@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+    <definition name="layoutsUpdate" template="/WEB-INF/views/tlly/templateUpdate.jsp">
+        <put-attribute name="title" value="spring-functionaltest" />
+        <put-attribute name="header"
+            value="/WEB-INF/views/tlly/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer"
+            value="/WEB-INF/views/layout/footer.jsp" />
+    </definition>
+
+    <definition name="tlly/update" extends="layoutsUpdate">
+        <put-attribute name="title" value="title.tlly2.update" />
+        <put-attribute name="functionId" value="tlly" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/tlly/update.jsp" />
+    </definition>
+
+    <definition name="tlly/update*" extends="layoutsUpdate">
+        <put-attribute name="title" value="title.tlly2.update{1}" />
+        <put-attribute name="functionId" value="tlly" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/tlly/update{1}.jsp" />
+    </definition>
+
+    <definition name="layoutsSearch" template="/WEB-INF/views/tlly/templateSearch.jsp">
+        <put-attribute name="title" value="spring-functionaltest" />
+        <put-attribute name="header"
+            value="/WEB-INF/views/tlly/headerInverse.jsp" />
+        <put-attribute name="menu" value="/WEB-INF/views/tlly/menu.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer"
+            value="/WEB-INF/views/layout/footer.jsp" />
+    </definition>
+
+    <definition name="tlly/search" extends="layoutsSearch">
+        <put-attribute name="title" value="title.tlly2.search" />
+        <put-attribute name="functionId" value="tlly" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/tlly/search.jsp" />
+    </definition>
+
+    <definition name="tlly/search*" extends="layoutsSearch">
+        <put-attribute name="title" value="title.tlly2.search{1}" />
+        <put-attribute name="functionId" value="tlly" />
+        <put-attribute name="body"
+            value="/WEB-INF/views/tlly/search{1}.jsp" />
+    </definition>
+</tiles-definitions>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+    namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository">
+
+    <resultMap id="jmsTodoResultMap" type="JmsTodo">
+        <id property="jmsTodoId" column="jms_todo_id" />
+        <result property="description" column="description" />
+        <result property="datetime" column="date_time" />
+    </resultMap>
+
+    <select id="findOneById" parameterType="String" resultMap="jmsTodoResultMap">
+        SELECT
+        jms_todo_id,
+        description,
+        date_time
+        FROM
+        t_jms_todo
+        WHERE
+        jms_todo_id = #{jmsTodoId}
+    </select>
+
+    <insert id="insert">
+        <trim prefix="INSERT INTO t_jms_todo (" suffix=")"
+            suffixOverrides=",">
+            <if test="jmsTodoId != null">
+                jms_todo_id,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="datetime != null">
+                date_time,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="jmsTodoId != null">
+                #{jmsTodoId},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="datetime != null">
+                #{datetime},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

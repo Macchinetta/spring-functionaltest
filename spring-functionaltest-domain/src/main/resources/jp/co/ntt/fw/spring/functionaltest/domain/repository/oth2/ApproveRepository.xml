@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2.ApproveRepository">
+
+	<delete id="deleteAll">
+		DELETE FROM 
+			oauth_approvals
+	</delete>
+
+	<select id="countAll" resultType="long">
+		SELECT
+			COUNT(*)
+		FROM
+			oauth_approvals
+	</select>
+
+</mapper>

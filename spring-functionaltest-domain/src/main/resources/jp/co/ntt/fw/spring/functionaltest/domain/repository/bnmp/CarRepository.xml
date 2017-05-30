@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+    namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.bnmp.CarRepository">
+
+    <select id="getCarSequence" resultType="long">
+        SELECT NEXTVAL('s_car')
+    </select>
+
+    <select id="getCarSequence" resultType="long" databaseId="oracle">
+        SELECT TO_NUMBER(s_car.nextval) FROM DUAL
+    </select>
+
+    <select id="getCarSequence" resultType="long" databaseId="db2">
+        values (NEXT VALUE FOR s_car)
+    </select>
+
+    <resultMap id="carResultMap" type="Car">
+        <result property="carId" column="car_id" />
+        <result property="name" column="name" />
+        <result property="color" column="color" />
+        <result property="releaseDate" column="release_date" />
+    </resultMap>
+
+    <sql id="selectPhrase">
+        SELECT
+        car_id
+        ,name
+        ,color
+        ,release_date
+        FROM
+        t_car
+    </sql>
+
+    <select id="findOneByCarId" parameterType="String" resultMap="carResultMap">
+        <bind name="carId" value="_parameter" />
+        <include refid="selectPhrase" />
+        WHERE
+        car_id = #{carId}
+    </select>
+
+    <insert id="insert">
+        <trim prefix="INSERT INTO t_car (" suffix=")"
+            suffixOverrides=",">
+            <if test="carId != null">
+                car_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="color != null">
+                color,
+            </if>
+            <if test="releaseDate != null">
+                release_date,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="carId != null">
+                #{carId},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="color != null">
+                #{color},
+            </if>
+            <if test="releaseDate != null">
+                #{releaseDate},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

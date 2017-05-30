@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:jms="http://www.springframework.org/schema/jms"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <import
+        resource="classpath:/META-INF/spring/spring-functionaltest-jms-domain.xml" />
+
+    <jms:annotation-driven />
+    <context:component-scan
+        base-package="jp.co.ntt.fw.spring.functionaltest.listener" />
+
+    <!-- JMS Listener Containers -->
+    <jms:listener-container factory-id="topicContainerFactory"
+        error-handler="jmsErrorHandler" destination-resolver="jndiDestinationResolver"
+        destination-type="topic" transaction-manager="asyncReceiveJmsTransactionManager"
+        cache="consumer"/>
+
+    <jms:listener-container factory-id="conCacheDynamicNoTranContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler" cache="consumer"/>
+
+    <jms:listener-container factory-id="jmsListenerContainerFactory"
+        error-handler="jmsErrorHandler" destination-resolver="jndiDestinationResolver"
+        transaction-manager="asyncReceiveJmsTransactionManager" cache="consumer"/>
+
+    <jms:listener-container factory-id="conCacheNoTranContainerFactory"
+        error-handler="jmsErrorHandler" destination-resolver="jndiDestinationResolver"
+        cache="consumer"/>
+
+    <!-- try-catch用リスナーコンテナ追記 -->
+    <jms:listener-container factory-id="conCacheTryCatchContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        destination-resolver="jndiDestinationResolver" cache="consumer"/>
+
+    <jms:listener-container factory-id="conCacheConcurrentSingleContainerFactory"
+        concurrency="1" error-handler="jmsErrorHandler" 
+        destination-resolver="jndiDestinationResolver" cache="consumer"/>
+
+    <jms:listener-container factory-id="conCacheConcurrentMultipleContainerFactory"
+        concurrency="5-10" error-handler="jmsErrorHandler"
+        destination-resolver="jndiDestinationResolver" cache="consumer"/>
+
+    <jms:listener-container factory-id="conCacheChainedTranContainerFactory"
+        error-handler="jmsErrorHandler" destination-resolver="jndiDestinationResolver"
+        transaction-manager="asyncReceiveChainedTransactionManager" acknowledge="transacted"
+        cache="consumer"/>
+
+    <jms:listener-container factory-id="topicContainerFactory"
+        error-handler="jmsErrorHandler" destination-resolver="jndiDestinationResolver"
+        acknowledge="transacted" cache="consumer" destination-type="topic"/>
+
+    <bean id="jmsErrorHandler"
+        class="jp.co.ntt.fw.spring.functionaltest.app.jmss.JmsErrorHandler" />
+</beans>

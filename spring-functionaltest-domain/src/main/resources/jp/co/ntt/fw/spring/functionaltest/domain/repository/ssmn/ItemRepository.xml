@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.ssmn.ItemRepository">
+
+    <resultMap id="item-resultMap" type="Item">
+        <result property="itemId" column="item_id" />
+        <result property="itemName" column="item_name" />
+        <result property="price" column="price" />
+        <result property="overviewDescription" column="overview_description" />
+        <result property="detailDescription" column="detail_description" />
+    </resultMap>
+
+    <sql id="selectItem">
+        SELECT
+            item_id
+            ,item_name
+            ,price
+            ,overview_description
+            ,detail_description
+        FROM
+            t_item
+    </sql>
+
+    <select id="findOne" resultMap="item-resultMap" parameterType="String">
+        <include refid="selectItem"/>
+        WHERE
+            item_id = #{itemId}
+    </select>
+
+    <select id="findPage" resultMap="item-resultMap">
+        <include refid="selectItem"/>
+        ORDER BY item_id ASC
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            t_item
+    </select>
+
+</mapper>

@@ -1,0 +1,26 @@
+.space {
+    margin-right: 1em;
+}
+
+.title-text-field {
+    width:550px;
+}
+
+.name-text-field {
+    width:200px;
+}
+
+.sort-field {
+    width:150px;
+}
+
+.inline {
+    display: inline;
+}
+
+table.pgnttable {
+    line-height: 1.4;
+    margin:5px auto 15px auto;
+	width:780px;
+}
+

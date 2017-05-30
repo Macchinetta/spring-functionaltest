@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryTypeRepository">
+
+    <resultMap id="deliveryTypeResultMap" type="DeliveryType">
+        <result property="deliveryTypeId" column="delivery_type_id" />
+        <result property="deliveryTypeName" column="delivery_type_name" />
+    </resultMap>
+
+    <sql id="selectPhrase">
+        SELECT
+            delivery_type_id
+            ,delivery_type_name
+        FROM
+            m_delivery_type
+    </sql>
+    
+    <select id="findAll" resultMap="deliveryTypeResultMap">
+        <include refid="selectPhrase" />
+        ORDER BY
+            delivery_type_id ASC
+    </select>
+
+    <select id="findOneByTypeName" resultMap="deliveryTypeResultMap" parameterType="String">
+        <include refid="selectPhrase" />
+        WHERE
+            delivery_type_name = #{deliveryTypeName}
+    </select>
+
+</mapper>

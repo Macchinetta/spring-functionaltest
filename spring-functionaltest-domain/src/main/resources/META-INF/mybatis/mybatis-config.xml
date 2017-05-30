@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="META-INF/mybatis/mybatis-config.properties" />
+
+    <settings>
+        <setting name="jdbcTypeForNull" value="${jdbcTypeForNull}" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="defaultFetchSize" value="100" />
+    </settings>
+
+    
+    <typeAliases>
+    	<typeAlias type="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria"/>
+    	<package name="jp.co.ntt.fw.spring.functionaltest.infra.mybatis.typehandler" />
+    </typeAliases>
+
+	<typeHandlers>
+		<package name="jp.co.ntt.fw.spring.functionaltest.infra.mybatis.typehandler" />
+	</typeHandlers>
+    
+</configuration>

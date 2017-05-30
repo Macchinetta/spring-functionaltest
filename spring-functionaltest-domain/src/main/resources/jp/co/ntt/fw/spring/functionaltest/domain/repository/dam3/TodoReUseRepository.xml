@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoReUseRepository">
+
+	<resultMap id="todoCategoryResultMap" type="CategoryMB3">
+		<result property="categoryId" column="category_id" />
+		<result property="name" column="name" />
+	</resultMap>
+
+	<resultMap id="todoResultMap" type="TodoMB3">
+		<result property="todoId" column="todo_id" />
+		<result property="todoTitle" column="todo_title" />
+		<!-- <result property="todoCategory" column="category_id" /> -->
+		<result property="finished" column="finished" />
+		<result property="createdAt" column="created_at" />
+		 <association property="category" column="category_id"
+            javaType="CategoryMB3" select="findOneByTodoCategoryId" />
+	</resultMap>
+	
+	<select id="findOneByTodoCategoryId" parameterType="String" resultMap="todoCategoryResultMap">
+        <bind name="categoryId" value="_parameter" />
+        SELECT
+            category_id
+            ,name
+        FROM
+            m_todo_cat
+        WHERE
+            category_id = #{categoryId}
+    </select>
+
+	<select id="findAllTodos" resultMap="todoResultMap" fetchSize="2">
+		SELECT
+		*
+		FROM
+		t_todo
+	</select>
+	
+	<sql id="selectPhrase">
+        SELECT
+            todo_id
+            ,category_id
+            ,todo_title
+            ,finished
+            ,created_at
+            ,version
+        FROM
+            t_todo
+    </sql>
+    
+      <sql id="wherePhrase">
+        <where>
+            <if test="todoId != null">
+                AND book_id = #{bookId}
+            </if>
+            <!-- <if test="category != null and category.categoryId != null">
+                AND category_id = #{category.categoryId}
+            </if> -->
+            <if test="todoTitle != null">
+                AND todo_title = #{todoTitle}
+            </if>
+            <if test="finished != null">
+                AND finished = #{finished}
+            </if>
+            <if test="releaseDate != null">
+                AND created_at = #{createdAt}
+            </if>
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+        </where>
+    </sql>
+    
+    <select id="findOneByTodoId" parameterType="String" resultMap="todoResultMap">
+        <bind name="todoId" value="_parameter" />
+        <include refid="selectPhrase" />
+        WHERE
+            todo_id = #{todoId}
+    </select>
+	
+	
+	<insert id="insert" parameterType="TodoMB3">
+		INSERT INTO
+		t_todo
+		(
+		todo_id,
+		todo_title,
+		category_id,
+		finished,
+		created_at,
+		version
+
+		)
+		VALUES
+		(
+		#{todoId},
+		#{todoTitle},
+		#{category.categoryId},
+		#{finished},
+		#{createdAt},
+		#{version}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		<bind name="todoId" value="_parameter" />
+		DELETE FROM
+		t_todo
+		WHERE
+		todo_id = #{todoId}
+	</delete>
+
+
+</mapper>

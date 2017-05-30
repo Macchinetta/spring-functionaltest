@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2.TokenRepository">
+
+	<delete id="deleteAllToken">
+		DELETE FROM
+			oauth_access_token
+	</delete>
+
+	<select id="countAllToken" resultType="long">
+		SELECT
+			COUNT(*)
+		FROM
+			oauth_access_token
+	</select>
+
+	<select id="deleteAllRefreshToken">
+		DELETE FROM
+			oauth_refresh_token
+	</select>
+
+	<select id="countAllRefreshToken" resultType="long">
+		SELECT
+			COUNT(*)
+		FROM
+			oauth_access_token
+	</select>
+
+</mapper>

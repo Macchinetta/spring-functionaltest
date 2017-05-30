@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!-- jmsTemplate activemqConnection-dynamicDestinationResolver -->
+    <bean id="dynamicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="dynamicConnectionFactory" />
+        <property name="pubSubDomain" value="false" />
+        <property name="receiveTimeout" value="20000" />
+    </bean>
+
+    <bean id="dynamicJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="dynamicJmsTemplate" />
+    </bean>
+
+    <!-- jmsTemplate jndiConnection-jndiDestinationResolver -->
+    <bean id="jndiJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="receiveTimeout" value="20000" />
+        <property name="destinationResolver" ref="jndiDestinationResolver" />
+    </bean>
+
+    <bean id="jndiJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jndiJmsTemplate" />
+    </bean>
+
+    <!-- jmsTemplate jndiConnection-jndiDestinationResolver -->
+    <bean id="jndiConCacheJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="receiveTimeout" value="20000" />
+        <property name="destinationResolver" ref="jndiDestinationResolver" />
+    </bean>
+
+    <bean id="jndiConCacheJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jndiConCacheJmsTemplate" />
+    </bean>
+
+    <!-- jmsTemplate For Topic -->
+    <bean id="topicJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="pubSubDomain" value="true" />
+        <property name="receiveTimeout" value="20000" />
+        <property name="destinationResolver" ref="jndiDestinationResolver" />
+    </bean>
+
+    <bean id="topicJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="topicJmsTemplate" />
+    </bean>
+
+    <bean id="selectedJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="pubSubDomain" value="false" />
+        <property name="receiveTimeout" value="20000" />
+        <property name="explicitQosEnabled" value="true" />
+        <property name="priority" value="${jms.mq.priority}" />
+        <property name="deliveryMode" value="${jms.mq.deliveryMode}" />
+        <property name="timeToLive" value="4000" />
+        <property name="destinationResolver" ref="jndiDestinationResolver" />
+    </bean>
+
+    <bean id="selectedMessagingJmsTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="selectedJmsTemplate" />
+    </bean>
+
+    <!-- Purge For Queue and Topic -->
+    <bean id="queuePurgeJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="pubSubDomain" value="false" />
+        <property name="receiveTimeout" value="10" />
+    </bean>
+
+    <bean id="topicPurgeJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="pubSubDomain" value="true" />
+        <property name="receiveTimeout" value="10" />
+    </bean>
+
+    <!-- jms jndi caching -->
+    <bean id="cachingConnectionFactory"
+        class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="connectionFactory" />
+        <property name="sessionCacheSize" value="3" />
+        <property name="cacheConsumers" value="false" />
+    </bean>
+
+    <bean id="dynamicConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL">
+            <value>tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp</value>
+        </property>
+        <property name="trustedPackages">
+            <list>
+                <value>jp.co.ntt.fw.spring.functionaltest.domain.model</value>
+                <value>org.joda.time</value>
+            </list>
+        </property>
+    </bean>
+
+    <beans profile="default, nonMqServer">
+        <bean id="brokerService" class="org.apache.activemq.broker.BrokerService"
+            init-method="start" destroy-method="stop">
+            <property name="brokerName" value="broker" />
+            <property name="useJmx" value="false" />
+            <property name="persistent" value="false" />
+            <property name="transportConnectorURIs">
+                <list>
+                    <value>tcp://${jms.mq.host}:${jms.mq.port}</value>
+                </list>
+            </property>
+        </bean>
+
+        <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+            <property name="brokerURL">
+                <value>tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp</value>
+            </property>
+            <property name="trustedPackages">
+                <list>
+                    <value>jp.co.ntt.fw.spring.functionaltest.domain.model</value>
+                    <value>org.joda.time</value>
+                </list>
+            </property>
+        </bean>
+
+        <bean id="jndiDestinationResolver"
+            class="org.springframework.jms.support.destination.DynamicDestinationResolver">
+        </bean>
+        
+        <bean id="testQueue0403003B" class="org.apache.activemq.command.ActiveMQQueue">
+            <constructor-arg index="0" value="TestQueue0403003B" />
+        </bean>
+    </beans>
+
+    <beans profile="mqServer">
+        <jee:jndi-lookup id="connectionFactory" jndi-name="${jndi.prefix}jms/NormalConnectionFactory"/>
+
+        <jee:jndi-lookup id="testQueue0403003B" jndi-name="${jndi.prefix}jms/queue/TestQueue0403003B"/>
+
+        <!-- jms jndi -->
+        <bean id="jndiDestinationResolver"
+            class="jp.co.ntt.fw.spring.functionaltest.infra.jmss.AddPrefixJndiDestinationResolver">
+            <property name="resourceRef" value="${jmss.JndiDestinationResolver.resourceRef}"/>
+        </bean>
+    </beans>
+
+</beans>

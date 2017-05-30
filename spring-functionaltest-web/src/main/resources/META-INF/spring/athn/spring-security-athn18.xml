@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="athnPasswordEncoderSha"
+        class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg value="${password.sha.shaalgorithm}" />
+        <property name="iterations" value="${password.sha.hashedstretching}" />
+    </bean>
+
+    <sec:http pattern="/athn/1801/002/**" auto-config="false"
+        authentication-manager-ref="loginWithShaPassword">
+        <sec:form-login login-page="/athn/1801/002"
+            login-processing-url="/athn/1801/002/authenticate"
+            default-target-url="/athn/1801/002/afterLogin" />
+        <sec:session-management
+            session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+        <sec:logout logout-url="/athn/1801/002/logout"
+            logout-success-url="/athn/" invalidate-session="true"
+            delete-cookies="JSESSIONID" />
+    </sec:http>
+
+    <sec:authentication-manager id="loginWithShaPassword">
+        <sec:authentication-provider ref="shaAuthenticationProvider">
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="loginWithShaPasswordService"
+        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_administrator WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, authority FROM t_administrator WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
+
+    <bean id="saltSource"
+        class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <property name="userPropertyToUse" value="username" />
+    </bean>
+
+    <bean id="shaAuthenticationProvider"
+        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="saltSource" ref="saltSource" />
+        <property name="userDetailsService" ref="loginWithShaPasswordService" />
+        <property name="passwordEncoder" ref="athnPasswordEncoderSha" />
+    </bean>
+
+</beans>

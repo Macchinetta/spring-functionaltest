@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="authorizationRoleHierarchy"
+        class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <property name="hierarchy">
+            <value>
+                ROLE_ADMIN > ROLE_STAFF
+                ROLE_STAFF > ROLE_USER
+            </value>
+        </property>
+    </bean>
+
+    <bean id="authorizationRoleHierarchyHandler"
+        class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+        <property name="roleHierarchy" ref="authorizationRoleHierarchy" />
+    </bean>
+
+    <sec:http pattern="/athr/0901/001/**"
+        authentication-manager-ref="loginForRoleHierarchyManager">
+        <sec:form-login login-page="/athr/0901/001"
+            login-processing-url="/athr/0901/001/authenticate"
+            default-target-url="/athr/0901/001/afterLogin" />
+        <sec:logout logout-url="/athr/0901/001/logout"
+            logout-success-url="/athr/" invalidate-session="true"
+            delete-cookies="JSESSIONID" />
+        <sec:expression-handler ref="authorizationRoleHierarchyHandler" />
+        <sec:intercept-url pattern="/athr/0901/001/*"
+            access="hasRole('ROLE_STAFF')" />
+        <sec:access-denied-handler error-page="/athr/hierarchyAccessDeniedPage" />
+    </sec:http>
+
+    <sec:authentication-manager id="loginForRoleHierarchyManager">
+        <sec:authentication-provider
+            user-service-ref="loginForRoleHierarchyDetailsService">
+            <sec:password-encoder ref="passwordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="loginForRoleHierarchyDetailsService"
+        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
+
+    <sec:http pattern="/athr/0901/002/**"
+        authentication-manager-ref="loginForJspRoleHierarchyManager">
+        <sec:form-login login-page="/athr/0901/002"
+            login-processing-url="/athr/0901/002/authenticate"
+            default-target-url="/athr/0901/002/afterLogin" />
+        <sec:logout logout-url="/athr/0901/002/logout"
+            logout-success-url="/athr/" invalidate-session="true"
+            delete-cookies="JSESSIONID" />
+        <sec:expression-handler ref="AuthorizationJspRoleHierarchyHandler" />
+        <sec:access-denied-handler error-page="/athr/hierarchyAccessDeniedPage" />
+    </sec:http>
+
+    <sec:authentication-manager id="loginForJspRoleHierarchyManager">
+        <sec:authentication-provider
+            user-service-ref="loginForJspRoleHierarchyDetailsService">
+            <sec:password-encoder ref="passwordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="loginForJspRoleHierarchyDetailsService"
+        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
+
+    <bean id="AuthorizationJspRoleHierarchy"
+        class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <property name="hierarchy">
+            <value>
+                ROLE_ADMIN > ROLE_STAFF
+                ROLE_STAFF > ROLE_USER
+            </value>
+        </property>
+    </bean>
+
+    <sec:http pattern="/athr/0901/003/**"
+        authentication-manager-ref="loginForMethodRoleHierarchyManager">
+        <sec:form-login login-page="/athr/0901/003"
+            login-processing-url="/athr/0901/003/authenticate"
+            default-target-url="/athr/0901/003/afterLogin" />
+        <sec:logout logout-url="/athr/0901/003/logout"
+            logout-success-url="/athr/" invalidate-session="true"
+            delete-cookies="JSESSIONID" />
+        <sec:expression-handler ref="authorizationRoleHierarchyHandler" />
+        <sec:intercept-url pattern="/athr/0901/003/*" />
+        <sec:access-denied-handler
+            error-page="/athr/methodHierarchyAccessDeniedPage" />
+    </sec:http>
+
+    <sec:authentication-manager id="loginForMethodRoleHierarchyManager">
+        <sec:authentication-provider
+            user-service-ref="loginForMethodRoleHierarchyDetailsService">
+            <sec:password-encoder ref="passwordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="loginForMethodRoleHierarchyDetailsService"
+        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
+
+    <bean id="authorizationRoleHierarchyMethodExpressionHandler"
+        class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+        <property name="roleHierarchy" ref="authorizationRoleHierarchy" />
+    </bean>
+
+    <sec:global-method-security
+        pre-post-annotations="enabled">
+        <sec:expression-handler
+            ref="authorizationRoleHierarchyMethodExpressionHandler" />
+    </sec:global-method-security>
+
+</beans>

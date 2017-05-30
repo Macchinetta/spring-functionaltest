@@ -1,0 +1,50 @@
+/*
+ * Copyright(c) 2014-2017 NTT Corporation.
+ */
+package jp.co.ntt.fw.spring.functionaltest.app.encr;
+
+import java.security.KeyPair;
+
+import javax.inject.Inject;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping("encr")
+public class ENCR04Controller {
+
+    @Inject
+    EncryptionDataService encryptionDataService;
+
+    @RequestMapping(value = "/0401/001", method = RequestMethod.GET)
+    public String handle0401001(Model model, EncryptionDataForm form) {
+        return "encr/encryptDecryptByHybrid";
+    }
+
+    @RequestMapping(value = "0401/001/encryptDecryptByHybrid", method = RequestMethod.POST)
+    public String encryptDecryptByHybrid(Model model,
+            @Validated EncryptionDataForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return handle0401001(model, form);
+        }
+
+        KeyPair keyPair = encryptionDataService.generateKeyPairByJCA();
+
+        String encrypted = encryptionDataService.encryptByHybrid(form
+                .getRawText(), keyPair.getPublic());
+        model.addAttribute("encryptedText", encrypted);
+        model.addAttribute("decryptedText", encryptionDataService
+                .decryptByHybrid(encrypted, keyPair.getPrivate()));
+        return "encr/encryptCompleteByHybrid";
+    }
+
+}

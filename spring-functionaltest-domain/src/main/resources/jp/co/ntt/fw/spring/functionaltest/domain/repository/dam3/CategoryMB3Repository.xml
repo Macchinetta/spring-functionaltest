@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryMB3Repository">
+
+    <resultMap id="categoryResultMap" type="CategoryMB3">
+        <result property="categoryId" column="category_id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <sql id="selectCategory">
+        SELECT
+            category_id
+            ,name
+        FROM
+            m_todo_cat
+    </sql>
+
+    <select id="findOneByName" resultMap="categoryResultMap" parameterType="String">
+        <include refid="selectCategory"/>
+        WHERE
+            name = #{name}
+    </select>
+    
+    <select id="selectTodoCategoryIdAutoMap" parameterType="String" resultType="CategoryMB3">
+        <bind name="categoryId" value="_parameter" />
+        SELECT
+            category_id
+            ,name
+        FROM
+            m_todo_cat
+        WHERE
+            category_id = #{categoryId}
+    </select>
+
+</mapper>

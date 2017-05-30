@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <sec:http pattern="/athn/0301/**"
+        authentication-manager-ref="userLoginManagerForAthn">
+        <sec:form-login login-page="/athn/0301/001/login"
+            login-processing-url="/athn/0301/001/authenticate"
+            default-target-url="/athn/0301/001?loginSuccess"
+            always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0301/001/logout"
+            logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0301/001/login/**"
+            access="permitAll" />
+        <sec:intercept-url pattern="/athn/0301/**"
+            access="isAuthenticated()" />
+    </sec:http>
+</beans>

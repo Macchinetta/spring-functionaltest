@@ -1,0 +1,2 @@
+CREATE
+    SEQUENCE s_order_item_jpa START WITH 13 INCREMENT BY 1

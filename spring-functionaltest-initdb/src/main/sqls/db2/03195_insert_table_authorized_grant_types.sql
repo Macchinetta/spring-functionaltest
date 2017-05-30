@@ -1,0 +1,20 @@
+INSERT INTO 
+    authorized_grant_types(client_id, authorized_grant_type) 
+VALUES
+    ('testClient', 'authorization_code'),
+    ('testClient', 'password'),
+    ('testClient', 'client_credentials'),
+    ('testClient', 'refresh_token'),
+    ('testClient', 'implicit'),
+    ('testClientReadOnly', 'authorization_code'),
+    ('testClientReadOnly', 'password'),
+    ('testClientReadOnly', 'client_credentials'),
+    ('testClientReadOnly', 'refresh_token'),
+    ('testClientReadOnly', 'implicit'),
+    ('testClientIllegalUri', 'authorization_code'),
+    ('testClientIllegalResource', 'authorization_code'),
+    ('testClient2', 'authorization_code'),
+    ('testClient2', 'password'),
+    ('testClient2', 'client_credentials'),
+    ('testClient2', 'refresh_token'),
+    ('testClient2', 'implicit')

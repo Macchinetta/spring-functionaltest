@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    
+    <mapping map-id="member.update">
+        <class-a>jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember</class-a>
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember</class-b>
+        <field-exclude>
+            <a>memberId</a>
+            <b>memberId</b>
+        </field-exclude>
+        <field-exclude>
+            <a>credential</a>
+            <b>credential</b>
+        </field-exclude>
+        <field-exclude>
+            <a>createdAt</a>
+            <b>createdAt</b>
+        </field-exclude>
+        <field-exclude>
+            <a>lastModifiedAt</a>
+            <b>lastModifiedAt</b>
+        </field-exclude>
+        <field-exclude>
+            <a>version</a>
+            <b>version</b>
+        </field-exclude>
+    </mapping>
+    
+    <mapping type="one-way">
+        <class-a>jp.co.ntt.fw.spring.functionaltest.domain.model.RestMemberCredential</class-a>
+        <class-b>jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberCredentialResource</class-b>
+        <field-exclude>
+            <a>password</a>
+            <b>password</b>
+        </field-exclude>
+    </mapping>
+
+</mappings>

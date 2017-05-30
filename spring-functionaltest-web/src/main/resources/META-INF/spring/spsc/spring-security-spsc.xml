@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="secureCacheControlHeadersWriter"
+        class="org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter">
+        <constructor-arg>
+            <bean
+                class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+                <constructor-arg value="/spsc/0104/001/secure/**" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean
+                class="org.springframework.security.web.header.writers.CacheControlHeadersWriter" />
+        </constructor-arg>
+    </bean>
+
+    <sec:http pattern="/spsc/0101/001">
+        <sec:form-login />
+        <sec:logout />
+        <sec:intercept-url pattern="/login" access="permitAll" />
+        <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/001">
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/002">
+        <sec:headers disabled="true" />
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/003">
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/004">
+        <sec:headers defaults-disabled="true">
+            <sec:cache-control />
+            <sec:content-type-options />
+            <sec:frame-options />
+            <sec:xss-protection />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/005">
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0102/006">
+        <sec:headers>
+            <sec:frame-options policy="SAMEORIGIN" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0103/001">
+        <sec:headers>
+            <sec:header name="X-WebKit-CSP" value="default-src 'self'" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0104/001/**">
+        <sec:headers defaults-disabled="true">
+            <sec:header ref="secureCacheControlHeadersWriter" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0105/001">
+        <sec:headers>
+            <sec:content-security-policy policy-directives="default-src 'self'" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0105/002">
+        <sec:headers>
+            <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" report-only="true" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0105/003">
+        <sec:headers>
+            <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0106/001">
+        <sec:headers>
+            <sec:hpkp report-only="false" max-age-seconds="1">
+                <sec:pins>
+                    <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+                    <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+                </sec:pins>
+            </sec:hpkp>
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0106/002">
+        <sec:headers>
+            <sec:hpkp max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
+                <sec:pins>
+                    <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+                    <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+                </sec:pins>
+            </sec:hpkp>
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:http pattern="/spsc/0106/003">
+        <sec:headers>
+            <sec:hpkp report-only="false" max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
+                <sec:pins>
+                    <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+                    <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+                </sec:pins>
+            </sec:hpkp>
+        </sec:headers>
+        <sec:form-login />
+        <sec:logout />
+    </sec:http>
+
+    <sec:authentication-manager />
+
+</beans>

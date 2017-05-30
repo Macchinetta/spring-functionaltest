@@ -1,0 +1,154 @@
+/*
+ * Copyright(c) 2014-2017 NTT Corporation.
+ */
+package jp.co.ntt.fw.spring.functionaltest.app.vldt;
+
+import java.io.Serializable;
+import java.util.Date;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+public class DefineTypeMismatchMessageForm implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private short shortValue;
+
+    private int intValue;
+
+    private long longValue;
+
+    private float floatValue;
+
+    private double doubleValue;
+
+    private Short shortObject;
+
+    private Integer integerObject;
+
+    private Long longObject;
+
+    private Float floatObject;
+
+    private Double doubleObject;
+
+    private Date date;
+
+    private DateTime datetime;
+
+    private LocalDate localdate;
+
+    private boolean booleanValue;
+
+    public short getShortValue() {
+        return shortValue;
+    }
+
+    public void setShortValue(short shortValue) {
+        this.shortValue = shortValue;
+    }
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public void setIntValue(int intValue) {
+        this.intValue = intValue;
+    }
+
+    public long getLongValue() {
+        return longValue;
+    }
+
+    public void setLongValue(long longValue) {
+        this.longValue = longValue;
+    }
+
+    public float getFloatValue() {
+        return floatValue;
+    }
+
+    public void setFloatValue(float floatValue) {
+        this.floatValue = floatValue;
+    }
+
+    public double getDoubleValue() {
+        return doubleValue;
+    }
+
+    public void setDoubleValue(double doubleValue) {
+        this.doubleValue = doubleValue;
+    }
+
+    public Short getShortObject() {
+        return shortObject;
+    }
+
+    public void setShortObject(Short shortObject) {
+        this.shortObject = shortObject;
+    }
+
+    public Integer getIntegerObject() {
+        return integerObject;
+    }
+
+    public void setIntegerObject(Integer integerObject) {
+        this.integerObject = integerObject;
+    }
+
+    public Long getLongObject() {
+        return longObject;
+    }
+
+    public void setLongObject(Long longObject) {
+        this.longObject = longObject;
+    }
+
+    public Float getFloatObject() {
+        return floatObject;
+    }
+
+    public void setFloatObject(Float floatObject) {
+        this.floatObject = floatObject;
+    }
+
+    public Double getDoubleObject() {
+        return doubleObject;
+    }
+
+    public void setDoubleObject(Double doubleObject) {
+        this.doubleObject = doubleObject;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public DateTime getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(DateTime datetime) {
+        this.datetime = datetime;
+    }
+
+    public LocalDate getLocaldate() {
+        return localdate;
+    }
+
+    public void setLocaldate(LocalDate localdate) {
+        this.localdate = localdate;
+    }
+
+    public boolean isBooleanValue() {
+        return booleanValue;
+    }
+
+    public void setBooleanValue(boolean booleanValue) {
+        this.booleanValue = booleanValue;
+    }
+}

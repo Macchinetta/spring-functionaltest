@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security.xsd
+           http://www.springframework.org/schema/security/oauth2
+           http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<oauth2:web-expression-handler id="oauth2ResourceExpressionHandler" />
+
+	<bean id="oauth2ResourceAuthenticationEntryPoint"
+		class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint" />
+
+	<!-- default -->
+	<security:http pattern="${oth2.restServletPath}/oth2/resources/string/**"
+		create-session="stateless" entry-point-ref="oauth2ResourceAuthenticationEntryPoint" >
+		<security:expression-handler ref="oauth2ResourceExpressionHandler" />
+		<security:csrf disabled="true" />
+
+		<security:intercept-url
+			pattern="${oth2.restServletPath}/oth2/resources/string/**"
+			method="GET" access="#oauth2.hasScope('READ')" />
+
+		<security:custom-filter ref="oauth2DefaultAuthenticationFilter"
+			before="PRE_AUTH_FILTER" />
+	</security:http>
+
+	<oauth2:resource-server id="oauth2DefaultAuthenticationFilter"
+		resource-id="todoResource" token-services-ref="oauth2DefaultResourceRemoteTokenServices" 
+		entry-point-ref="oauth2ResourceAuthenticationEntryPoint" />
+
+	<bean id="oauth2DefaultResourceRemoteTokenServices"
+		class="org.springframework.security.oauth2.provider.token.RemoteTokenServices">
+		<property name="checkTokenEndpointUrl"
+			value="${oth2.remoteApplicationContextUrl}/oth2/oauth/check-token" />
+	</bean>
+
+	<!-- custom -->
+    <security:http pattern="${oth2.restServletPath}/oth2/resources/**"
+		create-session="stateless" entry-point-ref="oauth2ResourceAuthenticationEntryPoint" >
+		<security:expression-handler ref="oauth2ResourceExpressionHandler" />
+		<security:csrf disabled="true" />
+
+		<security:intercept-url
+			pattern="/**"
+			method="GET" access="#oauth2.hasScope('READ')" />
+		<security:intercept-url
+			pattern="/**"
+			method="PUT" access="#oauth2.hasScope('UPDATE')" />
+		<security:intercept-url
+			pattern="/**"
+			method="POST" access="#oauth2.hasScope('CREATE')" />
+		<security:intercept-url
+			pattern="/**"
+			method="DELETE" access="#oauth2.hasScope('DELETE')" />
+
+		<security:custom-filter ref="oauth2AuthenticationFilter"
+			before="PRE_AUTH_FILTER" />
+	</security:http>
+	
+	<oauth2:resource-server id="oauth2AuthenticationFilter"
+		resource-id="todoResource" token-services-ref="oauth2ResourceRemoteTokenServices"
+		entry-point-ref="oauth2ResourceAuthenticationEntryPoint" />
+
+	<bean id="oauth2ResourceRemoteTokenServices"
+		class="org.springframework.security.oauth2.provider.token.RemoteTokenServices">
+		<property name="checkTokenEndpointUrl"
+			value="${oth2.remoteApplicationContextUrl}/oth2/oauth/check-token" />
+		<property name="accessTokenConverter" ref="oauth2ResourceAccessTokenConverter" />
+	</bean>
+
+	<bean id="oauth2ResourceAccessTokenConverter"
+		class="org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter">
+		<property name="userTokenConverter">
+			<bean
+				class="jp.co.ntt.fw.spring.functionaltest.converter.oth2.ResourceCustomUserTokenConverter" />
+		</property>
+	</bean>
+
+</beans>
