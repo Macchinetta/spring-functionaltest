@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -70,8 +83,8 @@ public enum WebDriverInputFieldAccessor {
 
         private void setValue(By by, String value, WebDriver webDriver) {
             String scriptCode = "arguments[0].value = '" + js(value) + "';";
-            ((JavascriptExecutor) webDriver).executeScript(scriptCode,
-                    webDriver.findElement(by));
+            ((JavascriptExecutor) webDriver).executeScript(scriptCode, webDriver
+                    .findElement(by));
         }
 
     };
@@ -86,7 +99,8 @@ public enum WebDriverInputFieldAccessor {
      * 指定した要素(テキスト項目)の値を上書きする。
      * @param by 要素(テキスト項目)を探すための識別子
      */
-    public abstract void overrideValue(By by, String value, WebDriver webDriver);
+    public abstract void overrideValue(By by, String value,
+            WebDriver webDriver);
 
     /**
      * 指定した入力フィールドに設定されている値を取得する。

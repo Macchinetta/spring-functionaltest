@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
@@ -151,12 +164,13 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null',"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null',"));
             assertTrue(logMessage.contains("propertyPath=convertUserId.arg0,")
-                    | logMessage.contains("propertyPath=convertUserId.userId,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    | logMessage.contains(
+                            "propertyPath=convertUserId.userId,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -193,10 +207,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null', propertyPath=convertUserId.<return value>,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null', propertyPath=convertUserId.<return value>,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -225,8 +239,8 @@ public class MethodValidationTest extends FunctionTestSupport {
         {
             assertThat(getTextString(id("userId")), is("visitUserId"));
             assertThat(getTextString(id("userName")), is("visitUserId"));
-            assertThat(getTextString(id("dateOfBirth")),
-                    is("Wed Dec 11 00:00:00 JST 2013"));
+            assertThat(getTextString(id("dateOfBirth")), is(
+                    "Wed Dec 11 00:00:00 JST 2013"));
         }
 
         // ログ確認(エラーがないこと)
@@ -271,14 +285,14 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='must be in the past',"));
-            assertTrue(logMessage
-                    .contains("propertyPath=convertUserInfo.arg0.visitDate,")
-                    | logMessage
-                            .contains("propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.Past.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='must be in the past',"));
+            assertTrue(logMessage.contains(
+                    "propertyPath=convertUserInfo.arg0.visitDate,") | logMessage
+                            .contains(
+                                    "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.Past.message}'"));
         }
     }
 
@@ -317,14 +331,14 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null',"));
-            assertTrue(logMessage
-                    .contains("propertyPath=convertUserInfo.arg0.visitDate,")
-                    | logMessage
-                            .contains("propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null',"));
+            assertTrue(logMessage.contains(
+                    "propertyPath=convertUserInfo.arg0.visitDate,") | logMessage
+                            .contains(
+                                    "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -363,14 +377,14 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null',"));
-            assertTrue(logMessage
-                    .contains("propertyPath=convertUserInfo.arg0.visitMessage,")
-                    | logMessage
-                            .contains("propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null',"));
+            assertTrue(logMessage.contains(
+                    "propertyPath=convertUserInfo.arg0.visitMessage,")
+                    | logMessage.contains(
+                            "propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -409,10 +423,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null', propertyPath=convertUserInfo.arg0,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.arg0,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -451,10 +465,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>,"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>,"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -493,10 +507,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -535,10 +549,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -577,10 +591,10 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertTrue(logMessage
-                    .contains("interpolatedMessage='must be in the past', propertyPath=convertUserInfo.<return value>.userInfo.dateOfBirth"));
-            assertTrue(logMessage
-                    .contains("messageTemplate='{javax.validation.constraints.Past.message}'"));
+            assertTrue(logMessage.contains(
+                    "interpolatedMessage='must be in the past', propertyPath=convertUserInfo.<return value>.userInfo.dateOfBirth"));
+            assertTrue(logMessage.contains(
+                    "messageTemplate='{javax.validation.constraints.Past.message}'"));
         }
     }
 }

@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.spsm;
 
@@ -49,8 +62,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("password"), "spring1234");
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("session")),
-                is("This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is(
+                "This is Session"));
 
         String beforeCoookie = webDriverOperations.getCookie("JSESSIONID")
                 .getValue();
@@ -59,16 +72,16 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("ログイン完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ログイン完了画面"));
 
         // ログイン前後でcookieIdが変更されれていることを確認
-        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(),
-                not(beforeCoookie));
+        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(
+                beforeCoookie));
 
         // セッション情報が引き継がれていないことを確認する。
-        assertThat(webDriverOperations.getText(id("session")),
-                is("This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is(
+                "This is Session"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -91,8 +104,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("password"), "spring1234");
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("session")),
-                is("This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is(
+                "This is Session"));
 
         String beforeCoookie = webDriverOperations.getCookie("JSESSIONID")
                 .getValue();
@@ -101,12 +114,12 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("ログイン完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ログイン完了画面"));
 
         // ログイン前後でcookieIdが変更されれていることを確認
-        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(),
-                not(beforeCoookie));
+        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(
+                beforeCoookie));
 
         // セッション情報が引き継がれていないことを確認する。
         assertThat(webDriverOperations.getText(id("session")), is(""));
@@ -180,8 +193,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
         // 無効セッションエラーとなることを確認する
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("Invalid Session Error"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "Invalid Session Error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -203,8 +216,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
         // 無効セッションエラーであっても遷移可能（ログインフォームに戻れる）であることを確認する。
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
     }
 
     /**
@@ -269,8 +282,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         browser1.click(id("spsm0501001nologin"));
 
         // 認証失敗後の画面遷移確認
-        assertThat(browser1.getText(id("screenTitle")),
-                is("Spring Functional Test Top Page"));
+        assertThat(browser1.getText(id("screenTitle")), is(
+                "Spring Functional Test Top Page"));
 
         // 後処理
         browser1.click(id("spsmLink"));
@@ -346,8 +359,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         browser3.click(id("login"));
 
         // 認証失敗後の画面遷移確認
-        assertThat(browser3.getText(id("loginError")),
-                is("Maximum sessions of 2 for this principal exceeded"));
+        assertThat(browser3.getText(id("loginError")), is(
+                "Maximum sessions of 2 for this principal exceeded"));
 
         // ログアウトボタン押下
         browser1.click(id("logout"));

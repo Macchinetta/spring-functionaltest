@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thly/layout/template :: layout(~{::title},~{::body/content()})}">
+<head>
+<title>Create Staff Information</title>
+</head>
+<body>
+  <h2>Create Staff Information</h2>
+  <form th:object="${staffInfoForm}" method="post" th:action="@{/thly/staff/create}">
+    <table>
+      <tr>
+        <td>Staff First Name</td>
+        <td><input type="text" th:field="*{firstName}" /></td>
+      </tr>
+      <tr>
+        <td>Staff Family Name</td>
+        <td><input type="text" th:field="*{familyName}" /></td>
+      </tr>
+      <tr>
+        <td rowspan="5">Staff Authorities</td>
+        <td><input type="checkbox" value="01" th:field="*{authorities}" /> Staff Management</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" value="02" th:field="*{authorities}" /> Master Management</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" value="03" th:field="*{authorities}" /> Stock Management</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" value="04" th:field="*{authorities}" /> Order Management</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" value="05" th:field="*{authorities}" /> Show Shopping
+          Management</td>
+      </tr>
+    </table>
+
+    <input type="submit" value="cancel" /> <input type="submit" value="confirm" />
+  </form>
+</body>
+</html>

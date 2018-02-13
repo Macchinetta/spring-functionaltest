@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <sec:http pattern="/athn/0701/001/**" auto-config="false"
-        authentication-manager-ref="userLoginManagerForAthn">
-        <sec:form-login login-page="/athn/0701/001/login"
-            default-target-url="/athn/0701/001?loginSuccess"
-            always-use-default-target="true"
-            login-processing-url="/athn/0701/001/authenticate" />
-        <sec:logout />
-        <sec:intercept-url pattern="/athn/0701/001/login/**"
-            access="permitAll" />
-        <sec:intercept-url pattern="/athn/0701/**"
-            access="isAuthenticated()" />
-    </sec:http>
+  <sec:http pattern="/athn/0701/001/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+    <sec:form-login login-page="/athn/0701/001/login" default-target-url="/athn/0701/001?loginSuccess"
+      always-use-default-target="true" login-processing-url="/athn/0701/001/authenticate" />
+    <sec:logout />
+    <sec:intercept-url pattern="/athn/0701/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0701/**" access="isAuthenticated()" />
+  </sec:http>
 
-    <sec:http pattern="/athn/0702/001/**" auto-config="false"
-        authentication-manager-ref="userLoginManagerForAthn">
-        <sec:form-login login-page="/athn/0702/001/login"
-            default-target-url="/athn/0702/001?loginSuccess"
-            always-use-default-target="true"
-            login-processing-url="/athn/0702/001/authenticate" />
-        <sec:logout delete-cookies="JSESSIONID" />
-        <sec:intercept-url pattern="/athn/0702/001/login/**"
-            access="permitAll" />
-        <sec:intercept-url pattern="/athn/0702/**"
-            access="isAuthenticated()" />
-    </sec:http>
+  <sec:http pattern="/athn/0702/001/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+    <sec:form-login login-page="/athn/0702/001/login" default-target-url="/athn/0702/001?loginSuccess"
+      always-use-default-target="true" login-processing-url="/athn/0702/001/authenticate" />
+    <sec:logout delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/athn/0702/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0702/**" access="isAuthenticated()" />
+  </sec:http>
 </beans>

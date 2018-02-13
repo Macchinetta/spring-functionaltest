@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">THYM テンプレートエンジンThymleaf</h1>
+
+      <div>[THYM01] Thymeleafとは</div>
+      <ul>
+        <li><a id="thym0103001" th:href="@{/thym/0103/001}">thym0103001</a></li>
+        <li><a id="thym0104001" th:href="@{/thym/0104/001}">thym0104001</a></li>
+      </ul>
+      <div>[THYM02] Thymeleafテンプレートの実装</div>
+      <ul>
+        <li><a id="thym0201001" th:href="@{/thym/0201/001/}">thym0201001</a></li>
+        <li><a id="thym0201002" th:href="@{/thym/0201/002/}">thym0201002</a></li>
+        <li><a id="thym0201003" th:href="@{/thym/0201/003/}">thym0202001</a></li>
+      </ul>
+      <div>[THYM03] コメント文</div>
+      <ul>
+        <li><a id="thym0301001" th:href="@{/thym/0301/001/}">thym0301001</a></li>
+        <li><a id="thym0301002" th:href="@{/thym/0301/002/}">thym0301002</a></li>
+        <li><a id="thym0301003" th:href="@{/thym/0301/003/}">thym0301003</a></li>
+      </ul>
+      <div>[THYM04] アプリケーションの設定</div>
+      <ul>
+        <li>RestClientでアクセスする為、不要。</li>
+      </ul>
+      <div>[THYM05] カスタムダイアレクトの追加</div>
+      <ul>
+        <li><a id="thym0501001" th:href="@{/thym/0501/001}">thym0501001</a></li>
+        <li><a id="thym0501002" th:href="@{/thym/0501/002}">thym0501002</a></li>
+        <li><a id="thym0502001" th:href="@{/thym/0502/001}">thym0502001</a></li>
+        <li><a id="thym0502002" th:href="@{/thym/0502/002}">thym0502002</a></li>
+      </ul>
+      <div>[THYM06] テンプレートキャッシュの適用</div>
+      <ul>
+        <li><a id="thym0601002" th:href="@{/thym/0601/002/}">thym0601002</a></li>
+        <li><a id="thym0602001" th:href="@{/thym/0602/001/}">thym0602001</a></li>
+        <li><a id="thym060300101" th:href="@{/thym/0603/001/01/}">thym060300101</a></li>
+        <li><a id="thym060300102" th:href="@{/thym/0603/001/02/}">thym060300102</a></li>
+        <li><a id="thym060300201" th:href="@{/thym/0603/002/01/}">thym060300201</a></li>
+        <li><a id="thym060300202" th:href="@{/thym/0603/002/02/}">thym060300202</a></li>
+        <li><a id="thym060500101" th:href="@{/thym/0605/001/01/}">thym060500101</a></li>
+        <li><a id="thym0605004" th:href="@{/thym/0605/004/}">thym0605004</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

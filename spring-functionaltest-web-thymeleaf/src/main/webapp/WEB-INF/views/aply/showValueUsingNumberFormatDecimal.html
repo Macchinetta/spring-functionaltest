@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">モデルに格納された値を数値フォーマット表示した画面（#numbers.formatDecimal形式）</h1>
+
+      <ul>
+        <li id="message1">Thymeleafのユーティリティオブジェクトが提供している数値フォーマットを利用して数値を以下に表示します。</li>
+        <li id="message2"
+          th:text="${#numbers.formatDecimal(valueUsingNumberFormatDecimal,1,'COMMA',2,'POINT')}"></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

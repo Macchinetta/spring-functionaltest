@@ -1,5 +1,5 @@
-CREATE TABLE oauth_refresh_token (
+CREATE TABLE oauth_code (
   code VARCHAR(256) NOT NULL,
-  authentication BLOB(2000),
+  authentication BLOB,
   CONSTRAINT pk_oauth_code PRIMARY KEY(code)
 )

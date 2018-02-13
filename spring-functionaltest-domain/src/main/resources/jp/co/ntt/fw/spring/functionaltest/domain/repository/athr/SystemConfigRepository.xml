@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-  namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.athr.SystemConfigRepository">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.athr.SystemConfigRepository">
 
   <resultMap id="systemConfig-resultMap" type="SystemConfig">
     <result property="device" column="device" />
@@ -31,73 +30,71 @@
     t_system_config
   </sql>
 
-  <select id="findOneByDevice" resultMap="systemConfig-resultMap"
-    parameterType="String">
+  <select id="findOneByDevice" resultMap="systemConfig-resultMap" parameterType="String">
     <include refid="selectSystemConfig" />
     WHERE
     device = #{device}
   </select>
 
-    <insert id="insert">
-        <trim prefix="INSERT INTO t_system_config (" suffix=")"
-            suffixOverrides=",">
-            <if test="device != null">
-                device,
-            </if>
-            <if test="broadcast != null">
-                broadcast,
-            </if>
-            <if test="ipaddr != null">
-                ipaddr,
-            </if>
-            <if test="netmask != null">
-                netmask,
-            </if>
-            <if test="network != null">
-                network,
-            </if>
-            <if test="onboot != null">
-                onboot,
-            </if>
-            <if test="deviceType != null">
-                device_type,
-            </if>
-            <if test="gateway != null">
-                gateway,
-            </if>
-            <if test="owner != null">
-                owner,
-            </if>
-        </trim>
-        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
-            <if test="device != null">
-                #{device},
-            </if>
-            <if test="broadcast != null">
-                #{broadcast},
-            </if>
-            <if test="ipaddr != null">
-                #{ipaddr},
-            </if>
-            <if test="netmask != null">
-                #{netmask},
-            </if>
-            <if test="network != null">
-                #{network},
-            </if>
-            <if test="onboot != null">
-                #{onboot},
-            </if>
-            <if test="deviceType != null">
-                #{deviceType},
-            </if>
-            <if test="gateway != null">
-                #{gateway},
-            </if>
-            <if test="owner != null">
-                #{owner},
-            </if>
-        </trim>
-    </insert>
+  <insert id="insert">
+    <trim prefix="INSERT INTO t_system_config (" suffix=")" suffixOverrides=",">
+      <if test="device != null">
+        device,
+      </if>
+      <if test="broadcast != null">
+        broadcast,
+      </if>
+      <if test="ipaddr != null">
+        ipaddr,
+      </if>
+      <if test="netmask != null">
+        netmask,
+      </if>
+      <if test="network != null">
+        network,
+      </if>
+      <if test="onboot != null">
+        onboot,
+      </if>
+      <if test="deviceType != null">
+        device_type,
+      </if>
+      <if test="gateway != null">
+        gateway,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+    </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+      <if test="device != null">
+        #{device},
+      </if>
+      <if test="broadcast != null">
+        #{broadcast},
+      </if>
+      <if test="ipaddr != null">
+        #{ipaddr},
+      </if>
+      <if test="netmask != null">
+        #{netmask},
+      </if>
+      <if test="network != null">
+        #{network},
+      </if>
+      <if test="onboot != null">
+        #{onboot},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType},
+      </if>
+      <if test="gateway != null">
+        #{gateway},
+      </if>
+      <if test="owner != null">
+        #{owner},
+      </if>
+    </trim>
+  </insert>
 
 </mapper>

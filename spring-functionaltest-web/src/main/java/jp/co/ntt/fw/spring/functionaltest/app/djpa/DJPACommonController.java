@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
@@ -23,6 +36,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPACategoryLzServi
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPACategoryService;
 
 import org.dozer.Mapper;
+import org.dozer.MappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.PessimisticLockingFailureException;
@@ -44,14 +58,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.terasoluna.gfw.common.exception.SystemException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
 @Controller
 @RequestMapping("djpa/book")
 public class DJPACommonController {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(DJPACommonController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            DJPACommonController.class);
 
     @Inject
     JPABookService jpaBookService;
@@ -114,8 +129,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookLZ jpaBook = beaMapper.map(bookForm, JPABookLZ.class);
 
-        JPACategoryLZ category = jpaCategoryLzService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryLZ category = jpaCategoryLzService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBook.setCategory(category);
         jpaBook = jpaBookLZService.addBook(jpaBook);
 
@@ -133,8 +148,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -151,11 +166,11 @@ public class DJPACommonController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "flush")
     public String registerBookUsingFlush(BookForm bookForm,
-            RedirectAttributes redirectAttrs) {
+            RedirectAttributes redirectAttrs) throws InterruptedException {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -175,8 +190,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -195,8 +210,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -279,11 +294,13 @@ public class DJPACommonController {
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "errorReg")
     public String registerBookRollback(Model model, BookForm bookForm,
             RedirectAttributes redirectAttrs) throws Exception {
+        // SystemExceptionをthrowしているため、SonarQube指摘は未対応としています。
         JPABook jpaBook = beaMapper.map(bookForm, JPABook.class);
 
         JPACategory category = jpaCategoryService.getCategoryDetails(bookForm
                 .getCategoryName());
         jpaBook.setCategory(category);
+
         jpaBook = jpaBookService.addBookWithRollback(jpaBook);
 
         redirectAttrs.addAttribute("complete", "");
@@ -295,11 +312,11 @@ public class DJPACommonController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "crudReg")
     public String registerUsingCrudRepository(Model model, BookForm bookForm,
-            RedirectAttributes redirectAttrs) throws Exception {
+            RedirectAttributes redirectAttrs) throws MappingException {
         JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBookEG.setCategory(category);
         jpaBookEG.setBlobCode(bookForm.getClobCode().getBytes());
         jpaBookEG = jpaBookEGService.addBook(jpaBookEG);
@@ -362,12 +379,13 @@ public class DJPACommonController {
      * @return
      */
     @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "noLazy")
-    public String searchNoLazySetting(Model model,
-            JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
+    public String searchNoLazySetting(Model model, JPABookListForm bookListForm,
+            RedirectAttributes redirectAttrs) {
         Integer bookId = Integer.valueOf(bookListForm
                 .getSearchInQueryBookIdNoLazy());
         JPABookLZ book = jpaBookLZService.findById(bookId);
-        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
+        model.addAttribute("bookCategory", book.getCategory()
+                .getCategoryName());
         model.addAttribute("bookForm", new BookForm());
         book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
                 .toUpperCase());
@@ -517,11 +535,12 @@ public class DJPACommonController {
 
     @RequestMapping(value = "pgList", method = RequestMethod.GET)
     public String paginationUsingPageable(
-            @PageableDefault(page = 0, size = 4, sort = { "bookId" }, direction = Direction.ASC) Pageable pageable,
+            @PageableDefault(page = 0, size = 4, sort = {
+                    "bookId" }, direction = Direction.ASC) Pageable pageable,
             Model model) {
 
-        Page<JPABookEG> bookListPage = jpaBookEGService
-                .getPaginatedBooks(pageable);
+        Page<JPABookEG> bookListPage = jpaBookEGService.getPaginatedBooks(
+                pageable);
 
         model.addAttribute("page", bookListPage);
         return "djpa/pageList";
@@ -636,8 +655,8 @@ public class DJPACommonController {
         bookForm.setBlobCode(null);
         JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService
-                .getCategoryDetails(bookForm.getCategoryName());
+        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
+                bookForm.getCategoryName());
         jpaBookEG.setCategory(category);
 
         jpaBookEG.setBlobCode(jpaBookEG.getClobCode().getBytes());
@@ -678,10 +697,11 @@ public class DJPACommonController {
 
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHint")
     public String lockTimeoutAndPessimisticLocking(
-            JPABookListForm jpaBookListForm, Model model) {
+            JPABookListForm jpaBookListForm,
+            Model model) throws InterruptedException {
 
-        String dataBaseName = DataBaseInfo
-                .getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName = DataBaseInfo.getDataBaseID(
+                (HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());
@@ -710,10 +730,11 @@ public class DJPACommonController {
 
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHintNoExcp")
     public String lockTimeoutAndPessimisticLockingNoExp(
-            JPABookListForm jpaBookListForm, Model model) {
+            JPABookListForm jpaBookListForm,
+            Model model) throws InterruptedException {
 
-        String dataBaseName = DataBaseInfo
-                .getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName = DataBaseInfo.getDataBaseID(
+                (HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());

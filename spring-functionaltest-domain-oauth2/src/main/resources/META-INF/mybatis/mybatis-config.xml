@@ -4,16 +4,16 @@
     "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<properties resource="META-INF/mybatis/mybatis-config.properties" />
+  <properties resource="META-INF/mybatis/mybatis-config.properties" />
 
-    <settings>
-        <setting name="jdbcTypeForNull" value="${jdbcTypeForNull}" />
-        <setting name="mapUnderscoreToCamelCase" value="true" />
-        <setting name="defaultFetchSize" value="100" />
-    </settings>
-    
-    <typeAliases>
-		<package name="jp.co.ntt.fw.spring.functionaltest.domain.model"/>
-	</typeAliases>
+  <settings>
+    <setting name="jdbcTypeForNull" value="${jdbcTypeForNull}" />
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+    <setting name="defaultFetchSize" value="100" />
+  </settings>
+
+  <typeAliases>
+    <package name="jp.co.ntt.fw.spring.functionaltest.domain.model" />
+  </typeAliases>
 
 </configuration>

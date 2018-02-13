@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.oth2;
 
@@ -7,6 +20,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +35,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthResource;
 @Controller
 public class OTH211Controller {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OTH211Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OTH211Controller.class);
 
     @Inject
     OauthIllegalParamAuthCodeService oauthIllegalParamAuthCodeService;
@@ -30,26 +44,19 @@ public class OTH211Controller {
     @Inject
     ResourceOwnerPasswordResourceDetails passGrantResource;
 
-    /**
-     * <ul>
-     * <li>Calls Service to send request with the authorization code grant(GET).</li>
-     * </ul>
-     * @param id
-     * @param model
-     * @return path of the view
-     */
-    @RequestMapping(value = "/01/001/get/{id}", method = RequestMethod.GET)
-    public String handle01001(@PathVariable("id") String id, Model model) {
+    @Value("${oth2.applicationContextUrl}")
+    String applicationContextUrl;
 
-        OauthResource response = oauthIllegalParamAuthCodeService
-                .getResourceByIllegalId(id);
+    @Value("${oth2.applicationContextUrl}/oth2/client")
+    String clientUrl;
 
-        logger.debug("Result response={}", response);
+    @Value("${oth2.databaseApplicationContextUrl}/oth2")
+    String authServerUrl;
 
-        model.addAttribute("response", response.getResult());
-        model.addAttribute("title", "GETメソッドの結果");
-        return "oth2/view";
-    }
+    @Value("${oth2.databaseApplicationContextUrl}${oth2.restServletPath}/oth2/resources")
+    String resourceServerUrl;
+
+    String clientId = "testClient";
 
     /**
      * <ul>
@@ -95,22 +102,19 @@ public class OTH211Controller {
 
     /**
      * <ul>
-     * <li>Calls Service to send request with the authorization code grant(GET).</li>
+     * <li>Calls Service to send request with the implicit grant(GET).</li>
      * </ul>
-     * @param id
      * @param model
      * @return path of the view
      */
-    @RequestMapping(value = "/01/005/get/{id}", method = RequestMethod.GET)
-    public String handle01005(@PathVariable("id") String id, Model model) {
-
-        OauthResource response = oauthIllegalParamAuthCodeService
-                .getResourceByIllegalUri(id);
-
-        logger.debug("Result response={}", response);
-
-        model.addAttribute("response", response.getResult());
-        model.addAttribute("title", "GETメソッドの結果");
-        return "oth2/view";
+    @RequestMapping(value = "/01/006/get", method = RequestMethod.GET)
+    public String handle01006(Model model) {
+        model.addAttribute("oauth2ClientUrl", clientUrl);
+        model.addAttribute("oauth2ResourceServerUrl", resourceServerUrl);
+        model.addAttribute("oauth2AuthServerUrl", authServerUrl);
+        model.addAttribute("oauth2ApplicationContextUrl",
+                applicationContextUrl);
+        model.addAttribute("clientId", clientId);
+        return "oth2/implicitDelayedGet";
     }
 }

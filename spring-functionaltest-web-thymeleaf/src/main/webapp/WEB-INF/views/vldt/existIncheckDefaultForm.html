@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h2>Codelist</h2>
+      <br>
+      <form th:action="@{/vldt/0501/001}" method="post" th:object="${existInCheckDefaultForm}">
+        <table>
+          <tr>
+            <td><span id="errors"><span id="key.errors" th:errors="*{key}"
+                style="color: red"></span></span></td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <td>Input a key to check if it is exists in CodeList:</td>
+            <td><input type="text" th:field="*{key}" /></td>
+          </tr>
+          <tr>
+            <td><input id="btn1" class="mainbtn" style="width: 200px;" type="submit"
+              value="Confirm" name="existInCheckString" />
+            <td>
+            <td></td>
+          </tr>
+        </table>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

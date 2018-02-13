@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
@@ -10,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.jms.JMSException;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsCacheConSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
 
@@ -28,14 +40,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("jmss")
 public class JMSS07SendingController {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(JMSS07SendingController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            JMSS07SendingController.class);
 
     @Inject
     JmsCacheConSendingService jmsCacheConSendingService;
-
-    @Inject
-    JmsAmqReceivingService jmsAmqReceivingService;
 
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
@@ -117,40 +126,12 @@ public class JMSS07SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0701/009", method = RequestMethod.GET)
-    public String handle0701009(JmsSendingForm form) {
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("input_validation_isolated_chaind_transaction_jms_c_db_r");
-        return "jmss/jmsSend";
-    }
-
-    @RequestMapping(value = "0701/010", method = RequestMethod.GET)
-    public String handle0701010(JmsSendingForm form) {
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("input_validation_isolated_chaind_transaction_jms_db_c");
-        return "jmss/jmsSend";
-    }
-
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=validation_ok")
     public String sendMessageValidationOK(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         // send message
         jmsCacheConSendingService.sendMessageValidationOK(form.getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの出力確認。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
@@ -163,68 +144,26 @@ public class JMSS07SendingController {
         // send message
         jmsCacheConSendingService.sendMessageValidationNG(form.getJmsTodoId());
 
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
-
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_ok")
-    public String sendMessageInputValidationOK(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+    public String sendMessageInputValidationOK(Model model, JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
         jmsCacheConSendingService.sendMessageInputValidationOk(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_ng")
-    public String sendMessageInputValidationNg(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+    public String sendMessageInputValidationNg(Model model, JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService.sendMessageInputValidationNg(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
@@ -232,24 +171,11 @@ public class JMSS07SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_ng_with_err_msg")
     public String sendMessageInputValidationWithViolationErrMsg(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+            JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService.sendMessageInputValidationNgWithErrMsg(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
@@ -257,24 +183,11 @@ public class JMSS07SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_jms_transaction")
     public String sendMessageInputValidationJmsTransaction(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+            JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService.sendMessageInputValidationJmsTransaction(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
@@ -282,25 +195,12 @@ public class JMSS07SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_c_db_r")
     public String sendMessageInputValidationIsolatedTransactionJmsCommitDbRollback(
-            Model model, JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+            Model model, JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService
-                .sendMessageInputValidationIsolatedTransactionJmsCommitDbRollback(form
-                        .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
+                .sendMessageInputValidationIsolatedTransactionJmsCommitDbRollback(
+                        form.getJmsTodoId());
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
@@ -308,77 +208,12 @@ public class JMSS07SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_db_c")
     public String sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(
-            Model model, JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+            Model model, JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService
-                .sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(form
-                        .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
-
-        attrs.addFlashAttribute("jmsSendingForm", form);
-        return "redirect:/jmss/receivemessage";
-    }
-
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_chaind_transaction_jms_c_db_r")
-    public String sendMessageInputValidationIsolatedChaindTransactionJmsCommitDbRollback(
-            Model model, JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
-
-        jmsCacheConSendingService
-                .sendMessageInputValidationIsolatedChaindTransactionJmsCommitDbRollback(form
-                        .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
-
-        attrs.addFlashAttribute("jmsSendingForm", form);
-        return "redirect:/jmss/receivemessage";
-    }
-
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_chaind_transaction_jms_db_c")
-    public String sendMessageInputValidationIsolatedChaindTransactionJmsAndDbCommit(
-            Model model, JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
-
-        jmsCacheConSendingService
-                .sendMessageInputValidationIsolatedChaindTransactionJmsAndDbCommit(form
-                        .getJmsTodoId());
-
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // 一時ファイルの存在確認
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId())) {
-                break;
-            }
-        }
+                .sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(
+                        form.getJmsTodoId());
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";

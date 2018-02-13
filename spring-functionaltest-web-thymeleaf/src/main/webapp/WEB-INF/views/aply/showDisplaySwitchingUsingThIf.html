@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">モデルに格納された値により条件分岐して表示切替ができることの確認（th:if形式）</h1>
+
+      <span th:if="${thymeleafForm.conditions == 'complete'}" id="message1">「complete」と入力された場合の分岐</span>
+      <span th:if="${thymeleafForm.conditions != 'complete'}" id="message1">「complete」と入力されなかった場合の分岐</span>
+    </div>
+  </div>
+</body>
+</html>

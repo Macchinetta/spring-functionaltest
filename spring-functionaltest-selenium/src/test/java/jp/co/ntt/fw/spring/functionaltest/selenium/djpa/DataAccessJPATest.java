@@ -1,15 +1,33 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 import javax.xml.bind.DatatypeConverter;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.BookDetailsPage;
@@ -24,10 +42,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrdersPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterBookPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.SystemErrorPage;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class DataAccessJPATest extends FunctionTestSupport {
 
     private static WebDriver driver;
@@ -234,8 +249,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         SystemErrorPage sysErrorPage = jpaHomePage.nolazyFetchSetting();
 
         // Assertion for system error occurred due to lazy initialization.
-        assertThat(sysErrorPage.getErrorMessage(),
-                is("could not initialize proxy - no Session"));
+        assertThat(sysErrorPage.getErrorMessage(), is(
+                "could not initialize proxy - no Session"));
     }
 
     /**
@@ -309,15 +324,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePageAfterDelete = jpaHomePage.jpaRepoDefDelAll();
 
-        boolean bookDetailLink = jpaHomePageAfterDelete
-                .isBookDetailLinkPresent(1);
+        boolean bookDetailLink = jpaHomePageAfterDelete.isBookDetailLinkPresent(
+                1);
 
         assertThat(bookDetailLink, is(false));
     }
 
     /**
-	 * 
-	 */
+     * 
+     */
     @Test
     public void testDJPA0201004() {
         // Creating data set
@@ -383,8 +398,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0201006Click();
 
-        jpaHomePage
-                .setBookIdForDefJPADeleteOpn("0000000001,0000000002,0000000005,0000000008");
+        jpaHomePage.setBookIdForDefJPADeleteOpn(
+                "0000000001,0000000002,0000000005,0000000008");
 
         // Deleting the above set books
         jpaHomePage = jpaHomePage.jpaRepoDefDelInBatch();
@@ -489,6 +504,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
         jpaHomePage = bookDetailsPage.goBackToBookListPage();
+
+        jpaHomePage = jpaHomePage.setSortCriteria(sortCriteria);
+        jpaHomePage = jpaHomePage.jpaRepoDefSort();
 
         bookDetailsPage = jpaHomePage.displayBookDetails(2);
 
@@ -711,8 +729,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-	 * 
-	 */
+     * 
+     */
     @Test
     public void testDJPA0201013() {
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
@@ -746,12 +764,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         List<String> list1 = dbLogAssertOperations.getLogByRegexMessageTime(
                 null, null, "\\\\*Debug:: after flush*");
 
-        List<String> list2 = dbLogAssertOperations
-                .getLogByRegexMessageTime(
-                        null,
-                        null,
-                        "\\\\*insert into t_book_eg \\(blob_code, category_id, clob_code, created_by, created_date, last_modified_by,"
-                                + " last_modified_date, price, release_date, title, version, book_id\\)*");
+        List<String> list2 = dbLogAssertOperations.getLogByRegexMessageTime(
+                null, null,
+                "\\\\*insert into t_book_eg \\(blob_code, category_id, clob_code, created_by, created_date, last_modified_by,"
+                        + " last_modified_date, price, release_date, title, version, book_id\\)*");
 
         Timestamp afterInserTm = new Timestamp(Long.valueOf(list1.get(0)));
         Timestamp inserTm = new Timestamp(Long.valueOf(list2.get(0)));
@@ -903,16 +919,16 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : sender address sample value
         orderListPage.setSearchValue("send");
 
-        orderListPage = orderListPage
-                .setSearchCriteria("Forward Match Sender Address");
+        orderListPage = orderListPage.setSearchCriteria(
+                "Forward Match Sender Address");
 
         orderListPage = orderListPage.atQueryLikeSearch();
         DeliveryOrderDetailsPage orderDetailsPage = orderListPage
                 .displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -923,8 +939,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : receiver address sample value
         orderListPage.setSearchValue("1");
 
-        orderListPage = orderListPage
-                .setSearchCriteria("Backward Match Receiver Address");
+        orderListPage = orderListPage.setSearchCriteria(
+                "Backward Match Receiver Address");
 
         orderListPage = orderListPage.atQueryLikeSearch();
 
@@ -942,13 +958,13 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : receiver address sample value
         orderListPage.setSearchValue("nde");
 
-        orderListPage = orderListPage
-                .setSearchCriteria("Partial Match Sender Name");
+        orderListPage = orderListPage.setSearchCriteria(
+                "Partial Match Sender Name");
         orderListPage = orderListPage.atQueryLikeSearch();
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1032,8 +1048,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each property
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1051,8 +1067,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each property
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName8"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress8"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress8"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName8"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress8"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver8"));
@@ -1148,8 +1164,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName8"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress8"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress8"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName8"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress8"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver8"));
@@ -1167,8 +1183,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         assertThat(orderDetailsPage.getDeliveryType(), is("2"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName7"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress7"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress7"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName7"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress7"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver7"));
@@ -1213,11 +1229,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
     @Test
     public void testDJPA0601002() {
         testDJPA0601001();
-        List<String> list = dbLogAssertOperations
-                .getLogByRegexMessage(
-                        null,
-                        null,
-                        "\\\\*select jpacategor0_.category_id as category1_2_0_, jpacategor0_.name as name2_2_0_ from m_category_eg jpacategor0_ where jpacategor0_.category_id=1*");
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
+                null,
+                "\\\\*select jpacategor0_.category_id as category1_2_0_, jpacategor0_.name as name2_2_0_ from m_category_eg jpacategor0_ where jpacategor0_.category_id=1*");
         Integer expVal = 0;
         // confirmation of no query is for dependent entity(i.e.JPACategoryEG )
         assertThat(list.size(), is(expVal));
@@ -1230,11 +1244,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
     @Test
     public void testDJPA0601003() {
         testDJPA0103001();
-        List<String> list = dbLogAssertOperations
-                .getLogByRegexMessage(
-                        null,
-                        null,
-                        "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
+                null,
+                "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
         Integer expVal = 1;
         // confirmation of query is for dependent entity(i.e.JPACategoryLz )
         assertThat(list.size(), is(expVal));
@@ -1276,8 +1288,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookDetailsPage = jpaHomePage.searchUsingNoPrimaryColumnValue();
 
         // confirm the IncorrectResultSizeDataAccessException
-        dbLogAssertOperations
-                .assertContainsByRegexStackTrace(".*.IncorrectResultSizeDataAccessException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*.IncorrectResultSizeDataAccessException.*");
     }
 
     /**
@@ -1303,17 +1315,18 @@ public class DataAccessJPATest extends FunctionTestSupport {
         DeliveryOrderDetailsPage orderDetailsPage = orderDetailForm
                 .addEntityBySave();
 
-        assertThat(orderDetailsPage.getAcceptDateTime(),
-                is("Sun Dec 13 00:00:00 JST 2015"));
-        assertThat(orderDetailsPage.getCompletionDateTime(),
-                is("Mon Dec 14 00:00:00 JST 2015"));
+        assertThat(orderDetailsPage.getAcceptDateTime(), is(
+                "Sun Dec 13 00:00:00 JST 2015"));
+        assertThat(orderDetailsPage.getCompletionDateTime(), is(
+                "Mon Dec 14 00:00:00 JST 2015"));
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
-        assertThat(orderDetailsPage.getReceiverName(), is("Test Receiver Name"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("Test Receiver Address"));
+        assertThat(orderDetailsPage.getReceiverName(), is(
+                "Test Receiver Name"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "Test Receiver Address"));
         assertThat(orderDetailsPage.getSenderName(), is("Test Sender Name"));
-        assertThat(orderDetailsPage.getSenderAddress(),
-                is("Test Sender Address"));
+        assertThat(orderDetailsPage.getSenderAddress(), is(
+                "Test Sender Address"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("TestDriver"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("完了"));
     }
@@ -1338,11 +1351,11 @@ public class DataAccessJPATest extends FunctionTestSupport {
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(8);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("8"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Order accepted"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Order accepted"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("1500"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("Test Order Comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "Test Order Comment"));
     }
 
     /**
@@ -1356,8 +1369,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(6);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("13100"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6"));
 
@@ -1372,11 +1385,11 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = ordersPage.displayOderDetail(6);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("13200"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
     }
 
     /**
@@ -1434,7 +1447,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         // confirmation of order status before updating the status of this orderId#1.
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(1);
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(orgStatus));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                orgStatus));
 
         orderDetailsPage.clearStatusField();
 
@@ -1447,8 +1461,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         // again get the details of orderId#1 after status update
         orderDetailsPage = ordersPage.displayOderDetail(1);
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is(statusToSet));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                statusToSet));
 
     }
 
@@ -1568,11 +1582,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // is used on update query method.
         // confirm the IncorrectResultSizeDataAccessException
 
-        List<String> list = dbLogAssertOperations
-                .getLogByRegexMessage(
-                        null,
-                        null,
-                        "\\\\*org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations*");
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
+                null,
+                "\\\\*org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations*");
         System.out.println("**=>" + list.size());
         Integer expVal = 2;
         // confirmation of error occurrence
@@ -1619,8 +1631,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("5"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy5"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("50000"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Stock checking"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Stock checking"));
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000002"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("50"));
         assertThat(orderDetailsPage.isItemRevmovable(1), is("No"));
@@ -1640,8 +1652,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         ordersPage.displayOrderDetail();
 
         // confirm the IncorrectResultSizeDataAccessException
-        dbLogAssertOperations
-                .assertContainsByRegexStackTrace(".*.ResourceNotFoundException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*.ResourceNotFoundException.*");
     }
 
     /**
@@ -1655,15 +1667,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 4;
         Integer item = 1;
-        OrderDetailsPage orderDetailsPage = ordersPage
-                .displayOderDetail(orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
+                orderIdVal);
 
         // confirm that the order is really present
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("4"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy4"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("4000"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Order accepted"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Order accepted"));
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("40"));
         assertThat(orderDetailsPage.isItemRevmovable(1), is("No"));
@@ -1700,15 +1712,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // candid item for deletion.
         Integer itemSrNum = 4;
 
-        OrderDetailsPage orderDetailsPage = ordersPage
-                .displayOderDetail(orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
+                orderIdVal);
 
         // confirm that the order is really present with 4 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -1737,10 +1749,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         // confirmation for the item 3 is deleted
         assertThat(orderDetailsPage.isItemPresent(itemSrNum), is(false));
@@ -1779,15 +1791,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 5;
 
-        OrderDetailsPage orderDetailsPage = ordersPage
-                .displayOderDetail(orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
+                orderIdVal);
 
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -1819,10 +1831,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each items once again
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -1851,15 +1863,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 5;
 
-        OrderDetailsPage orderDetailsPage = ordersPage
-                .displayOderDetail(orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
+                orderIdVal);
 
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(),
-                is("dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
+                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -1907,8 +1919,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
                 .displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1925,11 +1937,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is(
+                "deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
@@ -1955,11 +1968,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
                 .displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is(
+                "deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
@@ -1982,8 +1996,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
                 .displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -2000,11 +2014,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is(
+                "deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
@@ -2035,8 +2050,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("2"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy2"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is(searchStatus));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                searchStatus));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("20300"));
 
         // Item 1
@@ -2063,8 +2078,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
                 .displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(),
-                is("receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is(
+                "receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -2209,8 +2224,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy2"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("20300"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Stock checking"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Stock checking"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000002"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("20"));
@@ -2231,8 +2246,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         ordersPage.displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
 
         // confirm that the order id#1 is having the flag as true and hence not retrieved here
-        dbLogAssertOperations
-                .assertContainsByRegexStackTrace(".*.ResourceNotFoundException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*.ResourceNotFoundException.*");
     }
 
     /**
@@ -2253,8 +2268,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy7"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("2700"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("1"));
@@ -2280,8 +2295,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy7"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("2700"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(),
-                is("Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
+                "Item Shipped"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("1"));
@@ -2317,8 +2332,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // Register the book
         bookEntryForm.registerBookForDataIntegrityViolation();
 
-        dbLogAssertOperations
-                .assertContainsByRegexStackTrace(".*org.springframework.dao.DataIntegrityViolationException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*org.springframework.dao.DataIntegrityViolationException.*");
     }
 
     /*

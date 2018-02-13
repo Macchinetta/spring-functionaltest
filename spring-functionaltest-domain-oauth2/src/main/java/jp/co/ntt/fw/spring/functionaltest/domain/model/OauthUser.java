@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
@@ -11,17 +24,17 @@ public class OauthUser implements Serializable {
 
     private final String username;
 
-    private final String userAdditionalValue;
+    private final String companyId;
 
-    private final String clientAdditionalValue;
+    private final String businessId;
 
     private final String clientId;
 
-    public OauthUser(String username, String userAdditionalValue,
-            String clientAdditionalValue, String clientId) {
+    public OauthUser(String username, String companyId, String businessId,
+            String clientId) {
         this.username = username;
-        this.userAdditionalValue = userAdditionalValue;
-        this.clientAdditionalValue = clientAdditionalValue;
+        this.companyId = companyId;
+        this.businessId = businessId;
         this.clientId = clientId;
     }
 
@@ -29,12 +42,12 @@ public class OauthUser implements Serializable {
         return username;
     }
 
-    public String getUserAdditionalValue() {
-        return userAdditionalValue;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public String getClientAdditionalValue() {
-        return clientAdditionalValue;
+    public String getBusinessId() {
+        return businessId;
     }
 
     public String getClientId() {

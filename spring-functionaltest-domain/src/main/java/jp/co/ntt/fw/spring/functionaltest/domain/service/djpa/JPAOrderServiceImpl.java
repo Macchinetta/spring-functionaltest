@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -65,8 +78,8 @@ public class JPAOrderServiceImpl implements JPAOrderService {
         List<JPAOrderItem> orderItemList = new ArrayList<JPAOrderItem>();
         for (JPAItem jpaItem : itemList) {
             if (null != jpaItem.getQuantity() && jpaItem.getQuantity() > 0) {
-                orderAmount = orderAmount
-                        + (jpaItem.getItemPrice() * jpaItem.getQuantity());
+                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem
+                        .getQuantity());
             }
         }
 
@@ -105,8 +118,8 @@ public class JPAOrderServiceImpl implements JPAOrderService {
         List<JPAOrderItem> orderItemList = new ArrayList<JPAOrderItem>();
         for (JPAItem jpaItem : itemList) {
             if (null != jpaItem.getQuantity() && jpaItem.getQuantity() > 0) {
-                orderAmount = orderAmount
-                        + (jpaItem.getItemPrice() * jpaItem.getQuantity());
+                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem
+                        .getQuantity());
             }
         }
 
@@ -129,8 +142,8 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     @Override
     public JPAOrder updateStatus(Integer orderId, String statusName) {
         JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
-        JPAOrderStatus orderStatus = jpaOrderStatusRepository
-                .findByStatusName(statusName);
+        JPAOrderStatus orderStatus = jpaOrderStatusRepository.findByStatusName(
+                statusName);
         jpaOrder.setOrderStatus(orderStatus);
         return jpaOrder;
     }
@@ -144,11 +157,11 @@ public class JPAOrderServiceImpl implements JPAOrderService {
             if (itemNum.equals(jpaOrderItem.getItemNumber())) {
                 Integer initOrderAmt = jpaOrder.getOrderAmount();
                 Integer oldQty = jpaOrderItem.getQuantity();
-                Integer oldItemAmt = oldQty
-                        * jpaOrderItem.getOrderItem().getItemPrice();
+                Integer oldItemAmt = oldQty * jpaOrderItem.getOrderItem()
+                        .getItemPrice();
                 Integer ordAmtAdj = initOrderAmt - oldItemAmt;
-                Integer newOrderAmt = ordAmtAdj
-                        + (newQty * jpaOrderItem.getOrderItem().getItemPrice());
+                Integer newOrderAmt = ordAmtAdj + (newQty * jpaOrderItem
+                        .getOrderItem().getItemPrice());
                 jpaOrderItem.setQuantity(newQty);
                 jpaOrder.setOrderAmount(newOrderAmt);
             }

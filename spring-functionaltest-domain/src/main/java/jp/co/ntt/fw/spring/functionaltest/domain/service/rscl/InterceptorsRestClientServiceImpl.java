@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
@@ -22,21 +35,35 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
 public class InterceptorsRestClientServiceImpl implements
-                                              InterceptorsRestClientService {
+                                               InterceptorsRestClientService {
 
     @Inject
     RestTemplate interceptorsRestTemplate;
+
+    @Inject
+    RestTemplate invalidCredentialInterceptorsRestTemplate;
 
     @Value("${rscl.applicationContextUrl}/api/v1/rscl/{opt}")
     String uri;
 
     @Override
-    public UserResource confirmInterceptor01() {
+    public UserResource confirmInterceptor0101() {
 
         URI targetUri = this.getUri(this.uri, "basic");
 
         UserResource user = this.interceptorsRestTemplate.getForObject(
                 targetUri, UserResource.class);
+
+        return user;
+    }
+
+    @Override
+    public UserResource confirmInterceptor0102() {
+
+        URI targetUri = this.getUri(this.uri, "basic");
+
+        UserResource user = this.invalidCredentialInterceptorsRestTemplate
+                .getForObject(targetUri, UserResource.class);
 
         return user;
     }
@@ -56,10 +83,12 @@ public class InterceptorsRestClientServiceImpl implements
         try {
             this.interceptorsRestTemplate.getForObject(targetUri,
                     UserResource.class);
+            // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
             tmpFile.delete();
         } catch (BusinessException e) {
             throw e;
         } finally {
+            // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
             tmpFile.delete();
         }
     }

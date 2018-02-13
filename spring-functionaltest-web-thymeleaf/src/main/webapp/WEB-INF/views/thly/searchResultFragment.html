@@ -1,0 +1,12 @@
+<table class="table table-striped table-bordered table-condensed" th:object="${staffForm}">
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Authority</th>
+  </tr>
+  <tr>
+    <td th:text="*{firstName}"></td>
+    <td th:text="*{lastName}"></td>
+    <td th:text="*{authority}"></td>
+  </tr>
+</table>

@@ -1,33 +1,48 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.By.id;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.openqa.selenium.By.*;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.bind.DatatypeConverter;
 
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.annotation.IfProfileValue;
+
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.BookDetailsPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.JPAHomePage;
-
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  * EXCN 排他制御テスト<br>
  * <p>
  * </p>
  */
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class DataAccessExclusiveJPATest extends
-                                       FunctionTestSupportForMultiBrowser {
+                                        FunctionTestSupportForMultiBrowser {
 
     @Value("${selenium.excn.waitForNextRequest.offsetSeconds:0}")
     private int offsetSecondsOfWaitForNextRequest;
@@ -86,8 +101,8 @@ public class DataAccessExclusiveJPATest extends
                         // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
                         startSignal.await();
                         // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
+                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest
+                                / 2));
                         selectForUpdateNoExcp(1, "2", 0);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -166,8 +181,8 @@ public class DataAccessExclusiveJPATest extends
                         // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
                         startSignal.await();
                         // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
+                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest
+                                / 2));
                         selectForUpdate(1, "2", 20000);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -201,6 +216,7 @@ public class DataAccessExclusiveJPATest extends
             // 修正理由:Hibernateのバグ(HHH-10797)によって、PostgreSQLで@QueryHint(name = "javax.persistence.lock.timeout", value =
             // "0")を指定しても、
             // NOWAIT句が付かなくなってしまったため
+            // 横展開としてガイドラインのissueを挙げている(https://github.com/terasolunaorg/guideline/issues/2372)
             if (!"H2".equals(dataBase) && !"POSTGRESQL".equals(dataBase)) {
                 // As the first browser has locked the record, the second browser lock timeouts
                 // and exception is thrown

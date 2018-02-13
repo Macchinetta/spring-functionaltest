@@ -5,9 +5,8 @@
   <form:form action="${pageContext.request.contextPath}/athr/0802/customerAuthenticate"
     method="post">
     <c:if test="${param.containsKey('error')}">
-      <span id="loginError">
-      <t:messagesPanel
-        messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
+      <span id="loginError"> <t:messagesPanel
+          messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
       </span>
     </c:if>
     <fieldset>
@@ -18,8 +17,7 @@
           <label for="userName">UserName</label>
         </div>
         <div class="col col-md-3">
-          <input type="text" class="form-control input-sm" id="username"
-            name="username">
+          <input type="text" class="form-control input-sm" id="username" name="username">
         </div>
       </div>
       <br>
@@ -28,18 +26,14 @@
           <label for="password">Password</label>
         </div>
         <div class="col col-md-3">
-          <input type="password" class="form-control input-sm"
-            id="password" name="password">
+          <input type="password" class="form-control input-sm" id="password" name="password">
         </div>
       </div>
-      <br> <br>
-      <input type="submit" id="login"
-        class="btn btn-default" value="Login">
+      <br> <br> <input type="submit" id="login" class="btn btn-default" value="Login">
     </fieldset>
   </form:form>
   <br>
-  <form:form action="${pageContext.request.contextPath}/athr/0802/001/logout"
-    method="post">
+  <form:form action="${pageContext.request.contextPath}/athr/0802/001/logout" method="post">
     <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 

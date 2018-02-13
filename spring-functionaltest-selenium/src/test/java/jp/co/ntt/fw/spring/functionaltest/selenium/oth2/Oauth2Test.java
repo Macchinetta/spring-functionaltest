@@ -1,20 +1,36 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.openqa.selenium.By.id;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.openqa.selenium.By.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class Oauth2Test extends FunctionTestSupport {
 
     /** Title of GET Operation Result Page. */
@@ -36,6 +52,7 @@ public class Oauth2Test extends FunctionTestSupport {
     public void setUp() {
         // トップ画面での操作
         {
+            webDriverOperations.setDefaultTimeoutForImplicitlyWait(30);
             webDriverOperations.getWebDriver().manage().window().maximize();
             initialize();
         }
@@ -93,8 +110,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
         assertThat(webDriverOperations.getText(id("name")), is("testClient"));
@@ -116,8 +133,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.CREATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_POST_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
         assertThat(webDriverOperations.getText(id("name")), is("demo"));
@@ -138,8 +155,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.UPDATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_PUT_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -159,8 +176,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_DELETE_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -181,8 +198,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 
@@ -194,8 +211,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("oth20101001"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 
@@ -219,15 +236,23 @@ public class Oauth2Test extends FunctionTestSupport {
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "User denied access",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "User denied access",
+                "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=access_denied, error_description=User denied access");
 
     }
 
@@ -246,15 +271,23 @@ public class Oauth2Test extends FunctionTestSupport {
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "User denied access",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "User denied access",
+                "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=access_denied, error_description=User denied access");
 
     }
 
@@ -273,15 +306,23 @@ public class Oauth2Test extends FunctionTestSupport {
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "User denied access",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "User denied access",
+                "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=access_denied, error_description=User denied access");
 
     }
 
@@ -300,21 +341,30 @@ public class Oauth2Test extends FunctionTestSupport {
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "User denied access",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "User denied access",
+                "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.UserDeniedAuthorizationException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=access_denied, error_description=User denied access");
 
     }
 
     /**
      * <ul>
-     * <li>Check response from resource server when using the authorization code grant(DELETE:not registered scope in client).</li>
+     * <li>Check response from resource server when using the authorization code grant(DELETE:not registered scope in
+     * client).</li>
      * </ul>
      */
     @Test
@@ -325,14 +375,15 @@ public class Oauth2Test extends FunctionTestSupport {
         authServerLogin();
 
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
-        // Check error log
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Invalid scope: CREATE",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.InvalidScopeException");
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Invalid scope: CREATE"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=invalid_scope, error_description=Invalid scope: CREATE");
     }
 
     /**
@@ -349,8 +400,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is("implicit grant"));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                "implicit grant(scope:READ)"));
     }
 
     /**
@@ -367,8 +418,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.CREATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is("implicit grant"));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                "implicit grant(scope:CREATE)"));
     }
 
     /**
@@ -385,8 +436,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.UPDATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is("implicit grant"));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                "implicit grant(scope:UPDATE)"));
     }
 
     /**
@@ -403,8 +454,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is("implicit grant"));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                "implicit grant(scope:DELETE)"));
     }
 
     /**
@@ -429,8 +480,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("oth20102001"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is("implicit grant"));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                "implicit grant(scope:READ)"));
     }
 
     /**
@@ -453,8 +504,17 @@ public class Oauth2Test extends FunctionTestSupport {
         // Approve resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("access_denied"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ErrorController",
+                "error=access_denied, error_description=User denied access");
 
     }
 
@@ -472,8 +532,17 @@ public class Oauth2Test extends FunctionTestSupport {
         // Approve resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("access_denied"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ErrorController",
+                "error=access_denied, error_description=User denied access");
     }
 
     /**
@@ -490,8 +559,18 @@ public class Oauth2Test extends FunctionTestSupport {
         // Approve resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("access_denied"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ErrorController",
+                "error=access_denied, error_description=User denied access");
+
     }
 
     /**
@@ -508,8 +587,18 @@ public class Oauth2Test extends FunctionTestSupport {
         // Approve resource access
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("access_denied"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "User denied access"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ErrorController",
+                "error=access_denied, error_description=User denied access");
+
     }
 
     /**
@@ -526,8 +615,16 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("invalid_scope"));
+        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Invalid scope: DELETE"));
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ErrorController",
+                "error=invalid_scope, error_description=Invalid scope: DELETE");
     }
 
     /**
@@ -543,8 +640,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -562,8 +659,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_POST_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
         assertThat(webDriverOperations.getText(id("name")), is("testClient"));
@@ -582,8 +679,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_PUT_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -601,8 +698,8 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_DELETE_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -620,14 +717,21 @@ public class Oauth2Test extends FunctionTestSupport {
         authServerLogin();
 
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Access token denied."));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Access token denied",
-                        "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "Access token denied",
+                "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
+                "error=access_denied, error_description=Access token denied.");
     }
 
     /**
@@ -647,8 +751,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104001"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -670,8 +774,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104002"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_POST_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -693,8 +797,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104003"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_PUT_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -716,8 +820,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104004"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_DELETE_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -740,14 +844,21 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("oth20104005"));
 
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Access token denied."));
         // Check error log
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Access token denied",
-                        "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "Access token denied",
+                "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ResourceOwnerPasswordCredentialsGrantExceptionHandler",
+                "error=access_denied, error_description=Access token denied.");
     }
 
     /**
@@ -766,8 +877,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 
@@ -790,8 +901,112 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("response")), is("Success"));
+        assertThat(webDriverOperations.getText(id("token")), not(""));
+
+        String token_after = webDriverOperations.getText(id("token"));
+
+        assertThat(token_before, not(token_after));
+    }
+
+    /**
+     * <ul>
+     * <li>Check token value when using the implicit and the token is revoked.</li>
+     * </ul>
+     */
+    @Test
+    public void testOTH20701003() {
+
+        // Menu operation
+        webDriverOperations.click(id("oth20102001"));
+        authServerLogin();
+        // Approve resource access
+        webDriverOperations.click(id("scope.READ_approve"));
+        webDriverOperations.click(id("authorize"));
+
+        // Wait until desplayed
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElement(webDriverOperations.getWebDriver()
+                        .findElement(id("message")),
+                        "{\"testId\":\"123\",\"method\":\"GET\",\"result\":\"Success\",\"businessId\":null,\"companyId\":null,\"principalString\":\"testClient\"}"));
+
+        assertThat(webDriverOperations.getText(id("message")), is(
+                "{\"testId\":\"123\",\"method\":\"GET\",\"result\":\"Success\",\"businessId\":null,\"companyId\":null,\"principalString\":\"testClient\"}"));
+
+        String token_before = webDriverOperations.getText(id("token"));
+
+        webDriverOperations.click(id("springTestTop"));
+        webDriverOperations.click(id("oth2Link"));
+
+        webDriverOperations.click(id("oth20701003"));
+        webDriverOperations.getTitle();
+        Long tokenSize = Long.parseLong(String.valueOf(webDriverOperations
+                .getJavascriptExecutor().executeScript(
+                        "return oauth2Func.getTokens(\"todo\").length")));
+        assertThat(tokenSize, is(Long.valueOf(0)));
+
+        webDriverOperations.click(id("springTestTop"));
+        webDriverOperations.click(id("oth2Link"));
+
+        // Menu operation
+        webDriverOperations.click(id("oth20102001"));
+
+        // Wait until desplayed
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElement(webDriverOperations.getWebDriver()
+                        .findElement(id("message")),
+                        "{\"testId\":\"123\",\"method\":\"GET\",\"result\":\"Success\",\"businessId\":null,\"companyId\":null,\"principalString\":\"testClient\"}"));
+
+        assertThat(webDriverOperations.getText(id("message")), is(
+                "{\"testId\":\"123\",\"method\":\"GET\",\"result\":\"Success\",\"businessId\":null,\"companyId\":null,\"principalString\":\"testClient\"}"));
+
+        String token_after = webDriverOperations.getText(id("token"));
+
+        assertThat(token_before, is(token_after));
+    }
+
+    /**
+     * <ul>
+     * <li>Check token value when using the authorization code and only the token is revoked.</li>
+     * </ul>
+     */
+    @Test
+    public void testOTH20701004() {
+
+        // Menu operation
+        webDriverOperations.click(id("oth20101001"));
+        authServerLogin();
+        // Approve resource access
+        webDriverOperations.click(id("scope.READ_approve"));
+        webDriverOperations.click(id("scope.CREATE_approve"));
+        webDriverOperations.click(id("scope.UPDATE_approve"));
+        webDriverOperations.click(id("scope.DELETE_approve"));
+        webDriverOperations.click(id("authorize"));
+
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("response")), is("Success"));
+        assertThat(webDriverOperations.getText(id("token")), not(""));
+
+        String token_before = webDriverOperations.getText(id("token"));
+
+        webDriverOperations.click(id("springTestTop"));
+        webDriverOperations.click(id("oth2Link"));
+        // Menu operation
+        webDriverOperations.click(id("oth20701004"));
+
+        assertThat(webDriverOperations.getText(id("result")), is("success"));
+
+        webDriverOperations.click(id("springTestTop"));
+        webDriverOperations.click(id("oth2Link"));
+
+        // Menu operation
+        webDriverOperations.click(id("oth20101001"));
+
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 
@@ -819,8 +1034,8 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -840,33 +1055,17 @@ public class Oauth2Test extends FunctionTestSupport {
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("scope.DELETE_approve"));
-        assertThat(webDriverOperations.exists(id("scope.UPDATE_approve")),
-                is(false));
-        assertThat(webDriverOperations.exists(id("scope.CREATE_approve")),
-                is(false));
+        assertThat(webDriverOperations.exists(id("scope.UPDATE_approve")), is(
+                false));
+        assertThat(webDriverOperations.exists(id("scope.CREATE_approve")), is(
+                false));
 
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
-    }
-
-    /**
-     * <ul>
-     * <li>Check response from resource server when using the authorization code grant(GET).<br/>
-     * ClientId parameter is the illegal value.</li>
-     * </ul>
-     */
-    @Test
-    public void testOTH21101001() {
-
-        // Menu operation
-        webDriverOperations.click(id("oth21101001"));
-        authServerLogin();
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("invalid_client"));
     }
 
     /**
@@ -885,14 +1084,27 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
+        String messagePattern = "Error requesting access token.";
+        String stackTracePattern = "Caused by: org\\.springframework\\.web\\.client\\.HttpClientErrorException: 401 .*";
+        if (webDriverOperations.getApServerName() == ApServerName.WEBLOGIC) {
+            messagePattern = "Access token denied.";
+            stackTracePattern = "Caused by: org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.OAuth2Exception: Bad credentials";
+        }
+
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        messagePattern));
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Error requesting access token",
-                        "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                messagePattern,
+                "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                stackTracePattern);
     }
 
     /**
@@ -925,7 +1137,7 @@ public class Oauth2Test extends FunctionTestSupport {
     /**
      * <ul>
      * <li>Checking the log when using the authorization code grant(GET).<br/>
-     * Redirect Uri parameter is the illegal value.</li>
+     * resource id parameter is the illegal value.</li>
      * </ul>
      */
     @Test
@@ -939,37 +1151,56 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9001] System error occurred!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Invalid token does not contain resource id (todoResource)"));
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Invalid token does not contain resource id \\(todoResource\\)",
-                        "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "Invalid token does not contain resource id \\(todoResource\\)",
+                "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
     }
 
     /**
      * <ul>
-     * <li>Checking the log when using the authorization code grant(GET).<br/>
-     * Redirect Uri parameter is the illegal value.</li>
+     * <li>Check response from resource server when using the resource owner password password grant(GET).</li>
      * </ul>
      */
     @Test
-    public void testOTH21101005() {
+    public void testOTH21101008() {
 
         // Menu operation
-        webDriverOperations.click(id("oth21101005"));
-        authServerLogin();
+        webDriverOperations.click(id("oth20104001"));
 
-        assertThat(webDriverOperations.getText(id("ErrorCode")),
-                is("invalid_grant"));
+        // Input : Resource Owner Credential(illegal username)
+        webDriverOperations.overrideText(id("username"), "illegal_id");
+        webDriverOperations.overrideText(id("password"), "demo");
+        webDriverOperations.click(id("send"));
+
+        // Resource Owner Credential Grant Menu operation
+        webDriverOperations.click(id("oth20104001"));
+
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "accessDeniedPage"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
+                        "[e.sf.oth2.9002] Access Denied error!"));
+        assertThat(webDriverOperations.getText(xpath(
+                "//div[@class='alert alert-danger']/ul[2]/li[1]")), is(
+                        "Access token denied."));
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        "Invalid redirect.*",
-                        "org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.RedirectMismatchException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                "Access token denied.",
+                "org\\.springframework\\.security\\.oauth2\\.client\\.resource\\.OAuth2AccessDeniedException");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                "Caused by: org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.InvalidGrantException: Bad credentials");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ResourceOwnerPasswordCredentialsGrantExceptionHandler",
+                "error=access_denied, error_description=Access token denied.");
     }
 
     @Override

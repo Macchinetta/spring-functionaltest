@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">コレクション内の値に対する入力チェック(formatter利用）</h1>
+
+      <form th:action="@{/vldt/0502/001}" method="post" th:object="${roleForFormatterForm}">
+        <label th:for="roles">Roles</label> <br /> <span th:each="var : ${CL_ROLE}"> <input
+          type="checkbox" th:field="*{roles}" th:value="${var.key}" /> <label
+          th:for="${#ids.prev('roles')}" th:text="${var.value}"></label>
+        </span> <br /> <span id="roles*.errors" th:errors="*{roles*}"></span> <br /> <input id="validate"
+          class="mainbtn" style="width: 200px;" type="submit" value="Validate" name="Validate" />
+      </form>
+    </div>
+  </div>
+</body>
+</html>

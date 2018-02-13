@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">会員情報登録</h1>
+      <br>
+      <!-- actionを指定しないと遷移されたときのURLが使われる -->
+      <form class="form-horizontal" method="post" th:object="${memberForm}" th:action>
+        <fieldset>
+          <legend>個人情報</legend>
+          <div class="form-group">
+            <div class="col col-md-2">氏名（姓）</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{firstName}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="firstName.errors" th:errors="*{firstName}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">氏名（名）</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{lastName}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="lastName.errors" th:errors="*{lastName}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">氏名カナ（姓）</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{firstNameKana}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="firstNameKana.errors" th:errors="*{firstNameKana}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">氏名カナ（名）</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{lastNameKana}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="lastNameKana.errors" th:errors="*{lastNameKana}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">年齢</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{age}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="age.errors" th:errors="*{age}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">性別</div>
+            <div class="col col-md-3">
+              <select th:field="*{gender}" class="form-control">
+                <option th:each="var : ${CL_GENDER}" th:value="${var.key}" th:text="${var.value}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">郵便番号</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{zipCode}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="zipCode.errors" th:errors="*{zipCode}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">都道府県</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{state}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="state.errors" th:errors="*{state}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">市区町村</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{city}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="city.errors" th:errors="*{city}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">番地建物</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{address}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="address.errors" th:errors="*{address}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">職業</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{occupation}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="occupation.errors" th:errors="*{occupation}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col col-md-2">メールアドレス</div>
+            <div class="col col-md-3">
+              <input type="text" th:field="*{mailAddress}" class="form-control input-sm" />
+            </div>
+            <div class="col col-md-3">
+              <span id="mailAddress.errors" th:errors="*{mailAddress}" class="errorMessage"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <a id="menu" th:href="@{/ssmn}" class="btn btn-default">メニューに戻る</a>
+            <button id="confirm" name="confirm" class="btn btn-default" type="submit" value="Submit">確認</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>

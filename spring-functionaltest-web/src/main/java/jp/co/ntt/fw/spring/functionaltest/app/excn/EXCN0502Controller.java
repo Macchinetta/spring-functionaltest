@@ -1,26 +1,36 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockService;
-
 import org.dozer.Mapper;
-import org.hibernate.PessimisticLockException;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockOptimisticLockService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockPessimisticLockService;
 
 @Controller
 @RequestMapping("excn/0502")
@@ -30,11 +40,14 @@ public class EXCN0502Controller {
     Mapper beanMapper;
 
     @Inject
-    JPAStockService jpaStockService;
+    JPAStockOptimisticLockService jpaStockOptimisticLockService;
+
+    @Inject
+    JPAStockPessimisticLockService jpaStockPessimisticLockService;
 
     @ModelAttribute
     public StockForm setUpForm() {
-        JPAStock stock = jpaStockService.findOne("EXCN0502001");
+        JPAStock stock = jpaStockOptimisticLockService.findOne("EXCN0502001");
         return beanMapper.map(stock, StockForm.class);
     }
 
@@ -48,8 +61,8 @@ public class EXCN0502Controller {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         try {
-            stock = jpaStockService.buyWithOptimisticLock(stock, form
-                    .getPurchasingQuantity(), form.getSleepMillis());
+            stock = jpaStockOptimisticLockService.buy(stock, form
+                    .getPurchasingQuantity());
         } catch (OptimisticLockingFailureException excp) {
             model.addAttribute(ResultMessages.warning().add(
                     "excn.result.exclusivebycontroller"));
@@ -63,7 +76,7 @@ public class EXCN0502Controller {
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(Model model) {
-        JPAStock stock = jpaStockService.findOne("EXCN0502002");
+        JPAStock stock = jpaStockPessimisticLockService.findOne("EXCN0502002");
         StockForm stockForm = beanMapper.map(stock, StockForm.class);
         model.addAttribute("stockForm", stockForm);
         return "excn/jpaPessimisticLockView";
@@ -74,7 +87,7 @@ public class EXCN0502Controller {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         try {
-            stock = jpaStockService.buyWithPessimisticLock(stock, form
+            stock = jpaStockPessimisticLockService.buy(stock, form
                     .getPurchasingQuantity(), form.getSleepMillis());
         } catch (PessimisticLockingFailureException excp) {
             model.addAttribute(ResultMessages.warning().add(

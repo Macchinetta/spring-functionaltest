@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
@@ -32,8 +45,8 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @RequestMapping("synchronism")
 public class SSMN0601001NormalController {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(SSMN0601001NormalController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            SSMN0601001NormalController.class);
 
     @Inject
     Mapper beanMapper;
@@ -59,11 +72,13 @@ public class SSMN0601001NormalController {
 
     @RequestMapping(method = RequestMethod.POST, params = "confirm")
     public String createMemberConfirm(@Validated({ Personal.class,
-            Address.class, Other.class }) MemberForm form, BindingResult result) {
+            Address.class, Other.class }) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMember();
         }
-        logger.info("SSMN0601001NormalController createMemberConfirm process start");
+        logger.info(
+                "SSMN0601001NormalController createMemberConfirm process start");
         return "ssmn/createMemberConfirm";
     }
 
@@ -76,22 +91,25 @@ public class SSMN0601001NormalController {
                     "e.sf.cmmn.8002"));
         }
 
-        logger.info("[Session Synchronization Confirmation]SSMN0601001NormalController createMember process start");
+        logger.info(
+                "[Session Synchronization Confirmation]SSMN0601001NormalController createMember process start");
 
         Member member = beanMapper.map(form, Member.class);
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success()
-                .add("i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add(
+                "i.sf.ssmn.0001");
         redirectAttributes.addFlashAttribute(messages);
 
-        logger.info("[Session Synchronization Confirmation]SSMN0601001NormalController createMember process finish");
+        logger.info(
+                "[Session Synchronization Confirmation]SSMN0601001NormalController createMember process finish");
         return "redirect:/ssmn/0601/001/synchronism?complete";
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "complete")
-    public String createMemberComplete(Model model, SessionStatus sessionStatus) {
+    public String createMemberComplete(Model model,
+            SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "ssmn/createMemberComplete";
     }

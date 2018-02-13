@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.oth2;
 
@@ -13,15 +26,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthOwnerPwCredentialService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthResource;
 
 @RequestMapping("oth2/client/01/04")
 @Controller
+@OAuth2ResourceOwnerPasswordCredentialsGrant
 public class OTH20104Controller {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OTH20104Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OTH20104Controller.class);
 
     @Inject
     OauthOwnerPwCredentialService oauthOwnerPwCredentialService;
@@ -35,7 +50,7 @@ public class OTH20104Controller {
 
         model.addAttribute("resourceOwner", form);
 
-        return "/oth2/resourceOwnerInfoForm";
+        return "oth2/resourceOwnerInfoForm";
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.POST)
@@ -43,7 +58,7 @@ public class OTH20104Controller {
             Model model) {
         passGrantResource.setUsername(form.getUsername());
         passGrantResource.setPassword(form.getPassword());
-        return "/oth2/resourceOwnerPasswordCredentialsIndex";
+        return "oth2/resourceOwnerPasswordCredentialsIndex";
     }
 
     /**
@@ -142,7 +157,8 @@ public class OTH20104Controller {
 
     /**
      * <ul>
-     * <li>Calls Service to send request with the resource owner password credentials grant(DELETE:not registered in client)</li>
+     * <li>Calls Service to send request with the resource owner password credentials grant(DELETE:not registered in
+     * client)</li>
      * </ul>
      * @param id
      * @param model

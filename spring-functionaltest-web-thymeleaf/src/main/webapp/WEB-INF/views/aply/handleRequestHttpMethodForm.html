@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">Controllerの実装方法(HTTPメソッドの設定)</h1>
+
+      <form th:action="@{/aply/0101/002_1}" method="post" class="form-horizontal"
+        th:object="${handleRequestForm}">
+        <button id="aply0101002_1" name="aply0101002_1" class="btn btn-default" type="submit"
+          value="Submit">HTTPメソッドをPOSTのみ指定（POST送信）</button>
+      </form>
+      <form th:action="@{/aply/0101/002_2}" method="post" class="form-horizontal"
+        th:object="${handleRequestForm}">
+        <button id="aply0101002_2post" name="aply0101002_2post" class="btn btn-default"
+          type="submit" value="Submit">HTTPメソッドをPOSTとGETのみ指定（POST送信）</button>
+      </form>
+      <form th:action="@{/aply/0101/002_2}" method="get" class="form-horizontal">
+        <div th:errors="${handleRequestForm.*}"></div>
+        <input id="aply0101002_2get" class="btn btn-default" value="HTTPメソッドをPOSTとGETのみ指定（GET送信）"
+          type="submit" />
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

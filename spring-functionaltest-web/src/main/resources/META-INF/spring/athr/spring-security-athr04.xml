@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <sec:http pattern="/athr/0401/001/**" auto-config="false"
-        authentication-manager-ref="loginForRoleUserManager">
-        <sec:form-login login-page="/athr/0401/001"
-            login-processing-url="/athr/0401/001/authenticate"
-            default-target-url="/athr/0401/001/afterLogin" />
-        <sec:logout logout-url="/athr/0401/001/logout"
-            logout-success-url="/athr/" invalidate-session="true"
-            delete-cookies="JSESSIONID" />
-        <sec:intercept-url pattern="/athr/0401/001/afterLogin/admin/menu"
-            access="hasRole('ADMIN')" />
-    </sec:http>
+  <sec:http pattern="/athr/0401/001/**" auto-config="false" authentication-manager-ref="loginForRoleUserManager">
+    <sec:form-login login-page="/athr/0401/001" login-processing-url="/athr/0401/001/authenticate"
+      default-target-url="/athr/0401/001/afterLogin" />
+    <sec:logout logout-url="/athr/0401/001/logout" logout-success-url="/athr/"
+      invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/athr/0401/001/afterLogin/admin/menu" access="hasRole('ADMIN')" />
+  </sec:http>
 
 
 
-    <bean id="loginForRoleUserDetailsService"
-        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource" ref="dataSource" />
-        <property name="usersByUsernameQuery"
-            value="SELECT username, password, enabled FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
-        <property name="authoritiesByUsernameQuery"
-            value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
-    </bean>
+  <bean id="loginForRoleUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+    <property name="dataSource" ref="dataSource" />
+    <property name="usersByUsernameQuery"
+      value="SELECT username, password, enabled FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+    <property name="authoritiesByUsernameQuery"
+      value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
+  </bean>
 
 </beans>

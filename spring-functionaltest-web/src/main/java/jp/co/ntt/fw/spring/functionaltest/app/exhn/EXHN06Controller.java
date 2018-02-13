@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
@@ -87,10 +100,11 @@ public class EXHN06Controller {
     }
 
     @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.GET)
-    public String uploadRegisterGet(
-            @Validated({ Register.class, Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegisterGet(@Validated({ Register.class,
+            Default.class }) ArticleBatchRegisterForm form,
             @RequestParam("uploadTemporaryFileId") String uploadTemporaryFileId,
-            BindingResult result, RedirectAttributes redirectAttrs) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttrs) throws IOException {
         if (result.hasErrors()) {
             throw new InvalidRequestException(result.toString());
         }
@@ -104,8 +118,8 @@ public class EXHN06Controller {
     }
 
     @RequestMapping(value = "0601/confirm", params = "upload", method = RequestMethod.POST)
-    public String uploadConfirm(
-            @Validated({ Confirm.class, Default.class }) ArticleBatchRegisterForm form,
+    public String uploadConfirm(@Validated({ Confirm.class,
+            Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             Model model, RedirectAttributes redirectAttrs) throws IOException {
 
@@ -114,16 +128,16 @@ public class EXHN06Controller {
             return "exhn/articleBatchRegister";
         }
 
-        String uploadTemporaryFileId = articleFileHelper
-                .createTemporaryFile(form);
+        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
+                form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
         model.addAttribute("testNumber", "0601");
         return "exhn/articleBatchConfirm";
     }
 
     @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.POST)
-    public String uploadRegisterPost(
-            @Validated({ Register.class, Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegisterPost(@Validated({ Register.class,
+            Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             RedirectAttributes redirectAttrs) throws IOException {
         String uploadTemporaryFileId = articleSessionInfo
@@ -156,8 +170,8 @@ public class EXHN06Controller {
             return "exhn/articleBatchRegister";
         }
 
-        String uploadTemporaryFileId = articleFileHelper
-                .createTemporaryFile(form);
+        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
+                form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
         model.addAttribute("testNumber", "0601/002");
         return "exhn/articleBatchConfirm";
@@ -165,7 +179,8 @@ public class EXHN06Controller {
 
     @RequestMapping(value = "0601/002", params = "complete")
     public String articleCompleteChangeproperty(
-            ArticleSessionInfo articleSessionInfo, SessionStatus sessionStatus) {
+            ArticleSessionInfo articleSessionInfo,
+            SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         articleSessionInfo.setUploadTemporaryFileId("");
         return "exhn/articleBatchComplete";

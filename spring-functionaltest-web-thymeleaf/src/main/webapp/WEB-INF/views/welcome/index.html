@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">Spring Functional Test Top Page</h1>
+
+      <ul>
+        <li><a id="aplyLink" th:href="@{/aply/}">[APLY] アプリケーション層テスト</a></li>
+        <li><a id="dmlyLink" th:href="@{/dmly/}">[DMLY] ドメイン層テスト</a></li>
+        <li><a id="dam3Link" th:href="@{/dam3/}">[DAM3] データベースアクセス（Mybatis3編）</a></li>
+        <!--/* <li><a id="dam3mb3Link" th:href="@{/dam3mb3/}">[DAM3] データベースアクセス（Mybatis3編：追加）</a></li> */-->
+        <li><a id="dtacLink" th:href="@{/dtac/}">[DTAC] データベースアクセス（共通編）</a></li>
+        <li><a id="dtopLink" th:href="@{/dtop/}">[DTOP] 日付操作(Joda Time)機能テスト</a></li>
+        <li><a id="flupLink" th:href="@{/flup/}">[FLUP] ファイルアップロード 機能テスト</a></li>
+        <li><a id="intrLink" th:href="@{/intr/}">[INTR] 国際化機能テスト</a></li>
+        <li><a id="thlyLink" th:href="@{/thly/}">[THLY] Thymeleafにおける画面レイアウト 機能テスト</a></li>
+        <li><a id="fldwLink" th:href="@{/fldw/}">[FLDW] ファイルダウンロード機能テスト</a></li>
+        <li><a id="ssmnLink" th:href="@{/ssmn/}">[SSMN] セッション管理機能テスト</a></li>
+        <li><a id="pgntLink" th:href="@{/pgnt/}">[PGNT] ページネーション機能テスト</a></li>
+        <li><a id="csprLink" th:href="@{/cspr/}">[CSPR] CSRF対策機能テスト</a></li>
+        <li><a id="prmnLink" th:href="@{/prmn/}">[PRMN] プロパティ管理機能テスト</a></li>
+        <li><a id="excnLink" th:href="@{/excn/}">[EXCN] 排他制御機能テスト</a></li>
+        <li><a id="athnLink" th:href="@{/athn/}">[ATHN] 認証機能テスト</a></li>
+        <li><a id="exhnLink" th:href="@{/exhn/}">[EXHN] 例外ハンドリング機能テスト</a></li>
+        <li><a id="bnmpLink" th:href="@{/bnmp/}">[BNMP] Beanマッピング(Dozer)機能テスト</a></li>
+        <li><a id="vldtLink" th:href="@{/vldt/}">[VLDT] 入力チェック機能テスト</a></li>
+        <li><a id="ajaxLink" th:href="@{/ajax/}">[AJAX] AJAX機能テスト</a></li>
+        <li><a id="athrLink" th:href="@{/athr/}">[ATHR] 認可機能テスト</a></li>
+        <li><a id="spscLink" th:href="@{/spsc/}">[SPSC] Spring Security(header)テスト</a></li>
+        <li><a id="encrLink" th:href="@{/encr/}">[ENCR] 暗号化テスト</a></li>
+        <li><a id="emalLink" th:href="@{/emal/}">[EMAL] E-mail送信(SMTP)</a></li>
+        <li><a id="spsmLink" th:href="@{/spsm/}">[SPSM] SpringSecurityセッション管理テスト</a></li>
+        <li><a id="djpaLink" th:href="@{/djpa/}">[DJPA] JPA Confirmation</a></li>
+        <li><a id="stprLink" th:href="@{/stpr/}">[STPR] 文字列操作テスト</a></li>
+        <li><a id="hlchLink" th:href="@{/hlch/}">[HLCH] ヘルスチェックテスト</a></li>
+        <li><a id="soapLink" th:href="@{/soap/}">[SOAP] SOAPテスト</a></li>
+        <li><a id="rsclLink" th:href="@{/rscl/}">[RSCL] RESTクライアントテスト</a></li>
+        <li><a id="stprLink" th:href="@{/lggn/}">[LGGN] ロギングテスト</a></li>
+        <li><a id="jmssLink" th:href="@{/jmss/}">[JMSS] JMSテスト</a></li>
+        <li><a id="oth2Link" th:href="@{/oth2/}">[OTH2] OAuth2テスト</a></li>
+        <li><a id="dbspLink" th:href="@{/dbsp/}">[DBSP] 二重送信防止テスト</a></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

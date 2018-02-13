@@ -1,9 +1,21 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.exhn;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,6 +39,9 @@ public class ArticleFileServiceImpl implements ArticleFileService {
     @Value("${app.upload.temporaryDirectory}")
     String uploadTemporaryDirectory;
 
+    @Value("${app.upload.temporaryDirectory}completed/")
+    String uploadCompletedTemporaryDirectory;
+
     @Inject
     ArticleFileRepository articleFileRepository;
 
@@ -39,17 +54,13 @@ public class ArticleFileServiceImpl implements ArticleFileService {
     }
 
     @Override
-    public void save(String uploadTemporaryFileId, String title) throws IOException {
+    public void save(String uploadTemporaryFileId,
+            String title) throws IOException {
 
-        Path uploadTempDirectory = Paths.get(uploadTemporaryDirectory);
         Path uploadTemporaryFile = Paths.get(uploadTemporaryDirectory,
                 uploadTemporaryFileId);
-
-        if (0 != uploadTempDirectory.compareTo(uploadTemporaryFile.normalize()
-                .getParent())) {
-            throw new FileNotFoundException("File not found : "
-                    + uploadTemporaryFile.toString());
-        }
+        Path uploadCompletedTemporaryDirectoryPath = Paths.get(
+                uploadCompletedTemporaryDirectory);
 
         ArticleFile articleFile = new ArticleFile();
         articleFile.setFileId(uploadTemporaryFileId);
@@ -63,14 +74,11 @@ public class ArticleFileServiceImpl implements ArticleFileService {
         }
 
         articleFileRepository.register(articleFile);
-
         try {
-            // 試験のためスリープ処理を埋め込んでいる
-            Thread.sleep(5000L);
-            Files.delete(uploadTemporaryFile);
+            Files.move(uploadTemporaryFile,
+                    uploadCompletedTemporaryDirectoryPath.resolve(
+                            uploadTemporaryFile.getFileName()));
         } catch (IOException e) {
-            exceptionLogger.log(e);
-        } catch (InterruptedException e) {
             exceptionLogger.log(e);
         }
     }
@@ -79,5 +87,4 @@ public class ArticleFileServiceImpl implements ArticleFileService {
     public void deleteAll() {
         articleFileRepository.deleteAll();
     }
-
 }

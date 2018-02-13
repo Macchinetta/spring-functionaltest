@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dam3;
 
@@ -53,8 +66,8 @@ public class DAM3TodoController {
     @Inject
     Mapper beanMapper;
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(DAM3TodoController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            DAM3TodoController.class);
 
     @ModelAttribute
     public TodoForm setUpForm() {
@@ -133,8 +146,8 @@ public class DAM3TodoController {
             todoIds = Arrays.asList(todoIDAr);
         }
 
-        int totalUpdated = todoMB3Service.updateUsingBatchFinishedByTodIds(
-                true, todoIds);
+        int totalUpdated = todoMB3Service.updateUsingBatchFinishedByTodIds(true,
+                todoIds);
 
         redirectAttributes.addFlashAttribute("batchRepoUp", true);
         redirectAttributes.addFlashAttribute("regCount", totalUpdated);
@@ -158,7 +171,8 @@ public class DAM3TodoController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.GET, params = "complete")
-    public String updateComplete(@RequestParam("id") String todoId, Model model) {
+    public String updateComplete(@RequestParam("id") String todoId,
+            Model model) {
 
         TodoMB3 todo = todoMB3Service.findOneByTodoId(todoId);
         if (null == todo) {
@@ -255,7 +269,8 @@ public class DAM3TodoController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerAndRetBool")
     public String registerAndRetBoolean(@Validated TodoForm form,
-            BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+            BindingResult result, RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
@@ -276,7 +291,8 @@ public class DAM3TodoController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerAndRetInt")
     public String registerAndRetInt(@Validated TodoForm form,
-            BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+            BindingResult result, RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
@@ -297,7 +313,8 @@ public class DAM3TodoController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerForNull")
     public String registerForNullCheck(@Validated TodoForm form,
-            BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+            BindingResult result, RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
@@ -316,7 +333,8 @@ public class DAM3TodoController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerRollback")
     public String registerRollback(@Validated TodoForm form,
-            BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+            BindingResult result, RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
@@ -352,8 +370,7 @@ public class DAM3TodoController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "verifyBooleanPrimitiveRet")
-    public String registerCompleteBoolean(
-            @RequestParam("id") String todoId,
+    public String registerCompleteBoolean(@RequestParam("id") String todoId,
             @RequestParam("verifyBooleanPrimitiveRet") boolean verifyBooleanPrimitiveRet,
             @RequestParam("regResult") String regResult, Model model) {
 
@@ -375,8 +392,7 @@ public class DAM3TodoController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "verifyIntegerPrimitiveRet")
-    public String registerComplete(
-            @RequestParam("id") String todoId,
+    public String registerComplete(@RequestParam("id") String todoId,
             @RequestParam("verifyIntegerPrimitiveRet") boolean verifyIntegerPrimitiveRet,
             @RequestParam("regResult") String regResult, Model model) {
 
@@ -399,7 +415,8 @@ public class DAM3TodoController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "autoIdGenRegister")
     public String registerWithAutoIDGen(@Validated TodoForm form,
-            BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+            BindingResult result, RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
@@ -481,8 +498,8 @@ public class DAM3TodoController {
             BindingResult result, Model model) {
         String returnView = "";
 
-        TodoMB3 todo = todoMB3Service.findOneUsingCompositeKey(
-                form.getTodoId(), form.getTodoCategory());
+        TodoMB3 todo = todoMB3Service.findOneUsingCompositeKey(form.getTodoId(),
+                form.getTodoCategory());
 
         TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
         todoForm.setTodoCategory(todo.getCategory().getName());
@@ -627,8 +644,8 @@ public class DAM3TodoController {
 
         todoCriteria.setFinished(form.isFinished());
         todoCriteria.setTitle(form.getTodoTitle());
-        List<TodoMB3> todolist = todoMB3Service
-                .findAllByCriteriaIFEle(todoCriteria);
+        List<TodoMB3> todolist = todoMB3Service.findAllByCriteriaIFEle(
+                todoCriteria);
 
         model.addAttribute("isPaginated", false);
         model.addAttribute("mapRes", false);
@@ -655,8 +672,8 @@ public class DAM3TodoController {
             todoCriteria.setTitle(title);
         }
 
-        List<TodoMB3> todolist = todoMB3Service
-                .findUsingChooseEle(todoCriteria);
+        List<TodoMB3> todolist = todoMB3Service.findUsingChooseEle(
+                todoCriteria);
 
         model.addAttribute("isPaginated", false);
         model.addAttribute("mapRes", false);
@@ -676,8 +693,8 @@ public class DAM3TodoController {
         TodoCriteria todoCriteria = new TodoCriteria();
 
         todoCriteria.setTitle(form.getTodoTitle());
-        List<TodoMB3> todolist = todoMB3Service
-                .findAllByCriteriaOSGNL(todoCriteria);
+        List<TodoMB3> todolist = todoMB3Service.findAllByCriteriaOSGNL(
+                todoCriteria);
 
         model.addAttribute("isPaginated", false);
         model.addAttribute("mapRes", false);
@@ -690,7 +707,8 @@ public class DAM3TodoController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET, params = "downloadTodo")
-    public String downloadTodo(TodoForm form, BindingResult result, Model model) {
+    public String downloadTodo(TodoForm form, BindingResult result,
+            Model model) {
         String returnView = "";
         List<TodoMB3> todolist = null;
 
@@ -715,6 +733,7 @@ public class DAM3TodoController {
             throw new SystemException("e.sf.dam3.8001", "Create csv file error!", e1);
         } finally {
             if (tempFile != null) {
+                // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
                 tempFile.delete();
             }
         }
@@ -724,7 +743,9 @@ public class DAM3TodoController {
         model.addAttribute("isSQLRfinePageSrch", false);
         model.addAttribute("todoForm", new TodoForm());
         model.addAttribute("showCSVPath", true);
-        model.addAttribute("csvFilePath", tempFile.getAbsoluteFile());
+        if (tempFile != null) {
+            model.addAttribute("csvFilePath", tempFile.getAbsoluteFile());
+        }
         model.addAttribute("todos", todolist);
         returnView = "dam3/todoList";
 
@@ -738,8 +759,8 @@ public class DAM3TodoController {
         TodoCriteria todoCriteria = new TodoCriteria();
 
         todoCriteria.setTitle(form.getTodoTitle());
-        List<TodoMB3> todolist = todoMB3Service
-                .findAllByCriteriaEscapeSrch(todoCriteria);
+        List<TodoMB3> todolist = todoMB3Service.findAllByCriteriaEscapeSrch(
+                todoCriteria);
 
         model.addAttribute("isPaginated", false);
         model.addAttribute("mapRes", false);
@@ -779,8 +800,8 @@ public class DAM3TodoController {
         todoSearchCriteria.setTitle(form.getTodoTitle());
         todoSearchCriteria.setCreatedAt(form.getCreatedAt());
 
-        List<AutoMapTodoMB3> todos = todoMB3Service
-                .findByUsingClassTypeAlias(todoSearchCriteria);
+        List<AutoMapTodoMB3> todos = todoMB3Service.findByUsingClassTypeAlias(
+                todoSearchCriteria);
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         for (AutoMapTodoMB3 autoMapTodoMB3 : todos) {
             TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3, TodoMB3.class);
@@ -840,10 +861,12 @@ public class DAM3TodoController {
     private List<TodoMB3> getTodoListFromCSVFile(File tempFile) {
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         File file = new File(tempFile.getAbsoluteFile().getAbsolutePath());
+        FileReader fileRdr = null;
         BufferedReader bufRdr = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyy/mm/dd");
         try {
-            bufRdr = new BufferedReader(new FileReader(file));
+            fileRdr = new FileReader(file);
+            bufRdr = new BufferedReader(fileRdr);
             String line = null;
 
             while ((line = bufRdr.readLine()) != null) {
@@ -861,6 +884,13 @@ public class DAM3TodoController {
         } catch (ParseException e) {
             logger.debug(e.getMessage());
         } finally {
+            if (null != fileRdr) {
+                try {
+                    fileRdr.close();
+                } catch (IOException e) {
+                    logger.debug(e.getMessage());
+                }
+            }
             if (null != bufRdr) {
                 try {
                     bufRdr.close();

@@ -9,14 +9,14 @@
 
 		<div class="form-group">
 			<h4>
-				<span id="testDescription"> 【 ${f:h(testDescription)} 】 </span>
+				<span id="testDescription"> 【&nbsp;${f:h(testDescription)}&nbsp;】 </span>
 			</h4>
 
 			<div class="form-group">
-				<label for="userid" class="col-sm-2 control-label">ユーザID：</label>
+				<label for="username" class="col-sm-2 control-label">ユーザ名：</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="userid" name="userid"
-						placeholder="UserId">
+					<input type="text" class="form-control" id="username" name="username"
+						placeholder="UserName">
 				</div>
 			</div>
 			<div class="form-group">

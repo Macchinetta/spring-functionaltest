@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
@@ -46,7 +59,8 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "complete")
-    public String registerComplete(@RequestParam("no") Integer no, Model model) {
+    public String registerComplete(@RequestParam("no") Integer no,
+            Model model) {
 
         DeliveryOrder deliveryOrder = deliveryOrderService.getOrderExists(no);
         if (null == deliveryOrder) {
@@ -71,7 +85,8 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "cancel")
-    public String registerCancel(RedirectAttributes redirectAttrs, Model model) {
+    public String registerCancel(RedirectAttributes redirectAttrs,
+            Model model) {
         return "redirect:/dmly/deliveryorder/list";
     }
 
@@ -121,9 +136,8 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "{no}/update", method = RequestMethod.POST)
-    public String update(@PathVariable("no") Integer no,
-            DeliveryOrderForm form, RedirectAttributes redirectAttrs,
-            Model model) {
+    public String update(@PathVariable("no") Integer no, DeliveryOrderForm form,
+            RedirectAttributes redirectAttrs, Model model) {
         DeliveryOrder deliveryOrder = beanMapper.map(form, DeliveryOrder.class);
         deliveryOrderService.update(deliveryOrder);
 

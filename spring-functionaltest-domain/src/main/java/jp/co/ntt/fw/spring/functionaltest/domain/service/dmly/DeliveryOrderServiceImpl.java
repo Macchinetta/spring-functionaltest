@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
@@ -41,8 +54,8 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     public DeliveryOrder getOrderExists(Integer deliveryNo) {
         DeliveryOrder deliveryOrder = null;
         if (deliveryOrderRepository.existsByDeliveryNo(deliveryNo)) {
-            deliveryOrder = deliveryOrderRepository
-                    .findOneByDeliveryNo(deliveryNo);
+            deliveryOrder = deliveryOrderRepository.findOneByDeliveryNo(
+                    deliveryNo);
         }
 
         return deliveryOrder;
@@ -62,22 +75,20 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     }
 
     public void register(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository
-                .findOneByTypeName(deliveryOrder.getDeliveryType()
-                        .getDeliveryTypeName());
-        deliveryOrder.getDeliveryType().setDeliveryTypeId(
-                deliveryType.getDeliveryTypeId());
+        DeliveryType deliveryType = deliveryTypeRepository.findOneByTypeName(
+                deliveryOrder.getDeliveryType().getDeliveryTypeName());
+        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
+                .getDeliveryTypeId());
         deliveryOrderRepository.insert(deliveryOrder);
 
         return;
     }
 
     public void update(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository
-                .findOneByTypeName(deliveryOrder.getDeliveryType()
-                        .getDeliveryTypeName());
-        deliveryOrder.getDeliveryType().setDeliveryTypeId(
-                deliveryType.getDeliveryTypeId());
+        DeliveryType deliveryType = deliveryTypeRepository.findOneByTypeName(
+                deliveryOrder.getDeliveryType().getDeliveryTypeName());
+        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
+                .getDeliveryTypeId());
         deliveryOrderRepository.update(deliveryOrder);
 
         return;

@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
@@ -36,8 +49,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator
-                    .createLocaleSpecifiedDriver(currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(
+                    currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -68,8 +81,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -83,8 +96,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
     }
@@ -116,8 +129,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
 
@@ -131,8 +144,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
     }
@@ -163,8 +176,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -178,8 +191,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
     }
@@ -212,8 +225,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
 
@@ -227,8 +240,8 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
     }

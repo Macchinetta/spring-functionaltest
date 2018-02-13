@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rscl;
 
@@ -15,9 +28,12 @@ import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class RestClientTest extends FunctionTestSupport {
 
     // RSCL1302001アサート用
@@ -46,10 +62,11 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_0101"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_0101"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
     }
 
@@ -70,19 +87,20 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_0102"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_0102"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0102001 : "
-                + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0102001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -103,16 +121,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_0103"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_0103"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0103001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -132,19 +151,20 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_0104"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_0104"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0104001 : "
-                + MediaType.APPLICATION_JSON.toString());
+                        + MediaType.APPLICATION_JSON.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0104001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -165,14 +185,14 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザリスト情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザリスト情報出力】"));
 
         // 出力内容をチェック
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0105001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
 
         int count = 0;
         for (WebElement elements : webDriverOperations.getWebDriver()
@@ -203,11 +223,11 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0106_created"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0106_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
     }
 
@@ -230,20 +250,20 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0107_created"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0107_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0107001 : "
-                + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0107001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
 
     }
 
@@ -266,17 +286,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0108_created"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0108_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0108001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -298,17 +318,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0109_created"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0109_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0109001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -328,8 +348,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("delete"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果"));
 
         // 検証すべきものが無い。例外が発生しなければOK。
 
@@ -355,7 +375,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0111001 : "
-                + HttpStatus.NO_CONTENT.toString());
+                        + HttpStatus.NO_CONTENT.toString());
     }
 
     /**
@@ -377,8 +397,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果"));
 
         // 検証すべきものが無い。例外が発生しなければOK。
     }
@@ -402,14 +422,14 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果"));
 
         // 出力内容をチェック
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0113001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -431,8 +451,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【文字リスト出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【文字リスト出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("strListSize")), is("2"));
         assertThat(webDriverOperations.getText(id("str1")), is("send byte"));
@@ -441,7 +461,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0201001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -462,19 +482,19 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【文字列出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【文字列出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("rcvString")),
-                is("sendString_received"));
+        assertThat(webDriverOperations.getText(id("rcvString")), is(
+                "sendString_received"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0202001 : "
-                + MediaType.TEXT_PLAIN.toString());
+                        + MediaType.TEXT_PLAIN.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0202001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -495,17 +515,18 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【文字リスト出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【文字リスト出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("strListSize")), is("2"));
-        assertThat(webDriverOperations.getText(id("str1")), is("send resource"));
+        assertThat(webDriverOperations.getText(id("str1")), is(
+                "send resource"));
         assertThat(webDriverOperations.getText(id("str2")), is("_received"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0203001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -527,20 +548,20 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0204_created"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0204_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0204001 : "
-                + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0204001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -563,20 +584,20 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0205_received"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0205_received"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0205001 : "
-                + MediaType.APPLICATION_FORM_URLENCODED.toString());
+                        + MediaType.APPLICATION_FORM_URLENCODED.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0205001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -612,7 +633,7 @@ public class RestClientTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>MappingJackson2HttpMessageConverterを利用した送受信確認</li> <br>
-     * JavaBean　⇔　 JSON変換を確認する。
+     * JavaBean ⇔ JSON変換を確認する。
      * </ul>
      */
     @Test
@@ -628,19 +649,19 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0209_created"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0209_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0209001 : "
-                + MediaType.APPLICATION_JSON.toString());
+                        + MediaType.APPLICATION_JSON.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0209001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -656,7 +677,7 @@ public class RestClientTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>Jaxb2RootElementHttpMessageConverterを利用した送受信確認</li> <br>
-     * JavaBean　⇔　XML変換を確認する。
+     * JavaBean ⇔ XML変換を確認する。
      * </ul>
      */
     @Test
@@ -672,19 +693,19 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test0211_created"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test0211_created"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0211001 : "
-                + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0211001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -731,15 +752,15 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("rscl0303001"));
 
         // 入力条件設定
-        webDriverOperations.overrideText(id("userid"), "rscluser");
+        webDriverOperations.overrideText(id("username"), "rscluser");
         webDriverOperations.overrideText(id("password"), "password1234");
 
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -747,7 +768,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0303001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -777,10 +798,9 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかエラーログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "[e.sf.cmmn.9001]..*404",
-                        "org\\.springframework\\.web\\.client\\.HttpClientErrorException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, "[e.sf.cmmn.9001]..*404",
+                "org\\.springframework\\.web\\.client\\.HttpClientErrorException");
     }
 
     /**
@@ -799,10 +819,9 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかエラーログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "[e.sf.cmmn.9001]..*500",
-                        "org\\.springframework\\.web\\.client\\.HttpServerErrorException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, "[e.sf.cmmn.9001]..*500",
+                "org\\.springframework\\.web\\.client\\.HttpServerErrorException");
     }
 
     /**
@@ -821,11 +840,10 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null,
-                        "[e.sf.cmmn.9001]..*Unknown status code \\[901\\].*",
-                        "org\\.springframework\\.web\\.client\\.UnknownHttpStatusCodeException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null,
+                "[e.sf.cmmn.9001]..*Unknown status code \\[901\\].*",
+                "org\\.springframework\\.web\\.client\\.UnknownHttpStatusCodeException");
     }
 
     /**
@@ -842,8 +860,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("occur"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -869,8 +887,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("occur"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -897,10 +915,10 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "I/O error on GET request for..*",
-                        "org\\.springframework\\.web\\.client\\.ResourceAccessException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null,
+                "I/O error on GET request for..*",
+                "org\\.springframework\\.web\\.client\\.ResourceAccessException");
     }
 
     /**
@@ -918,10 +936,10 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "I/O error on GET request for..*",
-                        "org\\.springframework\\.web\\.client\\.ResourceAccessException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null,
+                "I/O error on GET request for..*",
+                "org\\.springframework\\.web\\.client\\.ResourceAccessException");
     }
 
     /**
@@ -939,8 +957,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("set"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -960,17 +978,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("upload"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("uploadTest"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "uploadTest"));
         assertThat(webDriverOperations.getText(id("userAge")), is("31"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0901001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
     }
 
     /**
@@ -999,8 +1017,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -1010,20 +1028,38 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*LoggingInterceptor.*",
                 "LoggingInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*BasicAuthInterceptor.*",
-                "BasicAuthInterceptor Called!");
     }
 
     /**
      * <ul>
-     * <li>ClientHttpRequestInterceptorを使用したBasic認証</li>
+     * <li>ClientHttpRequestInterceptorを使用したBasic認証で認証成功</li>
      * </ul>
      */
     @Ignore("RSCL1102001の試験で確認可能であるため、テスト不要。")
     @Test
     public void testRSCL1103001() {
         testRSCL1102001();
+    }
+
+    /**
+     * <ul>
+     * <li>ClientHttpRequestInterceptorを使用したBasic認証で認証失敗</li>
+     * </ul>
+     */
+    @Test
+    public void testRSCL1103002() {
+        // メニュー画面の操作
+        webDriverOperations.click(id("rscl1103002"));
+
+        // 送信ボタン押下
+        webDriverOperations.click(id("send"));
+
+        // システムエラー画面に遷移
+        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        // 期待するエラーが発生しているかエラーログチェック
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, "[e.sf.cmmn.9001]..*401",
+                "org\\.springframework\\.web\\.client\\.HttpClientErrorException");
     }
 
     /**
@@ -1043,10 +1079,9 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 期待するエラーが発生しているかログチェック
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, ".*e\\.rc\\.fw\\.8001.*",
-                        "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, ".*e\\.rc\\.fw\\.8001.*",
+                "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*AccessCtrlInterceptor.*",
                 "AccessCtrlInterceptor Obstruction File Called!");
@@ -1066,8 +1101,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
@@ -1100,16 +1135,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_1301"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_1301"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL1301001 : "
-                + HttpStatus.OK.toString());
+                        + HttpStatus.OK.toString());
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*",
                 ".*RSCL1301001 : CountDownLatch = 0");
@@ -1132,18 +1168,15 @@ public class RestClientTest extends FunctionTestSupport {
         // 出力内容をチェック
         // TaskRejectedExceptionが発生したか確認
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(),
-                        null,
-                        ".*java\\.util\\.concurrent\\.ThreadPoolExecutor..*did not accept task: "
-                                + "org\\.springframework\\.http\\.client\\.SimpleBufferingAsyncClientHttpRequest..*",
-                        "org\\.springframework\\.core\\.task\\.TaskRejectedException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null,
+                ".*java\\.util\\.concurrent\\.ThreadPoolExecutor..*did not accept task: "
+                        + "org\\.springframework\\.http\\.client\\.SimpleBufferingAsyncClientHttpRequest..*",
+                "org\\.springframework\\.core\\.task\\.TaskRejectedException");
         // RestAPIの呼び出し回数確認
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(webDriverOperations.getXTrack(),
-                        "..*RestClientServiceImpl.*",
-                        ".*RSCL1302001 : CallCount = ..*, SuccessCount = ..*, FinishedCount = ..*");
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
+                .getXTrack(), "..*RestClientServiceImpl.*",
+                ".*RSCL1302001 : CallCount = ..*, SuccessCount = ..*, FinishedCount = ..*");
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*",
                 ".*RSCL1302001 : CallCount - FinishedCount = " + thredCapacity
@@ -1164,8 +1197,8 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
         assertFalse(webDriverOperations.exists(className("alert-error")));
         assertThat(webDriverOperations.getText(id("userName")), is("test"));
@@ -1179,12 +1212,11 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*AsyncLoggingInterceptor.*",
                 "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(
-                        "..*AsyncLoggingInterceptor.*",
-                        "Request Header \\{Accept=\\[application/xml, text/xml, "
-                                + "application/json, application/\\*\\+xml, "
-                                + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*AsyncLoggingInterceptor.*",
+                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                        + "application/json, application/\\*\\+xml, "
+                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1196,8 +1228,7 @@ public class RestClientTest extends FunctionTestSupport {
                 "onSuccess Called!");
         // 呼び出し順をチェック
         Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*",
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
                         "AsyncChainInterceptor Called!").get(0);
         Long loggingInterceptEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
@@ -1210,9 +1241,8 @@ public class RestClientTest extends FunctionTestSupport {
                         "..*AsyncLoggingInterceptor.*", "onSuccess Called!")
                 .get(0);
         Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*", "onSuccess Called!").get(
-                        0);
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
+                        "onSuccess Called!").get(0);
         Long serviceCallbackEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
                         "..*InterceptorsAsyncRestClientServiceImpl.*",
@@ -1235,11 +1265,11 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")),
-                is("user information can not be acquired"));
+        assertThat(webDriverOperations.getText(className("alert-error")), is(
+                "user information can not be acquired"));
         assertThat(webDriverOperations.getText(id("userName")), is(""));
         assertThat(webDriverOperations.getText(id("userAge")), is(""));
 
@@ -1251,12 +1281,11 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*AsyncLoggingInterceptor.*",
                 "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(
-                        "..*AsyncLoggingInterceptor.*",
-                        "Request Header \\{Accept=\\[application/xml, text/xml, "
-                                + "application/json, application/\\*\\+xml, "
-                                + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*AsyncLoggingInterceptor.*",
+                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                        + "application/json, application/\\*\\+xml, "
+                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1268,8 +1297,7 @@ public class RestClientTest extends FunctionTestSupport {
                 "onFailure Called!");
         // 呼び出し順をチェック
         Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*",
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
                         "AsyncChainInterceptor Called!").get(0);
         Long loggingInterceptEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
@@ -1282,9 +1310,8 @@ public class RestClientTest extends FunctionTestSupport {
                         "..*AsyncLoggingInterceptor.*", "onSuccess Called!")
                 .get(0);
         Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*", "onSuccess Called!").get(
-                        0);
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
+                        "onSuccess Called!").get(0);
         Long serviceCallbackEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
                         "..*InterceptorsAsyncRestClientServiceImpl.*",
@@ -1307,11 +1334,11 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")),
-                is("user information can not be acquired"));
+        assertThat(webDriverOperations.getText(className("alert-error")), is(
+                "user information can not be acquired"));
         assertThat(webDriverOperations.getText(id("userName")), is(""));
         assertThat(webDriverOperations.getText(id("userAge")), is(""));
 
@@ -1323,12 +1350,11 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*AsyncLoggingInterceptor.*",
                 "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(
-                        "..*AsyncLoggingInterceptor.*",
-                        "Request Header \\{Accept=\\[application/xml, text/xml, "
-                                + "application/json, application/\\*\\+xml, "
-                                + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*AsyncLoggingInterceptor.*",
+                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                        + "application/json, application/\\*\\+xml, "
+                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(
@@ -1346,8 +1372,7 @@ public class RestClientTest extends FunctionTestSupport {
                 "onFailure Called!");
         // 呼び出し順をチェック
         Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*",
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
                         "AsyncChainInterceptor Called!").get(0);
         Long loggingInterceptEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
@@ -1360,9 +1385,8 @@ public class RestClientTest extends FunctionTestSupport {
                         "..*AsyncLoggingInterceptor.*", "onFailure Called!")
                 .get(0);
         Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*", "onFailure Called!").get(
-                        0);
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
+                        "onFailure Called!").get(0);
         Long serviceCallbackEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
                         "..*InterceptorsAsyncRestClientServiceImpl.*",
@@ -1385,11 +1409,11 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")),
-                is("user information can not be acquired"));
+        assertThat(webDriverOperations.getText(className("alert-error")), is(
+                "user information can not be acquired"));
         assertThat(webDriverOperations.getText(id("userName")), is(""));
         assertThat(webDriverOperations.getText(id("userAge")), is(""));
 
@@ -1401,12 +1425,11 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*AsyncLoggingInterceptor.*",
                 "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(
-                        "..*AsyncLoggingInterceptor.*",
-                        "Request Header \\{Accept=\\[application/xml, text/xml, "
-                                + "application/json, application/\\*\\+xml, "
-                                + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*AsyncLoggingInterceptor.*",
+                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                        + "application/json, application/\\*\\+xml, "
+                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(
@@ -1424,8 +1447,7 @@ public class RestClientTest extends FunctionTestSupport {
                 "onFailure Called!");
         // 呼び出し順をチェック
         Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*",
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
                         "AsyncChainInterceptor Called!").get(0);
         Long loggingInterceptEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
@@ -1438,9 +1460,8 @@ public class RestClientTest extends FunctionTestSupport {
                         "..*AsyncLoggingInterceptor.*", "onFailure Called!")
                 .get(0);
         Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncChainInterceptor.*", "onFailure Called!").get(
-                        0);
+                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
+                        "onFailure Called!").get(0);
         Long serviceCallbackEventId = dbLogAssertOperations
                 .getLogEventIdByRegexMessage(null,
                         "..*InterceptorsAsyncRestClientServiceImpl.*",
@@ -1466,18 +1487,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test_proxyAuth"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_proxyAuth"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(webDriverOperations.getXTrack(),
-                        "..*RestClientServiceImpl.*",
-                        ".*RSCL1401001 : Headers containsKey 'Pass-Internal-Proxy' is true");
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
+                .getXTrack(), "..*RestClientServiceImpl.*",
+                ".*RSCL1401001 : Headers containsKey 'Pass-Internal-Proxy' is true");
     }
 
     /**
@@ -1497,18 +1517,17 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")),
-                is("test_1401002"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_1401002"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(webDriverOperations.getXTrack(),
-                        "..*RestClientServiceImpl.*",
-                        ".*RSCL1401002 : Headers containsKey 'Pass-Internal-Proxy' is true");
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
+                .getXTrack(), "..*RestClientServiceImpl.*",
+                ".*RSCL1401002 : Headers containsKey 'Pass-Internal-Proxy' is true");
     }
 
     /**
@@ -1528,16 +1547,16 @@ public class RestClientTest extends FunctionTestSupport {
         webDriverOperations.click(id("send"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("RESTクライアント処理結果【ユーザ情報出力】"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "RESTクライアント処理結果【ユーザ情報出力】"));
         // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is("test_1402"));
+        assertThat(webDriverOperations.getText(id("userName")), is(
+                "test_1402"));
         assertThat(webDriverOperations.getText(id("userAge")), is("20"));
 
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(webDriverOperations.getXTrack(),
-                        "..*RestClientServiceImpl.*",
-                        ".*RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is true");
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
+                .getXTrack(), "..*RestClientServiceImpl.*",
+                ".*RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is true");
     }
 }

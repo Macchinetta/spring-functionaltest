@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
@@ -124,8 +137,8 @@ public class JMSS04SendingController {
     public String sendMessageAddKey(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        jmsCacheConSendingService
-                .sendMessageBySelectorTrue(form.getJmsTodoId());
+        jmsCacheConSendingService.sendMessageBySelectorTrue(form
+                .getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
@@ -161,7 +174,8 @@ public class JMSS04SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=resend_ano_mss")
     public String sendMessageReSendAnotherMessage(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
+            JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
         jmsCacheConSendingService.sendMessageReSendAnotherMessage(form
                 .getJmsTodoId());
@@ -171,7 +185,8 @@ public class JMSS04SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=concurrent_listener_single")
     public String sendMessageJmsConcurrentListenerSingle(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException {
+            JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException {
 
         jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
                 .getJmsTodoId());
@@ -190,7 +205,8 @@ public class JMSS04SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=concurrent_listener_multiple")
     public String sendMessageJmsConcurrentListenerMultiple(Model model,
-            JmsSendingForm form, RedirectAttributes attrs) throws InterruptedException, IOException {
+            JmsSendingForm form,
+            RedirectAttributes attrs) throws InterruptedException, IOException {
 
         jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
                 .getJmsTodoId());

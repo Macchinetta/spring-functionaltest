@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">Controllerの実装方法(リクエストパラメータ)</h1>
+
+      <ul>
+        <li><a id="aply0101003_1" th:href="@{/aply/0101/003?form1}">指定したリクエストパラメータが存在する場合</a></li>
+        <li><a id="aply0101003_2" th:href="@{/aply/0101/003?form2&formType=foo}">指定したリクエストパラメータが複数存在する場合</a></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

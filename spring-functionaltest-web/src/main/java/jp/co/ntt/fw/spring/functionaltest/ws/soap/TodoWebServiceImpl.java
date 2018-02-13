@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.ws.soap;
 
@@ -7,7 +20,6 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.activation.DataHandler;
-import javax.inject.Inject;
 import javax.jws.WebService;
 import javax.xml.ws.BindingType;
 import javax.xml.ws.soap.MTOM;
@@ -19,6 +31,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoService;
 import jp.co.ntt.fw.spring.functionaltest.ws.exception.WsExceptionHandler;
@@ -29,12 +42,12 @@ import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException;
 @WebService(portName = "TodoWebPort", serviceName = "TodoWebService", targetNamespace = "http://functionaltest.spring.fw.ntt.co.jp/todo", endpointInterface = "jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService")
 @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
 public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
-                                                                   TodoWebService {
+                                TodoWebService {
 
-    @Inject
+    @Autowired
     WsExceptionHandler handler;
 
-    @Inject
+    @Autowired
     TodoService todoService;
 
     @Value("${soap.timeout.sleepMilliseconds}")
@@ -92,22 +105,25 @@ public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
 
     @Override
     public void handlerTest() throws WebFaultException {
-        handler.translateException(new NullPointerException("for handler test"));
+        handler.translateException(
+                new NullPointerException("for handler test"));
     }
 
     @Override
-    public void timeoutTest() throws WebFaultException {
+    public void timeoutTest() throws WebFaultException, InterruptedException {
         try {
             Thread.sleep(time);
         } catch (IllegalArgumentException e) {
             handler.translateException(e);
         } catch (InterruptedException ie) {
             handler.translateException(ie);
+            throw ie;
         }
     }
 
     @Override
-    public boolean uploadFile(DataHandler dataHandler) throws WebFaultException {
+    public boolean uploadFile(
+            DataHandler dataHandler) throws WebFaultException {
         try (InputStream inputStream = dataHandler.getInputStream()) {
             return todoService.uploadFile(inputStream);
         } catch (Exception e) {

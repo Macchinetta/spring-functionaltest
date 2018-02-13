@@ -1,12 +1,25 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockOptimisticLockService;
 
 import org.dozer.Mapper;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -28,7 +41,7 @@ public class EXCN0302Controller {
     Mapper beanMapper;
 
     @Inject
-    StockService stockService;
+    StockOptimisticLockService stockOptimisticLockService;
 
     @ModelAttribute()
     public StockForm setUpForm() {
@@ -37,13 +50,13 @@ public class EXCN0302Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.GET)
     public String handle001(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0302001"), form);
+        beanMapper.map(stockOptimisticLockService.findOne("EXCN0302001"), form);
         return "excn/optimisticLockView";
     }
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0302002"), form);
+        beanMapper.map(stockOptimisticLockService.findOne("EXCN0302002"), form);
         return "excn/optimisticLockWithHiddenVersionView";
     }
 
@@ -52,21 +65,8 @@ public class EXCN0302Controller {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
-        stock = stockService.buyWithOptimisticLock(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
-
-        model.addAttribute("stock", stock);
-        model.addAttribute(ResultMessages.success().add("excn.result.success"));
-        return "excn/updateCompleteView";
-    }
-
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "sale")
-    public String handle001Sale(StockForm form, Model model) {
-
-        Stock stock = beanMapper.map(form, Stock.class);
-
-        stock = stockService.saleWithOptimisticLock(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
+        stock = stockOptimisticLockService.buy(stock, form
+                .getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -79,8 +79,8 @@ public class EXCN0302Controller {
         Stock stock = beanMapper.map(form, Stock.class);
 
         try {
-            stock = stockService.buyWithOptimisticLockByHiddenVersion(stock,
-                    form.getPurchasingQuantity(), form.getSleepMillis());
+            stock = stockOptimisticLockService.buyByHiddenVersion(stock, form
+                    .getPurchasingQuantity());
         } catch (OptimisticLockingFailureException e) {
             model.addAttribute(ResultMessages.warning().add(
                     "excn.result.exclusivebyrequest"));

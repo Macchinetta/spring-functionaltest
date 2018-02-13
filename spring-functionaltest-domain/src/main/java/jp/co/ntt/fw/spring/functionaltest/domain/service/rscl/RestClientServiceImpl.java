@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
@@ -49,8 +62,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 @Service
 public class RestClientServiceImpl implements RestClientService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(RestClientServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            RestClientServiceImpl.class);
 
     @Inject
     RestTemplate restTemplate;
@@ -201,7 +214,8 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public List<String> exchangeWithByteArrayHttpMessageConverter(String message) {
+    public List<String> exchangeWithByteArrayHttpMessageConverter(
+            String message) {
 
         URI targetUri = this.getUri(this.uri, "str");
 
@@ -218,6 +232,7 @@ public class RestClientServiceImpl implements RestClientService {
             throw new SystemException("e.sf.rscl.9001", "input/output error.", e1);
         } finally {
             if (sendFile != null) {
+                // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
                 sendFile.delete();
             }
         }
@@ -241,6 +256,7 @@ public class RestClientServiceImpl implements RestClientService {
             throw new SystemException("e.sf.rscl.9001", "input/output error.", e);
         } finally {
             if (rcvFile != null) {
+                // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
                 rcvFile.delete();
             }
         }
@@ -273,7 +289,8 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public List<String> exchangeWithResourceHttpMessageConverter(String message) {
+    public List<String> exchangeWithResourceHttpMessageConverter(
+            String message) {
 
         URI targetUri = this.getUri(this.uri, "str");
 
@@ -292,11 +309,12 @@ public class RestClientServiceImpl implements RestClientService {
         // 　Resourceデータを送信して、Resourceデータを受信する。
         RequestEntity<Resource> requestEntity = RequestEntity.post(targetUri)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).body(sendRsc);
-        ResponseEntity<Resource> res = this.restTemplate.exchange(
-                requestEntity, Resource.class);
+        ResponseEntity<Resource> res = this.restTemplate.exchange(requestEntity,
+                Resource.class);
 
         Resource rcvRsc = res.getBody();
         // 送信が終わったら送信ファイルは削除。
+        // deleteメソッドによる削除の成功失敗によってその後のアクションが変わることは無いため、SonarQube指摘は未対応としています。
         sendFile.delete();
 
         // 受信したResourceデータからファイルを作成して内容確認。
@@ -312,6 +330,7 @@ public class RestClientServiceImpl implements RestClientService {
             throw new SystemException("e.sf.rscl.9001", "input/output error.", e);
         } finally {
             if (rcvFile != null) {
+                // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
                 rcvFile.delete();
             }
         }
@@ -322,7 +341,8 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public UserResource exchangeWithSourceHttpMessageConverter(UserResource user) {
+    public UserResource exchangeWithSourceHttpMessageConverter(
+            UserResource user) {
 
         URI targetUri = this.getUri(this.uri, "");
         UserResource resUser = new UserResource();
@@ -396,7 +416,8 @@ public class RestClientServiceImpl implements RestClientService {
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
                 .post(targetUri).contentType(
                         MediaType.APPLICATION_FORM_URLENCODED).accept(
-                        MediaType.APPLICATION_FORM_URLENCODED).body(sendMap);
+                                MediaType.APPLICATION_FORM_URLENCODED).body(
+                                        sendMap);
         @SuppressWarnings("rawtypes")
         ResponseEntity<MultiValueMap> res = this.restTemplate.exchange(
                 requestEntity, MultiValueMap.class);
@@ -422,7 +443,7 @@ public class RestClientServiceImpl implements RestClientService {
         URI targetUri = this.getUri(this.uri, "");
         RequestEntity<UserResource> requestEntity = RequestEntity.post(
                 targetUri).contentType(MediaType.APPLICATION_JSON).accept(
-                MediaType.APPLICATION_JSON).body(user);
+                        MediaType.APPLICATION_JSON).body(user);
         ResponseEntity<UserResource> res = this.restTemplate.exchange(
                 requestEntity, UserResource.class);
         UserResource resUser = res.getBody();
@@ -442,7 +463,7 @@ public class RestClientServiceImpl implements RestClientService {
         URI targetUri = this.getUri(this.uri, "");
         RequestEntity<UserResource> requestEntity = RequestEntity.post(
                 targetUri).contentType(MediaType.APPLICATION_XML).accept(
-                MediaType.APPLICATION_XML).body(user);
+                        MediaType.APPLICATION_XML).body(user);
         ResponseEntity<UserResource> res = this.restTemplate.exchange(
                 requestEntity, UserResource.class);
         UserResource resUser = res.getBody();
@@ -456,12 +477,12 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public UserResource exchangeWithAuthentication(String userid,
+    public UserResource exchangeWithAuthentication(String username,
             String password) {
         URI targetUri = this.getUri(this.uri, "basic");
 
         // Basic認証用資格情報ヘッダ作成
-        String plainCredentials = userid + ":" + password;
+        String plainCredentials = username + ":" + password;
         String base64Credentials = new String(Base64.encode(plainCredentials
                 .getBytes(StandardCharsets.UTF_8)));
 
@@ -541,7 +562,8 @@ public class RestClientServiceImpl implements RestClientService {
                         e.getStatusCode(), retryCount);
 
                 try {
-                    Thread.sleep(retryWaitTimeCoefficient * retryCount);
+                    Thread.sleep((long) (retryWaitTimeCoefficient
+                            * retryCount));
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }

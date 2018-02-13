@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dam3mb3;
 
@@ -49,8 +62,8 @@ public class OrderMB3Controller {
     @RequestMapping(value = "detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOne(id.intValue());
-        OrderMB3Form orderMB3Form = orderMB3Helper
-                .chengeOrderMB3ToForm(orderMB3);
+        OrderMB3Form orderMB3Form = orderMB3Helper.chengeOrderMB3ToForm(
+                orderMB3);
         model.addAttribute("orderMB3Form", orderMB3Form);
         return "dam3mb3/orderUpdateForm";
     }
@@ -72,8 +85,8 @@ public class OrderMB3Controller {
     public String listPageMyBatis3(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
-        Page<OrderMB3> orderMB3List = orderMB3Service
-                .findPageMyBatis3(pageable);
+        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(
+                pageable);
         model.addAttribute("page", orderMB3List);
         return "dam3mb3/orderListPager";
     }
@@ -82,8 +95,8 @@ public class OrderMB3Controller {
     public String listPageMyBatis3Scroll(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
-        Page<OrderMB3> orderMB3List = orderMB3Service
-                .findPageMyBatis3(pageable);
+        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(
+                pageable);
         model.addAttribute("page", orderMB3List);
         return "dam3mb3/orderListPager";
     }
@@ -107,7 +120,8 @@ public class OrderMB3Controller {
     }
 
     @RequestMapping(value = "showCatDetl", method = RequestMethod.GET, params = "catDisplayLazy")
-    public String getCategoryDetailLazy(OrderMB3Form orderMB3Form, Model model) {
+    public String getCategoryDetailLazy(OrderMB3Form orderMB3Form,
+            Model model) {
 
         List<CategoryMB3> categories = orderMB3Service
                 .findAllCategoryByItemCodeLazy(orderMB3Form.getItemCode());

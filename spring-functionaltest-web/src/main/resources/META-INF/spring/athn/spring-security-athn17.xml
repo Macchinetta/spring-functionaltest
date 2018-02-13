@@ -1,137 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <sec:http pattern="/athn/1701/**" auto-config="false"
-        entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
-        authentication-manager-ref="customerAuthenticationManager">
-        <sec:form-login login-processing-url="/athn/1701/customerAuthenticate"
-            default-target-url="/athn/1701/001?loginSuccess"
-            always-use-default-target="true" />
-        <sec:session-management
-            session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-        <sec:logout logout-url="/athn/1701/logout"
-            logout-success-url="/athn/" delete-cookies="JSESSIONID" />
-    </sec:http>
+  <sec:http pattern="/athn/1701/**" auto-config="false" entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="customerAuthenticationManager">
+    <sec:form-login login-processing-url="/athn/1701/customerAuthenticate"
+      default-target-url="/athn/1701/001?loginSuccess" always-use-default-target="true" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:logout logout-url="/athn/1701/logout" logout-success-url="/athn/"
+      delete-cookies="JSESSIONID" />
+  </sec:http>
 
-    <sec:authentication-manager id="customerAuthenticationManager">
-        <sec:authentication-provider
-            ref="customerPasswordAuthenticationProvider" />
-    </sec:authentication-manager>
+  <sec:authentication-manager id="customerAuthenticationManager">
+    <sec:authentication-provider ref="customerPasswordAuthenticationProvider" />
+  </sec:authentication-manager>
 
-    <bean id="customerLoginUrlAuthenticationEntryPoint"
-        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg value="/athn/1701/001" />
-    </bean>
+  <bean id="customerLoginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    <constructor-arg value="/athn/1701/001" />
+  </bean>
 
-    <bean id="customerPasswordAuthenticationProvider"
-        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <property name="hideUserNotFoundExceptions" value="true" />
-        <property name="passwordEncoder" ref="passwordEncoder" />
-        <property name="userDetailsService" ref="customerService" />
-    </bean>
+  <bean id="customerPasswordAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="hideUserNotFoundExceptions" value="true" />
+    <property name="passwordEncoder" ref="passwordEncoder" />
+    <property name="userDetailsService" ref="customerService" />
+  </bean>
 
-    <bean id="customerService"
-        class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ReservationUserDetailsService">
-    </bean>
+  <bean id="customerService"
+    class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ReservationUserDetailsService">
+  </bean>
 
-    <sec:http pattern="/athn/1702/**" auto-config="false"
+  <sec:http pattern="/athn/1702/**" auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
 
-        entry-point-ref="loginUrlAuthenticationEntryPoint">
+    <sec:custom-filter position="FORM_LOGIN_FILTER" ref="companyIdUsernamePasswordAuthenticationFilter" />
 
-        <sec:custom-filter position="FORM_LOGIN_FILTER"
-            ref="companyIdUsernamePasswordAuthenticationFilter" />
+    <sec:csrf token-repository-ref="csrfTokenRepository" />
 
-        <sec:csrf token-repository-ref="csrfTokenRepository" />
+    <sec:logout logout-url="/athn/1702/logout" logout-success-url="/athn/"
+      delete-cookies="JSESSIONID" />
 
-        <sec:logout logout-url="/athn/1702/logout"
-            logout-success-url="/athn/" delete-cookies="JSESSIONID" />
+  </sec:http>
 
-    </sec:http>
+  <bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    <constructor-arg value="/athn/1702/001" />
+  </bean>
 
-    <bean id="loginUrlAuthenticationEntryPoint"
-        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg value="/athn/1702/001" />
-    </bean>
+  <bean id="companyIdUsernamePasswordAuthenticationFilter"
+    class="jp.co.ntt.fw.spring.functionaltest.app.athn.CompanyIdUsernamePasswordAuthenticationFilter">
+    <property name="requiresAuthenticationRequestMatcher">
+      <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+        <constructor-arg index="0" value="/athn/1702/customerAuthenticate" />
+        <constructor-arg index="1" value="POST" />
+      </bean>
+    </property>
+    <property name="authenticationManager" ref="authenticationManager" />
+    <property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+    <property name="authenticationFailureHandler">
+      <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+        <constructor-arg value="/athn/1702/001?error" />
+      </bean>
+    </property>
+    <property name="authenticationSuccessHandler">
+      <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+        <constructor-arg value="/athn/1702/001?loginSuccess" />
+      </bean>
+    </property>
+  </bean>
 
-    <bean id="companyIdUsernamePasswordAuthenticationFilter"
-        class="jp.co.ntt.fw.spring.functionaltest.app.athn.CompanyIdUsernamePasswordAuthenticationFilter">
-        <property name="requiresAuthenticationRequestMatcher">
-            <bean
-                class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-                <constructor-arg index="0"
-                    value="/athn/1702/customerAuthenticate" />
-                <constructor-arg index="1" value="POST" />
-            </bean>
-        </property>
-        <property name="authenticationManager" ref="authenticationManager" />
-        <property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
-        <property name="authenticationFailureHandler">
-            <bean
-                class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-                <constructor-arg value="/athn/1702/001?error" />
-            </bean>
-        </property>
-        <property name="authenticationSuccessHandler">
-            <bean
-                class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
-                <constructor-arg value="/athn/1702/001?loginSuccess" />
-            </bean>
-        </property>
-    </bean>
+  <!-- Use the "id" here although using the "alias" for guideline. "alias" does not work here because 
+    there are number of "spring-security.xml" for each "spring-functionaltest" which leads to the duplication 
+    . -->
+  <sec:authentication-manager id="authenticationManager">
+    <sec:authentication-provider ref="companyIdUsernamePasswordAuthenticationProvider" />
+  </sec:authentication-manager>
+  <bean id="companyIdUsernamePasswordAuthenticationProvider"
+    class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.CompanyIdUsernamePasswordAuthenticationProvider">
+    <property name="userDetailsService" ref="customerService" />
+    <property name="passwordEncoder" ref="passwordEncoder" />
+  </bean>
 
-    <!-- Use the "id" here although using the "alias" for guideline. "alias" 
-        does not work here because there are number of "spring-security.xml" for 
-        each "spring-functionaltest" which leads to the duplication . -->
-    <sec:authentication-manager id="authenticationManager">
-        <sec:authentication-provider
-            ref="companyIdUsernamePasswordAuthenticationProvider" />
-    </sec:authentication-manager>
-    <bean id="companyIdUsernamePasswordAuthenticationProvider"
-        class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.CompanyIdUsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="customerService" />
-        <property name="passwordEncoder" ref="passwordEncoder" />
-    </bean>
+  <bean id="sessionAuthenticationStrategy"
+    class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+    <constructor-arg>
+      <util:list>
+        <bean class="org.springframework.security.web.csrf.CsrfAuthenticationStrategy">
+          <constructor-arg ref="csrfTokenRepository" />
+        </bean>
+        <bean
+          class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+      </util:list>
+    </constructor-arg>
+  </bean>
 
-    <bean id="sessionAuthenticationStrategy"
-        class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
-        <constructor-arg>
-            <util:list>
-                <bean
-                    class="org.springframework.security.web.csrf.CsrfAuthenticationStrategy">
-                    <constructor-arg ref="csrfTokenRepository" />
-                </bean>
-                <bean
-                    class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
-            </util:list>
-        </constructor-arg>
-    </bean>
-
-    <bean id="csrfTokenRepository"
-        class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
+  <bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
 
 
-    <sec:http pattern="/athn/1703/**"
-        authentication-manager-ref="userLoginManagerForAthn">
-        <sec:form-login login-page="/athn/1703/001"
-            login-processing-url="/athn/1703/001/authenticate"
-            default-target-url="/athn/1703/001?loginSuccess"
-            always-use-default-target="true" />
-        <sec:logout logout-url="/athn/1703/001/logout"
-            logout-success-url="/athn/1703/001" />
-        <sec:intercept-url pattern="/athn/1703/001/**"
-            access="permitAll" />
-        <sec:intercept-url pattern="/athn/1703/001/login/**"
-            access="permitAll" />
-        <sec:intercept-url pattern="/athn/1703/**"
-            access="isAuthenticated()" />
-    </sec:http>
+  <sec:http pattern="/athn/1703/**" authentication-manager-ref="userLoginManagerForAthn">
+    <sec:form-login login-page="/athn/1703/001" login-processing-url="/athn/1703/001/authenticate"
+      default-target-url="/athn/1703/001?loginSuccess" always-use-default-target="true" />
+    <sec:logout logout-url="/athn/1703/001/logout" logout-success-url="/athn/1703/001" />
+    <sec:intercept-url pattern="/athn/1703/001/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1703/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1703/**" access="isAuthenticated()" />
+  </sec:http>
 
 </beans>

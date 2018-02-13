@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-  namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository">
 
   <resultMap id="committer-resultMap" type="Committer">
     <result property="username" column="username" />
@@ -13,70 +12,69 @@
     <result property="location" column="location" />
   </resultMap>
 
-    <sql id="selectCommitter">
-        SELECT
-            username
-            ,password
-            ,email
-            ,url
-            ,company
-            ,location
-        FROM
-            t_committer
-    </sql>
+  <sql id="selectCommitter">
+    SELECT
+    username
+    ,password
+    ,email
+    ,url
+    ,company
+    ,location
+    FROM
+    t_committer
+  </sql>
 
-    <sql id="setPhrase">
-        <set>
-            <if test="email != null">
-                email = #{email},
-            </if>
-            <if test="url != null">
-                url = #{url},
-            </if>
-            <if test="company != null">
-                company = #{company},
-            </if>
-            <if test="location != null">
-                location = #{location},
-            </if>
-        </set>
-    </sql>
+  <sql id="setPhrase">
+    <set>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="url != null">
+        url = #{url},
+      </if>
+      <if test="company != null">
+        company = #{company},
+      </if>
+      <if test="location != null">
+        location = #{location},
+      </if>
+    </set>
+  </sql>
 
-    <sql id="committerSearchCriteria">
-        <trim prefix="WHERE">
-            <if test="username != null and username != ''">
-                username LIKE #{username} || '%' ESCAPE '~'
-            </if>
-        </trim>
-    </sql>
+  <sql id="committerSearchCriteria">
+    <trim prefix="WHERE">
+      <if test="username != null and username != ''">
+        username LIKE #{username} || '%' ESCAPE '~'
+      </if>
+    </trim>
+  </sql>
 
-    <select id="findOneByName" resultMap="committer-resultMap"
-        parameterType="String">
-        <include refid="selectCommitter" />
-        WHERE
-            username = #{username}
-    </select>
+  <select id="findOneByName" resultMap="committer-resultMap" parameterType="String">
+    <include refid="selectCommitter" />
+    WHERE
+    username = #{username}
+  </select>
 
-    <select id="countByCriteria" resultType="long">
-        SELECT
-            count(*)
-        FROM
-            t_committer
-        <include refid="committerSearchCriteria" />
-    </select>
+  <select id="countByCriteria" resultType="long">
+    SELECT
+    count(*)
+    FROM
+    t_committer
+    <include refid="committerSearchCriteria" />
+  </select>
 
-    <select id="findCommiterByCriteria" resultMap="committer-resultMap">
-        <include refid="selectCommitter" />
-        <include refid="committerSearchCriteria" />
-        ORDER BY username ASC
-    </select>
+  <select id="findCommiterByCriteria" resultMap="committer-resultMap">
+    <include refid="selectCommitter" />
+    <include refid="committerSearchCriteria" />
+    ORDER BY username ASC
+  </select>
 
-    <update id="update" parameterType="Committer">
-        UPDATE
-            t_committer
-        <include refid="setPhrase" />
-        WHERE
-            username = #{username}
-    </update>
+  <update id="update" parameterType="Committer">
+    UPDATE
+    t_committer
+    <include refid="setPhrase" />
+    WHERE
+    username = #{username}
+  </update>
 
 </mapper>

@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.fldw;
 
@@ -37,8 +50,8 @@ import com.lowagie.text.pdf.PdfWriter;
 
 @Component
 public class PdfDownloadView extends AbstractPdfView {
-    private static final Logger logger = LoggerFactory
-            .getLogger(PdfDownloadView.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            PdfDownloadView.class);
 
     @Inject
     JodaTimeDateFactory dateFactory;
@@ -98,22 +111,23 @@ public class PdfDownloadView extends AbstractPdfView {
         applicationDateTable.addCell(new Phrase("お申込日", normalFont));
 
         // 年月日
-        PdfPCell applicationYearCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime().getYear()), normalFont));
+        PdfPCell applicationYearCell = new PdfPCell(new Phrase(Integer.toString(
+                dateFactory.newDateTime().getYear()), normalFont));
         applicationYearCell.setColspan(4);
         applicationYearCell.setBorder(0);
         applicationYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationYearCell);
         applicationDateTable.addCell(new Phrase("年", normalFont));
         PdfPCell applicationMonthCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime().getMonthOfYear()), normalFont));
+                .toString(dateFactory.newDateTime()
+                        .getMonthOfYear()), normalFont));
         applicationMonthCell.setColspan(2);
         applicationMonthCell.setBorder(0);
         applicationMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationMonthCell);
         applicationDateTable.addCell(new Phrase("月", normalFont));
-        PdfPCell applicationDayCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime().getDayOfMonth()), normalFont));
+        PdfPCell applicationDayCell = new PdfPCell(new Phrase(Integer.toString(
+                dateFactory.newDateTime().getDayOfMonth()), normalFont));
         applicationDayCell.setColspan(2);
         applicationDayCell.setBorder(0);
         applicationDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -146,7 +160,8 @@ public class PdfDownloadView extends AbstractPdfView {
 
         // name and address table
         PdfPTable nameAndAddressTable = new PdfPTable(2);
-        float nameAndAddressTableWidth[] = { mm2pixel(20.0f), mm2pixel(120.0f) };
+        float nameAndAddressTableWidth[] = { mm2pixel(20.0f), mm2pixel(
+                120.0f) };
         nameAndAddressTable.setTotalWidth(nameAndAddressTableWidth);
         nameAndAddressTable.setLockedWidth(true);
         nameAndAddressTable.getDefaultCell().setPadding(2.0f);
@@ -161,13 +176,13 @@ public class PdfDownloadView extends AbstractPdfView {
 
         nameAndAddressTable.addCell(new Phrase("お名前", normalFont));
 
-        nameAndAddressTable
-                .addCell(new Phrase((String) (model.get("name")), normalFont));
+        nameAndAddressTable.addCell(new Phrase((String) (model.get(
+                "name")), normalFont));
 
         nameAndAddressTable.addCell(new Phrase("ご住所", normalFont));
 
-        nameAndAddressTable.addCell(new Phrase(String.valueOf(model
-                .get("address")), normalFont));
+        nameAndAddressTable.addCell(new Phrase(String.valueOf(model.get(
+                "address")), normalFont));
 
         nameAndAddressTable.addCell(new Phrase("生年月日", normalFont));
 
@@ -185,27 +200,29 @@ public class PdfDownloadView extends AbstractPdfView {
                 Element.ALIGN_MIDDLE);
         birthDateTable.getDefaultCell().setBorder(0000);
 
-        PdfPCell birthdateYearCell = new PdfPCell(new Phrase(String
-                .valueOf(new DateTime(DateUtils.parseDate((String) model
-                        .get("birthdate"), "yyyyMMdd")).getYear()), normalFont));
+        PdfPCell birthdateYearCell = new PdfPCell(new Phrase(String.valueOf(
+                new DateTime(DateUtils.parseDate((String) model.get(
+                        "birthdate"), "yyyyMMdd")).getYear()), normalFont));
         birthdateYearCell.setColspan(4);
         birthdateYearCell.setBorder(0);
         birthdateYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         birthDateTable.addCell(birthdateYearCell);
         birthDateTable.addCell(new Phrase("年", normalFont));
 
-        PdfPCell birthdateMonthCell = new PdfPCell(new Phrase(String
-                .valueOf(new DateTime(DateUtils.parseDate((String) model
-                        .get("birthdate"), "yyyyMMdd")).getMonthOfYear()), normalFont));
+        PdfPCell birthdateMonthCell = new PdfPCell(new Phrase(String.valueOf(
+                new DateTime(DateUtils.parseDate((String) model.get(
+                        "birthdate"), "yyyyMMdd"))
+                                .getMonthOfYear()), normalFont));
         birthdateMonthCell.setColspan(2);
         birthdateMonthCell.setBorder(0);
         birthdateMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         birthDateTable.addCell(birthdateMonthCell);
         birthDateTable.addCell(new Phrase("月", normalFont));
 
-        PdfPCell birthdateDayCell = new PdfPCell(new Phrase(String
-                .valueOf(new DateTime(DateUtils.parseDate((String) model
-                        .get("birthdate"), "yyyyMMdd")).getDayOfMonth()), normalFont));
+        PdfPCell birthdateDayCell = new PdfPCell(new Phrase(String.valueOf(
+                new DateTime(DateUtils.parseDate((String) model.get(
+                        "birthdate"), "yyyyMMdd"))
+                                .getDayOfMonth()), normalFont));
         birthdateDayCell.setColspan(2);
         birthdateDayCell.setBorder(0);
         birthdateDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -262,8 +279,8 @@ public class PdfDownloadView extends AbstractPdfView {
         String filename = "日本語ファイル名.pdf";
         response.setContentType("application/pdf");
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-Disposition", "attachment; "
-                + browser.appendAndEncodeFilename(filename));
+        response.setHeader("Content-Disposition", "attachment; " + browser
+                .appendAndEncodeFilename(filename));
     }
 
     // mmを、PDF解像度のpixelに変換

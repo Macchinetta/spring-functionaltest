@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.oth2;
 
@@ -10,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,10 +31,10 @@ import org.springframework.web.client.RestOperations;
 @Service
 @Transactional
 public class OauthOwnerPwCredentialServiceImpl implements
-                                              OauthOwnerPwCredentialService {
+                                               OauthOwnerPwCredentialService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OauthOwnerPwCredentialServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OauthOwnerPwCredentialServiceImpl.class);
 
     @Value("${oth2.databaseApplicationContextUrl}${oth2.restServletPath}/oth2/resources")
     String resourceServerDbUrl;
@@ -44,13 +56,14 @@ public class OauthOwnerPwCredentialServiceImpl implements
 
     @Override
     public OauthResource postOwnerCredentialGrantResource(String testId) {
-        return postResource(resourceServerDbUrl,
-                ownerCredentialGrantOperations, testId);
+        return postResource(resourceServerDbUrl, ownerCredentialGrantOperations,
+                testId);
     }
 
     @Override
     public void putOwnerCredentialGrantResource(String testId) {
-        putResource(resourceServerDbUrl, ownerCredentialGrantOperations, testId);
+        putResource(resourceServerDbUrl, ownerCredentialGrantOperations,
+                testId);
     }
 
     @Override
@@ -70,8 +83,8 @@ public class OauthOwnerPwCredentialServiceImpl implements
         return getTokenValue(ownerCredentialGrantOperations);
     }
 
-    private OauthResource getResource(String url,
-            RestOperations restOperations, String testId) {
+    private OauthResource getResource(String url, RestOperations restOperations,
+            String testId) {
         final String resourceServerUrl = url + "/principal/{id}";
         logger.debug("RestOperation url={}, parameter={}", resourceServerUrl,
                 testId);

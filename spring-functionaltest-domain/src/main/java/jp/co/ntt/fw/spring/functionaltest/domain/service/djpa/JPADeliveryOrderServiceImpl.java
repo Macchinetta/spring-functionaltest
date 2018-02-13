@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -62,7 +75,8 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     }
 
     @Override
-    public List<JPADeliveryOrder> queryHint(String statusCode, Integer sleepTime) {
+    public List<JPADeliveryOrder> queryHint(String statusCode,
+            Integer sleepTime) {
         List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository
                 .getByDeliveryStatus(statusCode);
         return orderList;
@@ -93,14 +107,14 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     public List<JPADeliveryOrder> searchUsingGiveSearchType(String searchVal,
             String serachCriteria[]) {
         List<JPADeliveryOrder> orderList = null;
-        if (serachCriteria[0].equals("senderAddress")
-                && serachCriteria[1].equals("FW")) {
+        if (serachCriteria[0].equals("senderAddress") && serachCriteria[1]
+                .equals("FW")) {
             orderList = forwardSearch(searchVal);
         } else if (serachCriteria[0].equals("receiverAddress")
                 && serachCriteria[1].equals("BK")) {
             orderList = backwardSearch(searchVal);
-        } else if (serachCriteria[0].equals("senderName")
-                && serachCriteria[1].equals("PT")) {
+        } else if (serachCriteria[0].equals("senderName") && serachCriteria[1]
+                .equals("PT")) {
             orderList = partialSearch(searchVal);
         }
         return orderList;
@@ -109,8 +123,8 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     @Override
     public List<JPADeliveryOrder> searchUsingDynamicCond(
             DeliveryOrderCriteria deliveryOrderCriteria) {
-        return tDeliveryOrderRepository
-                .findAllByCriteria(deliveryOrderCriteria);
+        return tDeliveryOrderRepository.findAllByCriteria(
+                deliveryOrderCriteria);
     }
 
     @Override
@@ -135,8 +149,8 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     }
 
     @Override
-    public Page<JPADeliveryOrder> findByEscapeSearchMatchInLogic(
-            String keyword, Pageable pageable) {
+    public Page<JPADeliveryOrder> findByEscapeSearchMatchInLogic(String keyword,
+            Pageable pageable) {
         String escapedWord = QueryEscapeUtils.toContainingCondition(keyword);
         return jpaDeliveryOrderRepository.findPageByMatchTypeInLogic(
                 escapedWord, pageable);

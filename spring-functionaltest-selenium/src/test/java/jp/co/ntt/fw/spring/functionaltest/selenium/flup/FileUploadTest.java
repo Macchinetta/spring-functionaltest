@@ -1,18 +1,29 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.flup;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
-import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,8 +32,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.util.StreamUtils;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class FileUploadTest extends FunctionTestSupport {
 
     @Value("${selenium.flup.waitForDeletedByScheduler.offsetSeconds:0}")
@@ -51,17 +67,16 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -81,29 +96,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む255バイトファイル.txt"));
-            assertThat(
-                    webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む255バイトファイルaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1234567"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む255バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む255バイトファイルaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1234567"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -132,30 +143,27 @@ public class FileUploadTest extends FunctionTestSupport {
         }
         // 単一ファイルアップロード画面の操作
         {
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む63バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む63バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む63バイトファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む63バイト以下のファイル1234567"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む63バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む63バイト以下のファイル1234567"));
             // TODO 一時ファイルが作成されたか否かの確認については保留中
 
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -175,29 +183,26 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む65バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む65バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む65バイトファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む64バイトより大ファイル123456789"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む65バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む64バイトより大ファイル123456789"));
             // TODO 一時ファイルが作成されたか否かの確認については保留中
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -217,29 +222,26 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む64バイトファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む64バイト丁度のファイル12345678"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む64バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む64バイト丁度のファイル12345678"));
             // TODO 一時ファイルが作成されたか否かの確認については保留中
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -260,29 +262,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("uploadedFileName")),
-                    is("マルチバイト含む255バイトファイル.txt"));
-            assertThat(
-                    webDriverOperations.getText(id("uploadedContent")),
-                    is("マルチバイト含む255バイトファイルaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1234567"));
+            assertThat(webDriverOperations.getText(id("uploadedFileName")), is(
+                    "マルチバイト含む255バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("uploadedContent")), is(
+                    "マルチバイト含む255バイトファイルaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1234567"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -301,26 +299,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む257バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む257バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードエラーの確認
         {
-            assertThat(webDriverOperations.getTitle(), is("File Upload Error!"));
+            assertThat(webDriverOperations.getTitle(), is(
+                    "File Upload Error!"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
                     webDriverOperations.getXTrack(),
-                    "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                    ".*", "org\\.springframework\\.web\\.multipart\\.*");
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger", ".*",
+                    "org\\.springframework\\.web\\.multipart\\.*");
         }
 
         // サイズが制限以内のファイルはアップロードできることの確認
@@ -337,28 +334,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む64バイトファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む64バイト丁度のファイル12345678"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む64バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む64バイト丁度のファイル12345678"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -377,26 +371,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む1024バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む1024バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードエラーの確認
         {
-            assertThat(webDriverOperations.getTitle(), is("File Upload Error!"));
+            assertThat(webDriverOperations.getTitle(), is(
+                    "File Upload Error!"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
                     webDriverOperations.getXTrack(),
-                    "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                    ".*", "org\\.springframework\\.web\\.multipart\\.*");
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger", ".*",
+                    "org\\.springframework\\.web\\.multipart\\.*");
         }
 
         // サイズが制限以内のファイルはアップロードできることの確認
@@ -413,28 +406,25 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む64バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("マルチバイト含む64バイトファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("マルチバイト含む64バイト丁度のファイル12345678"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "マルチバイト含む64バイトファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "マルチバイト含む64バイト丁度のファイル12345678"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -462,17 +452,16 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -495,18 +484,17 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 戻る
@@ -518,8 +506,10 @@ public class FileUploadTest extends FunctionTestSupport {
             // hiddenパラメータのトークンを変更
             JavascriptExecutor jse = (JavascriptExecutor) webDriverOperations
                     .getWebDriver();
-            jse.executeScript("document.getElementsByName('_TRANSACTION_TOKEN')[0].setAttribute('type', 'text');");
-            jse.executeScript("document.getElementsByName('_TRANSACTION_TOKEN')[0].value = 'flup/0202~abcdefg';");
+            jse.executeScript(
+                    "document.getElementsByName('_TRANSACTION_TOKEN')[0].setAttribute('type', 'text');");
+            jse.executeScript(
+                    "document.getElementsByName('_TRANSACTION_TOKEN')[0].value = 'flup/0202~abcdefg';");
             webDriverOperations.click(id("uploadButton"));
         }
         // トランザクションエラーの確認
@@ -534,10 +524,9 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                            "\\[e.sf.cmmn.9001\\] Invalid Transaction Token Exception \\!\\!\\!");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                    "\\[e.sf.cmmn.9001\\] Invalid Transaction Token Exception \\!\\!\\!");
         }
     }
 
@@ -567,9 +556,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -601,9 +589,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -621,11 +608,9 @@ public class FileUploadTest extends FunctionTestSupport {
         // 単一ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id("multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
+                            .getFile());
             webDriverOperations.click(id("uploadButton"));
         }
 
@@ -637,9 +622,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -657,13 +641,13 @@ public class FileUploadTest extends FunctionTestSupport {
         // 複数ファイルアップロード画面の操作
         {
 
-            webDriverOperations.referUploadFile(
-                    id("uploadForms0.multipartFile"),
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms0.multipartFile"),
                     new ClassPathResource("testdata/flup/日本語ファイル.txt")
                             .getFile());
 
-            webDriverOperations.referUploadFile(
-                    id("uploadForms1.multipartFile"),
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms1.multipartFile"),
                     new ClassPathResource("testdata/flup/日本語ファイル２.txt")
                             .getFile());
 
@@ -673,22 +657,21 @@ public class FileUploadTest extends FunctionTestSupport {
         // アップロードファイルの確認
         {
 
-            assertThat(webDriverOperations.getText(id("fileNameText0")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText0")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText0")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText0")), is(
+                    "日本語コンテンツ"));
 
-            assertThat(webDriverOperations.getText(id("fileNameText1")),
-                    is("日本語ファイル２.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText1")),
-                    is("日本語コンテンツ２"));
+            assertThat(webDriverOperations.getText(id("fileNameText1")), is(
+                    "日本語ファイル２.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText1")), is(
+                    "日本語コンテンツ２"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -713,19 +696,18 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // エラーメッセージの確認
         {
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms0.multipartFile.errors")),
-                    is("コンテンツファイル1にファイルが選択されていません。"));
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms1.multipartFile.errors")),
-                    is("コンテンツファイル2にファイルが選択されていません。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms0.multipartFile.errors")), is(
+                            "コンテンツファイル1にファイルが選択されていません。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms1.multipartFile.errors")), is(
+                            "コンテンツファイル2にファイルが選択されていません。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -743,13 +725,13 @@ public class FileUploadTest extends FunctionTestSupport {
         // 複数ファイルアップロード画面の操作
         {
 
-            webDriverOperations.referUploadFile(
-                    id("uploadForms0.multipartFile"),
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms0.multipartFile"),
                     new ClassPathResource("testdata/flup/0バイトファイル.txt")
                             .getFile());
 
-            webDriverOperations.referUploadFile(
-                    id("uploadForms1.multipartFile"),
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms1.multipartFile"),
                     new ClassPathResource("testdata/flup/0バイトファイル.txt")
                             .getFile());
 
@@ -758,19 +740,18 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // エラーメッセージの確認
         {
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms0.multipartFile.errors")),
-                    is("コンテンツファイル1に指定されたファイルが空ファイルです。"));
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms1.multipartFile.errors")),
-                    is("コンテンツファイル2に指定されたファイルが空ファイルです。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms0.multipartFile.errors")), is(
+                            "コンテンツファイル1に指定されたファイルが空ファイルです。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms1.multipartFile.errors")), is(
+                            "コンテンツファイル2に指定されたファイルが空ファイルです。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -788,36 +769,33 @@ public class FileUploadTest extends FunctionTestSupport {
         // 複数ファイルアップロード画面の操作
         {
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("uploadForms0.multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms0.multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
+                            .getFile());
 
-            webDriverOperations
-                    .referUploadFile(
-                            id("uploadForms1.multipartFile"),
-                            new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
-                                    .getFile());
+            webDriverOperations.referUploadFile(id(
+                    "uploadForms1.multipartFile"),
+                    new ClassPathResource("testdata/flup/マルチバイト含む255バイトファイル.txt")
+                            .getFile());
 
             webDriverOperations.click(id("uploadButton"));
         }
 
         // エラーメッセージの確認
         {
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms0.multipartFile.errors")),
-                    is("コンテンツファイル1に指定されたファイルが大きすぎます。250バイト以下のファイルを指定してください。"));
-            assertThat(webDriverOperations
-                    .getText(id("uploadForms1.multipartFile.errors")),
-                    is("コンテンツファイル2に指定されたファイルが大きすぎます。250バイト以下のファイルを指定してください。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms0.multipartFile.errors")), is(
+                            "コンテンツファイル1に指定されたファイルが大きすぎます。250バイト以下のファイルを指定してください。"));
+            assertThat(webDriverOperations.getText(id(
+                    "uploadForms1.multipartFile.errors")), is(
+                            "コンテンツファイル2に指定されたファイルが大きすぎます。250バイト以下のファイルを指定してください。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -849,10 +827,10 @@ public class FileUploadTest extends FunctionTestSupport {
         // アップロードファイルの確認
         {
 
-            assertThat(webDriverOperations.getText(id("fileNameText0")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText0")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText0")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText0")), is(
+                    "日本語コンテンツ"));
 
             // assertThat(uploadedFileNameElements.get(1).getText(), is("日本語ファイル２.txt"));
             // assertThat(uploadedFileContentElements.get(1).getText(), is("日本語コンテンツ２"));
@@ -860,9 +838,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -893,8 +870,7 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // エラーメッセージの確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("multipartFiles.errors")),
+            assertThat(webDriverOperations.getText(id("multipartFiles.errors")),
                     is("コンテンツファイルに指定されたファイルが空ファイルです。"));
             // assertThat(webDriverOperations.getText(id("uploadForms1.multipartFile.errors")),
             // is("ContentsFile2 is empty."));
@@ -902,9 +878,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -932,24 +907,23 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 仮ファイルアップロード確認画面の操作
         String temporaryFileId = null;
         {
 
-            temporaryFileId = webDriverOperations
-                    .getText(id("temporaryFileIdText"));
+            temporaryFileId = webDriverOperations.getText(id(
+                    "temporaryFileIdText"));
 
             // 仮アップロードファイルが存在したらOK
             assertTrue(existsUploadedTemporaryFile(temporaryFileId));
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("descriptionText")),
-                    is(""));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("descriptionText")), is(
+                    ""));
             webDriverOperations.click(id("uploadButton"));
         }
         // 仮ファイルアップロード完了画面の確認
@@ -961,20 +935,19 @@ public class FileUploadTest extends FunctionTestSupport {
             // 仮アップロードファイルが存在したらNG
             assertFalse(existsUploadedTemporaryFile(temporaryFileId));
 
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
 
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
-            assertThat(webDriverOperations.getText(id("descriptionText")),
-                    is(""));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("descriptionText")), is(
+                    ""));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -996,15 +969,13 @@ public class FileUploadTest extends FunctionTestSupport {
                     new ClassPathResource("testdata/flup/日本語ファイル.txt")
                             .getFile());
 
-            String description = new StringBuilder()
-                    .append("確認画面遷移時に一時ディレクトリへ仮アップロードを行う。")
-                    .append("\r\n")
-                    .append("\n")
-                    .append("\r")
-                    .append("その後、確認画面でアップロードボタンを押下すると、アップロードしたファイルがデータベースに登録されます。")
+            String description = new StringBuilder().append(
+                    "確認画面遷移時に一時ディレクトリへ仮アップロードを行う。").append("\r\n").append("\n")
+                    .append("\r").append(
+                            "その後、確認画面でアップロードボタンを押下すると、アップロードしたファイルがデータベースに登録されます。")
                     .toString();
-            webDriverOperations
-                    .overrideTextArea(id("description"), description);
+            webDriverOperations.overrideTextArea(id("description"),
+                    description);
 
             webDriverOperations.click(id("confirmButton"));
         }
@@ -1019,14 +990,14 @@ public class FileUploadTest extends FunctionTestSupport {
         // 仮ファイルアップロード確認画面の操作
         String temporaryFileId = null;
         {
-            temporaryFileId = webDriverOperations
-                    .getText(id("temporaryFileIdText"));
+            temporaryFileId = webDriverOperations.getText(id(
+                    "temporaryFileIdText"));
             // 仮アップロードファイルが存在したらOK
             assertTrue(existsUploadedTemporaryFile(temporaryFileId));
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("descriptionText")),
-                    is(expectedDescription));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("descriptionText")), is(
+                    expectedDescription));
 
             webDriverOperations.click(id("uploadButton"));
         }
@@ -1035,14 +1006,14 @@ public class FileUploadTest extends FunctionTestSupport {
         {
             fileId = webDriverOperations.getText(id("fileIdText"));
 
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
 
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
 
-            assertThat(webDriverOperations.getText(id("descriptionText")),
-                    is(expectedDescription));
+            assertThat(webDriverOperations.getText(id("descriptionText")), is(
+                    expectedDescription));
 
         }
         // アップロード確認
@@ -1060,9 +1031,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1090,21 +1060,20 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 仮ファイルアップロード確認画面の操作
         String temporaryFileId = null;
         {
 
-            temporaryFileId = webDriverOperations
-                    .getText(id("temporaryFileIdText"));
+            temporaryFileId = webDriverOperations.getText(id(
+                    "temporaryFileIdText"));
             // 仮アップロードファイルが存在したらOK
             assertTrue(existsUploadedTemporaryFile(temporaryFileId));
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
 
             // 仮ファイルの削除スケジューラを有効に設定
             restOperations.getForEntity(applicationContextUrl
@@ -1112,8 +1081,8 @@ public class FileUploadTest extends FunctionTestSupport {
 
             // 仮ファイル削除のタスクスケジューラが動く間隔の12秒待機
             try {
-                TimeUnit.SECONDS
-                        .sleep(12 + offsetSecondsOfWaitForDeletedByScheduler);
+                TimeUnit.SECONDS.sleep(12
+                        + offsetSecondsOfWaitForDeletedByScheduler);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -1122,17 +1091,16 @@ public class FileUploadTest extends FunctionTestSupport {
         }
         // 一時ディレクトリのファイル一覧画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")),
-                    is("ファイルはありません。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "ファイルはありません。"));
             // 仮アップロードファイルが存在しなかったらOK
             assertFalse(existsUploadedTemporaryFile(temporaryFileId));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1160,21 +1128,20 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 仮ファイルアップロード確認画面の操作
         String temporaryFileId = null;
         {
 
-            temporaryFileId = webDriverOperations
-                    .getText(id("temporaryFileIdText"));
+            temporaryFileId = webDriverOperations.getText(id(
+                    "temporaryFileIdText"));
             // 仮アップロードファイルが存在したらOK
             assertTrue(existsUploadedTemporaryFile(temporaryFileId));
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
 
             // 仮ファイルの確認
             webDriverOperations.click(id("confirmTemporaryDirectory"));
@@ -1191,17 +1158,16 @@ public class FileUploadTest extends FunctionTestSupport {
         {
             // 最新状態を確認
             webDriverOperations.click(id("refreshButton"));
-            assertThat(webDriverOperations.getText(id("messages")),
-                    is("ファイルはありません。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "ファイルはありません。"));
             // 仮アップロードファイルが存在しなかったらOK
             assertFalse(existsUploadedTemporaryFile(temporaryFileId));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1218,8 +1184,8 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // ファイルダウンロードの設定をしたWebDriverの生成
         {
-            WebDriver newDriver = webDriverCreator
-                    .createDownloadableWebDriver(downloadTempDirectory);
+            WebDriver newDriver = webDriverCreator.createDownloadableWebDriver(
+                    downloadTempDirectory);
             quitWebDriver(webDriverOperations);
             setCurrentWebDriver(newDriver);
         }
@@ -1239,28 +1205,25 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // ファイルアップロード完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("index.jsp"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "index.jsp"));
 
             // ダウンロード
             webDriverOperations.click(id("downloadButton"));
             TimeUnit.SECONDS.sleep(1);
 
             // フダウンロードしたファイルの確認
-            assertThat(
-                    StreamUtils
-                            .copyToByteArray(new FileInputStream(downloadTempDirectory
-                                    + "/index.jsp")),
-                    is(StreamUtils
-                            .copyToByteArray(new ClassPathResource("testdata/flup/index.jsp")
+            assertThat(StreamUtils.copyToByteArray(
+                    new FileInputStream(downloadTempDirectory + "/index.jsp")),
+                    is(StreamUtils.copyToByteArray(
+                            new ClassPathResource("testdata/flup/index.jsp")
                                     .getInputStream())));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1287,17 +1250,16 @@ public class FileUploadTest extends FunctionTestSupport {
 
         // アップロードファイルの確認
         {
-            assertThat(webDriverOperations.getText(id("fileNameText")),
-                    is("日本語ファイル.txt"));
-            assertThat(webDriverOperations.getText(id("fileContentText")),
-                    is("日本語コンテンツ"));
+            assertThat(webDriverOperations.getText(id("fileNameText")), is(
+                    "日本語ファイル.txt"));
+            assertThat(webDriverOperations.getText(id("fileContentText")), is(
+                    "日本語コンテンツ"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1329,9 +1291,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 

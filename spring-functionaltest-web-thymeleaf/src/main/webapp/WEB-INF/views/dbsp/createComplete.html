@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="screenTitle">ユーザ登録完了画面</h1>
+      <form th:action="@{/dbsp/}" th:object="${userCreateForm}" method="get">
+        output:
+        <div id="output" th:text="${output}"></div>
+        <br>
+        <button id="backToTop" name="backToTop" type="submit" value="Submit">Top</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

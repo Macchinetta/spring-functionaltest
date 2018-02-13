@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
@@ -32,8 +45,8 @@ import org.terasoluna.gfw.common.exception.BusinessException;
 @RequestMapping("jmss")
 public class JMSS06SendingController {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(JMSS06SendingController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            JMSS06SendingController.class);
 
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
@@ -151,26 +164,6 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/003", method = RequestMethod.GET)
-    public String handle0604003(JmsSendingForm form) {
-
-        // Formオブジェクトに値設定
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("sendTx1PhaseSuccess");
-
-        return "jmss/jmsSend";
-    }
-
-    @RequestMapping(value = "0604/004", method = RequestMethod.GET)
-    public String handle0604004(JmsSendingForm form) {
-
-        // Formオブジェクトに値設定
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("sendTx1PhaseFail");
-
-        return "jmss/jmsSend";
-    }
-
     @RequestMapping(value = "0604/005", method = RequestMethod.GET)
     public String handle0604005(JmsSendingForm form) {
 
@@ -191,36 +184,17 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/007", method = RequestMethod.GET)
-    public String handle0604007(JmsSendingForm form) {
-
-        // Formオブジェクトに値設定
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("receTx1PhaseSuccess");
-
-        return "jmss/jmsSend";
-    }
-
-    @RequestMapping(value = "0604/008", method = RequestMethod.GET)
-    public String handle0604008(JmsSendingForm form) {
-
-        // Formオブジェクトに値設定
-        form.setJmsTodoId(UUID.randomUUID().toString());
-        form.setTestCase("receTx1PhaseFail");
-
-        return "jmss/jmsSend";
-    }
-
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTranSuccess")
     public String sendMessage_SendOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException, JMSException {
+            RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
 
         // メッセージ送信
         jmsTransactedCacheConSendingService.sendMessage_TxSndOK(form
                 .getJmsTodoId());
 
         // メッセージ取得可否判定（true：取得可 false:取得不可）
-        if (!jmsAmqReceivingService.receiveMessage_TxSndOK(form.getJmsTodoId())) {
+        if (!jmsAmqReceivingService.receiveMessage_TxSndOK(form
+                .getJmsTodoId())) {
             form.setJmsTodoId("Not Received!");
         } else {
             form.setJmsTodoId(form.getJmsTodoId());
@@ -248,7 +222,8 @@ public class JMSS06SendingController {
         }
 
         // メッセージ取得可否判定（true：取得可 false:取得不可）
-        if (!jmsAmqReceivingService.receiveMessage_TxSndNG(form.getJmsTodoId())) {
+        if (!jmsAmqReceivingService.receiveMessage_TxSndNG(form
+                .getJmsTodoId())) {
             form.setJmsTodoId("Not Received!");
         } else {
             form.setJmsTodoId(form.getJmsTodoId());
@@ -262,7 +237,7 @@ public class JMSS06SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranSuccess")
     public String sendMessage_ReceiveOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException, JMSException {
+            RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxRcvOK(form.getJmsTodoId());
@@ -288,7 +263,7 @@ public class JMSS06SendingController {
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranFail")
     public String sendMessage_ReceiveNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws JMSException {
+            RedirectAttributes attrs) throws JMSException, InterruptedException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxRcvNG(form.getJmsTodoId());
@@ -323,23 +298,6 @@ public class JMSS06SendingController {
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxAsyncOK(form.getJmsTodoId());
 
-        for (int i = 0; i < 4; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
-
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);
 
@@ -352,23 +310,6 @@ public class JMSS06SendingController {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxAsyncNG(form.getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
 
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);
@@ -407,38 +348,6 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTx1PhaseSuccess")
-    public String sendMessage_sendTx1PhaseOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException {
-
-        // メッセージ送信
-        jmsTransactedCacheConSendingService.sendMessage_sendTx1PhaseOK(form
-                .getJmsTodoId());
-
-        // アトリビュート設定
-        attrs.addFlashAttribute("jmsSendingForm", form);
-
-        return "redirect:/jmss/receivemessage";
-    }
-
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTx1PhaseFail")
-    public String sendMessage_sendTx1PhaseNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException {
-
-        try {
-            // メッセージ送信
-            jmsTransactedCacheConSendingService.sendMessage_sendTx1PhaseNG(form
-                    .getJmsTodoId());
-        } catch (BusinessException ex) {
-            logger.info("BusinessException Occured");
-        }
-
-        // アトリビュート設定
-        attrs.addFlashAttribute("jmsSendingForm", form);
-
-        return "redirect:/jmss/receivemessage";
-    }
-
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseSuccess")
     public String sendMessage_receTxBestEffort1PhaseOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
@@ -446,23 +355,6 @@ public class JMSS06SendingController {
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseOK(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
 
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);
@@ -477,85 +369,6 @@ public class JMSS06SendingController {
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseNG(form
                 .getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
-
-        // アトリビュート設定
-        attrs.addFlashAttribute("jmsSendingForm", form);
-
-        return "redirect:/jmss/receivemessage";
-    }
-
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTx1PhaseSuccess")
-    public String sendMessage_receTx1PhaseOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException {
-
-        // メッセージ送信
-        jmsCacheConSendingService.sendMessage_receTx1PhaseOK(form
-                .getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
-
-        // アトリビュート設定
-        attrs.addFlashAttribute("jmsSendingForm", form);
-
-        return "redirect:/jmss/receivemessage";
-    }
-
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTx1PhaseFail")
-    public String sendMessage_receTx1PhaseNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException {
-
-        // メッセージ送信
-        jmsCacheConSendingService.sendMessage_receTx1PhaseNG(form
-                .getJmsTodoId());
-
-        for (int i = 0; i < 3; i++) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
-            } catch (InterruptedException e) {
-                logger.warn("InterruptedException Occured", e);
-            }
-
-            // lockファイル存在確認
-            // @JmsListenerに設定されたTransactionManagerによりQueueにメッセージがロールバックされると
-            // 再度@JmsListenerが反応してしまい、エラー発生によるロールバックが繰り返される。（規定回数繰り返した後、メッセージはDLQに捨てられる。）
-            // そのため、メッセージ送信時に生成したlockファイルを非同期受信時のロールバック後に削除することで、トランザクションが有効であることを確認する。
-            if (!jmsSharedService.existsFile(temporaryDirectory
-                    + form.getJmsTodoId() + ".lock")) {
-                break;
-            }
-        }
 
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);

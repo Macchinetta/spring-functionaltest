@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.athr;
 
@@ -14,9 +27,6 @@ import java.net.URISyntaxException;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,6 +34,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class AuthorizationTest extends FunctionTestSupport {
 
@@ -45,8 +58,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athr0201001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("Staff Login Page"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "Staff Login Page"));
 
         // 入力条件設定
         // JoshはROLE_USER
@@ -87,8 +100,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.click(id("athr0201002"));
 
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 入力条件設定
             webDriverOperations.overrideText(id("username"), "Josh");
@@ -109,8 +122,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             // ユーザ情報が見えるページに遷移できることの確認
             // JoshはROLE_USERのみ
             assertThat(webDriverOperations.getText(id("username")), is("Josh"));
-            assertThat(webDriverOperations.getText(id("userRoles")),
-                    is("[ROLE_USER]"));
+            assertThat(webDriverOperations.getText(id("userRoles")), is(
+                    "[ROLE_USER]"));
 
             // 次のテストに影響するためログアウトする
             webDriverOperations.click(id("logout"));
@@ -123,8 +136,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/002/restrict.do");
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -134,8 +147,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/002/restrict");
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -145,8 +158,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/002/restrict/");
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -156,8 +169,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/002/restrict.do/");
             // タイトルの確認
-            assertThat(webDriverOperations.getTitle(),
-                    is("Resource Not Found Error!"));
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -173,12 +186,12 @@ public class AuthorizationTest extends FunctionTestSupport {
             if (apServerName == ApServerName.WEBSPHERELP
                     || apServerName == ApServerName.WEBSPHERETR) {
                 // ログインページのタイトルの確認
-                assertThat(webDriverOperations.getText(id("screenTitle")),
-                        is("Staff Login Page"));
+                assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                        "Staff Login Page"));
             } else {
                 // エラーページのタイトルの確認
-                assertThat(webDriverOperations.getTitle(),
-                        is("Resource Not Found Error!"));
+                assertThat(webDriverOperations.getTitle(), is(
+                        "Resource Not Found Error!"));
             }
         }
         {
@@ -186,8 +199,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/002/restrictA");
             // タイトルの確認
-            assertThat(webDriverOperations.getTitle(),
-                    is("Resource Not Found Error!"));
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -209,8 +222,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.click(id("athr0201003"));
 
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 入力条件設定
             webDriverOperations.overrideText(id("username"), "Josh");
@@ -220,8 +233,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.click(id("login"));
 
             // ログイン完了画面のタイトル確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("showForAccessSuccessfully"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "showForAccessSuccessfully"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -230,8 +243,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.click(id("athr0201003"));
 
             // ログイン完了画面のタイトル確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("showForAccessSuccessfully"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "showForAccessSuccessfully"));
 
             // 次のテストに影響するためログアウトする
             webDriverOperations.click(id("logout"));
@@ -244,8 +257,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/004/showForAccessSuccessfully");
             // ログイン画面の確認
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("Staff Login Page"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "Staff Login Page"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -255,8 +268,8 @@ public class AuthorizationTest extends FunctionTestSupport {
             webDriverOperations.displayPage(getPackageRootUrl()
                     + "0201/004/showforaccesssuccessfully");
             // タイトルの確認
-            assertThat(webDriverOperations.getTitle(),
-                    is("Resource Not Found Error!"));
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
 
             // 機能毎のトップページを表示
             webDriverOperations.displayPage(getPackageRootUrl());
@@ -295,19 +308,19 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 参照結果確認
         assertThat(webDriverOperations.getText(id("device")), is("eth0"));
-        assertThat(webDriverOperations.getText(id("broadcast")),
-                is("192.168.10.255"));
-        assertThat(webDriverOperations.getText(id("ipaddr")),
-                is("192.168.10.10"));
-        assertThat(webDriverOperations.getText(id("netmask")),
-                is("255.255.255.0"));
-        assertThat(webDriverOperations.getText(id("network")),
-                is("192.168.10.0"));
+        assertThat(webDriverOperations.getText(id("broadcast")), is(
+                "192.168.10.255"));
+        assertThat(webDriverOperations.getText(id("ipaddr")), is(
+                "192.168.10.10"));
+        assertThat(webDriverOperations.getText(id("netmask")), is(
+                "255.255.255.0"));
+        assertThat(webDriverOperations.getText(id("network")), is(
+                "192.168.10.0"));
         assertThat(webDriverOperations.getText(id("onboot")), is("yes"));
-        assertThat(webDriverOperations.getText(id("deviceType")),
-                is("Ethernet"));
-        assertThat(webDriverOperations.getText(id("gateway")),
-                is("192.168.10.1"));
+        assertThat(webDriverOperations.getText(id("deviceType")), is(
+                "Ethernet"));
+        assertThat(webDriverOperations.getText(id("gateway")), is(
+                "192.168.10.1"));
         assertThat(webDriverOperations.getText(id("owner")), is("Jack"));
 
         // ログアウトボタン押下
@@ -380,8 +393,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("select"));
 
         // 'ROLE_STAFF'ではアクセスできないことの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("methodAccessDeniedPage"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "methodAccessDeniedPage"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -407,8 +420,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_ADMIN'では指定タグ内の文言が表示されないことの確認
-        assertThat(webDriverOperations.getText(id("staffRole")),
-                is("This screen is for ROLE_ADMIN"));
+        assertThat(webDriverOperations.getText(id("staffRole")), is(
+                "This screen is for ROLE_ADMIN"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -451,8 +464,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_ADMIN'では指定リンクが表示されることの確認
-        assertThat(webDriverOperations.getText(id("staffRoleLink")),
-                is("Go To ATHR Top Page"));
+        assertThat(webDriverOperations.getText(id("staffRoleLink")), is(
+                "Go To ATHR Top Page"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -495,8 +508,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_ADMIN'では指定リンクが表示されることの確認
-        assertThat(webDriverOperations.getText(id("staffRoleVarLink")),
-                is("Go To ATHR Top Page(variable)"));
+        assertThat(webDriverOperations.getText(id("staffRoleVarLink")), is(
+                "Go To ATHR Top Page(variable)"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -542,8 +555,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("accountsLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -552,8 +565,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("mangerLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -573,8 +586,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("mangerLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -583,8 +596,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("allLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（ROLE）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -615,8 +628,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("managerLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -625,8 +638,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("configLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -646,8 +659,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("managerLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -667,8 +680,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("configLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -677,8 +690,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("adminLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -698,8 +711,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("adminLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（LOCAL IPADDRESS）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -730,8 +743,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("managerLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -751,8 +764,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("configLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -771,8 +784,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("adminLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -792,8 +805,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("adminLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ(NOT LOCAL IPADDRESS)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ(NOT LOCAL IPADDRESS)"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -824,8 +837,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("accountsLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -834,8 +847,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("mangerLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -855,8 +868,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("denyLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -876,8 +889,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("accountsLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -886,8 +899,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("mangerLink"));
 
         // アクセス許可の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "アクセスポリシに対応するユーザのみが表示できるページ（DENY ALL）"));
 
         // 戻る
         webDriverOperations.click(id("back"));
@@ -896,8 +909,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("denyLink"));
 
         // アクセスエラーの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "forbidden Error!"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -912,8 +925,7 @@ public class AuthorizationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>パス変数を使用するアクセスポリシーの認可が正常に機能することを確認する。</li>
-     * <li>パス変数を使用するアクセスポリシーの否認可が正常に機能することを確認する。(ATHR0601020)</li>
+     * <li>パス変数を使用するアクセスポリシーの認可/否認可が正常に機能することを確認する。</li>
      * </ul>
      */
     @Test
@@ -929,27 +941,190 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // "Josh"でログインしたことを確認
-        assertThat(webDriverOperations.getText(id("loginUserName")), is("Josh"));
+        assertThat(webDriverOperations.getText(id("loginUserName")), is(
+                "Josh"));
 
-        // 否認可パターンにアクセス
-        webDriverOperations.displayPage(getPackageRootUrl()
-                + "0601/019/account/Kosh");
+        // パターン１：Kosh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Kosh.html");
 
-        // 　否認可を受け、アクセス拒否画面が表示されていることを確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("forbidden Error!"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン２：Kosh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Kosh/a");
 
-        // 認可パターンにアクセス
-        webDriverOperations.displayPage(getPackageRootUrl()
-                + "0601/019/account/Josh");
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン３：Kosh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Kosh/");
 
-        // 認可を受け、ユーザ情報画面が表示されていることを確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("ユーザ情報詳細"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン４：Kosh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Kosh");
 
-        // ユーザ情報が見えるページに遷移できることの確認
-        assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン５：Josh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Josh.html");
 
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン６：Josh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Josh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン７：Josh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Josh/");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン８：Josh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/019/account/Josh");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // ログアウト
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パス変数を使用するアクセスポリシーの認可/否認可が正常に機能することを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHR0601020() throws IOException {
+        // メニュー画面の操作
+        webDriverOperations.click(id("athr0601020"));
+
+        // 入力条件設定
+        webDriverOperations.overrideText(id("username"), "Josh");
+        webDriverOperations.overrideText(id("password"), "spring1234");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // "Josh"でログインしたことを確認
+        assertThat(webDriverOperations.getText(id("loginUserName")), is(
+                "Josh"));
+
+        // パターン１：Kosh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Kosh.html");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン２：Kosh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Kosh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン３：Kosh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Kosh/");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン４：Kosh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Kosh");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン５：Josh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Josh.html");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン６：Josh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Josh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン７：Josh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Josh/");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン８：Josh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/020/account/Josh");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
         // ログアウト
         webDriverOperations.click(id("logout"));
 
@@ -973,30 +1148,197 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // "Josh"でログインしたことを確認
-        assertThat(webDriverOperations.getText(id("loginUserName")), is("Josh"));
+        assertThat(webDriverOperations.getText(id("loginUserName")), is(
+                "Josh"));
 
-        // 否認可パターンにアクセス
-        webDriverOperations.displayPage(getPackageRootUrl()
-                + "0601/021/account/Josh.json");
+        // パターン１：Kosh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Kosh.html");
 
-        // 認可を受け、ユーザ情報画面が表示されていることを確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("ユーザ情報詳細"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン２：Kosh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Kosh/a");
 
-        // ユーザ情報が見えるページに遷移できることの確認
-        assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン３：Kosh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Kosh/");
 
-        // 認可パターンにアクセス
-        webDriverOperations.displayPage(getPackageRootUrl()
-                + "0601/021/account/Josh");
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン４：Kosh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Kosh");
 
-        // ユーザ情報が見えるページに遷移できることの確認
-        assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン５：Josh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Josh.html");
 
-        // 認可を受け、ユーザ情報画面が表示されていることを確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("ユーザ情報詳細"));
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
 
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン６：Josh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Josh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン７：Josh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Josh/");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン８：Josh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/021/account/Josh");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // ログアウト
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パス変数を使用したアクセスポリシの設定にて、拡張子を含むアクセスポリシの設定を拡張子を含まないアクセスポリシ設定の前におくことで正常に機能することを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHR0601022() throws IOException {
+        // メニュー画面の操作
+        webDriverOperations.click(id("athr0601022"));
+
+        // 入力条件設定
+        webDriverOperations.overrideText(id("username"), "Josh");
+        webDriverOperations.overrideText(id("password"), "spring1234");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // "Josh"でログインしたことを確認
+        assertThat(webDriverOperations.getText(id("loginUserName")), is(
+                "Josh"));
+
+        // パターン１：Kosh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Kosh.html");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン２：Kosh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Kosh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン３：Kosh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Kosh/");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン４：Kosh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Kosh");
+
+            // 否認可を受け、アクセス拒否画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "forbidden Error!"));
+        }
+        // パターン５：Josh.html
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Josh.html");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン６：Josh/a
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Josh/a");
+
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
+        }
+        // パターン７：Josh/
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Josh/");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
+        // パターン８：Josh
+        {
+            webDriverOperations.displayPage(getPackageRootUrl()
+                    + "0601/022/account/Josh");
+
+            // 認可を受け、ユーザ情報画面が表示されていることを確認
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "ユーザ情報詳細"));
+
+            // ユーザ情報が見えるページに遷移できることの確認
+            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+        }
         // ログアウト
         webDriverOperations.click(id("logout"));
 
@@ -1028,8 +1370,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("select"));
 
         // 'ROLE_STAFF'はOwnerが時IDのDeviceにしかアクセスできないことの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("methodHierarchyAccessDeniedPage"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "methodHierarchyAccessDeniedPage"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -1090,17 +1432,17 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 要素が見つかるまでアサーションを待つ
         webDriverOperations.waitForDisplayed(ExpectedConditions
-                .visibilityOfElementLocated(By
-                        .xpath("//div[2]/div/div/ul/li[1]")));
+                .visibilityOfElementLocated(By.xpath(
+                        "//div[2]/div/div/ul/li[1]")));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")),
-                is("ステータスコード:403"));
+        assertThat(webDriverOperations.getText(id("returnStatus")), is(
+                "ステータスコード:403"));
 
         // 要素が見つかるまでアサーションを待つ
         webDriverOperations.waitForDisplayed(ExpectedConditions
-                .visibilityOfElementLocated(By
-                        .xpath("//div[2]/div/div/ul/li[2]")));
+                .visibilityOfElementLocated(By.xpath(
+                        "//div[2]/div/div/ul/li[2]")));
 
         // 戻り値の確認
         assertThat(webDriverOperations.getText(id("contentType")), isOneOf(
@@ -1110,8 +1452,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         // アクセス拒否リンク押下
         webDriverOperations.click(id("denyLink"));
 
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("AccessDeniedPagePge"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "AccessDeniedPagePge"));
 
         webDriverOperations.click(id("logout"));
 
@@ -1138,8 +1480,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 通常の認証エラーの確認
-        assertThat(webDriverOperations.getText(id("loginError")),
-                is("Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
 
         RequestEntity<Void> requestEntity = RequestEntity.get(
                 new URI(applicationContextUrl + "/athr/0802/001/api")).build();
@@ -1154,15 +1496,15 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         dbLogAssertOperations.waitForAssertion(1000);
         // ログが出力されていることを確認
-        dbLogAssertOperations
-                .assertContainsByRegexMessage(
-                        ".*AjaxAuthenticationEntryPoint",
-                        "Execute AjaxAuthenticationEntryPoint. RequestetURI is /spring-functionaltest-web/athr/0802/001/api");
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                ".*AjaxAuthenticationEntryPoint",
+                "Execute AjaxAuthenticationEntryPoint. RequestetURI is /"
+                        + contextName + "/athr/0802/001/api");
 
-        dbLogAssertOperations
-                .assertNotContainsByRegexMessage(
-                        ".*AjaxAuthenticationEntryPoint",
-                        "Execute AjaxAuthenticationEntryPoint. RequestetURI is /spring-functionaltest-web/athr/0802/001/aftreLogin");
+        dbLogAssertOperations.assertNotContainsByRegexMessage(
+                ".*AjaxAuthenticationEntryPoint",
+                "Execute AjaxAuthenticationEntryPoint. RequestetURI is /"
+                        + contextName + "/athr/0802/001/aftreLogin");
 
     }
 
@@ -1197,8 +1539,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_ADMIN'では指定タグ内の文言が表示されることの確認
-        assertThat(webDriverOperations.getText(id("roleHierarchy")),
-                is("This feature is for ROLE_ADMIN or ROLE_STAFF"));
+        assertThat(webDriverOperations.getText(id("roleHierarchy")), is(
+                "This feature is for ROLE_ADMIN or ROLE_STAFF"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1215,8 +1557,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_STAFF'では指定タグ内の文言が表示されることの確認
-        assertThat(webDriverOperations.getText(id("roleHierarchy")),
-                is("This feature is for ROLE_ADMIN or ROLE_STAFF"));
+        assertThat(webDriverOperations.getText(id("roleHierarchy")), is(
+                "This feature is for ROLE_ADMIN or ROLE_STAFF"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1233,8 +1575,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_USER'ではアクセスできないことの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("hierarchyAccessDeniedPage"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "hierarchyAccessDeniedPage"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1266,8 +1608,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_ADMIN'では指定タグ内の文言が表示されることの確認
-        assertThat(webDriverOperations.getText(id("roleHierarchy")),
-                is("This feature is for ROLE_ADMIN or ROLE_STAFF"));
+        assertThat(webDriverOperations.getText(id("roleHierarchy")), is(
+                "This feature is for ROLE_ADMIN or ROLE_STAFF"));
 
         // ログアウトボタン押下This feature is for ROLE_ADMIN or ROLE_STAFF
         webDriverOperations.click(id("logout"));
@@ -1284,8 +1626,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 'ROLE_STAFF'では指定タグ内の文言が表示されることの確認
-        assertThat(webDriverOperations.getText(id("roleHierarchy")),
-                is("This feature is for ROLE_ADMIN or ROLE_STAFF"));
+        assertThat(webDriverOperations.getText(id("roleHierarchy")), is(
+                "This feature is for ROLE_ADMIN or ROLE_STAFF"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1341,19 +1683,19 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 参照結果確認
         assertThat(webDriverOperations.getText(id("device")), is("eth0"));
-        assertThat(webDriverOperations.getText(id("broadcast")),
-                is("192.168.10.255"));
-        assertThat(webDriverOperations.getText(id("ipaddr")),
-                is("192.168.10.10"));
-        assertThat(webDriverOperations.getText(id("netmask")),
-                is("255.255.255.0"));
-        assertThat(webDriverOperations.getText(id("network")),
-                is("192.168.10.0"));
+        assertThat(webDriverOperations.getText(id("broadcast")), is(
+                "192.168.10.255"));
+        assertThat(webDriverOperations.getText(id("ipaddr")), is(
+                "192.168.10.10"));
+        assertThat(webDriverOperations.getText(id("netmask")), is(
+                "255.255.255.0"));
+        assertThat(webDriverOperations.getText(id("network")), is(
+                "192.168.10.0"));
         assertThat(webDriverOperations.getText(id("onboot")), is("yes"));
-        assertThat(webDriverOperations.getText(id("deviceType")),
-                is("Ethernet"));
-        assertThat(webDriverOperations.getText(id("gateway")),
-                is("192.168.10.1"));
+        assertThat(webDriverOperations.getText(id("deviceType")), is(
+                "Ethernet"));
+        assertThat(webDriverOperations.getText(id("gateway")), is(
+                "192.168.10.1"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1377,19 +1719,19 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 参照結果確認
         assertThat(webDriverOperations.getText(id("device")), is("eth1"));
-        assertThat(webDriverOperations.getText(id("broadcast")),
-                is("192.168.11.255"));
-        assertThat(webDriverOperations.getText(id("ipaddr")),
-                is("192.168.11.10"));
-        assertThat(webDriverOperations.getText(id("netmask")),
-                is("255.255.255.0"));
-        assertThat(webDriverOperations.getText(id("network")),
-                is("192.168.11.0"));
+        assertThat(webDriverOperations.getText(id("broadcast")), is(
+                "192.168.11.255"));
+        assertThat(webDriverOperations.getText(id("ipaddr")), is(
+                "192.168.11.10"));
+        assertThat(webDriverOperations.getText(id("netmask")), is(
+                "255.255.255.0"));
+        assertThat(webDriverOperations.getText(id("network")), is(
+                "192.168.11.0"));
         assertThat(webDriverOperations.getText(id("onboot")), is("yes"));
-        assertThat(webDriverOperations.getText(id("deviceType")),
-                is("Ethernet"));
-        assertThat(webDriverOperations.getText(id("gateway")),
-                is("192.168.11.1"));
+        assertThat(webDriverOperations.getText(id("deviceType")), is(
+                "Ethernet"));
+        assertThat(webDriverOperations.getText(id("gateway")), is(
+                "192.168.11.1"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1411,8 +1753,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("select"));
 
         // 'ROLE_USER'ではアクセスできないことの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("methodHierarchyAccessDeniedPage"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "methodHierarchyAccessDeniedPage"));
 
         // メニュー画面の操作
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -1448,19 +1790,19 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 登録結果確認
         assertThat(webDriverOperations.getText(id("device")), is("eth6"));
-        assertThat(webDriverOperations.getText(id("broadcast")),
-                is("192.168.16.255"));
-        assertThat(webDriverOperations.getText(id("ipaddr")),
-                is("192.168.16.10"));
-        assertThat(webDriverOperations.getText(id("netmask")),
-                is("255.255.255.0"));
-        assertThat(webDriverOperations.getText(id("network")),
-                is("192.168.16.0"));
+        assertThat(webDriverOperations.getText(id("broadcast")), is(
+                "192.168.16.255"));
+        assertThat(webDriverOperations.getText(id("ipaddr")), is(
+                "192.168.16.10"));
+        assertThat(webDriverOperations.getText(id("netmask")), is(
+                "255.255.255.0"));
+        assertThat(webDriverOperations.getText(id("network")), is(
+                "192.168.16.0"));
         assertThat(webDriverOperations.getText(id("onboot")), is("yes"));
-        assertThat(webDriverOperations.getText(id("deviceType")),
-                is("Ethernet"));
-        assertThat(webDriverOperations.getText(id("gateway")),
-                is("192.168.16.1"));
+        assertThat(webDriverOperations.getText(id("deviceType")), is(
+                "Ethernet"));
+        assertThat(webDriverOperations.getText(id("gateway")), is(
+                "192.168.16.1"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1495,19 +1837,19 @@ public class AuthorizationTest extends FunctionTestSupport {
 
         // 登録結果確認
         assertThat(webDriverOperations.getText(id("device")), is("eth7"));
-        assertThat(webDriverOperations.getText(id("broadcast")),
-                is("192.168.17.255"));
-        assertThat(webDriverOperations.getText(id("ipaddr")),
-                is("192.168.17.10"));
-        assertThat(webDriverOperations.getText(id("netmask")),
-                is("255.255.255.0"));
-        assertThat(webDriverOperations.getText(id("network")),
-                is("192.168.17.0"));
+        assertThat(webDriverOperations.getText(id("broadcast")), is(
+                "192.168.17.255"));
+        assertThat(webDriverOperations.getText(id("ipaddr")), is(
+                "192.168.17.10"));
+        assertThat(webDriverOperations.getText(id("netmask")), is(
+                "255.255.255.0"));
+        assertThat(webDriverOperations.getText(id("network")), is(
+                "192.168.17.0"));
         assertThat(webDriverOperations.getText(id("onboot")), is("yes"));
-        assertThat(webDriverOperations.getText(id("deviceType")),
-                is("Ethernet"));
-        assertThat(webDriverOperations.getText(id("gateway")),
-                is("192.168.17.1"));
+        assertThat(webDriverOperations.getText(id("deviceType")), is(
+                "Ethernet"));
+        assertThat(webDriverOperations.getText(id("gateway")), is(
+                "192.168.17.1"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1541,8 +1883,8 @@ public class AuthorizationTest extends FunctionTestSupport {
         webDriverOperations.click(id("register"));
 
         // 'ROLE_USER'ではアクセスできないことの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("methodHierarchyAccessDeniedPage"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "methodHierarchyAccessDeniedPage"));
 
         // 先頭へ戻る
         webDriverOperations.click(id("logout"));

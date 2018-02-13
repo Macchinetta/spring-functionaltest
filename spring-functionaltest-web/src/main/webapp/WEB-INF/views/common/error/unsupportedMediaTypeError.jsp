@@ -3,38 +3,26 @@
 <head>
 <meta charset="utf-8">
 <title>Unsupported MediaType Error!</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
 </head>
 <body>
-    <jsp:include page="/WEB-INF/views/layout/header.jsp" />
-    <div id="wrapper">
-        <h1>Unsupported MediaType  Error!</h1>
-        <div class="alert alert-danger">
-            <ul><li><c:if test="${!empty exceptionCode}">[${f:h(exceptionCode)}]</c:if>
-            <spring:message code="e.sf.cmmn.9008" /></li></ul>
-        </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+  <jsp:include page="/WEB-INF/views/layout/header.jsp" />
+  <div id="wrapper">
+    <h1>Unsupported MediaType Error!</h1>
+    <div class="alert alert-danger">
+      <ul>
+        <li><c:if test="${!empty exceptionCode}">[${f:h(exceptionCode)}]</c:if> <spring:message
+            code="e.sf.cmmn.9008" /></li>
+      </ul>
     </div>
-    <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <br> <br> <br> <br>
+  </div>
+  <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
 </body>
 </html>

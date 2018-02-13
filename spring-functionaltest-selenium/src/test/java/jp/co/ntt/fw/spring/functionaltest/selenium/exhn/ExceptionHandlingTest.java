@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.exhn;
 
@@ -15,6 +28,7 @@ import java.util.List;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -45,8 +59,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // ビジネスエラー画面に遷移
-        assertThat(webDriverOperations.getText(id("businessError")),
-                is("業務エラー画面"));
+        assertThat(webDriverOperations.getText(id("businessError")), is(
+                "業務エラー画面"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -56,10 +70,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         // 変更されていないことを確認
         assertThat(webDriverOperations.getInputFieldValue(id("employeeName")),
                 is("Josh"));
-        assertThat(webDriverOperations.getInputFieldValue(id("email")),
-                is("josh@example.com"));
-        assertThat(webDriverOperations.getInputFieldValue(id("address")),
-                is("sandiego"));
+        assertThat(webDriverOperations.getInputFieldValue(id("email")), is(
+                "josh@example.com"));
+        assertThat(webDriverOperations.getInputFieldValue(id("address")), is(
+                "sandiego"));
 
     }
 
@@ -81,8 +95,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("uploadButton"));
 
         // システム例外を発生させるため、作成した一時ファイルを削除
-        String temporaryFileName = webDriverOperations
-                .getText(id("uploadTemporaryFileId"));
+        String temporaryFileName = webDriverOperations.getText(id(
+                "uploadTemporaryFileId"));
         // RestTemplate で削除リクエストを投げる
         restOperations.getForEntity(applicationContextUrl
                 + "/exhn/delete?temporaryFileName=" + temporaryFileName,
@@ -121,26 +135,20 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("uploadButton"));
 
-        // IOエラーを発生させるため、作成した一時ファイルをDB登録後削除
-        String temporaryFileName = webDriverOperations
-                .getText(id("uploadTemporaryFileId"));
+        // IOエラーを発生させるため、作成した一時ファイルを完了ディレクトリにコピーしておく
+        String temporaryFileName = webDriverOperations.getText(id(
+                "uploadTemporaryFileId"));
 
-        /*
-         * 非同期で一時ファイルの削除処理を実行するため、JavascriptExecutor を使用して ボタンをクリックする方式をとっている。
-         */
-        webDriverOperations.forceClick(id("uploadButton"));
-
-        // DB登録処理が完了するまでの待ち時間、完了後一時ファイルを削除
-        Thread.sleep(2000L);
-
-        // RestTemplate で削除リクエストを投げる
+        // RestTemplate で一時ファイルをコピーするリクエストを投げる
         restOperations.getForEntity(applicationContextUrl
-                + "/exhn/delete?temporaryFileName=" + temporaryFileName,
-                String.class);
+                + "/exhn/copy/temporaryFile?temporaryFileName="
+                + temporaryFileName, void.class);
+
+        webDriverOperations.click(id("uploadButton"));
 
         // 完了画面に遷移すること
-        assertThat(webDriverOperations.getText(id("screenTitle")),
-                is("記事登録完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "記事登録完了画面"));
         webDriverOperations.saveScreenCapture();
 
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -150,7 +158,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
                 "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                "[e.sf.cmmn.9001]..*", "..*NoSuchFileException..*");
+                "[e.sf.cmmn.9001]..*", "..*FileAlreadyExistsException..*");
 
         // 登録されていることを確認
         assertThat(webDriverOperations.getText(id("count")), is("登録件数:1"));
@@ -175,8 +183,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // エラーメッセージ確認
-        assertThat(
-                webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
                 is("After exception message from catch"));
 
     }
@@ -200,8 +207,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // エラーメッセージ確認
-        assertThat(
-                webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
                 is("Exception message from EXHN"));
         webDriverOperations.saveScreenCapture();
 
@@ -218,8 +224,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // エラーメッセージ確認
-        assertThat(
-                webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div/ul")),
                 is("Exception message from EXHN"));
         webDriverOperations.saveScreenCapture();
 
@@ -243,8 +248,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
                 "NestedServletException Occured");
 
         // web.xmlの<error-page>に定義したエラー画面に遷移することを確認(SystemExceptionResolverのdefaultErrorViewに定義した画面に遷移しないこと)
-        assertThat(webDriverOperations.getTitle(),
-                is("Unhandled System Error!"));
+        assertThat(webDriverOperations.getTitle(), is(
+                "Unhandled System Error!"));
 
     }
 
@@ -266,8 +271,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("uploadButton"));
 
         // システム例外を発生させるため、作成した一時ファイルを削除
-        String temporaryFileName = webDriverOperations
-                .getText(id("uploadTemporaryFileId"));
+        String temporaryFileName = webDriverOperations.getText(id(
+                "uploadTemporaryFileId"));
         // RestTemplate で削除リクエストを投げる
         restOperations.getForEntity(applicationContextUrl
                 + "/exhn/delete?temporaryFileName=" + temporaryFileName,
@@ -291,8 +296,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
                     + "&title=test&fileName=exhn.html&upload", String.class);
         } catch (HttpServerErrorException e) {
             // X-Exception-Code が設定されていることを確認
-            assertThat(e.getResponseHeaders().getFirst("X-Exception-Code"),
-                    is("e.sf.exhn.9000"));
+            assertThat(e.getResponseHeaders().getFirst("X-Exception-Code"), is(
+                    "e.sf.exhn.9000"));
             throw e;
         }
     }
@@ -315,8 +320,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("uploadButton"));
 
         // システム例外を発生させるため、作成した一時ファイルを削除
-        String temporaryFileName = webDriverOperations
-                .getText(id("uploadTemporaryFileId"));
+        String temporaryFileName = webDriverOperations.getText(id(
+                "uploadTemporaryFileId"));
         // RestTemplate で削除リクエストを投げる
         restOperations.getForEntity(applicationContextUrl
                 + "/exhn/delete?temporaryFileName=" + temporaryFileName,
@@ -340,18 +345,19 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
                     + "&title=test&fileName=exhn.html&upload", String.class);
         } catch (HttpServerErrorException e) {
             // ヘッダに設定された値の整合性確認
-            assertThat(e.getResponseHeaders().getFirst("X-Error-Code"),
-                    is("e.sf.exhn.9000"));
+            assertThat(e.getResponseHeaders().getFirst("X-Error-Code"), is(
+                    "e.sf.exhn.9000"));
 
-            List<String> cacheControlList = Arrays.asList("no-store");
-            assertThat(e.getResponseHeaders().get("Cache-Control"),
-                    is(cacheControlList));
+            List<String> cacheControlList = Arrays.asList(
+                    "no-cache, no-store, max-age=0, must-revalidate",
+                    "no-store");
+            assertThat(e.getResponseHeaders().get("Cache-Control"), is(
+                    cacheControlList));
             assertThat(e.getResponseHeaders().getExpires(), is(-1L));
-            assertThat(e.getResponseHeaders().getPragma(), nullValue());
+            assertThat(e.getResponseHeaders().getPragma(), is("no-cache"));
 
             throw e;
         }
-
     }
 
     /**
@@ -373,11 +379,11 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // ビジネスエラー画面に遷移
-        assertThat(webDriverOperations.getText(id("businessError")),
-                is("業務エラー画面"));
-        assertThat(webDriverOperations.getText(By
-                .xpath("//div[2]/div/div/div[2]/ul/li")),
-                is("Business Exception occurred!!"));
+        assertThat(webDriverOperations.getText(id("businessError")), is(
+                "業務エラー画面"));
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//div[2]/div/div/div[2]/ul/li")), is(
+                        "Business Exception occurred!!"));
 
     }
 
@@ -400,11 +406,11 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("update"));
 
         // ビジネスエラー画面に遷移
-        assertThat(webDriverOperations.getText(id("businessError")),
-                is("業務エラー画面"));
-        assertThat(webDriverOperations.getText(By
-                .xpath("//div[2]/div/div/div[2]/ul/li")),
-                is("Business Exception occurred!!"));
+        assertThat(webDriverOperations.getText(id("businessError")), is(
+                "業務エラー画面"));
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//div[2]/div/div/div[2]/ul/li")), is(
+                        "Business Exception occurred!!"));
 
     }
 
@@ -419,8 +425,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         webDriverOperations.click(id("exhn0601005"));
 
         // web.xmlの<error-page>に定義したエラー画面に遷移することを確認(SystemExceptionResolverのdefaultErrorViewに定義した画面に遷移しないこと)
-        assertThat(webDriverOperations.getTitle(),
-                is("Unhandled System Error!"));
+        assertThat(webDriverOperations.getTitle(), is(
+                "Unhandled System Error!"));
 
     }
 
@@ -472,7 +478,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
                     + "/exhn/0701/003", String.class);
         } catch (HttpClientErrorException e) {
             // 415 が返却されていること
-            assertThat(e.getStatusCode(), is(HttpStatus.UNSUPPORTED_MEDIA_TYPE));
+            assertThat(e.getStatusCode(), is(
+                    HttpStatus.UNSUPPORTED_MEDIA_TYPE));
 
             throw e;
         }
@@ -678,12 +685,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
             // サーバでNoHandlerFoundExceptionをキャッチしていること。
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertContainsByRegexExceptionMessage(
-                            null,
-                            "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                            "No handler found for .*",
-                            "org\\.springframework\\.web\\.servlet\\.NoHandlerFoundException\\.*");
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger",
+                    "No handler found for .*",
+                    "org\\.springframework\\.web\\.servlet\\.NoHandlerFoundException\\.*");
 
             throw e;
         }
@@ -706,4 +711,30 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         }
     }
 
+    /**
+     * <ul>
+     * <li>HandlerExceptionResolverLoggingInterceptorを拡張し、ログレベルの判定ロジックを変えられる事を確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testEXHN0801001() throws IOException {
+
+        webDriverOperations.click(id("exhn0801001"));
+
+        // ERROR Level Log
+        dbLogAssertOperations.waitForAssertion();
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
+                "\\[e.sf.cmmn.9001\\] Runtime Exception occurred!!", "ERROR",
+                "org.terasoluna.gfw.common.exception.ExceptionLogger");
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
+                "\\[e.sf.cmmn.9001\\] Runtime Exception occurred!!", "ERROR",
+                "org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring");
+
+    }
+
+    @After
+    public void deleteTempDirectoryAndFiles() {
+        restOperations.getForEntity(applicationContextUrl + "/exhn/delete/all",
+                void.class);
+    }
 }

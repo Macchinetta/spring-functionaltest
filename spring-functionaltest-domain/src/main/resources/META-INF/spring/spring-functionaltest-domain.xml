@@ -1,69 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xmlns:tx="http://www.springframework.org/schema/tx"
-    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <tx:annotation-driven/>
+  <tx:annotation-driven />
 
-    <import resource="classpath:META-INF/spring/spring-functionaltest-infra.xml" />
-    <import resource="classpath:META-INF/spring/spring-functionaltest-jpa-infra.xml" />
-    <import resource="classpath:META-INF/spring/spring-functionaltest-codelist.xml" />
-    <import resource="classpath:META-INF/spring/spring-functionaltest-domain-ws.xml" />
-    
-     <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.domain,
+  <import resource="classpath:META-INF/spring/spring-functionaltest-infra.xml" />
+  <import resource="classpath:META-INF/spring/spring-functionaltest-jpa-infra.xml" />
+  <import resource="classpath:META-INF/spring/spring-functionaltest-codelist.xml" />
+  <import resource="classpath:META-INF/spring/spring-functionaltest-domain-ws.xml" />
+
+  <context:component-scan
+    base-package="jp.co.ntt.fw.spring.functionaltest.domain,
     									  jp.co.ntt.fw.spring.functionaltest.infra.spring.data" />
 
-    <!-- AOP. -->
-    <bean id="resultMessagesLoggingInterceptor"
-        class="org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor">
-          <property name="exceptionLogger" ref="exceptionLogger" />
-    </bean>
-    <aop:config>
-        <aop:advisor advice-ref="resultMessagesLoggingInterceptor"
-                     pointcut="@within(org.springframework.stereotype.Service)" />
-    </aop:config>
-    
-    <!-- Method Validation -->
-    <bean id="validator"
-        class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
-    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
-        <property name="validator" ref="validator" />
-    </bean>
-    
-    <bean id="notAsciiValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-	    <property name="validationMessageSource">
-	    	<bean class="org.springframework.context.support.ResourceBundleMessageSource">
-	            <property name="basenames">
-	                <list>
-	                    <value>ValidationMessagesNotAscii</value>
-	                </list>
-	            </property>
-	            <property name="defaultEncoding" value="UTF-8" />
-	        </bean>
-	    </property>
-	</bean>
-    
-    <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
-	    <property name="validator" ref="notAsciiValidator" />
-	</bean>
-<!-- Add End -->
+  <!-- AOP. -->
+  <bean id="resultMessagesLoggingInterceptor" class="org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor">
+    <property name="exceptionLogger" ref="exceptionLogger" />
+  </bean>
+  <aop:config>
+    <aop:advisor advice-ref="resultMessagesLoggingInterceptor" pointcut="@within(org.springframework.stereotype.Service)" />
+  </aop:config>
 
-    <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="${mail.from.address}" />
-        <property name="subject" value="Registration confirmation." />
-    </bean>
-    
-    <bean id="freemarkerConfiguration"
-        class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-        <property name="preferFileSystemAccess" value="false" />
-        <property name="templateLoaderPath" value="classpath:/META-INF/freemarker/" />
-        <property name="defaultEncoding" value="UTF-8" />
-    </bean>
+  <!-- spring-functionaltest/issues/1227 WASのみLocalValidatorFactoryのプロバイダクラスを変更する必要があるため、 LocalValidatorFactoryBeanの定義をspring-functionaltest-env.xmlに移動した。 
+    ガイドラインの説明とは異なるため、修正時は留意すること。 -->
+  <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+    <property name="validator" ref="validator" />
+  </bean>
+  <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor">
+    <property name="validator" ref="notAsciiValidator" />
+  </bean>
+  <!-- Add End -->
+
+  <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
+    <property name="from" value="${mail.from.address}" />
+    <property name="subject" value="Registration confirmation." />
+  </bean>
+
+  <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+    <property name="preferFileSystemAccess" value="false" />
+    <property name="templateLoaderPath" value="classpath:/META-INF/freemarker/" />
+    <property name="defaultEncoding" value="UTF-8" />
+  </bean>
 
 </beans>

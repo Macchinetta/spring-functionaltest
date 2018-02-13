@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
@@ -168,7 +181,8 @@ public class BNMP01Controller {
     }
 
     @RequestMapping(value = "sameNameSameTypeMapping", method = RequestMethod.POST, params = "copySameNameSameTypeBean")
-    public String handleSameNameSameTypeMapping(Model model, BeanMapperForm form) {
+    public String handleSameNameSameTypeMapping(Model model,
+            BeanMapperForm form) {
 
         // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
         BeanMapperDto destinationBean = beanMapper.map(form,
@@ -206,7 +220,8 @@ public class BNMP01Controller {
     }
 
     @RequestMapping(value = "differenceNameMapping", method = RequestMethod.POST, params = "copyDifferenceNameBean")
-    public String handleDifferenceNameMapping(Model model, BeanMapperForm form) {
+    public String handleDifferenceNameMapping(Model model,
+            BeanMapperForm form) {
 
         // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
         DifferenceFieldDto destinationBean = beanMapper.map(form,
@@ -430,12 +445,12 @@ public class BNMP01Controller {
 
         // 同じコレクションを参照しているか確認(コピー元Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceFormTo = beanMappingHelper
-                .checkSameCollectionRefference(form.getEmails(),
-                        destinationBean.getEmails());
+                .checkSameCollectionRefference(form.getEmails(), destinationBean
+                        .getEmails());
         // 同じコレクションを参照しているか確認(コピー先Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceDestTo = beanMappingHelper
-                .checkSameCollectionRefference(desitinationList,
-                        destinationBean.getEmails());
+                .checkSameCollectionRefference(desitinationList, destinationBean
+                        .getEmails());
         // 同じオブジェクト参照をしているか確認
         List<Boolean> objectRefferenceList = beanMappingHelper
                 .checkSameObjectRefference(form.getEmails(), destinationBean
@@ -466,12 +481,12 @@ public class BNMP01Controller {
 
         // 同じコレクションを参照しているか確認(コピー元Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceFormTo = beanMappingHelper
-                .checkSameCollectionRefference(form.getEmails(),
-                        destinationBean.getEmails());
+                .checkSameCollectionRefference(form.getEmails(), destinationBean
+                        .getEmails());
         // 同じコレクションを参照しているか確認(コピー先Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceDestTo = beanMappingHelper
-                .checkSameCollectionRefference(desitinationList,
-                        destinationBean.getEmails());
+                .checkSameCollectionRefference(desitinationList, destinationBean
+                        .getEmails());
         // 同じオブジェクト参照をしているか確認
         List<Boolean> objectRefferenceList = beanMappingHelper
                 .checkSameObjectRefference(form.getEmails(), destinationBean
@@ -518,12 +533,12 @@ public class BNMP01Controller {
 
         // 同じコレクションを参照しているか確認(コピー元Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceFormTo = beanMappingHelper
-                .checkSameCollectionRefference(form.getEmails(),
-                        destinationBean.getEmailAddresses());
+                .checkSameCollectionRefference(form.getEmails(), destinationBean
+                        .getEmailAddresses());
         // 同じコレクションを参照しているか確認(コピー先Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceDestTo = beanMappingHelper
-                .checkSameCollectionRefference(desitinationList,
-                        destinationBean.getEmailAddresses());
+                .checkSameCollectionRefference(desitinationList, destinationBean
+                        .getEmailAddresses());
         // 同じオブジェクト参照をしているか確認
         List<Boolean> objectRefferenceList = beanMappingHelper
                 .checkSameObjectRefference(form.getEmails(), destinationBean
@@ -554,12 +569,12 @@ public class BNMP01Controller {
 
         // 同じコレクションを参照しているか確認(コピー元Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceFormTo = beanMappingHelper
-                .checkSameCollectionRefference(form.getEmails(),
-                        destinationBean.getEmailAddresses());
+                .checkSameCollectionRefference(form.getEmails(), destinationBean
+                        .getEmailAddresses());
         // 同じコレクションを参照しているか確認(コピー先Beanとコピー結果Listとの比較)
         Boolean isSameCollectionRefferenceDestTo = beanMappingHelper
-                .checkSameCollectionRefference(desitinationList,
-                        destinationBean.getEmailAddresses());
+                .checkSameCollectionRefference(desitinationList, destinationBean
+                        .getEmailAddresses());
         // 同じオブジェクト参照をしているか確認
         List<Boolean> objectRefferenceList = beanMappingHelper
                 .checkSameObjectRefference(form.getEmails(), destinationBean

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">会員情報登録</h1>
+      <br>
+      <fieldset>
+        <legend>個人情報登録完了</legend>
+
+        <div th:if="${resultMessages} !=null" class="alert"
+          th:classappend="|alert-${resultMessages.type}|">
+          <ul>
+            <li th:each="message : ${resultMessages}"
+              th:text="${#messages.msgWithParams(message.code, message.args)}"></li>
+          </ul>
+        </div>
+
+
+        <table class="table table-striped table-bordered table-condensed">
+          <tr>
+            <th>会員ID</th>
+            <td><span id="memberId" th:text="${member.memberId}"></span></td>
+          </tr>
+          <tr>
+            <th>氏名（姓）</th>
+            <td><span id="firstName" th:text="${member.firstName}"></span></td>
+          </tr>
+          <tr>
+            <th>氏名（名）</th>
+            <td><span id="lastName" th:text="${member.lastName}"></span></td>
+          </tr>
+          <tr>
+            <th>氏名カナ（姓）</th>
+            <td><span id="firstNameKana" th:text="${member.firstNameKana}"></span></td>
+          </tr>
+          <tr>
+            <th>氏名カナ（名）</th>
+            <td><span id="lastNameKana" th:text="${member.lastNameKana}"></span></td>
+          </tr>
+          <tr>
+            <th>年齢</th>
+            <td><span id="age" th:text="${member.age}"></span></td>
+          </tr>
+          <tr>
+            <th>性別</th>
+            <td><span id="gender" th:text="${CL_GENDER[member.gender]}"></span></td>
+          </tr>
+          <tr>
+            <th>郵便番号</th>
+            <td><span id="zipCode" th:text="${member.zipCode}"></span></td>
+          </tr>
+          <tr>
+            <th>都道府県</th>
+            <td><span id="state" th:text="${member.state}"></span></td>
+          </tr>
+          <tr>
+            <th>市区町村</th>
+            <td><span id="city" th:text="${member.city}"></span></td>
+          </tr>
+          <tr>
+            <th>番地建物</th>
+            <td><span id="address" th:text="${member.address}"></span></td>
+          </tr>
+          <tr>
+            <th>職業</th>
+            <td><span id="occupation" th:text="${member.occupation}"></span></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><span id="mailAddress" th:text="${member.mailAddress}"></span></td>
+          </tr>
+        </table>
+        <div class="row">
+          <a id="menu" th:href="@{/ssmn}" class="btn btn-default">戻る</a>
+        </div>
+      </fieldset>
+      <!-- セッション内Form確認 -->
+      <div id="checkFormInSession" style="visibility: hidden"
+        th:text="${#session.getAttribute('memberForm')} != null ? ${#session.getAttribute('memberForm').getClass().getName()}"></div>
+    </div>
+  </div>
+</body>
+</html>

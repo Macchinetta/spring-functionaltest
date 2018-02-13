@@ -1,0 +1,15 @@
+<html>
+<head>
+<link rel="stylesheet" href="../../../resources/app/css/styles.css"
+  th:href="@{/resources/app/css/styles.css}">
+<title>Search No NameSpace Screen</title>
+</head>
+<body>
+  <h1>Search No NameSpace</h1>
+  <form name="searchForm" action="searchResult.html" th:action="@{/thym}" th:object="${searchForm}">
+    <label>fruits name:</label> <input type="text" name="fruitsName" th:value="*{fruitsName}" />
+    <button>Search</button>
+  </form>
+  <br>
+</body>
+</html>

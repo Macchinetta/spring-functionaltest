@@ -1,12 +1,24 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rest;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assume.assumeThat;
+import static com.jayway.restassured.RestAssured.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assume.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,14 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.RestTestSupport;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
 import com.jayway.restassured.filter.log.ResponseLoggingFilter;
 import com.jayway.restassured.http.ContentType;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.RestTestSupport;
 
 public class RestAPIForJSR310Test extends RestTestSupport {
 
@@ -37,8 +49,8 @@ public class RestAPIForJSR310Test extends RestTestSupport {
     @Before
     public void setUp() throws Exception {
         // Get all existing member resources
-        List<String> memberIds = given().when().get("/members").then()
-                .extract().jsonPath().getList("memberId");
+        List<String> memberIds = given().when().get("/members").then().extract()
+                .jsonPath().getList("memberId");
         // Delete all existing members
         for (String memberId : memberIds) {
             given().when().delete("/members/{memberId}", memberId);
@@ -94,8 +106,7 @@ public class RestAPIForJSR310Test extends RestTestSupport {
     @Test
     public void testREST0901001() throws Exception {
         // RESTサーバのJavaの実行環境のバージョンを取得する
-        int version = given().when().get("/serverinfo/getServerInfo").then()
-                .extract().jsonPath().getInt("javaVersion");
+        int version = getJavaVersion();
 
         // RESTサーバのJavaの実行環境のバージョンが1.8以上であればテストを実行する
         assumeThat(8 <= version, is(true));
@@ -111,16 +122,16 @@ public class RestAPIForJSR310Test extends RestTestSupport {
         // Request Body 期待値作成
         java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(date,
                 time);
-        String zoneDtStr = ZonedDateTime.of(dateTime,
-                ZoneId.of("America/Los_Angeles")).format(
-                DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        String zoneDtStr = ZonedDateTime.of(dateTime, ZoneId.of(
+                "America/Los_Angeles")).format(
+                        DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
         given().body(jsonBody).contentType(ContentType.JSON).filters(
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post(
-                "/datetime/getAmericaDateTime").then().statusCode(200).header(
-                "content-Type", containsString("application/json;")).body(
-                "dateTime", is(zoneDtStr));
+                        "/datetime/getAmericaDateTime").then().statusCode(200)
+                .header("content-Type", containsString("application/json;"))
+                .body("dateTime", is(zoneDtStr));
 
     }
 }

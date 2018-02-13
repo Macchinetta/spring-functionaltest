@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoBatchRepository">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoBatchRepository">
 
-	<resultMap id="todoCategoryResultMap" type="CategoryMB3">
-		<result property="categoryId" column="category_id" />
-		<result property="name" column="name" />
-	</resultMap>
+  <resultMap id="todoCategoryResultMap" type="CategoryMB3">
+    <result property="categoryId" column="category_id" />
+    <result property="name" column="name" />
+  </resultMap>
 
-	<resultMap id="todoResultMap" type="TodoMB3">
-		<result property="todoId" column="todo_id" />
-		<result property="todoTitle" column="todo_title" />
-		<!-- <result property="todoCategory" column="category_id" /> -->
-		<result property="finished" column="finished" />
-		<result property="createdAt" column="created_at" />
-		<association property="category" column="category_id"
-			javaType="CategoryMB3" select="findOneByTodoCategoryId" />
-	</resultMap>
+  <resultMap id="todoResultMap" type="TodoMB3">
+    <result property="todoId" column="todo_id" />
+    <result property="todoTitle" column="todo_title" />
+    <!-- <result property="todoCategory" column="category_id" /> -->
+    <result property="finished" column="finished" />
+    <result property="createdAt" column="created_at" />
+    <association property="category" column="category_id" javaType="CategoryMB3"
+      select="findOneByTodoCategoryId" />
+  </resultMap>
 
-	<update id="updateFinishedByTodIds">
-		UPDATE
-		t_todo
-		SET
-		finished = #{finished},
-		version = version + 1
-		WHERE
-		<foreach item="todoId" collection="todoIds" open="todo_id IN ("
-			separator="," close=")">
-			#{todoId}
-		</foreach>
-	</update>
+  <update id="updateFinishedByTodIds">
+    UPDATE
+    t_todo
+    SET
+    finished = #{finished},
+    version = version + 1
+    WHERE
+    <foreach item="todoId" collection="todoIds" open="todo_id IN (" separator="," close=")">
+      #{todoId}
+    </foreach>
+  </update>
 
 </mapper>

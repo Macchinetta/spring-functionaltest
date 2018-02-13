@@ -1,109 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-functionaltest-domain-oauth2</artifactId>
-    <packaging>jar</packaging>
-    <parent>
-        <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
-        <artifactId>spring-functionaltest</artifactId>
-        <version>1.4.0.RELEASE</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-    <name>Spring Functional Test - Domain Layer OAuth2</name>
-    <description>OAuth2 Domain layer of Spring Functional Test</description>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-functionaltest-domain-oauth2</artifactId>
+  <packaging>jar</packaging>
+  <parent>
+    <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
+    <artifactId>spring-functionaltest</artifactId>
+    <version>1.5.0.RELEASE</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <name>Spring Functional Test - Domain Layer OAuth2</name>
+  <description>OAuth2 Domain layer of Spring Functional Test</description>
 
-    <dependencies>
-        <!-- == Begin TERASOLUNA == -->
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <!-- == End TERASOLUNA == -->
+  <dependencies>
+    <!-- == Begin TERASOLUNA == -->
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <!-- == End TERASOLUNA == -->
 
-        <!-- == Begin Database == -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc7</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <!-- Once you have installed db2jcc4.jar into local repository,
-            please remove this comment out. -->
-        <!--
-        <dependency>
-            <groupId>com.ibm</groupId>
-            <artifactId>db2jcc4</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        -->
-        <!-- == End Database == -->
+    <!-- == Begin Database == -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <!-- Once you have installed ojdbc7.jar into local repository, please remove this comment out. -->
+    <!-- <dependency> <groupId>com.oracle.jdbc</groupId> <artifactId>ojdbc7</artifactId> <scope>provided</scope>
+      <optional>true</optional> </dependency> -->
+    <!-- Once you have installed db2jcc4.jar into local repository, please remove this comment out. -->
+    <!-- <dependency> <groupId>com.ibm</groupId> <artifactId>db2jcc4</artifactId> <scope>provided</scope> 
+      <optional>true</optional> </dependency> -->
+    <!-- == End Database == -->
 
-        <!-- == Begin Unit Test == -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- == Begin javax.transaction == -->
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>javax.transaction-api</artifactId>
-        </dependency>
-        <!-- == Ebd javax.transaction == -->
-        
-        <!-- == Begin oauth == -->
-        <dependency>
-            <groupId>org.springframework.security.oauth</groupId>
-            <artifactId>spring-security-oauth2</artifactId>
-		</dependency>
-        <!-- == End oauth == -->
-        
-    </dependencies>
-    <properties>
-        <project.root.basedir>${project.parent.basedir}</project.root.basedir>
-    </properties>
+    <!-- == Begin Unit Test == -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- == Begin javax.transaction == -->
+    <dependency>
+      <groupId>javax.transaction</groupId>
+      <artifactId>javax.transaction-api</artifactId>
+    </dependency>
+    <!-- == Ebd javax.transaction == -->
+
+    <!-- == Begin oauth == -->
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+    </dependency>
+    <!-- == End oauth == -->
+
+  </dependencies>
+  <properties>
+    <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+  </properties>
 </project>

@@ -1,19 +1,34 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.By.id;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.openqa.selenium.By.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class Oauth2InMemoryTest extends FunctionTestSupport {
 
     /** Title of GET Operation Result Page. */
@@ -87,8 +102,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -109,8 +124,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("scope.CREATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_POST_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -131,8 +146,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("scope.UPDATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_PUT_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -153,8 +168,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_DELETE_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
     }
@@ -172,8 +187,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("oth20201001"));
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 
@@ -196,8 +211,8 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")),
-                is(TITLE_GET_OPERATION));
+        assertThat(webDriverOperations.getText(id("title")), is(
+                TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
 

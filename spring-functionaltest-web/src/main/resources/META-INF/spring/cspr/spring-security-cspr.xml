@@ -1,89 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!-- CSPR設定(deniedHandlerを使用しない) -->
-    <sec:http pattern="/cspr/notUseDeniedHandler/**"
-        auto-config="false" entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
-        authentication-manager-ref="committerAuthenticationManager">
-        <sec:intercept-url pattern="/cspr/0301/001"
-            access="hasRole('ROLE_USER')" />
-        <sec:intercept-url pattern="/cspr/0301/003"
-            access="hasRole('ROLE_USER')" />
-        <sec:custom-filter ref="userIdMDCPutFilter"
-            after="ANONYMOUS_FILTER" />
-        <sec:form-login login-processing-url="/cspr/authenticate"
-            default-target-url="/cspr"
-            login-page="/cspr/login" />
-        <sec:logout logout-url="/cspr/logout" delete-cookies="JSESSIONID" />
-        <sec:session-management
-            session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    </sec:http>
+  <!-- CSPR設定(deniedHandlerを使用しない) -->
+  <sec:http pattern="/cspr/notUseDeniedHandler/**" auto-config="false"
+    entry-point-ref="committerLoginUrlAuthenticationEntryPoint" authentication-manager-ref="committerAuthenticationManager">
+    <sec:intercept-url pattern="/cspr/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/cspr/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/cspr/authenticate" default-target-url="/cspr"
+      login-page="/cspr/login" />
+    <sec:logout logout-url="/cspr/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+  </sec:http>
 
-    <!-- CSPR基本設定(deniedHandlerを使用する) -->
-    <sec:http pattern="/cspr/**" auto-config="false"
-        entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
-        authentication-manager-ref="committerAuthenticationManager">
-        <sec:intercept-url pattern="/cspr/0301/001"
-            access="hasRole('ROLE_USER')" />
-        <sec:intercept-url pattern="/cspr/0301/003"
-            access="hasRole('ROLE_USER')" />
-        <sec:access-denied-handler ref="accessDeniedHandler" />
+  <!-- CSPR基本設定(deniedHandlerを使用する) -->
+  <sec:http pattern="/cspr/**" auto-config="false" entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:intercept-url pattern="/cspr/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/cspr/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:access-denied-handler ref="accessDeniedHandler" />
 
-        <sec:custom-filter ref="userIdMDCPutFilter"
-            after="ANONYMOUS_FILTER" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
 
-        <sec:form-login login-processing-url="/cspr/authenticate"
-            default-target-url="/cspr"
-            login-page="/cspr/login" />
-        <sec:logout logout-url="/cspr/logout" delete-cookies="JSESSIONID" />
-        <sec:session-management
-            session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    </sec:http>
+    <sec:form-login login-processing-url="/cspr/authenticate" default-target-url="/cspr"
+      login-page="/cspr/login" />
+    <sec:logout logout-url="/cspr/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+  </sec:http>
 
-    <!-- CSPR基本設定(CSRFを使用しない) -->
-    <sec:http pattern="/disabledcspr/**" auto-config="false"
-        entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
-        authentication-manager-ref="committerAuthenticationManager">
+  <!-- CSPR基本設定(CSRFを使用しない) -->
+  <sec:http pattern="/disabledcspr/**" auto-config="false"
+    entry-point-ref="committerLoginUrlAuthenticationEntryPoint" authentication-manager-ref="committerAuthenticationManager">
 
-        <sec:csrf disabled="true" />
+    <sec:csrf disabled="true" />
 
-        <sec:custom-filter ref="userIdMDCPutFilter"
-            after="ANONYMOUS_FILTER" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
 
-        <sec:form-login login-processing-url="/disabledcspr/authenticate"
-            default-target-url="/cspr"
-            login-page="/disabledcspr/login" />
-        <sec:logout logout-url="/disabledcspr/logout"
-            delete-cookies="JSESSIONID" />
-        <sec:session-management
-            session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    </sec:http>
+    <sec:form-login login-processing-url="/disabledcspr/authenticate"
+      default-target-url="/cspr" login-page="/disabledcspr/login" />
+    <sec:logout logout-url="/disabledcspr/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+  </sec:http>
 
-    <sec:authentication-manager id="committerAuthenticationManager">
-        <sec:authentication-provider
-            ref="committerPasswordAuthenticationProvider" />
-    </sec:authentication-manager>
+  <sec:authentication-manager id="committerAuthenticationManager">
+    <sec:authentication-provider ref="committerPasswordAuthenticationProvider" />
+  </sec:authentication-manager>
 
-    <bean id="committerLoginUrlAuthenticationEntryPoint"
-        class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-        <constructor-arg value="/cspr/login" />
-    </bean>
+  <bean id="committerLoginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    <constructor-arg value="/cspr/login" />
+  </bean>
 
-    <bean id="committerPasswordAuthenticationProvider"
-        class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-        <property name="hideUserNotFoundExceptions" value="true" />
-        <property name="passwordEncoder" ref="passwordEncoder" />
-        <property name="userDetailsService" ref="committerService" />
-    </bean>
+  <bean id="committerPasswordAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="hideUserNotFoundExceptions" value="true" />
+    <property name="passwordEncoder" ref="passwordEncoder" />
+    <property name="userDetailsService" ref="committerService" />
+  </bean>
 
-    <bean id="committerService"
-        class="jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterUserDetailsService">
-    </bean>
+  <bean id="committerService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterUserDetailsService">
+  </bean>
 
 </beans>

@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
@@ -155,8 +168,8 @@ public class DNTA04Controller {
                 .getInputDateTime());
         model.addAttribute("getPlus", dateAndTimeApiService.plusMonth(date[0],
                 date[1], date[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusMonth(
-                date[0], date[1], date[2], form.getMinus()));
+        model.addAttribute("getMinus", dateAndTimeApiService.minusMonth(date[0],
+                date[1], date[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
@@ -207,17 +220,14 @@ public class DNTA04Controller {
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "compareDate")
     public String handleCompareDate(CompareDateTimeForm form, Model model) {
         model.addAttribute("NowIsBeforePast", dateAndTimeApiService
-                .isBeforeDate(form.getYear2(), form.getMonth2(),
-                        form.getDay2(), form.getYear1(), form.getMonth1(), form
-                                .getDay1()));
-        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService
-                .isBeforeDate(form.getYear2(), form.getMonth2(),
-                        form.getDay2(), form.getYear2(), form.getMonth2(), form
-                                .getDay2()));
+                .isBeforeDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+                        form.getYear1(), form.getMonth1(), form.getDay1()));
+        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService.isBeforeDate(
+                form.getYear2(), form.getMonth2(), form.getDay2(), form
+                        .getYear2(), form.getMonth2(), form.getDay2()));
         model.addAttribute("NowIsBeforeFuture", dateAndTimeApiService
-                .isBeforeDate(form.getYear2(), form.getMonth2(),
-                        form.getDay2(), form.getYear3(), form.getMonth3(), form
-                                .getDay3()));
+                .isBeforeDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+                        form.getYear3(), form.getMonth3(), form.getDay3()));
         model.addAttribute("NowIsAfterPast", dateAndTimeApiService.isAfterDate(
                 form.getYear2(), form.getMonth2(), form.getDay2(), form
                         .getYear1(), form.getMonth1(), form.getDay1()));
@@ -230,9 +240,9 @@ public class DNTA04Controller {
         model.addAttribute("NowEqualsPast", dateAndTimeApiService.equalsDate(
                 form.getYear2(), form.getMonth2(), form.getDay2(), form
                         .getYear1(), form.getMonth1(), form.getDay1()));
-        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear2(), form.getMonth2(), form.getDay2()));
+        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsDate(form
+                .getYear2(), form.getMonth2(), form.getDay2(), form.getYear2(),
+                form.getMonth2(), form.getDay2()));
         model.addAttribute("NowEqualsFuture", dateAndTimeApiService.equalsDate(
                 form.getYear2(), form.getMonth2(), form.getDay2(), form
                         .getYear3(), form.getMonth3(), form.getDay3()));
@@ -244,15 +254,14 @@ public class DNTA04Controller {
         model.addAttribute("NowIsBeforePast", dateAndTimeApiService
                 .isBeforeTime(form.getHour2(), form.getMinute2(), form
                         .getSecond2(), form.getHour1(), form.getMinute1(), form
-                        .getSecond1()));
-        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService
-                .isBeforeTime(form.getHour2(), form.getMinute2(), form
-                        .getSecond2(), form.getHour2(), form.getMinute2(), form
-                        .getSecond2()));
+                                .getSecond1()));
+        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService.isBeforeTime(
+                form.getHour2(), form.getMinute2(), form.getSecond2(), form
+                        .getHour2(), form.getMinute2(), form.getSecond2()));
         model.addAttribute("NowIsBeforeFuture", dateAndTimeApiService
                 .isBeforeTime(form.getHour2(), form.getMinute2(), form
                         .getSecond2(), form.getHour3(), form.getMinute3(), form
-                        .getSecond3()));
+                                .getSecond3()));
         model.addAttribute("NowIsAfterPast", dateAndTimeApiService.isAfterTime(
                 form.getHour2(), form.getMinute2(), form.getSecond2(), form
                         .getHour1(), form.getMinute1(), form.getSecond1()));
@@ -262,12 +271,12 @@ public class DNTA04Controller {
         model.addAttribute("NowIsAfterFuture", dateAndTimeApiService
                 .isAfterTime(form.getHour2(), form.getMinute2(), form
                         .getSecond2(), form.getHour3(), form.getMinute3(), form
-                        .getSecond3()));
+                                .getSecond3()));
         model.addAttribute("NowEqualsPast", dateAndTimeApiService.equalsTime(
                 form.getHour2(), form.getMinute2(), form.getSecond2(), form
                         .getHour1(), form.getMinute1(), form.getSecond1()));
-        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
+        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsTime(form
+                .getHour2(), form.getMinute2(), form.getSecond2(), form
                         .getHour2(), form.getMinute2(), form.getSecond2()));
         model.addAttribute("NowEqualsFuture", dateAndTimeApiService.equalsTime(
                 form.getHour2(), form.getMinute2(), form.getSecond2(), form
@@ -279,8 +288,8 @@ public class DNTA04Controller {
     public String handleCheckDateString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
-            model.addAttribute("getResult", dateAndTimeApiService
-                    .parseToDate(form.getTargetDate()));
+            model.addAttribute("getResult", dateAndTimeApiService.parseToDate(
+                    form.getTargetDate()));
         } catch (/* java.time.format.DateTimeParseException　JDK7向けのテスト実行時に、インスタンス生成の際のNoClassDefFoundErrorを回避するため */RuntimeException e) {
             model.addAttribute("checkResult", false);
             model.addAttribute("getResult", e);
@@ -293,8 +302,8 @@ public class DNTA04Controller {
     public String handleCheckTimeString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
-            model.addAttribute("getResult", dateAndTimeApiService
-                    .parseToTime(form.getTargetDate()));
+            model.addAttribute("getResult", dateAndTimeApiService.parseToTime(
+                    form.getTargetDate()));
         } catch (/* java.time.format.DateTimeParseException　JDK7向けのテスト実行時に、インスタンス生成の際のNoClassDefFoundErrorを回避するため */RuntimeException e) {
             model.addAttribute("checkResult", false);
             model.addAttribute("getResult", e);

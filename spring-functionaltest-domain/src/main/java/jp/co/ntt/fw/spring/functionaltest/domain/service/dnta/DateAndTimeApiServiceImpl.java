@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dnta;
 
@@ -84,8 +97,8 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
     @Override
     public String getNextMondayOfSpecifiedMonth(int year, int month, int day) {
         return java.time.LocalDate.of(year, month, day).with(
-                java.time.temporal.TemporalAdjusters
-                        .next(java.time.DayOfWeek.MONDAY)).toString();
+                java.time.temporal.TemporalAdjusters.next(
+                        java.time.DayOfWeek.MONDAY)).toString();
     }
 
     @Override
@@ -116,8 +129,8 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
         java.time.LocalDate date1 = java.time.LocalDate.of(year1, month1, day1);
         java.time.LocalDate date2 = java.time.LocalDate.of(year2, month2, day2);
         java.time.Period period = java.time.Period.between(date1, date2);
-        return new int[] { period.getYears(), period.getMonths(),
-                period.getDays() };
+        return new int[] { period.getYears(), period.getMonths(), period
+                .getDays() };
     }
 
     @Override
@@ -145,15 +158,15 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
         java.time.ZonedDateTime zonedDateTime2 = java.time.ZonedDateTime.of(
                 year2, month2, day2, hour2, minute2, second2, nanoSecond2,
                 java.time.ZoneId.of(area2));
-        java.time.Duration duration = java.time.Duration.between(
-                zonedDateTime1, zonedDateTime2);
+        java.time.Duration duration = java.time.Duration.between(zonedDateTime1,
+                zonedDateTime2);
         return new long[] { duration.toHours(), duration.toMinutes() % 60,
                 duration.getSeconds() % 60 };
     }
 
     @Override
-    public String toLocalDateTimeFromLocalTime(int hour, int minute,
-            int second, int year, int month, int day) {
+    public String toLocalDateTimeFromLocalTime(int hour, int minute, int second,
+            int year, int month, int day) {
         java.time.LocalTime time = java.time.LocalTime.of(hour, minute, second);
         return time.atDate(java.time.LocalDate.of(year, month, day)).toString();
     }
@@ -193,7 +206,8 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
 
     @Override
     public String toZonedDateTime(int year, int month, int day, int hour,
-            int minute, int second, int nanoSecond, int zoneOffset, String area) {
+            int minute, int second, int nanoSecond, int zoneOffset,
+            String area) {
         java.time.OffsetDateTime offsetDateTime = java.time.OffsetDateTime.of(
                 year, month, day, hour, minute, second, nanoSecond,
                 java.time.ZoneOffset.ofHours(zoneOffset));
@@ -204,23 +218,24 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
     @Override
     public String toOffsetDateTime(int year, int month, int day, int hour,
             int minute, int second, int nanoSecond, String area) {
-        java.time.ZonedDateTime zonedDateTime = java.time.ZonedDateTime.of(
-                year, month, day, hour, minute, second, nanoSecond,
-                java.time.ZoneId.of(area));
+        java.time.ZonedDateTime zonedDateTime = java.time.ZonedDateTime.of(year,
+                month, day, hour, minute, second, nanoSecond, java.time.ZoneId
+                        .of(area));
         return zonedDateTime.toOffsetDateTime().toString();
     }
 
     @Override
     public String toOffsetTime(int year, int month, int day, int hour,
             int minute, int second, int nanoSecond, String area) {
-        java.time.ZonedDateTime zonedDateTime = java.time.ZonedDateTime.of(
-                year, month, day, hour, minute, second, nanoSecond,
-                java.time.ZoneId.of(area));
+        java.time.ZonedDateTime zonedDateTime = java.time.ZonedDateTime.of(year,
+                month, day, hour, minute, second, nanoSecond, java.time.ZoneId
+                        .of(area));
         return zonedDateTime.toOffsetDateTime().toOffsetTime().toString();
     }
 
     @Override
-    public String toOffsetTime(int hour, int minute, int second, int zoneOffset) {
+    public String toOffsetTime(int hour, int minute, int second,
+            int zoneOffset) {
         java.time.LocalTime time = java.time.LocalTime.of(hour, minute, second);
         return time.atOffset(java.time.ZoneOffset.ofHours(zoneOffset))
                 .toString();
@@ -239,8 +254,8 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
     @Override
     public String toLocalDateTime(Date date) {
         java.time.Instant instant = date.toInstant();
-        return java.time.LocalDateTime.ofInstant(instant,
-                java.time.ZoneId.systemDefault()).toString();
+        return java.time.LocalDateTime.ofInstant(instant, java.time.ZoneId
+                .systemDefault()).toString();
     }
 
     @Override
@@ -329,8 +344,8 @@ public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
                 .withResolverStyle(java.time.format.ResolverStyle.STRICT);
         java.time.LocalDate date = java.time.LocalDate.parse(dateString,
                 formatter);
-        return new int[] { date.getYear(), date.getMonthValue(),
-                date.getDayOfMonth(), date.getDayOfYear() };
+        return new int[] { date.getYear(), date.getMonthValue(), date
+                .getDayOfMonth(), date.getDayOfYear() };
     }
 
     @Override

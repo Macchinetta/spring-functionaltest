@@ -4,8 +4,8 @@
 
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.hlch.HealthCheckRepository">
 
-    <select id="healthCheck" resultType="String">
-        SELECT '1'
-    </select>
+  <select id="healthCheck" resultType="String">
+    SELECT '1'
+  </select>
 
 </mapper>

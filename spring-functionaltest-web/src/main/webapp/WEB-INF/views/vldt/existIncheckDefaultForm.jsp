@@ -5,7 +5,8 @@
 <body>
   <h2>Codelist</h2>
   <br>
-  <form:form action="${pageContext.request.contextPath}/vldt/0501/001" method="post" modelAttribute="existInCheckDefaultForm">
+  <form:form action="${pageContext.request.contextPath}/vldt/0501/001" method="post"
+    modelAttribute="existInCheckDefaultForm">
     <table>
       <tr>
         <td><span id="errors"><form:errors path="key" style="color:red" /></span></td>
@@ -17,8 +18,8 @@
         <td><form:input path="key" /></td>
       </tr>
       <tr>
-        <td><input id="btn1" class="mainbtn" style="width: 200px;" type="submit" value="Confirm"
-          name="existInCheckString" />
+        <td><input id="btn1" class="mainbtn" style="width: 200px;" type="submit"
+          value="Confirm" name="existInCheckString" />
         <td>
         <td></td>
       </tr>

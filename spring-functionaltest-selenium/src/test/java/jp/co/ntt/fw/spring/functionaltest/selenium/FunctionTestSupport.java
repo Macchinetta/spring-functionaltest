@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -24,17 +37,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.ProfileValueSourceConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:META-INF/spring/seleniumContext.xml" })
+@ContextConfiguration(locations = {
+        "classpath:META-INF/spring/seleniumContext.xml" })
 public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(FunctionTestSupport.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            FunctionTestSupport.class);
 
     private static WebDriver webDriver;
 
@@ -117,8 +132,8 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
     @Value("${selenium.webDriverInputFieldAccessor:JAVASCRIPT}")
     public void setWebDriverInputFieldAccessor(
             String webDriverInputFieldAccessor) {
-        this.webDriverInputFieldAccessor = WebDriverInputFieldAccessor
-                .valueOf(webDriverInputFieldAccessor.toUpperCase());
+        this.webDriverInputFieldAccessor = WebDriverInputFieldAccessor.valueOf(
+                webDriverInputFieldAccessor.toUpperCase());
     }
 
     @Before
@@ -134,8 +149,8 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
         evidenceSavingDirectory = new File(String.format("%s/%s/%s",
                 evidenceBaseDirectory, simplePackageName, testCaseName));
 
-        LOGGER.debug("evidenceSavingDirectory is "
-                + evidenceSavingDirectory.getAbsolutePath());
+        LOGGER.debug("evidenceSavingDirectory is " + evidenceSavingDirectory
+                .getAbsolutePath());
 
         screenCapture.setUp(evidenceSavingDirectory);
         pageSource.setUp(evidenceSavingDirectory);
@@ -217,7 +232,8 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * </p>
      * @param webDriverOperations quitするWebDriverと関連付られているWebDriverOperationsインスタンス
      */
-    protected final void quitWebDriver(WebDriverOperations webDriverOperations) {
+    protected final void quitWebDriver(
+            WebDriverOperations webDriverOperations) {
         quitWebDriver(webDriverOperations.getWebDriver());
     }
 

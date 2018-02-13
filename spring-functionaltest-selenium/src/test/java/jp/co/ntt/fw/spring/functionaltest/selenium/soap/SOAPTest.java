@@ -1,20 +1,37 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.soap;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.By.id;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.openqa.selenium.By.*;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
 import jp.co.ntt.fw.spring.functionaltest.selenium.SOAPTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
 
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class SOAPTest extends SOAPTestSupport {
 
     private static final int TODO_MAX_COUNT = 5;
@@ -302,16 +319,16 @@ public class SOAPTest extends SOAPTestSupport {
             }
             // 結果の確認
             {
-                assertThat(webDriverOperations.getText(id("todoId")),
-                        is(createdTodoId));
-                assertThat(webDriverOperations.getText(id("title")),
-                        is(forUpdateTitle));
-                assertThat(webDriverOperations.getText(id("description")),
-                        is(forUpdateDescription));
-                assertThat(webDriverOperations.getText(id("finished")),
-                        is("true"));
-                assertThat(webDriverOperations.getText(id("createdAt")),
-                        is(createdAt));
+                assertThat(webDriverOperations.getText(id("todoId")), is(
+                        createdTodoId));
+                assertThat(webDriverOperations.getText(id("title")), is(
+                        forUpdateTitle));
+                assertThat(webDriverOperations.getText(id("description")), is(
+                        forUpdateDescription));
+                assertThat(webDriverOperations.getText(id("finished")), is(
+                        "true"));
+                assertThat(webDriverOperations.getText(id("createdAt")), is(
+                        createdAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
@@ -332,8 +349,8 @@ public class SOAPTest extends SOAPTestSupport {
 
                 beforeTodoId = webDriverOperations.getText(id("todoId1"));
                 beforeTitle = webDriverOperations.getText(id("title1"));
-                beforeDescription = webDriverOperations
-                        .getText(id("description1"));
+                beforeDescription = webDriverOperations.getText(id(
+                        "description1"));
                 beforeFinished = webDriverOperations.getText(id("finished1"));
                 beforeCreatedAt = webDriverOperations.getText(id("createdAt1"));
 
@@ -382,16 +399,16 @@ public class SOAPTest extends SOAPTestSupport {
                 // updateされていないことの確認
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
-                assertThat(webDriverOperations.getText(id("todoId1")),
-                        is(beforeTodoId));
-                assertThat(webDriverOperations.getText(id("title1")),
-                        is(beforeTitle));
-                assertThat(webDriverOperations.getText(id("description1")),
-                        is(beforeDescription));
-                assertThat(webDriverOperations.getText(id("finished1")),
-                        is(beforeFinished));
-                assertThat(webDriverOperations.getText(id("createdAt1")),
-                        is(beforeCreatedAt));
+                assertThat(webDriverOperations.getText(id("todoId1")), is(
+                        beforeTodoId));
+                assertThat(webDriverOperations.getText(id("title1")), is(
+                        beforeTitle));
+                assertThat(webDriverOperations.getText(id("description1")), is(
+                        beforeDescription));
+                assertThat(webDriverOperations.getText(id("finished1")), is(
+                        beforeFinished));
+                assertThat(webDriverOperations.getText(id("createdAt1")), is(
+                        beforeCreatedAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
@@ -448,8 +465,8 @@ public class SOAPTest extends SOAPTestSupport {
 
                 beforeTodoId = webDriverOperations.getText(id("todoId1"));
                 beforeTitle = webDriverOperations.getText(id("title1"));
-                beforeDescription = webDriverOperations
-                        .getText(id("description1"));
+                beforeDescription = webDriverOperations.getText(id(
+                        "description1"));
                 beforeFinished = webDriverOperations.getText(id("finished1"));
                 beforeCreatedAt = webDriverOperations.getText(id("createdAt1"));
 
@@ -498,16 +515,16 @@ public class SOAPTest extends SOAPTestSupport {
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
                 // updateされていないことの確認
-                assertThat(webDriverOperations.getText(id("todoId1")),
-                        is(beforeTodoId));
-                assertThat(webDriverOperations.getText(id("title1")),
-                        is(beforeTitle));
-                assertThat(webDriverOperations.getText(id("description1")),
-                        is(beforeDescription));
-                assertThat(webDriverOperations.getText(id("finished1")),
-                        is(beforeFinished));
-                assertThat(webDriverOperations.getText(id("createdAt1")),
-                        is(beforeCreatedAt));
+                assertThat(webDriverOperations.getText(id("todoId1")), is(
+                        beforeTodoId));
+                assertThat(webDriverOperations.getText(id("title1")), is(
+                        beforeTitle));
+                assertThat(webDriverOperations.getText(id("description1")), is(
+                        beforeDescription));
+                assertThat(webDriverOperations.getText(id("finished1")), is(
+                        beforeFinished));
+                assertThat(webDriverOperations.getText(id("createdAt1")), is(
+                        beforeCreatedAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
@@ -540,8 +557,8 @@ public class SOAPTest extends SOAPTestSupport {
             // 結果の確認
             {
                 assertThat(webDriverOperations.getText(id("title")), is("テスト"));
-                assertThat(webDriverOperations.getText(id("description")),
-                        is("test description by testuser"));
+                assertThat(webDriverOperations.getText(id("description")), is(
+                        "test description by testuser"));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
@@ -584,10 +601,18 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(401);
+                String exceptionClassName;
+                // Issue1231. WebSphere Traditionalだけ発生する例外クラスが異なるため
+                // チェックする名称を変更する。
+                if (webDriverOperations
+                        .getApServerName() == ApServerName.WEBSPHERETR) {
+                    exceptionClassName = "org.springframework.remoting.jaxws.JaxWsSoapFaultException";
+                } else {
+                    exceptionClassName = "org.springframework.remoting.RemoteAccessException";
+                }
                 dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(), null,
-                        "e.sf.cmmn.9001",
-                        "org.springframework.remoting.RemoteAccessException");
+                        webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                        exceptionClassName);
             }
         }
 
@@ -754,8 +779,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(
-                        WebFaultType.AccessDeniedFault,
+                assertWebFault(WebFaultType.AccessDeniedFault,
                         new ErrorBean("org.springframework.security.access.AccessDeniedException", "Access is denied", null));
             }
         }
@@ -825,8 +849,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(
-                        WebFaultType.ResourceNotFoundFault,
+                assertWebFault(WebFaultType.ResourceNotFoundFault,
                         new ErrorBean("e.sf.soap.5001", "Resource not found", null));
             }
         }
@@ -859,8 +882,7 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(500);
-            assertWebFault(
-                    WebFaultType.BusinessFault,
+            assertWebFault(WebFaultType.BusinessFault,
                     new ErrorBean("e.sf.soap.8001", "Exceed todo count max", null));
         }
 
@@ -882,10 +904,9 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(500);
-            dbLogAssertOperations
-                    .assertContainsByRegexExceptionMessage(webDriverOperations
-                            .getXTrack(), null, "e.sf.cmmn.9001",
-                            "org.springframework.remoting.jaxws.JaxWsSoapFaultException");
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                    webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                    "org.springframework.remoting.jaxws.JaxWsSoapFaultException");
         }
 
     }
@@ -910,8 +931,8 @@ public class SOAPTest extends SOAPTestSupport {
         }
         // 結果の確認
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("SOAP SOAP Web Service（サーバ/クライアント）"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "SOAP SOAP Web Service（サーバ/クライアント）"));
 
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(200);

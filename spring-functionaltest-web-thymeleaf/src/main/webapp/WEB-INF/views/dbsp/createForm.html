@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="screenTitle">ユーザ登録画面</h1>
+      <form th:action="@{/dbsp/0201/001/create?confirm}" th:object="${userCreateForm}" method="post">
+        <label for="firstName">FirstName:</label> <input type="text" th:field="*{firstName}" /> <br>
+        <label for="lastName">LastName:</label> <input type="text" th:field="*{lastName}" /> <br>
+        <label for="filePath">FilePath:</label> <input type="text" th:field="*{filePath}" /> <br>
+        <button id="confirm" name="confirm" type="submit" value="Submit">Confirm Create
+          User</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

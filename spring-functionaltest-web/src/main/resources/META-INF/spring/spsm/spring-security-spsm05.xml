@@ -1,59 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <sec:http pattern="/spsm/0501/001/**" auto-config="false"
-        authentication-manager-ref="loginForSessionUserInfoManager">
-        <sec:form-login login-page="/spsm/0501/001"
-            login-processing-url="/spsm/0501/001/authenticate"
-            default-target-url="/spsm/0501/001?loginSuccess" />
+  <sec:http pattern="/spsm/0501/001/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+    <sec:form-login login-page="/spsm/0501/001" login-processing-url="/spsm/0501/001/authenticate"
+      default-target-url="/spsm/0501/001?loginSuccess" />
 
-        <sec:intercept-url pattern="/spsm/0501/001/login"
-            access="permitAll" />
+    <sec:intercept-url pattern="/spsm/0501/001/login" access="permitAll" />
 
-        <sec:intercept-url pattern="/spsm/0501/**"
-            access="isAuthenticated()" />
-        <sec:session-management>
-            <sec:concurrency-control
-                error-if-maximum-exceeded="false" max-sessions="2"
-                expired-url="/" />
-        </sec:session-management>
-        <sec:logout logout-url="/spsm/0501/001/logout"
-            logout-success-url="/athn/" invalidate-session="true"
-            delete-cookies="JSESSIONID" />
-    </sec:http>
+    <sec:intercept-url pattern="/spsm/0501/**" access="isAuthenticated()" />
+    <sec:session-management>
+      <sec:concurrency-control error-if-maximum-exceeded="false"
+        max-sessions="2" expired-url="/" />
+    </sec:session-management>
+    <sec:logout logout-url="/spsm/0501/001/logout" logout-success-url="/athn/"
+      invalidate-session="true" delete-cookies="JSESSIONID" />
+  </sec:http>
 
-    <sec:http pattern="/spsm/0501/002/**" auto-config="false"
-        authentication-manager-ref="loginForSessionUserInfoManager">
-        <sec:form-login login-page="/spsm/0501/002"
-            login-processing-url="/spsm/0501/002/authenticate"
-            default-target-url="/spsm/0501/002?loginSuccess" />
-        <sec:session-management>
-            <sec:concurrency-control
-                error-if-maximum-exceeded="true" max-sessions="2" />
-        </sec:session-management>
-        <sec:logout logout-url="/spsm/0501/002/logout"
-            logout-success-url="/athn/" invalidate-session="true"
-            delete-cookies="JSESSIONID" />
-    </sec:http>
+  <sec:http pattern="/spsm/0501/002/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+    <sec:form-login login-page="/spsm/0501/002" login-processing-url="/spsm/0501/002/authenticate"
+      default-target-url="/spsm/0501/002?loginSuccess" />
+    <sec:session-management>
+      <sec:concurrency-control error-if-maximum-exceeded="true"
+        max-sessions="2" />
+    </sec:session-management>
+    <sec:logout logout-url="/spsm/0501/002/logout" logout-success-url="/athn/"
+      invalidate-session="true" delete-cookies="JSESSIONID" />
+  </sec:http>
 
-    <sec:authentication-manager id="loginForSessionUserInfoManager">
-        <sec:authentication-provider
-            user-service-ref="loginForSessionUserInfoDetailsService">
-            <sec:password-encoder ref="passwordEncoder" />
-        </sec:authentication-provider>
-    </sec:authentication-manager>
+  <sec:authentication-manager id="loginForSessionUserInfoManager">
+    <sec:authentication-provider user-service-ref="loginForSessionUserInfoDetailsService">
+      <sec:password-encoder ref="passwordEncoder" />
+    </sec:authentication-provider>
+  </sec:authentication-manager>
 
-    <bean id="loginForSessionUserInfoDetailsService"
-        class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-        <property name="dataSource" ref="dataSource" />
-        <property name="usersByUsernameQuery"
-            value="SELECT username, password, enabled FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
-        <property name="authoritiesByUsernameQuery"
-            value="SELECT username, 'ROLE_USER' authority FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
-    </bean>
+  <bean id="loginForSessionUserInfoDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+    <property name="dataSource" ref="dataSource" />
+    <property name="usersByUsernameQuery"
+      value="SELECT username, password, enabled FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
+    <property name="authoritiesByUsernameQuery"
+      value="SELECT username, 'ROLE_USER' authority FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
+  </bean>
 </beans>

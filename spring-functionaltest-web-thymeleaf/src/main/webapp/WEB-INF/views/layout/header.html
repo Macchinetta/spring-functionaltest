@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+</head>
+<body>
+  <div th:fragment="header">
+    <!-- ナビゲーションバー -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse"
+            data-target=".navbar-collapse">
+            <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+          </button>
+          <a id="springTestTop" class="navbar-brand" th:href="@{/}"
+            th:text="#{label.sf.cmmn.systemName}"></a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav pull-right">
+            <li class="nav-divider"></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                class="glyphicon glyphicon-user"></span> <span id="loginUserName"
+                th:text="${#authentication != null and #authorization.expr('isAuthenticated()')} ? ${#authentication.principal.username} : #{label.sf.cmmn.defaultUserName}">
+              </span> さん <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#users/update"><span class="glyphicon glyphicon-edit"></span>
+                    ユーザー情報変更</a></li>
+                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-off"></span>
+                    ログアウト</a></li>
+              </ul></li>
+          </ul>
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

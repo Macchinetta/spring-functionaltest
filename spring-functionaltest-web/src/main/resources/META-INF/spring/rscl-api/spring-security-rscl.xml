@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <sec:http pattern="/api/v1/rscl/**"
-        create-session="stateless"
-        authentication-manager-ref="rsclAuthenticationManager">
-        <sec:http-basic />
-        <sec:csrf disabled="true" />
-        <sec:intercept-url pattern="/api/v1/rscl/basic"
-            access="hasRole('ROLE_USER')" />
-    </sec:http>
+  <sec:http pattern="/api/v1/rscl/**" create-session="stateless"
+    authentication-manager-ref="rsclAuthenticationManager">
+    <sec:http-basic />
+    <sec:csrf disabled="true" />
+    <sec:intercept-url pattern="/api/v1/rscl/basic" access="hasRole('ROLE_USER')" />
+  </sec:http>
 
-    <!-- ↓他のテストAPIに影響を与えない＆受けないように、managerにIDを振って、IDを特定して使うようにする。↓ -->
-    <sec:authentication-manager id="rsclAuthenticationManager">
-        <sec:authentication-provider>
-            <sec:user-service>
-                <sec:user name="rscluser" password="password1234"
-                    authorities="ROLE_USER" />
-            </sec:user-service>
-        </sec:authentication-provider>
-    </sec:authentication-manager>
+  <!-- ↓他のテストAPIに影響を与えない＆受けないように、managerにIDを振って、IDを特定して使うようにする。↓ -->
+  <sec:authentication-manager id="rsclAuthenticationManager">
+    <sec:authentication-provider>
+      <sec:user-service>
+        <sec:user name="rscluser" password="password1234" authorities="ROLE_USER" />
+      </sec:user-service>
+    </sec:authentication-provider>
+  </sec:authentication-manager>
 
 </beans>

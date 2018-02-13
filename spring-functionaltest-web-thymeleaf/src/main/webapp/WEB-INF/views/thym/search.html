@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="../../../resources/app/css/styles.css"
+  th:href="@{/resources/app/css/styles.css}">
+<title>Search Screen</title>
+</head>
+<body>
+  <h1>Search</h1>
+  <!--/*  
+   Description of guidelines
+  <form name="searchForm" action="searchResult.html" th:action="@{/searchResult}" th:object="${searchForm}">
+   */-->
+  <form name="searchForm" action="searchResult.html" th:action="@{/thym/0201/002}"
+    th:object="${searchForm}">
+    <label>fruits name:</label> <input type="text" th:field="*{fruitsName}" />
+    <button>Search</button>
+  </form>
+</body>
+</html>

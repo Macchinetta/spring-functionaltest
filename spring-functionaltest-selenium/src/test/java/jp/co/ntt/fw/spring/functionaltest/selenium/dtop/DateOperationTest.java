@@ -1,17 +1,34 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dtop;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.By.id;
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.openqa.selenium.By.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+
+//Thymeleaf版未実装のためJSPのみ実行
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class DateOperationTest extends FunctionTestSupport {
 
     private static WebDriver deDriver;
@@ -53,8 +70,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 13:50:12.100 +09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 13:50:12.100 +09:00"));
         }
     }
 
@@ -78,8 +95,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09"));
         }
     }
 
@@ -103,8 +120,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("13:50:12"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "13:50:12"));
         }
     }
 
@@ -128,8 +145,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 00:00:00.000 +09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 00:00:00.000 +09:00"));
         }
     }
 
@@ -153,8 +170,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 00:00:00.000 +09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 00:00:00.000 +09:00"));
         }
     }
 
@@ -180,8 +197,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/08 20:50:12.100 -08:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/08 20:50:12.100 -08:00"));
         }
     }
 
@@ -205,16 +222,16 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResultYear")),
-                    is("2013"));
+            assertThat(webDriverOperations.getText(id("getDateResultYear")), is(
+                    "2013"));
             assertThat(webDriverOperations.getText(id("getDateResultMonth")),
                     is("12"));
-            assertThat(webDriverOperations.getText(id("getDateResultDay")),
-                    is("9"));
-            assertThat(webDriverOperations.getText(id("getDateResultWeek")),
-                    is("1"));
-            assertThat(webDriverOperations.getText(id("getDateResultHour")),
-                    is("13"));
+            assertThat(webDriverOperations.getText(id("getDateResultDay")), is(
+                    "9"));
+            assertThat(webDriverOperations.getText(id("getDateResultWeek")), is(
+                    "1"));
+            assertThat(webDriverOperations.getText(id("getDateResultHour")), is(
+                    "13"));
             assertThat(webDriverOperations.getText(id("getDateResultMinute")),
                     is("50"));
             assertThat(webDriverOperations.getText(id("getDateResultSecond")),
@@ -244,8 +261,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 13:50:12.100 +09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 13:50:12.100 +09:00"));
         }
     }
 
@@ -269,8 +286,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 13:50:12.100"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 13:50:12.100"));
         }
     }
 
@@ -295,8 +312,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09"));
         }
     }
 
@@ -315,8 +332,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したDateTimeから指定した日数を増減した場合に、指定した値分増減した日付を取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/12/09");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/12/09");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcDayDate"));
@@ -326,8 +343,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/12/10"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/12/08"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/12/08"));
         }
     }
 
@@ -346,8 +363,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したDateTimeから指定した月数を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/12/09");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/12/09");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcMonthDate"));
@@ -357,8 +374,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2014/01/09"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/11/09"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/11/09"));
         }
     }
 
@@ -377,8 +394,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したDateTimeから指定した年数を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/12/09");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/12/09");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcYearDate"));
@@ -388,8 +405,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2014/12/09"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/12/09"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/12/09"));
         }
     }
 
@@ -408,8 +425,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 閏年を設定したDateTimeから指定した日数を増加した場合に、指定した値分増した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2012/02/28");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2012/02/28");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcDayDate"));
@@ -426,8 +443,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 閏年を設定したDateTimeから指定した日数を減少した場合に、指定した値分減らした日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2012/03/01");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2012/03/01");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcDayDate"));
@@ -435,8 +452,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/02/29"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/02/29"));
         }
     }
 
@@ -455,8 +472,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 閏年を設定したDateTimeから指定した月数を増加した場合に、指定した値分増した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2012/01/31");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2012/01/31");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcMonthDate"));
@@ -473,8 +490,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 閏年を設定したDateTimeから指定した月数を減少した場合に、指定した値分減らした日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2012/03/31");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2012/03/31");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcMonthDate"));
@@ -482,8 +499,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/02/29"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/02/29"));
         }
     }
 
@@ -502,8 +519,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 閏年を設定したDateTimeから指定した年数を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2012/02/29");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2012/02/29");
             webDriverOperations.appendText(id("targetIncreaseNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseNum"), "1");
             webDriverOperations.click(id("calcYearDate"));
@@ -513,8 +530,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/02/28"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2011/02/28"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2011/02/28"));
         }
     }
 
@@ -540,8 +557,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/12/31"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/12/31"));
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/12/01"));
         }
@@ -569,8 +586,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/02/29"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/02/29"));
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2012/02/01"));
         }
@@ -598,8 +615,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/02/19"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/02/19"));
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2012/02/13"));
         }
@@ -627,8 +644,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2004/02/29"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2004/02/29"));
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2004/02/23"));
         }
@@ -645,8 +662,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2016/03/06"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2016/03/06"));
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2016/02/29"));
         }
@@ -685,7 +702,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「日付クラス」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -702,8 +720,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「日付クラス」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
         webDriverOperations.back();
@@ -723,7 +741,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス2」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -743,8 +762,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
     }
@@ -775,7 +794,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス2」の期間が連続しているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -795,8 +815,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
         webDriverOperations.back();
@@ -816,8 +836,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス2」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
     }
 
@@ -849,8 +869,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/11/11"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/11/12"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/11/12"));
         }
 
         webDriverOperations.back();
@@ -870,8 +890,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間と「期間クラス3」の期間との差が0の為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
 
         webDriverOperations.back();
@@ -891,8 +911,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス2」の期間と「期間クラス3」の期間との差がマイナス(重複)の為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
     }
 
@@ -922,8 +942,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間と「期間クラス2」の期間が境界で重複しない為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
 
         webDriverOperations.back();
@@ -943,8 +963,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間と「期間クラス3」の期間が重複しない為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
 
         webDriverOperations.back();
@@ -966,8 +986,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/11/12"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/11/13"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/11/13"));
         }
     }
 
@@ -994,7 +1014,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「日付クラス」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -1011,8 +1032,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「日付クラス」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
         webDriverOperations.back();
@@ -1032,7 +1053,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス2」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -1052,8 +1074,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
     }
@@ -1084,7 +1106,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス2」の期間が連続しているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")), is("true"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "true"));
         }
 
         webDriverOperations.back();
@@ -1104,8 +1127,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
 
         webDriverOperations.back();
@@ -1125,8 +1148,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス2」の期間に、「期間クラス3」の期間が含まれているかチェックを行う。
         {
-            assertThat(webDriverOperations.getText(id("getResult")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getResult")), is(
+                    "false"));
         }
     }
 
@@ -1158,8 +1181,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2012/02/29"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/03/01"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/03/01"));
         }
 
         webDriverOperations.back();
@@ -1179,8 +1202,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間と「期間クラス3」の期間との差が0の為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
 
         webDriverOperations.back();
@@ -1200,8 +1223,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス2」の期間と「期間クラス3」の期間との差がマイナス(重複)の為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
     }
 
@@ -1233,8 +1256,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2012/02/28"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2012/02/29"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2012/02/29"));
         }
 
         webDriverOperations.back();
@@ -1254,8 +1277,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス1」の期間と「期間クラス3」の期間が重複しない為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
 
         webDriverOperations.back();
@@ -1275,8 +1298,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 「期間クラス2」の期間と「期間クラス3」の期間が境界で重複しない為、nullが返却されることを確認。
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("なし"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "なし"));
         }
     }
 
@@ -1306,8 +1329,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したPeriodクラスから指定した単一期間（月のみ）を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/03/01");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/03/01");
             webDriverOperations.appendText(id("targetIncreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseMonthNum"), "1");
             webDriverOperations.click(id("calcMonthDate"));
@@ -1317,8 +1340,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/04/01"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/02/01"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/02/01"));
         }
 
         webDriverOperations.back();
@@ -1326,8 +1349,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したPeriodクラスから指定した単一期間（月のみ）を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/04/01");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/04/01");
             webDriverOperations.appendText(id("targetIncreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseMonthNum"), "1");
             webDriverOperations.click(id("calcMonthDate"));
@@ -1337,8 +1360,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/05/01"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/03/01"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/03/01"));
         }
     }
 
@@ -1357,8 +1380,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したPeriodクラスから指定した単一期間（月、日）を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/03/01");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/03/01");
             webDriverOperations.appendText(id("targetIncreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetIncreaseDayNum"), "10");
@@ -1370,8 +1393,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/04/11"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/01/22"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/01/22"));
         }
 
         webDriverOperations.back();
@@ -1379,8 +1402,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 指定した日時を設定したPeriodクラスから指定した単一期間（月、日）を増減した場合に、指定した値分増減した日付が取得する。
         {
-            webDriverOperations
-                    .appendText(id("targetIncDecDate"), "2013/04/01");
+            webDriverOperations.appendText(id("targetIncDecDate"),
+                    "2013/04/01");
             webDriverOperations.appendText(id("targetIncreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetDecreaseMonthNum"), "1");
             webDriverOperations.appendText(id("targetIncreaseDayNum"), "10");
@@ -1392,8 +1415,8 @@ public class DateOperationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getStartDateResult")),
                     is("2013/05/11"));
-            assertThat(webDriverOperations.getText(id("getEndDateResult")),
-                    is("2013/02/19"));
+            assertThat(webDriverOperations.getText(id("getEndDateResult")), is(
+                    "2013/02/19"));
         }
     }
 
@@ -1428,10 +1451,10 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 13:50:12.100 +09:00"));
-            assertThat(webDriverOperations.getText(id("getResultStyle")),
-                    is("13/12/09 13:50:12"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 13:50:12.100 +09:00"));
+            assertThat(webDriverOperations.getText(id("getResultStyle")), is(
+                    "13/12/09 13:50:12"));
         }
     }
 
@@ -1455,10 +1478,10 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09 13:50:12.100"));
-            assertThat(webDriverOperations.getText(id("getResultStyle")),
-                    is("13/12/09 13:50:12"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09 13:50:12.100"));
+            assertThat(webDriverOperations.getText(id("getResultStyle")), is(
+                    "13/12/09 13:50:12"));
         }
     }
 
@@ -1482,10 +1505,10 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013/12/09"));
-            assertThat(webDriverOperations.getText(id("getResultStyle")),
-                    is("13/12/09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013/12/09"));
+            assertThat(webDriverOperations.getText(id("getResultStyle")), is(
+                    "13/12/09"));
         }
     }
 
@@ -1509,10 +1532,10 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("13:50:12"));
-            assertThat(webDriverOperations.getText(id("getResultStyle")),
-                    is("13:50:12"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "13:50:12"));
+            assertThat(webDriverOperations.getText(id("getResultStyle")), is(
+                    "13:50:12"));
         }
     }
 
@@ -1531,8 +1554,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("H25.12.09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "H25.12.09"));
         }
     }
 
@@ -1551,8 +1574,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("平成25/12/09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "平成25/12/09"));
         }
     }
 
@@ -1571,8 +1594,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("H25.12.09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "H25.12.09"));
         }
     }
 
@@ -1591,8 +1614,8 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("平成25/12/09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "平成25/12/09"));
         }
     }
 

@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
@@ -25,9 +38,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 @Service
-public class SessionMailSendingServiceImpl implements SessionMailSendingService {
-    private static final Logger logger = LoggerFactory
-            .getLogger(SessionMailSendingServiceImpl.class);
+public class SessionMailSendingServiceImpl implements
+                                           SessionMailSendingService {
+    private static final Logger logger = LoggerFactory.getLogger(
+            SessionMailSendingServiceImpl.class);
 
     @Inject
     JavaMailSender mailSenderSession;
@@ -179,8 +193,8 @@ public class SessionMailSendingServiceImpl implements SessionMailSendingService 
                     helper.setFrom("\"髙山\" <" + fromAddress + ">");
                     helper.setTo(to);
                     helper.setSubject("お知らせ①");
-                    Template template = freemarkerConfiguration
-                            .getTemplate(templateName + ".ftl");
+                    Template template = freemarkerConfiguration.getTemplate(
+                            templateName + ".ftl");
                     String text = FreeMarkerTemplateUtils
                             .processTemplateIntoString(template, user);
                     helper.setText(text, true);
@@ -205,7 +219,8 @@ public class SessionMailSendingServiceImpl implements SessionMailSendingService 
                     helper.setFrom(convertISO2022JPCharacters(iso2022jpBadChars
                             + " <" + fromAddress + ">"));
                     helper.setTo(convertISO2022JPCharacters(to));
-                    helper.setSubject(convertISO2022JPCharacters(iso2022jpBadChars));
+                    helper.setSubject(convertISO2022JPCharacters(
+                            iso2022jpBadChars));
                     helper.setText(convertISO2022JPCharacters(text));
                 }
             });
@@ -241,8 +256,8 @@ public class SessionMailSendingServiceImpl implements SessionMailSendingService 
             logger.debug(pop3host + ":" + pop3port + "[" + pop3user + ","
                     + pop3password + "]");
         }
-        mailReceivingService
-                .connect(pop3host, pop3port, pop3user, pop3password);
+        mailReceivingService.connect(pop3host, pop3port, pop3user,
+                pop3password);
 
     }
 

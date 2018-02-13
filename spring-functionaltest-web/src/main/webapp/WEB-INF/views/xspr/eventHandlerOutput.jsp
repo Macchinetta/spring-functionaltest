@@ -1,0 +1,5 @@
+
+<h2>EventHandler f:hjs()</h2>
+
+<input id="write" type="button" value="write" class="mainbtn"
+  onclick="alert('output is ${f:hjs(warnCode)}.');">

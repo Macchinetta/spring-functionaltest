@@ -34,12 +34,11 @@ $ git clone https://github.com/Macchinetta/spring-functionaltest.git
 ```
 
 ### [Step 3] Place dependent libraries
-Place `iTextAsian-1.0.jar` and `ojdbc7-12.1.0.2.0.jar` on `spring-functionaltest-env/3rdparty`.
-You have to get these jar files in some way. 
+Place `iTextAsian-1.0.jar` on `spring-functionaltest-env/3rdparty`.
+You have to get this jar file in some way. 
 
 ```console
 $ mv iTextAsian-1.0.jar spring-functionaltest-env/3rdparty/com/lowagie/iTextAsian/1.0
-$ mv ojdbc7-12.1.0.2.0.jar spring-functionaltest-env/3rdparty/com/oracle/ojdbc7/12.1.0.2.0/
 ```
 
 If you'd like to use another version, it's necessary to change some configurations.
@@ -52,16 +51,18 @@ Build artifacts using maven commands as follows.
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn -U install -am -pl spring-functionaltest-web
+$ mvn clean install -am -pl spring-functionaltest-web
+$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
 ```
 
 > **Note:**
 >
 > When using JDK 7, build as follows.  
 > you must compile with the target version 1.7 in accordance with the runtime environment JVM and exclude the source code that depends on JDK 1.8 .  
-> You can set the target version using `java-version` property, and you can exclude using `build-for-jdk7` Maven Profile in addition to the default profile.
+> You can set the target version using `java-version` property, and in spring-functionaltest-web you can exclude using `build-for-jdk7` Maven Profile in addition to the default profile.
 >```console
-> $ mvn -U install -am -pl spring-functionaltest-web -Djava-version=1.7 -P local,build-for-jdk7
+> $ mvn clean install -am -pl spring-functionaltest-web -Djava-version=1.7 -P local,build-for-jdk7
+> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -Djava-version=1.7
 >```
 
 #### Case that use PostgreSQL as database
@@ -69,7 +70,8 @@ $ mvn -U install -am -pl spring-functionaltest-web
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn -U install -am -pl spring-functionaltest-web -P tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
+$ mvn clean install -am -pl spring-functionaltest-web -P tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
+$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat8-postgresql,warpack-env,warpack-jstl,travis
 ```
 
 > **Note:**
@@ -110,7 +112,17 @@ $ mvn -U cargo:run -pl spring-functionaltest-web -P travis
 >
 > Shutdown trigger is "Ctrl + C" on console.
 
-### [Step 7] Run functional tests
+### [Step 7] Deploy OAuth war files
+Deploy OAuth war files to already running container.
+
+```console
+$ cd {your repository directory}
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote
+```
+
+### [Step 8] Run functional tests
 Run tests using Selenium(`WebDriver`) on JUnit.
 
 ```console
@@ -180,7 +192,8 @@ Profiles that are available are as follows.
 |     JBoss + Postgresql    | `jboss-postgresql,warpack-env,warpack-transaction`                                   |
 |  Interstage + Postgresql  | `interstage11-postgresql,warpack-env`                                                |
 |      WebOTX + Oracle      | `webotx-oracle,warpack-env`                                                          |
-|    WebSphere(LP) + DB2    | `webpshere-db2,warpack-env,change-wsdl-location`                                     |
+|    WebSphere(LP) + DB2    | `webpsherelp-db2,warpack-env,change-wsdl-location`                                   |
+|    WebSphere(TR) + DB2    | `webpsheretr-db2,warpack-env,change-wsdl-location`                                   |
 
 [^1]: Please deploy spring-functionaltest-web.war, spring-functionaltest-env.jar, and context.xml.
 

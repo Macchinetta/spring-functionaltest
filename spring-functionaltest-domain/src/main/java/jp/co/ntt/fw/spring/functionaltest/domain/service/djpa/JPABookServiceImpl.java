@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -24,6 +37,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.exception.SystemException;
 
 @Service
 @Transactional(value = "jpaTransactionManager")
@@ -73,22 +87,22 @@ public class JPABookServiceImpl implements JPABookService {
 
     @Override
     public JPABook addBook(JPABook jpaBook) {
-        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(
-                Charset.forName("UTF-8")));
+        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName(
+                "UTF-8")));
         // return jpaBookRepository.saveAndFlush(jpaBook);
         return jpaBookRepository.save(jpaBook);
     }
 
     @Transactional(value = "jpaTransactionManager")
     @Override
-    public JPABook addBookWithRollback(JPABook jpaBook) throws Exception {
+    public JPABook addBookWithRollback(JPABook jpaBook) throws SystemException {
 
-        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(
-                Charset.forName("UTF-8")));
+        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName(
+                "UTF-8")));
         // return jpaBookRepository.saveAndFlush(jpaBook);
         JPABook book = jpaBookRepository.save(jpaBook);
         if (null != book) {
-            throw new RuntimeException(rollbackMsg);
+            throw new SystemException("e.sf.djpa.9001", rollbackMsg);
         }
         return book;
     }

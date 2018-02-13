@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.oth2;
 
@@ -20,8 +33,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthResource;
 @Controller
 public class OTH203Controller {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OTH203Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OTH203Controller.class);
 
     @Inject
     OauthRemoteCoopService oauthRemoteCoopService;
@@ -43,10 +56,8 @@ public class OTH203Controller {
         logger.debug("Result response={}, token={}", response, tokenValue);
 
         model.addAttribute("response", response.getResult());
-        model.addAttribute("clientAdditionalValue", response
-                .getClientAdditionalValue());
-        model.addAttribute("userAdditionalValue", response
-                .getUserAdditionalValue());
+        model.addAttribute("businessId", response.getBusinessId());
+        model.addAttribute("companyId", response.getCompanyId());
         model.addAttribute("title", "GETメソッドの結果");
         model.addAttribute("token", tokenValue);
         return "oth2/viewAdditionalValue";
@@ -69,10 +80,8 @@ public class OTH203Controller {
         logger.debug("Result response={}, token={}", response, tokenValue);
 
         model.addAttribute("response", response.getResult());
-        model.addAttribute("clientAdditionalValue", response
-                .getClientAdditionalValue());
-        model.addAttribute("userAdditionalValue", response
-                .getUserAdditionalValue());
+        model.addAttribute("businessId", response.getBusinessId());
+        model.addAttribute("companyId", response.getCompanyId());
         model.addAttribute("title", "POSTメソッドの結果");
         model.addAttribute("token", tokenValue);
         return "oth2/viewAdditionalValue";
@@ -95,8 +104,8 @@ public class OTH203Controller {
         logger.debug("Result response={}, token={}", "-", tokenValue);
 
         model.addAttribute("response", "Success");
-        model.addAttribute("clientAdditionalValue", "-");
-        model.addAttribute("userAdditionalValue", "-");
+        model.addAttribute("businessId", "-");
+        model.addAttribute("companyId", "-");
         model.addAttribute("title", "PUTメソッドの結果");
         model.addAttribute("token", tokenValue);
         return "oth2/viewAdditionalValue";
@@ -119,8 +128,8 @@ public class OTH203Controller {
         logger.debug("Result response={}, token={}", "-", tokenValue);
 
         model.addAttribute("response", "Success");
-        model.addAttribute("clientAdditionalValue", "-");
-        model.addAttribute("userAdditionalValue", "-");
+        model.addAttribute("businessId", "-");
+        model.addAttribute("companyId", "-");
         model.addAttribute("title", "DELETEメソッドの結果");
         model.addAttribute("token", tokenValue);
         return "oth2/viewAdditionalValue";
@@ -141,4 +150,19 @@ public class OTH203Controller {
         return "oth2/viewPrincipalName";
     }
 
+    @RequestMapping(value = "/01/006/get/{id}", method = RequestMethod.GET)
+    public String handle01006(@PathVariable("id") String id, Model model) {
+
+        OauthResource response = oauthRemoteCoopService.getResourceUnauthorized(
+                id);
+
+        String tokenValue = oauthRemoteCoopService.getTokenValue();
+        logger.debug("Result response={}, token={}", response, tokenValue);
+
+        model.addAttribute("response", response.getResult());
+        model.addAttribute("name", response.getPrincipalString());
+        model.addAttribute("title", "GETメソッドの結果");
+        model.addAttribute("token", tokenValue);
+        return "oth2/viewPrincipalName";
+    }
 }

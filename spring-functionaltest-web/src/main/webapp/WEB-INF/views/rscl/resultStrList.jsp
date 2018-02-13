@@ -5,7 +5,7 @@
 	<h1 id="screenTitle">RESTクライアント処理結果【文字リスト出力】</h1>
 	<c:if test="${!empty f:h(resultDescription)}">
 		<h4>
-			<span id="resultDescription"> 【 ${f:h(resultDescription)} 】 </span>
+			<span id="resultDescription"> 【&nbsp;${f:h(resultDescription)}&nbsp;】 </span>
 		</h4>
 	</c:if>
 	<c:if test="${f:h(strList) != null && fn:length(strList) != 0}">

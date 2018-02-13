@@ -1,12 +1,26 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockOptimisticLockService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockPessimisticLockService;
 
 import org.dozer.Mapper;
 import org.slf4j.Logger;
@@ -32,14 +46,17 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @RequestMapping("excn/0602")
 public class EXCN0602Controller {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(EXCN0602Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            EXCN0602Controller.class);
 
     @Inject
     Mapper beanMapper;
 
     @Inject
-    JPAStockService stockService;
+    JPAStockOptimisticLockService stockOptimisticLockService;
+
+    @Inject
+    JPAStockPessimisticLockService stockPessimisticLockService;
 
     @Inject
     JpaVendorAdapter jpaVendorAdapter;
@@ -51,13 +68,14 @@ public class EXCN0602Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.GET)
     public String handle001(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0602001"), form);
+        beanMapper.map(stockOptimisticLockService.findOne("EXCN0602001"), form);
         return "excn/jpaOptimisticLockViewExcpHandler";
     }
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0602002"), form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0602002"),
+                form);
         return "excn/jpaPessimisticLockViewExcpHandler";
     }
 
@@ -67,8 +85,8 @@ public class EXCN0602Controller {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
 
-        stock = stockService.buyWithOptimisticLock(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
+        stock = stockOptimisticLockService.buy(stock, form
+                .getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -79,13 +97,13 @@ public class EXCN0602Controller {
     public String handle002Buy(StockForm form, Model model,
             RedirectAttributes attributes) {
 
-        String dataBaseName = DataBaseInfo
-                .getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName = DataBaseInfo.getDataBaseID(
+                (HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         model.addAttribute("databaseId", dataBaseName);
-        stock = stockService.buyWithPessimisticLockExcp(stock, form
+        stock = stockPessimisticLockService.buyExcp(stock, form
                 .getPurchasingQuantity(), form.getSleepMillis());
 
         model.addAttribute("stock", stock);

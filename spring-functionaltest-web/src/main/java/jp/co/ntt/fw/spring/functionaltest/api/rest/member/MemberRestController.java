@@ -1,5 +1,18 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2017 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
@@ -63,8 +76,8 @@ public class MemberRestController {
     public Page<MemberResource> getMembers(@Validated MembersSearchQuery query,
             Pageable pageable) {
 
-        Page<RestMember> page = restMemberService.searchMembers(
-                query.getName(), pageable);
+        Page<RestMember> page = restMemberService.searchMembers(query.getName(),
+                pageable);
 
         List<MemberResource> memberResources = new ArrayList<>();
         for (RestMember member : page.getContent()) {
@@ -126,15 +139,16 @@ public class MemberRestController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<MemberResource> postMembers(
-            @RequestBody @Validated({ PostMembers.class, Default.class }) MemberResource requestedResource,
+    public ResponseEntity<MemberResource> postMembers(@RequestBody @Validated({
+            PostMembers.class,
+            Default.class }) MemberResource requestedResource,
             UriComponentsBuilder uriBuilder) {
 
         RestMember creatingMember = beanMapper.map(requestedResource,
                 RestMember.class);
 
-        RestMember createdMember = restMemberService
-                .createMember(creatingMember);
+        RestMember createdMember = restMemberService.createMember(
+                creatingMember);
 
         MemberResource responseResource = beanMapper.map(createdMember,
                 MemberResource.class);
@@ -153,9 +167,9 @@ public class MemberRestController {
      */
     @RequestMapping(value = "{memberId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public MemberResource putMember(
-            @PathVariable("memberId") String memberId,
-            @RequestBody @Validated({ PutMember.class, Default.class }) MemberResource requestedResource) {
+    public MemberResource putMember(@PathVariable("memberId") String memberId,
+            @RequestBody @Validated({ PutMember.class,
+                    Default.class }) MemberResource requestedResource) {
 
         RestMember updatingMember = beanMapper.map(requestedResource,
                 RestMember.class);
@@ -190,7 +204,8 @@ public class MemberRestController {
      * </ul>
      */
     @RequestMapping(value = "businessExp/{memberId}", method = RequestMethod.PUT)
-    public void callBusinessException(@PathVariable("memberId") String memberId) {
+    public void callBusinessException(
+            @PathVariable("memberId") String memberId) {
         restMemberForSpecificExceptionService.callBusinessException(memberId);
     }
 
@@ -202,8 +217,8 @@ public class MemberRestController {
      */
     @RequestMapping(value = "optimisticExp", method = RequestMethod.PUT)
     public void callOptimisticFailureException() {
-        restMemberForSpecificExceptionService
-                .callOptimisticFailureException("memberId");
+        restMemberForSpecificExceptionService.callOptimisticFailureException(
+                "memberId");
     }
 
     /**
@@ -273,7 +288,8 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Summary.class)
-    @RequestMapping(value = "{memberId}", params = "format=summary", method = { RequestMethod.GET })
+    @RequestMapping(value = "{memberId}", params = "format=summary", method = {
+            RequestMethod.GET })
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMemberSummary(
             @PathVariable("memberId") String memberId,
@@ -297,7 +313,8 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Detail.class)
-    @RequestMapping(value = "{memberId}", params = "format=detail", method = { RequestMethod.GET })
+    @RequestMapping(value = "{memberId}", params = "format=detail", method = {
+            RequestMethod.GET })
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMemberDetail(
             @PathVariable("memberId") String memberId,
@@ -320,7 +337,8 @@ public class MemberRestController {
      * <li>特定のMemberリソースを取得</li>
      * </ul>
      */
-    @RequestMapping(value = "getMemberWithAdvice", method = { RequestMethod.POST })
+    @RequestMapping(value = "getMemberWithAdvice", method = {
+            RequestMethod.POST })
     @ResponseStatus(HttpStatus.OK)
     public MemberResourceWithAdvice getMemberWithAdvice(
             @RequestBody MemberResourceWithAdvice requestedResource,
