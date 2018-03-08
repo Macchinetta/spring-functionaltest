@@ -11,20 +11,18 @@
 <meta name="viewport" content="width=device-width" />
 <script type="text/javascript">
 </script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/app/css/styles.css">
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
-<link rel="stylesheet"
-    href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
 </head>
 <body>
-	<tiles:insertAttribute name="header" />
-    <div class="container">
-    	<tiles:insertAttribute name="body" />
-    </div>
-    <tiles:insertAttribute name="footer" />
+  <tiles:insertAttribute name="header" />
+  <div class="container">
+    <tiles:insertAttribute name="body" />
+  </div>
+  <tiles:insertAttribute name="footer" />
 </body>
 </html>

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
@@ -54,8 +66,8 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @Service
 public class TodoMB3ServiceImpl implements TodoMB3Service {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(TodoMB3ServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            TodoMB3ServiceImpl.class);
 
     @Inject
     TodoRepository todoRepository;
@@ -94,7 +106,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             try (BufferedReader in4 = new BufferedReader(reader)) {
                 normDesc2 = in4.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SystemException("e.sf.dam3.9001", "input/output error.", e);
             }
         }
         return normDesc2;
@@ -107,7 +119,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
                 IOUtils.copy(inputStream, writer, "UTF-8");
                 normDesc1 = writer.toString();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SystemException("e.sf.dam3.9001", "input/output error.", e);
             } finally {
                 IOUtils.closeQuietly(inputStream);
             }
@@ -148,7 +160,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
 
-        throw new RuntimeException(rollbackMsg);
+        throw new SystemException("e.sf.dam3.9002", rollbackMsg);
     }
 
     @Override
@@ -255,8 +267,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 selectByAsClause(String todoId) {
-        AsClauseTodoMB3 asClauseTodoMB3 = todoRepository
-                .selectTodoByAsClause(todoId);
+        AsClauseTodoMB3 asClauseTodoMB3 = todoRepository.selectTodoByAsClause(
+                todoId);
         CategoryMB3 categoryMB3 = categoryMB3Repository
                 .selectTodoCategoryIdAutoMap(asClauseTodoMB3.getCatCode());
 
@@ -291,9 +303,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     }
 
     @Override
-    public TodoMB3 findOneUsingCompositeKey(String todoId, String categoryName) {
-        CategoryMB3 category = categoryMB3Repository
-                .findOneByName(categoryName);
+    public TodoMB3 findOneUsingCompositeKey(String todoId,
+            String categoryName) {
+        CategoryMB3 category = categoryMB3Repository.findOneByName(
+                categoryName);
         if (category == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
@@ -313,8 +326,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public TodoMB3 findOneUsingCompositeKeyNoParamAnnot(String todoId,
             String categoryName) {
-        CategoryMB3 category = categoryMB3Repository
-                .findOneByName(categoryName);
+        CategoryMB3 category = categoryMB3Repository.findOneByName(
+                categoryName);
         if (category == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
@@ -333,12 +346,13 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public List<TodoMB3> findAllByCriteria(TodoCriteria criteria) {
-        List<AutoMapTodoMB3> todoList = todoRepository
-                .findAllByCriteria(criteria);
+        List<AutoMapTodoMB3> todoList = todoRepository.findAllByCriteria(
+                criteria);
         List<TodoMB3> todoMB3s = new ArrayList<TodoMB3>();
         for (AutoMapTodoMB3 autoMapTodoMB3 : todoList) {
             CategoryMB3 categoryMB3 = categoryMB3Repository
-                    .selectTodoCategoryIdAutoMap(autoMapTodoMB3.getCategoryId());
+                    .selectTodoCategoryIdAutoMap(autoMapTodoMB3
+                            .getCategoryId());
             TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3, TodoMB3.class);
             todoMB3.setCategory(categoryMB3);
             todoMB3s.add(todoMB3);
@@ -472,8 +486,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
         TodoMB3 currentTodo = todoRepository.findOneByTodoId(todoMB3
                 .getTodoId());
-        if (currentTodo == null
-                || currentTodo.getVersion() != todoMB3.getVersion()) {
+        if (currentTodo == null || currentTodo.getVersion() != todoMB3
+                .getVersion()) {
             throw new ObjectOptimisticLockingFailureException(TodoMB3.class, todoMB3
                     .getTodoId());
         }
@@ -517,7 +531,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     }
 
     @Override
-    public List<TodoMB3> findAllByCriteriaEscapeSrch(TodoCriteria todoCriteria) {
+    public List<TodoMB3> findAllByCriteriaEscapeSrch(
+            TodoCriteria todoCriteria) {
         return todoRepository.findAllByCriteriaEscapeSrch(todoCriteria);
     }
 
@@ -573,8 +588,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public List<AutoMapTodoMB3> findByUsingOverwrittenDefltTypeAliasName(
             TodoCriteria2 todoSearchCriteria) {
-        return todoRepository
-                .findByUsingOverwrittenDefltTypeAliasName(todoSearchCriteria);
+        return todoRepository.findByUsingOverwrittenDefltTypeAliasName(
+                todoSearchCriteria);
     }
 
     @Override

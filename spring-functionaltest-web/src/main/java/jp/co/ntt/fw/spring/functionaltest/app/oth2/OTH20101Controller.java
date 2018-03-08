@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.oth2;
 
@@ -21,8 +33,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthResource;
 @Controller
 public class OTH20101Controller {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OTH20101Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OTH20101Controller.class);
 
     @Inject
     OauthAuthCodeService oauthAuthCodeService;
@@ -38,8 +50,8 @@ public class OTH20101Controller {
     @RequestMapping(value = "/001/get", method = RequestMethod.GET)
     public String handle01001(@RequestParam("id") String id, Model model) {
 
-        OauthResource response = oauthAuthCodeService
-                .getAuthCodeGrantResource(id);
+        OauthResource response = oauthAuthCodeService.getAuthCodeGrantResource(
+                id);
 
         String tokenValue = oauthAuthCodeService.getAuthCodeTokenValue();
         logger.debug("Result response={}, token={}", response, tokenValue);
@@ -62,8 +74,8 @@ public class OTH20101Controller {
     @RequestMapping(value = "/002/post", method = RequestMethod.GET)
     public String handle01002(@RequestParam("id") String id, Model model) {
 
-        OauthResource response = oauthAuthCodeService
-                .postAuthCodeGrantResource(id);
+        OauthResource response = oauthAuthCodeService.postAuthCodeGrantResource(
+                id);
 
         String tokenValue = oauthAuthCodeService.getAuthCodeTokenValue();
         logger.debug("Result response={}, token={}", response, tokenValue);

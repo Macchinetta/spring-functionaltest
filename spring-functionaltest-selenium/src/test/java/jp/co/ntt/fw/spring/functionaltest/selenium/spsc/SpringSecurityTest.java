@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.spsc;
 
@@ -21,7 +33,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class SpringSecurityTest extends FunctionTestSupport {
@@ -50,8 +61,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
         // パスワード
         assert (webDriverOperations.exists(name("password")));
         // パス
-        assertThat(webDriverOperations.getCurrentUrl(),
-                is(applicationContextUrl + "/login"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/login"));
 
     }
 
@@ -83,8 +94,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"),
-                is("no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"), is(
+                "no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
@@ -198,8 +209,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"),
-                is("no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"), is(
+                "no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
@@ -303,26 +314,11 @@ public class SpringSecurityTest extends FunctionTestSupport {
         requestHeaders2 = entity.getHeaders();
         resultMap = requestHeaders2.toSingleValueMap();
 
-        ApServerName apServerName = webDriverOperations.getApServerName();
-
-        String apServerVersion = webDriverOperations.getApServerVersion();
-        // https://github.com/spring-projects/spring-security/issues/3975
-        // Spring Security 4.1ではヘッダを書き込むフィルタのバグのため
-        // TomcatとJBoss6以外のAPサーバではヘッダに登録されない。4.2では改修されている
-        // 詳細は#968を参照
-        if (apServerName == ApServerName.TOMCAT
-                || (apServerName == ApServerName.JBOSS && "6"
-                        .equals(apServerVersion))) {
-            // キャッシュコントロールされているレスポンスヘッダを確認
-            assertThat(resultMap.get("Cache-Control"),
-                    is("no-cache, no-store, max-age=0, must-revalidate"));
-            assertThat(resultMap.get("Pragma"), is("no-cache"));
-            assertThat(resultMap.get("Expires"), is("0"));
-        } else {
-            assertNull(resultMap.get("Cache-Control"));
-            assertNull(resultMap.get("Pragma"));
-            assertNull(resultMap.get("Expires"));
-        }
+        // キャッシュコントロールされているレスポンスヘッダを確認
+        assertThat(resultMap.get("Cache-Control"), is(
+                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Pragma"), is("no-cache"));
+        assertThat(resultMap.get("Expires"), is("0"));
     }
 
     /**
@@ -350,8 +346,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"),
-                is("default-src 'self'"));
+        assertThat(resultMap.get("Content-Security-Policy"), is(
+                "default-src 'self'"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -381,8 +377,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを確認
         assertNull(resultMap.get("Content-Security-Policy"));
-        assertThat(resultMap.get("Content-Security-Policy-Report-Only"),
-                is("default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy-Report-Only"), is(
+                "default-src 'self'; report-uri /csp_report;"));
     }
 
     /**
@@ -410,8 +406,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"),
-                is("default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy"), is(
+                "default-src 'self'; report-uri /csp_report;"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -446,11 +442,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(
-                resultMap.get("Public-Key-Pins"),
-                is("max-age=1 ;"
-                        + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
-                        + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\""));
+        assertThat(resultMap.get("Public-Key-Pins"), is("max-age=1 ;"
+                + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
+                + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\""));
         assertNull(resultMap.get("Public-Key-Pins-Report-Only"));
     }
 
@@ -486,9 +480,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを確認
         assertNull(resultMap.get("Public-Key-Pins"));
-        assertThat(
-                resultMap.get("Public-Key-Pins-Report-Only"),
-                is("max-age=1 ;"
+        assertThat(resultMap.get("Public-Key-Pins-Report-Only"), is(
+                "max-age=1 ;"
                         + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
                         + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
                         + " report-uri=\"https://www.example.net/hpkp-report\""));
@@ -525,12 +518,10 @@ public class SpringSecurityTest extends FunctionTestSupport {
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(
-                resultMap.get("Public-Key-Pins"),
-                is("max-age=1 ;"
-                        + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
-                        + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
-                        + " report-uri=\"https://www.example.net/hpkp-report\""));
+        assertThat(resultMap.get("Public-Key-Pins"), is("max-age=1 ;"
+                + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
+                + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
+                + " report-uri=\"https://www.example.net/hpkp-report\""));
         assertNull(resultMap.get("Public-Key-Pins-Report-Only"));
     }
 

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
@@ -76,7 +88,7 @@ public class EMAL02Controller {
         noAuthMailSendingService.popBeforeSmtp();
         noAuthMailSendingService.sendSimpleMessage(form.getTo().get(0), form
                 .getCc().get(0), form.getBcc().get(0), form.getReplyTo(), form
-                .getText());
+                        .getText());
         return "redirect:/emal/receivemail";
     }
 
@@ -85,8 +97,9 @@ public class EMAL02Controller {
         authMailSendingService.popBeforeSmtp();
         authMailSendingService.sendSimpleMessage(form.getTo().toArray(
                 new String[form.getTo().size()]), form.getCc().toArray(
-                new String[form.getCc().size()]), form.getBcc().toArray(
-                new String[form.getBcc().size()]), form.getText());
+                        new String[form.getCc().size()]), form.getBcc().toArray(
+                                new String[form.getBcc().size()]), form
+                                        .getText());
         return "redirect:/emal/receivemail";
     }
 

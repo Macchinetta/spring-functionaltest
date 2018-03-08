@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
@@ -171,7 +183,8 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalTimeToLocalDateTime")
-    public String handleGetLocalTimeToLocalDateTime(DateForm form, Model model) {
+    public String handleGetLocalTimeToLocalDateTime(DateForm form,
+            Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
                 .toLocalDateTimeFromLocalTime(HOUR, MINUTE, SECOND, form
                         .getYear(), form.getMonth(), form.getDay()));
@@ -179,7 +192,8 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateToLocalDateTime")
-    public String handleGetLocalDateToLocalDateTime(DateForm form, Model model) {
+    public String handleGetLocalDateToLocalDateTime(DateForm form,
+            Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
                 .toLocalDateTimeFromLocalDate(YEAR, MONTH, DAY, form.getHour(),
                         form.getMinute(), form.getSecond()));
@@ -188,23 +202,24 @@ public class DNTA03Controller {
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToLocalTime")
     public String handleGetLocalDateTimeToLocalTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(YEAR,
+                MONTH, DAY, HOUR, MINUTE, SECOND));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToLocalDate")
     public String handleGetLocalDateTimeToLocalDate(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(YEAR,
+                MONTH, DAY, HOUR, MINUTE, SECOND));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getOffseTimeToOffsetDateTime")
-    public String handleGetOffseTimeToOffsetDateTime(DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toOffsetDateTime(HOUR, MINUTE, SECOND, NANO_SECOND, OFFSET,
-                        form.getYear(), form.getMonth(), form.getDay()));
+    public String handleGetOffseTimeToOffsetDateTime(DateForm form,
+            Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(
+                HOUR, MINUTE, SECOND, NANO_SECOND, OFFSET, form.getYear(), form
+                        .getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
@@ -220,14 +235,14 @@ public class DNTA03Controller {
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getZonedDateTimeToOffsetDateTime")
     public String handleGetZonedDateTimeToOffsetDateTime(DateForm form,
             Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toOffsetDateTime(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND,
-                        NANO_SECOND, AREA));
+        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(
+                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_SECOND, AREA));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getZonedDateTimeToOffsetTime")
-    public String handleGetZonedDateTimeToOffsetTime(DateForm form, Model model) {
+    public String handleGetZonedDateTimeToOffsetTime(DateForm form,
+            Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService.toOffsetTime(
                 YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_SECOND, AREA));
         return "dnta/showDateTime";
@@ -248,11 +263,12 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getUtilDateToLocalDateTime")
-    public String handleGetUtilDateToLocalDateTime(Model model) throws ParseException {
+    public String handleGetUtilDateToLocalDateTime(
+            Model model) throws ParseException {
         java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                 .parse("2012/12/15 12:10:30");
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalDateTime(utilDate));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(
+                utilDate));
         return "dnta/showDateTime";
     }
 
@@ -264,12 +280,13 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlDateToLocalDate")
-    public String handleGetSqlDateToLocalDate(Model model) throws ParseException {
+    public String handleGetSqlDateToLocalDate(
+            Model model) throws ParseException {
         java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                 .parse("2012/12/15 12:10:30");
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalDate(sqlDate));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(
+                sqlDate));
         return "dnta/showDateTime";
     }
 
@@ -281,13 +298,14 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlTimestampToLocalDateTime")
-    public String handleGetSqlTimestampToLocalDateTime(Model model) throws ParseException {
+    public String handleGetSqlTimestampToLocalDateTime(
+            Model model) throws ParseException {
         java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                 .parse("2012/12/15 12:10:30");
         java.sql.Timestamp timestamp = new java.sql.Timestamp(utilDate
                 .getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalDateTime(timestamp));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(
+                timestamp));
         return "dnta/showDateTime";
     }
 
@@ -299,12 +317,13 @@ public class DNTA03Controller {
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlTimeToLocalTime")
-    public String handleGetSqlTimeToLocalTime(Model model) throws ParseException {
+    public String handleGetSqlTimeToLocalTime(
+            Model model) throws ParseException {
         java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
                 .parse("2012/12/15 12:10:30");
         java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalTime(sqlTime));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(
+                sqlTime));
         return "dnta/showDateTime";
     }
 
@@ -317,8 +336,8 @@ public class DNTA03Controller {
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getNormalFormat")
     public String handleGetNormalFormat(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .createDateString(YEAR, MONTH, DAY));
+        model.addAttribute("resultDate", dateAndTimeApiService.createDateString(
+                YEAR, MONTH, DAY));
         return "dnta/showDateTime";
     }
 

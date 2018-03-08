@@ -1,159 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
-    xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:util="http://www.springframework.org/schema/util"
-    xmlns:task="http://www.springframework.org/schema/task"
-    xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/springFunctionaltestDataSource"
-        expected-type="javax.sql.DataSource" />
+  <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/springFunctionaltestDataSource"
+    expected-type="javax.sql.DataSource" />
 
-    <jee:jndi-lookup id="realDataSourceDefault" jndi-name="jdbc/springFunctionaltestDataSource"
-        expected-type="javax.sql.DataSource" />
+  <jee:jndi-lookup id="realDataSourceDefault" jndi-name="jdbc/springFunctionaltestDataSource"
+    expected-type="javax.sql.DataSource" />
 
-    <jee:jndi-lookup id="realDataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
-        expected-type="javax.sql.DataSource" />
+  <jee:jndi-lookup id="realDataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
+    expected-type="javax.sql.DataSource" />
 
-    <jee:jndi-lookup id="realDataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
-        expected-type="javax.sql.DataSource" />
+  <jee:jndi-lookup id="realDataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
+    expected-type="javax.sql.DataSource" />
 
-    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-        <constructor-arg index="0" ref="realDataSource" />
-    </bean>
+  <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <constructor-arg index="0" ref="realDataSource" />
+  </bean>
 
-    <bean id="proxyDataSourceDefault" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-        <constructor-arg index="0" ref="realDataSourceDefault" />
-    </bean>
+  <bean id="proxyDataSourceDefault" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <constructor-arg index="0" ref="realDataSourceDefault" />
+  </bean>
 
-    <bean id="proxyDataSourceOpen" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-        <constructor-arg index="0" ref="realDataSourceOpen" />
-    </bean>
+  <bean id="proxyDataSourceOpen" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <constructor-arg index="0" ref="realDataSourceOpen" />
+  </bean>
 
-    <bean id="proxyDataSourceClose" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-        <constructor-arg index="0" ref="realDataSourceClose" />
-    </bean>
+  <bean id="proxyDataSourceClose" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <constructor-arg index="0" ref="realDataSourceClose" />
+  </bean>
 
-    <bean id="routingDataSource"
-        class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
-        <property name="targetDataSources">
-            <map>
-                <entry key="OPEN" value-ref="proxyDataSourceOpen" />
-                <entry key="CLOSE" value-ref="proxyDataSourceClose" />
-            </map>
-        </property>
-        <property name="defaultTargetDataSource" ref="proxyDataSourceDefault" />
-        <property name="dateFactory" ref="dateFactoryDtac" />
-    </bean>
+  <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
+    <property name="targetDataSources">
+      <map>
+        <entry key="OPEN" value-ref="proxyDataSourceOpen" />
+        <entry key="CLOSE" value-ref="proxyDataSourceClose" />
+      </map>
+    </property>
+    <property name="defaultTargetDataSource" ref="proxyDataSourceDefault" />
+    <property name="dateFactory" ref="dateFactoryDtac" />
+  </bean>
 
-    <bean id="dateFactoryDtac" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory" />
+  <bean id="dateFactoryDtac" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory" />
 
-    <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.JdbcFixedJodaTimeDateFactory">
-        <property name="dataSource" ref="dataSource" />
-        <property name="currentTimestampQuery" value="SELECT now FROM system_date" />
-    </bean>
+  <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.JdbcFixedJodaTimeDateFactory">
+    <property name="dataSource" ref="dataSource" />
+    <property name="currentTimestampQuery" value="SELECT now FROM system_date" />
+  </bean>
 
-    <bean id="transactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-        <property name="rollbackOnCommitFailure" value="true" />
-    </bean>
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+    <property name="rollbackOnCommitFailure" value="true" />
+  </bean>
 
-	<!-- JPA transaction Manager -->
-	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	
-    <!-- Settings for DbAppender of logback. -->
-    <bean id="realDataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
-        destroy-method="close">
-        <property name="driverClassName" value="org.h2.Driver" />
-        <property name="url"
-            value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
-        <property name="username" value="sa" />
-        <property name="password" value="" />
-        <property name="defaultAutoCommit" value="false" />
-    </bean>
+  <!-- JPA transaction Manager -->
+  <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory" />
+  </bean>
 
-    <bean id="dataSourceForLogging" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-        <constructor-arg index="0"
-            ref="realDataSourceForLogging" />
-    </bean>
+  <!-- Settings for DbAppender of logback. -->
+  <bean id="realDataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
+    destroy-method="close">
+    <property name="driverClassName" value="org.h2.Driver" />
+    <property name="url" value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
+    <property name="username" value="sa" />
+    <property name="password" value="" />
+    <property name="defaultAutoCommit" value="false" />
+  </bean>
 
-    <bean id="dbLogCleaner"
-        class="jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner">
-        <property name="dataSource" ref="dataSourceForLogging" />
-    </bean>
+  <bean id="dataSourceForLogging" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+    <constructor-arg index="0" ref="realDataSourceForLogging" />
+  </bean>
 
-    <task:scheduler id="dbLogCleanupTaskScheduler" />
-    <task:scheduled-tasks scheduler="dbLogCleanupTaskScheduler">
-        <task:scheduled ref="dbLogCleaner" method="cleanup"
-            cron="0 0 6 * * ?" />
-    </task:scheduled-tasks>
-    
-    <jee:jndi-lookup id="mailSession" jndi-name="mail/Session_postfix-dovecot" />
-    <bean id="mailSenderSession" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="session" ref="mailSession" />
+  <bean id="dbLogCleaner" class="jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner">
+    <property name="dataSource" ref="dataSourceForLogging" />
+  </bean>
+
+  <task:scheduler id="dbLogCleanupTaskScheduler" />
+  <task:scheduled-tasks scheduler="dbLogCleanupTaskScheduler">
+    <task:scheduled ref="dbLogCleaner" method="cleanup" cron="0 0 6 * * ?" />
+  </task:scheduled-tasks>
+
+  <jee:jndi-lookup id="mailSession" jndi-name="mail/Session_postfix-dovecot" />
+  <bean id="mailSenderSession" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="session" ref="mailSession" />
+  </bean>
+
+  <bean id="mailSenderNoAuth" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail.smtp.host}" />
+    <property name="port" value="${mail.smtp.port}" />
+  </bean>
+
+  <bean id="mailSenderAuth" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail2.smtp.host}" />
+    <property name="port" value="${mail2.smtp.port}" />
+    <property name="username" value="${mail2.smtp.user}" />
+    <property name="password" value="${mail2.smtp.password}" />
+    <property name="javaMailProperties">
+      <props>
+        <prop key="mail.smtp.auth">true</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="mailSenderAuthError" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail2.smtp.host}" />
+    <property name="port" value="${mail2.smtp.port}" />
+    <property name="username" value="${mail2.smtp.user}" />
+    <property name="password" value="${mail2.smtp.password.invalid}" />
+    <property name="javaMailProperties">
+      <props>
+        <prop key="mail.smtp.auth">true</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean id="mailSenderConnError" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="${mail.smtp.host}" />
+    <property name="port" value="${mail.smtp.port.invalid}" />
+  </bean>
+
+  <bean id="timeoutTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="customProperties">
+      <map>
+        <entry key="${soap.request.timeout.key}" value="${soap.request.timeout.value}" />
+      </map>
+    </property>
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+
+  <beans profile="default, nonMailServer">
+    <bean id="greenMailBean" class="com.icegreen.greenmail.spring.GreenMailBean">
+      <property name="autostart" value="true" />
+      <property name="smtpProtocol" value="true" />
+      <property name="pop3Protocol" value="true" />
+      <property name="portOffset" value="7000" />
+      <property name="hostname" value="127.0.0.1" />
+      <property name="users">
+        <list>
+          <value>test:Ntt01@noauth-example.com</value>
+          <value>hoge:Ntt01@noauth-example.com</value>
+          <value>hoge2:Ntt01@noauth-example.com</value>
+          <value>info:Ntt01@noauth-example.com</value>
+          <value>foo:Ntt01@noauth-example.com</value>
+          <value>foo2:Ntt01@noauth-example.com</value>
+          <value>bar:Ntt01@noauth-example.com</value>
+          <value>bar2:Ntt01@noauth-example.com</value>
+          <value>reply:Ntt01@noauth-example.com</value>
+        </list>
+      </property>
     </bean>
-    
-    <bean id="mailSenderNoAuth" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail.smtp.host}"/>
-        <property name="port" value="${mail.smtp.port}"/>
-    </bean>
-    
-    <bean id="mailSenderAuth" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail2.smtp.host}"/>
-        <property name="port" value="${mail2.smtp.port}"/>
-        <property name="username" value="${mail2.smtp.user}"/>
-        <property name="password" value="${mail2.smtp.password}"/>
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">true</prop>
-            </props>
-        </property>
-    </bean>
-    
-    <bean id="mailSenderAuthError" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail2.smtp.host}"/>
-        <property name="port" value="${mail2.smtp.port}"/>
-        <property name="username" value="${mail2.smtp.user}"/>
-        <property name="password" value="${mail2.smtp.password.invalid}"/>
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.smtp.auth">true</prop>
-            </props>
-        </property>
-    </bean>
-    
-    <bean id="mailSenderConnError" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${mail.smtp.host}"/>
-        <property name="port" value="${mail.smtp.port.invalid}"/>
-    </bean>
-    
-    <beans profile="default, nonMailServer">
-        <bean id="greenMailBean" class="com.icegreen.greenmail.spring.GreenMailBean">
-            <property name="autostart" value="true" />
-            <property name="smtpProtocol" value="true" />
-            <property name="pop3Protocol" value="true" />
-            <property name="portOffset" value="7000" />
-            <property name="hostname" value="127.0.0.1" />
-            <property name="users">
-                <list>
-                    <value>test:Ntt01@noauth-example.com</value>
-                    <value>hoge:Ntt01@noauth-example.com</value>
-                    <value>hoge2:Ntt01@noauth-example.com</value>
-                    <value>info:Ntt01@noauth-example.com</value>
-                    <value>foo:Ntt01@noauth-example.com</value>
-                    <value>foo2:Ntt01@noauth-example.com</value>
-                    <value>bar:Ntt01@noauth-example.com</value>
-                    <value>bar2:Ntt01@noauth-example.com</value>
-                    <value>reply:Ntt01@noauth-example.com</value>
-                </list>
-            </property>
-        </bean>
-    </beans>
+  </beans>
 
 </beans>

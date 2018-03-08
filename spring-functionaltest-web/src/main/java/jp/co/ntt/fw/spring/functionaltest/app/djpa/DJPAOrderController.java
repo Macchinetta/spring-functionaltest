@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
@@ -60,8 +72,8 @@ public class DJPAOrderController {
     @Inject
     Mapper beanMapper;
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(DJPAOrderController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            DJPAOrderController.class);
 
     @ModelAttribute
     public OrderForm setUpForm() {
@@ -108,7 +120,8 @@ public class DJPAOrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "fetchSummary")
-    public String fetchStoringResultInCustomObject(OrderForm form, Model model) {
+    public String fetchStoringResultInCustomObject(OrderForm form,
+            Model model) {
         List<OrderSummary> orderSummaries = jpaOrderService
                 .storeFetchResultInCustomObject();
         model.addAttribute("orderList", orderSummaries);
@@ -118,12 +131,12 @@ public class DJPAOrderController {
     @RequestMapping(method = RequestMethod.GET, params = "cmnCondFetch")
     public String fetchUsingCommonCondition(OrderForm form, Model model) {
 
-        String dataBaseName = DataBaseInfo
-                .getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName = DataBaseInfo.getDataBaseID(
+                (HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
         logger.info("Current Database Under Test ::" + dataBaseName);
-        if (Database.H2.name().equals(dataBaseName)
-                || Database.POSTGRESQL.name().equals(dataBaseName)) {
+        if (Database.H2.name().equals(dataBaseName) || Database.POSTGRESQL
+                .name().equals(dataBaseName)) {
 
             JPAOrderForCommonCondition jpaOrder = jpaOrderService
                     .findOrderDeatilUsingCommonConditionOnEntity(form
@@ -132,8 +145,8 @@ public class DJPAOrderController {
             model.addAttribute("orderForm", orderForm);
         } else {
             JPAOrderForCmnConditionNoBoolean jpaOrder = jpaOrderService
-                    .findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(form
-                            .getOrderId());
+                    .findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(
+                            form.getOrderId());
             OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
             model.addAttribute("orderForm", orderForm);
         }
@@ -169,8 +182,8 @@ public class DJPAOrderController {
     public String dispalyOrderItemDetail(
             @PathVariable("orderId") Integer orderId,
             @PathVariable("itemNum") Integer itemNumber, Model model) {
-        JPAOrderItem jpaOrderItemOrder = jpaOrderItemService
-                .getOrderItemDetail(orderId, itemNumber);
+        JPAOrderItem jpaOrderItemOrder = jpaOrderItemService.getOrderItemDetail(
+                orderId, itemNumber);
         OrderItemForm orderItemForm = beanMapper.map(jpaOrderItemOrder,
                 OrderItemForm.class);
         model.addAttribute("orderItemForm", orderItemForm);
@@ -181,7 +194,7 @@ public class DJPAOrderController {
     public String updateItemDetail(OrderItemForm orderItemForm, Model model) {
         JPAOrder jpaOrder = jpaOrderService.updateOrderItem(orderItemForm
                 .getOrderId(), orderItemForm.getItemNumber(), orderItemForm
-                .getQuantity());
+                        .getQuantity());
         OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
         model.addAttribute("orderForm", orderForm);
         return "redirect:/djpa/order";
@@ -201,14 +214,15 @@ public class DJPAOrderController {
     public String deleteDirectlyRelatedEntity(OrderItemForm orderItemForm,
             Model model) {
 
-        jpaOrderItemService.directDeleteOrderItem(
-                orderItemForm.getItemNumber(), orderItemForm.getOrderId());
+        jpaOrderItemService.directDeleteOrderItem(orderItemForm.getItemNumber(),
+                orderItemForm.getOrderId());
 
         return "redirect:/djpa/order";
     }
 
     @RequestMapping(value = "item/modify", method = RequestMethod.POST, params = "delete")
-    public String deleteRelatedEntity(OrderItemForm orderItemForm, Model model) {
+    public String deleteRelatedEntity(OrderItemForm orderItemForm,
+            Model model) {
 
         jpaOrderService.deleteItem(orderItemForm.getOrderId(), orderItemForm
                 .getItemNumber());
@@ -219,8 +233,8 @@ public class DJPAOrderController {
     public String deleteRelatedEntityNoSuccess(OrderItemForm orderItemForm,
             Model model) {
 
-        jpaOrderItemService.deleteOrderItemNoSuccess(
-                orderItemForm.getOrderId(), orderItemForm.getItemNumber());
+        jpaOrderItemService.deleteOrderItemNoSuccess(orderItemForm.getOrderId(),
+                orderItemForm.getItemNumber());
         return "redirect:/djpa/order";
     }
 
@@ -234,7 +248,8 @@ public class DJPAOrderController {
     }
 
     @RequestMapping(value = "{orderId}/addUpdt", method = RequestMethod.GET, params = "add")
-    public String addItem(@PathVariable("orderId") Integer orderId, Model model) {
+    public String addItem(@PathVariable("orderId") Integer orderId,
+            Model model) {
         constructCartForm(model);
         model.addAttribute("orderId", orderId);
         return "djpa/addToCart";
@@ -273,8 +288,8 @@ public class DJPAOrderController {
             @PathVariable("orderId") Integer orderId, OrderForm orderForm,
             RedirectAttributes redirectAttr) {
 
-        JPAOrderItem jpaOrderItem = jpaOrderItemService
-                .updateUsingQueryMethod(orderId);
+        JPAOrderItem jpaOrderItem = jpaOrderItemService.updateUsingQueryMethod(
+                orderId);
         OrderItemForm orderItemForm = beanMapper.map(jpaOrderItem,
                 OrderItemForm.class);
         redirectAttr.addFlashAttribute("orderItemForm", orderItemForm);

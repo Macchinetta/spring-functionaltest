@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.pages.dam3;
 
@@ -165,40 +177,40 @@ public class OrderMB3ListPage implements Page<OrderMB3ListPage> {
             statusName = WebElementOperations.getElementTextValue(statusName1);
             itemCode = WebElementOperations.getElementTextValue(itemCode1);
             itemName = WebElementOperations.getElementTextValue(itemName1);
-            categoryCode = WebElementOperations
-                    .getElementTextValue(categorCode1);
-            categoryName = WebElementOperations
-                    .getElementTextValue(categoryName1);
+            categoryCode = WebElementOperations.getElementTextValue(
+                    categorCode1);
+            categoryName = WebElementOperations.getElementTextValue(
+                    categoryName1);
             memo = WebElementOperations.getElementTextValue(memo1);
             break;
         case 2:
             statusName = WebElementOperations.getElementTextValue(statusName2);
             itemCode = WebElementOperations.getElementTextValue(itemCode2);
             itemName = WebElementOperations.getElementTextValue(itemName2);
-            categoryCode = WebElementOperations
-                    .getElementTextValue(categorCode2);
-            categoryName = WebElementOperations
-                    .getElementTextValue(categoryName2);
+            categoryCode = WebElementOperations.getElementTextValue(
+                    categorCode2);
+            categoryName = WebElementOperations.getElementTextValue(
+                    categoryName2);
             memo = WebElementOperations.getElementTextValue(memo2);
             break;
         case 3:
             statusName = WebElementOperations.getElementTextValue(statusName3);
             itemCode = WebElementOperations.getElementTextValue(itemCode3);
             itemName = WebElementOperations.getElementTextValue(itemName3);
-            categoryCode = WebElementOperations
-                    .getElementTextValue(categorCode3);
-            categoryName = WebElementOperations
-                    .getElementTextValue(categoryName3);
+            categoryCode = WebElementOperations.getElementTextValue(
+                    categorCode3);
+            categoryName = WebElementOperations.getElementTextValue(
+                    categoryName3);
             memo = WebElementOperations.getElementTextValue(memo3);
             break;
         case 4:
             statusName = WebElementOperations.getElementTextValue(statusName4);
             itemCode = WebElementOperations.getElementTextValue(itemCode4);
             itemName = WebElementOperations.getElementTextValue(itemName4);
-            categoryCode = WebElementOperations
-                    .getElementTextValue(categorCode4);
-            categoryName = WebElementOperations
-                    .getElementTextValue(categoryName4);
+            categoryCode = WebElementOperations.getElementTextValue(
+                    categorCode4);
+            categoryName = WebElementOperations.getElementTextValue(
+                    categoryName4);
             memo = WebElementOperations.getElementTextValue(memo4);
             break;
 

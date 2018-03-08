@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="accessDeniedHandlerForAjax"
-        class="jp.co.ntt.fw.spring.functionaltest.app.athr.handler.JsonDelegatingAccessDeniedHandler">
-        <constructor-arg>
-            <bean
-                class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
-                <constructor-arg value="/athr/0701/001/denyjson/**" />
-            </bean>
-        </constructor-arg>
-        <constructor-arg>
-            <bean
-                class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-                <property name="errorPage" value="/athr/accessDeniedPage" />
-            </bean>
-        </constructor-arg>
-    </bean>
+  <bean id="accessDeniedHandlerForAjax"
+    class="jp.co.ntt.fw.spring.functionaltest.app.athr.handler.JsonDelegatingAccessDeniedHandler">
+    <constructor-arg>
+      <bean class="org.springframework.security.web.util.matcher.AntPathRequestMatcher">
+        <constructor-arg value="/athr/0701/001/denyjson/**" />
+      </bean>
+    </constructor-arg>
+    <constructor-arg>
+      <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+        <property name="errorPage" value="/athr/accessDeniedPage" />
+      </bean>
+    </constructor-arg>
+  </bean>
 
-    <sec:http pattern="/athr/0701/**"
-        authentication-manager-ref="loginForStaffManager">
-        <sec:form-login login-page="/athr/0701/001"
-            login-processing-url="/athr/0701/001/authenticate"
-            default-target-url="/athr/0701/001/afterLogin" />
-        <sec:intercept-url pattern="/athr/0701/001/afterLogin"
-            access="isAuthenticated()" />
-        <sec:intercept-url pattern="/athr/0701/001/denyjson/**"
-            access="denyAll" />
-        <sec:intercept-url pattern="/athr/0701/001/deny/**"
-            access="denyAll" />
-        <sec:intercept-url pattern="/athr/0701/001/**"
-            access="permitAll()" />
-        <sec:logout logout-url="/athr/0701/001/logout"
-            logout-success-url="/athr/" invalidate-session="true"
-            delete-cookies="JSESSIONID" />
-        <sec:access-denied-handler ref="accessDeniedHandlerForAjax" />
-    </sec:http>
+  <sec:http pattern="/athr/0701/**" authentication-manager-ref="loginForStaffManager">
+    <sec:form-login login-page="/athr/0701/001" login-processing-url="/athr/0701/001/authenticate"
+      default-target-url="/athr/0701/001/afterLogin" />
+    <sec:intercept-url pattern="/athr/0701/001/afterLogin" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/athr/0701/001/denyjson/**" access="denyAll" />
+    <sec:intercept-url pattern="/athr/0701/001/deny/**" access="denyAll" />
+    <sec:intercept-url pattern="/athr/0701/001/**" access="permitAll()" />
+    <sec:logout logout-url="/athr/0701/001/logout" logout-success-url="/athr/"
+      invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:access-denied-handler ref="accessDeniedHandlerForAjax" />
+  </sec:http>
 
 
 </beans>

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
@@ -47,8 +59,8 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator
-                    .createLocaleSpecifiedDriver(currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(
+                    currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -98,8 +110,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(
-                        webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
                         is(errorMessage));
             }
         }
@@ -114,8 +125,8 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     @Test
     public void testVLDT0201002() {
         String testId = "vldt0201002";
-        String[][] targets = { { "password", "confirmPassword" },
-                { "age", "dateOfBirth" } };
+        String[][] targets = { { "password", "confirmPassword" }, { "age",
+                "dateOfBirth" } };
         String[] errorMessages = {
                 "password and confirm password must be same.",
                 "Age and Date of Birth is inconsistent." };
@@ -175,8 +186,8 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
                 webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(20).toString(
-                                localeDateFormat.get(currentLocale)));
+                        .minusYears(20).toString(localeDateFormat.get(
+                                currentLocale)));
                 webDriverOperations.click(id(validates[param]));
             }
 
@@ -196,8 +207,8 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
                 webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(19).toString(
-                                localeDateFormat.get(currentLocale)));
+                        .minusYears(19).toString(localeDateFormat.get(
+                                currentLocale)));
                 webDriverOperations.click(id(validates[param]));
             }
 
@@ -257,19 +268,17 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             // 結果確認
             {
                 // エラーメッセージ確認
-                assertThat(
-                        webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
                         is(errorMessage));
-                assertThat(
-                        webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
                         isEmptyString());
                 // CSS適用確認
-                assertThat(webDriverOperations.getWebDriver().findElement(
-                        id(targets[0])).getAttribute("class"),
-                        is("form-control error-input"));
-                assertThat(webDriverOperations.getWebDriver().findElement(
-                        id(targets[1])).getAttribute("class"),
-                        is("form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(
+                        targets[0])).getAttribute("class"), is(
+                                "form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(
+                        targets[1])).getAttribute("class"), is(
+                                "form-control error-input"));
             }
         }
     }
@@ -319,8 +328,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(
-                        webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
                         is(errorMessage));
             }
         }
@@ -374,19 +382,17 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             // 結果確認
             {
                 // エラーメッセージ確認
-                assertThat(
-                        webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
                         is(errorMessage));
-                assertThat(
-                        webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
                         isEmptyString());
                 // CSS適用確認
-                assertThat(webDriverOperations.getWebDriver().findElement(
-                        id(targets[0])).getAttribute("class"),
-                        is("form-control error-input"));
-                assertThat(webDriverOperations.getWebDriver().findElement(
-                        id(targets[1])).getAttribute("class"),
-                        is("form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(
+                        targets[0])).getAttribute("class"), is(
+                                "form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(
+                        targets[1])).getAttribute("class"), is(
+                                "form-control error-input"));
             }
         }
     }

@@ -2,9 +2,7 @@
 
   <h1 id="screenTitle">Staff Login For Url Has Role Page</h1>
 
-  <form:form
-    action="${pageContext.request.contextPath}/athr/0101/002/authenticate"
-    method="post">
+  <form:form action="${pageContext.request.contextPath}/athr/0101/002/authenticate" method="post">
     <c:if test="${param.containsKey('error')}">
       <span id="staffLoginError"> <t:messagesPanel
           messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" />
@@ -18,8 +16,7 @@
           <label for="userName">UserName</label>
         </div>
         <div class="col col-md-3">
-          <input type="text" class="form-control input-sm" id="username"
-            name="username">
+          <input type="text" class="form-control input-sm" id="username" name="username">
         </div>
       </div>
       <br>
@@ -28,20 +25,14 @@
           <label for="password">Password</label>
         </div>
         <div class="col col-md-3">
-          <input type="password" class="form-control input-sm"
-            id="password" name="password">
+          <input type="password" class="form-control input-sm" id="password" name="password">
         </div>
       </div>
-      <br> <br>
-      <input type="submit" id="login"
-        class="btn btn-default" value="Login">
+      <br> <br> <input type="submit" id="login" class="btn btn-default" value="Login">
     </fieldset>
   </form:form>
   <br>
-  <form:form
-    action="${pageContext.request.contextPath}/athr/0101/002/logout"
-    method="post">
-    <input type="submit" id="logout" class="btn btn-default"
-      value="Logout">
+  <form:form action="${pageContext.request.contextPath}/athr/0101/002/logout" method="post">
+    <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 </div>

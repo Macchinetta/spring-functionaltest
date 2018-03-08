@@ -1,110 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-    namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.ajax.PersonalComputerRepository">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.ajax.PersonalComputerRepository">
 
-    <resultMap id="personalComputerResultMap" type="PersonalComputer">
-        <result property="personalComputerId" column="personal_computer_id" />
-        <result property="personalComputerName" column="personal_computer_name" />
-        <result property="os" column="os" />
-        <result property="cpu" column="cpu" />
-        <result property="ram" column="ram" />
-        <result property="videocard" column="videocard" />
-        <result property="hdd" column="hdd" />
-        <result property="power" column="power" />
-        <result property="price" column="price" />
-    </resultMap>
+  <resultMap id="personalComputerResultMap" type="PersonalComputer">
+    <result property="personalComputerId" column="personal_computer_id" />
+    <result property="personalComputerName" column="personal_computer_name" />
+    <result property="os" column="os" />
+    <result property="cpu" column="cpu" />
+    <result property="ram" column="ram" />
+    <result property="videocard" column="videocard" />
+    <result property="hdd" column="hdd" />
+    <result property="power" column="power" />
+    <result property="price" column="price" />
+  </resultMap>
 
-    <sql id="personalComputerSearchCriteria">
-        <trim prefix="WHERE">
-            <if test="personalComputerName != null and personalComputerName != ''">
-                personal_computer_name LIKE #{personalComputerName} || '%' ESCAPE '~'
-            </if>
-        </trim>
-    </sql>
+  <sql id="personalComputerSearchCriteria">
+    <trim prefix="WHERE">
+      <if test="personalComputerName != null and personalComputerName != ''">
+        personal_computer_name LIKE #{personalComputerName} || '%' ESCAPE '~'
+      </if>
+    </trim>
+  </sql>
 
-    <sql id="selectPhrase">
-        SELECT
-            personal_computer_id
-            ,personal_computer_name
-            ,os
-            ,cpu
-            ,ram
-            ,videocard
-            ,hdd
-            ,power
-            ,price
-        FROM
-            t_personal_computer
-    </sql>
+  <sql id="selectPhrase">
+    SELECT
+    personal_computer_id
+    ,personal_computer_name
+    ,os
+    ,cpu
+    ,ram
+    ,videocard
+    ,hdd
+    ,power
+    ,price
+    FROM
+    t_personal_computer
+  </sql>
 
-    <sql id="setPhrase">
-        <set>
-            <if test="personalComputerName != null">
-                personal_computer_name = #{personalComputerName},
-            </if>
-            <if test="os != null">
-                os = #{os},
-            </if>
-            <if test="cpu != null">
-                cpu = #{cpu},
-            </if>
-            <if test="ram != null">
-                ram = #{ram},
-            </if>
-            <if test="videocard != null">
-                videocard = #{videocard},
-            </if>
-            <if test="hdd != null">
-                hdd = #{hdd},
-            </if>
-            <if test="power != null">
-                power = #{power},
-            </if>
-            <if test="price != null">
-                price = #{price},
-            </if>
-        </set>
-    </sql>
+  <sql id="setPhrase">
+    <set>
+      <if test="personalComputerName != null">
+        personal_computer_name = #{personalComputerName},
+      </if>
+      <if test="os != null">
+        os = #{os},
+      </if>
+      <if test="cpu != null">
+        cpu = #{cpu},
+      </if>
+      <if test="ram != null">
+        ram = #{ram},
+      </if>
+      <if test="videocard != null">
+        videocard = #{videocard},
+      </if>
+      <if test="hdd != null">
+        hdd = #{hdd},
+      </if>
+      <if test="power != null">
+        power = #{power},
+      </if>
+      <if test="price != null">
+        price = #{price},
+      </if>
+    </set>
+  </sql>
 
-    <select id="countByCriteria" resultType="long">
-        SELECT
-            count(*)
-        FROM
-            t_personal_computer
-        <include refid="personalComputerSearchCriteria" />
-    </select>
-    
-    <select id="countByNameAndNotEqualID" resultType="long">
-        SELECT
-            count(*)
-        FROM
-            t_personal_computer
-        WHERE
-            personal_computer_id != #{personalComputerId}
-        AND
-            personal_computer_name = #{personalComputerName}
-    </select>
-    
+  <select id="countByCriteria" resultType="long">
+    SELECT
+    count(*)
+    FROM
+    t_personal_computer
+    <include refid="personalComputerSearchCriteria" />
+  </select>
 
-    <select id="findOneByID" parameterType="int" resultMap="personalComputerResultMap">
-        <include refid="selectPhrase" />
-        WHERE
-            personal_computer_id = #{personalComputerId}
-    </select>
+  <select id="countByNameAndNotEqualID" resultType="long">
+    SELECT
+    count(*)
+    FROM
+    t_personal_computer
+    WHERE
+    personal_computer_id != #{personalComputerId}
+    AND
+    personal_computer_name =
+    #{personalComputerName}
+  </select>
 
-    <select id="findPageByCriteria" resultMap="personalComputerResultMap">
-        <include refid="selectPhrase" />
-        <include refid="personalComputerSearchCriteria" />
-    </select>
 
-    <update id="update" parameterType="PersonalComputer">
-        UPDATE
-            t_personal_computer
-        <include refid="setPhrase" />
-        WHERE
-            personal_computer_id = #{personalComputerId}
-    </update>
+  <select id="findOneByID" parameterType="int" resultMap="personalComputerResultMap">
+    <include refid="selectPhrase" />
+    WHERE
+    personal_computer_id = #{personalComputerId}
+  </select>
+
+  <select id="findPageByCriteria" resultMap="personalComputerResultMap">
+    <include refid="selectPhrase" />
+    <include refid="personalComputerSearchCriteria" />
+  </select>
+
+  <update id="update" parameterType="PersonalComputer">
+    UPDATE
+    t_personal_computer
+    <include refid="setPhrase" />
+    WHERE
+    personal_computer_id = #{personalComputerId}
+  </update>
 
 </mapper>

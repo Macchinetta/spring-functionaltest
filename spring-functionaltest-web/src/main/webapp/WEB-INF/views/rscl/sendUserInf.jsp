@@ -9,7 +9,7 @@
 
 		<div class="form-group">
 			<h4>
-				<span id="testDescription"> 【 ${f:h(testDescription)} 】 </span>
+				<span id="testDescription"> 【&nbsp;${f:h(testDescription)}&nbsp;】 </span>
 			</h4>
 
 			<div class="form-group">

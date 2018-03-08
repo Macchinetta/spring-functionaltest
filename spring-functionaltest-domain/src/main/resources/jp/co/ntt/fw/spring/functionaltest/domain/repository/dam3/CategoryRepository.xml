@@ -3,23 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryRepository">
 
-    <resultMap id="categoryResultMap" type="Category">
-        <result property="categoryId" column="category_id" />
-        <result property="name" column="name" />
-    </resultMap>
+  <resultMap id="categoryResultMap" type="Category">
+    <result property="categoryId" column="category_id" />
+    <result property="name" column="name" />
+  </resultMap>
 
-    <sql id="selectCategory">
-        SELECT
-            category_id
-            ,name
-        FROM
-            m_category
-    </sql>
+  <sql id="selectCategory">
+    SELECT
+    category_id
+    ,name
+    FROM
+    m_category
+  </sql>
 
-    <select id="findOneByName" resultMap="categoryResultMap" parameterType="String">
-        <include refid="selectCategory"/>
-        WHERE
-            name = #{name}
-    </select>
+  <select id="findOneByName" resultMap="categoryResultMap" parameterType="String">
+    <include refid="selectCategory" />
+    WHERE
+    name = #{name}
+  </select>
 
 </mapper>

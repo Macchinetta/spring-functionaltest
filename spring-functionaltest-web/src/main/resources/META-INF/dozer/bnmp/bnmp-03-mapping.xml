@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
-    <mapping>
-        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ExcludeSpecifiedFieldForm</class-a>
-        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeSpecifiedFieldDto</class-b>
-        <field-exclude>
-            <a>birthDate</a>
-            <b>birthDate</b>
-        </field-exclude>
-    </mapping>
-    <mapping map-id="mapIdExclude">
-        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ScopeMappingForm</class-a>
-        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ScopeMappingDto</class-b>
-        <field-exclude>
-            <a>lastName</a>
-            <b>lastName</b>
-        </field-exclude>
-        <field-exclude>
-            <a>birthDate</a>
-            <b>birthDate</b>
-        </field-exclude>
-    </mapping>
-    <mapping map-null="false" map-empty-string="false">
-        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ExcludeNullEmptyForm</class-a>
-        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeNullEmptyDto</class-b>
-    </mapping>
-    <mapping>
-        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.DateMappingForm</class-a>
-        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateMappingDto</class-b>
-        <field>
-            <a date-format="yyyy/MM/dd HH:mm:ss.SSS">birthDate</a>
-            <b>birthDate</b>
-        </field>
-    </mapping>
-    <mapping>
-        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.MappingFailedForm</class-a>
-        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MappingFailedDto</class-b>
-        <field>
-            <a>birthDate</a>
-            <b>birthLocalDate</b>
-        </field>
-    </mapping>
+  xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+  <mapping>
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ExcludeSpecifiedFieldForm</class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeSpecifiedFieldDto
+    </class-b>
+    <field-exclude>
+      <a>birthDate</a>
+      <b>birthDate</b>
+    </field-exclude>
+  </mapping>
+  <mapping map-id="mapIdExclude">
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ScopeMappingForm</class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ScopeMappingDto</class-b>
+    <field-exclude>
+      <a>lastName</a>
+      <b>lastName</b>
+    </field-exclude>
+    <field-exclude>
+      <a>birthDate</a>
+      <b>birthDate</b>
+    </field-exclude>
+  </mapping>
+  <mapping map-null="false" map-empty-string="false">
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.ExcludeNullEmptyForm</class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeNullEmptyDto</class-b>
+  </mapping>
+  <mapping>
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.DateMappingForm</class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateMappingDto</class-b>
+    <field>
+      <a date-format="yyyy/MM/dd HH:mm:ss.SSS">birthDate</a>
+      <b>birthDate</b>
+    </field>
+  </mapping>
+  <mapping>
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.MappingFailedForm</class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MappingFailedDto</class-b>
+    <field>
+      <a>birthDate</a>
+      <b>birthLocalDate</b>
+    </field>
+  </mapping>
 </mappings>

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.aply;
 
@@ -65,17 +77,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/001/hello\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/001/hello\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -86,17 +96,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -107,16 +115,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -141,17 +147,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/002_1\", method = RequestMethod.POST)」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/002_1\", method = RequestMethod.POST)」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -162,17 +166,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -183,16 +185,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -217,17 +217,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -238,16 +236,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -271,17 +267,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -292,16 +286,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -324,16 +316,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/001/{id}/{version}\")」のメソッドが実行されました。(id=id1,version=1)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/001/{id}/{version}\")」のメソッドが実行されました。(id=id1,version=1)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -356,16 +346,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/002/{id}/{version}\")」のメソッドが実行されました。(id=id2,version=2)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/002/{id}/{version}\")」のメソッドが実行されました。(id=id2,version=2)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -388,16 +376,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/003\")」のメソッドが実行されました。(id=12,name=taro,age=null,genderCode=unknown)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/003\")」のメソッドが実行されました。(id=12,name=taro,age=null,genderCode=unknown)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -426,12 +412,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertContainsByRegexExceptionMessage(
-                            null,
-                            "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                            ".*",
-                            "org\\.springframework\\.web\\.bind\\.MissingServletRequestParameterException\\.*");
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger", ".*",
+                    "org\\.springframework\\.web\\.bind\\.MissingServletRequestParameterException\\.*");
 
         }
     }
@@ -458,16 +441,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
             // URLがリダイレクト先のものになっていること。
             assertTrue(webDriverOperations.getCurrentUrl().endsWith(
                     "aply/0102/005?complete"));
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -493,16 +474,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
             // URLがリダイレクト先のものになっていること。
             assertTrue(webDriverOperations.getCurrentUrl().endsWith(
                     "aply/0102/006?complete&id=redirect_id"));
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -525,17 +504,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertTrue(webDriverOperations
-                    .getText(id("messages"))
-                    .startsWith(
-                            "「@RequestMapping(value = \"0102/007\")」のメソッドが実行されました。(cookies[JSESSIONID]="));
+            assertTrue(webDriverOperations.getText(id("messages")).startsWith(
+                    "「@RequestMapping(value = \"0102/007\")」のメソッドが実行されました。(cookies[JSESSIONID]="));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -564,16 +540,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/008\")」のメソッドが実行されました。(cookies[hello]=helloworld!)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/008\")」のメソッドが実行されました。(cookies[hello]=helloworld!)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -596,17 +570,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertTrue(webDriverOperations
-                    .getText(id("messages"))
-                    .startsWith(
-                            "「@RequestMapping(value = \"0102/009\")」のメソッドが実行されました。(commonParam1=111, commonParam2=222)"));
+            assertTrue(webDriverOperations.getText(id("messages")).startsWith(
+                    "「@RequestMapping(value = \"0102/009\")」のメソッドが実行されました。(commonParam1=111, commonParam2=222)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -629,16 +600,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("messages")),
-                    is("「@RequestMapping(value = \"0102/010\")」のメソッドが実行されました。(commonParam1=123, commonParam2=456)"));
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0102/010\")」のメソッドが実行されました。(commonParam1=123, commonParam2=456)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -656,22 +625,22 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value1")),
-                    is("1,234,567"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value1")), is(
+                    "1,234,567"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is("1234567"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "1234567"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -689,22 +658,22 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value2")),
-                    is("2,345,678"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value2")), is(
+                    "2,345,678"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value2")), is("2345678"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "2345678"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -754,8 +723,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value4")),
-                    is("44%"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value4")), is(
+                    "44%"));
 
             webDriverOperations.click(id("submit"));
         }
@@ -767,9 +736,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -787,23 +755,22 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value5")),
-                    is("19550505"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value5")), is(
+                    "19550505"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -821,23 +788,22 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value6")),
-                    is("6,666,666,666"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value6")), is(
+                    "6,666,666,666"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("6666666666"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "6666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -855,23 +821,22 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value7")),
-                    is("￥7,777,777,777"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value7")), is(
+                    "￥7,777,777,777"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value7")),
-                    is("7777777777"));
+            assertThat(webDriverOperations.getText(id("value7")), is(
+                    "7777777777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -889,16 +854,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            assertThat(webDriverOperations
-                    .getText(id("formObjectForm.initConfirmValue")),
-                    is("@ModelAttribute属性名無し初期設定値"));
+            assertThat(webDriverOperations.getText(id(
+                    "formObjectForm.initConfirmValue")), is(
+                            "@ModelAttribute属性名無し初期設定値"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -916,16 +880,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            assertThat(webDriverOperations
-                    .getText(id("formObjectForm2.initConfirmValue")),
-                    is("@ModelAttribute属性名あり初期設定値"));
+            assertThat(webDriverOperations.getText(id(
+                    "formObjectForm2.initConfirmValue")), is(
+                            "@ModelAttribute属性名あり初期設定値"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -943,16 +906,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            String assertText = webDriverOperations
-                    .getText(id("formObjectForm3.initConfirmValue"));
+            String assertText = webDriverOperations.getText(id(
+                    "formObjectForm3.initConfirmValue"));
             assertThat(assertText.length(), Matchers.greaterThan(0));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -983,24 +945,23 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1033,26 +994,25 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
-            assertThat(webDriverOperations.getText(id("value7")),
-                    is("777777777777777"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value7")), is(
+                    "777777777777777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1083,24 +1043,23 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1131,15 +1090,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1.errors")),
-                    is("may not be null"));
+            assertThat(webDriverOperations.getText(id("value1.errors")), is(
+                    "may not be null"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1170,24 +1128,23 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1218,16 +1175,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("formObjectForm.errors")),
+            assertThat(webDriverOperations.getText(id("formObjectForm.errors")),
                     is("value1 must be larger than value2."));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1258,24 +1213,23 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1306,15 +1260,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1.errors")),
-                    is("may not be null"));
+            assertThat(webDriverOperations.getText(id("value1.errors")), is(
+                    "may not be null"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1345,24 +1298,23 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")),
-                    is("87654321"));
-            assertThat(webDriverOperations.getText(id("value2")),
-                    is("23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is(
+                    "87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is(
+                    "23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")),
-                    is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")), is(
+                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is(
+                    "666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1393,15 +1345,14 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value4.errors")),
-                    is("may not be null"));
+            assertThat(webDriverOperations.getText(id("value4.errors")), is(
+                    "may not be null"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1419,17 +1370,16 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // 共通JSPをインクルードした画面
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("共通JSPで宣言しているタグライブラリを利用してエスケープ処理した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")),
-                    is("<input name='test'>"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "共通JSPで宣言しているタグライブラリを利用してエスケープ処理した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "<input name='test'>"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1447,17 +1397,16 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("共通部品で提供しているEL式用のHTMLエスケープ関数を利用して文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")),
-                    is("<font color='red'>Sample</font>"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "共通部品で提供しているEL式用のHTMLエスケープ関数を利用して文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "<font color='red'>Sample</font>"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1475,17 +1424,16 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("JSTLのJSPタグライブラリから提供しているHTMLエスケープ関数を利用して文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")),
-                    is("<font color='red'>Sample</font>"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "JSTLのJSPタグライブラリから提供しているHTMLエスケープ関数を利用して文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "<font color='red'>Sample</font>"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1503,17 +1451,16 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("JSTLのJSPタグライブラリから提供している数値フォーマットを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")),
-                    is("3,333.55"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "JSTLのJSPタグライブラリから提供している数値フォーマットを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "3,333.55"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1531,17 +1478,16 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("JSTLのJSPタグライブラリから提供している日付フォーマットを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")),
-                    is("2013/12/09"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "JSTLのJSPタグライブラリから提供している日付フォーマットを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1566,8 +1512,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(<c:if>がtrueの場合)
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("「complete」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "「complete」と入力された場合の分岐"));
         }
 
         // JSPでモデルに含まれる値を再度入力(<c:if>がfalseの場合)
@@ -1580,16 +1526,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(<c:if>がfalseの場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")),
-                    not("「complete」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), not(
+                    "「complete」と入力された場合の分岐"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1614,8 +1559,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(<c:choose>が"gold"の場合)
         {
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("「gold」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "「gold」と入力された場合の分岐"));
         }
 
         // JSPでモデルに含まれる値を再度入力(<c:choose>が"silver"の場合)
@@ -1628,8 +1573,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(<c:choose>が"silver"の場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("「silver」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "「silver」と入力された場合の分岐"));
         }
 
         // JSPでモデルに含まれる値を再度入力(<c:otherwise>の場合)
@@ -1642,16 +1587,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(<c:otherwise>の場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")),
-                    is("「gold」と「silver」以外の入力の場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "「gold」と「silver」以外の入力の場合の分岐"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1681,26 +1625,25 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("getFirstName1")),
-                    is("山田"));
-            assertThat(webDriverOperations.getText(id("getLastName1")),
-                    is("太郎"));
-            assertThat(webDriverOperations.getText(id("getFirstName2")),
-                    is("佐藤"));
-            assertThat(webDriverOperations.getText(id("getLastName2")),
-                    is("次郎"));
-            assertThat(webDriverOperations.getText(id("getFirstName3")),
-                    is("田中"));
-            assertThat(webDriverOperations.getText(id("getLastName3")),
-                    is("花子"));
+            assertThat(webDriverOperations.getText(id("getFirstName1")), is(
+                    "山田"));
+            assertThat(webDriverOperations.getText(id("getLastName1")), is(
+                    "太郎"));
+            assertThat(webDriverOperations.getText(id("getFirstName2")), is(
+                    "佐藤"));
+            assertThat(webDriverOperations.getText(id("getLastName2")), is(
+                    "次郎"));
+            assertThat(webDriverOperations.getText(id("getFirstName3")), is(
+                    "田中"));
+            assertThat(webDriverOperations.getText(id("getLastName3")), is(
+                    "花子"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1726,17 +1669,17 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")),
-                    is("佐藤"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is("太郎"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is(
+                    "佐藤"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is(
+                    "太郎"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
     }
 
@@ -1756,19 +1699,17 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
-                            "Client IP Adress:");
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
+                    "Client IP Adress:");
         }
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "共通処理の実装 確認完了"));
         }
     }
 
@@ -1788,19 +1729,17 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
-                            "Client IP Adress:");
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
+                    "Client IP Adress:");
         }
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "共通処理の実装 確認完了"));
         }
     }
 
@@ -1821,39 +1760,32 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*APLY04CommonController.*", "\\[APLY0403003.*");
 
             // 順番通りに出力されていること。
             assertThat(list.size(), is(6));
-            assertThat(
-                    list.get(0).toString(),
-                    is("[APLY040300301]APLY04CommonControllerAdvice01 initBinder Method Called"));
-            assertThat(
-                    list.get(1).toString(),
-                    is("[APLY040300302]APLY04CommonControllerAdvice01 setUpCommonParameters01 Method Called"));
-            assertThat(
-                    list.get(2).toString(),
-                    is("[APLY040300303]APLY04CommonControllerAdvice02 initBinder Method Called"));
-            assertThat(
-                    list.get(3).toString(),
-                    is("[APLY040300304]APLY04CommonControllerAdvice02 setUpCommonParameters02 Method Called"));
-            assertThat(
-                    list.get(4).toString(),
-                    is("[APLY040300305]APLY04CommonControllerAdvice03 initBinder Method Called"));
-            assertThat(
-                    list.get(5).toString(),
-                    is("[APLY040300306]APLY04CommonControllerAdvice03 setUpCommonParameters03 Method Called"));
+            assertThat(list.get(0).toString(), is(
+                    "[APLY040300301]APLY04CommonControllerAdvice01 initBinder Method Called"));
+            assertThat(list.get(1).toString(), is(
+                    "[APLY040300302]APLY04CommonControllerAdvice01 setUpCommonParameters01 Method Called"));
+            assertThat(list.get(2).toString(), is(
+                    "[APLY040300303]APLY04CommonControllerAdvice02 initBinder Method Called"));
+            assertThat(list.get(3).toString(), is(
+                    "[APLY040300304]APLY04CommonControllerAdvice02 setUpCommonParameters02 Method Called"));
+            assertThat(list.get(4).toString(), is(
+                    "[APLY040300305]APLY04CommonControllerAdvice03 initBinder Method Called"));
+            assertThat(list.get(5).toString(), is(
+                    "[APLY040300306]APLY04CommonControllerAdvice03 setUpCommonParameters03 Method Called"));
         }
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")), is("エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is("エラーにより、異常終了しました。"));
         }
     }
 
@@ -1873,9 +1805,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // @RestController がついていないControllerの呼び出し
@@ -1883,9 +1815,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*ApiGlobalExceptionHandler.*", "\\[APLY0401004.*");
@@ -1901,30 +1832,27 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*LoginFormModelAttributeSetter.*", "\\[APLY0401004.*");
 
             // 順番通りに出力されていること。
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401004]LoginFormModelAttributeSetter initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401004]LoginFormModelAttributeSetter setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401004]LoginFormModelAttributeSetter initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401004]LoginFormModelAttributeSetter setUpCommonParameters01 Method Called"));
         }
 
     }
@@ -1945,9 +1873,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // assignableTypes で指定していないControllerの呼び出し
@@ -1955,9 +1883,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(), ".*ISODateApplicable.*",
                     "\\[APLY0401005.*");
@@ -1973,30 +1900,27 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(), ".*ISODateInitBinder.*",
                     "\\[APLY0401005.*");
 
             // 順番通りに出力されていること。
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401005]ISODateInitBinder initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401005]ISODateInitBinder setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401005]ISODateInitBinder initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401005]ISODateInitBinder setUpCommonParameters01 Method Called"));
         }
 
     }
@@ -2017,9 +1941,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // basePackageClasses の一つ上の階層のControllerの呼び出し
@@ -2027,9 +1951,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401006.*");
@@ -2044,29 +1967,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401006.*");
 
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // assignableTypes で指定したController（同じフォルダ）の呼び出し
@@ -2074,29 +1994,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list3;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list3 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401006.*");
 
             assertThat(list3.size(), is(2));
-            assertThat(
-                    list3.get(0).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list3.get(1).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list3.get(0).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list3.get(1).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // assignableTypes で指定したController（サブフォルダ）の呼び出し
@@ -2104,29 +2021,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list4;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list4 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401006.*");
 
             assertThat(list4.size(), is(2));
-            assertThat(
-                    list4.get(0).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list4.get(1).toString(),
-                    is("[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list4.get(0).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list4.get(1).toString(), is(
+                    "[APLY0401006]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
     }
 
@@ -2146,9 +2060,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // basePackageClasses の一つ上の階層のControllerの呼び出し
@@ -2156,9 +2070,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401007.*");
@@ -2173,29 +2086,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401007.*");
 
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // assignableTypes で指定したController（同じフォルダ）の呼び出し
@@ -2203,29 +2113,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list3;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list3 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401007.*");
 
             assertThat(list3.size(), is(2));
-            assertThat(
-                    list3.get(0).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list3.get(1).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list3.get(0).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list3.get(1).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // assignableTypes で指定したController（サブフォルダ）の呼び出し
@@ -2233,29 +2140,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list4;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list4 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401007.*");
 
             assertThat(list4.size(), is(2));
-            assertThat(
-                    list4.get(0).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list4.get(1).toString(),
-                    is("[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list4.get(0).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list4.get(1).toString(), is(
+                    "[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
     }
 
@@ -2275,9 +2179,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // basePackages の一つ上の階層のControllerの呼び出し
@@ -2285,9 +2189,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401008.*");
@@ -2302,29 +2205,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401008.*");
 
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // basePackages で指定したControllerの呼び出し
@@ -2332,29 +2232,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list3;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list3 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401008.*");
 
             assertThat(list3.size(), is(2));
-            assertThat(
-                    list3.get(0).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list3.get(1).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list3.get(0).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list3.get(1).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // basePackages で指定したController（サブフォルダ）の呼び出し
@@ -2362,29 +2259,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list4;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list4 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401008.*");
 
             assertThat(list4.size(), is(2));
-            assertThat(
-                    list4.get(0).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list4.get(1).toString(),
-                    is("[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list4.get(0).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list4.get(1).toString(), is(
+                    "[APLY0401008]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
     }
@@ -2405,9 +2299,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // value の一つ上の階層のControllerの呼び出し
@@ -2415,9 +2309,8 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401009.*");
@@ -2432,29 +2325,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list2;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list2 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401009.*");
 
             assertThat(list2.size(), is(2));
-            assertThat(
-                    list2.get(0).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list2.get(1).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list2.get(0).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list2.get(1).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // value で指定したControllerの呼び出し
@@ -2462,29 +2352,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list3;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list3 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401009.*");
 
             assertThat(list3.size(), is(2));
-            assertThat(
-                    list3.get(0).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list3.get(1).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list3.get(0).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list3.get(1).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
         // value で指定したController（サブフォルダ）の呼び出し
@@ -2492,29 +2379,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
 
         // ログが出力されていること
         List<String> list4;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list4 = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*AppGlobalExceptionHandler.*", "\\[APLY0401009.*");
 
             assertThat(list4.size(), is(2));
-            assertThat(
-                    list4.get(0).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
-            assertThat(
-                    list4.get(1).toString(),
-                    is("[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
+            assertThat(list4.get(0).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler initBinder Method Called"));
+            assertThat(list4.get(1).toString(), is(
+                    "[APLY0401009]AppGlobalExceptionHandler setUpCommonParameters01 Method Called"));
         }
 
     }
@@ -2536,27 +2420,26 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*SuccessLoggingInterceptor", "\\[APLY0402.*");
 
             // 順番通りに出力されていること。
             assertThat(list.size(), is(3));
-            assertThat(list.get(0).toString(),
-                    is("[APLY0402_01] preHandle method called"));
-            assertThat(list.get(1).toString(),
-                    is("[APLY0402_02] postHandle method called"));
-            assertThat(list.get(2).toString(),
-                    is("[APLY0402_03] afterCompletion method called"));
+            assertThat(list.get(0).toString(), is(
+                    "[APLY0402_01] preHandle method called"));
+            assertThat(list.get(1).toString(), is(
+                    "[APLY0402_02] postHandle method called"));
+            assertThat(list.get(2).toString(), is(
+                    "[APLY0402_03] afterCompletion method called"));
         }
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")),
-                    is("共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "共通処理の実装 確認完了"));
         }
     }
 
@@ -2577,26 +2460,25 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
             list = dbLogAssertOperations.getLogByRegexMessage(
                     webDriverOperations.getXTrack(),
                     ".*SuccessLoggingInterceptor", "\\[APLY0402.*");
 
             // 順番通りに出力されていること。
             assertThat(list.size(), is(2));
-            assertThat(list.get(0).toString(),
-                    is("[APLY0402_01] preHandle method called"));
-            assertThat(list.get(1).toString(),
-                    is("[APLY0402_03] afterCompletion method called"));
+            assertThat(list.get(0).toString(), is(
+                    "[APLY0402_01] preHandle method called"));
+            assertThat(list.get(1).toString(), is(
+                    "[APLY0402_03] afterCompletion method called"));
         }
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By
-                    .xpath("//div[2]/div/ul/li")),
-                    is("[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.8003] エラーにより、異常終了しました。"));
         }
     }
 }

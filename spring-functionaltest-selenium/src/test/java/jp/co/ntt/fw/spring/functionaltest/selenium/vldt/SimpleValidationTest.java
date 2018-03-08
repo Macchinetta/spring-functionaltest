@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
@@ -53,8 +65,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator
-                    .createLocaleSpecifiedDriver(currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(
+                    currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -87,8 +99,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -103,8 +115,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
 
@@ -118,8 +130,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
     }
@@ -151,8 +163,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -165,8 +177,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
     }
@@ -200,8 +212,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                String[] messages = webDriverOperations.getText(
-                        id(target + errors)).split(br);
+                String[] messages = webDriverOperations.getText(id(target
+                        + errors)).split(br);
                 assertThat(messages.length, is(errorMessages.size()));
                 for (String error : messages) {
                     assertTrue(errorMessages.indexOf(error) > -1);
@@ -239,8 +251,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                String[] messages = webDriverOperations.getText(
-                        id(target + errors)).split(br);
+                String[] messages = webDriverOperations.getText(id(target
+                        + errors)).split(br);
                 assertThat(messages.length, is(errorMessages.size()));
                 for (String error : messages) {
                     assertTrue(errorMessages.indexOf(error) > -1);
@@ -298,8 +310,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
                 "falsevalue", "future", "past", "creditcardnumber", "email",
                 "url", "notblank", "notempty" };
         String[] errorMessages = { "may not be null", "must be null",
-                "must match \"\\d{6}\"",
-                "must be greater than or equal to 100",
+                "must match \"\\d{6}\"", "must be greater than or equal to 100",
                 "must be less than or equal to 100",
                 "must be greater than or equal to 0.0",
                 "must be less than or equal to 99999.99",
@@ -333,9 +344,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
                 webDriverOperations.select(id(targets[10]), "True");
                 webDriverOperations.overrideText(id(targets[11]), ld.minusDays(
                         1).toString(localeDateFormat.get(currentLocale)));
-                webDriverOperations.overrideText(id(targets[12]), ld
-                        .plusDays(1).toString(
-                                localeDateFormat.get(currentLocale)));
+                webDriverOperations.overrideText(id(targets[12]), ld.plusDays(1)
+                        .toString(localeDateFormat.get(currentLocale)));
                 webDriverOperations.overrideText(id(targets[13]),
                         "1234567890123456");
                 webDriverOperations.overrideText(id(targets[14]), "aaa@aaa.");
@@ -377,8 +387,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations
-                        .overrideText(id("priceDefault"), priceInput);
+                webDriverOperations.overrideText(id("priceDefault"),
+                        priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
                 webDriverOperations.click(id(validate));
             }
@@ -387,8 +397,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 assertThat(webDriverOperations.exists(id("priceDefault"
                         + errors)), is(false));
-                assertThat(webDriverOperations
-                        .exists(id("priceFalse" + errors)), is(false));
+                assertThat(webDriverOperations.exists(id("priceFalse"
+                        + errors)), is(false));
             }
         }
     }
@@ -415,8 +425,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations
-                        .overrideText(id("priceDefault"), priceInput);
+                webDriverOperations.overrideText(id("priceDefault"),
+                        priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
                 webDriverOperations.click(id(validate));
             }
@@ -425,8 +435,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 assertThat(webDriverOperations.exists(id("priceDefault"
                         + errors)), is(false));
-                assertThat(webDriverOperations
-                        .getText(id("priceFalse" + errors)), is(errorMessage));
+                assertThat(webDriverOperations.getText(id("priceFalse"
+                        + errors)), is(errorMessage));
             }
         }
     }
@@ -454,8 +464,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations
-                        .overrideText(id("priceDefault"), priceInput);
+                webDriverOperations.overrideText(id("priceDefault"),
+                        priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
                 webDriverOperations.click(id(validate));
             }
@@ -464,9 +474,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 assertThat(webDriverOperations.getText(id("priceDefault"
                         + errors)), is(errorPriceDefaultMessage));
-                assertThat(webDriverOperations
-                        .getText(id("priceFalse" + errors)),
-                        is(errorPriceFalseMessage));
+                assertThat(webDriverOperations.getText(id("priceFalse"
+                        + errors)), is(errorPriceFalseMessage));
             }
         }
     }
@@ -526,7 +535,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 for (int i = 0; i < targets.length; i++) {
                     assertThat(webDriverOperations.getText(id(nestedFormName
-                            + dot + targets[i] + errors)), is(errorMessages[i]));
+                            + dot + targets[i] + errors)), is(
+                                    errorMessages[i]));
                 }
             }
         }
@@ -602,10 +612,9 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 for (int i = 0; i < nestedFormCount; i++) {
                     for (int j = 0; j < targets.length; j++) {
-                        assertThat(webDriverOperations
-                                .getText(id(nestedFormName + i + dot
-                                        + targets[j] + errors)),
-                                is(errorMessages[j]));
+                        assertThat(webDriverOperations.getText(id(nestedFormName
+                                + i + dot + targets[j] + errors)), is(
+                                        errorMessages[j]));
                     }
                 }
             }
@@ -645,8 +654,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -663,8 +672,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessages[groupValue]));
             }
         }
 
@@ -681,8 +690,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -699,8 +708,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessages[groupValue]));
             }
         }
     }
@@ -739,8 +748,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -757,8 +766,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessages[groupValue]));
             }
         }
 
@@ -775,8 +784,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -793,8 +802,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessages[groupValue]));
             }
         }
 
@@ -811,8 +820,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -829,8 +838,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessages[groupValue]));
             }
         }
     }
@@ -862,8 +871,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -876,8 +885,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
 
@@ -893,8 +902,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
     }
@@ -926,8 +935,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -940,8 +949,8 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)),
-                        is(errorMessage));
+                assertThat(webDriverOperations.getText(id(target + errors)), is(
+                        errorMessage));
             }
         }
     }

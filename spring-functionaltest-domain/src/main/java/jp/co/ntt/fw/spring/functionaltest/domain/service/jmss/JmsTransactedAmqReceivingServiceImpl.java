@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
@@ -37,9 +49,9 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @Transactional("sendJmsTransactionManager")
 @Service
 public class JmsTransactedAmqReceivingServiceImpl implements
-                                                 JmsTransactedAmqReceivingService {
-    private static final Logger logger = LoggerFactory
-            .getLogger(JmsTransactedAmqReceivingServiceImpl.class);
+                                                  JmsTransactedAmqReceivingService {
+    private static final Logger logger = LoggerFactory.getLogger(
+            JmsTransactedAmqReceivingServiceImpl.class);
 
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
@@ -57,15 +69,18 @@ public class JmsTransactedAmqReceivingServiceImpl implements
     JmsMessagingTemplate jndiConCacheJmsMessagingTemplate;
 
     @Override
-    public void receiveMessage_TxRcvOK(String id) throws IOException {
+    public void receiveMessage_TxRcvOK(
+            String id) throws IOException, InterruptedException {
 
         logger.debug("Received Message![TestQueue0602001] {}", id);
 
         // メッセージ受信までの間にreceiveWaitTime秒の待ち時間を発生させる
         try {
-            TimeUnit.MILLISECONDS.sleep(receiveWaitTime + addReceiveWaitTime);
+            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime
+                    + addReceiveWaitTime));
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
+            throw e;
         }
 
         // メッセージ受信
@@ -78,15 +93,17 @@ public class JmsTransactedAmqReceivingServiceImpl implements
     }
 
     @Override
-    public void receiveMessage_TxRcvNG(String id) {
+    public void receiveMessage_TxRcvNG(String id) throws InterruptedException {
 
         logger.debug("Received Message![TestQueue0602002] {}", id);
 
         // メッセージ受信までの間にreceiveWaitTime秒の待ち時間を発生させる
         try {
-            TimeUnit.MILLISECONDS.sleep(receiveWaitTime + addReceiveWaitTime);
+            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime
+                    + addReceiveWaitTime));
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
+            throw e;
         }
 
         // メッセージ受信
@@ -94,7 +111,7 @@ public class JmsTransactedAmqReceivingServiceImpl implements
                 JmsTodo.class);
 
         // 例外発生
-        throw new BusinessException(ResultMessages.error()
-                .add("e.sf.jmss.8001"));
+        throw new BusinessException(ResultMessages.error().add(
+                "e.sf.jmss.8001"));
     }
 }

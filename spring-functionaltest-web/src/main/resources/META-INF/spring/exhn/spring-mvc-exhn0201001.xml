@@ -1,64 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!-- Setting Exception Handling. -->
-    <!-- Exception Resolver. -->
-    <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
-        <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
-        <!-- Setting and Customization by project. -->
-        <property name="order" value="3" />
+  <!-- Setting Exception Handling. -->
+  <!-- Exception Resolver. -->
+  <bean class="org.terasoluna.gfw.web.exception.SystemExceptionResolver">
+    <property name="exceptionCodeResolver" ref="exceptionCodeResolver" />
+    <!-- Setting and Customization by project. -->
+    <property name="order" value="3" />
 
-        <property name="excludedExceptions">
-            <array>
-                <value>org.springframework.security.access.AccessDeniedException
-                </value>
-            </array>
-        </property>
+    <property name="excludedExceptions">
+      <array>
+        <value>org.springframework.security.access.AccessDeniedException
+        </value>
+      </array>
+    </property>
 
-        <property name="exceptionMappings">
-            <map>
-                <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
-                <entry key="BusinessException" value="exhn/businessError" />
-                <entry key="InvalidTransactionTokenException"
-                    value="common/error/transactionTokenError" />
-                <entry key=".DataAccessException" value="common/error/dataAccessError" />
-                <entry key="InvalidRequestException" value="common/error/operationError" />
-                <entry key="MultipartException" value="common/error/fileUploadError" />
-                <entry key="HttpSessionRequiredException" value="common/error/operationError" />
-                <entry key="MappingException" value="common/error/beanMappingError" />
-            </map>
-        </property>
+    <property name="exceptionMappings">
+      <map>
+        <entry key="ResourceNotFoundException" value="common/error/resourceNotFoundError" />
+        <entry key="BusinessException" value="exhn/businessError" />
+        <entry key="InvalidTransactionTokenException" value="common/error/transactionTokenError" />
+        <entry key=".DataAccessException" value="common/error/dataAccessError" />
+        <entry key="InvalidRequestException" value="common/error/operationError" />
+        <entry key="MultipartException" value="common/error/fileUploadError" />
+        <entry key="HttpSessionRequiredException" value="common/error/operationError" />
+        <entry key="MappingException" value="common/error/beanMappingError" />
+      </map>
+    </property>
 
-        <property name="statusCodes">
-            <map>
-                <entry key="common/error/resourceNotFoundError"
-                    value="404" />
-                <entry key="exhn/businessError" value="409" />
-                <entry key="common/error/transactionTokenError"
-                    value="409" />
-                <entry key="common/error/dataAccessError" value="500" />
-                <entry key="common/error/operationError" value="400" />
-                <entry key="common/error/fileUploadError" value="400" />
-                <entry key="common/error/beanMappingError" value="500" />
-            </map>
-        </property>
-        <property name="defaultErrorView" value="common/error/systemError" />
-        <property name="defaultStatusCode" value="500" />
-    </bean>
+    <property name="statusCodes">
+      <map>
+        <entry key="common/error/resourceNotFoundError" value="404" />
+        <entry key="exhn/businessError" value="409" />
+        <entry key="common/error/transactionTokenError" value="409" />
+        <entry key="common/error/dataAccessError" value="500" />
+        <entry key="common/error/operationError" value="400" />
+        <entry key="common/error/fileUploadError" value="400" />
+        <entry key="common/error/beanMappingError" value="500" />
+      </map>
+    </property>
+    <property name="defaultErrorView" value="common/error/systemError" />
+    <property name="defaultStatusCode" value="500" />
+  </bean>
 
-    <import resource="classpath:META-INF/spring/spring-mvc-common.xml"/>
+  <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
 
-    <context:annotation-config />
+  <context:annotation-config />
 
-    <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0201001Controller" />
-    <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EmployeeHelper" />
-    
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0201001Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EmployeeHelper" />
+
 </beans>

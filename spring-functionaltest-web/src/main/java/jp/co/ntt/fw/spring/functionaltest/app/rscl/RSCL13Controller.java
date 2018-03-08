@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
@@ -51,8 +63,7 @@ public class RSCL13Controller {
     @RequestMapping(value = "1302/001", method = RequestMethod.GET)
     public String handle1302001First(Model model) {
 
-        model.addAttribute(
-                "testDescription",
+        model.addAttribute("testDescription",
                 "AsyncRestTemplateを使用して、REST APIを複数回連続で呼び出し、スレッドプールのキューを溢れさせ、スレッド数の制限が行えていることを確認");
         model.addAttribute("testId", "1302/001");
 
@@ -85,8 +96,8 @@ public class RSCL13Controller {
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error()
-                    .add("e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add(
+                    "e.rc.fw.8002");
             model.addAttribute(messages);
         }
 
@@ -112,8 +123,8 @@ public class RSCL13Controller {
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error()
-                    .add("e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add(
+                    "e.rc.fw.8002");
             model.addAttribute(messages);
         }
 
@@ -140,8 +151,8 @@ public class RSCL13Controller {
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error()
-                    .add("e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add(
+                    "e.rc.fw.8002");
             model.addAttribute(messages);
         }
         return "rscl/resultUserInf";
@@ -167,8 +178,8 @@ public class RSCL13Controller {
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error()
-                    .add("e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add(
+                    "e.rc.fw.8002");
             model.addAttribute(messages);
         }
 

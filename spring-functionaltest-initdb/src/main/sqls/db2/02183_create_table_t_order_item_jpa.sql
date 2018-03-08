@@ -1,8 +1,8 @@
 CREATE
     TABLE t_order_item_jpa (
-        order_id INTEGER NOT NULL,
+        order_id INTEGER,
         item_num INTEGER NOT NULL,
-        item_code CHAR(10) NOT NULL,
+        item_code CHAR(10),
         quantity INTEGER,
         logical_delete NUMERIC,
         CONSTRAINT t_order_item_jpa_pk PRIMARY KEY(item_num),

@@ -1,89 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- SOAP Web Service Proxies -->
-    <bean id="todoWebServices" class="org.springframework.beans.factory.config.MapFactoryBean">
-        <property name="sourceMap">
-        	<map key-type="java.lang.String" value-type="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService">
-        		<entry key="todo" value-ref="todoWebService" />
-        		<entry key="wsdl" value-ref="wsdlFileTodoWebService" />
-        		<entry key="user" value-ref="userTodoWebService" />
-        		<entry key="anonymous" value-ref="anonymousTodoWebService" />
-        		<entry key="admin" value-ref="adminTodoWebService" />
-        		<entry key="timeout" value-ref="timeoutTodoWebService" />
-        	</map>
-        </property>
-    </bean>
-    <bean id="todoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="wsdlFileTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
-        <property name="endpointAddress" value="${soap.endpointAddress}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="userTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="username" value="${soap.user.username}" />
-        <property name="password" value="${soap.user.password}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="anonymousTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="username" value="${soap.anonymous.username}" />
-        <property name="password" value="${soap.anonymous.password}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="adminTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="username" value="${soap.admin.username}" />
-        <property name="password" value="${soap.admin.password}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="timeoutTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="customProperties">
-            <map>
-                <entry key="${soap.request.timeout.key}" value-type="java.lang.Integer" value="${soap.request.timeout.value}"/>
-            </map>
-        </property>
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
-    <bean id="wsimportTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
-        <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.TodoWebService" />
-        <property name="serviceName" value="TodoWebService" />
-        <property name="portName" value="TodoWebPort" />
-        <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
-        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
-        <property name="endpointAddress" value="${soap.endpointAddress}" />
-        <property name="lookupServiceOnStartup" value="false" />
-    </bean>
+  <!-- SOAP Web Service Proxies -->
+  <bean id="todoWebServices" class="org.springframework.beans.factory.config.MapFactoryBean">
+    <property name="sourceMap">
+      <map key-type="java.lang.String" value-type="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService">
+        <entry key="todo" value-ref="todoWebService" />
+        <entry key="wsdl" value-ref="wsdlFileTodoWebService" />
+        <entry key="user" value-ref="userTodoWebService" />
+        <entry key="anonymous" value-ref="anonymousTodoWebService" />
+        <entry key="admin" value-ref="adminTodoWebService" />
+        <entry key="timeout" value-ref="timeoutTodoWebService" />
+      </map>
+    </property>
+  </bean>
+  <bean id="todoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+  <bean id="wsdlFileTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+    <property name="endpointAddress" value="${soap.endpointAddress}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+  <bean id="userTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="username" value="${soap.user.username}" />
+    <property name="password" value="${soap.user.password}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+  <bean id="anonymousTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="username" value="${soap.anonymous.username}" />
+    <property name="password" value="${soap.anonymous.password}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+  <bean id="adminTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="username" value="${soap.admin.username}" />
+    <property name="password" value="${soap.admin.password}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
+  <!-- "timeoutTodoWebService" moved to spring-functionaltest-env.xml for fix of Issue #1230. -->
+  <bean id="wsimportTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+    <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.TodoWebService" />
+    <property name="serviceName" value="TodoWebService" />
+    <property name="portName" value="TodoWebPort" />
+    <property name="namespaceUri" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+    <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.url}" />
+    <property name="endpointAddress" value="${soap.endpointAddress}" />
+    <property name="lookupServiceOnStartup" value="false" />
+  </bean>
 
 </beans>

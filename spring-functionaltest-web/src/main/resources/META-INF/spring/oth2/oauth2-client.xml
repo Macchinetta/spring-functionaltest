@@ -1,146 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-	xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="
         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
     ">
 
-	<oauth2:client id="oauth2ClientContextFilter" />
+  <oauth2:client id="oauth2ClientContextFilter" />
 
-	<!-- Authorization Code Grant Client (InMemoryTokenStore) -->
-	<oauth2:resource id="authorizationCode/todo-Memory" client-id="testClient"
-		client-secret="demo" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.memoryApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.memoryApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-Memory"
-		id="authorizationCodeMemoryRestTemplate" />
+  <!-- Authorization Code Grant Client (InMemoryTokenStore) -->
+  <oauth2:resource id="authorizationCode/todo-Memory" client-id="testClient"
+    client-secret="demo" type="authorization_code" scope="READ,CREATE,DELETE,UPDATE"
+    access-token-uri="${oth2.memoryApplicationContextUrl}/oth2/oauth/token" user-authorization-uri="${oth2.memoryApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo-Memory" id="authorizationCodeMemoryRestTemplate" />
 
-	<!-- Authorization Code Grant Client (RemoteTokenService) -->
-	<oauth2:resource id="authorizationCode/todo-Remote" client-id="testClient"
-		client-secret="demo" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.remoteApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.remoteApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-Remote"
-		id="authorizationCodeRemoteRestTemplate" />
+  <!-- Authorization Code Grant Client (RemoteTokenService) -->
+  <oauth2:resource id="authorizationCode/todo-Remote" client-id="testClient"
+    client-secret="demo" type="authorization_code" scope="READ,CREATE,DELETE,UPDATE"
+    access-token-uri="${oth2.remoteApplicationContextUrl}/oth2/oauth/token" user-authorization-uri="${oth2.remoteApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo-Remote" id="authorizationCodeRemoteRestTemplate" />
 
-	<!-- Authorization Code Grant Client (Scope type:ALL) -->
-	<oauth2:resource id="authorizationCode/todo" client-id="testClient"
-		client-secret="demo" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo"
-		id="authorizationCodeRestTemplate" />
+  <!-- Authorization Code Grant Client (Scope type:ALL) -->
+  <oauth2:resource id="authorizationCode/todo" client-id="testClient" client-secret="demo"
+    type="authorization_code" scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
+    user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo" id="authorizationCodeRestTemplate" />
 
 
-	<!-- Authorization Code Grant Client (Scope type:READ, DELETE) -->
-	<oauth2:resource id="authorizationCode/todo-ScopeRD"
-		client-id="testClient" client-secret="demo"
-		type="authorization_code" scope="READ,DELETE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-ScopeRD"
-		id="authorizationCodeScopeRestTemplate" />
+  <!-- Authorization Code Grant Client (Scope type:READ, DELETE) -->
+  <oauth2:resource id="authorizationCode/todo-ScopeRD" client-id="testClient"
+    client-secret="demo" type="authorization_code" scope="READ,DELETE"
+    access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
+    user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo-ScopeRD" id="authorizationCodeScopeRestTemplate" />
 
-	<!-- for Illegal Parameter Test -->
-	<!-- Authorization Code Grant Client (Illegal Client Id) -->
-	<oauth2:resource id="authorizationCode/todo-IllegalId"
-		client-id="illegal_id" client-secret="demo" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-IllegalId"
-		id="authorizationCodeIllegalIdRestTemplate" />
+  <!-- Authorization Code Grant Client (Illegal Client Secret) -->
+  <oauth2:resource id="authorizationCode/todo-IllegalSecret" client-id="testClient"
+    client-secret="illegal_secret" type="authorization_code" scope="READ,CREATE,DELETE,UPDATE"
+    access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
+    user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo-IllegalSecret" id="authorizationCodeIllegalSecretRestTemplate" />
 
-	<!-- Authorization Code Grant Client (Illegal Client Secret) -->
-	<oauth2:resource id="authorizationCode/todo-IllegalSecret"
-		client-id="testClient" client-secret="illegal_secret" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-IllegalSecret"
-		id="authorizationCodeIllegalSecretRestTemplate" />
+  <!-- Authorization Code Grant Client (Illegal Resource Id) -->
+  <oauth2:resource id="authorizationCode/todo-IllegalResource" client-id="testClientIllegalResource"
+    client-secret="demo" type="authorization_code" scope="READ"
+    access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
+    user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todo-IllegalResource" id="authorizationCodeIllegalResourceRestTemplate" />
 
-	<!-- Authorization Code Grant Client (Illegal Redirect URI) -->
-	<oauth2:resource id="authorizationCode/todo-IllegalUri"
-		client-id="testClientIllegalUri" client-secret="demo" type="authorization_code"
-		scope="READ,CREATE,DELETE,UPDATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-IllegalUri"
-		id="authorizationCodeIllegalUriRestTemplate" />
+  <!-- Client Password Credential Grant Client -->
+  <oauth2:resource id="clientResource" client-id="testClient" client-secret="demo"
+    type="client_credentials" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
+  <oauth2:rest-template resource="clientResource" id="clientCredentialRestTemplate" />
 
-	<!-- Authorization Code Grant Client (Illegal Resource Id) -->
-	<oauth2:resource id="authorizationCode/todo-IllegalResource"
-		client-id="testClientIllegalResource" client-secret="demo" type="authorization_code"
-		scope="READ" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todo-IllegalResource"
-		id="authorizationCodeIllegalResourceRestTemplate" />
-
-	<!-- Client Password Credential Grant Client -->
-	<oauth2:resource id="clientResource" client-id="testClient"
-		client-secret="demo" type="client_credentials"
-		access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
-	<oauth2:rest-template resource="clientResource"
-		id="clientCredentialRestTemplate" />
-
-	<!-- Resource Owner Password Credential Grant Client -->
-	<bean id="passGrantResource"
-		class="org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails"
-		scope="session">
-		<aop:scoped-proxy />
-		<property name="clientId" value="testClient2" />
-		<property name="clientSecret" value="demo" />
-		<property name="accessTokenUri" value="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
-	</bean>
-	<oauth2:rest-template resource="passGrantResource"
-		id="passwordRestTemplate" />
+  <!-- Resource Owner Password Credential Grant Client -->
+  <bean id="passGrantResource"
+    class="org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails"
+    scope="session">
+    <aop:scoped-proxy />
+    <property name="clientId" value="testClient2" />
+    <property name="clientSecret" value="demo" />
+    <property name="accessTokenUri" value="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
+    <property name="scope">
+      <list>
+        <value>READ</value>
+        <value>CREATE</value>
+        <value>DELETE</value>
+        <value>UPDATE</value>
+      </list>
+    </property>
+  </bean>
+  <oauth2:rest-template resource="passGrantResource" id="passwordRestTemplate" />
 
 
-	<!-- for Read Only Client -->
-	<!-- Authorization Code Grant Client (Client:Read Only, Scope type:CREATE) -->
-	<oauth2:resource id="authorizationCode/todoReadOnly" client-id="testClientReadOnly"
-		client-secret="demo" type="authorization_code"
-		scope="CREATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
-		user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
-	<oauth2:rest-template resource="authorizationCode/todoReadOnly"
-		id="authorizationCodeReadOnlyRestTemplate" />
+  <!-- for Read Only Client -->
+  <!-- Authorization Code Grant Client (Client:Read Only, Scope type:CREATE) -->
+  <oauth2:resource id="authorizationCode/todoReadOnly" client-id="testClientReadOnly"
+    client-secret="demo" type="authorization_code" scope="CREATE"
+    access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token"
+    user-authorization-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/authorize" />
+  <oauth2:rest-template resource="authorizationCode/todoReadOnly" id="authorizationCodeReadOnlyRestTemplate" />
 
-	<!-- Client Password Credential Grant Client (Client:Read Only, Scope type:CREATE) -->
-	<oauth2:resource id="clientResourceReadOnly" client-id="testClientReadOnly"
-		client-secret="demo" type="client_credentials"
-		scope="CREATE" access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
-	<oauth2:rest-template resource="clientResourceReadOnly"
-		id="clientCredentialReadOnlyRestTemplate" />
+  <!-- Client Password Credential Grant Client (Client:Read Only, Scope type:CREATE) -->
+  <oauth2:resource id="clientResourceReadOnly" client-id="testClientReadOnly"
+    client-secret="demo" type="client_credentials" scope="CREATE"
+    access-token-uri="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
+  <oauth2:rest-template resource="clientResourceReadOnly" id="clientCredentialReadOnlyRestTemplate" />
 
-	<!-- Resource Owner Password Credential Grant Client (Client:Read Only, Scope type:CREATE) -->
-	<bean id="passGrantResourceReadOnly"
-		class="org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails"
-		scope="session">
-		<aop:scoped-proxy />
-		<property name="clientId" value="testClientReadOnly" />
-		<property name="clientSecret" value="demo" />
-		<property name="accessTokenUri" value="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
-		<property name="scope" value="CREATE" />
-	</bean>
-	<oauth2:rest-template resource="passGrantResourceReadOnly"
-		id="passwordReadOnlyRestTemplate" />
+  <!-- Resource Owner Password Credential Grant Client (Client:Read Only, Scope type:CREATE) -->
+  <bean id="passGrantResourceReadOnly"
+    class="org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails"
+    scope="session">
+    <aop:scoped-proxy />
+    <property name="clientId" value="testClientReadOnly" />
+    <property name="clientSecret" value="demo" />
+    <property name="accessTokenUri" value="${oth2.databaseApplicationContextUrl}/oth2/oauth/token" />
+    <property name="scope" value="CREATE" />
+  </bean>
+  <oauth2:rest-template resource="passGrantResourceReadOnly" id="passwordReadOnlyRestTemplate" />
 
 
-	<!-- for  -->
+  <!-- for -->
 
-    <bean id="revokeRestTemplate" class="org.springframework.web.client.RestTemplate">
-        <property name="interceptors">
-            <list>
-                <ref bean="oth2BasicAuthInterceptor" />
-            </list>
-        </property>
-    </bean>
-    
-    <bean id="oth2BasicAuthInterceptor" class="jp.co.ntt.fw.spring.functionaltest.infra.rest.BasicAuthInterceptor">
-            <constructor-arg index="0" value="testClient" />
-            <constructor-arg index="1" value="demo" />
-    </bean>
+  <bean id="revokeRestTemplate" class="org.springframework.web.client.RestTemplate">
+    <property name="interceptors">
+      <list>
+        <ref bean="oth2BasicAuthInterceptor" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="oth2BasicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+    <constructor-arg index="0" value="testClient" />
+    <constructor-arg index="1" value="demo" />
+  </bean>
 
 </beans>

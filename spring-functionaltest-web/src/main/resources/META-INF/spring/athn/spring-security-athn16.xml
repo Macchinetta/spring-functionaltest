@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <bean id="authenticationSystemFailureHandler"
-        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
-        <property name="defaultFailureUrl" value="/athn/1601/001/login?error" />
-        <property name="exceptionMappings">
-            <props>
-                <prop
-                    key="org.springframework.security.authentication.InternalAuthenticationServiceException">
-                    /athn/1601/001/login?systemError
-                </prop>
-            </props>
-        </property>
-    </bean>
+  <bean id="authenticationSystemFailureHandler"
+    class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+    <property name="defaultFailureUrl" value="/athn/1601/001/login?error" />
+    <property name="exceptionMappings">
+      <props>
+        <prop key="org.springframework.security.authentication.InternalAuthenticationServiceException">
+          /athn/1601/001/login?systemError
+        </prop>
+      </props>
+    </property>
+  </bean>
 
-    <sec:authentication-manager
-        id="authEventSystemFailureHandleUserLoginManager">
-        <sec:authentication-provider
-            user-service-ref="authEventHandleUserDetailsService">
-            <sec:password-encoder ref="passwordEncoder" />
-        </sec:authentication-provider>
-    </sec:authentication-manager>
+  <sec:authentication-manager id="authEventSystemFailureHandleUserLoginManager">
+    <sec:authentication-provider user-service-ref="authEventHandleUserDetailsService">
+      <sec:password-encoder ref="passwordEncoder" />
+    </sec:authentication-provider>
+  </sec:authentication-manager>
 
-    <sec:http pattern="/athn/1601/**"
-        authentication-manager-ref="authEventSystemFailureHandleUserLoginManager">
-        <sec:form-login login-page="/athn/1601/001/login"
-            login-processing-url="/athn/1601/authenticate"
-            default-target-url="/athn/1601/001?loginSuccess"
-            always-use-default-target="true"
-            authentication-failure-handler-ref="authenticationSystemFailureHandler" />
-        <sec:logout logout-url="/athn/1601/001/logout"
-            logout-success-url="/athn/" />
-        <sec:intercept-url pattern="/athn/1601/001/login/**"
-            access="permitAll" />
-        <sec:intercept-url pattern="/athn/1601/**"
-            access="isAuthenticated()" />
-    </sec:http>
+  <sec:http pattern="/athn/1601/**" authentication-manager-ref="authEventSystemFailureHandleUserLoginManager">
+    <sec:form-login login-page="/athn/1601/001/login" login-processing-url="/athn/1601/authenticate"
+      default-target-url="/athn/1601/001?loginSuccess" always-use-default-target="true"
+      authentication-failure-handler-ref="authenticationSystemFailureHandler" />
+    <sec:logout logout-url="/athn/1601/001/logout" logout-success-url="/athn/" />
+    <sec:intercept-url pattern="/athn/1601/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1601/**" access="isAuthenticated()" />
+  </sec:http>
 </beans>

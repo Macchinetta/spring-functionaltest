@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.soap;
 
@@ -55,7 +67,8 @@ public class SOAPTodoController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // bind empty strings as null
-        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+        binder.registerCustomEditor(String.class,
+                new StringTrimmerEditor(true));
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -73,7 +86,8 @@ public class SOAPTodoController {
         return "soap/list";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET, params = { "form" })
+    @RequestMapping(value = "create", method = RequestMethod.GET, params = {
+            "form" })
     public String createForm() {
         return "soap/create";
     }
@@ -88,7 +102,8 @@ public class SOAPTodoController {
         return "soap/todo";
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.GET, params = { "form" })
+    @RequestMapping(value = "get", method = RequestMethod.GET, params = {
+            "form" })
     public String getForm() {
         return "soap/get";
     }
@@ -102,7 +117,8 @@ public class SOAPTodoController {
         return "soap/todo";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET, params = { "form" })
+    @RequestMapping(value = "update", method = RequestMethod.GET, params = {
+            "form" })
     public String updateForm() {
         return "soap/update";
     }
@@ -117,7 +133,8 @@ public class SOAPTodoController {
         return "soap/todo";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.GET, params = { "form" })
+    @RequestMapping(value = "delete", method = RequestMethod.GET, params = {
+            "form" })
     public String deleteForm() {
         return "soap/delete";
     }
@@ -140,13 +157,14 @@ public class SOAPTodoController {
 
     @RequestMapping(value = "requestTimeout", method = RequestMethod.GET)
     public String requestTimeout(Model model,
-            @PathVariable("proxy") String proxy) {
+            @PathVariable("proxy") String proxy) throws InterruptedException {
 
         todoProxyService.requestTimeout(proxy);
         return "soap/index";
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.GET, params = { "form" })
+    @RequestMapping(value = "upload", method = RequestMethod.GET, params = {
+            "form" })
     public String uploadForm(UploadFileForm form) {
         return "soap/upload";
     }
@@ -170,9 +188,8 @@ public class SOAPTodoController {
         } catch (IOException e) {
             throw new SystemException("e.sf.cmmn.9001", e);
         } finally {
-            if (temporaryFile != null) {
-                temporaryFile.delete();
-            }
+            // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
+            temporaryFile.delete();
         }
 
         return "soap/index";

@@ -1,34 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="SessionEventListeners "
-        class="jp.co.ntt.fw.spring.functionaltest.app.spsm.listner.SessionEventListeners" />
+  <bean id="SessionEventListeners " class="jp.co.ntt.fw.spring.functionaltest.app.spsm.listner.SessionEventListeners" />
 
-    <sec:http pattern="/spsm/0403/001/001/**"
-        authentication-manager-ref="userLoginManagerForAthn">
-        <sec:form-login login-page="/spsm/0403/001/001/login"
-            login-processing-url="/spsm/0403/001/001/authenticate"
-            default-target-url="/spsm/0403/001/001?loginSuccess"
-            always-use-default-target="true" />
-        <sec:logout logout-url="/spsm/0403/001/001/logout"
-            logout-success-url="/spsm/0403/001/001/login" />
-        <sec:session-management
-            invalid-session-url="/spsm/invalidSessionError" />
-    </sec:http>
+  <sec:http pattern="/spsm/0403/001/001/**" authentication-manager-ref="userLoginManagerForAthn">
+    <sec:form-login login-page="/spsm/0403/001/001/login" login-processing-url="/spsm/0403/001/001/authenticate"
+      default-target-url="/spsm/0403/001/001?loginSuccess" always-use-default-target="true" />
+    <sec:logout logout-url="/spsm/0403/001/001/logout" logout-success-url="/spsm/0403/001/001/login" />
+    <sec:session-management invalid-session-url="/spsm/invalidSessionError" />
+  </sec:http>
 
-    <sec:http pattern="/spsm/0403/001/002/**"
-        authentication-manager-ref="userLoginManagerForAthn">
-        <sec:form-login login-page="/spsm/0403/001/002/login"
-            login-processing-url="/spsm/0403/001/002/authenticate"
-            default-target-url="/spsm/0403/001/002?loginSuccess"
-            always-use-default-target="true" />
-        <sec:logout logout-url="/spsm/0403/001/002/logout"
-            logout-success-url="/spsm/0403/001/002/login" />
-        <sec:session-management />
-    </sec:http>
+  <sec:http pattern="/spsm/0403/001/002/**" authentication-manager-ref="userLoginManagerForAthn">
+    <sec:form-login login-page="/spsm/0403/001/002/login" login-processing-url="/spsm/0403/001/002/authenticate"
+      default-target-url="/spsm/0403/001/002?loginSuccess" always-use-default-target="true" />
+    <sec:logout logout-url="/spsm/0403/001/002/logout" logout-success-url="/spsm/0403/001/002/login" />
+    <sec:session-management />
+  </sec:http>
 </beans>

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -30,7 +42,7 @@ public class SOAPTestSupport extends FunctionTestSupport {
         if (enableToAssertHttpStatusCode) {
             dbLogAssertOperations.assertContainsByMessage(webDriverOperations
                     .getXTrack(), null, String.format("httpStatusCode=%s",
-                    expected));
+                            expected));
         }
     }
 
@@ -40,18 +52,17 @@ public class SOAPTestSupport extends FunctionTestSupport {
      * @param errors エラー詳細
      */
     protected void assertWebFault(WebFaultType type, ErrorBean... errors) {
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "e.sf.cmmn.9001",
-                        "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
         dbLogAssertOperations.assertContainsByMessage(webDriverOperations
                 .getXTrack(), null, String.format("webFaultType=%s", type
-                .toString()));
+                        .toString()));
 
         if (errors != null) {
             dbLogAssertOperations.assertContainsByMessage(webDriverOperations
                     .getXTrack(), null, String.format("errorBeanSize=%s",
-                    errors.length));
+                            errors.length));
             for (ErrorBean error : errors) {
                 dbLogAssertOperations.assertContainsByMessage(
                         webDriverOperations.getXTrack(), null, String.format(
@@ -68,20 +79,19 @@ public class SOAPTestSupport extends FunctionTestSupport {
      */
     protected void assertWebFaultIsInErrorBeans(WebFaultType type,
             ErrorBean... errors) {
-        dbLogAssertOperations
-                .assertContainsByRegexExceptionMessage(webDriverOperations
-                        .getXTrack(), null, "e.sf.cmmn.9001",
-                        "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
+        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
         dbLogAssertOperations.assertContainsByMessage(webDriverOperations
                 .getXTrack(), null, String.format("webFaultType=%s", type
-                .toString()));
+                        .toString()));
 
         if (errors != null) {
             dbLogAssertOperations.assertContainsByMessage(webDriverOperations
                     .getXTrack(), null, "errorBeanSize=1");
-            List<String> list = dbLogAssertOperations
-                    .getLogByRegexMessage(webDriverOperations.getXTrack(),
-                            null, "code:message:path*");
+            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
+                    webDriverOperations.getXTrack(), null,
+                    "code:message:path*");
             assertThat(list, hasSize(1));
             String logMessage = list.get(0);
             List<String> messageList = new ArrayList<String>();

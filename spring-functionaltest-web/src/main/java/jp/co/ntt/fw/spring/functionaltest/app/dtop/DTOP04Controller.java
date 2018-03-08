@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
@@ -79,7 +91,8 @@ public class DTOP04Controller {
     }
 
     @RequestMapping(value = "checkterm", method = RequestMethod.GET, params = "checkContainTermToDate")
-    public String handleCheckContainTermToDate(Model model, CheckTermForm form) {
+    public String handleCheckContainTermToDate(Model model,
+            CheckTermForm form) {
         model.addAttribute("result", dateOperationService
                 .checkContainTermToDate(form.getTargetTermFrom(), form
                         .getTargetTermTo(), form.getTargetCheckDate()));
@@ -87,11 +100,12 @@ public class DTOP04Controller {
     }
 
     @RequestMapping(value = "checkterm", method = RequestMethod.GET, params = "checkContainTermToTerm")
-    public String handleCheckContainTermToTerm(Model model, CheckTermForm form) {
+    public String handleCheckContainTermToTerm(Model model,
+            CheckTermForm form) {
         model.addAttribute("result", dateOperationService
                 .checkContainTermToTerm(form.getTargetTermFrom(), form
                         .getTargetTermTo(), form.getTargetCheckTermFrom(), form
-                        .getTargetCheckTermTo()));
+                                .getTargetCheckTermTo()));
         return "dtop/showExistDate";
     }
 
@@ -99,7 +113,8 @@ public class DTOP04Controller {
     public String handleCheckAbutsTerm(Model model, CheckTermForm form) {
         model.addAttribute("result", dateOperationService.checkAbutsTerm(form
                 .getTargetTermFrom(), form.getTargetTermTo(), form
-                .getTargetCheckTermFrom(), form.getTargetCheckTermTo()));
+                        .getTargetCheckTermFrom(), form
+                                .getTargetCheckTermTo()));
         return "dtop/showExistDate";
     }
 
@@ -117,7 +132,7 @@ public class DTOP04Controller {
         dateOperationHelper.bindTermResultToModel(model, dateOperationService
                 .getOverlapTerm(form.getTargetTermFrom(), form
                         .getTargetTermTo(), form.getTargetCheckTermFrom(), form
-                        .getTargetCheckTermTo()));
+                                .getTargetCheckTermTo()));
         return "dtop/showExistTerm";
     }
 
@@ -140,12 +155,12 @@ public class DTOP04Controller {
                 .calcIncreaseNumOfDateUsingPeriod(form.getTargetIncDecDate(),
                         dateOperationHelper.getPeriodByMonthAndDay(form
                                 .getTargetIncreaseMonthNum(), form
-                                .getTargetIncreaseDayNum())));
+                                        .getTargetIncreaseDayNum())));
         model.addAttribute("resultEndDate", dateOperationService
                 .calcDecreaseNumOfDateUsingPeriod(form.getTargetIncDecDate(),
                         dateOperationHelper.getPeriodByMonthAndDay(form
                                 .getTargetDecreaseMonthNum(), form
-                                .getTargetDecreaseDayNum())));
+                                        .getTargetDecreaseDayNum())));
         return "dtop/showIncDecDate";
     }
 

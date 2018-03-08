@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.fldw;
 
@@ -84,9 +96,8 @@ public class FileDownloadTest extends FunctionTestSupport {
     @Before
     public void setUp() throws Exception {
         if (downloadDriver == null) {
-            downloadDriver = webDriverCreator
-                    .createDownloadableWebDriver(downloadTempDirectory.toFile()
-                            .getAbsolutePath());
+            downloadDriver = webDriverCreator.createDownloadableWebDriver(
+                    downloadTempDirectory.toFile().getAbsolutePath());
         }
         setCurrentWebDriver(downloadDriver);
     }
@@ -116,7 +127,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedPdfJava1_8 = new ClassPathResource("/testdata/fldw/日本語ファイル名iTextAsian1_0_jdk1_8.pdf");
 
         // ダウンロードされたファイルを読み込む
-        File file = new File(downloadTempDirectory.toString(), downloadPdfFileName);
+        File file = new File(downloadTempDirectory
+                .toString(), downloadPdfFileName);
         BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
 
         // ファイルダウンロードの確認
@@ -143,7 +155,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             for (String line = reader.readLine(); line != null; line = reader
                     .readLine()) {
-                if (!line.startsWith("<</Root") && !line.startsWith("<</Info")) {
+                if (!line.startsWith("<</Root") && !line.startsWith(
+                        "<</Info")) {
                     builder.append(line);
                 } else {
                     builder.append("xxxxxxxxxx");
@@ -180,7 +193,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedExcel = new ClassPathResource("/testdata/fldw/日本語ファイル名.xlsx");
 
         // ダウンロードされたファイルを読み込む中身の検証
-        File file = new File(downloadTempDirectory.toString(), downloadXlsFileName);
+        File file = new File(downloadTempDirectory
+                .toString(), downloadXlsFileName);
 
         // xlsxファイルを解凍してバイナリで比較
         compareFile(file, expectedExcel.getFile());
@@ -217,7 +231,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedCsv = new ClassPathResource("/testdata/fldw/日本語ファイル名.csv");
 
         // ダウンロードされたファイルを読み込む
-        File file = new File(downloadTempDirectory.toString(), downloadCsvFileName);
+        File file = new File(downloadTempDirectory
+                .toString(), downloadCsvFileName);
         BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
 
         // ファイルダウンロードの確認
@@ -256,11 +271,11 @@ public class FileDownloadTest extends FunctionTestSupport {
         }
     }
 
-    private void compareFile(File actualFile, File expectedFile) throws IOException {
+    private void compareFile(File actualFile,
+            File expectedFile) throws IOException {
 
-        try (ZipFile zipActual = new ZipFile(actualFile, Charset
-                .forName("UTF-8"));
-                ZipFile zipExpect = new ZipFile(expectedFile, Charset
+        try (ZipFile zipActual = new ZipFile(actualFile, Charset.forName(
+                "UTF-8")); ZipFile zipExpect = new ZipFile(expectedFile, Charset
                         .forName("UTF-8"));) {
 
             // ファイルサイズ取得
@@ -308,8 +323,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         long size = 0;
         try (ZipFile zipFile = new ZipFile(file, Charset.forName("UTF-8"));) {
 
-            for (Enumeration<? extends ZipEntry> zipEntries = zipFile.entries(); zipEntries
-                    .hasMoreElements();) {
+            for (Enumeration<? extends ZipEntry> zipEntries = zipFile
+                    .entries(); zipEntries.hasMoreElements();) {
                 ZipEntry entry = zipEntries.nextElement();
                 if (entry.getName().equals("docProps/core.xml")) {
                     // バイナリが異なるファイルはサイズ計算対象外

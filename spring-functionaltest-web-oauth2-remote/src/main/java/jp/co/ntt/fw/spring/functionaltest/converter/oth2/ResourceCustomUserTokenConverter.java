@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.converter.oth2;
 
@@ -16,7 +28,7 @@ import org.springframework.util.StringUtils;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OauthUser;
 
 public class ResourceCustomUserTokenConverter extends
-                                             DefaultUserAuthenticationConverter {
+                                              DefaultUserAuthenticationConverter {
 
     private Collection<? extends GrantedAuthority> defaultAuthorities;
 
@@ -29,11 +41,11 @@ public class ResourceCustomUserTokenConverter extends
     @Override
     public Authentication extractAuthentication(Map<String, ?> map) {
         if (map.containsKey(USERNAME)) {
-            Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
-            OauthUser user = new OauthUser((String) map.get(USERNAME), (String) map
-                    .get("user_additional_key"), (String) map
-                    .get("client_additional_key"), (String) map
-                    .get("client_id"));
+            Collection<? extends GrantedAuthority> authorities = getAuthorities(
+                    map);
+            OauthUser user = new OauthUser((String) map.get(
+                    USERNAME), (String) map.get("company_id"), (String) map.get(
+                            "business_id"), (String) map.get("client_id"));
             return new UsernamePasswordAuthenticationToken(user, "N/A", authorities);
         }
         return null;
@@ -46,13 +58,13 @@ public class ResourceCustomUserTokenConverter extends
         }
         Object authorities = map.get(AUTHORITIES);
         if (authorities instanceof String) {
-            return AuthorityUtils
-                    .commaSeparatedStringToAuthorityList((String) authorities);
+            return AuthorityUtils.commaSeparatedStringToAuthorityList(
+                    (String) authorities);
         }
         if (authorities instanceof Collection) {
-            return AuthorityUtils
-                    .commaSeparatedStringToAuthorityList(StringUtils
-                            .collectionToCommaDelimitedString((Collection<?>) authorities));
+            return AuthorityUtils.commaSeparatedStringToAuthorityList(
+                    StringUtils.collectionToCommaDelimitedString(
+                            (Collection<?>) authorities));
         }
         throw new IllegalArgumentException("Authorities must be either a String or a Collection");
     }

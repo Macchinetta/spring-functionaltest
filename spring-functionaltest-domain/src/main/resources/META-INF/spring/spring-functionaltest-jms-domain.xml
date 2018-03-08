@@ -1,60 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <import
-        resource="classpath:META-INF/spring/spring-functionaltest-jms-infra.xml" />
+  <import resource="classpath:META-INF/spring/spring-functionaltest-jms-infra.xml" />
 
-    <!-- Setting for transaction management -->
-    <bean id="sendJmsTransactionManager"
-        class="org.springframework.jms.connection.JmsTransactionManager">
-        <property name="connectionFactory" ref="cachingConnectionFactory" />
-    </bean>
+  <!-- Setting for transaction management -->
+  <bean id="sendJmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+  </bean>
 
-    <bean id="asyncReceiveJmsTransactionManager"
-        class="org.springframework.jms.connection.JmsTransactionManager">
-        <property name="connectionFactory" ref="cachingConnectionFactory" />
-    </bean>
+  <bean id="asyncReceiveJmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <property name="connectionFactory" ref="cachingConnectionFactory" />
+  </bean>
 
-    <bean id="jmsTopicTransactionManager"
-        class="org.springframework.jms.connection.JmsTransactionManager">
-        <property name="connectionFactory" ref="dynamicConnectionFactory" />
-    </bean>
+  <bean id="jmsTopicTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+  </bean>
 
-    <bean id="transactionTemplate"
-        class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="sendJmsTransactionManager" />
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED" />
-    </bean>
+  <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="sendJmsTransactionManager" />
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED" />
+  </bean>
 
-    <bean id="chainedTransactionTemplate"
-        class="org.springframework.transaction.support.TransactionTemplate">
-        <property name="transactionManager" ref="sendChainedTransactionManager" />
-        <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED" />
-    </bean>
+  <bean id="chainedTransactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="sendChainedTransactionManager" />
+    <property name="propagationBehaviorName" value="PROPAGATION_REQUIRED" />
+  </bean>
 
-    <!-- chained transaction manager -->
-    <bean id="sendChainedTransactionManager"
-        class="org.springframework.data.transaction.ChainedTransactionManager">
-        <constructor-arg>
-            <list>
-                <ref bean="sendJmsTransactionManager" />
-                <ref bean="transactionManager" />
-            </list>
-        </constructor-arg>
-    </bean>
-
-    <!-- chained transaction manager -->
-    <bean id="asyncReceiveChainedTransactionManager"
-        class="org.springframework.data.transaction.ChainedTransactionManager">
-        <constructor-arg>
-            <list>
-                <ref bean="asyncReceiveJmsTransactionManager" />
-                <ref bean="transactionManager" />
-            </list>
-        </constructor-arg>
-    </bean>
+  <!-- chained transaction manager -->
+  <bean id="sendChainedTransactionManager" class="org.springframework.data.transaction.ChainedTransactionManager">
+    <constructor-arg>
+      <list>
+        <ref bean="sendJmsTransactionManager" />
+        <ref bean="transactionManager" />
+      </list>
+    </constructor-arg>
+  </bean>
 
 </beans>

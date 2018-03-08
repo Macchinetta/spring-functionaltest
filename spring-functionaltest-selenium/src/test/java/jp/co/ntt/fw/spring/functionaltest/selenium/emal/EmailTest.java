@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.emal;
 
@@ -65,8 +77,8 @@ public class EmailTest extends FunctionTestSupport {
 
         // 送信内容（＝受信内容）の確認
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")),
-                is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("subject")), is(
+                "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
@@ -106,16 +118,16 @@ public class EmailTest extends FunctionTestSupport {
         // 送信内容（＝受信内容）の確認
         // GreenMail用（1件受信してチェック）
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")),
-                is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("subject")), is(
+                "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("cc")), is("foo@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
                 + mailDomain));
-        assertThat(webDriverOperations.getText(id("date")),
-                startsWith("2015/07/06"));
+        assertThat(webDriverOperations.getText(id("date")), startsWith(
+                "2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
     }
@@ -154,16 +166,16 @@ public class EmailTest extends FunctionTestSupport {
 
         // 送信内容（＝受信内容）の確認
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")),
-                is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("subject")), is(
+                "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("cc")), is("foo@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
                 + mailDomain));
-        assertThat(webDriverOperations.getText(id("date")),
-                startsWith("2015/07/06"));
+        assertThat(webDriverOperations.getText(id("date")), startsWith(
+                "2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
@@ -345,8 +357,8 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <"
-                + from + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
+                + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
@@ -384,8 +396,8 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <"
-                + from + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
+                + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
@@ -425,13 +437,14 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <"
-                + from + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
+                + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("attachment")), is("説明①.txt"));
+        assertThat(webDriverOperations.getText(id("attachment")), is(
+                "説明①.txt"));
     }
 
     /**
@@ -444,9 +457,7 @@ public class EmailTest extends FunctionTestSupport {
 
         String identifier = UUID.randomUUID().toString();
         String text = "<html><head><link rel=\"stylesheet\" href='cid:identifier1234'>"
-                + "</head><body>あいう①～③</body></html>"
-                + "<!-- "
-                + identifier
+                + "</head><body>あいう①～③</body></html>" + "<!-- " + identifier
                 + " -->";
 
         // メニュー画面の操作
@@ -469,14 +480,14 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <"
-                + from + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
+                + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("inline")),
-                is("<identifier1234>"));
+        assertThat(webDriverOperations.getText(id("inline")), is(
+                "<identifier1234>"));
     }
 
     /**
@@ -600,15 +611,15 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <"
-                + from + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
+                + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
                 + mailDomain));
         String expectedBodyPattern = "<html>\\s*<body>\\s*"
                 + "<h3>Hi &lt;script&gt;alert\\(&quot;あいう①～③&quot;\\);&lt;/script&gt;"
                 + ".*" + identifier + ".*"
-                + ", welcome to Macchinetta!</h3>\\s*"
+                + ", welcome to Macchinetta\\.ORG!</h3>\\s*"
                 + "</body>\\s*</html>";
         assertTrue(webDriverOperations.getText(id("body")).matches(
                 expectedBodyPattern));
@@ -649,12 +660,12 @@ public class EmailTest extends FunctionTestSupport {
         String expectedConverted = "—−〜‖¢£¬";
         assertThat(webDriverOperations.getText(id("from")), is("\""
                 + expectedConverted + "\" <" + from + ">"));
-        assertThat(webDriverOperations.getText(id("subject")),
-                is(expectedConverted));
+        assertThat(webDriverOperations.getText(id("subject")), is(
+                expectedConverted));
         assertThat(webDriverOperations.getText(id("to")), is("\""
                 + expectedConverted + "\" <hoge@" + mailDomain + ">"));
-        assertThat(webDriverOperations.getText(id("body")),
-                is(expectedConverted + "<!-- " + identifier + " -->"));
+        assertThat(webDriverOperations.getText(id("body")), is(expectedConverted
+                + "<!-- " + identifier + " -->"));
     }
 
     /**
@@ -690,8 +701,8 @@ public class EmailTest extends FunctionTestSupport {
         // 送信内容（＝受信内容）の確認
         assertThat(webDriverOperations.getText(id("from")), is("\""
                 + externalChars + "\" <" + from + ">"));
-        assertThat(webDriverOperations.getText(id("subject")),
-                is(externalChars));
+        assertThat(webDriverOperations.getText(id("subject")), is(
+                externalChars));
         assertThat(webDriverOperations.getText(id("to")), is("\""
                 + externalChars + "\" <hoge@" + mailDomain + ">"));
         assertThat(webDriverOperations.getText(id("body")), is(text));

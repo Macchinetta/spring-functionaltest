@@ -7,56 +7,44 @@
     <table class="table table-bordered table-condensed">
       <tr>
         <th>systemConfig.device</th>
-        <td><span id="device"> ${f:h(systemConfig.device)} </span>
-        </td>
+        <td><span id="device"> ${f:h(systemConfig.device)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.broadcast</th>
-        <td><span id="broadcast">
-            ${f:h(systemConfig.broadcast)} </span></td>
+        <td><span id="broadcast"> ${f:h(systemConfig.broadcast)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.ipaddr</th>
-        <td><span id="ipaddr"> ${f:h(systemConfig.ipaddr)} </span>
-        </td>
+        <td><span id="ipaddr"> ${f:h(systemConfig.ipaddr)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.netmask</th>
-        <td><span id="netmask"> ${f:h(systemConfig.netmask)}
-        </span></td>
+        <td><span id="netmask"> ${f:h(systemConfig.netmask)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.network</th>
-        <td><span id="network"> ${f:h(systemConfig.network)}
-        </span></td>
+        <td><span id="network"> ${f:h(systemConfig.network)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.onboot</th>
-        <td><span id="onboot"> ${f:h(systemConfig.onboot)} </span>
-        </td>
+        <td><span id="onboot"> ${f:h(systemConfig.onboot)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.deviceType</th>
-        <td><span id="deviceType">
-            ${f:h(systemConfig.deviceType)} </span></td>
+        <td><span id="deviceType"> ${f:h(systemConfig.deviceType)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.gateway</th>
-        <td><span id="gateway"> ${f:h(systemConfig.gateway)}
-        </span></td>
+        <td><span id="gateway"> ${f:h(systemConfig.gateway)} </span></td>
       </tr>
       <tr>
         <th>systemConfig.owner</th>
-        <td><span id="owner"> ${f:h(systemConfig.owner)}
-        </span></td>
+        <td><span id="owner"> ${f:h(systemConfig.owner)} </span></td>
       </tr>
     </table>
   </fieldset>
-  <form:form
-    action="${pageContext.request.contextPath}/athr/0901/003/logout"
-    method="post">
-    <input type="submit" id="logout" class="btn btn-default"
-      value="Logout">
+  <form:form action="${pageContext.request.contextPath}/athr/0901/003/logout" method="post">
+    <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 
 </div>

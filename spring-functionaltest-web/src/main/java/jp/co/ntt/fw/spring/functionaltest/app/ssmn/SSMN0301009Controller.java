@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
@@ -92,8 +104,8 @@ public class SSMN0301009Controller {
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success()
-                .add("i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add(
+                "i.sf.ssmn.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         return "redirect:/ssmn/0301/009?complete";
@@ -113,8 +125,8 @@ public class SSMN0301009Controller {
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success()
-                .add("i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add(
+                "i.sf.ssmn.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         return "redirect:/ssmn/0301/009?complete";
@@ -122,8 +134,8 @@ public class SSMN0301009Controller {
 
     @RequestMapping(method = RequestMethod.POST)
     public String createMember(@ModelAttribute @Validated({ Personal.class,
-            Address.class, Other.class }) MemberForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) {
+            Address.class, Other.class }) MemberForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             throw new InvalidRequestException(ResultMessages.error().add(
                     "e.sf.cmmn.8002"));
@@ -133,15 +145,16 @@ public class SSMN0301009Controller {
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success()
-                .add("i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add(
+                "i.sf.ssmn.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         return "redirect:/ssmn/0301/009?complete";
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "complete")
-    public String createMemberComplete(Model model, SessionStatus sessionStatus) {
+    public String createMemberComplete(Model model,
+            SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "ssmn/createMemberComplete";
     }

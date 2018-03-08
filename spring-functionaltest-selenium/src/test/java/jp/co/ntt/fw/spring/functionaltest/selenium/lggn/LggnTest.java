@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.lggn;
 
@@ -52,21 +64,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^debug log$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^debug log args:\\{\\}$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^debug log args:param1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^debug log$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^debug log args:\\{\\}$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^debug log args:param1$");
         }
 
     }
@@ -87,21 +96,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1001\\], This message is Info-Level. \\{0\\}$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1001\\], This message is Info-Level. replace_value_1$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1001\\], This message is Info-Level. replace_value_1_1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1001\\], This message is Info-Level. \\{0\\}$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1001\\], This message is Info-Level. replace_value_1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1001\\], This message is Info-Level. replace_value_1_1$");
         }
 
     }
@@ -122,21 +128,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[w.ab.cd.2001\\], This message is Warn-Level. \\{0\\}$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2_1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[w.ab.cd.2001\\], This message is Warn-Level. \\{0\\}$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2_1$");
         }
 
     }
@@ -157,21 +160,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[e.ab.cd.3001\\], This message is Error-Level. \\{0\\}$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3_1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[e.ab.cd.3001\\], This message is Error-Level. \\{0\\}$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3_1$");
         }
 
     }
@@ -192,21 +192,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[t.ab.cd.4001\\], This message is Trace-Level. \\{0\\}$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[t.ab.cd.4001\\], This message is Trace-Level. replace_value_4$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[t.ab.cd.4001\\], This message is Trace-Level. replace_value_4_1$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[t.ab.cd.4001\\], This message is Trace-Level. \\{0\\}$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[t.ab.cd.4001\\], This message is Trace-Level. replace_value_4$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[t.ab.cd.4001\\], This message is Trace-Level. replace_value_4_1$");
         }
 
     }
@@ -227,21 +224,18 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[\\]$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[replace_value_5\\]$");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[replace_value_5_1, replace_value_5_2\\]$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[\\]$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[replace_value_5\\]$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[i.ab.cd.1002\\], UNDEFINED-MESSAGE id:i.ab.cd.1002 arg:\\[replace_value_5_1, replace_value_5_2\\]$");
         }
 
     }
@@ -262,11 +256,10 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^This message is Trace-Level. replace_value_7$");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^This message is Trace-Level. replace_value_7$");
         }
 
     }
@@ -287,14 +280,13 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2$");
-            dbLogAssertOperations
-                    .assertContainsByRegexExceptionMessage(null, null, ".*",
-                            "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[w.ab.cd.2001\\], This message is Warn-Level. replace_value_2$");
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                    null, ".*",
+                    "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
 
         }
 
@@ -316,14 +308,13 @@ public class LggnTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            webDriverOperations.getXTrack(),
-                            "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
-                            "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3$");
-            dbLogAssertOperations
-                    .assertContainsByRegexExceptionMessage(null, null, ".*",
-                            "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    webDriverOperations.getXTrack(),
+                    "^jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller$",
+                    "^\\[e.ab.cd.3001\\], This message is Error-Level. replace_value_3$");
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
+                    null, ".*",
+                    "org\\.terasoluna\\.gfw.common\\.exception\\.BusinessException");
         }
 
     }

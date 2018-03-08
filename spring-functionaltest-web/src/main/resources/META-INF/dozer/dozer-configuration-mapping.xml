@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
-    <configuration>
-        <custom-converters>
-            <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.StringToJodaDateTimeConverter">
-                <class-a>java.lang.String</class-a>
-                <class-b>org.joda.time.DateTime</class-b>
-            </converter>
-            <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.DateToJodaDateTimeConverter">
-                <class-a>java.util.Date</class-a>
-                <class-b>org.joda.time.DateTime</class-b>
-            </converter>
-            <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.JodaDateTimeToJodaDateTimeConverter">
-                <class-a>org.joda.time.DateTime</class-a>
-                <class-b>org.joda.time.DateTime</class-b>
-            </converter>
-            <converter type="jp.co.ntt.fw.spring.functionaltest.infra.dozer.converter.JodaLocalDateConverter">
-                <class-a>org.joda.time.LocalDate</class-a>
-                <class-b>org.joda.time.LocalDate</class-b>
-            </converter>
-            
-        </custom-converters>
-    </configuration>
+  xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+  <configuration>
+    <custom-converters>
+      <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.StringToJodaDateTimeConverter">
+        <class-a>java.lang.String</class-a>
+        <class-b>org.joda.time.DateTime</class-b>
+      </converter>
+      <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.DateToJodaDateTimeConverter">
+        <class-a>java.util.Date</class-a>
+        <class-b>org.joda.time.DateTime</class-b>
+      </converter>
+      <converter type="jp.co.ntt.fw.spring.functionaltest.app.bnmp.JodaDateTimeToJodaDateTimeConverter">
+        <class-a>org.joda.time.DateTime</class-a>
+        <class-b>org.joda.time.DateTime</class-b>
+      </converter>
+      <converter type="jp.co.ntt.fw.spring.functionaltest.infra.dozer.converter.JodaLocalDateConverter">
+        <class-a>org.joda.time.LocalDate</class-a>
+        <class-b>org.joda.time.LocalDate</class-b>
+      </converter>
+
+    </custom-converters>
+  </configuration>
 </mappings>

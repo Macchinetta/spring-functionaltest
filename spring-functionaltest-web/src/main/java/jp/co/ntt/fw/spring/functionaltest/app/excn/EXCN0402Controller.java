@@ -1,12 +1,24 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockPessimisticLockService;
 
 import org.dozer.Mapper;
 import org.springframework.dao.PessimisticLockingFailureException;
@@ -29,7 +41,7 @@ public class EXCN0402Controller {
     Mapper beanMapper;
 
     @Inject
-    StockService stockService;
+    StockPessimisticLockService stockPessimisticLockService;
 
     @ModelAttribute()
     public StockForm setUpForm() {
@@ -38,13 +50,15 @@ public class EXCN0402Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.GET)
     public String handle001(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0402001"), form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402001"),
+                form);
         return "excn/pessimisticLockView";
     }
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockService.findOne("EXCN0402002"), form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402002"),
+                form);
         return "excn/pessimisticLockExceptionHandlingByRequestView";
     }
 
@@ -54,22 +68,8 @@ public class EXCN0402Controller {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
-        stock = stockService.buyWithPessimisticLock(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
-
-        model.addAttribute("stock", stock);
-        model.addAttribute(ResultMessages.success().add("excn.result.success"));
-        return "excn/updateCompleteView";
-    }
-
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "sale")
-    public String handle001Sale(StockForm form, Model model,
-            RedirectAttributes attributes) {
-
-        Stock stock = beanMapper.map(form, Stock.class);
-
-        stock = stockService.saleWithPessimisticLock(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
+        stock = stockPessimisticLockService.buy(stock, form
+                .getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -83,8 +83,8 @@ public class EXCN0402Controller {
         Stock stock = beanMapper.map(form, Stock.class);
 
         try {
-            stock = stockService.buyWithPessimisticLock(stock, form
-                    .getPurchasingQuantity(), form.getSleepMillis());
+            stock = stockPessimisticLockService.buy(stock, form
+                    .getPurchasingQuantity());
         } catch (PessimisticLockingFailureException e) {
             model.addAttribute(ResultMessages.warning().add(
                     "excn.result.exclusivebyrequest"));

@@ -1,12 +1,23 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -31,77 +42,54 @@ public class ReceiveMessageHelper {
     @Inject
     JmsSharedService jmsSharedService;
 
-    public List<String> waitingReceivedMessageAndForList(String jmsTodoId) throws InterruptedException, IOException {
+    public List<String> receivedMessageAndForList(
+            String jmsTodoId) throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 
-        TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
-        int roopSize = (receiveWaitTime - receiveCheckInterval)
-                / receiveCheckInterval;
-
         List<String> list = null;
 
-        for (int i = 0; i < roopSize; i++) {
-            if (jmsSharedService.existsFile(filepath) == true) {
-                list = jmsSharedService.readFileToList(filepath);
-                if (list != null) {
-                    jmsSharedService.deleteFile(filepath);
-                    break;
-                }
+        if (jmsSharedService.existsFile(filepath) == true) {
+            list = jmsSharedService.readFileToList(filepath);
+            if (list != null) {
+                jmsSharedService.deleteFile(filepath);
             }
-            TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
         }
 
         return list != null ? list : null;
     }
 
-    public Map<String, String> waitingReceivedMessageAndForMap(String jmsTodoId) throws InterruptedException, IOException {
+    public Map<String, String> receivedMessageAndForMap(
+            String jmsTodoId) throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 
-        TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
-        int roopSize = (receiveWaitTime - receiveCheckInterval)
-                / receiveCheckInterval;
-
         Map<String, String> map = null;
 
-        for (int i = 0; i < roopSize; i++) {
-            if (jmsSharedService.existsFile(filepath) == true) {
-                map = jmsSharedService.readFileToMap(filepath);
-                if (map != null) {
-                    jmsSharedService.deleteFile(filepath);
-                    break;
-                }
+        if (jmsSharedService.existsFile(filepath) == true) {
+            map = jmsSharedService.readFileToMap(filepath);
+            if (map != null) {
+                jmsSharedService.deleteFile(filepath);
             }
-            TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
         }
 
         return map != null ? map : null;
     }
 
-    public JmsTodo waitingReceivedMessageAndForJmsTodo(String jmsTodoId) throws InterruptedException, IOException {
+    public JmsTodo receiveMessagesForJmsTodo(
+            String jmsTodoId) throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 
-        TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
-        int roopSize = (receiveWaitTime - receiveCheckInterval)
-                / receiveCheckInterval;
-
         Object obj = null;
 
-        for (int i = 0; i < roopSize; i++) {
-            if (jmsSharedService.existsFile(filepath) == true) {
-                obj = jmsSharedService.readFileToObject(filepath);
-                if (obj != null) {
-                    jmsSharedService.deleteFile(filepath);
-                    break;
-                }
+        if (jmsSharedService.existsFile(filepath) == true) {
+            obj = jmsSharedService.readFileToObject(filepath);
+            if (obj != null) {
+                jmsSharedService.deleteFile(filepath);
             }
-            TimeUnit.MILLISECONDS.sleep(receiveCheckInterval);
         }
-
         return obj != null ? (JmsTodo) obj : null;
-
     }
 
 }

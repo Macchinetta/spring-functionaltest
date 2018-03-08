@@ -1,50 +1,51 @@
-if (!cspr) var cspr = {};
+if (!cspr)
+    var cspr = {};
 
-(function (cspr) {
+(function(cspr) {
 
     var contextPath = $("meta[name='contextPath']").attr("content");
     var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
 
-    cspr.search = function () {
+    cspr.search = function() {
 
         $("#customerResult").remove();
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
 
-        $(document).ajaxSend(function (event, xhr, options) {
+        $(document).ajaxSend(function(event, xhr, options) {
             xhr.setRequestHeader(csrfHeaderName, csrfToken);
         });
 
         $.ajax(contextPath + "/cspr/search", {
-            type: "GET",
-            data: $("#committerCriteria").serialize(),
-            dataType: "json"
-        }).done(function (json) {
-                searchNormalResultDisplay(json);
-            }).fail(function (xhr) {
-                errorResultDisplay(xhr);
-            });
+            type : "GET",
+            data : $("#committerCriteria").serialize(),
+            dataType : "json"
+        }).done(function(json) {
+            searchNormalResultDisplay(json);
+        }).fail(function(xhr) {
+            errorResultDisplay(xhr);
+        });
 
         return false;
     };
 
-    cspr.editProfile = function () {
+    cspr.editProfile = function() {
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
 
-        $(document).ajaxSend(function (event, xhr, options) {
+        $(document).ajaxSend(function(event, xhr, options) {
             xhr.setRequestHeader(csrfHeaderName, csrfToken);
         });
 
         $.ajax(contextPath + "/cspr/edit", {
-            type: "POST",
-            data: $("#committerForm").serialize(),
-            dataType: "json"
-        }).done(function (json) {
-                editProfileNormalResultDisplay(json);
-            }).fail(function (xhr) {
-                errorResultDisplay(xhr);
-            });
+            type : "POST",
+            data : $("#committerForm").serialize(),
+            dataType : "json"
+        }).done(function(json) {
+            editProfileNormalResultDisplay(json);
+        }).fail(function(xhr) {
+            errorResultDisplay(xhr);
+        });
 
         return false;
     };
@@ -65,9 +66,14 @@ if (!cspr) var cspr = {};
         if (0 < json.committers.length) {
             var committerResult = $("#committerResult");
             for (var i = 0; i < json.committers.length; i++) {
-                committerResult.append("<tr><td>" + (i + 1) +
-                    "</td><td>" + escapeHTML(json.committers[i].username) + "</td><td>"
-                    + escapeHTML(json.committers[i].email) + "</td><td><input type=\"submit\" class=\"btn btn-default\" value=\"詳細\" /></td></tr>");
+                committerResult
+                        .append("<tr><td>"
+                                + (i + 1)
+                                + "</td><td>"
+                                + escapeHTML(json.committers[i].username)
+                                + "</td><td>"
+                                + escapeHTML(json.committers[i].email)
+                                + "</td><td><input type=\"submit\" class=\"btn btn-default\" value=\"詳細\" /></td></tr>");
             }
 
             committerResultTable.removeClass('hidden');
@@ -82,7 +88,8 @@ if (!cspr) var cspr = {};
 
         var returnMessage = $("#returnMessage");
         for (var i = 0; i < json.messages.length; i++) {
-            returnMessage.append("<li>" + escapeHTML(json.messages[i]) + "</li>");
+            returnMessage.append("<li>" + escapeHTML(json.messages[i])
+                    + "</li>");
         }
     }
 
@@ -96,7 +103,8 @@ if (!cspr) var cspr = {};
             setResultMessageError();
             var returnMessage = $("#returnMessage");
             for (var i = 0; i < json.errorResults.length; i++) {
-                returnMessage.append("<li>" + escapeHTML(json.errorResults[i].message) + "</li>");
+                returnMessage.append("<li>"
+                        + escapeHTML(json.errorResults[i].message) + "</li>");
             }
         }
     }
@@ -133,4 +141,4 @@ if (!cspr) var cspr = {};
         resultMessage.text("");
         resultMessage.append("<ul id=\"returnMessage\"></ul>");
     }
-})(cspr); 
+})(cspr);

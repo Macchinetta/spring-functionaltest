@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.jmss;
 
@@ -17,6 +29,7 @@ import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -26,14 +39,17 @@ import org.springframework.test.annotation.IfProfileValue;
 
 public class JMSTest extends FunctionTestSupport {
 
-    @Value("${app.jms.addReceiveWaitTime}")
-    private int addReceiveWaitTime;
-
     @Value("${selenium.jmss.retryForExpectedString.interval}")
     private int retryInterval;
 
     @Value("${selenium.jmss.retryForExpectedString.max}")
     private int retryCount;
+
+    @After
+    public void clear() {
+        restOperations.getForEntity(applicationContextUrl + "/jmss/clear",
+                Void.class);
+    }
 
     @Test
     public void testJMSS0101001() {
@@ -47,7 +63,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -56,8 +74,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -73,7 +91,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -82,8 +102,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -99,7 +119,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -108,8 +130,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -147,7 +169,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -156,8 +180,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -184,7 +208,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -193,8 +219,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -210,7 +236,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -219,8 +247,8 @@ public class JMSTest extends FunctionTestSupport {
                 "All of the subscriber has been received.");
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("All of the subscriber has been received."));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "All of the subscriber has been received."));
     }
 
     @Test
@@ -235,7 +263,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -258,7 +288,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -267,8 +299,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -287,8 +319,8 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "Not Received!"));
     }
 
     /**
@@ -314,14 +346,12 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "Not Received!"));
     }
 
     @Test
@@ -336,7 +366,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -345,8 +377,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -362,7 +394,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -371,8 +405,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -387,7 +421,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -396,10 +432,10 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")),
-                is("TestQueue0403001B"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
+                "TestQueue0403001B"));
 
     }
 
@@ -415,7 +451,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -424,10 +462,10 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")),
-                is("TestQueue0403001C"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
+                "TestQueue0403001C"));
     }
 
     @Test
@@ -442,7 +480,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -451,10 +491,10 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")),
-                is("TestQueue0403003B"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
+                "TestQueue0403003B"));
     }
 
     @Test
@@ -469,7 +509,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -493,7 +535,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -517,8 +561,6 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
 
@@ -526,8 +568,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -549,8 +591,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -570,8 +612,8 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "Not Received!"));
 
     }
 
@@ -594,8 +636,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -615,14 +657,13 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "Not Received!"));
 
     }
 
     @Test
     public void testJMSS0603001() {
-
         String identifier = UUID.randomUUID().toString();
 
         // メニュー画面の操作
@@ -632,7 +673,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -641,8 +684,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -658,7 +701,10 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + "rollbacked_" + identifier,
+                Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -667,8 +713,8 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "rollbacked_" + identifier));
 
     }
 
@@ -684,7 +730,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -693,8 +741,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -710,8 +758,6 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
 
@@ -719,60 +765,8 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_MQandDB_" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_MQandDB_" + identifier));
-
-    }
-
-    @Test
-    public void testJMSS0604003() {
-
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0604003"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
-
-    }
-
-    @Test
-    public void testJMSS0604004() {
-
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0604004"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                "rollbacked_MQ_" + identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_MQ_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "rollbacked_MQandDB_" + identifier));
 
     }
 
@@ -788,7 +782,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -797,8 +793,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
 
     }
 
@@ -814,59 +810,10 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                "rollbacked_MQandDB_" + identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_MQandDB_" + identifier));
-
-    }
-
-    @Test
-    public void testJMSS0604007() {
-
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0604007"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
-
-    }
-
-    @Test
-    public void testJMSS0604008() {
-
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0604008"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + "rollbacked_" + identifier,
+                Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -875,9 +822,8 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_MQ_" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_MQ_" + identifier));
-
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "rollbacked_MQ_" + identifier));
     }
 
     @Test
@@ -892,7 +838,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -901,8 +849,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -917,7 +865,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -926,8 +876,8 @@ public class JMSTest extends FunctionTestSupport {
                 "Validated!! :" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("Validated!! :" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "Validated!! :" + identifier));
     }
 
     @Test
@@ -941,7 +891,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -950,8 +902,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -965,7 +917,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -974,8 +928,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -989,7 +943,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -998,8 +954,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -1013,7 +969,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1022,8 +980,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     @Test
@@ -1037,7 +995,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1046,8 +1006,8 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_DB_" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_DB_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "rollbacked_DB_" + identifier));
     }
 
     @Test
@@ -1061,7 +1021,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1070,56 +1032,8 @@ public class JMSTest extends FunctionTestSupport {
                 "not_rollbacked_MQandDB_" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("not_rollbacked_MQandDB_" + identifier));
-    }
-
-    @Test
-    public void testJMSS0701009() {
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0701009"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                "rollbacked_DB_" + identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("rollbacked_DB_" + identifier));
-    }
-
-    @Test
-    public void testJMSS0701010() {
-        String identifier = UUID.randomUUID().toString();
-
-        // メニュー画面の操作
-        webDriverOperations.click(id("jmss0701010"));
-
-        // メッセージの送信
-        webDriverOperations.overrideText(id("jmsTodoId"), identifier);
-        webDriverOperations.click(id("sendMessage"));
-
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
-
-        // 結果の取得
-        webDriverOperations.click(id("receiveMessage"));
-
-        this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
-                "not_rollbacked_MQandDB_" + identifier);
-
-        // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("not_rollbacked_MQandDB_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "not_rollbacked_MQandDB_" + identifier));
     }
 
     /**
@@ -1145,7 +1059,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1170,7 +1086,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1195,7 +1113,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1204,8 +1124,8 @@ public class JMSTest extends FunctionTestSupport {
                 "BusinessException! :" + identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is("BusinessException! :" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                "BusinessException! :" + identifier));
     }
 
     @Test
@@ -1220,7 +1140,9 @@ public class JMSTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("jmsTodoId"), identifier);
         webDriverOperations.click(id("sendMessage"));
 
-        webDriverOperations.suspend(addReceiveWaitTime, TimeUnit.MILLISECONDS);
+        // RestTemplate で受信するまで待機する
+        restOperations.getForEntity(applicationContextUrl
+                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
@@ -1229,8 +1151,8 @@ public class JMSTest extends FunctionTestSupport {
                 identifier);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
-                is(identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
+                identifier));
     }
 
     /**

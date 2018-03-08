@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dmly;
 
@@ -145,9 +157,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -167,7 +178,8 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         // 登録画面表示
         {
-            List<String> deliveryTypeNameList = getValueList(id("deliveryType"));
+            List<String> deliveryTypeNameList = getValueList(id(
+                    "deliveryType"));
 
             assertThat(deliveryTypeNameList.size(), is(5));
             assertThat(deliveryTypeNameList.get(0), is("通常"));
@@ -180,9 +192,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -217,9 +228,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -247,8 +257,8 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")),
-                    is("2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is(
+                    "2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -257,9 +267,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -325,9 +334,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // オーダー登録
@@ -348,9 +356,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 確認
@@ -361,8 +368,8 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所10"));
             assertThat(getInputString(id("recieverName")), is("送り先名10"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所10"));
-            assertThat(getInputString(id("acceptDatetime")),
-                    is("2014/01/10 10:10:10"));
+            assertThat(getInputString(id("acceptDatetime")), is(
+                    "2014/01/10 10:10:10"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー10"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -393,8 +400,8 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")),
-                    is("2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is(
+                    "2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -403,9 +410,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 更新
@@ -430,8 +436,8 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所11"));
             assertThat(getInputString(id("recieverName")), is("送り先名11"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所11"));
-            assertThat(getInputString(id("acceptDatetime")),
-                    is("2014/01/11 11:11:11"));
+            assertThat(getInputString(id("acceptDatetime")), is(
+                    "2014/01/11 11:11:11"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー11"));
             assertThat(getInputString(id("deliveryStatus")), is("配達中"));
@@ -440,9 +446,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -470,8 +475,8 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")),
-                    is("2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is(
+                    "2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -480,9 +485,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
         // 削除
@@ -507,9 +511,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -558,19 +561,21 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         // 確認
         {
-            List<String> completionDatetimeList = getValueList(id("completionDatetime"));
+            List<String> completionDatetimeList = getValueList(id(
+                    "completionDatetime"));
 
             assertThat(completionDatetimeList.size(), not(0));
-            assertThat(completionDatetimeList.get(2), is("2014/01/06 15:15:15"));
-            assertThat(completionDatetimeList.get(3), is("2014/01/06 15:15:15"));
+            assertThat(completionDatetimeList.get(2), is(
+                    "2014/01/06 15:15:15"));
+            assertThat(completionDatetimeList.get(3), is(
+                    "2014/01/06 15:15:15"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -605,9 +610,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -681,9 +685,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -757,9 +760,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -833,9 +835,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -953,9 +954,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1034,9 +1034,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1115,9 +1114,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1201,9 +1199,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1321,9 +1318,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1402,9 +1398,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1520,9 +1515,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1602,9 +1596,8 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1762,9 +1755,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1838,9 +1830,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1914,9 +1905,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -1990,9 +1980,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2110,9 +2099,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2191,9 +2179,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2272,9 +2259,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2358,9 +2344,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2478,9 +2463,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }
@@ -2559,9 +2543,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertNotContainsWarnAndError(webDriverOperations
-                            .getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
         }
 
     }

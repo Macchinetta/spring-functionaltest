@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.encr;
 
@@ -132,8 +144,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             KeySpec publicKeySpec = new X509EncodedKeySpec(StreamUtils
                     .copyToByteArray(stream));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return encryptAndSaveByPublicKey(rawText, keyFactory
-                    .generatePublic(publicKeySpec));
+            return encryptAndSaveByPublicKey(rawText, keyFactory.generatePublic(
+                    publicKeySpec));
         } catch (IOException e) {
             throw new SystemException("e.sf.encr.9007", "input/output error.", e);
         } catch (NoSuchAlgorithmException e) {
@@ -185,7 +197,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         try {
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            return new String(cipher.doFinal(encryptedBytes), StandardCharsets.UTF_8);
+            return new String(cipher.doFinal(
+                    encryptedBytes), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
             throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (NoSuchPaddingException e) {
@@ -200,7 +213,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     }
 
     @Override
-    public byte[] encryptAndSaveByPublicKey(String rawText, PublicKey publicKey) {
+    public byte[] encryptAndSaveByPublicKey(String rawText,
+            PublicKey publicKey) {
         try {
             byte[] encryptedBytes = encryptByPublicKey(rawText, publicKey);
             Files.write(Paths.get(System.getProperty("java.io.tmpdir"),
@@ -220,7 +234,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
         try (InputStream stream = privateKey4OpensslFile.getInputStream()) {
 
-            Files.write(privateKeyFilePath, StreamUtils.copyToByteArray(stream));
+            Files.write(privateKeyFilePath, StreamUtils.copyToByteArray(
+                    stream));
 
             Process proc = Runtime.getRuntime().exec(
                     "openssl rsautl -decrypt -inkey " + privateKeyFilePath
@@ -233,6 +248,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         } catch (IOException e) {
             throw new SystemException("e.sf.encr.9007", "input/output error.", e);
         } catch (InterruptedException e) {
+            // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
             throw new SystemException("e.sf.encr.9009", "interrupted error.", e);
         } finally {
             try {
@@ -253,8 +269,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
         try (InputStream stream = publicKeyFile.getInputStream()) {
             Files.write(publicKeyFilePath, StreamUtils.copyToByteArray(stream));
-            Files.write(rawTextFilePath, rawText
-                    .getBytes(StandardCharsets.UTF_8));
+            Files.write(rawTextFilePath, rawText.getBytes(
+                    StandardCharsets.UTF_8));
 
             Process proc = Runtime.getRuntime().exec(
                     "openssl rsautl -encrypt -keyform DER -pubin -inkey "
@@ -267,6 +283,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         } catch (IOException e) {
             throw new SystemException("e.sf.encr.9007", "input/output error.", e);
         } catch (InterruptedException e) {
+            // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
             throw new SystemException("e.sf.encr.9009", "interrupted error.", e);
         } finally {
             try {
@@ -292,8 +309,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
     @Override
     public String encryptBytesByAesWithGcm(String rawText) {
-        return new String(Hex.encode(encryptBytesByAesWithGcm(Utf8
-                .encode(rawText))));
+        return new String(Hex.encode(encryptBytesByAesWithGcm(Utf8.encode(
+                rawText))));
     }
 
     @Override
@@ -320,8 +337,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     // <https://github.com/dsyer/spring-security-rsa/blob/master/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>
     private byte[] encryptByHybrid(byte[] text, PublicKey key) {
         byte[] random = KeyGenerators.secureRandom(16).generateKey();
-        BytesEncryptor aes = Encryptors.standard(
-                new String(Hex.encode(random)), salt);
+        BytesEncryptor aes = Encryptors.standard(new String(Hex.encode(random)),
+                salt);
         try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             final Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -364,16 +381,19 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         try (ByteArrayInputStream input = new ByteArrayInputStream(text);
                 ByteArrayOutputStream output = new ByteArrayOutputStream()) {
             byte[] b = new byte[2];
-            input.read(b);
-            int length = ((b[0] & 0xFF) << 8) | (b[1] & 0xFF);
+            int no_bytes_read = input.read(b);
+            int length = 0;
+            if (no_bytes_read > -1) {
+                length = ((b[0] & 0xFF) << 8) | (b[1] & 0xFF);
+            }
 
             byte[] random = new byte[length];
-            input.read(random);
+            no_bytes_read = input.read(random);
             final Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, key);
             String secret = new String(Hex.encode(cipher.doFinal(random)));
             byte[] buffer = new byte[text.length - random.length - 2];
-            input.read(buffer);
+            no_bytes_read = input.read(buffer);
             BytesEncryptor aes = Encryptors.standard(secret, salt);
             output.write(aes.decrypt(buffer));
 

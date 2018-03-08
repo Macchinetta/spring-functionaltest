@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dtac;
 
@@ -181,15 +193,15 @@ public class DataAccessCommonTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(".*jdbc.sqltiming.*",
-                            ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Jack'.*");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(".*jdbc.sqltiming.*",
-                            ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Ken'.*");
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(".*jdbc.sqltiming.*",
-                            ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Josh'.*");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    ".*jdbc.sqltiming.*",
+                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Jack'.*");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    ".*jdbc.sqltiming.*",
+                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Ken'.*");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    ".*jdbc.sqltiming.*",
+                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Josh'.*");
         }
 
     }
@@ -227,12 +239,11 @@ public class DataAccessCommonTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations
-                    .assertContainsByRegexMessage(
-                            ".*jp.co.ntt.fw.spring.functionaltest.app.dtac.DTACUserController.*",
-                            ".*DuplicateKeyExeption occur!!.*");
-            dbLogAssertOperations
-                    .assertContainsByRegexStackTrace(".*SQLErrorCodeSQLExceptionTranslator.*");
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    ".*jp.co.ntt.fw.spring.functionaltest.app.dtac.DTACUserController.*",
+                    ".*DuplicateKeyExeption occur!!.*");
+            dbLogAssertOperations.assertContainsByRegexStackTrace(
+                    ".*SQLErrorCodeSQLExceptionTranslator.*");
         }
     }
 

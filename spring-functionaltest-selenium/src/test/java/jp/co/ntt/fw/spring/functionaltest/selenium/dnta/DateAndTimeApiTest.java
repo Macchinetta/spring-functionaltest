@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dnta;
 
@@ -59,8 +71,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25"));
         }
     }
 
@@ -84,8 +96,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("23:30:59"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "23:30:59"));
         }
     }
 
@@ -109,8 +121,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25T23:30:59"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25T23:30:59"));
         }
     }
 
@@ -137,8 +149,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-02-01"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-02-01"));
         }
     }
 
@@ -165,8 +177,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("01:02:03"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "01:02:03"));
         }
     }
 
@@ -196,8 +208,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-02-01T01:02:03"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-02-01T01:02:03"));
         }
     }
 
@@ -224,8 +236,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-02-29"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-02-29"));
         }
     }
 
@@ -252,8 +264,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-02-06"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-02-06"));
         }
     }
 
@@ -277,8 +289,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("23:30:59.000000567+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "23:30:59.000000567+09:00"));
         }
     }
 
@@ -302,8 +314,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25T23:30:59.000000567+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25T23:30:59.000000567+09:00"));
         }
     }
 
@@ -327,8 +339,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25T23:30:59.000000567+09:00[Asia/Tokyo]"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25T23:30:59.000000567+09:00[Asia/Tokyo]"));
         }
     }
 
@@ -353,9 +365,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(
-                    webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25T23:30:59.000000567-08:00[America/Los_Angeles]"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25T23:30:59.000000567-08:00[America/Los_Angeles]"));
         }
     }
 
@@ -375,14 +386,14 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
         // TimezoneにUTCとの時差を指定して、DateFactoryから現在時刻のミリ秒まで取得した文字列を取得
         {
             webDriverOperations.appendText(id("zone"), "UTC-08:00");
-            webDriverOperations
-                    .click(id("getDateTimeSpecifiedTimezoneByTimeDifference"));
+            webDriverOperations.click(id(
+                    "getDateTimeSpecifiedTimezoneByTimeDifference"));
         }
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25T23:30:59.000000567-08:00[UTC-08:00]"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25T23:30:59.000000567-08:00[UTC-08:00]"));
         }
     }
 
@@ -547,8 +558,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -575,8 +586,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -600,8 +611,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "12:10:30"));
         }
     }
 
@@ -625,8 +636,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15"));
         }
     }
 
@@ -653,8 +664,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30.000000567+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30.000000567+09:00"));
         }
     }
 
@@ -679,8 +690,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30.000000567+09:00[Asia/Tokyo]"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30.000000567+09:00[Asia/Tokyo]"));
         }
     }
 
@@ -704,8 +715,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30.000000567+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30.000000567+09:00"));
         }
     }
 
@@ -729,8 +740,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("12:10:30.000000567+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "12:10:30.000000567+09:00"));
         }
     }
 
@@ -754,8 +765,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("12:10:30+09:00"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "12:10:30+09:00"));
         }
     }
 
@@ -779,8 +790,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -804,8 +815,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -829,8 +840,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15"));
         }
     }
 
@@ -854,8 +865,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15"));
         }
     }
 
@@ -879,8 +890,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -904,8 +915,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15T12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15T12:10:30"));
         }
     }
 
@@ -929,8 +940,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "12:10:30"));
         }
     }
 
@@ -954,8 +965,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("12:10:30"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "12:10:30"));
         }
     }
 
@@ -979,8 +990,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2013-12-09"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2013-12-09"));
         }
     }
 
@@ -1004,8 +1015,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2012-12-15"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2012-12-15"));
         }
     }
 
@@ -1029,8 +1040,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("20121215"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "20121215"));
         }
     }
 
@@ -1054,8 +1065,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("西暦 2012/12/15 土"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "西暦 2012/12/15 土"));
         }
     }
 
@@ -1080,8 +1091,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("2015-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "2015-12-25"));
         }
     }
 
@@ -1106,8 +1117,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("14:09:20"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "14:09:20"));
         }
     }
 
@@ -1134,10 +1145,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2016-01-04"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2015-12-20"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2016-01-04"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2015-12-20"));
         }
     }
 
@@ -1164,10 +1175,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2016-10-25"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2015-07-25"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2016-10-25"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2015-07-25"));
         }
     }
 
@@ -1194,10 +1205,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2025-12-25"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2010-12-25"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2025-12-25"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2010-12-25"));
         }
     }
 
@@ -1224,8 +1235,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2012-02-29"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2012-02-29"));
         }
 
         // 前画面に戻る
@@ -1245,8 +1256,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2012-02-29"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2012-02-29"));
         }
     }
 
@@ -1273,8 +1284,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2012-02-29"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2012-02-29"));
         }
 
         // 前画面に戻る
@@ -1294,8 +1305,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2012-02-29"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2012-02-29"));
         }
     }
 
@@ -1322,10 +1333,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("2013-02-28"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("2011-02-28"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "2013-02-28"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "2011-02-28"));
         }
     }
 
@@ -1352,10 +1363,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("12:51:05"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("12:50:50"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "12:51:05"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "12:50:50"));
         }
     }
 
@@ -1382,10 +1393,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("13:00:55"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("12:45:55"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "13:00:55"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "12:45:55"));
         }
     }
 
@@ -1412,10 +1423,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getPlus")),
-                    is("22:50:55"));
-            assertThat(webDriverOperations.getText(id("getMinus")),
-                    is("07:50:55"));
+            assertThat(webDriverOperations.getText(id("getPlus")), is(
+                    "22:50:55"));
+            assertThat(webDriverOperations.getText(id("getMinus")), is(
+                    "07:50:55"));
         }
     }
 
@@ -1448,24 +1459,24 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("NowIsBeforePast")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsBeforeNow")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsBeforeFuture")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterPast")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterNow")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterFuture")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowEqualsPast")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowEqualsNow")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowEqualsFuture")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforePast")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforeNow")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforeFuture")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterPast")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterNow")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterFuture")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowEqualsPast")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowEqualsNow")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowEqualsFuture")), is(
+                    "false"));
         }
     }
 
@@ -1498,24 +1509,24 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("NowIsBeforePast")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsBeforeNow")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsBeforeFuture")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterPast")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterNow")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowIsAfterFuture")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowEqualsPast")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("NowEqualsNow")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("NowEqualsFuture")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforePast")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforeNow")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsBeforeFuture")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterPast")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterNow")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowIsAfterFuture")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowEqualsPast")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("NowEqualsNow")), is(
+                    "true"));
+            assertThat(webDriverOperations.getText(id("NowEqualsFuture")), is(
+                    "false"));
         }
     }
 
@@ -1540,8 +1551,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("true"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "true"));
         }
     }
 
@@ -1566,10 +1577,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("class")),
-                    is("java.time.format.DateTimeParseException"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("class")), is(
+                    "java.time.format.DateTimeParseException"));
         }
     }
 
@@ -1594,10 +1605,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("class")),
-                    is("java.time.format.DateTimeParseException"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("class")), is(
+                    "java.time.format.DateTimeParseException"));
         }
     }
 
@@ -1622,8 +1633,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("true"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "true"));
         }
     }
 
@@ -1648,10 +1659,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("class")),
-                    is("java.time.format.DateTimeParseException"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("class")), is(
+                    "java.time.format.DateTimeParseException"));
         }
     }
 
@@ -1676,10 +1687,10 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("class")),
-                    is("java.time.format.DateTimeParseException"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "false"));
+            assertThat(webDriverOperations.getText(id("class")), is(
+                    "java.time.format.DateTimeParseException"));
         }
     }
 
@@ -1704,8 +1715,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("checkResult")),
-                    is("true"));
+            assertThat(webDriverOperations.getText(id("checkResult")), is(
+                    "true"));
         }
     }
 
@@ -1784,8 +1795,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("Japanese Heisei 27-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "Japanese Heisei 27-12-25"));
         }
 
         // 前画面に戻る
@@ -1805,8 +1816,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("Japanese Heisei 26-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "Japanese Heisei 26-12-25"));
         }
 
         // 前画面に戻る
@@ -1826,8 +1837,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("Japanese Heisei 26-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "Japanese Heisei 26-12-25"));
         }
     }
 
@@ -1854,8 +1865,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("class")),
-                    is("java.time.DateTimeException"));
+            assertThat(webDriverOperations.getText(id("class")), is(
+                    "java.time.DateTimeException"));
         }
     }
 
@@ -1882,8 +1893,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("平成27年12月25日"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "平成27年12月25日"));
         }
     }
 
@@ -1910,8 +1921,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("平成 4年 1月 1日"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "平成 4年 1月 1日"));
         }
     }
 
@@ -1936,8 +1947,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("Japanese Heisei 5-01-01"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "Japanese Heisei 5-01-01"));
         }
     }
 
@@ -1964,8 +1975,8 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")),
-                    is("Japanese Heisei 27-12-25"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is(
+                    "Japanese Heisei 27-12-25"));
         }
     }
 }

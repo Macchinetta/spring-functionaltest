@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
@@ -44,8 +56,8 @@ import org.terasoluna.gfw.common.exception.SystemException;
 @Service
 public class JmsSharedServiceImpl implements JmsSharedService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(JmsSharedServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            JmsSharedServiceImpl.class);
 
     @Value("${app.jms.receiveWaitTime}")
     int receiveWaitTime;
@@ -91,16 +103,19 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     }
 
     public void deleteFile(String path) throws IOException {
+        // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
         new File(path).delete();
     }
 
-    public void createTemporaryDirectoryIfNotExists(Path path) throws IOException {
+    public void createTemporaryDirectoryIfNotExists(
+            Path path) throws IOException {
         if (Files.exists(path) == false) {
             Files.createDirectories(path);
         }
     }
 
-    public void createTemporaryDirectoryIfNotExists(String path) throws IOException {
+    public void createTemporaryDirectoryIfNotExists(
+            String path) throws IOException {
         File file = new File(path);
         file.mkdirs();
     }
@@ -174,8 +189,8 @@ public class JmsSharedServiceImpl implements JmsSharedService {
 
         try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(dir
                 + fileName), StandardCharsets.UTF_8)) {
-            for (Iterator<Entry<String, String>> iterator = inputData
-                    .entrySet().iterator(); iterator.hasNext();) {
+            for (Iterator<Entry<String, String>> iterator = inputData.entrySet()
+                    .iterator(); iterator.hasNext();) {
                 Entry<String, String> entry = iterator.next();
 
                 StringBuilder sb = new StringBuilder();
@@ -187,11 +202,13 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         }
     }
 
-    public void writeValidObjectToFile(String dir, String fileName, Object obj) throws IOException {
+    public void writeValidObjectToFile(String dir, String fileName,
+            Object obj) throws IOException {
         writeObjectToFile(dir, fileName, obj);
     }
 
-    public void writeObjectToFile(String dir, String fileName, Object obj) throws IOException {
+    public void writeObjectToFile(String dir, String fileName,
+            Object obj) throws IOException {
 
         createTemporaryDirectoryIfNotExists(dir);
 
@@ -222,7 +239,8 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     }
 
     public List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
-            String distinationName, String messageSelector) throws JMSException {
+            String distinationName,
+            String messageSelector) throws JMSException {
 
         // JMSからメッセージ件数取得
         return jmsTemplate.browseSelected(distinationName, messageSelector,
@@ -234,7 +252,8 @@ public class JmsSharedServiceImpl implements JmsSharedService {
                         List<javax.jms.Message> list = new ArrayList<javax.jms.Message>();
                         Enumeration<?> messages = browser.getEnumeration();
                         while (messages.hasMoreElements()) {
-                            list.add((javax.jms.Message) messages.nextElement());
+                            list.add((javax.jms.Message) messages
+                                    .nextElement());
                         }
                         return list;
                     }

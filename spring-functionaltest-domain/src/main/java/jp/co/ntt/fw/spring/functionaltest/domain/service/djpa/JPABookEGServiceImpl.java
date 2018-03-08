@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -30,8 +42,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class JPABookEGServiceImpl implements JPABookEGService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(JPABookEGServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            JPABookEGServiceImpl.class);
 
     @Inject
     JPABookEGCrudRepository jpaBookEGCrudRepository;
@@ -64,8 +76,8 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public Page<JPABookEG> getPaginatedBooks(Pageable pageable) {
-        Page<JPABookEG> pagedBookList = jpaBookEGPaginationRepository
-                .findAll(pageable);
+        Page<JPABookEG> pagedBookList = jpaBookEGPaginationRepository.findAll(
+                pageable);
         for (JPABookEG jpaBookEG : pagedBookList) {
             jpaBookEG.setBlobCodeHex(new String(Hex.encode(jpaBookEG
                     .getBlobCode())).toUpperCase());
@@ -136,7 +148,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Transactional(value = "jpaTransactionManager")
     @Override
-    public JPABookEG flush(JPABookEG jpaBookEG) {
+    public JPABookEG flush(JPABookEG jpaBookEG) throws InterruptedException {
         JPABookEG jpaBookEGManaged = jpaBookEGRepository.save(jpaBookEG);
 
         jpaBookEGRepository.flush();
@@ -144,6 +156,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             logger.debug(e.getMessage());
+            throw e;
         }
         logger.debug("Debug:: after flush");
         return jpaBookEGManaged;
@@ -198,13 +211,14 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     @Transactional(value = "jpaTransactionManager")
     @Override
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(
-            Integer bookId, Integer sleepTime) {
+            Integer bookId, Integer sleepTime) throws InterruptedException {
 
         JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdate(bookId);
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage());
+            throw e;
         }
         return jpaBookEG;
     }
@@ -212,14 +226,15 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     @Transactional(value = "jpaTransactionManager")
     @Override
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(
-            Integer bookId, Integer sleepTime) {
+            Integer bookId, Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository
-                .findOneForUpdateNoExcp(bookId);
+        JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdateNoExcp(
+                bookId);
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.debug(e.getMessage());
+            throw e;
         }
         return jpaBookEG;
     }

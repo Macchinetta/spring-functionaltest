@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rscl;
 
@@ -11,6 +23,10 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,11 +59,19 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 
 @RestController
 public class RSCLController {
-    private static final Logger logger = LoggerFactory
-            .getLogger(RSCLController.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            RSCLController.class);
 
     @Value("${rscl.timeoutRestTemplate.readTimeout}")
     long readTimeout;
+
+    private final CyclicBarrier barrierForAsyncThreadLimitation;
+
+    public RSCLController(
+            @Value("${rscl.asyncRestTemplate.maxPoolSize}") int maxPoolSize) {
+        this.barrierForAsyncThreadLimitation = new CyclicBarrier(maxPoolSize
+                + 1);
+    }
 
     /**
      * <ul>
@@ -290,22 +314,33 @@ public class RSCLController {
 
     /**
      * <ul>
-     * <li>指定ミリ秒間待って、UserResourceを返却する。</li> <br>
-     * 読み取りタイムアウト確認用
+     * <li>例外が発生するまで待機し、maxPoolSize+1個目のリクエストがきたらUserResourceを返却する。</li> <br>
+     * スレッド数制限確認用
      * </ul>
      * @throws InterruptedException
-     * @param sleepMillis 待機ミリ秒数
+     * @throws TimeoutException
+     * @throws BrokenBarrierException
      */
-    @RequestMapping(value = "sleep/{sleepMillis}", method = RequestMethod.GET)
-    public UserResource sleep(@PathVariable("sleepMillis") long sleepMillis) throws InterruptedException {
-        logger.debug("sleep:" + sleepMillis);
-
+    @RequestMapping(value = "await", method = RequestMethod.GET)
+    public UserResource await() throws InterruptedException, BrokenBarrierException, TimeoutException {
+        barrierForAsyncThreadLimitation.await(30, TimeUnit.SECONDS);
         UserResource user = new UserResource();
         user.setName("test");
         user.setAge(20);
+        return user;
+    }
 
-        Thread.sleep(sleepMillis);
-
+    /**
+     * <ul>
+     * <li>UserResourceを返却する。</li> <br>
+     * スレッド数制限確認用
+     * </ul>
+     */
+    @RequestMapping(value = "noawait", method = RequestMethod.GET)
+    public UserResource noAwait() {
+        UserResource user = new UserResource();
+        user.setName("test");
+        user.setAge(20);
         return user;
     }
 
@@ -355,6 +390,7 @@ public class RSCLController {
             throw new SystemException("e.rc.fw.9001", e);
         } finally {
             if (rcvFile != null) {
+                // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
                 rcvFile.delete();
             }
         }

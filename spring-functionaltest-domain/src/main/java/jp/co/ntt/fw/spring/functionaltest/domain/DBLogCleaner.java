@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain;
 
@@ -19,8 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class DBLogCleaner {
 
-    private static final Logger LOGGER = LoggerFactory
-            .getLogger(DBLogCleaner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            DBLogCleaner.class);
 
     private long savedPeriodMinutes = TimeUnit.MINUTES.toHours(24);
 
@@ -41,21 +53,6 @@ public class DBLogCleaner {
             return;
         }
 
-        cleanup(savedPeriodMinutes);
-
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void cleanupAll() {
-        LOGGER.info("Begin cleanupAll.");
-
-        cleanup(0L);
-
-        LOGGER.info("Finished cleanupAll.");
-    }
-
-    private int cleanup(long savedPeriodMinutes) {
-        // calculate cutoff date.
         Date cutoffDate = new Date(System.currentTimeMillis()
                 - (TimeUnit.MINUTES.toMillis(savedPeriodMinutes)));
 
@@ -64,22 +61,42 @@ public class DBLogCleaner {
         // decide max event id of unnecessary log.
         MapSqlParameterSource queryParameters = new MapSqlParameterSource();
         queryParameters.addValue("cutoffDateMillis", cutoffDate.getTime());
-        Long maxEventId = namedParameterJdbcTemplate
-                .queryForObject(
-                        "SELECT MAX(event_id) FROM logging_event WHERE timestmp < :cutoffDateMillis",
-                        queryParameters, Long.class);
+        Long maxEventId = namedParameterJdbcTemplate.queryForObject(
+                "SELECT MAX(event_id) FROM logging_event WHERE timestmp < :cutoffDateMillis",
+                queryParameters, Long.class);
+
+        cleanup(maxEventId);
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void cleanupAll() {
+
+        LOGGER.info("Begin cleanupAll.");
+
+        MapSqlParameterSource queryParameters = new MapSqlParameterSource();
+        Long maxEventId = namedParameterJdbcTemplate.queryForObject(
+                "SELECT MAX(event_id) FROM logging_event", queryParameters,
+                Long.class);
+
+        cleanup(maxEventId);
+
+        LOGGER.info("Finished cleanupAll.");
+    }
+
+    private int cleanup(Long maxEventId) {
 
         // delete unnecessary log.
         int deletedCount = 0;
         if (maxEventId != null) {
             MapSqlParameterSource deleteParameters = new MapSqlParameterSource();
             deleteParameters.addValue("eventId", maxEventId);
-            namedParameterJdbcTemplate
-                    .update("DELETE FROM logging_event_exception WHERE event_id <= :eventId",
-                            deleteParameters);
-            namedParameterJdbcTemplate
-                    .update("DELETE FROM logging_event_property WHERE event_id <= :eventId",
-                            deleteParameters);
+            namedParameterJdbcTemplate.update(
+                    "DELETE FROM logging_event_exception WHERE event_id <= :eventId",
+                    deleteParameters);
+            namedParameterJdbcTemplate.update(
+                    "DELETE FROM logging_event_property WHERE event_id <= :eventId",
+                    deleteParameters);
             deletedCount = namedParameterJdbcTemplate.update(
                     "DELETE FROM logging_event WHERE event_id <= :eventId",
                     deleteParameters);

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
@@ -35,10 +47,11 @@ import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
 @Service
-public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService {
+public class JmsCacheConSendingServiceImpl implements
+                                           JmsCacheConSendingService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(JmsCacheConSendingServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            JmsCacheConSendingServiceImpl.class);
 
     // Caching Connection
     @Inject
@@ -96,7 +109,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         jmsSharedService.purgeMessageFrom(destinationNameList, false);
 
         jndiConCacheJmsTemplate.send("TestQueue0301001", new MessageCreator() {
-            public javax.jms.Message createMessage(Session session) throws JMSException {
+            public javax.jms.Message createMessage(
+                    Session session) throws JMSException {
 
                 TextMessage message = session.createTextMessage();
                 message.setText(id);
@@ -152,7 +166,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         jmsSharedService.purgeMessageFrom(destinationNameList, false);
 
         MessageCreator mc = new MessageCreator() {
-            public javax.jms.Message createMessage(Session session) throws JMSException {
+            public javax.jms.Message createMessage(
+                    Session session) throws JMSException {
 
                 TextMessage message = session.createTextMessage();
                 message.setText(id);
@@ -166,7 +181,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
     }
 
     @Override
-    public void sendSyncMessage(final String id) throws IOException {
+    public void sendSyncMessage(
+            final String id) throws IOException, InterruptedException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -182,6 +198,7 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
             TimeUnit.MILLISECONDS.sleep(receiveWaitTime);
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
+            throw e;
         }
 
         JmsTodo retJmsTodo = null;
@@ -204,12 +221,13 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        selectedMessagingJmsTemplate
-                .convertAndSend("TestQueue0303001", jmsTodo);
+        selectedMessagingJmsTemplate.convertAndSend("TestQueue0303001",
+                jmsTodo);
     }
 
     @Override
-    public void sendMessageWithHeadersNG(final String id) throws IOException {
+    public void sendMessageWithHeadersNG(
+            final String id) throws IOException, InterruptedException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -219,18 +237,20 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        selectedMessagingJmsTemplate
-                .convertAndSend("TestQueue0303002", jmsTodo);
+        selectedMessagingJmsTemplate.convertAndSend("TestQueue0303002",
+                jmsTodo);
 
         try {
-            TimeUnit.MILLISECONDS.sleep(receiveWaitTime + addReceiveWaitTime);
+            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime
+                    + addReceiveWaitTime));
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
+            throw e;
         }
 
         // Headerに設定したTimeToLiveの時間が経過した後（メッセージ削除後）に受信できないことを確認するため、同期受信を行う。
-        JmsTodo receiveJmeTodo = selectedMessagingJmsTemplate
-                .receiveAndConvert("TestQueue0303002", JmsTodo.class);
+        JmsTodo receiveJmeTodo = selectedMessagingJmsTemplate.receiveAndConvert(
+                "TestQueue0303002", JmsTodo.class);
 
         if (receiveJmeTodo != null) {
             jmsSharedService.writeObjectToFile(temporaryDirectory,
@@ -332,7 +352,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
 
     }
 
-    public void sendMessageReSendAnotherMessage(final String id) throws JMSException {
+    public void sendMessageReSendAnotherMessage(
+            final String id) throws JMSException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -350,7 +371,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
                 jmsTodoMessage);
     }
 
-    public void sendMessageConcurrentListenerSingle(final String id) throws IOException {
+    public void sendMessageConcurrentListenerSingle(
+            final String id) throws IOException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -365,7 +387,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
 
     }
 
-    public void sendMessageConcurrentListenerMultiple(final String id) throws IOException {
+    public void sendMessageConcurrentListenerMultiple(
+            final String id) throws IOException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -538,9 +561,6 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
 
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0603001",
                 jmsTodo);
@@ -559,9 +579,6 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
 
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0603002",
                 jmsTodo);
@@ -569,7 +586,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
     }
 
     @Override
-    public void sendMessage_receTxBestEffort1PhaseOK(String id) throws IOException {
+    public void sendMessage_receTxBestEffort1PhaseOK(
+            String id) throws IOException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -582,9 +600,6 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         jmsTodo.setDescription(id);
         jmsTodo.setDatetime(DateTime.now());
 
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604005",
                 jmsTodo);
@@ -592,7 +607,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
     }
 
     @Override
-    public void sendMessage_receTxBestEffort1PhaseNG(final String id) throws IOException {
+    public void sendMessage_receTxBestEffort1PhaseNG(
+            final String id) throws IOException {
 
         // キューのクリーン処理
         List<String> destinationNameList = new ArrayList<>();
@@ -605,56 +621,8 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
         jmsTodo.setDescription(id);
         jmsTodo.setDatetime(DateTime.now());
 
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604006",
-                jmsTodo);
-    }
-
-    @Override
-    public void sendMessage_receTx1PhaseOK(String id) throws IOException {
-
-        // キューのクリーン処理
-        List<String> destinationNameList = new ArrayList<>();
-        destinationNameList.add("TestQueue0604007");
-        jmsSharedService.purgeMessageFrom(destinationNameList, false);
-
-        // Todoオブジェクト生成
-        JmsTodo jmsTodo = new JmsTodo();
-        jmsTodo.setJmsTodoId(id);
-        jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
-
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
-        // メッセージ送信
-        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604007",
-                jmsTodo);
-
-    }
-
-    @Override
-    public void sendMessage_receTx1PhaseNG(final String id) throws IOException {
-
-        // キューのクリーン処理
-        List<String> destinationNameList = new ArrayList<>();
-        destinationNameList.add("TestQueue0604008");
-        jmsSharedService.purgeMessageFrom(destinationNameList, false);
-
-        // Todoオブジェクト生成
-        final JmsTodo jmsTodo = new JmsTodo();
-        jmsTodo.setJmsTodoId(id);
-        jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
-
-        jmsSharedService.writeObjectToFile(temporaryDirectory, id + ".lock",
-                jmsTodo);
-
-        // メッセージ送信
-        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604008",
                 jmsTodo);
     }
 
@@ -683,28 +651,6 @@ public class JmsCacheConSendingServiceImpl implements JmsCacheConSendingService 
     public void sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(
             String id) {
         final String destination = "TestQueue0701008";
-        jmsSharedService.purgeMessageFrom(Arrays.asList(destination), false);
-        final JmsTodo jmsTodo = new JmsTodo();
-        jmsTodo.setDescription("description");
-        jmsTodo.setJmsTodoId(id);
-        jndiConCacheJmsMessagingTemplate.convertAndSend(destination, jmsTodo);
-    }
-
-    @Override
-    public void sendMessageInputValidationIsolatedChaindTransactionJmsCommitDbRollback(
-            String id) {
-        final String destination = "TestQueue0701009";
-        jmsSharedService.purgeMessageFrom(Arrays.asList(destination), false);
-        final JmsTodo jmsTodo = new JmsTodo();
-        jmsTodo.setDescription("description");
-        jmsTodo.setJmsTodoId(id);
-        jndiConCacheJmsMessagingTemplate.convertAndSend(destination, jmsTodo);
-    }
-
-    @Override
-    public void sendMessageInputValidationIsolatedChaindTransactionJmsAndDbCommit(
-            String id) {
-        final String destination = "TestQueue0701010";
         jmsSharedService.purgeMessageFrom(Arrays.asList(destination), false);
         final JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setDescription("description");

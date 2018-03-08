@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
@@ -83,7 +95,8 @@ public class DJPADeliveryOrderController {
     public String escapeModSerach(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
-            @PageableDefault(page = 0, size = 2) Pageable pageable, Model model) {
+            @PageableDefault(page = 0, size = 2) Pageable pageable,
+            Model model) {
         Page<JPADeliveryOrder> deliveryOrderPage = jpaDeliveryOrderService
                 .findByEscapeSearchMod(modSearchVal, pageable);
         model.addAttribute("page", deliveryOrderPage);
@@ -97,7 +110,8 @@ public class DJPADeliveryOrderController {
     public String escapeDashSerach(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
-            @PageableDefault(page = 0, size = 2) Pageable pageable, Model model) {
+            @PageableDefault(page = 0, size = 2) Pageable pageable,
+            Model model) {
         Page<JPADeliveryOrder> deliveryOrderPage = jpaDeliveryOrderService
                 .findByEscapeSearchDash(modSearchVal, pageable);
         model.addAttribute("page", deliveryOrderPage);
@@ -111,7 +125,8 @@ public class DJPADeliveryOrderController {
     public String escapeModSerachMatchInLogic(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
-            @PageableDefault(page = 0, size = 2) Pageable pageable, Model model) {
+            @PageableDefault(page = 0, size = 2) Pageable pageable,
+            Model model) {
         Page<JPADeliveryOrder> deliveryOrderPage = jpaDeliveryOrderService
                 .findByEscapeSearchMatchInLogic(modSearchVal, pageable);
         model.addAttribute("page", deliveryOrderPage);
@@ -157,10 +172,10 @@ public class DJPADeliveryOrderController {
     }
 
     @RequestMapping(params = "matchCond", method = RequestMethod.GET)
-    public String list(
-            @RequestParam("delOrderStatus") String delOrderStatus,
+    public String list(@RequestParam("delOrderStatus") String delOrderStatus,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
-            @PageableDefault(page = 0, value = 2, sort = { "acceptDateTime" }, direction = Direction.DESC) Pageable pageable,
+            @PageableDefault(page = 0, value = 2, sort = {
+                    "acceptDateTime" }, direction = Direction.DESC) Pageable pageable,
             Model model) {
         Page<JPADeliveryOrder> deliveryOrderPage = jpaDeliveryOrderService
                 .findEntityPageMatchingCondition(delOrderStatus, pageable);
@@ -174,7 +189,8 @@ public class DJPADeliveryOrderController {
     @RequestMapping(params = "addMethodToIndRepo", method = RequestMethod.GET)
     public String searchByMethodAddedtoRepository(
             DeliveryOrderStatusForm deliveryOrderStatusForm,
-            @PageableDefault(page = 0, value = 2, sort = { "delivery_no" }, direction = Direction.ASC) Pageable pageable,
+            @PageableDefault(page = 0, value = 2, sort = {
+                    "delivery_no" }, direction = Direction.ASC) Pageable pageable,
             Model model) {
         DeliveryOrderCriteria criteria = new DeliveryOrderCriteria();
 

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
@@ -37,7 +49,8 @@ public class FLUP0102Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
     public String handle001Upload(@Validated SingleUploadForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
@@ -48,7 +61,8 @@ public class FLUP0102Controller {
 
     @RequestMapping(value = "002", method = RequestMethod.POST)
     public String handle002Upload(@Validated SingleUploadForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
@@ -59,7 +73,8 @@ public class FLUP0102Controller {
 
     @RequestMapping(value = "003", method = RequestMethod.POST)
     public String handle003Upload(@Validated SingleUploadForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
@@ -70,7 +85,8 @@ public class FLUP0102Controller {
 
     @RequestMapping(value = "004", method = RequestMethod.POST)
     public String handle004Upload(@Validated SingleUploadForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
@@ -81,7 +97,8 @@ public class FLUP0102Controller {
 
     @RequestMapping(value = "005", method = RequestMethod.POST)
     public String handle005Upload(@Validated SingleUploadForm form,
-            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
+            BindingResult result,
+            RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 

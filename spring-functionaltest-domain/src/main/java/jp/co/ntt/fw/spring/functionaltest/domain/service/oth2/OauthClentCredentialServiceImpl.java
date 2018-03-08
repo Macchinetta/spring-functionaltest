@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.oth2;
 
@@ -19,10 +31,10 @@ import org.springframework.web.client.RestOperations;
 @Service
 @Transactional
 public class OauthClentCredentialServiceImpl implements
-                                            OauthClentCredentialService {
+                                             OauthClentCredentialService {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(OauthClentCredentialServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            OauthClentCredentialServiceImpl.class);
 
     @Value("${oth2.databaseApplicationContextUrl}${oth2.restServletPath}/oth2/resources")
     String resourceServerDbUrl;
@@ -41,8 +53,8 @@ public class OauthClentCredentialServiceImpl implements
         final String url = resourceServerDbUrl + "/default/{id}";
         logger.debug("RestOperation url={}, parameter={}", url, testId);
 
-        OauthResource result = clientCredentialGrantOperations.getForObject(
-                url, OauthResource.class, testId);
+        OauthResource result = clientCredentialGrantOperations.getForObject(url,
+                OauthResource.class, testId);
         return result;
     }
 

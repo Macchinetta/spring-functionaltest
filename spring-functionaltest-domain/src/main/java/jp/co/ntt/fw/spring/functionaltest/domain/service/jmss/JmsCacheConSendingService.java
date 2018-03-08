@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
@@ -19,7 +31,7 @@ public interface JmsCacheConSendingService {
 
     void sendMessageMany(String id) throws IOException;
 
-    void sendSyncMessage(String id) throws IOException;
+    void sendSyncMessage(String id) throws IOException, InterruptedException;
 
     void sendMessageBySelectorTrue(String id) throws IOException;
 
@@ -31,7 +43,8 @@ public interface JmsCacheConSendingService {
 
     void sendMessageForJmsResponseC(String id) throws IOException;
 
-    void sendMessageReSendAnotherMessage(String id) throws IOException, JMSException;
+    void sendMessageReSendAnotherMessage(
+            String id) throws IOException, JMSException;
 
     void sendMessageConcurrentListenerSingle(String id) throws IOException;
 
@@ -39,7 +52,8 @@ public interface JmsCacheConSendingService {
 
     void sendMessageWithHeadersOK(String id) throws IOException;
 
-    void sendMessageWithHeadersNG(String id) throws IOException;
+    void sendMessageWithHeadersNG(
+            String id) throws IOException, InterruptedException;
 
     void sendMessageValidationOK(String id) throws IOException;
 
@@ -63,10 +77,6 @@ public interface JmsCacheConSendingService {
 
     void sendMessage_receTxBestEffort1PhaseNG(String id) throws IOException;
 
-    void sendMessage_receTx1PhaseOK(String id) throws IOException;
-
-    void sendMessage_receTx1PhaseNG(String id) throws IOException;
-
     void sendMessageInputValidationOk(String id);
 
     void sendMessageInputValidationNg(String id);
@@ -79,11 +89,5 @@ public interface JmsCacheConSendingService {
             String id);
 
     void sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(String id);
-
-    void sendMessageInputValidationIsolatedChaindTransactionJmsCommitDbRollback(
-            String id);
-
-    void sendMessageInputValidationIsolatedChaindTransactionJmsAndDbCommit(
-            String id);
 
 }

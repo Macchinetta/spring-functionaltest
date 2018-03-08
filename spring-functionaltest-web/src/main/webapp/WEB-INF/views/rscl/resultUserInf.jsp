@@ -6,7 +6,7 @@
 	<t:messagesPanel />
 	<c:if test="${!empty f:h(resultDescription)}">
 		<h4>
-			<span id="resultDescription"> 【 ${f:h(resultDescription)} 】 </span>
+			<span id="resultDescription"> 【&nbsp;${f:h(resultDescription)}&nbsp;】 </span>
 		</h4>
 	</c:if>
 	<table

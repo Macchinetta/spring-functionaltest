@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
@@ -46,8 +58,8 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator
-                    .createLocaleSpecifiedDriver(currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(
+                    currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -183,8 +195,8 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
         String testId = "vldt0303001";
         String[] targets = { "shortValue", "intValue", "longValue",
                 "floatValue", "doubleValue", "shortObject", "integerObject",
-                "longObject", "floatObject", "doubleObject", "date",
-                "datetime", "localdate", "booleanValue" };
+                "longObject", "floatObject", "doubleObject", "date", "datetime",
+                "localdate", "booleanValue" };
         String[] errorMessages = { "\"{0}\" はshort型を入力してください。",
                 "\"{0}\" はint型を入力してください。", "\"{0}\" はlong型を入力してください。",
                 "\"{0}\" はfloat型を入力してください。", "\"{0}\" はdouble型を入力してください。",
@@ -209,25 +221,24 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
                 webDriverOperations.overrideText(id(targets[1]), "2147483647");
                 webDriverOperations.overrideText(id(targets[2]),
                         "9223372036854775807");
-                webDriverOperations
-                        .overrideText(id(targets[3]), "3.4028235E38");
+                webDriverOperations.overrideText(id(targets[3]),
+                        "3.4028235E38");
                 webDriverOperations.overrideText(id(targets[4]),
                         "1.7976931348623157E308");
                 webDriverOperations.overrideText(id(targets[5]), "32767");
                 webDriverOperations.overrideText(id(targets[6]), "2147483647");
                 webDriverOperations.overrideText(id(targets[7]),
                         "9223372036854775807");
-                webDriverOperations
-                        .overrideText(id(targets[8]), "3.4028235E38");
+                webDriverOperations.overrideText(id(targets[8]),
+                        "3.4028235E38");
                 webDriverOperations.overrideText(id(targets[9]),
                         "1.7976931348623157E308");
-                webDriverOperations.overrideText(id(targets[10]), dt
-                        .toString(localeDateFormat.get(currentLocale)));
-                webDriverOperations.overrideText(id(targets[11]), dt
-                        .toString(localeDateFormat.get(currentLocale)
-                                + " HH:mm"));
-                webDriverOperations.overrideText(id(targets[12]), dt
-                        .toString(localeDateFormat.get(currentLocale)));
+                webDriverOperations.overrideText(id(targets[10]), dt.toString(
+                        localeDateFormat.get(currentLocale)));
+                webDriverOperations.overrideText(id(targets[11]), dt.toString(
+                        localeDateFormat.get(currentLocale) + " HH:mm"));
+                webDriverOperations.overrideText(id(targets[12]), dt.toString(
+                        localeDateFormat.get(currentLocale)));
                 webDriverOperations.overrideText(id(targets[13]), "true");
                 webDriverOperations.click(id(validate));
             }
@@ -267,7 +278,7 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
                 for (int i = 0; i < targets.length; i++) {
                     assertThat(webDriverOperations.getText(id(targets[i]
                             + errors)), is(errorMessages[i].replace("{0}",
-                            targets[i])));
+                                    targets[i])));
                 }
             }
         }
@@ -361,8 +372,8 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(target + errors)), is(
+                        false));
             }
         }
 
@@ -376,8 +387,7 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(
-                        webDriverOperations.getText(id(targetForm + errors)),
+                assertThat(webDriverOperations.getText(id(targetForm + errors)),
                         is(errorMessage));
             }
         }

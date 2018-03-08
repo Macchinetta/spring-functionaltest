@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.excn;
 
@@ -58,7 +70,6 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
             final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
@@ -69,7 +80,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        buy(0, 3, sleepMillisThatWaitNextRequest, startSignal);
+                        buy(0, 3, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -81,14 +92,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        buy(1, 4, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        buy(1, 4, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -101,18 +105,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(0, testIdUpperCase, testIdUpperCase, 2, 0);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・業務エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1, "Business Error!\nOther user updated!!");
-            getWebDriverOperations(1).displayPage(
-                    getPackageRootUrl() + "/0301/001");
-            assertUpdateView(1, testIdUpperCase, testIdUpperCase, 2, 0);
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0301001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0301001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -130,127 +127,42 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // テスト実行（1メソッド目）
         {
+            final CountDownLatch doneSignal = new CountDownLatch(2);
             // 疑似アプリの画面を表示するブラウザを2つ起動
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
-
-            final CountDownLatch startSignal = new CountDownLatch(1);
-            final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
-
-            // 画面1を操作するスレッドを起動。
+            // 画面1を操作するスレッドを起動
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        buy(0, 3, sleepMillisThatWaitNextRequest, startSignal);
+                        buy(0, 3);
                     } finally {
                         doneSignal.countDown();
                     }
                 }
             }).start();
-
-            // 画面2を操作するスレッドを起動。
+            // 画面2を操作するスレッドを起動
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        buy(1, 4, sleepMillisThatWaitNextRequest);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        buy(1, 4);
                     } finally {
                         doneSignal.countDown();
                     }
                 }
             }).start();
-
             // 画面1と2の両方でボタンが押下されるまで待機
             doneSignal.await();
         }
-
-        // テスト実行（2メソッド目）
         {
-            // 疑似アプリの画面を表示するブラウザを2つ起動
-            setUpWebDriver(2, testId);
-            setUpWebDriver(3, testId);
-
-            final CountDownLatch startSignal = new CountDownLatch(1);
-            final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
-
-            // 画面3を操作するスレッドを起動。
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        sale(2, 3, sleepMillisThatWaitNextRequest, startSignal);
-                    } finally {
-                        doneSignal.countDown();
-                    }
-                }
-            }).start();
-
-            // 画面4を操作するスレッドを起動。
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        // 画面3->画面4の順で画面操作が行われるようにするため、画面3でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面3のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(3,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        sale(3, 4, sleepMillisThatWaitNextRequest);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
-                    } finally {
-                        doneSignal.countDown();
-                    }
-                }
-            }).start();
-
-            // 画面3と4の両方でボタンが押下されるまで待機
-            doneSignal.await();
-        }
-
-        // 結果確認
-        {
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(0, testIdUpperCase, testIdUpperCase, 2, 1);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1,
-                    "Exclusive Lock Error!\nOther user updated!!(controller)");
-            getWebDriverOperations(1).getWebDriver().navigate().to(
-                    applicationContextUrl + "/excn/0302/001");
-            assertUpdateView(1, testIdUpperCase, testIdUpperCase, 5, 2);
-
-            // 画面3が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(2, testIdUpperCase, testIdUpperCase, 5, 2);
-
-            // 画面4が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(3,
-                    "Exclusive Lock Error!\nOther user updated!!(controller)");
-            getWebDriverOperations(3).displayPage(
-                    getPackageRootUrl() + "/0302/001");
-            assertUpdateView(3, testIdUpperCase, testIdUpperCase, 5, 2);
+            if (isUpdateSuccued(0)) {
+                // 画面1が更新できた場合
+                assertionForTestEXCN0302001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0302001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -261,40 +173,48 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * </ul>
      */
     @Test
-    public void testEXCN0302002() {
+    public void testEXCN0302002() throws InterruptedException {
         String testId = "excn0302002";
         String testIdUpperCase = testId.toUpperCase();
 
-        // 疑似アプリの画面を表示するブラウザを2つ起動
-        setUpWebDriver(0, testId);
-        setUpWebDriver(1, testId);
-
-        // 画面1を操作する
         {
-            // 操作
-            buy(0, 3, 0);
+            final CountDownLatch doneSignal = new CountDownLatch(2);
+            // 疑似アプリの画面を表示するブラウザを2つ起動
+            setUpWebDriver(0, testId);
+            setUpWebDriver(1, testId);
 
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(0, testIdUpperCase, testIdUpperCase, 2, 1);
+            // 画面1を操作するスレッドを起動
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        buy(0, 3);
+                    } finally {
+                        doneSignal.countDown();
+                    }
+                }
+            }).start();
+            // 画面2を操作するスレッドを起動
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        buy(1, 4);
+                    } finally {
+                        doneSignal.countDown();
+                    }
+                }
+            }).start();
+            // 画面1と2の両方でボタンが押下されるまで待機
+            doneSignal.await();
         }
-
-        // 画面2を操作する
         {
-            // 操作
-            buy(1, 4, 0);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1,
-                    "Exclusive Lock Error!\nOther user updated!!(request)");
-            getWebDriverOperations(1).displayPage(
-                    getPackageRootUrl() + "/0302/002");
-            assertUpdateView(1, testIdUpperCase, testIdUpperCase, 2, 1);
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0302002(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0302002(1, 0, testIdUpperCase, 1);
+            }
         }
-
     }
 
     /**
@@ -318,7 +238,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @see ExclusiveControlTest#testEXCN0302002()
      */
     @Ignore("testEXCN0302002で実施")
-    public void testEXCN0401002() {
+    public void testEXCN0401002() throws InterruptedException {
         testEXCN0302002();
     }
 
@@ -340,18 +260,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(6 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        buy(0, 3, sleepMillisThatWaitNextRequest, startSignal);
+                        buy(0, 3);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -363,14 +279,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        buy(1, 4, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        buy(1, 4);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -380,83 +289,13 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             // 画面1と2の両方でボタンが押下されるまで待機
             doneSignal.await();
         }
-
-        // テスト実行（2メソッド目）
-        {
-            // 疑似アプリの画面を表示するブラウザを2つ起動
-            setUpWebDriver(2, testId);
-            setUpWebDriver(3, testId);
-
-            final CountDownLatch startSignal = new CountDownLatch(1);
-            final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(6 + offsetSecondsOfWaitForNextRequest);
-
-            // 画面3を操作するスレッドを起動。
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        sale(2, 3, sleepMillisThatWaitNextRequest, startSignal);
-                    } finally {
-                        doneSignal.countDown();
-                    }
-                }
-            }).start();
-
-            // 画面4を操作するスレッドを起動。
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        // 画面3->画面4の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面3のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(3,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        sale(3, 4, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
-                    } finally {
-                        doneSignal.countDown();
-                    }
-                }
-            }).start();
-
-            // 画面3と4の両方でボタンが押下されるまで待機
-            doneSignal.await();
-        }
-
         // 結果確認
         {
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(0, testIdUpperCase, testIdUpperCase, 2, 0);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1,
-                    "Exclusive Lock Error!\nOther user updated!!(controller)");
-            getWebDriverOperations(1).displayPage(
-                    getPackageRootUrl() + "/0402/001");
-            assertUpdateView(1, testIdUpperCase, testIdUpperCase, 5, 0);
-
-            // 画面3が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(2, testIdUpperCase, testIdUpperCase, 5, 0);
-
-            // 画面4が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(3,
-                    "Exclusive Lock Error!\nOther user updated!!(controller)");
-            getWebDriverOperations(3).displayPage(
-                    getPackageRootUrl() + "/0402/001");
-            assertUpdateView(3, testIdUpperCase, testIdUpperCase, 5, 0);
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0402001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0402001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -478,18 +317,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(6 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        buy(0, 3, sleepMillisThatWaitNextRequest, startSignal);
+                        buy(0, 3);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -501,14 +336,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        buy(1, 4, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        buy(1, 4);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -521,19 +349,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompleteView(0, testIdUpperCase, testIdUpperCase, 2, 0);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・排他エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1,
-                    "Exclusive Lock Error!\nOther user updated!!(request)");
-            getWebDriverOperations(1).displayPage(
-                    getPackageRootUrl() + "/0402/002");
-            assertUpdateView(0, testIdUpperCase, testIdUpperCase, 2, 0);
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0402002(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0402002(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -555,7 +375,6 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
             final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
@@ -566,8 +385,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest,
-                                startSignal);
+                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -579,14 +397,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        jpaBuy(1, 4, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        jpaBuy(1, 4, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -599,19 +410,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            // 画面1が、以下の条件を満たすこと
-            // ・完了画面に遷移すること
-            // ・入力した変更内容が反映されること
-            assertCompletePageView(0, testIdUpperCase, testIdUpperCase, 2, 0);
-
-            // 画面2が、以下の条件を満たすこと
-            // ・業務エラー完了画面に遷移すること
-            // ・入力した変更内容が反映されないこと
-            assertFailureView(1,
-                    "Business Error!\nNot enough stock. Please, change quantity!!");
-            getWebDriverOperations(1).displayPage(
-                    getPackageRootUrl() + "/0501/001");
-            assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 2, 0);
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0501001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0501001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -633,19 +436,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest,
-                                startSignal);
+                        jpaBuy(0, 3);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -657,14 +455,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        jpaBuy(1, 4, sleepMillisThatWaitNextRequest);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        jpaBuy(1, 4);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -677,14 +468,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            assertCompletePageView(0, testIdUpperCase, testIdUpperCase, 2, 1);
-
-            assertFailureView(1,
-                    "Exclusive Lock Error!\nOther user updated!!(controller)");
-            getWebDriverOperations(1).getWebDriver().navigate().to(
-                    applicationContextUrl + "/excn/0502/001");
-            assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 2, 1);
-
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0502001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0502001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -702,6 +490,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // テスト実行（1メソッド目）
         {
+            // 疑似アプリの画面を表示するブラウザを2つ起動
             // 疑似アプリの画面を表示するブラウザを2つ起動
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
@@ -732,8 +521,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                         // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
                         startSignal.await();
                         // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
+                        suspendWebDriver(1, sleepMillisThatWaitNextRequest / 2);
                         jpaBuy(1, 1, 0);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -749,12 +537,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            assertCompletePageView(0, testIdUpperCase, testIdUpperCase, 2, 1);
-
-            getWebDriverOperations(1).getWebDriver().navigate().to(
-                    applicationContextUrl + "/excn/0502/002");
-            assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 1, 2);
-
+            ExclusionResultPage exclusionResultPage = new ExclusionResultPage(getWebDriverOperations(
+                    0).getWebDriver());
+            if ("1".equals(exclusionResultPage.getVersion())) {
+                // 画面1の処理が先に行われた場合
+                assertionForTestEXCN0502002(0, 1, testIdUpperCase, 2, 1);
+            } else {
+                assertionForTestEXCN0502002(1, 0, testIdUpperCase, 4, 1);
+            }
         }
     }
 
@@ -776,19 +566,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
-
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest,
-                                startSignal);
+                        jpaBuy(0, 3);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -800,14 +585,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        jpaBuy(1, 4, sleepMillisThatWaitNextRequest);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        jpaBuy(1, 4);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -820,13 +598,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            assertCompletePageView(0, testIdUpperCase, testIdUpperCase, 2, 1);
-
-            assertFailureView(1, "Exclusive Lock Error!\nOther user updated!!");
-            getWebDriverOperations(1).getWebDriver().navigate().to(
-                    applicationContextUrl + "/excn/0602/001");
-            assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 2, 1);
-
+            if (isUpdateSuccued(0)) {
+                assertionForTestEXCN0602001(0, 1, testIdUpperCase, 2);
+            } else {
+                assertionForTestEXCN0602001(1, 0, testIdUpperCase, 1);
+            }
         }
     }
 
@@ -848,7 +624,6 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
-            final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
             final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
@@ -859,8 +634,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest,
-                                startSignal);
+                        jpaBuy(0, 3, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -872,14 +646,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 @Override
                 public void run() {
                     try {
-                        // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
-                        startSignal.await();
-                        // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1,
-                                (sleepMillisThatWaitNextRequest / 2));
-                        jpaBuy(1, 1, 0);
-                    } catch (InterruptedException e) {
-                        throw new IllegalStateException(e);
+                        jpaBuy(1, 1, sleepMillisThatWaitNextRequest / 2);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -892,28 +659,38 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            WebDriverOperations operations = getWebDriverOperations(0);
+            int completedId;
+            // 更新画面を開いている画面からDB名を取得する
+            if (isUpdateSuccued(0)) {
+                completedId = 0;
+            } else {
+                completedId = 1;
+            }
+            WebDriverOperations operations = getWebDriverOperations(
+                    completedId);
             WebDriver driver = operations.getWebDriver();
             ExclusionResultPage exclusionResultPage = new ExclusionResultPage(driver);
 
             String database = exclusionResultPage.getDatabase();
-            assertCompletePageView(0, testIdUpperCase, testIdUpperCase, 2, 1);
             // TODO:Hibernateのバグ対応版（5.2.1.Final）にアップデート後、条件"POSTGRESQL".equals(database)を除去する
             // 修正理由:Hibernateのバグ(HHH-10797)によって、PostgreSQLで@QueryHint(name = "javax.persistence.lock.timeout", value =
             // "0")を指定しても、
             // NOWAIT句が付かなくなってしまったため
+            // 横展開としてガイドラインのissueを挙げている(https://github.com/terasolunaorg/guideline/issues/2372)
             if ("H2".equals(database) || "POSTGRESQL".equals(database)) {
-
-                getWebDriverOperations(1).getWebDriver().navigate().to(
-                        applicationContextUrl + "/excn/0602/002");
-                assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 1, 2);
-
+                if ("1".equals(exclusionResultPage.getVersion())) {
+                    assertionForTestEXCN0602002WithoutNoWaitOption(0, 1,
+                            testIdUpperCase, 2, 1);
+                } else {
+                    assertionForTestEXCN0602002WithoutNoWaitOption(1, 0,
+                            testIdUpperCase, 4, 1);
+                }
             } else {
-                assertFailureView(1,
-                        "Exclusive Lock Error!\nOther user updated!!");
-                getWebDriverOperations(1).getWebDriver().navigate().to(
-                        applicationContextUrl + "/excn/0602/002");
-                assertUpdatePageView(1, testIdUpperCase, testIdUpperCase, 2, 1);
+                if (completedId == 0) {
+                    assertionForTestEXCN0602002(0, 1, testIdUpperCase, 2);
+                } else {
+                    assertionForTestEXCN0602002(1, 0, testIdUpperCase, 4);
+                }
             }
         }
     }
@@ -922,10 +699,9 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * 変更画面に入力し、画面遷移する。<br>
      * @param webDriverId 操作するブラウザを識別するためのID
      * @param purchaseQuantity 減算する数量
-     * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
      */
-    private void buy(int webDriverId, int purchaseQuantity, long sleepMillis) {
-        buy(webDriverId, purchaseQuantity, sleepMillis, null);
+    private void jpaBuy(int webDriverId, int purchaseQuantity) {
+        jpaBuy(webDriverId, purchaseQuantity, -1);
     }
 
     /**
@@ -934,7 +710,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param purchaseQuantity 減算する数量
      * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
      */
-    private void jpaBuy(int webDriverId, int purchaseQuantity, long sleepMillis) {
+    private void jpaBuy(int webDriverId, int purchaseQuantity,
+            long sleepMillis) {
         jpaBuy(webDriverId, purchaseQuantity, sleepMillis, null);
     }
 
@@ -945,13 +722,15 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
      * @param startSignal 待機待ちの別スレッドに開始シグナルを送るためのオブジェクト
      */
-    private void jpaBuy(int webDriverId, int purchaseQuantity,
-            long sleepMillis, CountDownLatch startSignal) {
+    private void jpaBuy(int webDriverId, int purchaseQuantity, long sleepMillis,
+            CountDownLatch startSignal) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
         StockPage stockPage = new StockPage(driver);
         stockPage.setPurchaseQuantity(purchaseQuantity);
-        stockPage.setSleepTime(sleepMillis);
+        if (sleepMillis != -1) {
+            stockPage.setSleepTime(sleepMillis);
+        }
         if (startSignal != null) {
             startSignal.countDown();
         }
@@ -962,48 +741,35 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * 変更画面に入力し、画面遷移する。<br>
      * @param webDriverId 操作するブラウザを識別するためのID
      * @param purchaseQuantity 減算する数量
-     * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
-     * @param startSignal 待機待ちの別スレッドに開始シグナルを送るためのオブジェクト
      */
-    private void buy(int webDriverId, int purchaseQuantity, long sleepMillis,
-            CountDownLatch startSignal) {
+    private void buy(int webDriverId, int purchaseQuantity) {
+        buy(webDriverId, purchaseQuantity, -1);
+    }
+
+    /**
+     * 変更画面に入力し、画面遷移する。<br>
+     * @param webDriverId 操作するブラウザを識別するためのID
+     * @param purchaseQuantity 減算する数量
+     * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
+     */
+    private void buy(int webDriverId, int purchaseQuantity, long sleepMillis) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
-        operations.overrideText(id("purchasingQuantity"), Integer
-                .toString(purchaseQuantity));
-        operations.overrideText(id("sleepMillis"), Long.toString(sleepMillis));
-        if (startSignal != null) {
-            startSignal.countDown();
+        operations.overrideText(id("purchasingQuantity"), Integer.toString(
+                purchaseQuantity));
+        if (sleepMillis != -1) {
+            operations.overrideText(id("sleepMillis"), Long.toString(
+                    sleepMillis));
         }
         operations.click(id("buy"));
     }
 
     /**
-     * 変更画面に入力し、画面遷移する。<br>
-     * @param webDriverId 操作するブラウザを識別するためのID
-     * @param purchaseQuantity 加算する数量
-     * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
+     * 対象のブラウザが更新完了画面に遷移したかを返す。<br>
+     * @param id ブラウザid
+     * @return true 更新完了画面に遷移した
      */
-    private void sale(int webDriverId, int purchaseQuantity, long sleepMillis) {
-        sale(webDriverId, purchaseQuantity, sleepMillis, null);
-    }
-
-    /**
-     * 変更画面に入力し、画面遷移する。<br>
-     * @param webDriverId 操作するブラウザを識別するためのID
-     * @param purchaseQuantity 加算する数量
-     * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
-     * @param startSignal 待機待ちの別スレッドに開始シグナルを送るためのオブジェクト
-     */
-    private void sale(int webDriverId, int purchaseQuantity, long sleepMillis,
-            CountDownLatch startSignal) {
-        WebDriverOperations operations = getWebDriverOperations(webDriverId);
-        operations.overrideText(id("purchasingQuantity"), Integer
-                .toString(purchaseQuantity));
-        operations.overrideText(id("sleepMillis"), Long.toString(sleepMillis));
-        if (startSignal != null) {
-            startSignal.countDown();
-        }
-        operations.click(id("sale"));
+    private boolean isUpdateSuccued(int id) {
+        return getWebDriverOperations(id).exists(id("screenTitle"));
     }
 
     /**
@@ -1043,10 +809,10 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
         assertThat(operations.getText(id("screenTitle")), is("売買完了"));
         assertThat(exclusionResultPage.getItemCode(), is(itemCode));
         assertThat(exclusionResultPage.getItemName(), is(itemName));
-        assertThat(exclusionResultPage.getQuantity(), is(Integer
-                .toString(quantity)));
-        assertThat(exclusionResultPage.getVersion(), is(Integer
-                .toString(version)));
+        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(
+                quantity)));
+        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(
+                version)));
     }
 
     /**
@@ -1064,10 +830,10 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
         ExclusionResultPage exclusionResultPage = new ExclusionResultPage(driver);
         assertThat(exclusionResultPage.getItemCode(), is(itemCode));
         assertThat(exclusionResultPage.getItemName(), is(itemName));
-        assertThat(exclusionResultPage.getQuantity(), is(Integer
-                .toString(quantity)));
-        assertThat(exclusionResultPage.getVersion(), is(Integer
-                .toString(version)));
+        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(
+                quantity)));
+        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(
+                version)));
     }
 
     /**
@@ -1099,6 +865,123 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
                 .toString(version)));
     }
 
+    private void assertionForTestEXCN0301001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
+                "0301/001", "Business Error!\nOther user updated!!");
+    }
+
+    private void assertionForTestEXCN0302001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
+                "0302/001",
+                "Exclusive Lock Error!\nOther user updated!!(controller)");
+    }
+
+    private void assertionForTestEXCN0302002(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
+                "0302/002",
+                "Exclusive Lock Error!\nOther user updated!!(request)");
+    }
+
+    private void assertionForTestEXCN0402001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
+                "0402/001",
+                "Exclusive Lock Error!\nOther user updated!!(controller)");
+    }
+
+    private void assertionForTestEXCN0402002(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
+                "0402/002",
+                "Exclusive Lock Error!\nOther user updated!!(request)");
+    }
+
+    private void assertionForTestEXCN0501001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
+                "0501/001",
+                "Business Error!\nNot enough stock. Please, change quantity!!");
+    }
+
+    private void assertionForTestEXCN0502001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
+                "0502/001",
+                "Exclusive Lock Error!\nOther user updated!!(controller)");
+    }
+
+    private void assertionForTestEXCN0502002(int completedId1, int completedId2,
+            String testIdUpperCase, int quantity1, int quantity2) {
+        assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
+                testIdUpperCase, quantity1, quantity2, "0502/002");
+    }
+
+    private void assertionForTestEXCN0602001(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
+                "0602/001", "Exclusive Lock Error!\nOther user updated!!");
+    }
+
+    private void assertionForTestEXCN0602002(int completedId, int failedId,
+            String testIdUpperCase, int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
+                "0602/002", "Exclusive Lock Error!\nOther user updated!!");
+    }
+
+    private void assertionForTestEXCN0602002WithoutNoWaitOption(
+            int completedId1, int completedId2, String testIdUpperCase,
+            int quantity1, int quantity2) {
+        assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
+                testIdUpperCase, quantity1, quantity2, "0602/002");
+    }
+
+    /**
+     * 片方が更新に成功し、もう片方が失敗するテストのアサーションのテンプレート。
+     * @param completedId 更新に成功したブラウザID
+     * @param failedId 更新に失敗したブラウザID
+     * @param testIdUpperCase テストID
+     * @param quantity 在庫数
+     * @param version バージョン
+     * @param path テストケースのパス
+     * @param message エラーメッセージ
+     */
+    private void assertionTemplete(int completedId, int failedId,
+            String testIdUpperCase, int quantity, int version, String path,
+            String message) {
+        // 更新に成功したブラウザが完了画面に遷移すること・入力した変更内容が反映されること
+        assertCompleteView(completedId, testIdUpperCase, testIdUpperCase,
+                quantity, version);
+        // 更新に失敗したブラウザが排他エラー完了画面に遷移すること・入力した変更内容が反映されないこと
+        assertFailureView(failedId, message);
+        getWebDriverOperations(failedId).displayPage(getPackageRootUrl()
+                + path);
+        assertUpdateView(failedId, testIdUpperCase, testIdUpperCase, quantity,
+                version);
+    }
+
+    /**
+     * 両ブラウザで更新に成功するテストのアサーションのテンプレート。
+     * @param completedId1 バージョン1のブラウザID
+     * @param completedId2 バージョン2のブラウザID
+     * @param testIdUpperCase テストID
+     * @param quantity1 バージョン1の画面の在庫数
+     * @param quantity2 バージョン2の画面の在庫数
+     * @param path テストケースのパス
+     */
+    private void assertionUpdatingAllCompletedTemplate(int completedId1,
+            int completedId2, String testIdUpperCase, int quantity1,
+            int quantity2, String path) {
+        assertCompletePageView(completedId1, testIdUpperCase, testIdUpperCase,
+                quantity1, 1);
+        getWebDriverOperations(completedId2).displayPage(getPackageRootUrl()
+                + path);
+        assertUpdatePageView(completedId2, testIdUpperCase, testIdUpperCase,
+                quantity2, 2);
+    }
+
     /**
      * ブラウザの実行を停止する。<br>
      * @param webDriverId 操作するブラウザを識別するためのID
@@ -1108,5 +991,4 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
         getWebDriverOperations(webDriverId).suspend(waitTime,
                 TimeUnit.MILLISECONDS);
     }
-
 }

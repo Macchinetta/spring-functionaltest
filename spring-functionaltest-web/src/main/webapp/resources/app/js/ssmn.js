@@ -12,11 +12,13 @@ function addItem() {
     resultMessageArea.removeClass("errorMessage");
     resultMessageArea.text("");
     var form = $("#cartItemForm");
-    $.ajax(contextPath + "/ssmn/" + middleItemsURL + "/" + smallItemsURL + "/shopping/cart?add", {
-        type : "POST",
-        data : form.serialize(),
-        dataType : "json"
-    }).done(function(json) {
+    $.ajax(
+            contextPath + "/ssmn/" + middleItemsURL + "/" + smallItemsURL
+                    + "/shopping/cart?add", {
+                type : "POST",
+                data : form.serialize(),
+                dataType : "json"
+            }).done(function(json) {
         resultMessageArea.text(json.message);
     }).fail(function(xhr) {
         var contentType = xhr.getResponseHeader("Content-Type");

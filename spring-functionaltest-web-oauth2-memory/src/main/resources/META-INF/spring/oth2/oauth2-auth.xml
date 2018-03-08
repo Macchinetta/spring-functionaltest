@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:oauth2="http://www.springframework.org/schema/security/oauth2"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/security
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:oauth2="http://www.springframework.org/schema/security/oauth2" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd
            http://www.springframework.org/schema/jdbc
            http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
@@ -19,80 +18,79 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<security:http pattern="/oth2/oauth/*token*/**"
-		authentication-manager-ref="oauth2AuthenticationManager">
-		<security:http-basic />
-		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/**" access="isAuthenticated()"/> 
-	</security:http>
+  <sec:http pattern="/oth2/oauth/*token*/**" authentication-manager-ref="oauth2AuthenticationManager">
+    <sec:http-basic entry-point-ref="oauth2AuthenticationEntryPoint" />
+    <sec:csrf disabled="true" />
+    <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+    <sec:access-denied-handler ref="oauth2AccessDeniedHandler"/>
+  </sec:http>
 
-	<security:http pattern="${oth2.restServletPath}/oth2/tokens/**"
-		authentication-manager-ref="oauth2AuthenticationManager">
-		<security:http-basic />
-		<security:csrf disabled="true" />
-		<security:intercept-url pattern="/**" access="isAuthenticated()"/> 
-	</security:http>
+  <sec:http pattern="${oth2.restServletPath}/oth2/tokens/**"
+    authentication-manager-ref="oauth2AuthenticationManager">
+    <sec:http-basic entry-point-ref="oauth2AuthenticationEntryPoint" />
+    <sec:csrf disabled="true" />
+    <sec:intercept-url pattern="/**" access="isAuthenticated()" />
+  </sec:http>
 
-	<oauth2:authorization-server
-		client-details-service-ref="clientDetailsService" token-services-ref="oauth2TokenServices"
-		token-endpoint-url="/oth2/oauth/token"
-		authorization-endpoint-url="/oth2/oauth/authorize"
-		user-approval-handler-ref="oauth2UserApprovalHandler"
-		user-approval-page="forward:/oth2/confirm-access"
-		error-page="forward:/oth2/error">
-		<oauth2:authorization-code />
-		<oauth2:implicit />
-		<oauth2:client-credentials />
-		<oauth2:password />
-	</oauth2:authorization-server>
+  <oauth2:authorization-server client-details-service-ref="clientDetailsService"
+    token-services-ref="oauth2TokenServices" token-endpoint-url="/oth2/oauth/token"
+    authorization-endpoint-url="/oth2/oauth/authorize" user-approval-handler-ref="oauth2UserApprovalHandler"
+    user-approval-page="forward:/oth2/confirm-access" error-page="forward:/oth2/error">
+    <oauth2:authorization-code />
+    <oauth2:implicit />
+    <oauth2:client-credentials />
+    <oauth2:password />
+  </oauth2:authorization-server>
 
-	<bean id="oauth2UserApprovalHandler"
-		class="org.springframework.security.oauth2.provider.approval.ApprovalStoreUserApprovalHandler">
-		<property name="clientDetailsService" ref="clientDetailsService" />
-		<property name="approvalStore" ref="oauth2ApprovalStore" />
-		<property name="requestFactory" ref="oauth2RequestFactory" />
-	</bean>
+  <sec:authentication-manager id="oauth2AuthenticationManager">
+    <sec:authentication-provider user-service-ref="oauth2ClientDetailsUserService">
+      <sec:password-encoder ref="passwordEncoder" />
+    </sec:authentication-provider>
+  </sec:authentication-manager>
 
-	<bean id="oauth2ApprovalStore"
-		class="org.springframework.security.oauth2.provider.approval.InMemoryApprovalStore" />
+  <bean id="oauth2AuthenticationEntryPoint" class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
+    <property name="typeName" value="Basic" />
+    <property name="realmName" value="Realm" />
+  </bean>
 
-	<bean id="oauth2RequestFactory"
-		class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
-		<constructor-arg ref="clientDetailsService" />
-	</bean>
+  <bean id="oauth2AccessDeniedHandler" class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler" />
 
-	<bean id="oauth2TokenServices"
-		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
-		<property name="tokenStore" ref="oauth2TokenStore" />
-		<property name="clientDetailsService" ref="clientDetailsService" />
-		<property name="supportRefreshToken" value="true" />
-	</bean>
+  <bean id="oauth2UserApprovalHandler"
+    class="org.springframework.security.oauth2.provider.approval.ApprovalStoreUserApprovalHandler">
+    <property name="clientDetailsService" ref="clientDetailsService" />
+    <property name="approvalStore" ref="oauth2ApprovalStore" />
+    <property name="requestFactory" ref="oauth2RequestFactory" />
+  </bean>
 
-	<bean id="oauth2TokenStore"
-		class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
-	</bean>
+  <bean id="oauth2ApprovalStore" class="org.springframework.security.oauth2.provider.approval.InMemoryApprovalStore" />
 
-	<security:authentication-manager id="oauth2AuthenticationManager">
-		<security:authentication-provider
-			user-service-ref="oauth2ClientDetailsUserService">
-			<security:password-encoder ref="passwordEncoder" />
-		</security:authentication-provider>
-	</security:authentication-manager>
+  <bean id="oauth2RequestFactory" class="org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory">
+    <constructor-arg ref="clientDetailsService" />
+  </bean>
 
-	<bean id="oauth2ClientDetailsUserService"
-		class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
-		<constructor-arg ref="clientDetailsService" />
-	</bean>
+  <bean id="oauth2TokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+    <property name="tokenStore" ref="oauth2TokenStore" />
+    <property name="clientDetailsService" ref="clientDetailsService" />
+    <property name="supportRefreshToken" value="true" />
+  </bean>
 
-	<tx:advice id="approvalTransactionAdvice">
-		<tx:attributes>
-			<tx:method name="*"/>
-		</tx:attributes>
-	</tx:advice>
+  <bean id="oauth2TokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
+  </bean>
 
-	<aop:config>
-		<aop:pointcut id="approvalOperation"
-					  expression="execution(* org.springframework.security.oauth2.provider.approval.UserApprovalHandler.*(..))"/>
-		<aop:advisor pointcut-ref="approvalOperation" advice-ref="approvalTransactionAdvice"/>
-	</aop:config>
+  <bean id="oauth2ClientDetailsUserService"
+    class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+    <constructor-arg ref="clientDetailsService" />
+  </bean>
+
+  <tx:advice id="approvalTransactionAdvice">
+    <tx:attributes>
+      <tx:method name="*" />
+    </tx:attributes>
+  </tx:advice>
+
+  <aop:config>
+    <aop:pointcut id="approvalOperation"
+      expression="execution(* org.springframework.security.oauth2.provider.approval.UserApprovalHandler.*(..))" />
+    <aop:advisor pointcut-ref="approvalOperation" advice-ref="approvalTransactionAdvice" />
+  </aop:config>
 </beans>

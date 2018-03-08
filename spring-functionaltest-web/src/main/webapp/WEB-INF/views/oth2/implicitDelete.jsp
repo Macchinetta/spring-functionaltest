@@ -1,5 +1,7 @@
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/oth2-implicit.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/app/js/oth2-implicit.js"></script>
 <script type="text/javascript">
 "use strict";
 
@@ -21,23 +23,20 @@ var todolist = function() {
     if (result) {
         oauth2Func.oajax({
             url : "${oauth2ResourceServerUrl}/principal/123",
-            providerId : "todo", 
-            scopes : [ "DELETE" ], 
+            providerId : "todo",
+            scopes : [ "DELETE" ],
             dataType : "json",
             type : "DELETE",
-            success : function(data) {
-                $("#message").text(JSON.stringify(data));
-            },
-            error : function() {
-                oauth2Func.clearTokens();
-            }
+        },false).done(function(data) {
+            $("#message").text(JSON.stringify(data));
+        }).fail(function(data) {
+            oauth2Func.parseFailureJSON("todo", data);
         });
-    } else {
-        oauth2Func.clearTokens();
     }
 };
+
 </script>
 <div id="wrapper">
-    <h1 id="title">implicit grant</h1>
-    <p id="message"></p>
+  <h1 id="title">implicit grant(scope:DELETE)</h1>
+  <p id="message"></p>
 </div>

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
@@ -53,9 +65,7 @@ public class APLY02Controller {
 
     @InitBinder
     public void initWebDataBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(
-                Long.class,
-                "value6",
+        binder.registerCustomEditor(Long.class, "value6",
                 new CustomNumberEditor(Long.class, new DecimalFormat("###,###"), true));
         binder.addValidators(largerValue1ThanValue2Validator);
     }
@@ -102,7 +112,7 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0201/004", method = RequestMethod.GET)
     public String handle01004(FormObjectForm form, Model model) {
-        form.setValue4(new BigDecimal(0.44));
+        form.setValue4(BigDecimal.valueOf(0.44));
         return "aply/formObjectForm";
     }
 
@@ -112,7 +122,8 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0201/005", method = RequestMethod.GET)
-    public String handle01005(FormObjectForm form, Model model) throws ParseException {
+    public String handle01005(FormObjectForm form,
+            Model model) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         form.setValue5(sdf.parse("19550505"));
         return "aply/formObjectForm";
@@ -136,14 +147,16 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0201/007", method = RequestMethod.GET)
     public String handle01007(
-            @ModelAttribute("formObjectForm2") FormObjectForm form, Model model) {
+            @ModelAttribute("formObjectForm2") FormObjectForm form,
+            Model model) {
         form.setValue7(Long.valueOf(7777777777l));
         return "aply/formObjectForm2";
     }
 
     @RequestMapping(value = "0201/007")
     public String handle01007_1(
-            @ModelAttribute("formObjectForm2") FormObjectForm form, Model model) {
+            @ModelAttribute("formObjectForm2") FormObjectForm form,
+            Model model) {
         return "aply/formObjectComplete2";
     }
 
@@ -174,7 +187,8 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0203/002", method = RequestMethod.GET)
     public String handle03002(
-            @ModelAttribute("formObjectForm2") FormObjectForm form, Model model) {
+            @ModelAttribute("formObjectForm2") FormObjectForm form,
+            Model model) {
         return "aply/formObjectForm2";
     }
 

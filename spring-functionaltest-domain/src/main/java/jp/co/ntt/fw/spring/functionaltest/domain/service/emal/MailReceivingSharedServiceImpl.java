@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
@@ -32,9 +44,9 @@ import org.terasoluna.gfw.common.exception.SystemException;
 
 @Service
 public class MailReceivingSharedServiceImpl implements
-                                           MailReceivingSharedService {
-    private static final Logger logger = LoggerFactory
-            .getLogger(MailReceivingSharedServiceImpl.class);
+                                            MailReceivingSharedService {
+    private static final Logger logger = LoggerFactory.getLogger(
+            MailReceivingSharedServiceImpl.class);
 
     Store store;
 
@@ -109,7 +121,8 @@ public class MailReceivingSharedServiceImpl implements
     }
 
     @Override
-    public MailMessage receive(String identifier, int retryCount) {
+    public MailMessage receive(String identifier,
+            int retryCount) throws InterruptedException {
 
         for (int i = 0; i < retryCount; i++) {
             MailMessage mail = receive(identifier);
@@ -117,11 +130,7 @@ public class MailReceivingSharedServiceImpl implements
                 return mail;
             }
 
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                break;
-            }
+            TimeUnit.SECONDS.sleep(1);
         }
 
         return null;
@@ -148,7 +157,8 @@ public class MailReceivingSharedServiceImpl implements
             // To
             List<String> to = new ArrayList<>();
             if (message.getRecipients(RecipientType.TO) != null) {
-                for (Address address : message.getRecipients(RecipientType.TO)) {
+                for (Address address : message.getRecipients(
+                        RecipientType.TO)) {
                     to.add(((InternetAddress) address).toUnicodeString());
                 }
             }
@@ -157,14 +167,16 @@ public class MailReceivingSharedServiceImpl implements
             // Cc
             List<String> cc = new ArrayList<>();
             if (message.getRecipients(RecipientType.CC) != null) {
-                for (Address address : message.getRecipients(RecipientType.CC)) {
+                for (Address address : message.getRecipients(
+                        RecipientType.CC)) {
                     cc.add(((InternetAddress) address).toUnicodeString());
                 }
             }
             mail.setCc(cc);
 
             // 送信日
-            if (message.getReplyTo() != null && message.getReplyTo().length > 0) {
+            if (message.getReplyTo() != null && message
+                    .getReplyTo().length > 0) {
                 mail.setReplyTo(((InternetAddress) message.getReplyTo()[0])
                         .toUnicodeString());
             }
@@ -194,7 +206,8 @@ public class MailReceivingSharedServiceImpl implements
      * @throws MessagingException
      * @throws IOException
      */
-    void processMultipart(Multipart multipart, MailMessage mail) throws MessagingException, IOException {
+    void processMultipart(Multipart multipart,
+            MailMessage mail) throws MessagingException, IOException {
 
         int count = multipart.getCount();
         for (int i = 0; i < count; i++) {
@@ -209,8 +222,8 @@ public class MailReceivingSharedServiceImpl implements
                     // インライン
                 } else if (Part.INLINE.equals(part.getDisposition())) {
                     mail.setInline(part.getHeader("Content-ID")[0]);
-                } else if (part.isMimeType("text/plain")
-                        || part.isMimeType("text/html")) {
+                } else if (part.isMimeType("text/plain") || part.isMimeType(
+                        "text/html")) {
                     mail.setBody(part.getContent().toString());
                     mail.setContentType(part.getContentType());
                 }

@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
@@ -29,13 +41,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.exception.SystemException;
 
 @Transactional
 @Service
 public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(TodoMB3ForJSR310ServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            TodoMB3ForJSR310ServiceImpl.class);
 
     @Inject
     TodoRepository todoRepository;
@@ -74,7 +87,7 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
             try (BufferedReader in4 = new BufferedReader(reader)) {
                 normDesc2 = in4.readLine();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SystemException("e.sf.dam3.9001", "input/output error.", e);
             }
         }
         return normDesc2;
@@ -87,7 +100,7 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
                 IOUtils.copy(inputStream, writer, "UTF-8");
                 normDesc1 = writer.toString();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                throw new SystemException("e.sf.dam3.9001", "input/output error.", e);
             } finally {
                 IOUtils.closeQuietly(inputStream);
             }

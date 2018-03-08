@@ -1,5 +1,17 @@
 /*
- * Copyright(c) 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy;
 
@@ -28,25 +40,25 @@ public class InternalProxyServlet extends ProxyServlet {
 
     private static final long serialVersionUID = 4051111343160785339L;
 
-    private static final Logger logger = LoggerFactory
-            .getLogger(InternalProxyServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            InternalProxyServlet.class);
 
-    private String proxyUseAuthPath;
+    private static String proxyUseAuthPath;
 
-    private String proxyUserName;
+    private static String proxyUserName;
 
-    private String proxyPassword;
+    private static String proxyPassword;
 
-    public void setProxyUseAuthPath(String proxyUseAuthPath) {
-        this.proxyUseAuthPath = proxyUseAuthPath;
+    public static void setProxyUseAuthPath(String proxyUseAuthPath) {
+        InternalProxyServlet.proxyUseAuthPath = proxyUseAuthPath;
     }
 
-    public void setProxyUserName(String proxyUserName) {
-        this.proxyUserName = proxyUserName;
+    public static void setProxyUserName(String proxyUserName) {
+        InternalProxyServlet.proxyUserName = proxyUserName;
     }
 
-    public void setProxyPassword(String proxyPassword) {
-        this.proxyPassword = proxyPassword;
+    public static void setProxyPassword(String proxyPassword) {
+        InternalProxyServlet.proxyPassword = proxyPassword;
     }
 
     @Override
@@ -90,7 +102,8 @@ public class InternalProxyServlet extends ProxyServlet {
             final HttpServletResponse response) throws IOException {
 
         // URIに認証が必要なURLのパスが含まれない場合、認証不要。
-        if (!request.getPathInfo().contains(this.proxyUseAuthPath)) {
+        if (!request.getPathInfo().contains(
+                InternalProxyServlet.proxyUseAuthPath)) {
             return true;
         }
 
@@ -111,9 +124,9 @@ public class InternalProxyServlet extends ProxyServlet {
         String[] credentials = getCredentialsFromHeader(header);
 
         // 認証情報の判定
-        if (credentials != null
-                && StringUtils.equals(credentials[0], this.proxyUserName)
-                && StringUtils.equals(credentials[1], this.proxyPassword)) {
+        if (credentials != null && StringUtils.equals(credentials[0],
+                InternalProxyServlet.proxyUserName) && StringUtils.equals(
+                        credentials[1], InternalProxyServlet.proxyPassword)) {
             // 認証情報が正しい場合、trueを返す。
             return true;
         } else {
@@ -131,11 +144,13 @@ public class InternalProxyServlet extends ProxyServlet {
      * Proxy-Authorizationヘッダーの値は、Basic認証の場合「Baseic 認証情報」形式。<br>
      * また、認証情報の値は、「ユーザ:パスワード」形式の値をBase64で変換されている。
      * </pre>
+     * 
      * @param header HTTPリクエストヘッダのProxy-Authorizationの値
      * @return 認証情報(1要素目：ユーザ、2要素目：パスワード)、ｎｕｌｌ：認証情報不正
      * @throws IOException
      */
-    private String[] getCredentialsFromHeader(String header) throws IOException {
+    private String[] getCredentialsFromHeader(
+            String header) throws IOException {
 
         // 先頭の"Basic "を除いた文字列を取得
         byte[] base64Token = header.substring(6).getBytes("UTF-8");

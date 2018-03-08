@@ -3,46 +3,47 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.ssmn.OrderRepository">
 
-    <select id="getOrderSequence" resultType="long">
-        SELECT NEXTVAL('s_order')
-    </select>
+  <select id="getOrderSequence" resultType="long">
+    SELECT NEXTVAL('s_order')
+  </select>
 
-    <select id="getOrderSequence" resultType="long" databaseId="oracle">
-        SELECT TO_NUMBER(s_order.nextval) FROM DUAL
-    </select>
+  <select id="getOrderSequence" resultType="long" databaseId="oracle">
+    SELECT
+    TO_NUMBER(s_order.nextval) FROM DUAL
+  </select>
 
-    <select id="getOrderSequence" resultType="long" databaseId="db2">
-        values (NEXT VALUE FOR s_order)
-    </select>
+  <select id="getOrderSequence" resultType="long" databaseId="db2">
+    values (NEXT VALUE FOR s_order)
+  </select>
 
-    <!-- BEGIN Order -->
-    <insert id="createOrder">
-        INSERT INTO t_order
-        (
-            order_id
-        )
-        VALUES
-        (
-            #{orderId}
-        )
-    </insert>
-    <!-- END Order -->
-    
-    <!-- BEGIN OrderItem -->
-    <insert id="createOrderItem">
-        INSERT INTO t_order_item
-        (
-            order_id
-            ,item_id
-            ,quantity
-        )
-        VALUES
-        (
-            #{orderId}
-            ,#{itemId}
-            ,#{quantity}
-        )
-    </insert>
-    <!-- END OrderItem -->
+  <!-- BEGIN Order -->
+  <insert id="createOrder">
+    INSERT INTO t_order
+    (
+    order_id
+    )
+    VALUES
+    (
+    #{orderId}
+    )
+  </insert>
+  <!-- END Order -->
+
+  <!-- BEGIN OrderItem -->
+  <insert id="createOrderItem">
+    INSERT INTO t_order_item
+    (
+    order_id
+    ,item_id
+    ,quantity
+    )
+    VALUES
+    (
+    #{orderId}
+    ,#{itemId}
+    ,#{quantity}
+    )
+  </insert>
+  <!-- END OrderItem -->
 
 </mapper>
