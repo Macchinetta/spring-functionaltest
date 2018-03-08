@@ -8,8 +8,9 @@
     <sec:csrfInput />
     <c:forEach var="scope" items="${scopes}">
       <li>${f:h(scope.key)}<input type="radio" name="${f:h(scope.key)}"
-        id="${f:h(scope.key)}_approve" value="true" />Approve <input type="radio"
-        name="${f:h(scope.key)}" id="${f:h(scope.key)}_deny" value="false" checked="checked" />Deny
+        id="${f:h(scope.key)}_approve" value="true" /><label for="${f:h(scope.key)}_approve">Approve</label>
+        <input type="radio" name="${f:h(scope.key)}" id="${f:h(scope.key)}_deny" value="false"
+        checked="checked" /><label for="${f:h(scope.key)}_deny">Deny</label>
       </li>
     </c:forEach>
     <label> <input name="authorize" value="Authorize" id="authorize" type="submit" />

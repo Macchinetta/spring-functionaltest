@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.0.RELEASE</version>
+    <version>1.5.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -24,6 +24,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <configuration>
+          <warName>spring-functionaltest-web</warName>
           <webResources>
             <webResource>
               <directory>${project.root.basedir}/spring-functionaltest-web/src/main/webapp/resources</directory>
@@ -448,6 +449,5 @@
   </dependencies>
   <properties>
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
-    <cargo.deployable.artifactId>spring-functionaltest-web-thymeleaf</cargo.deployable.artifactId>
   </properties>
 </project>

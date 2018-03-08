@@ -9,14 +9,14 @@
     <c:if test="${not empty uploadedContent}">
 
       <div class="form-group">
-        <label class="col col-md-2 control-label">ファイル名</label>
+        <label for="fileNameText" class="col col-md-2 control-label">ファイル名</label>
         <div class="col col-md-10">
           <span id="fileNameText" class="display-item form-control">${f:h(uploadedContent.fileName)}</span>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col col-md-2 control-label">データ</label>
+        <label for="fileContentText" class="col col-md-2 control-label">データ</label>
         <div class="col col-md-10">
           <span id="fileContentText" class="display-item form-control">${f:h(uploadedContent.fileContent)}</span>
         </div>

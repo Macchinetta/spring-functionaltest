@@ -17,14 +17,14 @@
         <div class="panel-body">
 
           <div class="form-group">
-            <label class="col col-md-2 control-label">ファイル名</label>
+            <label for="fileNameText${rowStatus.index}" class="col col-md-2 control-label">ファイル名</label>
             <div class="col col-md-10">
               <span id="fileNameText${rowStatus.index}" class="display-item form-control">${f:h(uploadedContent.fileName)}</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label class="col col-md-2 control-label">データ</label>
+            <label for="fileContentText${rowStatus.index}" class="col col-md-2 control-label">データ</label>
             <div class="col col-md-10">
               <span id="fileContentText${rowStatus.index}" class="display-item form-control">${f:h(uploadedContent.fileContent)}</span>
             </div>

@@ -5,21 +5,21 @@
   <form:form modelAttribute="screenFlowUploadForm" method="post" cssClass="form-horizontal">
 
     <div class="form-group">
-      <label class="col col-md-2 control-label">ファイルID</label>
+      <label for="temporaryFileIdText" class="col col-md-2 control-label">ファイルID</label>
       <div class="col col-md-10">
         <span id="temporaryFileIdText" class="display-item form-control">${f:h(screenFlowUploadSessionInfo.temporaryFileId)}</span>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col col-md-2 control-label">ファイル名</label>
+      <label for="fileNameText" class="col col-md-2 control-label">ファイル名</label>
       <div class="col col-md-10">
         <span id="fileNameText" class="display-item form-control">${f:h(screenFlowUploadForm.fileName)}</span>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col col-md-2 control-label">説明</label>
+      <label for="descriptionText" class="col col-md-2 control-label">説明</label>
       <div class="col col-md-10">
         <span id="descriptionText" class="display-item form-control">${f:br(f:h(screenFlowUploadForm.description))}</span>
       </div>

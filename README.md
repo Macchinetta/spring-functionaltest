@@ -34,11 +34,12 @@ $ git clone https://github.com/Macchinetta/spring-functionaltest.git
 ```
 
 ### [Step 3] Place dependent libraries
-Place `iTextAsian-1.0.jar` on `spring-functionaltest-env/3rdparty`.
-You have to get this jar file in some way. 
+Place `iTextAsian-1.0.jar` and `ojdbc7-12.1.0.2.0.jar` on `spring-functionaltest-env/3rdparty`.
+You have to get these jar files in some way. 
 
 ```console
 $ mv iTextAsian-1.0.jar spring-functionaltest-env/3rdparty/com/lowagie/iTextAsian/1.0
+$ mv ojdbc7-12.1.0.2.0.jar spring-functionaltest-env/3rdparty/com/oracle/ojdbc7/12.1.0.2.0/
 ```
 
 If you'd like to use another version, it's necessary to change some configurations.

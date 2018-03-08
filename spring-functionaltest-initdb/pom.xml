@@ -5,7 +5,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.0.RELEASE</version>
+    <version>1.5.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - DB Init</name>
@@ -67,7 +67,7 @@
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle</db.basedir>
-        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
         <db.username>cfw</db.username>
         <db.password>cfw</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
@@ -83,7 +83,7 @@
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle/open</db.basedir>
-        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
         <db.username>cfw_open</db.username>
         <db.password>cfw_open</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
@@ -99,7 +99,7 @@
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle/close</db.basedir>
-        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
         <db.username>cfw_close</db.username>
         <db.password>cfw_close</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>

@@ -25,7 +25,7 @@
     <a id="copyUnidirectionalBean"
       href="${pageContext.request.contextPath}/bnmp/unidirectionalBidirectionalMapping/car/${f:h(car.carId)}?unidirectional"
       class="btn btn-default">詳細(単方向Bean)</a> <a id="copyBidirectionalBean"
-      href="${pageContext.request.contextPath}/bnmp//unidirectionalBidirectionalMapping/car/${f:h(car.carId)}?bidirectional"
+      href="${pageContext.request.contextPath}/bnmp/unidirectionalBidirectionalMapping/car/${f:h(car.carId)}?bidirectional"
       class="btn btn-default">詳細(双方向Bean)</a>
   </div>
 </div>

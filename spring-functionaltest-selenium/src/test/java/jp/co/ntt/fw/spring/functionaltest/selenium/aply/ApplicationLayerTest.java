@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.aply;
 
@@ -35,11 +34,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
 
 public class ApplicationLayerTest extends FunctionTestSupport {
 
     private static WebDriver driver;
+
+    @Value("/${selenium.contextName}")
+    private String contextRoot;
 
     public ApplicationLayerTest() {
         disableDefaultWebDriver();
@@ -2714,7 +2717,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message2")), is(
-                    "/spring-functionaltest-web-thymeleaf/aply/1002/user/address"));
+                    contextRoot + "/aply/1002/user/address"));
         }
         // ログの確認
         {
@@ -2766,7 +2769,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message2")), is(
-                    "/spring-functionaltest-web-thymeleaf/user/address?id=3"));
+                    contextRoot + "/user/address?id=3"));
         }
         // ログの確認
         {
@@ -2792,7 +2795,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message2")), is(
-                    "/spring-functionaltest-web-thymeleaf/3/address"));
+                    contextRoot + "/3/address"));
         }
         // ログの確認
         {
@@ -2818,7 +2821,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message2")), is(
-                    "/spring-functionaltest-web-thymeleaf/aply/1002/address"));
+                    contextRoot + "/aply/1002/address"));
         }
         // ログの確認
         {

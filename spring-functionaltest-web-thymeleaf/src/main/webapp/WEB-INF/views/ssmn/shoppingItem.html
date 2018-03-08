@@ -18,7 +18,7 @@
           class="glyphicon glyphicon-play"></span> ショッピングを続ける</a>
       </div>
       <form id="cartItemForm" action="./cart" class="form-horizontal" method="post"
-        th:object="${cartItemForm}" th:action>
+        th:object="${cartItemForm}">
         <div class="form-group">
           <label class="col col-md-2 control-label">商品番号</label>
           <div class="col col-md-10" th:text="${item.itemId}"></div>

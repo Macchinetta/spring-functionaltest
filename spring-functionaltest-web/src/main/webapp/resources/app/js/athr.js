@@ -5,9 +5,6 @@ if (!athr)
     var contextPath = $("meta[name='contextPath']").attr("content");
     var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
 
-    var contextPath = $("meta[name='contextPath']").attr("content");
-    var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
-
     athr.send = function() {
 
         $("#customerResult").remove();

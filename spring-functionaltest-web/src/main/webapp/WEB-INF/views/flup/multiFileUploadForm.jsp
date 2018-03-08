@@ -7,29 +7,20 @@
   <form:form modelAttribute="multiUploadForm" method="post" cssClass="form-horizontal"
     enctype="multipart/form-data">
 
-    <div class="form-group">
-      <form:label path="uploadForms[0].multipartFile" cssClass="col col-md-2 control-label">コンテンツファイル1</form:label>
-      <div class="col col-md-10">
-        <form:input type="file" path="uploadForms[0].multipartFile" cssClass="multipartFile" />
-        <input type="text" readonly="readonly" id="selectedFiles0" class="selectedFile form-control">
-        <button id="browseFiles0" type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-folder-open"></span>参照
-        </button>
-        <form:errors path="uploadForms[0].multipartFile" cssClass="text-danger" element="div" />
+    <c:forEach var="i" begin="0" end="1" step="1">
+      <div class="form-group">
+        <form:label path="uploadForms[${i}].multipartFile" cssClass="col col-md-2 control-label">コンテンツファイル1</form:label>
+        <div class="col col-md-10">
+          <form:input type="file" path="uploadForms[${i}].multipartFile" cssClass="multipartFile" />
+          <input type="text" readonly="readonly" id="selectedFiles${i}"
+            class="selectedFile form-control">
+          <button id="browseFiles${i}" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-folder-open"></span>参照
+          </button>
+          <form:errors path="uploadForms[${i}].multipartFile" cssClass="text-danger" element="div" />
+        </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <form:label path="uploadForms[1].multipartFile" cssClass="col col-md-2 control-label">コンテンツファイル2</form:label>
-      <div class="col col-md-10">
-        <form:input type="file" path="uploadForms[1].multipartFile" cssClass="multipartFile" />
-        <input type="text" readonly="readonly" id="selectedFiles1" class="selectedFile form-control">
-        <button id="browseFiles1" type="button" class="btn btn-default">
-          <span class="glyphicon glyphicon-folder-open"></span>参照
-        </button>
-        <form:errors path="uploadForms[1].multipartFile" cssClass="text-danger" element="div" />
-      </div>
-    </div>
+    </c:forEach>
 
     <div class="form-group">
       <div class="col col-md-10 col-md-offset-2">

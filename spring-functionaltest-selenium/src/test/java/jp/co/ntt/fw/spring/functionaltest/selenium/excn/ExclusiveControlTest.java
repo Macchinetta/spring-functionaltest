@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.excn;
 
@@ -872,74 +871,74 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
     private void assertionForTestEXCN0301001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "/0301/001", "Business Error!\nOther user updated!!");
+                "0301/001", "Business Error!\nOther user updated!!");
     }
 
     private void assertionForTestEXCN0302001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "/0302/001",
+                "0302/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
     private void assertionForTestEXCN0302002(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "/0302/002",
+                "0302/002",
                 "Exclusive Lock Error!\nOther user updated!!(request)");
     }
 
     private void assertionForTestEXCN0402001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "/0402/001",
+                "0402/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
     private void assertionForTestEXCN0402002(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "/0402/002",
+                "0402/002",
                 "Exclusive Lock Error!\nOther user updated!!(request)");
     }
 
     private void assertionForTestEXCN0501001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "/0501/001",
+                "0501/001",
                 "Business Error!\nNot enough stock. Please, change quantity!!");
     }
 
     private void assertionForTestEXCN0502001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "/0502/001",
+                "0502/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
     private void assertionForTestEXCN0502002(int completedId1, int completedId2,
             String testIdUpperCase, int quantity1, int quantity2) {
         assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
-                testIdUpperCase, quantity1, quantity2, "/0502/002");
+                testIdUpperCase, quantity1, quantity2, "0502/002");
     }
 
     private void assertionForTestEXCN0602001(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "/0602/001", "Exclusive Lock Error!\nOther user updated!!");
+                "0602/001", "Exclusive Lock Error!\nOther user updated!!");
     }
 
     private void assertionForTestEXCN0602002(int completedId, int failedId,
             String testIdUpperCase, int quantity) {
         assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "/0602/002", "Exclusive Lock Error!\nOther user updated!!");
+                "0602/002", "Exclusive Lock Error!\nOther user updated!!");
     }
 
     private void assertionForTestEXCN0602002WithoutNoWaitOption(
             int completedId1, int completedId2, String testIdUpperCase,
             int quantity1, int quantity2) {
         assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
-                testIdUpperCase, quantity1, quantity2, "/0602/002");
+                testIdUpperCase, quantity1, quantity2, "0602/002");
     }
 
     /**

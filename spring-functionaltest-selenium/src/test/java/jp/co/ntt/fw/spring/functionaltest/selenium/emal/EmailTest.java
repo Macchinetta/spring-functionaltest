@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.emal;
 
@@ -619,7 +618,7 @@ public class EmailTest extends FunctionTestSupport {
         String expectedBodyPattern = "<html>\\s*<body>\\s*"
                 + "<h3>Hi &lt;script&gt;alert\\(&quot;あいう①～③&quot;\\);&lt;/script&gt;"
                 + ".*" + identifier + ".*"
-                + ", welcome to TERASOLUNA\\.ORG!</h3>\\s*"
+                + ", welcome to Macchinetta!</h3>\\s*"
                 + "</body>\\s*</html>";
         assertTrue(webDriverOperations.getText(id("body")).matches(
                 expectedBodyPattern));

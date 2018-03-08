@@ -1,3 +1,4 @@
+<% response.setStatus(HttpServletResponse.SC_BAD_REQUEST); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +15,7 @@
   <jsp:include page="/WEB-INF/views/layout/header.jsp" />
   <div id="wrapper">
     <h1>File Upload Error!</h1>
+    <input type="hidden" id="statusCode" value="<%= response.getStatus() %>" />
     <div class="alert alert-danger">
       <ul>
         <li><c:if test="${!empty exceptionCode}">[${f:h(exceptionCode)}]</c:if> <spring:message

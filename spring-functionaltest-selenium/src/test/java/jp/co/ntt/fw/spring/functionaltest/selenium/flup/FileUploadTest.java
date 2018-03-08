@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 NTT Corporation.
+ * Copyright 2014-2018 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.flup;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.Is.*;
 import static org.junit.Assert.*;
 import static org.openqa.selenium.By.*;
@@ -32,6 +32,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.util.StreamUtils;
 
@@ -311,6 +312,11 @@ public class FileUploadTest extends FunctionTestSupport {
             assertThat(webDriverOperations.getTitle(), is(
                     "File Upload Error!"));
         }
+        // ステータスコードの確認
+        {
+            assertThat(webDriverOperations.getInputFieldValue(id("statusCode")), is(String
+                    .valueOf(HttpStatus.BAD_REQUEST.value())));
+        }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
@@ -382,6 +388,11 @@ public class FileUploadTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getTitle(), is(
                     "File Upload Error!"));
+        }
+        // ステータスコードの確認
+        {
+            assertThat(webDriverOperations.getInputFieldValue(id("statusCode")), is(String
+                    .valueOf(HttpStatus.BAD_REQUEST.value())));
         }
         // ログの確認
         {

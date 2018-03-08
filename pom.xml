@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.5.0.RELEASE</version>
+  <version>1.5.1.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -24,14 +24,14 @@
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.4.0.RELEASE</version>
+    <version>5.4.1.RELEASE</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>http://terasoluna.org</url>
-  <inceptionYear>2014</inceptionYear>
+  <url>https://Macchinetta.github.io</url>
+  <inceptionYear>2017</inceptionYear>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -259,10 +259,10 @@
             </container>
             <deployables>
               <deployable>
-                <location>${project.root.basedir}/${cargo.deployable.artifactId}/target/${cargo.deployable.artifactId}.war</location>
+                <location>${project.root.basedir}/${cargo.deployable.artifactId}/target/${cargo.deployable.warName}.war</location>
                 <type>war</type>
                 <properties>
-                  <context>${cargo.deployable.artifactId}</context>
+                  <context>${cargo.deployable.warName}</context>
                 </properties>
               </deployable>
             </deployables>
@@ -693,6 +693,7 @@
     <project.env.buildFinalName>${project.artifactId}-${project.version}</project.env.buildFinalName>
     <project.root.basedir>${project.basedir}</project.root.basedir>
     <cargo.deployable.artifactId>spring-functionaltest-web</cargo.deployable.artifactId>
+    <cargo.deployable.warName>spring-functionaltest-web</cargo.deployable.warName>
     <encoding>UTF-8</encoding>
     <java-version>1.8</java-version>
   </properties>
