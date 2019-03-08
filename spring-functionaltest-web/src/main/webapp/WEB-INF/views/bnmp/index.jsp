@@ -12,6 +12,8 @@
     <li><a id="bnmp0104002" href="${pageContext.request.contextPath}/bnmp/0104/002">bnmp0104002</a></li>
     <li><a id="bnmp0104003" href="${pageContext.request.contextPath}/bnmp/0104/003">bnmp0104003</a></li>
     <li><a id="bnmp0104004" href="${pageContext.request.contextPath}/bnmp/0104/004">bnmp0104004</a></li>
+    <li><a id="bnmp0104005" href="${pageContext.request.contextPath}/bnmp/0104/005">bnmp0104005</a></li>
+    <li><a id="bnmp0104006" href="${pageContext.request.contextPath}/bnmp/0104/006">bnmp0104006</a></li>
     <li><a id="bnmp0105001" href="${pageContext.request.contextPath}/bnmp/0105/001">bnmp0105001</a></li>
     <li><a id="bnmp0106001" href="${pageContext.request.contextPath}/bnmp/0106/001">bnmp0106001</a></li>
     <li><a id="bnmp0106002" href="${pageContext.request.contextPath}/bnmp/0106/002">bnmp0106002</a></li>

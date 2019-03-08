@@ -26,7 +26,7 @@
     <sec:intercept-url pattern="/athr/0701/001/denyjson/**" access="denyAll" />
     <sec:intercept-url pattern="/athr/0701/001/deny/**" access="denyAll" />
     <sec:intercept-url pattern="/athr/0701/001/**" access="permitAll()" />
-    <sec:logout logout-url="/athr/0701/001/logout" logout-success-url="/athr/"
+    <sec:logout logout-url="/athr/0701/logout" logout-success-url="/athr/"
       invalidate-session="true" delete-cookies="JSESSIONID" />
     <sec:access-denied-handler ref="accessDeniedHandlerForAjax" />
   </sec:http>

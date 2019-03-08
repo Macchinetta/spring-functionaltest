@@ -9,11 +9,25 @@
 
       <h1 id="screenTitle">モデルに格納された値を数値フォーマット表示した画面（#numbers.formatPercent形式）</h1>
 
-      <ul>
-        <li id="message1">Thymeleafのユーティリティオブジェクトが提供している数値フォーマットを利用して数値を以下に表示します。</li>
+      <ul th:if="${testcaseId} == 'APLY1001004'">
+        <li id="message1">Thymeleafが提供している#numbers.formatPercentを利用して数値を以下に表示します。</li>
         <li id="message2" th:text="${#numbers.formatPercent(valueUsingNumberFormatPercent,1,2)}"></li>
       </ul>
-
+      <ul th:if="${testcaseId} == 'APLY1001013'">
+        <li id="message1">Thymeleafが提供している#numbers.arrayFormatPercentを利用して数値を以下に表示します。</li>
+        <li id="message2">
+          <span th:each="number, status : ${#numbers.arrayFormatPercent(valueUsingNumberFormatPercent,1,2)}" th:text="${status.last}? ${number} : |${number}, |" th:remove="tag"></span></li>
+      </ul>
+      <ul th:if="${testcaseId} == 'APLY1001014'">
+        <li id="message1">Thymeleafが提供している#numbers.listFormatPercentを利用して数値を以下に表示します。</li>
+        <li id="message2">
+          <span th:each="number, status : ${#numbers.listFormatPercent(valueUsingNumberFormatPercent,1,2)}" th:text="${status.last}? ${number} : |${number}, |" th:remove="tag"></span></li>
+      </ul>
+      <ul th:if="${testcaseId} == 'APLY1001015'">
+        <li id="message1">Thymeleafが提供している#numbers.setFormatPercentを利用して数値を以下に表示します。</li>
+        <li id="message2">
+          <span th:each="number, status : ${#numbers.setFormatPercent(valueUsingNumberFormatPercent,1,2)}" th:text="${status.last}? ${number} : |${number}, |" th:remove="tag"></span></li>
+      </ul>
     </div>
   </div>
 </body>

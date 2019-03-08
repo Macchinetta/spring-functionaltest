@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1>Revoke Token Result</h1>
+      <p id="result" th:text="${result}"></p>
+    </div>
+  </div>
+</body>
+</html>

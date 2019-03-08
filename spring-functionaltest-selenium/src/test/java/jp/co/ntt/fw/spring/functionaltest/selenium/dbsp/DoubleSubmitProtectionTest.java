@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,15 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dbsp;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -33,16 +33,18 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.web.client.RestTemplate;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
 public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
@@ -70,7 +72,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>PRGパターンが正常に適用できていることを確認する。
+     * <li>PRGパターンが正常に適用できていることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -112,7 +114,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>完了画面でブラウザのリロード機能を実行しても、更新処理が再実行されないことを確認する。
+     * <li>完了画面でブラウザのリロード機能を実行しても、更新処理が再実行されないことを確認する。</li>
      * </ul>
      **/
     @Test
@@ -160,7 +162,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>トランザクショントークンチェックを実装し、正規の画面遷移が実行できることを確認する。
+     * <li>トランザクショントークンチェックを実装し、正規の画面遷移が実行できることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -210,7 +212,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>トランザクショントークンチェックを実装することで、不正な画面遷移を防止できることを確認する。
+     * <li>トランザクショントークンチェックを実装することで、不正な画面遷移を防止できることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -223,7 +225,13 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "fourthView"));
 
-        webDriverOperations.getWebDriver().navigate().back();
+        // back()処理が終了せずテストが進行不可になるため、例外処理を用いて継続させる。
+        try {
+            webDriverOperations.back();
+        } catch (TimeoutException e) {
+            logger.info("navigation back wait");
+        }
+
         // エラーの確認
         {
             // エラー画面表示まで待機
@@ -237,7 +245,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>トランザクショントークンチェックを実装することで、正規の画面遷移を伴わない不正なリクエストによってデータが更新できないことを確認する。
+     * <li>トランザクショントークンチェックを実装することで、正規の画面遷移を伴わない不正なリクエストによってデータが更新できないことを確認する。</li>
      * </ul>
      **/
     @Test
@@ -257,7 +265,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ブラウザの再読み込みを行い、二重送信を試みる。トランザクショントークンエラーになることを確認する。
+     * <li>ブラウザの再読み込みを行い、二重送信を試みる。トランザクショントークンエラーになることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -285,7 +293,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>クライアントへ画面を返却しない処理を含むユースケースにおいて、トランザクショントークンチェックを実装しても正常に画面遷移が行えることを確認する。
+     * <li>クライアントへ画面を返却しない処理を含むユースケースにおいて、トランザクショントークンチェックを実装しても正常に画面遷移が行えることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -312,7 +320,84 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li><sec:cache-control />の設定を除外することで、トランザクショントークンエラー画面が表示できることを確認する。
+     * <li>トランザクショントークンチェックを実装し、正規の画面遷移が実行できることを確認する。</li>
+     * <li>(th:actionの値を指定しない)</li>
+     * </ul>
+     **/
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testDBSP0301006() throws IOException {
+        /** トランザクショントークンタグのvalue値 */
+        String valueText = null;
+        /** 生成されたTokenKey */
+        String tokenKey = null;
+        /** 生成されたTokenValue */
+        String tokenValue = null;
+        String[] buttonNames = { "dbsp0301006", "second", "third", "fourth",
+                "fifth" };
+        String[] screenTitles = { "firstView", "secondView", "thirdView",
+                "fourthView", "fifthView" };
+        for (int i = 0; i < 5; i++) {
+            if (i >= 2) {
+                // 第二画面から第四画面ではトランザクショントークンを確認する。
+                // トランザクショントークンの確認
+                valueText = (String) webDriverOperations.getJavascriptExecutor()
+                        .executeScript(
+                                "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                assertNotNull(valueText);
+                if (i == 2) {
+                    // 第二画面の場合はTokenKey,TokenValueの存在とNameSpaceの値を確認する。
+                    assertThat(getNameSpace(valueText), is("create"));
+                    tokenKey = getTokenKey(valueText);
+                    assertNotNull(tokenKey);
+                    tokenValue = getTokenValue(valueText);
+                    assertNotNull(tokenValue);
+                } else {
+                    // 第三、第四画面では、前の画面のTokenKeyが引き継がれていること、TokenValueが変更されていることも確認する。
+                    checkToken(valueText, "create", tokenKey, tokenValue);
+                    tokenKey = getTokenKey(valueText);
+                    tokenValue = getTokenValue(valueText);
+                }
+            }
+            // 次の画面へ遷移
+            webDriverOperations.click(id(buttonNames[i]));
+            // 各画面へ遷移したことをチェック
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    screenTitles[i] + "(th:actionの値を指定しない)"));
+        }
+        // 第5画面の場合はトランザクショントークンがないことを確認
+        assertNull(webDriverOperations.getJavascriptExecutor().executeScript(
+                "return document.getElementsByName('_TRANSACTION_TOKEN')[0];"));
+    }
+
+    /**
+     * <ul>
+     * <li>トランザクショントークンチェックを伴うAjax処理を行い、正常に画面遷移が完了することを確認する。</li>
+     * </ul>
+     **/
+    @Test
+    public void testDBSP0301007() throws IOException {
+
+        webDriverOperations.click(id("dbsp0301007"));
+        webDriverOperations.click(id("second"));
+
+        // 第二画面でトランザクショントークンチェックを伴うAjax処理が実行されることを確認する。
+        webDriverOperations.click(id("ajaxButton"));
+        // Ajax処理が完了するまで待機
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .invisibilityOfElementWithText(id("outputData"), ""));
+        assertThat(webDriverOperations.getText(id("outputData")), is(
+                "Taro Yamada"));
+
+        webDriverOperations.click(id("third"));
+        // 第三画面に遷移したことをチェック
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "thirdView"));
+    }
+
+    /**
+     * <ul>
+     * <li><sec:cache-control />の設定を除外することで、トランザクショントークンエラー画面が表示できることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -325,7 +410,13 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "fourthView"));
 
-        webDriverOperations.getWebDriver().navigate().back();
+        // back()処理が正常に終了しないため、例外処理を用いてテストを継続する。
+        try {
+            webDriverOperations.back();
+        } catch (TimeoutException e) {
+            logger.info("navigation back wait");
+        }
+
         // 第三画面に遷移したことをチェック
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "thirdView"));
@@ -346,7 +437,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>NameSpaceが設定されていない時はグローバルトークン用のNameSpaceが自動で設定されていることを確認する。
+     * <li>NameSpaceが設定されていない時はグローバルトークン用のNameSpaceが自動で設定されていることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -395,7 +486,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>トランザクショントークンを削除する際は、実行された日時が最も古いものから順に削除することを確認する。
+     * <li>トランザクショントークンを削除する際は、実行された日時が最も古いものから順に削除することを確認する。</li>
      * </ul>
      **/
     @Test
@@ -443,7 +534,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>NameSpaceごとに保持できるトランザクショントークンの上限数が設定できることを確認する。
+     * <li>NameSpaceごとに保持できるトランザクショントークンの上限数が設定できることを確認する。</li>
      * </ul>
      **/
     @Test
@@ -480,11 +571,13 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>NameSpaceを設けることで、並行して操作できることを確認する。
+     * <li>NameSpaceを設けることで、並行して操作できることを確認する。</li>
+     * <li>NameSpaceを設けた場合、1つのコントローラで複数ユースケースのトランザクショントークンチェックができることを確認する。</li>
      * </ul>
      **/
     @Test
     public void testDBSP0303004() throws IOException {
+        String[] valueTexts = new String[2];
         WebDriverOperations[] browsers = new WebDriverOperations[2];
         browsers[0] = webDriverOperations;
         // 同一セッションで新しいブラウザを立ち上げる
@@ -495,9 +588,9 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         String[] screenTitles = { "secondView", "thirdView", "fourthView",
                 "fifthView" };
 
-        // Namespaceは未設定のため、globalToken
+        // NameSpaceは未設定のため、globalToken
         browsers[0].click(id("dbsp0303003"));
-        // Namespaceはcreate
+        // NameSpaceはcreate
         browsers[1].click(id("dbsp0303004"));
         for (WebDriverOperations browser : browsers) {
             assertThat(browser.getText(id("screenTitle")), is("firstView"));
@@ -508,6 +601,18 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
                 browsers[j].click(id(buttonNames[i]));
                 assertThat(browsers[j].getText(id("screenTitle")), is(
                         screenTitles[i]));
+                // トランザクショントークンを保持する第二、第三、第四画面にて、トークンのNameSpace情報を取得する。
+                if (i < 3) {
+                    valueTexts[j] = (String) browsers[j].getJavascriptExecutor()
+                            .executeScript(
+                                    "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                }
+            }
+
+            if (i < 3) {
+                // 2つのブラウザにおけるトランザクショントークンのNameSpaceが異なることを確認
+                assertThat(getNameSpace(valueTexts[0]), is("globalToken"));
+                assertThat(getNameSpace(valueTexts[1]), is("create"));
             }
         }
     }

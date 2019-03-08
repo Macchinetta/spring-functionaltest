@@ -14,9 +14,7 @@
   </sec:http>
 
   <sec:authentication-manager id="userLoginManager">
-    <sec:authentication-provider user-service-ref="vldtUserDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="vldtUserDetailsService" />
   </sec:authentication-manager>
 
   <bean id="vldtUserDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">

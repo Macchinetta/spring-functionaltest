@@ -10,7 +10,7 @@
   <!-- テストデータを操作するためのWEB APIは認証・認可の対象外とする -->
   <sec:http pattern="/**/testdata/*" security="none" />
 
-  <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+  <bean id="noOpPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
 
   <!-- ATHR0401002 Protection -->
   <!-- ATHR0401002 Protection -->
@@ -90,8 +90,11 @@
   <!-- ATHN18 Protection -->
   <import resource="classpath:META-INF/spring/athn/spring-security-athn18.xml" />
 
+  <!-- ATHN18 Protection -->
+  <import resource="classpath:META-INF/spring/athn/spring-security-athn19.xml" />
+
   <!-- ATHN21 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn21.xml" />
+  <import resource="classpath:META-INF/spring/athn/spring-security-athn22.xml" />
 
   <!-- ATHN Protection -->
   <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
@@ -158,7 +161,7 @@
 
   <import resource="classpath:META-INF/spring/oth2/spring-security-oth2.xml" />
 
-  <!-- DBSP Protection --> 
+  <!-- DBSP Protection -->
   <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
 
   <!-- All setting -->

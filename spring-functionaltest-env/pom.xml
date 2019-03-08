@@ -6,7 +6,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.1.RELEASE</version>
+    <version>1.6.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Environment Layer</name>
@@ -69,19 +69,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-install-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>install-itextAsian</id>
-            <phase>install</phase>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-            <configuration>
-              <file>${basedir}/3rdparty/com/lowagie/iTextAsian/${iTextAsian.version}/iTextAsian-${iTextAsian.version}.jar</file>
-              <pomFile>${basedir}/3rdparty/com/lowagie/iTextAsian/${iTextAsian.version}/iTextAsian-${iTextAsian.version}.pom</pomFile>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>

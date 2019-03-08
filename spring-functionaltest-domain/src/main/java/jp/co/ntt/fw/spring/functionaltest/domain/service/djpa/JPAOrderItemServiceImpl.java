@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -52,14 +52,15 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     @Override
     public JPAOrderItem getOrderItemDetail(Integer orderId,
             Integer itemNumber) {
-        return jpaOrderItemRepository.findOne(itemNumber);
+        return jpaOrderItemRepository.findById(itemNumber).orElse(null);
     }
 
     @Override
     @Transactional(value = "jpaTransactionManager")
     public JPAOrderItem updateOrderItem(Integer orderItemId,
             Integer newQuantity) {
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findOne(orderItemId);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(orderItemId)
+                .orElse(null);
         jpaOrderItem.setQuantity(newQuantity);
         return jpaOrderItem;
     }
@@ -69,12 +70,13 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     public JPAOrderItem updateUsingQueryMethod(Integer orderId) {
         // getting the item#1 from the given orderId under entityManager
         Integer itemNum = 1;
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findOne(itemNum);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum)
+                .orElse(null);
 
         jpaOrderItemRepository.updateByQueryNoClear(orderId);
 
         // Once again getting the same item#1 from the given orderId to check the state
-        jpaOrderItem = jpaOrderItemRepository.findOne(itemNum);
+        jpaOrderItem = jpaOrderItemRepository.findById(itemNum).orElse(null);
         return jpaOrderItem;
     }
 
@@ -90,13 +92,14 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     public JPAOrderItem updateUsingQueryMethodAndClear(Integer orderId) {
         // getting the item#1 from the given orderId under entityManager
         Integer itemNum = 1;
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findOne(itemNum);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum)
+                .orElse(null);
 
         jpaOrderItemRepository.updateByQueryWithClear(orderId);
 
         // Once again getting the same item#1 from the given orderId to check
         // the state
-        jpaOrderItem = jpaOrderItemRepository.findOne(itemNum);
+        jpaOrderItem = jpaOrderItemRepository.findById(itemNum).orElse(null);
         return jpaOrderItem;
     }
 
@@ -117,7 +120,7 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
 
         JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getOne(orderItemId);
 
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
 
         jpaOrderItemRepository.delete(jpaOrderItem);
     }

@@ -130,7 +130,7 @@
     <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
   </bean>
 
-  <bean id="notAsciiValidator" primary="true"
+  <bean id="notAsciiValidator"
     class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
     <property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
     <property name="validationMessageSource">

@@ -30,9 +30,7 @@
   </sec:http>
 
   <sec:authentication-manager id="loginForRoleHierarchyManager">
-    <sec:authentication-provider user-service-ref="loginForRoleHierarchyDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForRoleHierarchyDetailsService" />
   </sec:authentication-manager>
 
   <bean id="loginForRoleHierarchyDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
@@ -53,9 +51,7 @@
   </sec:http>
 
   <sec:authentication-manager id="loginForJspRoleHierarchyManager">
-    <sec:authentication-provider user-service-ref="loginForJspRoleHierarchyDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForJspRoleHierarchyDetailsService" />
   </sec:authentication-manager>
 
   <bean id="loginForJspRoleHierarchyDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
@@ -86,9 +82,7 @@
   </sec:http>
 
   <sec:authentication-manager id="loginForMethodRoleHierarchyManager">
-    <sec:authentication-provider user-service-ref="loginForMethodRoleHierarchyDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForMethodRoleHierarchyDetailsService" />
   </sec:authentication-manager>
 
   <bean id="loginForMethodRoleHierarchyDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">

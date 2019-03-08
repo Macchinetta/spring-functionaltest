@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+<meta name="_TRANSACTION_TOKEN_INFO"
+  th:content="${#request.getAttribute('org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor.NEXT_TOKEN').getTokenString()}" />
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="screenTitle">secondView</h1>
+      <div>
+        <button id="ajaxButton" onclick="return ajaxTest()">Ajax通信テスト</button>
+        <br> outputData<span id="outputData"></span>
+      </div>
+      <form th:action="@{/dbsp/0301/007}" method="post">
+        <input type="submit" id="third" name="third" value="third" />
+      </form>
+    </div>
+  </div>
+</body>
+</html>

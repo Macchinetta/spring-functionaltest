@@ -13,6 +13,8 @@
             href="${pageContext.request.contextPath}/dam3mb3/">[DAM3]
                 データベースアクセス（Mybatis3編：追加）</a></li> --%>
 
+    <li><a id="dntaLink" href="${pageContext.request.contextPath}/dnta">[DNTA]
+        日付操作(Date and Time API)機能テスト</a></li>
     <li><a id="dtacLink" href="${pageContext.request.contextPath}/dtac">[DTAC]
         データベースアクセス（共通編）</a></li>
     <li><a id="dtopLink" href="${pageContext.request.contextPath}/dtop/">[DTOP]
@@ -73,6 +75,8 @@
         OAuth2テスト</a></li>
     <li><a id="dbspLink" href="${pageContext.request.contextPath}/dbsp/">[DBSP]
         二重送信防止テスト</a></li>
+    <li><a id="cdlsLink" href="${pageContext.request.contextPath}/cdls/">[CDLS]
+        コードリストテスト</a></li>
   </ul>
 
 </div>

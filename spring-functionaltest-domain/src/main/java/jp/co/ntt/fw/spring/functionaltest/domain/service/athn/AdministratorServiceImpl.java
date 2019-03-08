@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
@@ -51,15 +51,93 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
-    public void createUsingShaEncode(Administrator administrator) {
+    public void createUsingPbkdf2Encode(Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.athn.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodePbkdf2(administrator.getPassword()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
+    public void createUsingSCryptEncode(Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.athn.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeSCrypt(administrator.getPassword()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
+    public void createUsingDelegatingEncode(Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.athn.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeDelegating(administrator.getPassword()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
+    public void createUsingCustomPbkdf2Encode(Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.athn.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeCustomPbkdf2(administrator.getPassword()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
+    public void createUsingMessageDigestEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
             throw new BusinessException(ResultMessages.danger().add(
                     "e.sf.pshs.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService.passwordEncodeSha(
-                administrator.getPassword(), administrator.getUsername()));
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeMessageDigest(administrator.getPassword(),
+                        administrator.getUsername()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
+    public void createUsingDelegatingMessageDigestEncode(
+            Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.pshs.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeMessageDigestDelegating(administrator
+                        .getPassword(), administrator.getUsername()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);

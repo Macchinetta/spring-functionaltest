@@ -2,7 +2,7 @@
 
   <h1 id="screenTitle">ログインフォーム(loginForRememberMe)</h1>
 
-  <form:form action="${pageContext.request.contextPath}/athn/2101/authenticate" method="post">
+  <form:form action="${pageContext.request.contextPath}/athn/2201/authenticate" method="post">
     <c:if test="${param.containsKey('error')}">
       <span id="accountLoginError"> <t:messagesPanel
           messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" panelClassName="alert alert-danger" />
@@ -42,7 +42,7 @@
     </fieldset>
   </form:form>
   <br>
-  <form:form action="${pageContext.request.contextPath}/athn/2101/logout" method="post">
+  <form:form action="${pageContext.request.contextPath}/athn/2201/logout" method="post">
     <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 

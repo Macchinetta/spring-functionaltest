@@ -72,10 +72,10 @@
 
   <div>[VLDT07] OSコマンドインジェクション</div>
   <ul>
-    <li><a id="vldt0701001" href="${pageContext.request.contextPath}/vldt/07">vldt0701001</a></li>
-    <li><a id="vldt0701002" href="${pageContext.request.contextPath}/vldt/07">vldt0701002</a></li>
-    <li><a id="vldt0702001" href="${pageContext.request.contextPath}/vldt/07">vldt0702001</a></li>
-    <li><a id="vldt0702002" href="${pageContext.request.contextPath}/vldt/07">vldt0702002</a></li>
+    <li><a id="vldt0701001" href="${pageContext.request.contextPath}/vldt/0701/001">vldt0701001</a></li>
+    <li><a id="vldt0701002" href="${pageContext.request.contextPath}/vldt/0701/001">vldt0701002</a></li>
+    <li><a id="vldt0702001" href="${pageContext.request.contextPath}/vldt/0701/001">vldt0702001</a></li>
+    <li><a id="vldt0702002" href="${pageContext.request.contextPath}/vldt/0701/001">vldt0702002</a></li>
   </ul>
 
   <div>[VLDT08] 共通ライブラリが用意する入力チェックルール</div>

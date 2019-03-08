@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">特定のコード値からコード名を表示する</h1>
+
+      <div>CDLS0106001</div>
+      <div id="cdls0106001"
+        th:text="${orderStatusForm.id} != null ? ${CL_ORDERSTATUS['__${orderStatusForm.id}__']}">
+      </div>
+    </div>
+  </div>
+</body>
+</html>

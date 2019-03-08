@@ -8,13 +8,7 @@
     <div id="wrapper">
       <h3 id="screenTitle">社員情報編集画面</h3>
 
-      <div th:if="${resultMessages} != null" class="alert"
-        th:classappend="|alert-${resultMessages.type}|">
-        <ul>
-          <li th:each="message : ${resultMessages}"
-            th:text="${#messages.msgWithParams(message.code, message.args)}"></li>
-        </ul>
-      </div>
+      <div th:replace="~{common/fragments :: messagesPanel}"></div>
 
       <form th:action="@{/exhn/{testNumber}(testNumber=${testNumber})}" class="form-horizontal"
         method="post" th:object="${employeeForm}">

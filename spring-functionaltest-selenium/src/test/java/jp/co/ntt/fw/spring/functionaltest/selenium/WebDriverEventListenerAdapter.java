@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -24,7 +24,8 @@ public abstract class WebDriverEventListenerAdapter implements
                                                     WebDriverEventListener {
 
     @Override
-    public void afterChangeValueOf(WebElement arg0, WebDriver arg1) {
+    public void afterChangeValueOf(WebElement arg0, WebDriver arg1,
+            CharSequence[] arg2) {
     }
 
     @Override
@@ -48,11 +49,16 @@ public abstract class WebDriverEventListenerAdapter implements
     }
 
     @Override
+    public void afterNavigateRefresh(WebDriver arg0) {
+    }
+
+    @Override
     public void afterScript(String arg0, WebDriver arg1) {
     }
 
     @Override
-    public void beforeChangeValueOf(WebElement arg0, WebDriver arg1) {
+    public void beforeChangeValueOf(WebElement arg0, WebDriver arg1,
+            CharSequence[] arg2) {
     }
 
     @Override
@@ -73,6 +79,10 @@ public abstract class WebDriverEventListenerAdapter implements
 
     @Override
     public void beforeNavigateTo(String arg0, WebDriver arg1) {
+    }
+
+    @Override
+    public void beforeNavigateRefresh(WebDriver arg0) {
     }
 
     @Override

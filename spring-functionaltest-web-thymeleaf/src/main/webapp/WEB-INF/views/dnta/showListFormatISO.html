@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <ul>
+        <li th:each="listDate : ${#temporals.listFormatISO(resultDate)}">
+          DateISOFormat:<span th:id="${#ids.seq('getDateISO')}" th:text="${listDate}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

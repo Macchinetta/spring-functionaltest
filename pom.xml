@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.5.1.RELEASE</version>
+  <version>1.6.0.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -18,20 +18,24 @@
     <module>spring-functionaltest-web-oauth2-memory</module>
     <module>spring-functionaltest-web-oauth2-remote</module>
     <module>spring-functionaltest-web-thymeleaf</module>
+    <module>spring-functionaltest-web-oauth2-component-thymeleaf</module>
+    <module>spring-functionaltest-web-oauth2-db-thymeleaf</module>
+    <module>spring-functionaltest-web-oauth2-memory-thymeleaf</module>
+    <module>spring-functionaltest-web-oauth2-remote-thymeleaf</module>
     <module>spring-functionaltest-initdb</module>
     <module>spring-functionaltest-selenium</module>
   </modules>
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.4.1.RELEASE</version>
+    <version>5.5.0.RC7</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>https://Macchinetta.github.io</url>
-  <inceptionYear>2017</inceptionYear>
+  <url>http://terasoluna.org</url>
+  <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -41,7 +45,7 @@
   </licenses>
   <organization>
     <name>Macchinetta Framework Team</name>
-    <url>http://Macchinetta.github.io</url>
+    <url>https://macchinetta.github.io/</url>
   </organization>
   <repositories>
     <repository>
@@ -389,6 +393,26 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>spring-functionaltest-web-oauth2-component-thymeleaf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>spring-functionaltest-web-oauth2-db-thymeleaf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>spring-functionaltest-web-oauth2-remote-thymeleaf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>spring-functionaltest-web-oauth2-memory-thymeleaf</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>spring-functionaltest-env</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -434,52 +458,10 @@
       </dependency>
       <!-- == End REST-assured == -->
 
-      <!-- == Begin itext == -->
-      <dependency>
-        <groupId>com.lowagie</groupId>
-        <artifactId>iTextAsian</artifactId>
-        <version>${iTextAsian.version}</version>
-      </dependency>
-      <!-- == End itext == -->
-
-      <!-- == Begin JasperReports == -->
-      <dependency>
-        <groupId>net.sf.jasperreports</groupId>
-        <artifactId>jasperreports</artifactId>
-        <version>${net.sf.jasperreports.jasperreports.version}</version>
-        <exclusions>
-          <exclusion>
-            <artifactId>xml-apis</artifactId>
-            <groupId>xml-apis</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>castor</artifactId>
-            <groupId>org.codehaus.castor</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>jfreechart</artifactId>
-            <groupId>jfree</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>jcommon</artifactId>
-            <groupId>jfree</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>jackson-core</artifactId>
-            <groupId>com.fasterxml.jackson.core</groupId>
-          </exclusion>
-          <exclusion>
-            <artifactId>jackson-databind</artifactId>
-            <groupId>com.fasterxml.jackson.core</groupId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <!-- == End JasperReports == -->
-
       <!-- == Begin Bouncy Castle == -->
       <dependency>
         <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk14</artifactId>
+        <artifactId>bcprov-jdk15on</artifactId>
         <version>${bouncycastle.version}</version>
       </dependency>
       <!-- == End Bouncy Castle == -->
@@ -533,6 +515,11 @@
       </dependency>
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-edge-driver</artifactId>
+        <version>${selenium.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-remote-driver</artifactId>
         <version>${selenium.version}</version>
       </dependency>
@@ -543,8 +530,18 @@
       </dependency>
       <dependency>
         <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-opera-driver</artifactId>
+        <version>${selenium.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
         <artifactId>selenium-support</artifactId>
         <version>${selenium.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.bonigarcia</groupId>
+        <artifactId>webdrivermanager</artifactId>
+        <version>${webdrivermanager.version}</version>
       </dependency>
       <!-- == End Test == -->
 
@@ -612,34 +609,6 @@
       </dependency>
       <!-- == End Jetty Proxy Server == -->
 
-      <!-- == Begin Thymeleaf == -->
-      <dependency>
-        <groupId>org.thymeleaf</groupId>
-        <artifactId>thymeleaf</artifactId>
-        <version>${thymeleaf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.thymeleaf</groupId>
-        <artifactId>thymeleaf-spring4</artifactId>
-        <version>${thymeleaf.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.thymeleaf.extras</groupId>
-        <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-        <version>${thymeleaf-extras-springsecurity4.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.thymeleaf.extras</groupId>
-        <artifactId>thymeleaf-extras-java8time</artifactId>
-        <version>${thymeleaf-extras-java8time.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>nz.net.ultraq.thymeleaf</groupId>
-        <artifactId>thymeleaf-joda-dialect</artifactId>
-        <version>${thymeleaf-joda-dialect.version}</version>
-      </dependency>
-      <!-- == End Thymeleaf == -->
-
     </dependencies>
   </dependencyManagement>
   <properties>
@@ -671,22 +640,17 @@
     <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
     <org.codehaus.mojo.version>2.5</org.codehaus.mojo.version>
     <org.springframework.build.aws.version>3.0.0.RELEASE</org.springframework.build.aws.version>
-    <postgresql.version>9.4.1212.jre7</postgresql.version>
+    <postgresql.version>42.2.4</postgresql.version>
     <ojdbc7.version>12.1.0.2</ojdbc7.version>
     <db2jcc4.version>4.21.29</db2jcc4.version>
-    <iTextAsian.version>1.0</iTextAsian.version>
-    <selenium.version>2.46.0</selenium.version>
+    <selenium.version>3.0.1</selenium.version>
+    <webdrivermanager.version>1.6.2</webdrivermanager.version>
     <com.github.detro.ghostdriver.version>1.0.4</com.github.detro.ghostdriver.version>
-    <net.sf.jasperreports.jasperreports.version>5.2.0</net.sf.jasperreports.jasperreports.version>
     <com.jayway.restassured.version>2.7.0</com.jayway.restassured.version>
     <greenmail-spring.version>1.4.1</greenmail-spring.version>
     <cxf-rt.version>3.1.4</cxf-rt.version>
-    <bouncycastle.version>1.38</bouncycastle.version>
+    <bouncycastle.version>1.59</bouncycastle.version>
     <jetty.version>9.2.14.v20151106</jetty.version>
-    <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
-    <thymeleaf-extras-springsecurity4.version>3.0.2.RELEASE</thymeleaf-extras-springsecurity4.version>
-    <thymeleaf-extras-java8time.version>3.0.0.RELEASE</thymeleaf-extras-java8time.version>
-    <thymeleaf-joda-dialect.version>2.0.0</thymeleaf-joda-dialect.version>
     <!-- == Project Properties == -->
     <project.env.main.directory>src/main</project.env.main.directory>
     <project.env.target.name>spring-functionaltest-env</project.env.target.name>
@@ -719,6 +683,11 @@
         <dependency>
           <groupId>org.apache.activemq</groupId>
           <artifactId>activemq-broker</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.jms</groupId>
+          <artifactId>javax.jms-api</artifactId>
           <scope>provided</scope>
         </dependency>
       </dependencies>
@@ -772,6 +741,10 @@
                     <dependency>
                       <groupId>org.apache.activemq</groupId>
                       <artifactId>activemq-openwire-legacy</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>javax.jms</groupId>
+                      <artifactId>javax.jms-api</artifactId>
                     </dependency>
                   </dependencies>
                 </container>
@@ -843,6 +816,20 @@
       <properties>
         <project.env.main.directory>configs/tomcat85-oracle</project.env.main.directory>
         <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat85-oracle</project.env.buildFinalName>
+      </properties>
+    </profile>
+    <profile>
+      <id>tomcat9-postgresql</id>
+      <properties>
+        <project.env.main.directory>configs/tomcat9-postgresql</project.env.main.directory>
+        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat9-postgresql</project.env.buildFinalName>
+      </properties>
+    </profile>
+    <profile>
+      <id>tomcat9-oracle</id>
+      <properties>
+        <project.env.main.directory>configs/tomcat9-oracle</project.env.main.directory>
+        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat9-oracle</project.env.buildFinalName>
       </properties>
     </profile>
     <profile>

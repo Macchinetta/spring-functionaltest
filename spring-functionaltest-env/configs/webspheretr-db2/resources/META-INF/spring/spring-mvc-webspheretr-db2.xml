@@ -9,9 +9,9 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <!-- DB2用のbeanを優先してインジェクションする -->
-  <bean id="stockPessimisticLockServiceImplForDB2" primary="true"
+  <bean id="stockPessimisticLockServiceImplForDB2"
     class="jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockPessimisticLockServiceImplForDB2" />
-  <bean id="jpaStockPessimisticLockServiceImplForDB2" primary="true"
+  <bean id="jpaStockPessimisticLockServiceImplForDB2"
     class="jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockPessimisticLockServiceImplForDB2" />
 
 </beans>

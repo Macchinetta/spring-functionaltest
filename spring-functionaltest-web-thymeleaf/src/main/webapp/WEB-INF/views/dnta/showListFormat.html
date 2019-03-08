@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <ul>
+        <li th:each="listDate : ${#temporals.listFormat(resultDate)}">
+          listFormat:<span th:id="${#ids.seq('getDate')}" th:text="${listDate}"></span>
+        </li>
+        <li th:each="listDateLocale : ${#temporals.listFormat(resultDate, 'G uuuu/MM/dd E')}">
+          listFormatWithFormatter:<span th:id="${#ids.seq('getDateFormat')}" th:text="${listDateLocale}"></span>
+        </li>
+        <li th:each="listDate : ${#temporals.listFormat(resultDate, locale)}">
+          listFormatWithLocale:<span th:id="${#ids.seq('getDateLocale')}" th:text="${listDate}"></span>
+        </li>
+        <li th:each="listDateLocale : ${#temporals.listFormat(resultDate, 'G uuuu/MM/dd E', locale)}">
+          listFormatWithFormatterAndLocale:<span th:id="${#ids.seq('getDateFormatLocale')}" th:text="${listDateLocale}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

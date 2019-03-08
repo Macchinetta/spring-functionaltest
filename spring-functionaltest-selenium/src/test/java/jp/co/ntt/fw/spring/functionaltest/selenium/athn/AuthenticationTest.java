@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.athn;
 
@@ -269,6 +269,186 @@ public class AuthenticationTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>AuthenticationManagerにPasswordEncoderを明示的に設定する。</li>
+     * <li>DBに格納した情報で正常に認証されることを確認する。</li>
+     * <li>DBに格納した情報で正常に認証されないことを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0402001() throws IOException {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402001"));
+
+        // ログイン画面の確認
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ログインフォーム（DbFormAuthentication with PasswordEncoder specified）"));
+
+        // 入力条件設定（認証成功）
+        webDriverOperations.overrideText(id("username"), "Smith");
+        webDriverOperations.overrideText(id("password"), "spring1234");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証後のユーザ情報の確認
+        assertThat(webDriverOperations.getText(id("username")), is("Smith"));
+
+        // パスの確認（認証成功）
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/001?loginSuccess"));
+
+        // ログアウトボタン押下
+        webDriverOperations.click(id("logout"));
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402001"));
+
+        // 入力条件設定（認証失敗）
+        webDriverOperations.overrideText(id("username"), "Smith");
+        webDriverOperations.overrideText(id("password"), "spring");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証失敗後のデフォルトメッセージの確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // パスの確認
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/001/login?error"));
+
+        // 機能毎のトップページを表示
+        webDriverOperations.displayPage(getPackageRootUrl());
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402001"));
+
+        // 入力条件設定（認証失敗）
+        webDriverOperations.overrideText(id("username"), "America");
+        webDriverOperations.overrideText(id("password"), "spring");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証失敗後のデフォルトメッセージの確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // パスの確認
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/001/login?error"));
+
+        // 機能毎のトップページを表示
+        webDriverOperations.displayPage(getPackageRootUrl());
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>AuthenticationManagerにハッシュ化アルゴリズムを明示的に設定する。</li>
+     * <li>DBに格納した情報で正常に認証されることを確認する。</li>
+     * <li>DBに格納した情報で正常に認証されないことを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0402004() throws IOException {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402004"));
+
+        // ログイン画面の確認
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ログインフォーム（DbFormAuthentication with hash type specified）"));
+
+        // 入力条件設定（認証成功）
+        webDriverOperations.overrideText(id("username"), "Smith");
+        webDriverOperations.overrideText(id("password"), "spring1234");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証後のユーザ情報の確認
+        assertThat(webDriverOperations.getText(id("username")), is("Smith"));
+
+        // パスの確認（認証成功）
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/004?loginSuccess"));
+
+        // ログアウトボタン押下
+        webDriverOperations.click(id("logout"));
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402004"));
+
+        // 入力条件設定（認証失敗）
+        webDriverOperations.overrideText(id("username"), "Smith");
+        webDriverOperations.overrideText(id("password"), "spring");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証失敗後のデフォルトメッセージの確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // パスの確認
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/004/login?error"));
+
+        // 機能毎のトップページを表示
+        webDriverOperations.displayPage(getPackageRootUrl());
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0402004"));
+
+        // 入力条件設定（認証失敗）
+        webDriverOperations.overrideText(id("username"), "America");
+        webDriverOperations.overrideText(id("password"), "spring");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証失敗後のデフォルトメッセージの確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // パスの確認
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
+                + "/athn/0402/004/login?error"));
+
+        // 機能毎のトップページを表示
+        webDriverOperations.displayPage(getPackageRootUrl());
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+    }
+
+    /**
+     * <ul>
      * <li>パスワードをBCryptPasswordEncoderでハッシュ化できることを確認。</li>
      * </ul>
      */
@@ -302,7 +482,7 @@ public class AuthenticationTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testATHN0502001() {
+    public void testATHN0501002() {
 
         // テスト実行順不定の為、管理者登録処理から実施
         // メニュー画面の操作
@@ -336,7 +516,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("goAthnMenu"));
 
         // メニュー画面の操作
-        webDriverOperations.click(id("athn0502001"));
+        webDriverOperations.click(id("athn0501002"));
 
         // ログイン情報入力
 
@@ -358,7 +538,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
         // メニュー画面の操作
-        webDriverOperations.click(id("athn0502001"));
+        webDriverOperations.click(id("athn0501002"));
 
         // ログイン情報入力
         webDriverOperations.appendText(id("username"), "Adam");
@@ -368,6 +548,387 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 認証エラーとなることを確認
         assertThat(webDriverOperations.getText(id("loginError")), is(
                 "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パスワードをPbkdf2PasswordEncoderでハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501003() {
+
+        // メニュー画面の操作
+
+        webDriverOperations.click(id("athn0501003"));
+
+        // 管理者情報入力
+
+        webDriverOperations.appendText(id("username"), "Pola");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("create"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Pola"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+    }
+
+    /**
+     * <ul>
+     * <li>Pbkdf2PasswordEncoderでハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501004() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn0501003"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Pole");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Pole"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501004"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Pole");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Pole"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("password"))).matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501004"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Pole");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パスワードをSCryptPasswordEncoderでハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501005() {
+
+        // メニュー画面の操作
+
+        webDriverOperations.click(id("athn0501005"));
+
+        // 管理者情報入力
+
+        webDriverOperations.appendText(id("username"), "Susan");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("create"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Susan"));
+        // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id(
+                        "getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+    }
+
+    /**
+     * <ul>
+     * <li>SCryptPasswordEncoderでハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501006() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn0501005"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Steven");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Steven"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id(
+                        "getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501006"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Steven");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Steven"));
+        // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password")))
+                .matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501006"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Steven");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パスワードをDelegatingPasswordEncoder（Pbkdf2PasswordEncoderに委譲）でハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0502001() {
+
+        // メニュー画面の操作
+
+        webDriverOperations.click(id("athn0502001"));
+
+        // 管理者情報入力
+
+        webDriverOperations.appendText(id("username"), "Jack");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("create"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Jack"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+    }
+
+    /**
+     * <ul>
+     * <li>DelegatingPasswordEncoder（Pbkdf2PasswordEnxoderに委譲）でハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0502002() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn0502001"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Ann");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Ann"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0502002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Ann");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Ann"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("password"))).matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0502002"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Ann");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>BCryptアルゴリズムでハッシュ化したパスワードをDelegatingPasswordEncoderで認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0502003() {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0502002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Tom");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Tom"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\{bcrypt\\}\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}").matcher(
+                        webDriverOperations.getText(id("password"))).matches());
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>SCryptアルゴリズムでハッシュ化したパスワードをDelegatingPasswordEncoderで認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0502004() {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0502002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Dave");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Dave"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\{scrypt\\}\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password")))
+                .matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1061,15 +1622,185 @@ public class AuthenticationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>パスワードをShaPasswordEncoderでハッシュ化できることを確認。</li>
+     * <li>パスワードをDelegatingPasswordEncoder（イテレーションカウントを変更したPbkdf2PasswordEncoderに委譲）でハッシュ化できることを確認。</li>
      * </ul>
      */
     @Test
     public void testATHN1801001() {
 
         // メニュー画面の操作
+
+        webDriverOperations.click(id("athn1801001"));
+
+        // 管理者情報入力
+
+        webDriverOperations.appendText(id("username"), "Carl");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("create"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Carl"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+    }
+
+    /**
+     * <ul>
+     * <li>イテレーションカウントを変更したPbkdf2PasswordEncoderでハッシュ化したパスワードをDelegatingPasswordEncoderで認証できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN1801002() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
         {
             webDriverOperations.click(id("athn1801001"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Samson");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Samson"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncoderでエンコードされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("getAfterEncodePassword")))
+                .matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn1801002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Samson");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Samson"));
+        // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+                webDriverOperations.getText(id("password"))).matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn1801002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Samson");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>BCryptPasswordEncoderでハッシュ化したパスワードをDelegatingPasswordEncoderで認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN1801003() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn0501001"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Billy");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Billy"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
+                .matcher(webDriverOperations.getText(id(
+                        "getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn1801003"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Billy");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Billy"));
+        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
+                .matcher(webDriverOperations.getText(id("password")))
+                .matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パスワードをMessageDigestPasswordEncoderでハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN1901001() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn1901001"));
         }
 
         // 管理者情報入力
@@ -1083,9 +1814,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getAdministratorName")),
                     is("Shigeru"));
-            // ハッシュ化されたパスワードはShaPasswordEncodeされているか
+            // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
-                    .matches("[0-9a-f]{128}"));
+                    .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
             assertThat(webDriverOperations.getText(id(
                     "getBeforeEncodePassword")), is("spring1234"));
         }
@@ -1093,16 +1824,16 @@ public class AuthenticationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ShaPasswordEncoderでハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * <li>MessageDigestPasswordEncoderでハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
      * </ul>
      */
     @Test
-    public void testATHN1801002() {
+    public void testATHN1901002() {
 
         // テスト実行順不定の為、管理者登録処理から実施
         // メニュー画面の操作
         {
-            webDriverOperations.click(id("athn1801001"));
+            webDriverOperations.click(id("athn1901001"));
         }
 
         // 管理者情報入力
@@ -1120,9 +1851,9 @@ public class AuthenticationTest extends FunctionTestSupport {
             // DBの中身と一致することを確認する為、事前に取得
             encodePassword = webDriverOperations.getText(id(
                     "getAfterEncodePassword"));
-            // ハッシュ化されたパスワードはShaPasswordEncodeされているか
+            // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
-                    .matches("[0-9a-f]{128}"));
+                    .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
             assertThat(webDriverOperations.getText(id(
                     "getBeforeEncodePassword")), is("spring1234"));
         }
@@ -1132,7 +1863,7 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // メニュー画面の操作
         {
-            webDriverOperations.click(id("athn1801002"));
+            webDriverOperations.click(id("athn1901002"));
         }
 
         // ログイン情報入力
@@ -1146,9 +1877,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("username")), is(
                     "Akira"));
-            // ハッシュ化されたパスワードはShaPasswordEncodeされているか
+            // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("password")).matches(
-                    "[0-9a-f]{128}"));
+                    "\\{\\S{1,}\\}[0-9a-f]{128}"));
             // 表示されていたパスワードと一致すること
             assertThat(webDriverOperations.getText(id("password")), is(
                     encodePassword));
@@ -1158,6 +1889,139 @@ public class AuthenticationTest extends FunctionTestSupport {
         {
             webDriverOperations.click(id("logout"));
         }
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn1801002"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Akira");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>パスワードをDelegatingPasswordEncoder(MessageDigestPasswordEncoderに委譲)でハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN1901003() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn1901003"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Satoshi");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        {
+            assertThat(webDriverOperations.getText(id("getAdministratorName")),
+                    is("Satoshi"));
+            // ハッシュ化されたパスワードはShaPasswordEncodeされているか
+            assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
+                    .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBeforeEncodePassword")), is("spring1234"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>DelegatingPasswordEncoder(MessageDigestPasswordEncoderに委譲)でハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN1901004() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn1901003"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Megumi");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+        {
+            assertThat(webDriverOperations.getText(id("getAdministratorName")),
+                    is("Megumi"));
+            // DBの中身と一致することを確認する為、事前に取得
+            encodePassword = webDriverOperations.getText(id(
+                    "getAfterEncodePassword"));
+            // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
+            assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
+                    .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBeforeEncodePassword")), is("spring1234"));
+        }
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn1901004"));
+        }
+
+        // ログイン情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Megumi");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("login"));
+        }
+
+        // 管理者情報内容確認
+        {
+            assertThat(webDriverOperations.getText(id("username")), is(
+                    "Megumi"));
+            // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
+            assertTrue(webDriverOperations.getText(id("password")).matches(
+                    "\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
+            // 表示されていたパスワードと一致すること
+            assertThat(webDriverOperations.getText(id("password")), is(
+                    encodePassword));
+        }
+
+        // ログアウトしてセッションを削除
+        {
+            webDriverOperations.click(id("logout"));
+        }
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn1901004"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Megumi");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
     }
 
     /**
@@ -1166,10 +2030,10 @@ public class AuthenticationTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testATHN2101001() throws IOException {
+    public void testATHN2201001() throws IOException {
 
         // メニュー画面の操作
-        webDriverOperations.click(id("athn2101001"));
+        webDriverOperations.click(id("athn2201001"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1189,7 +2053,7 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("athnLink"));
 
-        webDriverOperations.click(id("athn2101001showInfo"));
+        webDriverOperations.click(id("athn2201001showInfo"));
 
         // RememberMe機能を使用しているので、ログインせずにログイン後の情報が見れることの確認
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
@@ -1205,10 +2069,10 @@ public class AuthenticationTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testATHN2101002() throws IOException {
+    public void testATHN2201002() throws IOException {
 
         // メニュー画面の操作
-        webDriverOperations.click(id("athn2101001"));
+        webDriverOperations.click(id("athn2201001"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1228,7 +2092,7 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("athnLink"));
 
-        webDriverOperations.click(id("athn2101001showInfo"));
+        webDriverOperations.click(id("athn2201001showInfo"));
 
         // RememberMe機能を使用していないので、ログインせずにログイン後の情報が見れないことの確認
         assertThat(webDriverOperations.getText(id("username")), is(""));
@@ -1237,4 +2101,5 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
     }
+
 }

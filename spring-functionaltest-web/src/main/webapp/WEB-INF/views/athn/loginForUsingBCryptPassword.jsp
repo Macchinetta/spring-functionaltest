@@ -7,7 +7,7 @@
       messagesAttributeName="SPRING_SECURITY_LAST_EXCEPTION" panelClassName="alert alert-danger" />
   </span>
 
-  <form:form action="${pageContext.request.contextPath}/athn/0502/001/authenticate"
+  <form:form action="${pageContext.request.contextPath}/athn/0501/002/authenticate"
     cssClass="form-horizontal" method="post">
     <legend>ログイン</legend>
     <div class="form-group">
@@ -28,7 +28,7 @@
       <input type="submit" id="login" class="btn btn-default" value="Login">
     </div>
   </form:form>
-  <form:form action="${pageContext.request.contextPath}/athn/0502/001/logout"
+  <form:form action="${pageContext.request.contextPath}/athn/0501/002/logout"
     cssClass="form-horizontal" method="post">
     <div class="form-group">
       <input type="submit" id="logout" class="btn btn-default" value="Logout">

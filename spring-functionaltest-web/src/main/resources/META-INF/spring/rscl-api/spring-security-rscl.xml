@@ -18,6 +18,7 @@
       <sec:user-service>
         <sec:user name="rscluser" password="password1234" authorities="ROLE_USER" />
       </sec:user-service>
+      <sec:password-encoder ref="noOpPasswordEncoder" />
     </sec:authentication-provider>
   </sec:authentication-manager>
 

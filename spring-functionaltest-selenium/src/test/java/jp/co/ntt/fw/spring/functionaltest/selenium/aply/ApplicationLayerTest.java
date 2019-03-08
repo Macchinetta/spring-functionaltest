@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,21 +9,22 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.aply;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
@@ -2577,7 +2578,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのユーティリティオブジェクトが提供している数値フォーマットを利用して数値を以下に表示します。"));
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "7,777"));
         }
@@ -2605,7 +2606,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのユーティリティオブジェクトが提供している数値フォーマットを利用して数値を以下に表示します。"));
+                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "3,333.55"));
         }
@@ -2633,7 +2634,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのユーティリティオブジェクトが提供している数値フォーマットを利用して数値を以下に表示します。"));
+                    "Thymeleafが提供している#numbers.formatPercentを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "34.50%"));
         }
@@ -2661,7 +2662,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのユーティリティオブジェクトが提供している日付フォーマットを利用して数値を以下に表示します。"));
+                    "Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "2013/12/09"));
         }
@@ -2689,9 +2690,694 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのユーティリティオブジェクトが提供している日付フォーマットを利用して数値を以下に表示します。"));
+                    "Thymeleafが提供している#calendars.formatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "2013/12/09"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatIntegerメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001007() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001007"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.arrayFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "1,111, 2,222, 3,333"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatIntegerメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001008() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001008"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.listFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "4,444, 5,555, 6,666"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatIntegerメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001009() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001009"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.setFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "7,777, 8,888, 9,999"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatDecimalメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001010() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001010"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.arrayFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "1,111.10, 2,222.20, 3,333.30"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatDecimalメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001011() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001011"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.listFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "4,444.40, 5,555.50, 6,666.60"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatDecimalメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001012() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001012"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.setFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "7,777.70, 8,888.80, 9,999.90"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatPercentメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001013() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001013"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.arrayFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "11.10%, 22.20%, 33.30%"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatPercentメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001014() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001014"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.listFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "44.40%, 55.50%, 66.60%"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatPercentメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001015() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001015"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.setFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "77.70%, 88.80%, 99.90%"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>千の位の区切り文字　"." POINT</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001016() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001016"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "7.777"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>千の位の区切り文字　" " WHITESPACE</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001018() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001018"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "7 777"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>千の位の区切り文字　"" NONE</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001019() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001019"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7777"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>千の位の区切り文字　"." DEFAULT(Local依存)</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001020() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001020"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "7,777"));
+            assertThat(webDriverOperations.getText(id("message3")),
+                    containsString("ja"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
+     * <li>小数点　"," COMMA</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001022() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001022"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "3,333,55"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
+     * <li>小数点　"　" WHITESPACE</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001023() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001023"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "3,333 55"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
+     * <li>小数点　"" NONE</li>
+     * <li>小数点に NONEは使用すべきでない為、"?"が付与される。</li>
+     * </ul>
+     * @see org.thymeleaf.util.NumberUtils#computeDecimalFormatSymbols(NumberPointType, NumberPointType, Locale)
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001024() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001024"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "3,333?55"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
+     * <li>小数点　"." DEFAULT(Locale依存)</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001025() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001025"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "3,333.55"));
+            assertThat(webDriverOperations.getText(id("message3")),
+                    containsString("ja"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>最小桁数を指定し、指定した桁数になることを確認する。</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001026() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001026"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("099"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.arrayformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001027() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001027"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.listformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001028() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001028"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.setformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001029() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001029"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.arrayformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001030() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001030"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#calendars.arrayFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.listformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001031() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001031"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#calendars.listFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.setformatメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1001032() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1001032"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#calendars.setFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
@@ -2833,6 +3519,32 @@ public class ApplicationLayerTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>リンクURL式を利用してURLを生成できること。(パラメータの使用、変数値がnull評価)</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1002006() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1002006"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    contextRoot + "/user//address"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
      * <li>プロパティファイルに格納されたメッセージを表示できること。（メッセージ式#{}）</li>
      * </ul>
      */
@@ -2906,6 +3618,38 @@ public class ApplicationLayerTest extends FunctionTestSupport {
                     "パイプ(|)を利用して値と文字列を結合した文字列を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is(
                     "Message : Hello World!"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された値と文字列を結合して表示できること。（変数値がnull評価）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1003004() throws IOException {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1003004"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "+演算子を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is(
+                    "Message : null"));
+            assertThat(webDriverOperations.getText(id("message3")), is(
+                    "パイプ(|)を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message4")), is(
+                    "Message : null"));
         }
         // ログの確認
         {
@@ -3404,4 +4148,57 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         }
     }
 
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#aggregates.sumメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1009001() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1009001"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#aggregates.sumを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("1368"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>モデルに格納された数値を指定した書式で表示できること。（#aggregates.avgメソッド）</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testAPLY1009002() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply1009002"));
+        }
+        // リクエスト処理メソッドの応答に対応する画面
+        {
+            assertThat(webDriverOperations.getText(id("message1")), is(
+                    "Thymeleafが提供している#aggregates.avgを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("456"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+    }
 }

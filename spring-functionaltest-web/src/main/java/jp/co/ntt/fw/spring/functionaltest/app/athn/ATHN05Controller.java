@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
@@ -39,13 +39,8 @@ public class ATHN05Controller {
     AdministratorService administratorService;
 
     @RequestMapping(value = "/0501/001", method = RequestMethod.GET)
-    public String handle05001(Model model, AdministratorForm form) {
+    public String handle0501001(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingBCryptPassword";
-    }
-
-    @RequestMapping(value = "/0501/002", method = RequestMethod.GET)
-    public String handle05002(Model model, AdministratorForm form) {
-        return "athn/loginForUsingBCryptPassword";
     }
 
     @RequestMapping(value = "0501/001/createAdminUsingBCrypt", method = RequestMethod.POST)
@@ -54,7 +49,7 @@ public class ATHN05Controller {
             RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            return handle05001(model, form);
+            return handle0501001(model, form);
         }
 
         // Administratorテーブルに管理者情報登録
@@ -66,7 +61,7 @@ public class ATHN05Controller {
         } catch (BusinessException e) {
             // 同じユーザ名が存在する場合エラー
             model.addAttribute(e.getResultMessages());
-            return handle05001(model, form);
+            return handle0501001(model, form);
         }
 
         // エンコード前のパスワード
@@ -85,7 +80,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0502/001/afterLogin")
+    @RequestMapping(value = "0501/002/afterLogin")
     public String afterLoginUsingBCryptPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
@@ -99,6 +94,181 @@ public class ATHN05Controller {
         }
 
         return "athn/showAdministratorInfoUsingBCryptPassword";
+    }
+
+    @RequestMapping(value = "/0501/003", method = RequestMethod.GET)
+    public String handle0501003(Model model, AdministratorForm form) {
+        return "athn/createAdministratorUsingPbkdf2Password";
+    }
+
+    @RequestMapping(value = "0501/003/createAdminUsingPbkdf2", method = RequestMethod.POST)
+    public String createAdministratorUsingPbkdf2Password(Model model,
+            @Validated AdministratorForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return handle0501003(model, form);
+        }
+
+        // Administratorテーブルに管理者情報登録
+        Administrator administrator = new Administrator();
+        administrator.setUsername(form.getUsername());
+        administrator.setPassword(form.getPassword());
+        try {
+            administratorService.createUsingPbkdf2Encode(administrator);
+        } catch (BusinessException e) {
+            // 同じユーザ名が存在する場合エラー
+            model.addAttribute(e.getResultMessages());
+            return handle0501003(model, form);
+        }
+
+        // エンコード前のパスワード
+        redirectAttributes.addFlashAttribute("beforeEncodePassword", form
+                .getPassword());
+        redirectAttributes.addFlashAttribute(administrator);
+
+        return "redirect:/athn/0501/003/createCompleteAdminUsingPbkdf2?complete";
+    }
+
+    @RequestMapping(value = "0501/003/createCompleteAdminUsingPbkdf2", method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingPbkdf2Password(Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
+        model.addAttribute(messages);
+
+        return "athn/createCompleteAdministrator";
+    }
+
+    @RequestMapping(value = "0501/004/afterLogin")
+    public String afterLoginUsingPbkdf2Password(
+            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        if (userDetails != null) {
+            model.addAttribute("username", userDetails.getUsername());
+            // principalからパスワードを取得できない為、DBから取得
+            Administrator administrator = administratorService
+                    .findOneByUserName(userDetails.getUsername());
+            model.addAttribute("administratorPassword", administrator
+                    .getPassword());
+        }
+
+        return "athn/showAdministratorInfoUsingPbkdf2Password";
+    }
+
+    @RequestMapping(value = "/0501/005", method = RequestMethod.GET)
+    public String handle0501005(Model model, AdministratorForm form) {
+        return "athn/createAdministratorUsingSCryptPassword";
+    }
+
+    @RequestMapping(value = "0501/005/createAdminUsingSCrypt", method = RequestMethod.POST)
+    public String createAdministratorUsingSCryptPassword(Model model,
+            @Validated AdministratorForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return handle0501005(model, form);
+        }
+
+        // Administratorテーブルに管理者情報登録
+        Administrator administrator = new Administrator();
+        administrator.setUsername(form.getUsername());
+        administrator.setPassword(form.getPassword());
+        try {
+            administratorService.createUsingSCryptEncode(administrator);
+        } catch (BusinessException e) {
+            // 同じユーザ名が存在する場合エラー
+            model.addAttribute(e.getResultMessages());
+            return handle0501005(model, form);
+        }
+
+        // エンコード前のパスワード
+        redirectAttributes.addFlashAttribute("beforeEncodePassword", form
+                .getPassword());
+        redirectAttributes.addFlashAttribute(administrator);
+
+        return "redirect:/athn/0501/005/createCompleteAdminUsingSCrypt?complete";
+    }
+
+    @RequestMapping(value = "0501/005/createCompleteAdminUsingSCrypt", method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingSCryptPassword(Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
+        model.addAttribute(messages);
+
+        return "athn/createCompleteAdministrator";
+    }
+
+    @RequestMapping(value = "0501/006/afterLogin")
+    public String afterLoginUsingSCryptPassword(
+            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        if (userDetails != null) {
+            model.addAttribute("username", userDetails.getUsername());
+            // principalからパスワードを取得できない為、DBから取得
+            Administrator administrator = administratorService
+                    .findOneByUserName(userDetails.getUsername());
+            model.addAttribute("administratorPassword", administrator
+                    .getPassword());
+        }
+
+        return "athn/showAdministratorInfoUsingSCryptPassword";
+    }
+
+    @RequestMapping(value = "/0502/001", method = RequestMethod.GET)
+    public String handle0502001(Model model, AdministratorForm form) {
+        return "athn/createAdministratorUsingDelegatingPassword";
+    }
+
+    @RequestMapping(value = "0502/001/createAdminUsingDelegating", method = RequestMethod.POST)
+    public String createAdministratorUsingDelegatingPassword(Model model,
+            @Validated AdministratorForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return handle0502001(model, form);
+        }
+
+        // Administratorテーブルに管理者情報登録
+        Administrator administrator = new Administrator();
+        administrator.setUsername(form.getUsername());
+        administrator.setPassword(form.getPassword());
+        try {
+            administratorService.createUsingDelegatingEncode(administrator);
+        } catch (BusinessException e) {
+            // 同じユーザ名が存在する場合エラー
+            model.addAttribute(e.getResultMessages());
+            return handle0502001(model, form);
+        }
+
+        // エンコード前のパスワード
+        redirectAttributes.addFlashAttribute("beforeEncodePassword", form
+                .getPassword());
+        redirectAttributes.addFlashAttribute(administrator);
+
+        return "redirect:/athn/0502/001/createCompleteAdminUsingDelegating?complete";
+    }
+
+    @RequestMapping(value = "0502/001/createCompleteAdminUsingDelegating", method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingDelegatingPassword(
+            Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
+        model.addAttribute(messages);
+
+        return "athn/createCompleteAdministrator";
+    }
+
+    @RequestMapping(value = "0502/002/afterLogin")
+    public String afterLoginUsingDelegatingPassword(
+            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        if (userDetails != null) {
+            model.addAttribute("username", userDetails.getUsername());
+            // principalからパスワードを取得できない為、DBから取得
+            Administrator administrator = administratorService
+                    .findOneByUserName(userDetails.getUsername());
+            model.addAttribute("administratorPassword", administrator
+                    .getPassword());
+        }
+
+        return "athn/showAdministratorInfoUsingDelegatingPassword";
     }
 
 }

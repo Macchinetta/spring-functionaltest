@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>OAuth Error</title>
+<link rel="stylesheet" th:href="@{/resources/app/css/styles.css}">
+</head>
+<body>
+  <div id="wrapper">
+    <h1>OAuth Error!</h1>
+    <div th:if="${error} != null" th:object="${error}">
+      <p th:text="*{oAuth2ErrorCode}"></p>
+      <p th:text="*{message}"></p>
+    </div>
+  </div>
+</body>
+</html>

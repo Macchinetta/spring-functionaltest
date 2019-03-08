@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,22 +9,28 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 public class WebDriverCreator extends ApplicationObjectSupport {
+
+    @Inject
+    protected FirefoxDriverPrepare firefoxDriverPrepare;
 
     /**
      * デフォルトのWebDriver(Beanファイルに定義されているWebDriver)を作成する。
@@ -32,7 +38,8 @@ public class WebDriverCreator extends ApplicationObjectSupport {
      */
     public WebDriver createDefaultWebDriver() {
         WebDriver webDriver = getApplicationContext().getBean(WebDriver.class);
-        return webDriver;
+
+        return registerWebDriverEventListener(webDriver);
     }
 
     /**
@@ -63,12 +70,17 @@ public class WebDriverCreator extends ApplicationObjectSupport {
         }
 
         // デフォルトのブラウザはFirefoxとする
+        firefoxDriverPrepare.geckodriverSetup();
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", localeStr);
         profile.setPreference("browser.startup.homepage_override.mstone",
                 "ignore");
         profile.setPreference("network.proxy.type", 0);
-        return new FirefoxDriver(profile);
+        profile.setPreference("layout.css.devPixelsPerPx", "0.5");
+
+        WebDriver webDriver = new FirefoxDriver(profile);
+
+        return registerWebDriverEventListener(webDriver);
     }
 
     /**
@@ -87,6 +99,7 @@ public class WebDriverCreator extends ApplicationObjectSupport {
                 throw new UnsupportedOperationException("FireFox以外のブラウザでダウンロード機能を使用するテストを実行することはできません。");
             }
         }
+        firefoxDriverPrepare.geckodriverSetup();
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("browser.download.dir", downloadTempDirectory);
         profile.setPreference("browser.download.folderList", 2);
@@ -107,7 +120,22 @@ public class WebDriverCreator extends ApplicationObjectSupport {
 
         WebDriver webDriver = new FirefoxDriver(profile);
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        return webDriver;
+
+        return registerWebDriverEventListener(webDriver);
+    }
+
+    /**
+     * WebDriverEventListenerを実行ドライバに登録
+     * @param webDriver テスト対象のwebDriver
+     * @return EventFiringWebDriver Listener処理を有したwebDriver
+     */
+    private EventFiringWebDriver registerWebDriverEventListener(
+            WebDriver webDriver) {
+        EventFiringWebDriver driver = new EventFiringWebDriver(webDriver);
+        driver.register(getApplicationContext().getBean(
+                WaitWebDriverEventListener.class));
+
+        return driver;
     }
 
 }

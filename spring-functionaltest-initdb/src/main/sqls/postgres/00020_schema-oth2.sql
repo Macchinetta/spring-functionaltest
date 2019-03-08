@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS oauth_code;
 
 create table if not exists users(
     username varchar(50) not null primary key,
-    password varchar(60) not null,
+    password varchar(88) not null,
     enabled boolean not null
 );
 
@@ -26,7 +26,7 @@ create table if not exists authorities (
 
 create table if not exists clients (
     client_id varchar(50) not null primary key,
-    client_secret varchar(60) not null,
+    client_secret varchar(88) not null,
     client_name varchar(256) not null,
     access_token_validity integer not null,
     refresh_token_validity integer

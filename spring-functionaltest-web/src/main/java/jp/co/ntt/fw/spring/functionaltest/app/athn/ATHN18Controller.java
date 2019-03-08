@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,20 +9,18 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
-
-import java.security.Principal;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AdministratorService;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,22 +39,17 @@ public class ATHN18Controller {
     AdministratorService administratorService;
 
     @RequestMapping(value = "/1801/001", method = RequestMethod.GET)
-    public String handle18001(Model model, AdministratorForm form) {
-        return "athn/createAdministratorUsingShaPassword";
+    public String handle1801001(Model model, AdministratorForm form) {
+        return "athn/createAdministratorUsingCustomPbkdf2Password";
     }
 
-    @RequestMapping(value = "/1801/002", method = RequestMethod.GET)
-    public String handle18002(Model model, AdministratorForm form) {
-        return "athn/loginAdministratorUsingShaPassword";
-    }
-
-    @RequestMapping(value = "1801/001/createAdminUsingSha", method = RequestMethod.POST)
-    public String createAdministratorUsingShaPassword(Model model,
+    @RequestMapping(value = "1801/001/createAdminUsingCustomPbkdf2", method = RequestMethod.POST)
+    public String createAdministratorUsingCustomPbkdf2Password(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-            return handle18001(model, form);
+            return handle1801001(model, form);
         }
 
         // Administratorテーブルに管理者情報登録
@@ -64,11 +57,11 @@ public class ATHN18Controller {
         administrator.setUsername(form.getUsername());
         administrator.setPassword(form.getPassword());
         try {
-            administratorService.createUsingShaEncode(administrator);
+            administratorService.createUsingCustomPbkdf2Encode(administrator);
         } catch (BusinessException e) {
             // 同じユーザ名が存在する場合エラー
             model.addAttribute(e.getResultMessages());
-            return handle18001(model, form);
+            return handle1801001(model, form);
         }
 
         // エンコード前のパスワード
@@ -76,11 +69,12 @@ public class ATHN18Controller {
                 .getPassword());
         redirectAttributes.addFlashAttribute(administrator);
 
-        return "redirect:/athn/1801/001/createCompleteAdminUsingSha?complete";
+        return "redirect:/athn/1801/001/createCompleteAdminUsingCustomPbkdf2?complete";
     }
 
-    @RequestMapping(value = "1801/001/createCompleteAdminUsingSha", method = RequestMethod.GET, params = "complete")
-    public String createCompleteAdministratorUsingShaPassword(Model model) {
+    @RequestMapping(value = "1801/001/createCompleteAdminUsingCustomPbkdf2", method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingCustomPbkdf2Password(
+            Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
         model.addAttribute(messages);
 
@@ -88,12 +82,9 @@ public class ATHN18Controller {
     }
 
     @RequestMapping(value = "1801/002/afterLogin")
-    public String afterLoginUsingShaPassword(Principal principal, Model model) {
-        Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
+    public String afterLoginUsingCustomPbkdf2Password(
+            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
         if (userDetails != null) {
             model.addAttribute("username", userDetails.getUsername());
             // principalからパスワードを取得できない為、DBから取得
@@ -103,6 +94,7 @@ public class ATHN18Controller {
                     .getPassword());
         }
 
-        return "athn/showAdministratorInfoUsingShaPassword";
+        return "athn/showAdministratorInfoUsingCustomPbkdf2Password";
     }
+
 }

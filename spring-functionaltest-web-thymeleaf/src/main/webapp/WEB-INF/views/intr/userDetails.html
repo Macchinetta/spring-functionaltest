@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h3 id="screenTitle">
+        <span th:text="#{title.intr.userDetails}"></span>
+      </h3>
+      <hr>
+      <div>
+        Session Stored Locale Value <label id="sessionLocale" th:text="${#session.getAttribute('org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE')}"></label>
+      </div>
+      <br />
+
+      <div>
+        <label id="name" th:text="#{label.sf.intr.name}"></label> : Tom Hollander
+      </div>
+      <div>
+        <label id="gender" th:text="#{label.sf.intr.gender}"></label> : Man
+      </div>
+      <div>
+        <label id="age" th:text="#{label.sf.intr.age}"></label> : <span id="ageValue" th:text="#{label.sf.intr.age.value}">
+            </span>
+      </div>
+
+      <form th:action="@{/intr}" method="get">
+        <div align="right">
+          <input type="submit" class="btn btn-default" th:value="#{label.sf.intr.back}" />
+          <input type="submit" class="btn btn-default" th:value="#{label.sf.intr.change}" />
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

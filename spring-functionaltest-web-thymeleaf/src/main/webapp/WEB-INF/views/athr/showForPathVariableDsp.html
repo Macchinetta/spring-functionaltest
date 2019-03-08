@@ -20,7 +20,7 @@
           </tr>
         </table>
       </fieldset>
-      <form th:action="@{/athr/0601/019/logout}" method="post">
+      <form th:action="@{/athr/0601/{testNo}/logout(testNo=${testNo})}" method="post">
         <input type="submit" id="logout" class="btn btn-default" value="Logout">
       </form>
 

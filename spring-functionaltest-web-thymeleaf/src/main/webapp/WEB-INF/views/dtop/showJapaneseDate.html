@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <p>
+        <span id="getDateResult" th:text="${resultDate}"></span><br />
+      </p>
+    </div>
+  </div>
+</body>
+</html>

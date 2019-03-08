@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <ul>
+        <li>start:<span th:text="${start}"></span></li>
+        <li>end:<span th:text="${end}"></span></li>
+      </ul>
+      Differece of
+      <ul>
+        <li>year:<span id="getYear" th:text="${yearResult}"></span></li>
+        <li>month:<span id="getMonth" th:text="${monthResult}"></span></li>
+        <li>day:<span id="getDay" th:text="${dayResult}"></span></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

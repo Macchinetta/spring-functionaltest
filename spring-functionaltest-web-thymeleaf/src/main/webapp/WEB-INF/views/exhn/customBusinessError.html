@@ -10,10 +10,11 @@
       <div>
         <div>業務エラーが発生しました、詳細は以下のメッセージを参照してください。</div>
         <br>
-        <div th:if="${result} != null" class="alert" th:classappend="|alert-${result.type}|">
+        <div th:if="${result} != null" class="alert alert-error"
+          th:class="|alert alert-${result.type}|">
           <ul>
             <li th:each="message : ${result}"
-              th:text="${#messages.msgWithParams(message.code, message.args)}"></li>
+              th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
           </ul>
         </div>
       </div>

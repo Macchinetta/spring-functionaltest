@@ -18,7 +18,7 @@
       </span></td>
     </tr>
   </table>
-  <form:form action="${pageContext.request.contextPath}/athn/2101/logout" method="post">
+  <form:form action="${pageContext.request.contextPath}/athn/2201/logout" method="post">
     <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 

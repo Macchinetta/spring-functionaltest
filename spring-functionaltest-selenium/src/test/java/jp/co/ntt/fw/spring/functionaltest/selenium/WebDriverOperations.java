@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,11 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.openqa.selenium.By.id;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -399,22 +395,6 @@ public class WebDriverOperations {
     }
 
     /**
-     * APサーバのJVMのバージョンが1.7以降であるかを判定する
-     */
-    public boolean isJvm7OrLater() {
-        String[] version = getJvmVersionOfApServer().split("\\.");
-        return Integer.valueOf(version[1]) >= 7;
-    }
-
-    /**
-     * APサーバのJVMのバージョンが1.8以降であるかを判定する
-     */
-    public boolean isJvm8OrLater() {
-        String[] version = getJvmVersionOfApServer().split("\\.");
-        return Integer.valueOf(version[1]) >= 8;
-    }
-
-    /**
      * APサーバの名前を取得。
      */
     public ApServerName getApServerName() {
@@ -447,5 +427,4 @@ public class WebDriverOperations {
             return TemplateEngineName.JSP;
         }
     }
-
 }

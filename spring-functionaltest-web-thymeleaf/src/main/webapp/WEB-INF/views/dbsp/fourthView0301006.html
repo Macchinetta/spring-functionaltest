@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="screenTitle">fourthView(th:actionの値を指定しない)</h1>
+      <form id="ID" th:action method="post">
+        <input type="submit" id="fifth" name="fifth" value="fifth" />
+      </form>
+    </div>
+  </div>
+</body>
+</html>

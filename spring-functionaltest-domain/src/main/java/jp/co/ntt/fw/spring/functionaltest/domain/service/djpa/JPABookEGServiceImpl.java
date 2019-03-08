@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
@@ -65,7 +64,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public JPABookEG findById(Integer id) {
-        return jpaBookEGCrudRepository.findOne(id);
+        return jpaBookEGCrudRepository.findById(id).orElse(null);
     }
 
     @Transactional(value = "jpaTransactionManager")
@@ -93,7 +92,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
         // delete all the books previously added.
         // jpaBookEGRepository.deleteAll();
 
-        return jpaBookEGRepository.save(entities);
+        return jpaBookEGRepository.saveAll(entities);
 
     }
 
@@ -170,7 +169,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public JPABookEG findUsingCustomRepo(Integer bookId) {
-        return jpaBookRepositoryCustom.findOne(bookId);
+        return jpaBookRepositoryCustom.findById(bookId).orElse(null);
     }
 
     @Transactional(value = "jpaTransactionManager")
@@ -181,12 +180,13 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public JPABookEG findUsingNoIntfInheriRepo(Integer bookId) {
-        return jpaBookNoInterfaceInheritanceRepository.findOne(bookId);
+        return jpaBookNoInterfaceInheritanceRepository.findById(bookId).orElse(
+                null);
     }
 
     @Override
     public JPABookEG findByIdUsingJPARepository(Integer id) {
-        return jpaBookEGRepository.findOne(id);
+        return jpaBookEGRepository.findById(id).orElse(null);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
@@ -19,7 +19,6 @@ import java.security.Principal;
 import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -51,12 +50,12 @@ public class ATHR02Controller {
 
     @RequestMapping("0201/002")
     public String handle0201002loginForStaff() {
-        return "athr/loginForJSPTagRoleAdmin";
+        return "athr/loginForJspTagRoleAdmin";
     }
 
     @RequestMapping(value = "0201/002/afterLogin")
     public String handle0201002afterLogin() {
-        return "athr/showForJSPTagRoleAdminDsp";
+        return "athr/showForJspTagRoleAdminDsp";
     }
 
     @RequestMapping("0201/002/restrict")

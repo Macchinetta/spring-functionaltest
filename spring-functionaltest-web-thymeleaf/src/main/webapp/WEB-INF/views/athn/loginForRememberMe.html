@@ -9,7 +9,7 @@
 
       <h1 id="screenTitle">ログインフォーム(loginForRememberMe)</h1>
 
-      <form th:action="@{/athn/2101/authenticate}" method="post">
+      <form th:action="@{/athn/2201/authenticate}" method="post">
         <div th:if="${param.keySet().contains('error')}" id="accountLoginError">
           <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}" class="alert alert-danger">
             <ul>
@@ -51,7 +51,7 @@
         </fieldset>
       </form>
       <br>
-      <form th:action="@{/athn/2101/logout}" method="post">
+      <form th:action="@{/athn/2201/logout}" method="post">
         <input type="submit" id="logout" class="btn btn-default" value="Logout">
       </form>
 

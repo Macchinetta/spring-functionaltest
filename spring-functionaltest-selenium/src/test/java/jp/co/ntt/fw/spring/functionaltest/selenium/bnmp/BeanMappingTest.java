@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.bnmp;
 
@@ -177,7 +177,6 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.click(id("copyUnidirectionalBean"));
         }
 
-        // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(
@@ -209,11 +208,11 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.click(id("copyUnidirectionalBean"));
         }
 
-        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
         {
             webDriverOperations.click(id("copyUnidirectionalBean"));
         }
-        // コピー先(Destination)の内容確認
+
         // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされないこと。
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(""));
@@ -244,7 +243,6 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.click(id("copyBidirectionalBean"));
         }
 
-        // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(
@@ -276,11 +274,11 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.click(id("copyBidirectionalBean"));
         }
 
-        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
         {
             webDriverOperations.click(id("copyBidirectionalBean"));
         }
-        // コピー先(Destination)の内容確認
+
         // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされること。
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(
@@ -288,6 +286,94 @@ public class BeanMappingTest extends FunctionTestSupport {
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
             assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
                     "20140117"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Dozer 6.2.0より、クラスベースでマッピングを定義している場合も、type="one-way"を付与すれば単方向の逆コピーができないこと。</li>
+     * </ul>
+     */
+    @Test
+    public void testBNMP0104005() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("bnmp0104005"));
+        }
+
+        // コピー元(Source)の内容入力
+        {
+            webDriverOperations.appendText(id("name"), "デニオ");
+            webDriverOperations.appendText(id("color"), "赤");
+            webDriverOperations.appendText(id("releaseDate"), "20140117");
+            webDriverOperations.click(id("copyUnidirectionalBean"));
+        }
+
+        // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
+        {
+            assertThat(webDriverOperations.getText(id("getCarName")), is(
+                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
+                    "20140117"));
+        }
+
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
+        {
+            webDriverOperations.click(id("copyUnidirectionalBean"));
+        }
+
+        // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされないこと。
+        {
+            assertThat(webDriverOperations.getText(id("getCarName")), is(""));
+            assertThat(webDriverOperations.getText(id("getCarColor")), is(""));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
+                    ""));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Dozer 6.2.0より、同名フィールドをfieldタグでマッピングを定義している場合も、type="one-way"を付与すれば単方向の逆コピーができないこと。</li>
+     * </ul>
+     */
+    @Test
+    public void testBNMP0104006() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("bnmp0104006"));
+        }
+
+        // コピー元(Source)の内容入力
+        {
+            webDriverOperations.appendText(id("name"), "デニオ");
+            webDriverOperations.appendText(id("color"), "赤");
+            webDriverOperations.appendText(id("releaseDate"), "20140117");
+            webDriverOperations.click(id("copyUnidirectionalBean"));
+        }
+
+        // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
+        {
+            assertThat(webDriverOperations.getText(id("getCarName")), is(
+                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
+                    "20140117"));
+        }
+
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
+        {
+            webDriverOperations.click(id("copyUnidirectionalBean"));
+        }
+
+        // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされないこと。
+        {
+            assertThat(webDriverOperations.getText(id("getCarName")), is(""));
+            assertThat(webDriverOperations.getText(id("getCarColor")), is(""));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
+                    ""));
         }
     }
 

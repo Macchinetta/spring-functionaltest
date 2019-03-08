@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.1.RELEASE</version>
+    <version>1.6.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -29,6 +29,7 @@
             <webResource>
               <directory>${project.root.basedir}/spring-functionaltest-web/src/main/webapp/resources</directory>
               <targetPath>resources</targetPath>
+              <exclude>**/ajax.js</exclude>
             </webResource>
             <webResource>
               <directory>${project.root.basedir}/spring-functionaltest-web/src/main/webapp/WEB-INF/views</directory>
@@ -107,6 +108,11 @@
         <dependency>
           <groupId>org.apache.activemq</groupId>
           <artifactId>activemq-broker</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>javax.jms</groupId>
+          <artifactId>javax.jms-api</artifactId>
+          <scope>runtime</scope>
         </dependency>
       </dependencies>
     </profile>
@@ -203,52 +209,6 @@
         </plugins>
       </build>
     </profile>
-    <!-- excluded class when build for jdk7 -->
-    <profile>
-      <id>build-for-jdk7</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.terasoluna.gfw</groupId>
-          <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-          <type>pom</type>
-          <exclusions>
-            <exclusion>
-              <groupId>com.fasterxml.jackson.datatype</groupId>
-              <artifactId>jackson-datatype-jsr310</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>org.terasoluna.gfw</groupId>
-          <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-          <type>pom</type>
-          <exclusions>
-            <exclusion>
-              <groupId>org.mybatis</groupId>
-              <artifactId>mybatis-typehandlers-jsr310</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <exclude>**/DateTimeResource.java</exclude>
-                <exclude>**/DateTimeRestController.java</exclude>
-                <exclude>**/ShowDateController.java</exclude>
-                <exclude>**/RoleForExAnnotationForm.java</exclude>
-                <exclude>**/VLDT0503Controller.java</exclude>
-                <exclude>**/ExistInCodeListForTypeArgument.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
 
   <dependencies>
@@ -260,6 +220,12 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>spring-functionaltest-domain</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>joda-time</groupId>
+          <artifactId>joda-time-jsptags</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -276,10 +242,31 @@
       <groupId>org.terasoluna.gfw</groupId>
       <artifactId>terasoluna-gfw-security-web-dependencies</artifactId>
       <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.security</groupId>
+          <artifactId>spring-security-taglibs</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.terasoluna.gfw</groupId>
       <artifactId>terasoluna-gfw-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
+      <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.tiles</groupId>
+          <artifactId>tiles-jsp</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- == End TERASOLUNA == -->
 
@@ -290,7 +277,7 @@
     </dependency>
     <dependency>
       <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf-spring4</artifactId>
+      <artifactId>thymeleaf-spring5</artifactId>
     </dependency>
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
@@ -299,10 +286,6 @@
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
       <artifactId>thymeleaf-extras-java8time</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>nz.net.ultraq.thymeleaf</groupId>
-      <artifactId>thymeleaf-joda-dialect</artifactId>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -342,42 +325,8 @@
 
     <!-- == Begin For Report == -->
     <dependency>
-      <groupId>com.lowagie</groupId>
-      <artifactId>itext</artifactId>
-      <exclusions>
-        <exclusion>
-          <artifactId>xml-apis</artifactId>
-          <groupId>xml-apis</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>bctsp-jdk14</artifactId>
-          <groupId>org.bouncycastle</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jfreechart</artifactId>
-          <groupId>jfree</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>dom4j</artifactId>
-          <groupId>dom4j</groupId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.swinglabs</groupId>
-          <artifactId>pdf-renderer</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.bouncycastle</groupId>
-          <artifactId>bcprov-jdk14</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk14</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.lowagie</groupId>
-      <artifactId>iTextAsian</artifactId>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openpdf</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.poi</groupId>
@@ -386,16 +335,6 @@
         <exclusion>
           <groupId>stax</groupId>
           <artifactId>stax-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>net.sf.jasperreports</groupId>
-      <artifactId>jasperreports</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -446,8 +385,17 @@
     </dependency>
     <!-- == End activemq == -->
 
+    <!-- == Begin Password Encode == -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+    </dependency>
+    <!-- == End Password Encode == -->
+
   </dependencies>
   <properties>
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+    <cargo.deployable.artifactId>${project.artifactId}</cargo.deployable.artifactId>
+    <cargo.deployable.warName>spring-functionaltest-web</cargo.deployable.warName>
   </properties>
 </project>

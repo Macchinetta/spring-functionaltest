@@ -1,7 +1,7 @@
 CREATE TABLE t_account (
     username VARCHAR(255),
     user_uuid VARCHAR(36) NOT NULL,
-    password VARCHAR(60) NOT NULL,
+    password VARCHAR(149) NOT NULL,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     enabled BOOLEAN NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE t_customer (
 
 CREATE TABLE t_administrator (
     username VARCHAR(30) NOT NULL
-    ,password VARCHAR(128) NOT NULL
+    ,password VARCHAR(255) NOT NULL
     ,enabled BOOLEAN NOT NULL
     ,authority VARCHAR(30) NOT NULL
     ,CONSTRAINT pk_t_administrator PRIMARY KEY (username)

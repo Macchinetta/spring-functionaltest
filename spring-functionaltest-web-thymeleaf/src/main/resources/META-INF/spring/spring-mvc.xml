@@ -36,13 +36,13 @@
     <context:exclude-filter type="assignable"
       expression="jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0402001Controller" />
     <context:exclude-filter type="regex"
-      expression="jp.co.ntt.fw.spring.functionaltest.app.pgnt.PGNT0102..*" />
-    <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.SSMN04..*" />
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.SSMN06..*" />
     <context:exclude-filter type="assignable"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.Cart" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.pgnt..*" />
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.prmn..*" />
     <context:exclude-filter type="regex"
@@ -72,7 +72,21 @@
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM050[1-2].*" />
     <context:exclude-filter type="regex"
-      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM06.*"/>
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM06.*" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM0701Controller" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM0803.*" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.dbsp.DBSP0303Controller.*" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0105Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0401Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0402Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS05Controller" />
   </context:component-scan>
 
   <mvc:view-controller path="/" view-name="welcome/index" />

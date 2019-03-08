@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.fldw;
 
@@ -47,8 +47,6 @@ import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-//Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class FileDownloadTest extends FunctionTestSupport {
 
     private static Path downloadTempDirectory;
@@ -125,8 +123,7 @@ public class FileDownloadTest extends FunctionTestSupport {
         waitForDownloaded();
 
         // テストデータで用意されたPDFを読み込む
-        ClassPathResource expectedPdf = new ClassPathResource("/testdata/fldw/日本語ファイル名iTextAsian1_0.pdf");
-        ClassPathResource expectedPdfJava1_8 = new ClassPathResource("/testdata/fldw/日本語ファイル名iTextAsian1_0_jdk1_8.pdf");
+        ClassPathResource expectedPdf = new ClassPathResource("/testdata/fldw/日本語ファイル名.pdf");
 
         // ダウンロードされたファイルを読み込む
         File file = new File(downloadTempDirectory
@@ -137,10 +134,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         String actual = readPdfAsStringWithoutRoot(inputStream);
         String expected = readPdfAsStringWithoutRoot(expectedPdf
                 .getInputStream());
-        String expectedJava1_8 = readPdfAsStringWithoutRoot(expectedPdfJava1_8
-                .getInputStream());
 
-        assertThat(actual, isOneOf(expected, expectedJava1_8));
+        assertThat(actual, is(expected));
 
         // ダウンロードファイルを削除
         file.delete();
@@ -200,47 +195,6 @@ public class FileDownloadTest extends FunctionTestSupport {
 
         // xlsxファイルを解凍してバイナリで比較
         compareFile(file, expectedExcel.getFile());
-
-        // ダウンロードファイルの削除
-        file.delete();
-
-        // ログの確認
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations
-                .getXTrack());
-    }
-
-    /**
-     * <ul>
-     * <li>JasperReportsを利用した場合に、CSVファイルがダウンロードできることを確認
-     * </ul>
-     */
-    @Test
-    public void testFLDW0301001() throws Exception {
-        // メニュー画面の操作
-        webDriverOperations.click(By.id("fldw0301001"));
-
-        // 画面で情報入力
-        webDriverOperations.overrideText(By.id("name"), "山田");
-        webDriverOperations.overrideText(By.id("address"), "東京");
-        webDriverOperations.overrideText(By.id("birthdate"), "19700101");
-
-        // CSVファイルダウンロード
-        webDriverOperations.click(By.id("downloadButton"));
-        waitForDownloaded();
-
-        // テストデータで用意されたPDFを読み込む
-        ClassPathResource expectedCsv = new ClassPathResource("/testdata/fldw/日本語ファイル名.csv");
-
-        // ダウンロードされたファイルを読み込む
-        File file = new File(downloadTempDirectory
-                .toString(), downloadCsvFileName);
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-
-        // ファイルダウンロードの確認
-        String actual = readFileAsString(inputStream);
-        String expected = readFileAsString(expectedCsv.getInputStream());
-        assertThat(actual, is(expected));
 
         // ダウンロードファイルの削除
         file.delete();

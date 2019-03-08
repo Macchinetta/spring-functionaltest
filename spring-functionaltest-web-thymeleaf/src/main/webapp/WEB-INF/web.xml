@@ -275,6 +275,20 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>pgntAppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/pgnt/spring-mvc-pgnt.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>pgntAppServlet</servlet-name>
+    <url-pattern>/pgnt/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>prmnAppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
@@ -545,15 +559,13 @@
   <servlet-mapping>
     <servlet-name>athrAppServlet</servlet-name>
     <url-pattern>/athr/loginForStaff</url-pattern>
-    <url-pattern>/athr/loginForUrlHasRole</url-pattern>
     <url-pattern>/athr/loginForRoleAdmin</url-pattern>
     <url-pattern>/athr/loginForMethod</url-pattern>
     <url-pattern>/athr/loginForRoleHierarchy</url-pattern>
-    <url-pattern>/athr/loginForJSPTagRoleAdmin</url-pattern>
+    <url-pattern>/athr/loginForJspTagRoleAdmin</url-pattern>
     <url-pattern>/athr/methodAccessAllowedPage</url-pattern>
     <url-pattern>/athr/methodAccessDeniedPage</url-pattern>
     <url-pattern>/athr/hierarchyAccessDeniedPage</url-pattern>
-    <url-pattern>/athr/urlPatternHasRoleAccessDeniedPage</url-pattern>
     <url-pattern>/athr/methodHierarchyAccessDeniedPage</url-pattern>
     <url-pattern>/athr/accessDeniedPage</url-pattern>
     <url-pattern>/athr/*</url-pattern>
@@ -900,6 +912,62 @@
     <url-pattern>/soap/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>cdls0105AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0105.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0105AppServlet</servlet-name>
+    <url-pattern>/cdls/0105/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0401AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0401.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0401AppServlet</servlet-name>
+    <url-pattern>/cdls/0401/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0402AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0402.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0402AppServlet</servlet-name>
+    <url-pattern>/cdls/0402/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0501AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls05.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0501AppServlet</servlet-name>
+    <url-pattern>/cdls/0501/*</url-pattern>
+  </servlet-mapping>
+
   <!-- For REST API start -->
   <servlet>
     <servlet-name>restApiServlet</servlet-name>
@@ -1017,7 +1085,7 @@
     <servlet-name>lggn0402001AppServlet</servlet-name>
     <url-pattern>/lggn/0402/001</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>dbsp0303AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -1043,7 +1111,7 @@
     <servlet-name>thym0104AppServlet</servlet-name>
     <url-pattern>/thym/0104/*</url-pattern>
   </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>thym0402AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -1152,7 +1220,102 @@
     <servlet-name>thym0605004AppServlet</servlet-name>
     <url-pattern>/thym/0605/004/*</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <servlet-name>thym0701AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0701.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0701AppServlet</servlet-name>
+    <url-pattern>/thym/0701/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0702AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0702.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0702AppServlet</servlet-name>
+    <url-pattern>/thym/0702/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803AppServlet</servlet-name>
+    <url-pattern>/thym/0803/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803003AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803003.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803003AppServlet</servlet-name>
+    <url-pattern>/thym/0803/003/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803004AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803004.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803004AppServlet</servlet-name>
+    <url-pattern>/thym/0803/004/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803005AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803005.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803005AppServlet</servlet-name>
+    <url-pattern>/thym/0803/005/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803006AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803006.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803006AppServlet</servlet-name>
+    <url-pattern>/thym/0803/006/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>thym0803007AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/thym/spring-mvc-thym0803007.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>thym0803007AppServlet</servlet-name>
+    <url-pattern>/thym/0803/007/*</url-pattern>
+  </servlet-mapping>
   <error-page>
     <error-code>500</error-code>
     <location>/common/error/systemError</location>

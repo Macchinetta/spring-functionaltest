@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,31 +9,33 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.pgnt;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.springframework.test.annotation.IfProfileValue;
+import org.openqa.selenium.NoSuchElementException;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-//Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>リクエストパラメータに検索対象のページネーション構成情報を指定した場合、コントローラの引数に設定されることの確認
+     * <li>リクエストパラメータに検索対象のページネーション構成情報を指定した場合、コントローラの引数に設定されることの確認</li>
      * </ul>
      */
     @Test
@@ -84,7 +86,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>リクエストパラメータに検索対象のページネーション構成情報を指定しない場合、コントローラの引数にデフォルト値のページネーション構成情報オブジェクトが設定されることの確認
+     * <li>リクエストパラメータに検索対象のページネーション構成情報を指定しない場合、コントローラの引数にデフォルト値のページネーション構成情報オブジェクトが設定されることの確認</li>
      * </ul>
      */
     @Test
@@ -301,7 +303,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>取得件数として許可する最大値を超過した件数をリクエストパラメータに指定した場合、デフォルト値の取得件数に変更されることの確認
+     * <li>取得件数として許可する最大値を超過した件数をリクエストパラメータに指定した場合、デフォルト値の取得件数に変更されることの確認</li>
      * </ul>
      */
     @Test
@@ -342,7 +344,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>取得件数として許可する最大値を変更した場合、指定した最大値に設定されることを確認
+     * <li>取得件数として許可する最大値を変更した場合、指定した最大値に設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -396,7 +398,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>アプリケーション全体のページ位置、取得件数、ソート条件のデフォルト値を指定した場合、デフォルト値が設定した値になることを確認
+     * <li>アプリケーション全体のページ位置、取得件数、ソート条件のデフォルト値を指定した場合、デフォルト値が設定した値になることを確認</li>
      * </ul>
      */
     @Test
@@ -577,7 +579,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ページネーション構成情報を設定するアノテーションを利用し、リクエストパラメータにもページネーション情報がない場合、 アノテーションの設定値でページネーション情報が設定されることを確認
+     * <li>ページネーション構成情報を設定するアノテーションを利用し、リクエストパラメータにもページネーション情報がない場合、 アノテーションの設定値でページネーション情報が設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -719,7 +721,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ページネーション構成情報を設定するアノテーションを利用し、リクエストパラメータにもページネーション情報がない場合、アノテーションのデフォルト値でページネーション情報が設定されることを確認
+     * <li>ページネーション構成情報を設定するアノテーションを利用し、リクエストパラメータにもページネーション情報がない場合、アノテーションのデフォルト値でページネーション情報が設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -818,7 +820,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ページネーション構成情報を設定するアノテーションに取得件数のみを設定した場合、アノテーションの設定値でページネーション情報が設定されることを確認
+     * <li>ページネーション構成情報を設定するアノテーションに取得件数のみを設定した場合、アノテーションの設定値でページネーション情報が設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -918,7 +920,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ソート情報を設定するアノテーションを利用する場合、ページネーション情報を構成するオブジェクトにソート値が設定されることを確認
+     * <li>ソート情報を設定するアノテーションを利用する場合、ページネーション情報を構成するオブジェクトにソート値が設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -1020,7 +1022,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ソート項目のデフォルト値のみ指定する場合、ページネーション情報を構成するオブジェクトにソート値が設定されることを確認
+     * <li>ソート項目のデフォルト値のみ指定する場合、ページネーション情報を構成するオブジェクトにソート値が設定されることを確認</li>
      * </ul>
      */
     @Test
@@ -1119,7 +1121,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Mybatis3のデータアクセス機能を利用した場合、JSTLのタグを使用して一覧に複数件表示でき、 ページネーションが複数ページ分表示されることを確認する。
+     * <li>Mybatis3のデータアクセス機能を利用した場合、JSTLのタグを使用して一覧に複数件表示でき、 ページネーションが複数ページ分表示されることを確認する。</li>
      * </ul>
      */
     @Test
@@ -1164,7 +1166,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Mybatis3のデータアクセス機能を利用した場合、JSTLのタグを使用して一覧に複数件表示でき、ページネーションが単数ページ表分示されることを確認する。
+     * <li>Mybatis3のデータアクセス機能を利用した場合、JSTLのタグを使用して一覧に複数件表示でき、ページネーションが単数ページ表分示されることを確認する。</li>
      * </ul>
      */
     @Test
@@ -1248,7 +1250,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Mybatis3のデータアクセス機能を利用し、検索結果が0件となる場合、JSTLのタグを使用し、一覧もページネーションも表示されないことを確認する。
+     * <li>Mybatis3のデータアクセス機能を利用し、検索結果が0件となる場合、JSTLのタグを使用し、一覧もページネーションも表示されないことを確認する。</li>
      * </ul>
      */
     @Test
@@ -1270,7 +1272,636 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>結果情報を用いてページネーションに関連する情報出力する場合、 合計ページ数、ページ数、合計件数を出力することが可能なことを確認する
+     * <li>ページ数がmaxDisplayCount(デフォルト=10)より小さい場合に全ページ用のページネーションが出力されることのテスト デフォルトのHTMLタグ、クラス、クエリでページネーションが作成されることのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602001() {
+        webDriverOperations.click(id("pgnt0602001"));
+
+        // all page display check
+        assertThat(webDriverOperations.getText(By.xpath("//li[3]/a")), is("1"));
+        assertThat(webDriverOperations.getText(By.xpath("//li[4]/a")), is("2"));
+        assertThat(webDriverOperations.getText(By.xpath("//li[5]/a")), is("3"));
+
+        // currentPage query check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[3]")), is("1"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[6]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[7]/a")), is(">>"));
+
+        // previousLink value "javascript:void(0)" check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")),
+                notNullValue());
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("1"));
+
+        // "disabled" class check
+        assertThat(webDriverOperations.getText(By.cssSelector(
+                "li.disabled > a")), is("<<"));
+
+        // screen capture
+        webDriverOperations.saveScreenCapture();
+
+        webDriverOperations.click(By.linkText(">"));
+
+        // move page 2 page check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("2"));
+
+        webDriverOperations.saveScreenCapture();
+
+        webDriverOperations.click(By.linkText(">>"));
+
+        // move page 3 page check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("3"));
+
+        // screen capture
+        webDriverOperations.saveScreenCapture();
+
+    }
+
+    /**
+     * <ul>
+     * <li>ページ数=maxDisplayCountの場合に全ページ用のページネーションが出力されることのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602002() {
+        webDriverOperations.click(id("pgnt0602002"));
+
+        // all page display check
+        for (int i = 1; i < 11; i++) {
+            String elemnetNumber = String.valueOf(i + 2);
+            assertThat(webDriverOperations.getText(By.xpath("//li["
+                    + elemnetNumber + "]/a")), is(String.valueOf(i)));
+        }
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[13]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[14]/a")), is(">>"));
+
+        // previousLink value "javascript:void(0)" check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")),
+                notNullValue());
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("1"));
+
+        // "disabled" class check
+        assertThat(webDriverOperations.getText(By.cssSelector(
+                "li.disabled > a")), is("<<"));
+
+        // screen capture
+        webDriverOperations.saveScreenCapture();
+
+        for (int i = 2; i < 11; i++) {
+            webDriverOperations.click(By.linkText(">"));
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>ページ数がmaxDisplayCountより大きい場合に全ページ用のページネーションが出力されることのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602003() {
+        webDriverOperations.click(id("pgnt0602003"));
+
+        // all page display check
+        for (int i = 1; i < 11; i++) {
+            String elemnetNumber = String.valueOf(i + 2);
+            assertThat(webDriverOperations.getText(By.xpath("//li["
+                    + elemnetNumber + "]/a")), is(String.valueOf(i)));
+        }
+
+        // 11 page no display
+        assertThat(webDriverOperations.getText(By.xpath("//li[13]/a")), not(
+                "11"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[13]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[14]/a")), is(">>"));
+
+        // previousLink value "javascript:void(0)" check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")),
+                notNullValue());
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("1"));
+
+        // "disabled" class check
+        assertThat(webDriverOperations.getText(By.cssSelector(
+                "li.disabled > a")), is("<<"));
+
+        webDriverOperations.click(By.linkText("6"));
+
+        // move page 6 page check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("6"));
+
+        // all page display check
+        for (int i = 1; i < 11; i++) {
+            String elemnetNumber = String.valueOf(i + 2);
+            assertThat(webDriverOperations.getText(By.xpath("//li["
+                    + elemnetNumber + "]/a")), is(String.valueOf(i)));
+        }
+
+        webDriverOperations.click(By.linkText("7"));
+
+        // move page 7 page check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("7"));
+
+        // all page display check
+        for (int i = 2; i < 12; i++) {
+            String elemnetNumber = String.valueOf(i + 1);
+            assertThat(webDriverOperations.getText(By.xpath("//li["
+                    + elemnetNumber + "]/a")), is(String.valueOf(i)));
+        }
+
+        webDriverOperations.click(By.linkText("<<"));
+
+        for (int i = 1; i < 21; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+
+    }
+
+    /**
+     * <ul>
+     * <li>ページ数が0の場合にページネーションが出力されないことのテスト</li>
+     * </ul>
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void testPGNT0602004() {
+        webDriverOperations.click(id("pgnt0602004"));
+
+        try {
+            // Immediate time-out value set
+            webDriverOperations.getWebDriver().manage().timeouts()
+                    .implicitlyWait(1, TimeUnit.SECONDS);
+
+            // pagination no display
+            webDriverOperations.getWebDriver().findElement(By.xpath(
+                    "//li[3]/a"));
+            fail("error route");
+        } catch (NoSuchElementException e) {
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Pageオブジェクトがnullの場合にページネーションが出力されないことのテスト</li>
+     * </ul>
+     */
+    @Test(expected = NoSuchElementException.class)
+    public void testPGNT0602005() {
+        webDriverOperations.click(id("pgnt0602005"));
+
+        try {
+            // Immediate time-out value set
+            webDriverOperations.getWebDriver().manage().timeouts()
+                    .implicitlyWait(1, TimeUnit.SECONDS);
+
+            // pagination no display
+            webDriverOperations.getWebDriver().findElement(By.xpath(
+                    "//li[3]/a"));
+            fail("error route");
+        } catch (NoSuchElementException e) {
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>currentPage=firstPageの場合にジャンプリンクがactive/disabledになっているかのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602006() {
+        webDriverOperations.click(id("pgnt0602006"));
+
+        // firstLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, 'javascript:void(0)')]")), is("<<"));
+        // previousLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")), is("<"));
+        // nextLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=1&size=10')])[2]")), is(">"));
+        // lastLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=2&size=10')])[2]")), is(">>"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[6]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[7]/a")), is(">>"));
+
+        // previousLink value "javascript:void(0)" check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")),
+                notNullValue());
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("1"));
+
+        // "disabled" class check
+        assertThat(webDriverOperations.getText(By.cssSelector(
+                "li.disabled > a")), is("<<"));
+
+        for (int i = 1; i < 4; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>@{@literal firstPage < currentPage < lastPage}の場合にジャンプリンクがactive/disabledになっているかのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602007() {
+        webDriverOperations.click(id("pgnt0602007"));
+
+        webDriverOperations.click(By.linkText("2"));
+
+        // firstLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=0&size=10')]")), is("<<"));
+        // previousLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=0&size=10')])[2]")), is("<"));
+        // nextLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=2&size=10')])[2]")), is(">"));
+        // lastLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=2&size=10')])[3]")), is(">>"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[6]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[7]/a")), is(">>"));
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("2"));
+
+        webDriverOperations.click(By.linkText("<<"));
+        for (int i = 1; i < 4; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>currentPage = lastPageの場合にジャンプリンクがactive/disabledになっているかのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602008() {
+        webDriverOperations.click(id("pgnt0602008"));
+
+        webDriverOperations.click(By.linkText("3"));
+
+        // firstLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=0&size=10')]")), is("<<"));
+        // previousLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=1&size=10')]")), is("<"));
+        // current page disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, 'javascript:void(0)')]")), is("3"));
+        // nextLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")), is(">"));
+        // lastLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[3]")), is(">>"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[6]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[7]/a")), is(">>"));
+
+        // previousLink value "javascript:void(0)" check
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, 'javascript:void(0)')])[2]")),
+                notNullValue());
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("3"));
+
+        // "disabled" class check
+        assertThat(webDriverOperations.getText(By.cssSelector(
+                "li.disabled > a")), is(">"));
+
+        webDriverOperations.click(By.linkText("<<"));
+        for (int i = 1; i < 4; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>@{@literal fistPage < currentPage < maxDisplayCount < lastPage}の場合にジャンプリンクがactive/disabledになっているかのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602009() {
+        webDriverOperations.click(id("pgnt0602009"));
+
+        webDriverOperations.click(By.linkText("3"));
+
+        // firstLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=0&size=15')]")), is("<<"));
+        // previousLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=1&size=15')]")), is("<"));
+        // nextLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=3&size=15')])[2]")), is(">"));
+        // lastLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=19&size=15')]")), is(">>"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[13]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[14]/a")), is(">>"));
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("3"));
+
+        webDriverOperations.click(By.linkText("<<"));
+        for (int i = 1; i < 21; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+
+    }
+
+    /**
+     * <ul>
+     * <li>@{@literal fistPage < maxDisplayCount < currentPage < lastPage}の場合にジャンプリンクがactive/disabledになっているかのテスト</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602010() {
+        webDriverOperations.click(id("pgnt0602010"));
+
+        webDriverOperations.click(By.linkText("10"));
+        webDriverOperations.click(By.linkText("13"));
+
+        // firstLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=0&size=15')]")), is("<<"));
+        // previousLink active
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=11&size=15')]")), is("<"));
+        // nextLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "(//a[contains(@href, '?page=13&size=15')])[2]")), is(">"));
+        // lastLink disabled
+        assertThat(webDriverOperations.getText(By.xpath(
+                "//a[contains(@href, '?page=19&size=15')]")), is(">>"));
+
+        // HTML tags outside "<ul>" check
+        String pgntXPath = "/html/body/div[2]/div/ul";
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath)),
+                notNullValue());
+        // HTML tags inside "<li>" check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath + "/li[1]")),
+                notNullValue());
+
+        // previousLink, nextLink, firstLink, lastLink check
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[1]/a")), is("<<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[2]/a")), is("<"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[13]/a")), is(">"));
+        assertThat(webDriverOperations.getText(By.xpath(pgntXPath
+                + "/li[14]/a")), is(">>"));
+
+        // "active" class check
+        assertThat(webDriverOperations.getText(By.cssSelector("li.active > a")),
+                is("13"));
+
+        webDriverOperations.click(By.linkText("<<"));
+        for (int i = 1; i < 21; i++) {
+            // active page number check
+            assertThat(webDriverOperations.getText(By.xpath("//h1")), is(String
+                    .valueOf(i) + " Page"));
+
+            // screen capture
+            webDriverOperations.saveScreenCapture();
+
+            webDriverOperations.click(By.linkText(">"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>active/disabledのページリンクを押下しても、リクエストが送信されないこと。（デフォルト"javascript:void(0)"のため）</li>
+     * </ul>
+     */
+    @Test
+    public void testPGNT0602011() {
+        webDriverOperations.click(id("pgnt0602011"));
+
+        // default page
+        String orgXtrack = webDriverOperations.getText(By.id("xTrack"));
+
+        // firstLink disabled click
+        webDriverOperations.click(By.linkText("<<"));
+        String firstLinkXtrack = webDriverOperations.getText(By.id("xTrack"));
+        // not change xtrack
+        assertThat(firstLinkXtrack, is(orgXtrack));
+
+        // previousLink disabled click
+        webDriverOperations.click(By.linkText("<"));
+        String previousLinkXtrack = webDriverOperations.getText(By.id(
+                "xTrack"));
+        // not change xtrack
+        assertThat(previousLinkXtrack, is(orgXtrack));
+
+        // currentPage(1Page) active click
+        webDriverOperations.click(By.linkText("<"));
+        String currentPageXtrack = webDriverOperations.getText(By.id("xTrack"));
+        // not change xtrack
+        assertThat(currentPageXtrack, is(orgXtrack));
+
+        // nextLink click
+        webDriverOperations.click(By.linkText(">"));
+        String nextLinkXtrack = webDriverOperations.getText(By.id("xTrack"));
+        // change xtrack
+        assertThat(nextLinkXtrack, is(not(orgXtrack)));
+    }
+
+    /**
+     * <ul>
+     * <li>結果情報を用いてページネーションに関連する情報出力する場合、 合計ページ数、ページ数、合計件数を出力することが可能なことを確認する</li>
      * </ul>
      */
     @Test
@@ -1299,7 +1930,7 @@ public class PaginationTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>結果情報が0件の場合、合計ページ、表示ページ、合計件数を出力することが可能なことを確認する
+     * <li>結果情報が0件の場合、合計ページ、表示ページ、合計件数を出力することが可能なことを確認する</li>
      * </ul>
      */
     @Test

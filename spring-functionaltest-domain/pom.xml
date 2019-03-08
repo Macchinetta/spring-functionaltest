@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.1.RELEASE</version>
+    <version>1.6.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Domain Layer</name>
@@ -73,7 +73,7 @@
       <optional>true</optional>
     </dependency>
     <!-- Once you have installed ojdbc7.jar into local repository, please remove this comment out. -->
-    <!-- <dependency> <groupId>com.oracle.jdbc</groupId> <artifactId>ojdbc7</artifactId> <scope>provided</scope>
+    <!-- <dependency> <groupId>com.oracle.jdbc</groupId> <artifactId>ojdbc7</artifactId> <scope>provided</scope> 
       <optional>true</optional> </dependency> -->
     <!-- Once you have installed db2jcc4.jar into local repository, please remove this comment out. -->
     <!-- <dependency> <groupId>com.ibm</groupId> <artifactId>db2jcc4</artifactId> <scope>provided</scope> 
@@ -167,29 +167,4 @@
   <properties>
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
   </properties>
-  <profiles>
-    <profile>
-      <id>build-for-jdk7</id>
-      <build>
-        <plugins>
-          <!-- excluded class when build for jdk7 -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <exclude>**/DateAndTimeApiDateFactory.java</exclude>
-                <exclude>**/DateAndTimeApiServiceFactoryBean.java</exclude>
-                <exclude>**/DateAndTimeApiServiceImpl.java</exclude>
-                <exclude>**/DateMB3.java</exclude>
-                <exclude>**/ShowDateMB3Repository.java</exclude>
-                <exclude>**/TodoMB3ForJSR310Service.java</exclude>
-                <exclude>**/TodoMB3ForJSR310ServiceImpl.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>

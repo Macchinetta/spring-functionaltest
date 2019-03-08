@@ -1,14 +1,22 @@
 # Spring Functional Test
-This project provides functional tests of [Macchinetta Server Framework (1.x) Development Guideline](http://Macchinetta.github.io/server-guideline/current/ja).
+This project provides functional tests of Macchinetta Server Framework (1.x) Development Guideline.
+
+* [JSP](https://macchinetta.github.io/server-guideline/list/)
+* [Thymeleaf](https://macchinetta.github.io/server-guideline-thymeleaf/list/)
+
+## Test case design
+
+Please refer to [docs](./docs/README.md).
 
 ## How to perform functional test
 
 **Preconditions are as follow:**
 
-* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [JDK 7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) installed (`JAVA_HOME` defined as environment variable)
-* "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html) or [JDK 7](http://www.oracle.com/technetwork/java/embedded/embedded-se/downloads/jce-7-download-432124.html)) installed
+* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) installed (`JAVA_HOME` defined as environment variable)
+* "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)) installed
 * [Maven](https://maven.apache.org/download.cgi) installed (Can run `mvn` command)
 * Firefox([for personal](https://www.mozilla.org/en-US/firefox/all/) or [ESR](https://www.mozilla.org/en-US/firefox/organizations/all/)) installed (ESR is used on our CI environment)
+* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.14.0` recommended) placed in application execution environment and add to `PATH`.
 
 ### [Step 1] Create database of PostgreSQL (Optional)
 If [PostgreSQL](http://www.postgresql.org/) use as database , you need to create database of PostgreSQL into local machine. (PostgreSQL can download via [here site](http://www.postgresql.org/download/)).
@@ -22,29 +30,18 @@ By default, database owner is `postgres` user, and password of `postgres` user i
 
 #### Create database
 ```console
-$ createdb -U postgres spring-functionaltest --locale=C --encoding=UTF8 --template=template0
-$ createdb -U postgres spring-functionaltest-open --locale=C --encoding=UTF8 --template=template0
-$ createdb -U postgres spring-functionaltest-close --locale=C --encoding=UTF8 --template=template0
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest-open
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest-close
 ```
 ### [Step 2] Clone a repository
-Clone the `Macchinetta/spring-functionaltest` repository into local machine.
+Clone the `terasolunaorg/spring-functionaltest` repository into local machine.
 
 ```console
-$ git clone https://github.com/Macchinetta/spring-functionaltest.git
+$ git clone https://{remote host url}/terasolunaorg/spring-functionaltest.git
 ```
 
-### [Step 3] Place dependent libraries
-Place `iTextAsian-1.0.jar` and `ojdbc7-12.1.0.2.0.jar` on `spring-functionaltest-env/3rdparty`.
-You have to get these jar files in some way. 
-
-```console
-$ mv iTextAsian-1.0.jar spring-functionaltest-env/3rdparty/com/lowagie/iTextAsian/1.0
-$ mv ojdbc7-12.1.0.2.0.jar spring-functionaltest-env/3rdparty/com/oracle/ojdbc7/12.1.0.2.0/
-```
-
-If you'd like to use another version, it's necessary to change some configurations.
-
-### [Step 4] Build artifacts
+### [Step 3] Build artifacts
 Build artifacts using maven commands as follows.
 
 #### Case that use embedded H2 as database
@@ -58,12 +55,12 @@ $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functiona
 
 > **Note:**
 >
-> When using JDK 7, build as follows.  
-> you must compile with the target version 1.7 in accordance with the runtime environment JVM and exclude the source code that depends on JDK 1.8 .  
-> You can set the target version using `java-version` property, and in spring-functionaltest-web you can exclude using `build-for-jdk7` Maven Profile in addition to the default profile.
+> Case that use Thymeleaf as view
 >```console
-> $ mvn clean install -am -pl spring-functionaltest-web -Djava-version=1.7 -P local,build-for-jdk7
-> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -Djava-version=1.7
+> $ cd {your repository directory}
+> $ git checkout {target branch}
+> $ mvn clean install -am -pl spring-functionaltest-web-thymeleaf
+> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db-thymeleaf,spring-functionaltest-web-oauth2-memory-thymeleaf,spring-functionaltest-web-oauth2-remote-thymeleaf
 >```
 
 #### Case that use PostgreSQL as database
@@ -71,15 +68,25 @@ $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functiona
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn clean install -am -pl spring-functionaltest-web -P tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
-$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat8-postgresql,warpack-env,warpack-jstl,travis
+$ mvn clean install -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
+$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
 ```
 
 > **Note:**
 >
 > If you not use default user(`postgres`) or password(`P0stgres`), you should modify settings in `terasoluna-gfw-functionaltest-env/configs/travis/ContainerConfigXML/context.xml`.
 
-### [Step 5] Initialize database (Optional)
+> **Note:**
+>
+> Case that use Thymeleaf as view
+>```console
+> $ cd {your repository directory}
+> $ git checkout {target branch}
+> $ mvn clean install -am -pl spring-functionaltest-web-thymeleaf -P tomcat8-postgresql,warpack-env,warpack-cxf,warpack-transaction,travis
+> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db-thymeleaf,spring-functionaltest-web-oauth2-memory-thymeleaf,spring-functionaltest-web-oauth2-remote-thymeleaf -P tomcat8-postgresql,warpack-env,travis
+>```
+
+### [Step 4] Initialize database (Optional)
 If PostgreSQL use as database, initialize database before run functional test.
 
 ```console
@@ -92,8 +99,8 @@ $ mvn -U sql:execute -pl spring-functionaltest-initdb -P local-postgres-close
 >
 > If you not use default user(`postgres`) or password(`P0stgres`), you should specify `-Ddb.username={your user}` or `-Ddb.password={your password}` or both.
 
-### [Step 6] Startup Tomcat8 and deploy war file
-Startup Tomcat8 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html).
+### [Step 5] Startup Tomcat9 and deploy war file
+Startup Tomcat9 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html).
 
 #### Case that use embedded H2 as database
 
@@ -101,6 +108,14 @@ Startup Tomcat8 and deploy war file using [CARGO maven plugin](https://codehaus-
 $ cd {your repository directory}
 $ mvn -U cargo:run -pl spring-functionaltest-web
 ```
+
+> **Note:**
+>
+> Case that use Thymeleaf as view
+>```console
+> $ cd {your repository directory}
+> $ mvn -U cargo:run -pl spring-functionaltest-web-thymeleaf
+>```
 
 #### Case that use PostgreSQL as database (use Tomcat JNDI Resource)
 
@@ -111,19 +126,38 @@ $ mvn -U cargo:run -pl spring-functionaltest-web -P travis
 
 > **Note:**
 >
+> Case that use Thymeleaf as view
+>```console
+> $ cd {your repository directory}
+> $ mvn -U cargo:run -pl spring-functionaltest-web-thymeleaf -P travis
+>```
+
+> **Note:**
+>
 > Shutdown trigger is "Ctrl + C" on console.
 
-### [Step 7] Deploy OAuth war files
+### [Step 6] Deploy OAuth war files
 Deploy OAuth war files to already running container.
 
 ```console
 $ cd {your repository directory}
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
 ```
 
-### [Step 8] Run functional tests
+> **Note:**
+>
+> In the case of Thymeleaf, run the following command .
+> 
+> ```console
+> $ cd {your repository directory}
+> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
+> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
+> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
+> ```
+
+### [Step 7] Run functional tests
 Run tests using Selenium(`WebDriver`) on JUnit.
 
 ```console
@@ -133,14 +167,41 @@ $ mvn -U test -pl spring-functionaltest-selenium
 
 > **Note:**
 >
-> If functional test is failed, try again using latest Selenium(specify with `-Dselenium.version={latest version}`).
+> Case that use Thymeleaf as view
+> ```console
+> $ cd {your repository directory}
+> $ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment.view=thymeleaf
+> ```
 
 > **Note:**
 >
-> When using JDK 7,  please build as follows.
->```console
-> $ mvn -U test -pl spring-functionaltest-selenium -Djava-version=1.7 -P build-for-jdk7
->```
+> If GeckoDriver is not registered in the path, [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) will download it automatically.  
+> If required proxy, please set `selenium.proxyHttpServer`.  
+> If required proxy authentication, set   `selenium.proxyUserName`, `selenium.proxyUserPassword`.  
+> ```console
+> $ mvn -U test -pl spring-functionaltest-selenium -Dselenium.proxyHttpServer={HttpServer} -Dselenium.proxyUserName={UserName} -Dselenium.proxyUserPassword={Password}
+> ```
+
+> **Note:**
+>
+> In the guava`20.0` on the TERASOLUNA Framework stack, can not run Selenium`3.9.1` defined by SpringIO.  
+> Therefore, downgraded to Selenium '3.0.1` which can be run.  
+> 
+> If functional test can not run , the execution environment such as browser version may be the problem.  
+> In that case , change `selenium` and `geckodriver` to appropriate version.  
+> specify with `-Dselenium.version={selenium version}`, `-Dselenium.geckodriverVersion={geckodriver version}`.
+>
+> However, by upgrading Selenium version, it is necessary to upgrade Guava version.  
+> Therefore, add the version of Guava to spring-functionaltest-selenium/pom.xml as below.
+> ```xml
+> <dependency>
+>   <groupId>com.google.guava</groupId>
+>   <artifactId>guava</artifactId>
+>   <version>any guava version</version>
+>   <scope>test</scope>
+> </dependency>
+> ```
+> Since it has not been tested with Guava version over 20.0, unpredictable behavior may occur.
 
 ## Appendix
 
@@ -178,6 +239,9 @@ Profiles that are available are as follows.
 
 |        environments       | specify maven profiles                                                               |
 |:-------------------------:|--------------------------------------------------------------------------------------|
+|    Tomcat9 + Postgresql   | `tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
+| Tomcat9 + Postgresql [^1] | `tomcat9-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
+|  Tomcat9 + Oracle [^1]    | `tomcat9-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
 |   Tomcat8.5 + Postgresql  | `tomcat85-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`|
 |Tomcat8.5 + Postgresql [^1]| `tomcat85-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                   |
 |  Tomcat8.5 + Oracle [^1]  | `tomcat85-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                       |
@@ -203,7 +267,6 @@ Profiles that are available are as follows.
 |   environments  | specify maven profile |
 |:---------------:|-----------------------|
 |      Java8      | (not specify)         |
-|      Java7      | `build-for-jdk7`      |
 
 ### How to switch bean definition for various environments
 

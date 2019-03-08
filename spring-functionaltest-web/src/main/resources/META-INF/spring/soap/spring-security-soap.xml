@@ -13,6 +13,7 @@
 
   <sec:authentication-manager id="soapAuthenticationManager">
     <sec:authentication-provider user-service-ref="soapUserDetailsService">
+      <sec:password-encoder ref="noOpPasswordEncoder" />
     </sec:authentication-provider>
   </sec:authentication-manager>
 

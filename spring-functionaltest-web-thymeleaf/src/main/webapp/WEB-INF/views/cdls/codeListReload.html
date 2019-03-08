@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">コードリストのリロード</h1>
+
+      <div>CDLS0201001</div>
+      <form th:action="@{/cdls/0201/001}" th:object="${updateCodeListForm}" method="post">
+        <select id="cdls0201001" th:field="*{id}">
+          <option th:each="authority : ${CL_CRON_REFRESH_CODELIST}" th:value="${authority.key}"
+            th:text="${authority.value}"></option>
+        </select> <span th:errors="*{id}"></span>
+        <p>
+          Value:<input type="text" id="cronValue" th:field="*{value}" /> <span th:errors="*{value}"></span>
+        </p>
+        <button id="updateCdls0201001" type="submit" name="update">cron table update</button>
+      </form>
+
+      <div>CDLS0201002</div>
+      <form th:action="@{/cdls/0201/002}" th:object="${updateCodeListForm}" method="post">
+        <select id="cdls0201002" th:field="*{id}">
+          <option th:each="authority : ${refreshCodeList}" th:value="${authority.key}"
+            th:text="${authority.value}"></option>
+        </select> <span th:errors="*{id}"></span>
+        <p>
+          Value:<input type="text" id="refreshValue" th:field="*{value}" /> <span
+            th:errors="*{value}"></span>
+        </p>
+        <button id="updateCdls0201002" type="submit" name="update">refresh table update</button>
+      </form>
+      <a id="codeListRefreshEndPoint" th:href="@{/cdls/0201/002?refresh}">コードリストリフレッシュエンドポイント</a>
+    </div>
+  </div>
+</body>
+</html>

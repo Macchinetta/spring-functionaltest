@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
@@ -46,7 +46,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.dozer.Mapper;
+import com.github.dozermapper.core.Mapper;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -378,8 +378,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         long total = todoRepository.countByCriteria(criteria);
         List<TodoMB3> todos;
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds(pageable.getOffset(), pageable
-                    .getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable
+                    .getOffset(), pageable.getPageSize());
             todos = todoRepository.findPageByCriteria(criteria, rowBounds);
         } else {
             todos = Collections.emptyList();

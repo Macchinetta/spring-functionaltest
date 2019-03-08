@@ -14,9 +14,7 @@
   </sec:http>
 
   <sec:authentication-manager id="userLoginManagerDTAC">
-    <sec:authentication-provider user-service-ref="userDetailsServiceDTAC">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="userDetailsServiceDTAC" />
   </sec:authentication-manager>
 
   <bean id="userDetailsServiceDTAC" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">

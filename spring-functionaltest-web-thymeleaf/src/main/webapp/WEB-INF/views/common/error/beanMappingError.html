@@ -15,7 +15,7 @@
     <div class="alert alert-danger">
       <ul>
         <li
-          th:text="(${!#strings.isEmpty(exceptionCode)} ? |[${exceptionCode}] | : '') + #{e.sf.bnmp.0001}">
+          th:text="${#strings.isEmpty(exceptionCode)} ? #{e.sf.bnmp.0001} : |[${exceptionCode}] #{e.sf.bnmp.0001}|">
         </li>
       </ul>
     </div>

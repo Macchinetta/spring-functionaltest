@@ -19,9 +19,7 @@
   </bean>
 
   <sec:authentication-manager id="authEventSystemFailureHandleUserLoginManager">
-    <sec:authentication-provider user-service-ref="authEventHandleUserDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="authEventHandleUserDetailsService" />
   </sec:authentication-manager>
 
   <sec:http pattern="/athn/1601/**" authentication-manager-ref="authEventSystemFailureHandleUserLoginManager">

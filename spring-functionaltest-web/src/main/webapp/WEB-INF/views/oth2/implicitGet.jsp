@@ -1,16 +1,9 @@
 <script type="text/javascript"
-  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.js"></script>
-<script type="text/javascript"
   src="${pageContext.request.contextPath}/resources/app/js/oth2-implicit.js"></script>
 <script type="text/javascript">
 "use strict";
 
 $(document).ready(function() {
-    jQuery.noConflict(true);
-    todolist();
-});
-
-var todolist = function() {
     var result = oauth2Func.initialize({
         "todo" : {
             clientId : "${clientId}",
@@ -35,7 +28,7 @@ var todolist = function() {
             oauth2Func.parseFailureJSON("todo", data);
         });
     }
-};
+});
 
 </script>
 <div id="wrapper">

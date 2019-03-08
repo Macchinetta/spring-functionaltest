@@ -2,7 +2,7 @@
 
 create table if not exists users(
     username varchar_ignorecase(50) not null primary key,
-    password varchar_ignorecase(60) not null,
+    password varchar_ignorecase(88) not null,
     enabled boolean not null
 );
 
@@ -16,7 +16,7 @@ create unique index ix_auth_username on authorities (username,authority);
 
 create table if not exists clients (
 	client_id varchar_ignorecase(50) not null primary key,
-	client_secret varchar_ignorecase(60) not null,
+	client_secret varchar_ignorecase(88) not null,
 	client_name varchar_ignorecase(256) not null,
 	access_token_validity int(6) not null,
     refresh_token_validity int(6)

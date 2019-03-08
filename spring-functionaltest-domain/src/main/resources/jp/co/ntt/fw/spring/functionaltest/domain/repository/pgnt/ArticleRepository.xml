@@ -31,9 +31,11 @@
     ,publish_date
     ,ROW_NUMBER() OVER(
     <choose>
-      <when test="pageable.sort != null">
-        <foreach item="order" collection="pageable.sort">
-          ORDER BY ${order.property} ${order.direction}
+      <when test="pageable.sort.iterator().hasNext()">
+        ORDER BY
+        <foreach item="order" collection="pageable.sort" separator=",">
+          ${order.property}
+          ${order.direction}
         </foreach>
       </when>
       <otherwise>
@@ -58,9 +60,11 @@
     resultMap="articleResultMap">
     <include refid="selectArticle" />
     <include refid="articleSearchCriteria" />
-    <if test="pageable.sort != null">
-      <foreach item="order" collection="pageable.sort">
-        ORDER BY ${order.property} ${order.direction}
+    <if test="pageable.sort.iterator().hasNext()">
+      ORDER BY
+      <foreach item="order" collection="pageable.sort" separator=",">
+        ${order.property}
+        ${order.direction}
       </foreach>
     </if>
     LIMIT #{pageable.pageSize}
@@ -73,9 +77,11 @@
     SELECT * FROM (
     <include refid="selectArticleOracle" />
     <include refid="articleSearchCriteria" />
-    <if test="pageable.sort != null">
-      <foreach item="order" collection="pageable.sort">
-        ORDER BY ${order.property} ${order.direction}
+    <if test="pageable.sort.iterator().hasNext()">
+      ORDER BY
+      <foreach item="order" collection="pageable.sort" separator=",">
+        ${order.property}
+        ${order.direction}
       </foreach>
     </if>
     )

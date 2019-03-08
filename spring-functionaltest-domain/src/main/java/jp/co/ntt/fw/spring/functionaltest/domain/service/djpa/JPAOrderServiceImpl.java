@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
@@ -59,7 +59,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     @Override
     @Transactional(value = "jpaTransactionManager")
     public JPAOrder getOrderDetail(Integer orderId) {
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         if (null == jpaOrder) {
             throw new ResourceNotFoundException(message);
         }
@@ -112,7 +112,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     public JPAOrder addtoOrder(List<JPAItem> itemList, Integer orderId,
             String comment) {
 
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         Integer orderAmount = jpaOrder.getOrderAmount();
         List<JPAOrderItem> orderItemList = new ArrayList<JPAOrderItem>();
         for (JPAItem jpaItem : itemList) {
@@ -140,7 +140,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
 
     @Override
     public JPAOrder updateStatus(Integer orderId, String statusName) {
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         JPAOrderStatus orderStatus = jpaOrderStatusRepository.findByStatusName(
                 statusName);
         jpaOrder.setOrderStatus(orderStatus);
@@ -150,7 +150,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     @Override
     public JPAOrder updateOrderItem(Integer orderId, Integer itemNum,
             Integer newQty) {
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         List<JPAOrderItem> orderItemList = jpaOrder.getOrderItem();
         for (JPAOrderItem jpaOrderItem : orderItemList) {
             if (itemNum.equals(jpaOrderItem.getItemNumber())) {
@@ -170,12 +170,12 @@ public class JPAOrderServiceImpl implements JPAOrderService {
 
     @Override
     public void delete(Integer orderId) {
-        jpaOrderRepository.delete(orderId);
+        jpaOrderRepository.deleteById(orderId);
     }
 
     @Override
     public void deleteItem(Integer orderId, Integer itemNum) {
-        JPAOrder jpaOrder = jpaOrderRepository.findOne(orderId);
+        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         List<JPAOrderItem> orderItems = jpaOrder.getOrderItem();
 
         List<JPAOrderItem> orderItemsToremove = new ArrayList<JPAOrderItem>();
@@ -207,7 +207,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     public JPAOrderForCommonCondition findOrderDeatilUsingCommonConditionOnEntity(
             Integer orderId) {
         JPAOrderForCommonCondition jpaOrder = jpaOrderForCommonConditionRepository
-                .findOne(orderId);
+                .findById(orderId).orElse(null);
         if (null == jpaOrder) {
             throw new ResourceNotFoundException(message);
         }
@@ -218,7 +218,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     public JPAOrderForCmnConditionNoBoolean findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(
             Integer orderId) {
         JPAOrderForCmnConditionNoBoolean jpaOrder = jpaOrderForCommonConditionNoBooleanRepository
-                .findOne(orderId);
+                .findById(orderId).orElse(null);
         if (null == jpaOrder) {
             throw new ResourceNotFoundException(message);
         }

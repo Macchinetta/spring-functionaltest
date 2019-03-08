@@ -44,8 +44,9 @@
           </tr>
           <tr>
             <th>性別</th>
-            <td><span id="gender" th:text="${CL_GENDER[member.gender]}"></span> <input
-              type="hidden" name="gender" value="1"></td>
+            <td><span id="gender"
+              th:text="${member.gender} != null ? ${CL_GENDER['__${member.gender}__']}"></span>
+              <input type="hidden" name="gender" value="1"></td>
           </tr>
           <tr>
             <th>郵便番号</th>

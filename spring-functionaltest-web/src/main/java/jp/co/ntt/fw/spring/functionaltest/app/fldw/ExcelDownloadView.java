@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.fldw;
 
@@ -23,12 +23,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.poi.ss.usermodel.BorderFormatting;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
@@ -124,9 +126,9 @@ public class ExcelDownloadView extends AbstractXlsxView {
         CellStyle headerCellStyle = (CellStyle) workbook.createCellStyle();
         Font setFont = (Font) workbook.createFont();
         setFont.setFontHeightInPoints((short) 18);
-        setFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-        headerCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-        headerCellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        setFont.setBold(true);
+        headerCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        headerCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         headerCellStyle.setWrapText(true);
         headerCellStyle.setFont(setFont);
 
@@ -134,30 +136,30 @@ public class ExcelDownloadView extends AbstractXlsxView {
         CellStyle titleCellStyle = (CellStyle) workbook.createCellStyle();
         Font setTitleFont = (Font) workbook.createFont();
         setTitleFont.setFontHeightInPoints((short) 14);
-        setTitleFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        setTitleFont.setBold(true);
         titleCellStyle.setFont(setTitleFont);
-        titleCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
-        titleCellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        titleCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        titleCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         titleCellStyle.setWrapText(true);
 
         // This is for Data Style
         CellStyle dataCellStyle = (CellStyle) workbook.createCellStyle();
         Font setDataFont = (Font) workbook.createFont();
         setDataFont.setFontHeightInPoints((short) 10);
-        setDataFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        setDataFont.setBold(true);
         dataCellStyle.setFont(setDataFont);
-        dataCellStyle.setAlignment(CellStyle.ALIGN_CENTER_SELECTION);
-        dataCellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        dataCellStyle.setAlignment(HorizontalAlignment.CENTER_SELECTION);
+        dataCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
         // This is for List Style
         CellStyle ListCellStyle = (CellStyle) workbook.createCellStyle();
         Font setListFont = (Font) workbook.createFont();
         setListFont.setFontHeightInPoints((short) 10);
-        setListFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        setListFont.setBold(true);
         ListCellStyle.setFont(setListFont);
         ListCellStyle.setIndention((short) 1);
-        ListCellStyle.setAlignment(CellStyle.ALIGN_LEFT);
-        ListCellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        ListCellStyle.setAlignment(HorizontalAlignment.LEFT);
+        ListCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
         // fill in values in header row
         Cell headerCell = headerRow.createCell(1, Cell.CELL_TYPE_BLANK);
@@ -235,59 +237,54 @@ public class ExcelDownloadView extends AbstractXlsxView {
         DocListItem3Cell.setCellStyle(ListCellStyle);
 
         // give borders to all the tables
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                nameRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                nameRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                nameRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                nameRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, nameRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, nameRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, nameRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, nameRangeAddress, sheet);
 
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                nameValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                nameValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                nameValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                nameValueRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, nameValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, nameValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, nameValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, nameValueRangeAddress,
+                sheet);
 
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                addressRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                addressRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                addressRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                addressRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, addressRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressRangeAddress,
+                sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressRangeAddress,
+                sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressRangeAddress,
+                sheet);
 
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                addressValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                addressValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                addressValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                addressValueRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, addressValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressValueRangeAddress,
+                sheet);
 
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                birthdateRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                birthdateRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                birthdateRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                birthdateRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateRangeAddress,
+                sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, birthdateRangeAddress,
+                sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateRangeAddress,
+                sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, birthdateRangeAddress,
+                sheet);
 
-        RegionUtil.setBorderTop(BorderFormatting.BORDER_MEDIUM,
-                birthdateValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderBottom(BorderFormatting.BORDER_MEDIUM,
-                birthdateValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderLeft(BorderFormatting.BORDER_MEDIUM,
-                birthdateValueRangeAddress, sheet, workbook);
-        RegionUtil.setBorderRight(BorderFormatting.BORDER_MEDIUM,
-                birthdateValueRangeAddress, sheet, workbook);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM,
+                birthdateValueRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateValueRangeAddress,
+                sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM,
+                birthdateValueRangeAddress, sheet);
 
         String filename = "日本語ファイル名.xlsx";
         Browser browser = Browser.detect(request.getHeader("user-agent"));

@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.5.1.RELEASE</version>
+    <version>1.6.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Selenium</name>
@@ -95,6 +95,11 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>io.github.bonigarcia</groupId>
+      <artifactId>webdrivermanager</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
@@ -110,48 +115,4 @@
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
   </properties>
 
-  <profiles>
-    <!-- excluded class when build for jdk7 -->
-    <profile>
-      <id>build-for-jdk7</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.terasoluna.gfw</groupId>
-          <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-          <type>pom</type>
-          <exclusions>
-            <exclusion>
-              <groupId>com.fasterxml.jackson.datatype</groupId>
-              <artifactId>jackson-datatype-jsr310</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-        <dependency>
-          <groupId>org.terasoluna.gfw</groupId>
-          <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
-          <type>pom</type>
-          <exclusions>
-            <exclusion>
-              <groupId>org.mybatis</groupId>
-              <artifactId>mybatis-typehandlers-jsr310</artifactId>
-            </exclusion>
-          </exclusions>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <testExcludes>
-                <exclude>**/RestAPIForJSR310Test.java</exclude>
-                <exclude>**/CommonLibraryValidationWithCustomizedAnnotationTest.java</exclude>
-              </testExcludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>

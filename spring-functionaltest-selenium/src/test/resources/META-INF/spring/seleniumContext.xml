@@ -62,6 +62,11 @@
   </bean>
 
   <bean class="jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverCreator" />
+  
+  <bean id="firefoxDriverPrepare" class="jp.co.ntt.fw.spring.functionaltest.selenium.FirefoxDriverPrepare" />
+
+  <bean id="waitWebDriverEventListener"
+    class="jp.co.ntt.fw.spring.functionaltest.selenium.WaitWebDriverEventListener" scope="prototype" />
 
   <!-- Settings for WebDrivers -->
   <beans profile="firefox default">

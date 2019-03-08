@@ -20,7 +20,7 @@
       </tr>
     </table>
   </fieldset>
-  <form:form action="${pageContext.request.contextPath}/athn/0502/001/logout" method="post">
+  <form:form action="${pageContext.request.contextPath}/athn/0501/002/logout" method="post">
     <input type="submit" id="logout" class="btn btn-default" value="Logout">
   </form:form>
 

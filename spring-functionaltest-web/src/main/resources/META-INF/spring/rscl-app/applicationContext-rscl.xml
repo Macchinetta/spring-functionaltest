@@ -59,7 +59,7 @@
 
   <bean id="loggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.LoggingInterceptor" />
   <bean id="accessCtrlInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AccessCtrlInterceptor" />
-  
+
   <bean id="interceptorsRestTemplate" class="org.springframework.web.client.RestTemplate">
     <property name="interceptors">
       <list>

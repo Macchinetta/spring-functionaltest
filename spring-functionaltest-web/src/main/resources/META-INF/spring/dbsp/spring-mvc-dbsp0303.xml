@@ -43,7 +43,7 @@
       <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
     </mvc:interceptor>
-    
+
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/**" />

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -244,14 +244,32 @@ public class DBLogAssertOperations {
      * @param stackTracePattern スタックトレースの文字列パターン(必須)
      */
     public void assertContainsByRegexStackTrace(String stackTracePattern) {
+        assertContainsByRegexStackTrace(null, stackTracePattern);
+    }
+
+    /**
+     * スタックトレースに指定した文字列パターン(正規表現)が出力されていることを検証する。
+     * <p>
+     * 出力元のロガー名パターンを指定することで対象を絞り込むことが可能である。
+     * </p>
+     * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
+     * @param stackTracePattern スタックトレースの文字列パターン(必須)
+     */
+    public void assertContainsByRegexStackTrace(String loggerNamePattern,
+            String stackTracePattern) {
 
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
-        sql.append("SELECT COUNT(e.*) FROM logging_event_exception e");
-        where.append(" WHERE e.TRACE_LINE REGEXP :stackTrace");
+        sql.append("SELECT COUNT(ee.*) FROM logging_event_exception ee");
+        sql.append(" JOIN logging_event e ON e.event_id = ee.event_id");
+        where.append(" WHERE ee.TRACE_LINE REGEXP :stackTrace");
+        if (StringUtils.hasText(loggerNamePattern)) {
+            where.append(" AND e.logger_name REGEXP :loggerName");
+        }
         sql.append(where);
 
         MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("loggerName", loggerNamePattern);
         params.addValue("stackTrace", stackTracePattern);
         Long count = jdbcOperations.queryForObject(sql.toString(), params,
                 Long.class);

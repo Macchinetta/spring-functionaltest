@@ -11,16 +11,13 @@
         http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-  <!-- #927 JMS関連のBean定義ファイルの構成は、ガイドラインに順ずる。 以下の理由から、JMSのBean定義ファイル全体をenvプロジェクトで管理している。 * applicationContext-jms.xml 
+  <!-- #57 JMS関連のBean定義ファイルの構成は、ガイドラインに順ずる。 以下の理由から、JMSのBean定義ファイルの多くをenvプロジェクトで管理している。 * applicationContext-jms.xml 
     jms:listener-containerのcache属性をプロパティプレースホルダで置き換えることができないため。 (ガイドラインではcache="consumer"を推奨しているが、IBM MQではアプリケーションサーバ内で 
-    ConnectionPool/SessionPoolを管理する仕様であるため、cache="none"に変更する必要がある。) * spring-functionaltest-jms-infra.xml、spring-functionaltest-jms-env.xml 
-    JNDI接続とローカルBean定義のConnectionFactoryを環境毎に切り替えて利用しているため。 また、JmsTemplateが参照するConnectionFactoryは環境に依存しているため。 
-    * spring-functionaltest-jms-domain.xml JmsTransactionManagerが参照するConnectionFactoryは環境に依存しているため。 -->
+    ConnectionPool/SessionPoolを管理する仕様であるため、cache="none"に変更する必要がある。) * spring-functionaltest-jms-infra.xml JmsTemplateやJmsTransactionManagerが参照する
+    connectionFactory属性をプロパティプレースホルダで置き換えることができないため。 * spring-functionaltest-jms-env.xml 可読性を考慮して、spring-functionaltest-env.xmlから
+    切り出している。 -->
 
-  <import resource="classpath:/META-INF/spring/jmss/spring-functionaltest-jms-domain.xml" />
-
-  <jms:annotation-driven />
-  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.listener" />
+  <import resource="classpath:/META-INF/spring/jmss/spring-functionaltest-jms-infra.xml" />
 
   <bean id="jmsErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.JmsErrorHandler" />
 

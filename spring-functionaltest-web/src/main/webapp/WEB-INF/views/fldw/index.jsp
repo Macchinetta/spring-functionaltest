@@ -8,8 +8,4 @@
   <ul>
     <li><a id="fldw0201001" href="${pageContext.request.contextPath}/fldw/0201/001">fldw0201001</a></li>
   </ul>
-  <div>[FLDW03] CSVダウンロード</div>
-  <ul>
-    <li><a id="fldw0301001" href="${pageContext.request.contextPath}/fldw/0301/001">fldw0301001</a></li>
-  </ul>
 </div>

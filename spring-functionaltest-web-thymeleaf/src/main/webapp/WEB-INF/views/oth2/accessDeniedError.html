@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="screenTitle">accessDeniedPage</h1>
+      <div class="alert alert-danger">
+        <ul>
+          <li><div th:if="${exceptionCode != null}">
+              <span th:text="|[${exceptionCode}]|"></span> <span th:text="#{e.sf.oth2.9002}"></span>
+            </div></li>
+        </ul>
+        <ul>
+          <li><div th:if="${exception.message != null}">
+              <span th:text="${exception.message}"></span>
+            </div></li>
+        </ul>
+      </div>
+      <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+      <br> <br> <br> <br>
+    </div>
+  </div>
+</body>
+</html>

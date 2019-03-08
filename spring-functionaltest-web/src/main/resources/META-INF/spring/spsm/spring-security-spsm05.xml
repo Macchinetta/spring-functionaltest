@@ -32,9 +32,7 @@
   </sec:http>
 
   <sec:authentication-manager id="loginForSessionUserInfoManager">
-    <sec:authentication-provider user-service-ref="loginForSessionUserInfoDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForSessionUserInfoDetailsService" />
   </sec:authentication-manager>
 
   <bean id="loginForSessionUserInfoDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">

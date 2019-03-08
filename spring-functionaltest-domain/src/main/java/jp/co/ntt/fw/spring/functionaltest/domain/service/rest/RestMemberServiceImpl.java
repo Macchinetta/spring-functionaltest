@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rest;
 
@@ -26,7 +26,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMemberCredential;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.rest.RestMemberRepository;
 
 import org.apache.ibatis.session.RowBounds;
-import org.dozer.Mapper;
+import com.github.dozermapper.core.Mapper;
 import org.joda.time.DateTime;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -77,8 +77,8 @@ public class RestMemberServiceImpl implements RestMemberService {
         // Count Member by search criteria
         long total = restMemberRepository.countByContainsName(name);
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds(pageable.getOffset(), pageable
-                    .getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable
+                    .getOffset(), pageable.getPageSize());
             restMembers = restMemberRepository.findPageByContainsName(name,
                     rowBounds);
 

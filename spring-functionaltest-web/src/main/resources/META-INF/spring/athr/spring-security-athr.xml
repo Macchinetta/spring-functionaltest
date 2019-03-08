@@ -8,20 +8,14 @@
   <bean id="authorizationService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.athr.AuthorizationServiceImpl" />
 
   <sec:authentication-manager id="loginForStaffManager">
-    <sec:authentication-provider user-service-ref="loginForStaffDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForStaffDetailsService" />
   </sec:authentication-manager>
 
   <sec:authentication-manager id="loginForMethodManager">
-    <sec:authentication-provider user-service-ref="loginForMethodDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForMethodDetailsService" />
   </sec:authentication-manager>
 
   <sec:authentication-manager id="loginForRoleUserManager">
-    <sec:authentication-provider user-service-ref="loginForRoleUserDetailsService">
-      <sec:password-encoder ref="passwordEncoder" />
-    </sec:authentication-provider>
+    <sec:authentication-provider user-service-ref="loginForRoleUserDetailsService" />
   </sec:authentication-manager>
 </beans>

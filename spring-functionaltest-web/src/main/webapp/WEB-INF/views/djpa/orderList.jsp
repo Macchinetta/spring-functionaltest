@@ -168,11 +168,9 @@
       </div>
     </c:when>
   </c:choose>
-  <div>
 
-    <a id="regDelOrder" href="${pageContext.request.contextPath}/djpa/delivery/order/register">Add
-      Delivery Order</a>
-  </div>
+  <a id="regDelOrder" href="${pageContext.request.contextPath}/djpa/delivery/order/register">Add
+    Delivery Order</a>
   <hr>
   <a id="djpaLink" href="${pageContext.request.contextPath}/djpa/">Back to [DJPA] JPA
     Confirmation</a>
