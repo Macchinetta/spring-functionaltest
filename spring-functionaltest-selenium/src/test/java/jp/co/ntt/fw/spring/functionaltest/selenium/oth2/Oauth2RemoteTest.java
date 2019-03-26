@@ -411,10 +411,10 @@ public class Oauth2RemoteTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
                 "org.terasoluna.gfw.common.exception.ExceptionLogger", "401 .*",
-                "org\\.springframework\\.web\\.client\\.HttpClientErrorException");
+                "org\\.springframework\\.web\\.client\\.HttpClientErrorException\\$Unauthorized");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "jp.co.ntt.fw.spring.functionaltest.app.oth2.OAuth2ExceptionHandler",
-                "status code=500, message=500 .*");
+                "status code=500 INTERNAL_SERVER_ERROR, message=500 .*");
     }
 
     @Override

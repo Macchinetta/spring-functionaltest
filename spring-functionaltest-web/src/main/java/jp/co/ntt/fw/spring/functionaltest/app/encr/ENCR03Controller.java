@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.encr;
 
 import java.security.KeyPair;
+import java.util.Base64;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
 
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,8 +63,8 @@ public class ENCR03Controller {
         KeyPair keyPair = encryptionDataService.generateKeyPairByJCA();
         byte[] encryptedBytes = encryptionDataService.encryptByPublicKey(form
                 .getRawText(), keyPair.getPublic());
-        model.addAttribute("encryptedText", new String(Base64.encode(
-                encryptedBytes)));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
+                encryptedBytes));
         model.addAttribute("decryptedText", encryptionDataService
                 .decryptByPrivateKey(encryptedBytes, keyPair.getPrivate()));
         return "encr/publicKeyEncryptionComplete";
@@ -80,8 +80,8 @@ public class ENCR03Controller {
 
         byte[] encryptedBytes = encryptionDataService
                 .encryptByJCAWithPublicKeyOfOpenSSL(form.getRawText());
-        model.addAttribute("encryptedText", new String(Base64.encode(
-                encryptedBytes)));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
+                encryptedBytes));
         model.addAttribute("decryptedText", encryptionDataService
                 .openSSLDecrypt(encryptedBytes));
 
@@ -99,8 +99,8 @@ public class ENCR03Controller {
         byte[] encryptedBytes = encryptionDataService.openSSLEncrypt(form
                 .getRawText());
 
-        model.addAttribute("encryptedText", new String(Base64.encode(
-                encryptedBytes)));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
+                encryptedBytes));
         model.addAttribute("decryptedText", encryptionDataService
                 .decryptByJCAWithPrivateKeyOfOpenSSL(encryptedBytes));
 

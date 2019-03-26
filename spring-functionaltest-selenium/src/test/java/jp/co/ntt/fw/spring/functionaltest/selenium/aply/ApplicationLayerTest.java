@@ -1099,7 +1099,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "may not be null"));
+                    "must not be null"));
         }
         // ログの確認
         {
@@ -1269,7 +1269,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "may not be null"));
+                    "must not be null"));
         }
         // ログの確認
         {
@@ -1354,7 +1354,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value4.errors")), is(
-                    "may not be null"));
+                    "must not be null"));
         }
         // ログの確認
         {

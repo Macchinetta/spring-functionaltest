@@ -5,10 +5,10 @@
     modelAttribute="customBeanValidationByOriginalRulesForm" class="form-horizontal">
 
     <div class="form-group">
-      <form:label path="isbnCode" class="col-sm-2 control-label">ISBNCode</form:label>
+      <form:label path="ipAddress" class="col-sm-2 control-label">IP Address</form:label>
       <div class="col-sm-10">
-        <form:input path="isbnCode" class="form-control" placeholder="ISBNCode" />
-        <form:errors path="isbnCode" class="text-danger" />
+        <form:input path="ipAddress" class="form-control" placeholder="IP Address" />
+        <form:errors path="ipAddress" class="text-danger" />
       </div>
     </div>
 

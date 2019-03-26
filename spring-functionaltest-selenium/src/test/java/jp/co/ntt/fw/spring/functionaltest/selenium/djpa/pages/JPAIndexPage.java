@@ -53,6 +53,14 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     private WebElement noLazyFetchSettingLink;
 
     @CacheLookup
+    @FindBy(id = "djpa0103004")
+    private WebElement registerSession;
+
+    @CacheLookup
+    @FindBy(id = "djpa0103005")
+    private WebElement registerFlashAttribute;
+
+    @CacheLookup
     @FindBy(id = "djpa0201001")
     private WebElement crudeRepoCheckPage;
 
@@ -143,6 +151,14 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     @CacheLookup
     @FindBy(id = "djpa0601001")
     private WebElement findOneByIdLink;
+
+    @CacheLookup
+    @FindBy(id = "djpa0601003")
+    private WebElement acquiringNotForeignKey;
+
+    @CacheLookup
+    @FindBy(id = "djpa0601004")
+    private WebElement acquiringForeignKey;
 
     @CacheLookup
     @FindBy(id = "djpa0602001")
@@ -300,6 +316,18 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
         return homePage;
     }
 
+    public JPAHomePage djpa0103004Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        registerSession.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0103005Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        registerFlashAttribute.click();
+        return homePage;
+    }
+
     public JPAHomePage djpa0201001Click() {
         JPAHomePage homePage = new JPAHomePage(driver);
         crudeRepoCheckPage.click();
@@ -435,6 +463,18 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     public JPAHomePage djpa0601001Click() {
         JPAHomePage homePage = new JPAHomePage(driver);
         findOneByIdLink.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0601003Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        acquiringNotForeignKey.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0601004Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        acquiringForeignKey.click();
         return homePage;
     }
 

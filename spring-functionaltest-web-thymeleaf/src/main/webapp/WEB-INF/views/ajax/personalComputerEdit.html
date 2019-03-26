@@ -11,7 +11,22 @@
           xhr.setRequestHeader([[${_csrf.headerName}]], [[${_csrf.token}]]);
       });
 
-      ajax.editPersonalComputer = function(path) {
+      ajax.editPersonalComputer = function(method, path) {
+
+          switch (method) {
+          case 'ajax.editPersonalComputerForJson':
+              return ajax.editPersonalComputerForJson(path);
+              break;
+          case 'ajax.editPersonalComputerForJsonAndBidingResultHandle':
+              return ajax.editPersonalComputerForJsonAndBidingResultHandle(path);
+              break;
+          default:
+              return ajax.editPersonalComputerDefault(path);
+              break;
+          }
+      };
+
+      ajax.editPersonalComputerDefault = function(path) {
 
           $.ajax([[@{/ajax/}]] + path, {
               type : "POST",
@@ -163,9 +178,7 @@
           <div class="form-group col col-md-5">
             <button id="retrunToIndex" name="retrunToIndex" class="btn btn-default">戻る</button>
             <input id="edit" type="button" name="edit" class="btn btn-default"
-              th:onclick="|return ${#strings.escapeJavaScript(method)}
-              ('${#strings.escapeJavaScript(path)}')|"
-              value="編集" />
+              th:onclick="return ajax.editPersonalComputer([[${method}]], [[${path}]])" value="編集" />
           </div>
         </fieldset>
       </form>

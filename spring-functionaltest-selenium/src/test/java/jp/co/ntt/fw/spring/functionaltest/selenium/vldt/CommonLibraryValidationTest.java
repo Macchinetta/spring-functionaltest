@@ -67,7 +67,7 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
     /**
      * VLDT0502001
      * <ul>
-     * <li>formatterを使用した型変換を用いて、コレクションに対する入力チェックが行えることを確認する。</li>
+     * <li>コレクションに対する入力チェックが行えることを確認する。</li>
      * </ul>
      */
     @Test
@@ -76,8 +76,8 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
         String target = "roles";
         String errors = "errors";
         String validate = "validate";
-        String errorMessage1 = "\"roles[0].role\" must exist in code list of CL_ROLE.";
-        String errorMessage2 = "\"roles[1].role\" must exist in code list of CL_ROLE.";
+        String errorMessage1 = "\"roles[0]\" must exist in code list of CL_ROLE.";
+        String errorMessage2 = "\"roles[1]\" must exist in code list of CL_ROLE.";
 
         // テスト画面表示
         {

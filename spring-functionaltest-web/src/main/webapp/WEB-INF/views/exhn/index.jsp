@@ -35,6 +35,7 @@
   <div>[EXHN07]
     DefaultHandlerExceptionResolverで設定されるHTTPレスポンスコードの確認</div>
   <ul>
+    <li><a id="exhn0701001" href="${pageContext.request.contextPath}/exhn/0701/001">exhn0701001</a></li>
     <li><a id="exhn0701002" href="${pageContext.request.contextPath}/exhn/0701/002">exhn0701002</a></li>
     <li><a id="exhn0701003" href="${pageContext.request.contextPath}/exhn/0701/003">exhn0701003</a></li>
     <li><a id="exhn0701004" href="${pageContext.request.contextPath}/exhn/0701/004">exhn0701004</a></li>
@@ -47,6 +48,7 @@
     <li><a id="exhn0701011" href="${pageContext.request.contextPath}/exhn/0701/011">exhn0701011</a></li>
     <li><a id="exhn0701012" href="${pageContext.request.contextPath}/exhn/0701/012">exhn0701012</a></li>
     <li><a id="exhn0701013" href="${pageContext.request.contextPath}/exhn/0701/013">exhn0701013</a></li>
+    <li><a id="exhn0701015" href="${pageContext.request.contextPath}/exhn/0701/015">exhn0701015</a></li>
   </ul>
 
   <div>[EXHN08] HandlerExceptionResolverLoggingInterceptorの拡張実装の確認</div>

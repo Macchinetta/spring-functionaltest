@@ -27,6 +27,16 @@ public class DJPAController06 {
         return "redirect:/djpa/book/list";
     }
 
+    @RequestMapping(value = "0601/003")
+    public String handle0601003() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0601/004")
+    public String handle0601004() {
+        return "redirect:/djpa/book/list";
+    }
+
     @RequestMapping(value = "0602/001")
     public String handle0602001() {
         return "redirect:/djpa/book/pgList";

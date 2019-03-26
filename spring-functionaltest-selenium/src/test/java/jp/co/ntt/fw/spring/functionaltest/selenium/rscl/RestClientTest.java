@@ -1226,9 +1226,9 @@ public class RestClientTest extends FunctionTestSupport {
                 "AsyncLoggingInterceptor Called!");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*",
-                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                "Request Header \\[Accept:\\\"application/xml, text/xml, "
                         + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1295,9 +1295,9 @@ public class RestClientTest extends FunctionTestSupport {
                 "AsyncLoggingInterceptor Called!");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*",
-                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                "Request Header \\[Accept:\\\"application/xml, text/xml, "
                         + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1364,9 +1364,9 @@ public class RestClientTest extends FunctionTestSupport {
                 "AsyncLoggingInterceptor Called!");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*",
-                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                "Request Header \\[Accept:\\\"application/xml, text/xml, "
                         + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         tryAssertContainsByRegexExceptionMessageAndRetry(webDriverOperations
@@ -1439,9 +1439,9 @@ public class RestClientTest extends FunctionTestSupport {
                 "AsyncLoggingInterceptor Called!");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*",
-                "Request Header \\{Accept=\\[application/xml, text/xml, "
+                "Request Header \\[Accept:\\\"application/xml, text/xml, "
                         + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
+                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(

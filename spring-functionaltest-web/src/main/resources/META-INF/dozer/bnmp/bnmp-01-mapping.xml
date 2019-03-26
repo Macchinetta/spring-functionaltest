@@ -10,6 +10,10 @@
       <a>firstName</a>
       <b>myoji</b>
     </field>
+    <field>
+      <a>birthDate</a>
+      <b>tanjobi</b>
+    </field>
   </mapping>
   <mapping type="one-way">
     <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarForm

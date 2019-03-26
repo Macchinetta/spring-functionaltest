@@ -17,6 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
@@ -152,7 +153,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
     public void testVLDT0101002() {
         String testId = "vldt0101002";
         String target = "address";
-        String errorMessage = "may not be empty";
+        String errorMessage = "must not be empty";
 
         // テスト画面表示
         {
@@ -202,7 +203,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
         List<String> errorMessages = new ArrayList<String>();
         errorMessages.add("size must be between 1 and 20");
         errorMessages.add("size must be between 1 and 50");
-        errorMessages.add("may not be null");
+        errorMessages.add("must not be null");
 
         // テスト画面表示
         {
@@ -241,7 +242,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
         List<String> errorMessages = new ArrayList<String>();
         errorMessages.add("size must be between 1 and 20");
         errorMessages.add("size must be between 1 and 50");
-        errorMessages.add("may not be null");
+        errorMessages.add("must not be null");
 
         // テスト画面表示
         {
@@ -278,7 +279,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
         String testId = "vldt0101005";
         String[] targets = { "userName", "email", "age" };
         String[] errorMessages = { "size must be between 1 and 20",
-                "size must be between 1 and 50", "may not be null" };
+                "size must be between 1 and 50", "must not be null" };
 
         // テスト画面表示
         {
@@ -305,68 +306,182 @@ public class SimpleValidationTest extends FunctionTestSupport {
     /**
      * VLDT0101006
      * <ul>
-     * <li>JSR303、Hibernate Validatorのチェックルールを指定した場合、フィールド値の検証が行えることを確認する。</li>
+     * <li>JSR380、Hibernate Validatorのチェックルールを指定した場合、フィールド値の検証が行えることを確認する。</li>
      * </ul>
      */
     @Test
     public void testVLDT0101006() {
         String testId = "vldt0101006";
-        String[] targets = { "notnull", "nullvalue", "pattern", "min", "max",
-                "decimalmin", "decimalmax", "size", "digits", "truevalue",
-                "falsevalue", "future", "past", "creditcardnumber", "email",
-                "url", "notblank", "notempty" };
-        String[] errorMessages = { "may not be null", "must be null",
-                "must match \"\\d{6}\"", "must be greater than or equal to 100",
-                "must be less than or equal to 100",
-                "must be greater than or equal to 0.0",
-                "must be less than or equal to 99999.99",
-                "size must be between 2 and 3",
-                "numeric value out of bounds (<6 digits>.<2 digits> expected)",
-                "must be true", "must be false", "must be in the future",
-                "must be in the past", "invalid credit card number",
-                "not a well-formed email address", "must be a valid URL",
-                "may not be empty", "may not be empty" };
 
         // テスト画面表示
         {
             webDriverOperations.click(id(testId));
         }
 
-        // 実施条件1
+        // Bean Validation
         {
-            // テスト実行
+            String[] beanValidationTargets = { "notnull", "notempty",
+                    "notblank", "nullvalue", "pattern", "min", "max",
+                    "decimalmin", "decimalmax", "positive", "positiveorzero",
+                    "negative", "negativeorzero", "size", "digits", "truevalue",
+                    "falsevalue", "future", "futureorpresent", "past",
+                    "pastorpresent", "email" };
+            String[] beanValidationErrorMessages = { "must not be null",
+                    "must not be empty", "must not be blank", "must be null",
+                    "must match \"\\d{6}\"",
+                    "must be greater than or equal to 100",
+                    "must be less than or equal to 100",
+                    "must be greater than or equal to 0.0",
+                    "must be less than or equal to 99999.99",
+                    "must be greater than 0",
+                    "must be greater than or equal to 0", "must be less than 0",
+                    "must be less than or equal to 0",
+                    "size must be between 2 and 3",
+                    "numeric value out of bounds (<6 digits>.<2 digits> expected)",
+                    "must be true", "must be false", "must be a future date",
+                    "must be a date in the present or in the future",
+                    "must be a past date",
+                    "must be a date in the past or in the present",
+                    "must be a well-formed email address" };
+
+            // テスト実行(Bean Validation)
             {
                 LocalDate ld = new LocalDate();
 
-                webDriverOperations.overrideText(id(targets[1]), "a");
-                webDriverOperations.overrideText(id(targets[2]), "1234567");
-                webDriverOperations.overrideText(id(targets[3]), "99");
-                webDriverOperations.overrideText(id(targets[4]), "101");
-                webDriverOperations.overrideText(id(targets[5]), "-0.1");
-                webDriverOperations.overrideText(id(targets[6]), "100000.00");
-                webDriverOperations.overrideText(id(targets[7]), "1234");
-                webDriverOperations.overrideText(id(targets[8]), "123456.125");
-                webDriverOperations.select(id(targets[9]), "False");
-                webDriverOperations.select(id(targets[10]), "True");
-                webDriverOperations.overrideText(id(targets[11]), ld.minusDays(
-                        1).toString(localeDateFormat.get(currentLocale)));
-                webDriverOperations.overrideText(id(targets[12]), ld.plusDays(1)
-                        .toString(localeDateFormat.get(currentLocale)));
-                webDriverOperations.overrideText(id(targets[13]),
-                        "1234567890123456");
-                webDriverOperations.overrideText(id(targets[14]), "aaa@aaa.");
-                webDriverOperations.overrideText(id(targets[15]),
-                        "htt://aaa.com/");
-                webDriverOperations.clearText(id(targets[16]));
-                webDriverOperations.clearText(id(targets[17]));
-                webDriverOperations.click(id(validate));
+                webDriverOperations.clearText(id(beanValidationTargets[0]));
+                webDriverOperations.clearText(id(beanValidationTargets[1]));
+                webDriverOperations.overrideText(id(beanValidationTargets[2]),
+                        " ");
+                webDriverOperations.overrideText(id(beanValidationTargets[3]),
+                        "a");
+                webDriverOperations.overrideText(id(beanValidationTargets[4]),
+                        "1234567");
+                webDriverOperations.overrideText(id(beanValidationTargets[5]),
+                        "99");
+                webDriverOperations.overrideText(id(beanValidationTargets[6]),
+                        "101");
+                webDriverOperations.overrideText(id(beanValidationTargets[7]),
+                        "-0.1");
+                webDriverOperations.overrideText(id(beanValidationTargets[8]),
+                        "100000.00");
+                webDriverOperations.overrideText(id(beanValidationTargets[9]),
+                        "-1");
+                webDriverOperations.overrideText(id(beanValidationTargets[10]),
+                        "-1");
+                webDriverOperations.overrideText(id(beanValidationTargets[11]),
+                        "1");
+                webDriverOperations.overrideText(id(beanValidationTargets[12]),
+                        "1");
+                webDriverOperations.overrideText(id(beanValidationTargets[13]),
+                        "1234");
+                webDriverOperations.overrideText(id(beanValidationTargets[14]),
+                        "123456.125");
+                webDriverOperations.select(id(beanValidationTargets[15]),
+                        "False");
+                webDriverOperations.select(id(beanValidationTargets[16]),
+                        "True");
+                webDriverOperations.overrideText(id(beanValidationTargets[17]),
+                        ld.minusDays(1).toString(localeDateFormat.get(
+                                currentLocale)));
+                webDriverOperations.overrideText(id(beanValidationTargets[18]),
+                        ld.minusDays(1).toString(localeDateFormat.get(
+                                currentLocale)));
+                webDriverOperations.overrideText(id(beanValidationTargets[19]),
+                        ld.plusDays(1).toString(localeDateFormat.get(
+                                currentLocale)));
+                webDriverOperations.overrideText(id(beanValidationTargets[20]),
+                        ld.plusDays(1).toString(localeDateFormat.get(
+                                currentLocale)));
+                webDriverOperations.overrideText(id(beanValidationTargets[21]),
+                        "aaa@aaa.");
+
+                webDriverOperations.click(id("validateBeanValidation"));
+            }
+
+            // 結果確認(Bean Validation)
+            {
+                for (int i = 0; i < beanValidationTargets.length; i++) {
+                    assertThat(webDriverOperations.getText(id(
+                            beanValidationTargets[i] + errors)), is(
+                                    beanValidationErrorMessages[i]));
+                }
+            }
+
+            // テスト実行(@Positive、@PositiveOrZero等が区別されてチェックされることを確認する)
+            {
+                // @Positive, @PositiveOrZero等に"0"を入力する
+                String zeroString = "0";
+                webDriverOperations.overrideText(id(beanValidationTargets[9]),
+                        zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[10]),
+                        zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[11]),
+                        zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[12]),
+                        zeroString);
+
+                // @Future, @FutureOrPresent等に現在日付を入力する
+                String todayString = new LocalDate().toString(localeDateFormat
+                        .get(currentLocale));
+                webDriverOperations.overrideText(id(beanValidationTargets[17]),
+                        todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[18]),
+                        todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[19]),
+                        todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[20]),
+                        todayString);
+
+                webDriverOperations.click(id("validateBeanValidation"));
             }
 
             // 結果確認
             {
-                for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i]));
+                int[] targetIndexes = { 9, 10, 11, 12, 17, 18, 19, 20 };
+                for (int i : targetIndexes) {
+                    // "or"が含まれないルールはゼロ、現在日付が入力チェックエラーとなる
+                    assertThat(webDriverOperations.exists(id(
+                            beanValidationTargets[i] + errors)), not(
+                                    beanValidationTargets[i].contains("or")));
+                }
+            }
+
+        }
+
+        // Hibernate Validator
+        {
+            String[] hibernateValidatorTargets = { "creditcardnumber", "isbn",
+                    "url", "notemptyHV", "notblankHV", "emailHV" };
+            String[] hibernateValidatorErrorMessages = {
+                    "invalid credit card number", "invalid ISBN",
+                    "must be a valid URL", "may not be empty",
+                    "may not be empty", "not a well-formed email address" };
+
+            // テスト実行(Hibernate Validator)
+            {
+                LocalDate ld = new LocalDate();
+
+                webDriverOperations.overrideText(id(
+                        hibernateValidatorTargets[0]), "1234567890123456");
+                webDriverOperations.overrideText(id(
+                        hibernateValidatorTargets[1]), "97847775a7992");
+                webDriverOperations.overrideText(id(
+                        hibernateValidatorTargets[2]), "htt://aaa.com/");
+                webDriverOperations.clearText(id(hibernateValidatorTargets[3]));
+                webDriverOperations.overrideText(id(
+                        hibernateValidatorTargets[4]), " ");
+                webDriverOperations.overrideText(id(
+                        hibernateValidatorTargets[5]), "aaa@aaa.");
+
+                webDriverOperations.click(id("validateHibernateValidator"));
+            }
+
+            // 結果確認(Hibernate Validator)
+            {
+                for (int i = 0; i < hibernateValidatorTargets.length; i++) {
+                    assertThat(webDriverOperations.getText(id(
+                            hibernateValidatorTargets[i] + errors)), is(
+                                    hibernateValidatorErrorMessages[i]));
                 }
             }
         }
@@ -516,7 +631,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
                 assertThat(errorMessage, Matchers.allOf(containsString(
                         "size must be between 1 and 20"), containsString(
                                 "size must be between 1 and 50"),
-                        containsString("may not be null")));
+                        containsString("must not be null")));
 
             }
         }
@@ -657,7 +772,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
         assertThat(errorMessageList, is(Matchers.containsInAnyOrder(
                 "size must be between 1 and 20",
-                "size must be between 1 and 50", "may not be null")));
+                "size must be between 1 and 50", "must not be null")));
     }
 
     /**
@@ -1063,7 +1178,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
     public void testVLDT0103003() {
         String testId = "vldt0103003";
         String target = "deliveryAddress";
-        String errorMessage = "may not be null";
+        String errorMessage = "must not be null";
 
         // テスト画面表示
         {
@@ -1127,7 +1242,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
     public void testVLDT0104001() {
         String testId = "vldt0104001";
         String target = "userName";
-        String errorMessage = "may not be null";
+        String errorMessage = "must not be null";
 
         // テスト画面表示
         {

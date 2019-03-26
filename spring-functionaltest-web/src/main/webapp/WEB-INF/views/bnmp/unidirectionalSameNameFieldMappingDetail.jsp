@@ -15,7 +15,7 @@
       <td><span id="getCarColor">${f:h(carSameNameFieldOneWayMappingForm.color)}</span></td>
     </tr>
     <tr>
-      <td>release Date</td>
+      <td>Release Date</td>
       <td><span id="getCarReleaseDate"><joda:format pattern="yyyyMMdd"
             value="${carSameNameFieldOneWayMappingForm.releaseDate}" /></span></td>
     </tr>

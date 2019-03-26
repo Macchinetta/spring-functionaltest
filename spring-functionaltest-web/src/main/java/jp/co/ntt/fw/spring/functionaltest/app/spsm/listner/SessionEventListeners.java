@@ -38,7 +38,7 @@ public class SessionEventListeners {
     private static final String HANDLE_LOGOUT_KEY = SecurityContextLogoutHandler.class
             .getName().concat(".logout");
 
-    private static final Logger log = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             AuthenticationEventListeners.class);
 
     // (1)
@@ -46,7 +46,7 @@ public class SessionEventListeners {
     public void handleLogout(JoinPoint joinPoint) {
         HttpServletRequest request = HttpServletRequest.class.cast(joinPoint
                 .getArgs()[0]);
-        log.info("SessionEventListeners execute [logout]");
+        logger.info("SessionEventListeners execute [logout]");
         request.getSession().setAttribute(HANDLE_LOGOUT_KEY, true);
     }
 
@@ -58,7 +58,8 @@ public class SessionEventListeners {
         Boolean isHandleLogout = Boolean.class.cast(event.getSession()
                 .getAttribute(HANDLE_LOGOUT_KEY));
         if (isHandleLogout != null && isHandleLogout) {
-            log.info("SessionEventListeners execute [session timeout(logout)]");
+            logger.info(
+                    "SessionEventListeners execute [session timeout(logout)]");
             return;
         }
 
@@ -67,7 +68,7 @@ public class SessionEventListeners {
         for (SecurityContext securityContext : securityContexts) {
             // ログアウト処理などを実装する
             securityContext.getAuthentication().setAuthenticated(false);
-            log.info(
+            logger.info(
                     "SessionEventListeners execute [session timeout username:{}]",
                     securityContext.getAuthentication().getName());
         }

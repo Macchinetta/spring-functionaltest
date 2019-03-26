@@ -20,8 +20,9 @@ import static org.junit.Assert.*;
 import static org.junit.Assume.*;
 import static org.openqa.selenium.By.*;
 
+import java.util.Base64;
+
 import org.junit.Test;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
@@ -186,8 +187,8 @@ public class EncryptionTest extends FunctionTestSupport {
 
         // 疑似乱数(鍵)生成結果確認
         {
-            assertThat(Base64.decode(webDriverOperations.getText(id(
-                    "generatedKey")).getBytes()).length, is(16));
+            assertThat(Base64.getDecoder().decode(webDriverOperations.getText(
+                    id("generatedKey")).getBytes()).length, is(16));
         }
 
     }
@@ -213,8 +214,8 @@ public class EncryptionTest extends FunctionTestSupport {
 
         // 疑似乱数(鍵)生成結果確認
         {
-            assertThat(Base64.decode(webDriverOperations.getText(id(
-                    "generatedKey")).getBytes()).length, is(16));
+            assertThat(Base64.getDecoder().decode(webDriverOperations.getText(
+                    id("generatedKey")).getBytes()).length, is(16));
             assertEquals(webDriverOperations.getText(id("generatedKey")),
                     webDriverOperations.getText(id("generatedKey2")));
         }

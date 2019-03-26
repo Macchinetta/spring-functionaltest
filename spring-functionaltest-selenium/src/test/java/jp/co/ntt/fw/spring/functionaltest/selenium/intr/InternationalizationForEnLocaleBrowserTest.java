@@ -84,4 +84,22 @@ public class InternationalizationForEnLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture("ForEnLocaleBrowser");
     }
 
+    /**
+     * <ul>
+     * <li>Springのロケールを解決する機能にサポートロケールとデフォルトロケールを定義し、<br/>
+     * サポートロケールを指定した場合、指定したロケールが使用されることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0101005() {
+        // 英語Locale
+        webDriverOperations.click(id("intr0101005"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("name")), is("Name"));
+        assertThat(webDriverOperations.getText(id("gender")), is("Gender"));
+        assertThat(webDriverOperations.getText(id("age")), is("Age"));
+
+    }
+
 }

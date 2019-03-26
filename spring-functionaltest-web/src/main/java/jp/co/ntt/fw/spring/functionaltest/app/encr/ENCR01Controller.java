@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.encr;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
 
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -103,8 +103,8 @@ public class ENCR01Controller {
 
         byte[] encryptedBytes = encryptionDataService.encryptBytes(form
                 .getRawText().getBytes(StandardCharsets.UTF_8));
-        model.addAttribute("encryptedText", new String(Base64.encode(
-                encryptedBytes)));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
+                encryptedBytes));
         model.addAttribute("decryptedText", new String(encryptionDataService
                 .decryptBytes(encryptedBytes), StandardCharsets.UTF_8));
         return "encr/encryptCompleteByBytesEncryptor";

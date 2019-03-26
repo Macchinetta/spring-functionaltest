@@ -41,6 +41,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrderDetailsPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrderEntryPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrdersPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterBookPage;
+import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterConfirmPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.SystemErrorPage;
 
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
@@ -248,6 +249,42 @@ public class DataAccessJPATest extends FunctionTestSupport {
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0103003Click();
         jpaHomePage.setNoLazyBookId("0001");
         SystemErrorPage sysErrorPage = jpaHomePage.nolazyFetchSetting();
+
+        // Assertion for system error occurred due to lazy initialization.
+        assertTrue(Pattern.compile(
+                "^could\\snot\\sinitialize\\sproxy\\s\\[([a-z]|[A-Z]|[0-9]|#|\\.){1,}\\]\\s-\\sno\\sSession$")
+                .matcher(sysErrorPage.getErrorMessage()).matches());
+    }
+
+    /**
+     * Error scenario for lazy loading(acquire Session outside of OpenEntityManagerInViewInterceptor)
+     */
+    @Test
+    public void testDJPA0103004() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0103004Click();
+        jpaHomePage.setBookIdAndRegisterSession("0001");
+        RegisterConfirmPage registerConfirmPage = jpaHomePage.registerSession();
+        SystemErrorPage sysErrorPage = registerConfirmPage
+                .accessOutOfLazyFetchScope();
+
+        // Assertion for system error occurred due to lazy initialization.
+        assertTrue(Pattern.compile(
+                "^could\\snot\\sinitialize\\sproxy\\s\\[([a-z]|[A-Z]|[0-9]|#|\\.){1,}\\]\\s-\\sno\\sSession$")
+                .matcher(sysErrorPage.getErrorMessage()).matches());
+    }
+
+    /**
+     * Error scenario for lazy loading(acquire FlashAttribute outside of OpenEntityManagerInViewInterceptor)
+     */
+    @Test
+    public void testDJPA0103005() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0103005Click();
+        jpaHomePage.setBookIdAndRegisterFlashAttribute("0001");
+        SystemErrorPage sysErrorPage = jpaHomePage.registerFlashAttribute();
 
         // Assertion for system error occurred due to lazy initialization.
         assertTrue(Pattern.compile(
@@ -1246,13 +1283,46 @@ public class DataAccessJPATest extends FunctionTestSupport {
      */
     @Test
     public void testDJPA0601003() {
-        testDJPA0103001();
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0601003Click();
+        jpaHomePage.setBookIdAcquiringNotForeignKey("0001");
+        BookDetailsPage lazyBookPage = jpaHomePage.acquiringNotForeignKey();
+
+        // Assertion for record earlier registered in DB.
+        assertThat(lazyBookPage.getBookIdVal(), is("1"));
+        assertThat(lazyBookPage.getTitle(), is("title1"));
+        assertThat(lazyBookPage.getCategoryName(), is("A01"));
+        assertThat(lazyBookPage.getClobCode(), is("54455354"));
+        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getPrice(), is("40"));
+        assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
+
         List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
                 null,
                 "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
         Integer expVal = 1;
         // confirmation of query is for dependent entity(i.e.JPACategoryLz )
         assertThat(list.size(), is(expVal));
+    }
+
+    /**
+     * Load timing of the related-entity : Lazy Fetch (cant't fetch related-entity when acquire foreign key)
+     * For changes Hibernate 5.2.12(HHH-11838)
+     */
+    @Test
+    public void testDJPA0601004() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0601004Click();
+        jpaHomePage.setBookIdAcquiringForeignKey("0001");
+        SystemErrorPage sysErrorPage = jpaHomePage.acquiringForeignKey();
+
+        // Assertion for system error occurred due to lazy initialization.
+        assertTrue(Pattern.compile(
+                "^could\\snot\\sinitialize\\sproxy\\s\\[([a-z]|[A-Z]|[0-9]|#|\\.){1,}\\]\\s-\\sno\\sSession$")
+                .matcher(sysErrorPage.getErrorMessage()).matches());
     }
 
     /**

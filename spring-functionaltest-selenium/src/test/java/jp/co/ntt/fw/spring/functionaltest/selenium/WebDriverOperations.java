@@ -306,6 +306,21 @@ public class WebDriverOperations {
     }
 
     /**
+     * Cookieに記載されているドメイン名を変更する。
+     * <p>
+     * 指定したドメイン名に変更する。
+     * </p>
+     * @param cookie 変更するCookie
+     * @param domainName 変更するドメイン名
+     * @return
+     */
+    public Cookie changeCookieDomainName(Cookie cookie, String domainName) {
+        return new Cookie.Builder(cookie.getName(), cookie.getValue()).domain(
+                domainName).expiresOn(cookie.getExpiry()).isHttpOnly(true)
+                .isSecure(false).path(cookie.getPath()).build();
+    }
+
+    /**
      * JavascriptExecutor を取得する。
      */
     public JavascriptExecutor getJavascriptExecutor() {

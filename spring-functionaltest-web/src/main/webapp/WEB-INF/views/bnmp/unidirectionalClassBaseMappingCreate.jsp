@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col col-md-2">release Date</div>
+      <div class="col col-md-2">Release Date</div>
       <div class="col col-md-3">
         <form:input path="releaseDate" cssClass="form-control input-sm" />
       </div>

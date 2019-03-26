@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.6.0.RELEASE</version>
+    <version>1.6.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Service Interfaces</name>
@@ -46,4 +46,26 @@
   <properties>
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
   </properties>
+  <profiles>
+    <profile>
+      <id>jdk11</id>
+      <activation>
+        <jdk>11</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>javax.xml.ws</groupId>
+          <artifactId>jaxws-api</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>javax.jws</groupId>
+          <artifactId>javax.jws-api</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>com.sun.xml.messaging.saaj</groupId>
+          <artifactId>saaj-impl</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 </project>

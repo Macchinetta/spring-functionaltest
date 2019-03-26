@@ -9,7 +9,7 @@
         <c:forEach var="emails" items="${accountForm.emails}" varStatus="rowStatus">
           <spring:nestedPath path="emails[${rowStatus.index}]">
             <div class="form-group">
-              <div class="col col-md-4">コピー元email&nbsp;${rowStatus.count}</div>
+              <div class="col col-md-4">コピー元Email&nbsp;${rowStatus.count}</div>
               <div class="col col-md-6">
                 <form:input path="email" cssClass="form-control input-sm" />
               </div>
@@ -21,7 +21,7 @@
         <c:forEach var="destinationBean" items="${destinationList}" varStatus="rowStatus">
           <spring:nestedPath path="emails[${rowStatus.index}]">
             <div class="form-group">
-              <div class="col col-md-4">コピー先email&nbsp;${rowStatus.count}</div>
+              <div class="col col-md-4">コピー先Email&nbsp;${rowStatus.count}</div>
               <div class="col col-md-6">${f:h(destinationBean)}</div>
             </div>
           </spring:nestedPath>

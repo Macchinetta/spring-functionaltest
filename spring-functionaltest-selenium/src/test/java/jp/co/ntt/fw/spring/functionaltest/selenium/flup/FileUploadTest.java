@@ -15,6 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.flup;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
@@ -314,7 +315,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ステータスコードの確認
         {
             assertThat(webDriverOperations.getInputFieldValue(id("statusCode")),
-                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
+                    containsString(String.valueOf(HttpStatus.BAD_REQUEST
+                            .value())));
         }
         // ログの確認
         {
@@ -391,7 +393,8 @@ public class FileUploadTest extends FunctionTestSupport {
         // ステータスコードの確認
         {
             assertThat(webDriverOperations.getInputFieldValue(id("statusCode")),
-                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
+                    containsString(String.valueOf(HttpStatus.BAD_REQUEST
+                            .value())));
         }
         // ログの確認
         {

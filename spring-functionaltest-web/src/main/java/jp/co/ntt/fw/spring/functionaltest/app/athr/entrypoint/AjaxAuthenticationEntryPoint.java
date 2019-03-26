@@ -27,7 +27,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private static final Logger log = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             AjaxAuthenticationEntryPoint.class);
 
     @Override
@@ -35,7 +35,7 @@ public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
             HttpServletResponse response,
             org.springframework.security.core.AuthenticationException authException) throws IOException, ServletException {
 
-        log.info("Execute AjaxAuthenticationEntryPoint. RequestetURI is {} ",
+        logger.info("Execute AjaxAuthenticationEntryPoint. RequestetURI is {} ",
                 request.getRequestURI());
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }

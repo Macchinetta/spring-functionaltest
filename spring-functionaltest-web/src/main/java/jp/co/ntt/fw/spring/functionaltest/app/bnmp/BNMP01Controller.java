@@ -15,6 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,14 +28,13 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountDifferenceT
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountNonCumulativeDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountRemoveOrphansDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.BeanMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarBidirectionalDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.EmailDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.NestedFieldMapperDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameBeanMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameDifferenceTypeDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldIgnoreDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserCopyByReferenceDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceCollectionDto;
@@ -65,17 +66,12 @@ public class BNMP01Controller {
     CarService carService;
 
     @RequestMapping(value = "0101/001", method = RequestMethod.GET)
-    public String handle01001(Model model, BeanMapperForm form) {
+    public String handle01001(Model model, SameNameBeanMapperForm form) {
         return "bnmp/sameNameSameTypeMapping";
     }
 
     @RequestMapping(value = "0102/001", method = RequestMethod.GET)
     public String handle02001(Model model, BeanMapperForm form) {
-        return "bnmp/sameNameDifferenceTypeMapping";
-    }
-
-    @RequestMapping(value = "0102/002", method = RequestMethod.GET)
-    public String handle02002(Model model, BeanMapperForm form) {
         return "bnmp/sameNameDifferenceTypeMapping";
     }
 
@@ -190,15 +186,24 @@ public class BNMP01Controller {
         return "bnmp/collectionTypeFieldMapping";
     }
 
-    @RequestMapping(value = "sameNameSameTypeMapping", method = RequestMethod.POST, params = "copySameNameSameTypeBean")
+    @RequestMapping(value = "sameNameSameTypeMapping", method = RequestMethod.POST, params = "copySameNameSameTypeField")
     public String handleSameNameSameTypeMapping(Model model,
-            BeanMapperForm form) {
+            SameNameBeanMapperForm form) {
 
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        BeanMapperDto destinationBean = beanMapper.map(form,
-                BeanMapperDto.class);
-
+        // コピー元Bean、コピー先Bean作成後、コピー先フィールドにコピー元フィールドとは異なる値を設定し、Mapperを使用してコピー元Beanからコピー先Beanへフィールドをコピーする。
+        SameNameBeanMapperDto destinationBean = new SameNameBeanMapperDto();
+        destinationBean.setMyoji("DestinationMyoji");
+        destinationBean.setLastName("DestinationLastName");
+        destinationBean.setAge(18);
+        destinationBean.setBirthDate(LocalDate.of(1950, 01, 01));
+        destinationBean.setSex("M");
+        beanMapper.map(form, destinationBean);
         model.addAttribute("resultBean", destinationBean);
+
+        if (destinationBean.getBirthDate() != null) {
+            model.addAttribute("birthDate", destinationBean.getBirthDate()
+                    .format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
+        }
 
         return "bnmp/showBeanMappingSameFieldResult";
     }
@@ -213,23 +218,10 @@ public class BNMP01Controller {
 
         model.addAttribute("resultBean", destinationBean);
 
-        return "bnmp/showBeanMappingSameFieldResult";
+        return "bnmp/showBeanMappingSameNameDifferenceTypeResult";
     }
 
-    @RequestMapping(value = "sameNameDifferenceTypeMapping", method = RequestMethod.POST, params = "copyDifferenceNameSameTypeBean")
-    public String handleDifferenceNameIgnoreMapping(Model model,
-            BeanMapperForm form) {
-
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        DifferenceFieldIgnoreDto destinationBean = beanMapper.map(form,
-                DifferenceFieldIgnoreDto.class);
-
-        model.addAttribute("resultBean", destinationBean);
-
-        return "bnmp/showBeanMappingDifferenceFieldResult";
-    }
-
-    @RequestMapping(value = "differenceNameMapping", method = RequestMethod.POST, params = "copyDifferenceNameBean")
+    @RequestMapping(value = "differenceNameMapping", method = RequestMethod.POST, params = "copyDifferenceNameField")
     public String handleDifferenceNameMapping(Model model,
             BeanMapperForm form) {
 
@@ -238,6 +230,11 @@ public class BNMP01Controller {
                 DifferenceFieldDto.class);
 
         model.addAttribute("resultBean", destinationBean);
+
+        if (destinationBean.getTanjobi() != null) {
+            model.addAttribute("tanjobi", destinationBean.getTanjobi().format(
+                    DateTimeFormatter.ofPattern("uuuu/MM/dd")));
+        }
 
         return "bnmp/showBeanMappingDifferenceFieldResult";
     }

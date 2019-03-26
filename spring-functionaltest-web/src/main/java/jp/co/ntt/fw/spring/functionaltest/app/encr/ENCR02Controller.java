@@ -15,12 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.encr;
 
+import java.util.Base64;
+
 import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.BytesKeys;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
 
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -59,8 +60,8 @@ public class ENCR02Controller {
             return handle0201001(model, form);
         }
 
-        model.addAttribute("generatedKey", new String(Base64.encode(
-                encryptionDataService.generateBytesKey(form.getKeyLength()))));
+        model.addAttribute("generatedKey", Base64.getEncoder().encodeToString(
+                encryptionDataService.generateBytesKey(form.getKeyLength())));
         return "encr/generateBytesKeyComplete";
     }
 
@@ -74,10 +75,10 @@ public class ENCR02Controller {
 
         BytesKeys generatedByteKeys = encryptionDataService
                 .generateSameBytesKey(form.getKeyLength());
-        model.addAttribute("generatedKey", new String(Base64.encode(
-                generatedByteKeys.getKey1())));
-        model.addAttribute("generatedKey2", new String(Base64.encode(
-                generatedByteKeys.getKey2())));
+        model.addAttribute("generatedKey", Base64.getEncoder().encodeToString(
+                generatedByteKeys.getKey1()));
+        model.addAttribute("generatedKey2", Base64.getEncoder().encodeToString(
+                generatedByteKeys.getKey2()));
         return "encr/generateSameBytesKeyComplete";
     }
 

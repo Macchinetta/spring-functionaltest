@@ -95,6 +95,7 @@ public class DTOP01Controller {
         return "dtop/showLocalTime";
     }
 
+    @SuppressWarnings("deprecation")
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowDateMidnight")
     public String handleGetNowDateMidnight(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();

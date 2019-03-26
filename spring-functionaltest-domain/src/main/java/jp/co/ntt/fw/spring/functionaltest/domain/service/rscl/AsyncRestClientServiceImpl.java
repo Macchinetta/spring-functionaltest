@@ -40,6 +40,7 @@ import org.terasoluna.gfw.common.exception.SystemException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
+@SuppressWarnings("deprecation")
 public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
     private static final Logger logger = LoggerFactory.getLogger(

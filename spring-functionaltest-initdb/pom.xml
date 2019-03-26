@@ -5,7 +5,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.6.0.RELEASE</version>
+    <version>1.6.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - DB Init</name>
@@ -62,50 +62,50 @@
       </properties>
     </profile>
     <profile>
-      <!-- ojdbc7.jar must be pre-installed in local repository. -->
+      <!-- ojdbc8.jar must be pre-installed in local repository. -->
       <id>oracle</id>
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle</db.basedir>
-        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
         <db.username>cfw</db.username>
         <db.password>cfw</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
         <db.groupId>com.oracle.jdbc</db.groupId>
-        <db.artifactId>ojdbc7</db.artifactId>
-        <db.version>${ojdbc7.version}</db.version>
+        <db.artifactId>ojdbc8</db.artifactId>
+        <db.version>${ojdbc8.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
       </properties>
     </profile>
     <profile>
-      <!-- ojdbc7.jar must be pre-installed in local repository. -->
+      <!-- ojdbc8.jar must be pre-installed in local repository. -->
       <id>oracle-open</id>
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle/open</db.basedir>
-        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
         <db.username>cfw_open</db.username>
         <db.password>cfw_open</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
         <db.groupId>com.oracle.jdbc</db.groupId>
-        <db.artifactId>ojdbc7</db.artifactId>
-        <db.version>${ojdbc7.version}</db.version>
+        <db.artifactId>ojdbc8</db.artifactId>
+        <db.version>${ojdbc8.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
       </properties>
     </profile>
     <profile>
-      <!-- ojdbc7.jar must be pre-installed in local repository. -->
+      <!-- ojdbc8.jar must be pre-installed in local repository. -->
       <id>oracle-close</id>
       <properties>
         <db.encoding>UTF8</db.encoding>
         <db.basedir>${project.basedir}/src/main/sqls/oracle/close</db.basedir>
-        <db.url>jdbc:oracle:thin:@X.X.X.X:1521:teradb</db.url>
+        <db.url>jdbc:oracle:thin:@127.0.0.1:1521:teradb</db.url>
         <db.username>cfw_close</db.username>
         <db.password>cfw_close</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
         <db.groupId>com.oracle.jdbc</db.groupId>
-        <db.artifactId>ojdbc7</db.artifactId>
-        <db.version>${ojdbc7.version}</db.version>
+        <db.artifactId>ojdbc8</db.artifactId>
+        <db.version>${ojdbc8.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
       </properties>
     </profile>

@@ -49,6 +49,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -383,8 +384,95 @@ public class DJPACommonController {
         Integer bookId = Integer.valueOf(bookListForm
                 .getSearchInQueryBookIdNoLazy());
         JPABookLZ book = jpaBookLZService.findById(bookId);
+
+        // when acquire CategoryName, LazyInitializationException will thrown
         model.addAttribute("bookCategory", book.getCategory()
                 .getCategoryName());
+
+        model.addAttribute("bookForm", new BookForm());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
+                .toUpperCase());
+        model.addAttribute("book", book);
+        return "djpa/registerComplete";
+
+    }
+
+    /**
+     * This method demonstrates when acquire FlashAttribute outside of
+     * OpenEntityManagerInViewInterceptor, LazyInitializationException occur.
+     * @param bookListForm
+     * @param redirectAttrs
+     * @return
+     */
+    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "registerFlashAttribute")
+    public String registerFlashAttribute(JPABookListForm bookListForm,
+            RedirectAttributes redirectAttrs) {
+        Integer bookId = Integer.valueOf(bookListForm
+                .getSearchInQueryBookIdAndRegisterFlashAttribute());
+        JPABookLZ book = jpaBookLZService.findById(bookId);
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
+                .toUpperCase());
+
+        // register FlashAttribute
+        redirectAttrs.addFlashAttribute("book", book);
+        return "redirect:/djpa/book/redirectRegisterComplete";
+
+    }
+
+    @RequestMapping(value = "redirectRegisterComplete", method = RequestMethod.GET)
+    public String redirectRegisterComplete(
+            @ModelAttribute("book") JPABookLZ book, Model model) {
+
+        // when acquire CategoryName, LazyInitializationException will thrown
+        model.addAttribute("bookCategory", book.getCategory()
+                .getCategoryName());
+
+        model.addAttribute("bookForm", new BookForm());
+        model.addAttribute("book", book);
+        return "djpa/registerComplete";
+
+    }
+
+    /**
+     * This method demonstrates when acquiring anything but foreign key, the entire Entity is acquired.
+     * @param model
+     * @param bookListForm
+     * @return
+     */
+    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringNotForeignKey")
+    public String searchNoLazySettingAcquiringNotForeignKey(Model model,
+            JPABookListForm bookListForm) {
+        Integer bookId = Integer.valueOf(bookListForm
+                .getSearchInQueryBookIdAcquiringNotForeignKey());
+        JPABookLZ book = jpaBookLZService.findByIdAcquiringNotForeignKey(
+                bookId);
+        model.addAttribute("bookCategory", book.getCategory()
+                .getCategoryName());
+        model.addAttribute("bookForm", new BookForm());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
+                .toUpperCase());
+        model.addAttribute("book", book);
+        return "djpa/registerComplete";
+
+    }
+
+    /**
+     * This method demonstrates when acquiring foreign key, the entire Entity is not acquired.
+     * @param model
+     * @param bookListForm
+     * @return
+     */
+    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringForeignKey")
+    public String searchNoLazySettingAcquiringForeignKey(Model model,
+            JPABookListForm bookListForm) {
+        Integer bookId = Integer.valueOf(bookListForm
+                .getSearchInQueryBookIdAcquiringForeignKey());
+        JPABookLZ book = jpaBookLZService.findByIdAcquiringForeignKey(bookId);
+
+        // when acquire CategoryName, LazyInitializationException will thrown
+        model.addAttribute("bookCategory", book.getCategory()
+                .getCategoryName());
+
         model.addAttribute("bookForm", new BookForm());
         book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
                 .toUpperCase());

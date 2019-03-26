@@ -34,9 +34,9 @@ public class GroupedValidationByDefaultForm implements Serializable {
 
     private String email;
 
-    @Min.List({ @Min(value = 18, groups = Default.class),
-            @Min(value = 20, groups = Japanese.class),
-            @Min(value = 21, groups = Singaporean.class) })
+    @Min(value = 18, groups = Default.class)
+    @Min(value = 20, groups = Japanese.class)
+    @Min(value = 21, groups = Singaporean.class)
     private int age;
 
     private String country;

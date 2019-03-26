@@ -34,6 +34,28 @@ public class InternationalizationForFrLocaleBrowserTest extends
 
     /**
      * <ul>
+     * <li>Springのロケールを解決する機能にサポートロケールとデフォルトロケールを定義し、<br/>
+     * サポートロケールを指定した場合、指定したロケールが使用されることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0101005() {
+        // フランス語Locale
+        WebDriver frDriver = webDriverCreator.createLocaleSpecifiedDriver(
+                "fr, FR");
+        setCurrentWebDriver(frDriver);
+
+        webDriverOperations.click(id("intr0101005"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("name")), is("nom"));
+        assertThat(webDriverOperations.getText(id("gender")), is("gender"));
+        assertThat(webDriverOperations.getText(id("age")), is("Ã¢ge"));
+
+    }
+
+    /**
+     * <ul>
      * <li>ブラウザのロケール、JVMのロケール、WebサーバのOSのロケールが異なる場合、<br/>
      * ブラウザに設定されたロケールで値が表示されることの確認。</li>
      * </ul>

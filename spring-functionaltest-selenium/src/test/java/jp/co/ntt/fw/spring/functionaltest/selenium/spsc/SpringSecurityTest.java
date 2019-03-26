@@ -290,6 +290,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *
      * </ul>
      **/
+    @Ignore("リクエストパスがJSPパスに変更されたタイミングでパスマッチングを行い失敗するため実施不可(issues#93)")
     @Test
     public void testSPSC0104001() throws IOException {
 

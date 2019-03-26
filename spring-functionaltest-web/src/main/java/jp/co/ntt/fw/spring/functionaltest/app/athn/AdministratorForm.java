@@ -17,9 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class AdministratorForm implements Serializable {
 

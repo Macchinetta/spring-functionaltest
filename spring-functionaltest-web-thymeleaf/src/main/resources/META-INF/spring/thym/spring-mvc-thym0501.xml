@@ -15,7 +15,7 @@
     <property name="templateResolver" ref="templateResolver" />
     <property name="additionalDialects">
       <set>
-        <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+        <bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect" />
         <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
         <bean class="jp.co.ntt.fw.spring.functionaltest.dialects.thym.InputFormDialect" />
         <bean class="jp.co.ntt.fw.spring.functionaltest.dialects.thym.Precedence2000Dialect" />

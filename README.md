@@ -8,15 +8,46 @@ This project provides functional tests of Macchinetta Server Framework (1.x) Dev
 
 Please refer to [docs](./docs/README.md).
 
+## Project structure
+The build process of functional tests using JSP for View is built with the following projects.
+
+```console
+spring-functionaltest
+├── spring-functionaltest-env
+├── spring-functionaltest-model
+├── spring-functionaltest-webservice
+├── spring-functionaltest-domain
+├── spring-functionaltest-web
+├── spring-functionaltest-env-oauth2
+├── spring-functionaltest-domain-oauth2
+├── spring-functionaltest-web-oauth2-component
+├── spring-functionaltest-web-oauth2-db
+├── spring-functionaltest-web-oauth2-memory
+├── spring-functionaltest-web-oauth2-remote
+├── spring-functionaltest-initdb
+└── spring-functionaltest-selenium
+```
+
+If you want to use Thymeleaf for View, switch the web projects in the build process to the following project for Thymeleaf.
+
+```console
+spring-functionaltest
+├── spring-functionaltest-web-thymeleaf
+├── spring-functionaltest-web-oauth2-component-thymeleaf
+├── spring-functionaltest-web-oauth2-db-thymeleaf
+├── spring-functionaltest-web-oauth2-memory-thymeleaf
+└── spring-functionaltest-web-oauth2-remote-thymeleaf
+```
+
 ## How to perform functional test
 
 **Preconditions are as follow:**
 
-* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) installed (`JAVA_HOME` defined as environment variable)
-* "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)) installed
+* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) installed (`JAVA_HOME` defined as environment variable)
+* "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8u144 earlier](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)) installed
 * [Maven](https://maven.apache.org/download.cgi) installed (Can run `mvn` command)
 * Firefox([for personal](https://www.mozilla.org/en-US/firefox/all/) or [ESR](https://www.mozilla.org/en-US/firefox/organizations/all/)) installed (ESR is used on our CI environment)
-* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.14.0` recommended) placed in application execution environment and add to `PATH`.
+* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.23.0` recommended) placed and register in the environment variable.
 
 ### [Step 1] Create database of PostgreSQL (Optional)
 If [PostgreSQL](http://www.postgresql.org/) use as database , you need to create database of PostgreSQL into local machine. (PostgreSQL can download via [here site](http://www.postgresql.org/download/)).
@@ -49,42 +80,26 @@ Build artifacts using maven commands as follows.
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn clean install -am -pl spring-functionaltest-web
-$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
+$ mvn -U clean install -am -pl spring-functionaltest-web
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
 ```
 
 > **Note:**
 >
-> Case that use Thymeleaf as view
->```console
-> $ cd {your repository directory}
-> $ git checkout {target branch}
-> $ mvn clean install -am -pl spring-functionaltest-web-thymeleaf
-> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db-thymeleaf,spring-functionaltest-web-oauth2-memory-thymeleaf,spring-functionaltest-web-oauth2-remote-thymeleaf
->```
+> Using JDK 11, add `-P local`. (Because JDK 11 automatically activate `jdk11` profile)
 
 #### Case that use PostgreSQL as database
 
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn clean install -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
-$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
 ```
 
 > **Note:**
 >
 > If you not use default user(`postgres`) or password(`P0stgres`), you should modify settings in `terasoluna-gfw-functionaltest-env/configs/travis/ContainerConfigXML/context.xml`.
-
-> **Note:**
->
-> Case that use Thymeleaf as view
->```console
-> $ cd {your repository directory}
-> $ git checkout {target branch}
-> $ mvn clean install -am -pl spring-functionaltest-web-thymeleaf -P tomcat8-postgresql,warpack-env,warpack-cxf,warpack-transaction,travis
-> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db-thymeleaf,spring-functionaltest-web-oauth2-memory-thymeleaf,spring-functionaltest-web-oauth2-remote-thymeleaf -P tomcat8-postgresql,warpack-env,travis
->```
 
 ### [Step 4] Initialize database (Optional)
 If PostgreSQL use as database, initialize database before run functional test.
@@ -109,14 +124,6 @@ $ cd {your repository directory}
 $ mvn -U cargo:run -pl spring-functionaltest-web
 ```
 
-> **Note:**
->
-> Case that use Thymeleaf as view
->```console
-> $ cd {your repository directory}
-> $ mvn -U cargo:run -pl spring-functionaltest-web-thymeleaf
->```
-
 #### Case that use PostgreSQL as database (use Tomcat JNDI Resource)
 
 ```console
@@ -126,11 +133,8 @@ $ mvn -U cargo:run -pl spring-functionaltest-web -P travis
 
 > **Note:**
 >
-> Case that use Thymeleaf as view
->```console
-> $ cd {your repository directory}
-> $ mvn -U cargo:run -pl spring-functionaltest-web-thymeleaf -P travis
->```
+> For both JSP and Thymeleaf, the same war file name will be used.  
+> you can access application at `http://localhost:8080/spring-functionaltest-web/`.
 
 > **Note:**
 >
@@ -146,17 +150,6 @@ $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactI
 $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
 ```
 
-> **Note:**
->
-> In the case of Thymeleaf, run the following command .
-> 
-> ```console
-> $ cd {your repository directory}
-> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
-> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
-> $ mvn -U cargo:deploy -pl spring-functionaltest-web-thymeleaf -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote-thymeleaf -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
-> ```
-
 ### [Step 7] Run functional tests
 Run tests using Selenium(`WebDriver`) on JUnit.
 
@@ -167,41 +160,12 @@ $ mvn -U test -pl spring-functionaltest-selenium
 
 > **Note:**
 >
-> Case that use Thymeleaf as view
-> ```console
-> $ cd {your repository directory}
-> $ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment.view=thymeleaf
-> ```
+> In the case of Thymeleaf, add `-Dtest.environment.view=thymeleaf`.
 
 > **Note:**
 >
-> If GeckoDriver is not registered in the path, [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) will download it automatically.  
-> If required proxy, please set `selenium.proxyHttpServer`.  
-> If required proxy authentication, set   `selenium.proxyUserName`, `selenium.proxyUserPassword`.  
-> ```console
-> $ mvn -U test -pl spring-functionaltest-selenium -Dselenium.proxyHttpServer={HttpServer} -Dselenium.proxyUserName={UserName} -Dselenium.proxyUserPassword={Password}
-> ```
-
-> **Note:**
->
-> In the guava`20.0` on the TERASOLUNA Framework stack, can not run Selenium`3.9.1` defined by SpringIO.  
-> Therefore, downgraded to Selenium '3.0.1` which can be run.  
-> 
-> If functional test can not run , the execution environment such as browser version may be the problem.  
-> In that case , change `selenium` and `geckodriver` to appropriate version.  
-> specify with `-Dselenium.version={selenium version}`, `-Dselenium.geckodriverVersion={geckodriver version}`.
->
-> However, by upgrading Selenium version, it is necessary to upgrade Guava version.  
-> Therefore, add the version of Guava to spring-functionaltest-selenium/pom.xml as below.
-> ```xml
-> <dependency>
->   <groupId>com.google.guava</groupId>
->   <artifactId>guava</artifactId>
->   <version>any guava version</version>
->   <scope>test</scope>
-> </dependency>
-> ```
-> Since it has not been tested with Guava version over 20.0, unpredictable behavior may occur.
+> If GeckoDriver is not registered in the path, [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) will download it automatically.
+> Configure using [properties](https://github.com/bonigarcia/webdrivermanager#webdrivermanager-api) in `wdm.properties` or Java System Properties.
 
 ## Appendix
 
@@ -239,20 +203,20 @@ Profiles that are available are as follows.
 
 |        environments       | specify maven profiles                                                               |
 |:-------------------------:|--------------------------------------------------------------------------------------|
+|        Tomcat9 + H2       | (not specify)                                                                        |
 |    Tomcat9 + Postgresql   | `tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
 | Tomcat9 + Postgresql [^1] | `tomcat9-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
 |  Tomcat9 + Oracle [^1]    | `tomcat9-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
 |   Tomcat8.5 + Postgresql  | `tomcat85-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`|
 |Tomcat8.5 + Postgresql [^1]| `tomcat85-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                   |
 |  Tomcat8.5 + Oracle [^1]  | `tomcat85-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                       |
-|        Tomcat8 + H2       | (not specify)                                                                        |
 |    Tomcat8 + Postgresql   | `tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
 | Tomcat8 + Postgresql [^1] | `tomcat8-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
 |   Tomcat8 + Oracle [^1]   | `tomcat8-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
 | Tomcat7 + Postgresql      | `tomcat-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`  |
 | Tomcat7 + Postgresql [^1] | `tomcat-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                     |
 | Tomcat7 + Oracle [^1]     | `tomcat-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                         |
-|     Weblogic + Oracle     | `weblogic-oracle,warpack-env`                                                        |
+|     Weblogic + Oracle     | `weblogic-oracle,warpack-env,warpack-exclude-jaxb`                                   |
 |     JBoss7 + Postgresql   | `jboss7-postgresql,warpack-env`                                                      |
 |     JBoss + Postgresql    | `jboss-postgresql,warpack-env,warpack-transaction`                                   |
 |  Interstage + Postgresql  | `interstage11-postgresql,warpack-env`                                                |
@@ -264,9 +228,12 @@ Profiles that are available are as follows.
 
 #### The JVM version of build and runtime environment
 
+Profiles for Java version are automatically activated.
+
 |   environments  | specify maven profile |
 |:---------------:|-----------------------|
 |      Java8      | (not specify)         |
+|      Java11     | `jdk11`               |
 
 ### How to switch bean definition for various environments
 
@@ -283,18 +250,35 @@ Profiles that are available are as follows.
 
 #### Connecting mail server
 
-|       environments       | specify spring profiles  |
-|:------------------------:|--------------------------|
-| using embedded GreenMail | nonMailServer (default)  |
-| using actual Mail Server | mailServer [^1]          |
+|       environments       | specify spring profiles   |
+|:------------------------:|---------------------------|
+| using embedded GreenMail | `nonMailServer` (default) |
+| using actual Mail Server | `mailServer` [^1]         |
 
 [^1]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination mail server.
 
 #### Connecting message queue
 
-|        environments        | specify spring profiles  |
-|:--------------------------:|--------------------------|
-| using embedded ActiveMQ    | nonMqServer (default)    |
-| using actual Message Queue | mqServer [^1]            |
+|        environments        | specify spring profiles   |
+|:--------------------------:|---------------------------|
+| using embedded ActiveMQ    | `nonMqServer` (default)   |
+| using actual Message Queue | `mqServer` [^1]           |
 
 [^1]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination message queue.
+
+### How to switch specific test cases to run for various environments
+
+Using the system property(`-D`) with `@IfProfileValue`, enable to switch specific test cases to run in accordance with the environment that you want to run.
+
+```console
+$ cd {your repository directory}
+$ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment=mailServier
+```
+
+Properties that are available are as follows.
+
+|        properties         | description                                                                                                                                   |
+|:-------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------|
+|    test.environment       | Whether to run tests must use actual mail server.<br>Set **`mailServer`** when `spring.profiles.active` of application contains `mailServer`. |
+|   test.environment.view   | Whether to run tests depending on a specific HTML view template.<br>Set view template name **`jsp`**(default) or **`thymeleaf`**.             |
+| test.environment.weblogic | Skip specific tests if running on WebLogic Server.<br>Set **`true`** or **`false`**(default).                                                 |

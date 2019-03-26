@@ -19,7 +19,6 @@ import java.io.Serializable;
 
 public class SameNameDifferenceTypeDto implements Serializable {
 
-    /**  */
     private static final long serialVersionUID = 1L;
 
     private String firstName;
@@ -27,6 +26,8 @@ public class SameNameDifferenceTypeDto implements Serializable {
     private String lastName;
 
     private String age;
+
+    private String birthDate;
 
     public String getFirstName() {
         return firstName;
@@ -50,5 +51,13 @@ public class SameNameDifferenceTypeDto implements Serializable {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 }

@@ -433,10 +433,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
-    public void testEXHN0701002() throws IOException {
+    public void testEXHN0701001() throws IOException {
         try {
             restOperations.headForHeaders(applicationContextUrl
-                    + "/exhn/0701/002");
+                    + "/exhn/0701/001");
         } catch (HttpClientErrorException e) {
             // 405 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.METHOD_NOT_ALLOWED));
@@ -451,10 +451,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
-    public void testEXHN0701003() throws IOException {
+    public void testEXHN0701002() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
-                    + "/exhn/0701/003", String.class);
+                    + "/exhn/0701/002", String.class);
         } catch (HttpClientErrorException e) {
             // 415 が返却されていること
             assertThat(e.getStatusCode(), is(
@@ -470,13 +470,31 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
+    public void testEXHN0701003() throws IOException {
+        try {
+            restOperations.getForEntity(applicationContextUrl
+                    + "/exhn/0701/003", String.class);
+        } catch (HttpClientErrorException e) {
+            // 406 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.NOT_ACCEPTABLE));
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>MissingPathVariableException発生時ににHTTPステータスが500になることを確認する。</li>
+     * </ul>
+     */
+    @Test(expected = HttpServerErrorException.class)
     public void testEXHN0701004() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/004", String.class);
         } catch (HttpClientErrorException e) {
-            // 406 が返却されていること
-            assertThat(e.getStatusCode(), is(HttpStatus.NOT_ACCEPTABLE));
+            // 500 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
 
             throw e;
         }
@@ -675,14 +693,32 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>AsyncRequestTimeoutException発生時ににHTTPステータスが503になることを確認する。</li>
+     * </ul>
+     */
+    @Test(expected = HttpServerErrorException.class)
+    public void testEXHN0701015() throws IOException {
+        try {
+            restOperations.getForEntity(applicationContextUrl
+                    + "/exhn/0701/015", String.class);
+        } catch (HttpClientErrorException e) {
+            // 503 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.SERVICE_UNAVAILABLE));
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
      * <li>throwExceptionIfNoHandlerFoundプロパティが設定されたDispatcherServletで、正常にリスクエストが処理されるかを確認する。</li>
      * </ul>
      */
     @Test
-    public void testEXHN0701015() throws IOException {
+    public void testEXHN0701016() throws IOException {
         try {
             ResponseEntity<String> res = restOperations.getForEntity(
-                    applicationContextUrl + "/exhn/0701/015", String.class);
+                    applicationContextUrl + "/exhn/0701/016", String.class);
 
             assertThat(res.getStatusCode(), is(HttpStatus.OK));
         } catch (HttpClientErrorException e) {

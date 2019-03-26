@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -101,8 +102,6 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
                 normDesc1 = writer.toString();
             } catch (IOException e) {
                 throw new SystemException("e.sf.dam3.9001", "input/output error.", e);
-            } finally {
-                IOUtils.closeQuietly(inputStream);
             }
         }
         return normDesc1;
@@ -121,14 +120,14 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
      */
     private void formatTodoList(List<TodoMB3> todoList) {
         for (TodoMB3 todoMB3 : todoList) {
-            InputStream inputStream = todoMB3.getDesc1();
-
-            String normDesc1 = normalizeDesc1(inputStream);
-
-            Reader reader = todoMB3.getDesc2();
-            String normDesc2 = normalizeDesc2(reader);
-            todoMB3.setNormDesc1(normDesc1);
-            todoMB3.setNormDesc2(normDesc2);
+            try (InputStream inputStream = todoMB3.getDesc1();
+                    Reader reader = todoMB3.getDesc2()) {
+                String normDesc1 = normalizeDesc1(inputStream);
+                String normDesc2 = normalizeDesc2(reader);
+                todoMB3.setNormDesc1(normDesc1);
+                todoMB3.setNormDesc2(normDesc2);
+            } catch (IOException e) {
+            }
         }
     }
 

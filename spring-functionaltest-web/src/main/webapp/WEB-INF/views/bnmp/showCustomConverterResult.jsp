@@ -9,11 +9,11 @@
       <td><span id="getLastName">${f:h(resultBean.lastName)}</span></td>
     </tr>
     <tr>
-      <th class="inputColumn">age</th>
+      <th class="inputColumn">Age</th>
       <td><span id="getAge">${f:h(resultBean.age)}</span></td>
     </tr>
     <tr>
-      <th class="inputColumn">birth Date</th>
+      <th class="inputColumn">Birth Date</th>
       <td><span id="getBirthDate"><joda:format pattern="yyyyMMdd"
             value="${resultBean.birthDate}" /></span></td>
     </tr>

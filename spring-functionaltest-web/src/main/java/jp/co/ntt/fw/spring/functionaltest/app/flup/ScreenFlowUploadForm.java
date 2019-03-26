@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;

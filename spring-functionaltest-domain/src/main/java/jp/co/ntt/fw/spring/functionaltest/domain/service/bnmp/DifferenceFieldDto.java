@@ -16,17 +16,19 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class DifferenceFieldDto implements Serializable {
 
-    /**  */
     private static final long serialVersionUID = 1L;
 
     private String myoji;
 
-    private String lastName;
+    private String namae;
 
     private String age;
+
+    private LocalDate tanjobi;
 
     public String getMyoji() {
         return myoji;
@@ -36,12 +38,12 @@ public class DifferenceFieldDto implements Serializable {
         this.myoji = myoji;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getNamae() {
+        return namae;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setNamae(String namae) {
+        this.namae = namae;
     }
 
     public String getAge() {
@@ -50,5 +52,13 @@ public class DifferenceFieldDto implements Serializable {
 
     public void setAge(String age) {
         this.age = age;
+    }
+
+    public LocalDate getTanjobi() {
+        return tanjobi;
+    }
+
+    public void setTanjobi(LocalDate tanjobi) {
+        this.tanjobi = tanjobi;
     }
 }

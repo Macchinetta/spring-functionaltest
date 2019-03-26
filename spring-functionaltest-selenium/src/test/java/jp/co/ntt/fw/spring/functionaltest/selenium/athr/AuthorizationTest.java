@@ -760,7 +760,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // ログインボタン押下
         webDriverOperations.click(id("login"));
 
-        // 'ROLE_CONFIGURATION_MANAGER'+ localhostがアクセスできるリンクをクリック
+        // 'ROLE_CONFIGURATION_MANAGER'+ アクセス不可能なアドレスのリンクをクリック
         webDriverOperations.click(id("configLink"));
 
         // アクセスエラーの確認

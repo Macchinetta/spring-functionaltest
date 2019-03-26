@@ -164,7 +164,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null',"));
+                    "interpolatedMessage='must not be null',"));
             assertTrue(logMessage.contains("propertyPath=convertUserId.arg0,")
                     | logMessage.contains(
                             "propertyPath=convertUserId.userId,"));
@@ -207,7 +207,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null', propertyPath=convertUserId.<return value>,"));
+                    "interpolatedMessage='must not be null', propertyPath=convertUserId.<return value>,"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -285,7 +285,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='must be in the past',"));
+                    "interpolatedMessage='must be a past date',"));
             assertTrue(logMessage.contains(
                     "propertyPath=convertUserInfo.arg0.visitDate,") | logMessage
                             .contains(
@@ -331,7 +331,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null',"));
+                    "interpolatedMessage='must not be null',"));
             assertTrue(logMessage.contains(
                     "propertyPath=convertUserInfo.arg0.visitDate,") | logMessage
                             .contains(
@@ -377,7 +377,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null',"));
+                    "interpolatedMessage='must not be null',"));
             assertTrue(logMessage.contains(
                     "propertyPath=convertUserInfo.arg0.visitMessage,")
                     | logMessage.contains(
@@ -423,7 +423,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.arg0,"));
+                    "interpolatedMessage='must not be null', propertyPath=convertUserInfo.arg0,"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -465,7 +465,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>,"));
+                    "interpolatedMessage='must not be null', propertyPath=convertUserInfo.<return value>,"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -507,7 +507,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
+                    "interpolatedMessage='must not be null', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -549,7 +549,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='may not be null', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
+                    "interpolatedMessage='must not be null', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -591,7 +591,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertTrue(logMessage.contains(
-                    "interpolatedMessage='must be in the past', propertyPath=convertUserInfo.<return value>.userInfo.dateOfBirth"));
+                    "interpolatedMessage='must be a past date', propertyPath=convertUserInfo.<return value>.userInfo.dateOfBirth"));
             assertTrue(logMessage.contains(
                     "messageTemplate='{javax.validation.constraints.Past.message}'"));
         }

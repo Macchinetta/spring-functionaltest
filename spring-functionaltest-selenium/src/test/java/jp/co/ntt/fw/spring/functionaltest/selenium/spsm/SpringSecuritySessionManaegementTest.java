@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import javax.inject.Inject;
 
@@ -34,7 +35,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.client.RestTemplate;
 
 public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
@@ -140,8 +140,8 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         String password = "spring1234";
 
         String plainCredentials = userid + ":" + password;
-        String base64Credentials = new String(Base64.encode(plainCredentials
-                .getBytes(StandardCharsets.UTF_8)));
+        String base64Credentials = Base64.getEncoder().encodeToString(
+                plainCredentials.getBytes(StandardCharsets.UTF_8));
 
         RequestEntity<Void> requestEntity = RequestEntity.get(
                 new URI(applicationContextUrl + "/spsm/0301/001?afterLogin"))

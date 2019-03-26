@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athr;
 
-import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
 

@@ -6,7 +6,6 @@
   <ul>
     <li><a id="bnmp0101001" href="${pageContext.request.contextPath}/bnmp/0101/001">bnmp0101001</a></li>
     <li><a id="bnmp0102001" href="${pageContext.request.contextPath}/bnmp/0102/001">bnmp0102001</a></li>
-    <li><a id="bnmp0102002" href="${pageContext.request.contextPath}/bnmp/0102/002">bnmp0102002</a></li>
     <li><a id="bnmp0103001" href="${pageContext.request.contextPath}/bnmp/0103/001">bnmp0103001</a></li>
     <li><a id="bnmp0104001" href="${pageContext.request.contextPath}/bnmp/0104/001">bnmp0104001</a></li>
     <li><a id="bnmp0104002" href="${pageContext.request.contextPath}/bnmp/0104/002">bnmp0104002</a></li>
@@ -36,6 +35,8 @@
     <li><a id="bnmp0302001" href="${pageContext.request.contextPath}/bnmp/0302/001">bnmp0302001</a></li>
     <li><a id="bnmp0303001" href="${pageContext.request.contextPath}/bnmp/0303/001">bnmp0303001</a></li>
     <li><a id="bnmp0304001" href="${pageContext.request.contextPath}/bnmp/0304/001">bnmp0304001</a></li>
+    <li><a id="bnmp0304002" href="${pageContext.request.contextPath}/bnmp/0304/002">bnmp0304002</a></li>
+    <li><a id="bnmp0304003" href="${pageContext.request.contextPath}/bnmp/0304/003">bnmp0304003</a></li>
     <li><a id="bnmp0305001" href="${pageContext.request.contextPath}/bnmp/0305/001">bnmp0305001</a></li>
   </ul>
 </div>

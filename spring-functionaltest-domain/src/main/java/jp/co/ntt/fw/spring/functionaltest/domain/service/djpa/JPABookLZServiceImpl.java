@@ -36,6 +36,24 @@ public class JPABookLZServiceImpl implements JPABookLZService {
     }
 
     @Override
+    public JPABookLZ findByIdAcquiringNotForeignKey(Integer id) {
+        JPABookLZ jpaBookLZ = jpaBookRepositoryLZ.findById(id).orElse(null);
+
+        // fetch to avoid lazy LazyInitializationException
+        jpaBookLZ.getCategory().getCategoryName();
+        return jpaBookLZ;
+    }
+
+    @Override
+    public JPABookLZ findByIdAcquiringForeignKey(Integer id) {
+        JPABookLZ jpaBookLZ = jpaBookRepositoryLZ.findById(id).orElse(null);
+
+        // can't fetch to avoid lazy LazyInitializationException when acquire foreign key (HHH-11838)
+        jpaBookLZ.getCategory().getCategoryId();
+        return jpaBookLZ;
+    }
+
+    @Override
     public JPABookLZ addBook(JPABookLZ bookLZ) {
         return jpaBookRepositoryLZ.saveAndFlush(bookLZ);
     }

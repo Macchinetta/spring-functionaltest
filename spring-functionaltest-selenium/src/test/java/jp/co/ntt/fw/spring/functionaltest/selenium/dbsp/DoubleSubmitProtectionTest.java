@@ -38,13 +38,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.web.client.RestTemplate;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
 public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
@@ -228,8 +228,8 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         // back()処理が終了せずテストが進行不可になるため、例外処理を用いて継続させる。
         try {
             webDriverOperations.back();
-        } catch (TimeoutException e) {
-            logger.info("navigation back wait");
+        } catch (WebDriverException e) {
+            logger.info("WebDriverException by navigation back");
         }
 
         // エラーの確認
@@ -372,31 +372,6 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>トランザクショントークンチェックを伴うAjax処理を行い、正常に画面遷移が完了することを確認する。</li>
-     * </ul>
-     **/
-    @Test
-    public void testDBSP0301007() throws IOException {
-
-        webDriverOperations.click(id("dbsp0301007"));
-        webDriverOperations.click(id("second"));
-
-        // 第二画面でトランザクショントークンチェックを伴うAjax処理が実行されることを確認する。
-        webDriverOperations.click(id("ajaxButton"));
-        // Ajax処理が完了するまで待機
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .invisibilityOfElementWithText(id("outputData"), ""));
-        assertThat(webDriverOperations.getText(id("outputData")), is(
-                "Taro Yamada"));
-
-        webDriverOperations.click(id("third"));
-        // 第三画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "thirdView"));
-    }
-
-    /**
-     * <ul>
      * <li><sec:cache-control />の設定を除外することで、トランザクショントークンエラー画面が表示できることを確認する。</li>
      * </ul>
      **/
@@ -481,139 +456,6 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
             // 各画面へ遷移したことをチェック
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
                     screenTitles[i]));
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>トランザクショントークンを削除する際は、実行された日時が最も古いものから順に削除することを確認する。</li>
-     * </ul>
-     **/
-    @Test
-    public void testDBSP0303002() throws IOException {
-        WebDriverOperations[] browsers = new WebDriverOperations[11];
-        browsers[0] = webDriverOperations;
-
-        for (int i = 1; i < 11; i++) {
-            // 同一セッションで新しいブラウザを立ち上げる
-            browsers[i] = newWebDriverOperations();
-            browsers[i].getWebDriver().manage().addCookie(browsers[0].getCookie(
-                    "JSESSIONID"));
-        }
-        String[] buttonNames = { "dbsp0302002", "second", "third" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView" };
-
-        for (WebDriverOperations webDriverOperations : browsers) {
-            for (int i = 0; i < 3; i++) {
-                // 画面遷移
-                webDriverOperations.click(id(buttonNames[i]));
-                // 各画面へ遷移したことをチェック
-                assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                        screenTitles[i]));
-            }
-        }
-        browsers[0].click(id("fourth"));
-        // 一番目のブラウザは第四画面に遷移できず、トランザクショントークンエラーとなることをチェック
-        // エラーの確認
-        {
-            // エラー画面表示まで待機
-            String expectedTitle = "Transaction Token Error!";
-            browsers[0].waitForDisplayed(ExpectedConditions.titleContains(
-                    expectedTitle));
-            assertThat(browsers[0].getTitle(), is(expectedTitle));
-        }
-        // 二番目以降のブラウザは正常に次の画面へ遷移できることを確認
-        for (int i = 1; i < 11; i++) {
-            // 画面遷移
-            browsers[i].click(id("fourth"));
-            // 各画面へ遷移したことをチェック
-            assertThat(browsers[i].getText(id("screenTitle")), is(
-                    "fourthView"));
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>NameSpaceごとに保持できるトランザクショントークンの上限数が設定できることを確認する。</li>
-     * </ul>
-     **/
-    @Test
-    public void testDBSP0303003() throws IOException {
-        WebDriverOperations[] browsers = new WebDriverOperations[2];
-        browsers[0] = webDriverOperations;
-        // 同一セッションで新しいブラウザを立ち上げる
-        browsers[1] = newWebDriverOperations();
-        browsers[1].getWebDriver().manage().addCookie(browsers[0].getCookie(
-                "JSESSIONID"));
-        String[] buttonNames = { "dbsp0303003", "second", "third" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView" };
-
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 2; j++) {
-                browsers[j].click(id(buttonNames[i]));
-                if (i == 2 && j == 0) {
-                    // ブラウザ1では第三画面に遷移できず、トランザクショントークンエラーとなることをチェック
-                    // エラーの確認
-                    {
-                        // エラー画面表示まで待機
-                        String expectedTitle = "Transaction Token Error!";
-                        browsers[j].waitForDisplayed(ExpectedConditions
-                                .titleContains(expectedTitle));
-                        assertThat(browsers[j].getTitle(), is(expectedTitle));
-                    }
-                } else {
-                    assertThat(browsers[j].getText(id("screenTitle")), is(
-                            screenTitles[i]));
-                }
-            }
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>NameSpaceを設けることで、並行して操作できることを確認する。</li>
-     * <li>NameSpaceを設けた場合、1つのコントローラで複数ユースケースのトランザクショントークンチェックができることを確認する。</li>
-     * </ul>
-     **/
-    @Test
-    public void testDBSP0303004() throws IOException {
-        String[] valueTexts = new String[2];
-        WebDriverOperations[] browsers = new WebDriverOperations[2];
-        browsers[0] = webDriverOperations;
-        // 同一セッションで新しいブラウザを立ち上げる
-        browsers[1] = newWebDriverOperations();
-        browsers[1].getWebDriver().manage().addCookie(browsers[0].getCookie(
-                "JSESSIONID"));
-        String[] buttonNames = { "second", "third", "fourth", "fifth" };
-        String[] screenTitles = { "secondView", "thirdView", "fourthView",
-                "fifthView" };
-
-        // NameSpaceは未設定のため、globalToken
-        browsers[0].click(id("dbsp0303003"));
-        // NameSpaceはcreate
-        browsers[1].click(id("dbsp0303004"));
-        for (WebDriverOperations browser : browsers) {
-            assertThat(browser.getText(id("screenTitle")), is("firstView"));
-        }
-
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2; j++) {
-                browsers[j].click(id(buttonNames[i]));
-                assertThat(browsers[j].getText(id("screenTitle")), is(
-                        screenTitles[i]));
-                // トランザクショントークンを保持する第二、第三、第四画面にて、トークンのNameSpace情報を取得する。
-                if (i < 3) {
-                    valueTexts[j] = (String) browsers[j].getJavascriptExecutor()
-                            .executeScript(
-                                    "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
-                }
-            }
-
-            if (i < 3) {
-                // 2つのブラウザにおけるトランザクショントークンのNameSpaceが異なることを確認
-                assertThat(getNameSpace(valueTexts[0]), is("globalToken"));
-                assertThat(getNameSpace(valueTexts[1]), is("create"));
-            }
         }
     }
 

@@ -42,7 +42,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.codec.Base64;
+import java.util.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -482,8 +482,8 @@ public class RestClientServiceImpl implements RestClientService {
 
         // Basic認証用資格情報ヘッダ作成
         String plainCredentials = username + ":" + password;
-        String base64Credentials = new String(Base64.encode(plainCredentials
-                .getBytes(StandardCharsets.UTF_8)));
+        String base64Credentials = Base64.getEncoder().encodeToString(
+                plainCredentials.getBytes(StandardCharsets.UTF_8));
 
         RequestEntity<Void> req = RequestEntity.get(targetUri).header(
                 "Authorization", "Basic " + base64Credentials).build();

@@ -23,5 +23,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface MyProjectRepository<T, ID extends Serializable> extends
                                     JpaRepository<T, ID> {
 
-    T findOneWithValidVersion(ID id, Long version);
+    T findByIdWithValidVersion(ID id, Long version);
 }

@@ -146,6 +146,62 @@
   </form:form>
   <br>
   <form:form modelAttribute="jpaBookListForm"
+    action="${pageContext.request.contextPath}/djpa/book/interceptSrch">
+    <fieldset>
+      <legend>Lazy Initialization Exception(register Session)</legend>
+      <table>
+        <tr>
+          <th class="title">書籍ID</th>
+          <th><form:input path="searchInQueryBookIdAndRegisterSession" class="form-control form-input"
+              value="${f:h(bookListForm.searchInQueryBookIdIntercept)}" /></th>
+          <th><form:button name="registerSession" class="btn btn-default btn-right">Fetch</form:button></th>
+      </table>
+    </fieldset>
+  </form:form>
+  <br>
+  <form:form modelAttribute="jpaBookListForm"
+    action="${pageContext.request.contextPath}/djpa/book/interceptSrch">
+    <fieldset>
+      <legend>Lazy Initialization Exception(register FlashAttribute)</legend>
+      <table>
+        <tr>
+          <th class="title">書籍ID</th>
+          <th><form:input path="searchInQueryBookIdAndRegisterFlashAttribute" class="form-control form-input"
+              value="${f:h(bookListForm.searchInQueryBookIdIntercept)}" /></th>
+          <th><form:button name="registerFlashAttribute" class="btn btn-default btn-right">Fetch</form:button></th>
+      </table>
+    </fieldset>
+  </form:form>
+  <br>
+  <form:form modelAttribute="jpaBookListForm"
+    action="${pageContext.request.contextPath}/djpa/book/noLazySetting">
+    <fieldset>
+      <legend>Acquiring anything but Foreign Key</legend>
+      <table>
+        <tr>
+          <th class="title">書籍ID</th>
+          <th><form:input path="searchInQueryBookIdAcquiringNotForeignKey" class="form-control form-input"
+              value="${f:h(bookListForm.searchInQueryBookIdIntercept)}" /></th>
+          <th><form:button name="acquiringNotForeignKey" class="btn btn-default btn-right">Fetch</form:button></th>
+      </table>
+    </fieldset>
+  </form:form>
+  <br>
+  <form:form modelAttribute="jpaBookListForm"
+    action="${pageContext.request.contextPath}/djpa/book/noLazySetting">
+    <fieldset>
+      <legend>Acquiring Foreign Key</legend>
+      <table>
+        <tr>
+          <th class="title">書籍ID</th>
+          <th><form:input path="searchInQueryBookIdAcquiringForeignKey" class="form-control form-input"
+              value="${f:h(bookListForm.searchInQueryBookIdIntercept)}" /></th>
+          <th><form:button name="acquiringForeignKey" class="btn btn-default btn-right">Fetch</form:button></th>
+      </table>
+    </fieldset>
+  </form:form>
+  <br>
+  <form:form modelAttribute="jpaBookListForm"
     action="${pageContext.request.contextPath}/djpa/book/register" method="GET">
     <table>
       <tr>

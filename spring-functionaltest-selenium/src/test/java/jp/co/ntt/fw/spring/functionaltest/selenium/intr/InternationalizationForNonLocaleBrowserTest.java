@@ -82,6 +82,25 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("年齢"));
 
         webDriverOperations.saveScreenCapture("ForNonLocaleBrowser");
+
+    }
+
+    /**
+     * <ul>
+     * <li>Springのロケールを解決する機能にサポートロケールとデフォルトロケールを定義し、<br/>
+     * ロケールを指定しない場合、デフォルトロケールが使用されることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0101006() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0101006"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("name")), is("Name"));
+        assertThat(webDriverOperations.getText(id("gender")), is("Gender"));
+        assertThat(webDriverOperations.getText(id("age")), is("Age"));
+
     }
 
     /**
@@ -378,6 +397,65 @@ public class InternationalizationForNonLocaleBrowserTest extends
 
         // 日本語に変更
         webDriverOperations.click(id("japanese"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "ロケールを変更しました。"));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "次の画面でのロケール変更を確認"));
+
+        // ブラウザのセッションIDを削除
+        webDriverOperations.deleteCookie("JSESSIONID");
+
+    }
+
+    /**
+     * <ul>
+     * <li>ignoreInvalidLocaleプロパティにfalseを設定する場合、無効なロケールのリクエストでエラーが発生することの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0201007() {
+        {
+            // Locale 無し
+            webDriverOperations.click(id("intr0201007"));
+
+            // 無効なロケールに変更
+            webDriverOperations.click(id("invalidLocale"));
+
+            // 確認画面に遷移
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                    webDriverOperations.getXTrack(), null,
+                    "Locale part \"j@\" contains invalid characters",
+                    "java\\.lang\\.IllegalArgumentException");
+        }
+
+        // ブラウザのセッションIDを削除
+        webDriverOperations.deleteCookie("JSESSIONID");
+
+    }
+
+    /**
+     * <ul>
+     * <li>ignoreInvalidLocaleプロパティにtrueを設定する場合、無効なロケールのリクエストでエラーが発生しないことの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0201008() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0201008"));
+
+        // 日本語に変更
+        webDriverOperations.click(id("japanese"));
+
+        // 無効なロケールに変更
+        webDriverOperations.click(id("invalidLocale"));
 
         // 出力メッセージの確認
         assertThat(webDriverOperations.getText(id("changeMessage")), is(

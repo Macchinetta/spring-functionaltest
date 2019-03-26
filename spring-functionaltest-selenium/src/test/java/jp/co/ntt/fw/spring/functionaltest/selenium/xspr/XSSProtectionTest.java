@@ -134,7 +134,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
     }
 
     /**
-     * <li>出力された値が、「output is '); alert('XSS Attack!'); //.」であること</li>
+     * <li>出力された値が、「output is "); alert('XSS Attack!'); //.」であること</li>
      */
     @Test
     public void testXSPR0301001() {
@@ -143,12 +143,12 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("write"));
 
         assertThat(closeAlertAndGetItsText(), is(
-                "output is '); alert('XSS Attack!'); //."));
+                "output is \"); alert('XSS Attack!'); //."));
 
     }
 
     /**
-     * <li>出力された値が、「output is '); alert("XSS Attack!"); //.」であること</li>
+     * <li>出力された値が、「output is "); alert("XSS Attack!"); //.」であること</li>
      */
     @Test
     public void testXSPR0301002() {
@@ -157,7 +157,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("write"));
 
         assertThat(closeAlertAndGetItsText(), is(
-                "output is '); alert(\"XSS Attack!\"); //."));
+                "output is \"); alert(\"XSS Attack!\"); //."));
 
     }
 

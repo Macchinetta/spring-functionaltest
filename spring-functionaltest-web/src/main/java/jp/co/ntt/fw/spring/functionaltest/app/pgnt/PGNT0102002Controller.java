@@ -32,7 +32,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.ArticleService;
 //@RequestMapping("pgnt")
 @Controller
 public class PGNT0102002Controller {
-
     @Inject
     ArticleService articleService;
 

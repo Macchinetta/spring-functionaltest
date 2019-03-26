@@ -2,14 +2,29 @@
   <h1 id="screenTitle">単項目チェック</h1>
 
   <form:form method="post" action="${pageContext.request.contextPath}/vldt/0101/006"
-    modelAttribute="variousSimpleValidationForm" class="form-horizontal">
+    modelAttribute="variousSimpleValidationBVForm" class="form-horizontal">
 
     <div class="form-group">
       <form:label path="notnull" class="col-sm-2 control-label">NotNull</form:label>
       <div class="col-sm-10">
-        <%--                 <form:input path="notnull" class="form-control" --%>
-        <%--                     placeholder="NotNull" /> --%>
+        <form:input path="notnull" class="form-control" placeholder="NotNull" />
         <form:errors path="notnull" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="notempty" class="col-sm-2 control-label">NotEmpty</form:label>
+      <div class="col-sm-10">
+        <form:input path="notempty" class="form-control" placeholder="NotEmpty" />
+        <form:errors path="notempty" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="notblank" class="col-sm-2 control-label">NotBlank</form:label>
+      <div class="col-sm-10">
+        <form:input path="notblank" class="form-control" placeholder="NotBlank" />
+        <form:errors path="notblank" class="text-danger" />
       </div>
     </div>
 
@@ -62,6 +77,38 @@
     </div>
 
     <div class="form-group">
+      <form:label path="positive" class="col-sm-2 control-label">Positive</form:label>
+      <div class="col-sm-10">
+        <form:input path="positive" class="form-control" placeholder="Positive" />
+        <form:errors path="positive" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="positiveorzero" class="col-sm-2 control-label">PositiveOrZero</form:label>
+      <div class="col-sm-10">
+        <form:input path="positiveorzero" class="form-control" placeholder="PositiveOrZero" />
+        <form:errors path="positiveorzero" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="negative" class="col-sm-2 control-label">Negative</form:label>
+      <div class="col-sm-10">
+        <form:input path="negative" class="form-control" placeholder="Negative" />
+        <form:errors path="negative" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="negativeorzero" class="col-sm-2 control-label">NegativeOrZero</form:label>
+      <div class="col-sm-10">
+        <form:input path="negativeorzero" class="form-control" placeholder="NegativeOrZero" />
+        <form:errors path="negativeorzero" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <form:label path="size" class="col-sm-2 control-label">Size</form:label>
       <div class="col-sm-10">
         <form:input path="size" class="form-control" placeholder="Size" />
@@ -108,6 +155,14 @@
     </div>
 
     <div class="form-group">
+      <form:label path="futureorpresent" class="col-sm-2 control-label">FutureOrPresent</form:label>
+      <div class="col-sm-10">
+        <form:input path="futureorpresent" class="form-control" placeholder="FutureOrPresent" />
+        <form:errors path="futureorpresent" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <form:label path="past" class="col-sm-2 control-label">Past</form:label>
       <div class="col-sm-10">
         <form:input path="past" class="form-control" placeholder="Past" />
@@ -116,10 +171,10 @@
     </div>
 
     <div class="form-group">
-      <form:label path="creditcardnumber" class="col-sm-2 control-label">CreditCardNumber</form:label>
+      <form:label path="pastorpresent" class="col-sm-2 control-label">PastOrPresent</form:label>
       <div class="col-sm-10">
-        <form:input path="creditcardnumber" class="form-control" placeholder="CreditCardNumber" />
-        <form:errors path="creditcardnumber" class="text-danger" />
+        <form:input path="pastorpresent" class="form-control" placeholder="PastOrPresent" />
+        <form:errors path="pastorpresent" class="text-danger" />
       </div>
     </div>
 
@@ -132,6 +187,33 @@
     </div>
 
     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <form:button id="validateBeanValidation" name="validateBeanValidation" class="btn btn-default">validate(Bean Validation)</form:button>
+      </div>
+    </div>
+
+  </form:form>
+
+  <form:form method="post" action="${pageContext.request.contextPath}/vldt/0101/006"
+    modelAttribute="variousSimpleValidationHVForm" class="form-horizontal">
+
+    <div class="form-group">
+      <form:label path="creditcardnumber" class="col-sm-2 control-label">CreditCardNumber</form:label>
+      <div class="col-sm-10">
+        <form:input path="creditcardnumber" class="form-control" placeholder="CreditCardNumber" />
+        <form:errors path="creditcardnumber" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="isbn" class="col-sm-2 control-label">ISBN</form:label>
+      <div class="col-sm-10">
+        <form:input path="isbn" class="form-control" placeholder="ISBN" />
+        <form:errors path="isbn" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
       <form:label path="url" class="col-sm-2 control-label">Url</form:label>
       <div class="col-sm-10">
         <form:input path="url" class="form-control" placeholder="Url" />
@@ -140,24 +222,32 @@
     </div>
 
     <div class="form-group">
-      <form:label path="notblank" class="col-sm-2 control-label">NotBlank</form:label>
+      <form:label path="notemptyHV" class="col-sm-2 control-label">NotEmpty</form:label>
       <div class="col-sm-10">
-        <form:input path="notblank" class="form-control" placeholder="NotBlank" />
-        <form:errors path="notblank" class="text-danger" />
+        <form:input path="notemptyHV" class="form-control" placeholder="NotEmpty (Hibernate Validator)" />
+        <form:errors path="notemptyHV" class="text-danger" />
       </div>
     </div>
 
     <div class="form-group">
-      <form:label path="notempty" class="col-sm-2 control-label">NotEmpty</form:label>
+      <form:label path="notblankHV" class="col-sm-2 control-label">NotBlank</form:label>
       <div class="col-sm-10">
-        <form:input path="notempty" class="form-control" placeholder="NotEmpty" />
-        <form:errors path="notempty" class="text-danger" />
+        <form:input path="notblankHV" class="form-control" placeholder="NotBlank (Hibernate Validator)" />
+        <form:errors path="notblankHV" class="text-danger" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <form:label path="emailHV" class="col-sm-2 control-label">Email</form:label>
+      <div class="col-sm-10">
+        <form:input path="emailHV" class="form-control" placeholder="Email (Hibernate Validator)" />
+        <form:errors path="emailHV" class="text-danger" />
       </div>
     </div>
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <form:button id="validate" name="validate" class="btn btn-default">validate</form:button>
+        <form:button id="validateHibernateValidator" name="validateHibernateValidator" class="btn btn-default">validate(Hibernate Validator)</form:button>
       </div>
     </div>
 

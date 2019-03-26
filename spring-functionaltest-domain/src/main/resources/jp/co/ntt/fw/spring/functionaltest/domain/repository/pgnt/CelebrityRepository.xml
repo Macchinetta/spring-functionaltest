@@ -25,7 +25,7 @@
     ,last_name
     ,ROW_NUMBER() OVER(
     <choose>
-      <when test="pageable.sort.iterator().hasNext()">
+      <when test="!pageable.sort.isEmpty()">
         ORDER BY
         <foreach item="order" collection="pageable.sort" separator=",">
           ${order.property}
@@ -57,7 +57,7 @@
     resultMap="celebrityResultMap">
     <include refid="selectCelebrity" />
     <include refid="celebritySearchCriteria" />
-    <if test="pageable.sort.iterator().hasNext()">
+    <if test="!pageable.sort.isEmpty()">
       ORDER BY
       <foreach item="order" collection="pageable.sort" separator=",">
         ${order.property}
@@ -74,7 +74,7 @@
     SELECT * FROM (
     <include refid="selectCelebrityOracle" />
     <include refid="celebritySearchCriteria" />
-    <if test="pageable.sort.iterator().hasNext()">
+    <if test="!pageable.sort.isEmpty()">
       ORDER BY
       <foreach item="order" collection="pageable.sort" separator=",">
         ${order.property}

@@ -70,7 +70,7 @@ public class XSPRController {
     @RequestMapping(value = "0301/001", method = RequestMethod.GET)
     public String eventHandlerXSSMeasures_0301_001(Model model) {
 
-        model.addAttribute("warnCode", "'); alert('XSS Attack!'); //");
+        model.addAttribute("warnCode", "\"); alert('XSS Attack!'); //");
 
         return "xspr/eventHandlerOutput";
     }
@@ -78,7 +78,7 @@ public class XSPRController {
     @RequestMapping(value = "0301/002", method = RequestMethod.GET)
     public String eventHandlerXSSMeasures_0301_002(Model model) {
 
-        model.addAttribute("warnCode", "'); alert(\"XSS Attack!\"); //");
+        model.addAttribute("warnCode", "\"); alert(\"XSS Attack!\"); //");
 
         return "xspr/eventHandlerOutput";
     }

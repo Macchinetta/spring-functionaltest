@@ -29,14 +29,14 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 public class MyAuthenticationSuccessHandler extends
                                             SavedRequestAwareAuthenticationSuccessHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             MyAuthenticationSuccessHandler.class);
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
             HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        log.info("Excute MyAuthenticationSuccessHandler. username : {}",
+        logger.info("Excute MyAuthenticationSuccessHandler. username : {}",
                 authentication.getName());
         super.onAuthenticationSuccess(request, response, authentication);
     }

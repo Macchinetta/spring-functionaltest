@@ -9,7 +9,7 @@
       <h3 id="screenTitle">EventHandler Escaping</h3>
 
       <input id="write" type="button" value="write" class="mainbtn"
-        th:onclick="|alert('output is ${#strings.escapeJavaScript(warnCode)}.')|">
+        th:onclick="alert([[|output is ${warnCode}.|]])">
     </div>
   </div>
 </body>

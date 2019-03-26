@@ -15,15 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.AllowedSortProperty;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Celebrity;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.CelebritySearchCriteria;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+@Validated
 public interface CelebrityService {
 
     Page<Celebrity> getNames(CelebritySearchCriteria criteria,
-            Pageable pageable);
+            @AllowedSortProperty({ "celebrity_id" }) Pageable pageable);
 
 }

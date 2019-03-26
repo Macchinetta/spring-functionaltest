@@ -426,7 +426,7 @@ public class RestAPITest extends RestTestSupport {
                         "message", is(
                                 "Validation error occurred on item in the request body."))
                 .body("details.code", hasItems("NotEmpty")).body(
-                        "details.message", hasItems("may not be empty")).body(
+                        "details.message", hasItems("must not be empty")).body(
                                 "details.target", hasItems("firstName"));
     }
 
@@ -448,7 +448,7 @@ public class RestAPITest extends RestTestSupport {
                         "message", is(
                                 "Validation error occurred on item in the request parameters."))
                 .body("details.code", hasItems("NotEmpty")).body(
-                        "details.message", hasItems("may not be empty")).body(
+                        "details.message", hasItems("must not be empty")).body(
                                 "details.target", hasItems("name"));
 
     }

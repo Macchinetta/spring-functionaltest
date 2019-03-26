@@ -32,6 +32,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  * ロギング用インターセプタ（AsyncRestTemplate用）
  * </ul>
  */
+@SuppressWarnings("deprecation")
 public class AsyncLoggingInterceptor implements
                                      AsyncClientHttpRequestInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(

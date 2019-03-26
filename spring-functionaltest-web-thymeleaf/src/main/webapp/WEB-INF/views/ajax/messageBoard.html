@@ -51,7 +51,7 @@
             <label for="comment" class="space">コメント</label> <input id="comment" name="comment"
               class="space write-comment-field form-control inline" />
             <button id="writeBtn" class="btn btn-default"
-              th:onclick="|return ajax.write('${#strings.escapeJavaScript(path)}')|">書き込み</button>
+              th:onclick="return ajax.write([[${path}]])">書き込み</button>
           </fieldset>
         </form>
       </div>

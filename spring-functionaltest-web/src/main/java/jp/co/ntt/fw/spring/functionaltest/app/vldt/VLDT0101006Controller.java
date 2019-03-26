@@ -27,8 +27,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class VLDT0101006Controller {
 
     @ModelAttribute
-    public VariousSimpleValidationForm setUpForm() {
-        return new VariousSimpleValidationForm();
+    public VariousSimpleValidationBVForm setUpVariousSimpleValidationBVForm() {
+        return new VariousSimpleValidationBVForm();
+    }
+
+    @ModelAttribute
+    public VariousSimpleValidationHVForm setUpVariousSimpleValidationHVForm() {
+        return new VariousSimpleValidationHVForm();
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -36,8 +41,20 @@ public class VLDT0101006Controller {
         return "vldt/variousSimpleValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated VariousSimpleValidationForm form,
+    @RequestMapping(method = RequestMethod.POST, params = "validateBeanValidation")
+    public String handleBeanValidationValidate(
+            @Validated VariousSimpleValidationBVForm form,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "vldt/variousSimpleValidationView";
+        }
+        return "redirect:/vldt/0101/006";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, params = "validateHibernateValidator")
+    public String handleHibernateValidatorValidate(
+            @Validated VariousSimpleValidationHVForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

@@ -17,6 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Controller;
@@ -26,34 +27,43 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @Controller
 @RequestMapping("exhn")
 public class EXHN07Controller {
 
-    @RequestMapping(value = "0701/002", method = RequestMethod.POST)
-    public String handle0701002() {
+    @RequestMapping(value = "0701/001", method = RequestMethod.POST)
+    public String handle0701001() {
 
         return "cspr/exhn";
     }
 
-    @RequestMapping(value = "0701/003")
-    public String handle0701003() throws HttpMediaTypeNotSupportedException {
+    @RequestMapping(value = "0701/002")
+    public String handle0701002() throws HttpMediaTypeNotSupportedException {
 
         throw new HttpMediaTypeNotSupportedException("");
 
     }
 
-    @RequestMapping(value = "0701/004")
-    public String handle0701004() throws HttpMediaTypeNotAcceptableException {
+    @RequestMapping(value = "0701/003")
+    public String handle0701003() throws HttpMediaTypeNotAcceptableException {
 
         throw new HttpMediaTypeNotAcceptableException("");
+
+    }
+
+    @RequestMapping(value = "0701/004")
+    public String handle0701004() throws MissingPathVariableException {
+
+        throw new MissingPathVariableException(null, null);
 
     }
 
@@ -87,7 +97,7 @@ public class EXHN07Controller {
     @RequestMapping(value = "0701/009")
     public String handle0701009() throws HttpMessageNotReadableException {
 
-        throw new HttpMessageNotReadableException("");
+        throw new HttpMessageNotReadableException("", (HttpInputMessage) null);
     }
 
     @RequestMapping(value = "0701/010")
@@ -119,7 +129,14 @@ public class EXHN07Controller {
     }
 
     @RequestMapping(value = "0701/015")
-    public String handle0701015() {
+    public String handle0701015() throws AsyncRequestTimeoutException {
+
+        throw new AsyncRequestTimeoutException();
+
+    }
+
+    @RequestMapping(value = "0701/016")
+    public String handle0701016() {
 
         return "exhn/index";
     }

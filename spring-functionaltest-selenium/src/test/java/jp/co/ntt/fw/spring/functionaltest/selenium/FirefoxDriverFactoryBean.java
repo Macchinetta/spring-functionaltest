@@ -15,26 +15,27 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
-import javax.inject.Inject;
-
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.springframework.beans.factory.FactoryBean;
 
-public class FirefoxDriverFactoryBean implements FactoryBean<FirefoxDriver> {
+import io.github.bonigarcia.wdm.WebDriverManager;
 
-    @Inject
-    protected FirefoxDriverPrepare firefoxDriverPrepare;
+public class FirefoxDriverFactoryBean extends
+                                      WebDriverManagerFactoryBean<FirefoxDriver> {
 
     @Override
     public FirefoxDriver getObject() {
-        firefoxDriverPrepare.geckodriverSetup();
+        if (System.getenv("webdriver.gecko.driver") == null) {
+            WebDriverManager.firefoxdriver().setup();
+        }
 
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("browser.startup.homepage_override.mstone",
                 "ignore");
         profile.setPreference("network.proxy.type", 0);
-        return new FirefoxDriver(profile);
+        FirefoxOptions options = new FirefoxOptions().setProfile(profile);
+        return new FirefoxDriver(options);
     }
 
     @Override

@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.6.0.RELEASE</version>
+    <version>1.6.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer OAuth2 Remote</name>
@@ -51,6 +51,22 @@
         <dependency>
           <groupId>org.apache.taglibs</groupId>
           <artifactId>taglibs-standard-jstlel</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>warpack-exclude-jaxb</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.terasoluna.gfw</groupId>
+          <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
+          <type>pom</type>
+          <exclusions>
+            <exclusion>
+              <groupId>javax.xml.bind</groupId>
+              <artifactId>jaxb-api</artifactId>
+            </exclusion>
+          </exclusions>
         </dependency>
       </dependencies>
     </profile>

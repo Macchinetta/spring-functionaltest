@@ -25,7 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
@@ -102,34 +101,6 @@ public class DBSP03Controller {
     @TransactionTokenCheck(value = "create")
     public String handleToFourth() {
         return "dbsp/fourthView";
-    }
-
-    @RequestMapping(value = "0301/007", params = "ajax", method = RequestMethod.GET)
-    @ResponseBody
-    @TransactionTokenCheck(value = "create", type = TransactionTokenType.CHECK)
-    public UserCreateForm ajaxTokenCheck() {
-        UserCreateForm user = new UserCreateForm();
-        user.setFirstName("Taro");
-        user.setLastName("Yamada");
-        return user;
-    }
-
-    @RequestMapping(value = "0301/007", method = RequestMethod.GET)
-    @TransactionTokenCheck(value = "create", type = TransactionTokenType.BEGIN)
-    public String first0301007() {
-        return "dbsp/firstView0301007";
-    }
-
-    @RequestMapping(value = "0301/007", params = "second", method = RequestMethod.POST)
-    @TransactionTokenCheck(value = "create", type = TransactionTokenType.IN)
-    public String second0301007() {
-        return "dbsp/secondView0301007";
-    }
-
-    @RequestMapping(value = "0301/007", params = "third", method = RequestMethod.POST)
-    @TransactionTokenCheck(value = "create", type = TransactionTokenType.IN)
-    public String third0301007() {
-        return "dbsp/thirdView0301007";
     }
 
     @RequestMapping(value = "0302/002", method = RequestMethod.GET)

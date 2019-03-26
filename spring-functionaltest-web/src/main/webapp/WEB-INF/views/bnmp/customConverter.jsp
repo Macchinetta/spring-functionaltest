@@ -17,13 +17,13 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col col-md-2">age</div>
+      <div class="col col-md-2">Age</div>
       <div class="col col-md-3">
         <form:input path="age" cssClass="form-control input-sm" />
       </div>
     </div>
     <div class="form-group">
-      <div class="col col-md-2">birthDate(yyyyMMdd)</div>
+      <div class="col col-md-2">Birth Date(yyyyMMdd)</div>
       <div class="col col-md-3">
         <form:input path="birthDate" cssClass="form-control input-sm" />
       </div>

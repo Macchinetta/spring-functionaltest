@@ -162,6 +162,20 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>intr0101005AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/intr/spring-mvc-intr0101005.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>intr0101005AppServlet</servlet-name>
+    <url-pattern>/intr/0101/005</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>intr0201002AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
@@ -187,6 +201,20 @@
   <servlet-mapping>
     <servlet-name>intr0201003AppServlet</servlet-name>
     <url-pattern>/intr/0201/003</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>intr0201008AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/intr/spring-mvc-intr0201008.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>intr0201008AppServlet</servlet-name>
+    <url-pattern>/intr/0201/008</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -1057,19 +1085,6 @@
   <servlet-mapping>
     <servlet-name>vldt0502AppServlet</servlet-name>
     <url-pattern>/vldt/0502/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>vldt0503AppServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath*:META-INF/spring/vldt/spring-mvc-vldt0503.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>vldt0503AppServlet</servlet-name>
-    <url-pattern>/vldt/0503/*</url-pattern>
   </servlet-mapping>
 
   <servlet>

@@ -74,6 +74,22 @@ public class JPAHomePage implements Page<JPAHomePage> {
     private WebElement noLazyFetchSettingBtn;
 
     @CacheLookup
+    @FindBy(id = "registerSession")
+    private WebElement registerSessionBtn;
+
+    @CacheLookup
+    @FindBy(id = "registerFlashAttribute")
+    private WebElement registerFlashAttributeBtn;
+
+    @CacheLookup
+    @FindBy(id = "acquiringNotForeignKey")
+    private WebElement acquiringNotForeignKeyBtn;
+
+    @CacheLookup
+    @FindBy(id = "acquiringForeignKey")
+    private WebElement acquiringForeignKeyBtn;
+
+    @CacheLookup
     @FindBy(id = "searchInQueryBookIdIntercept")
     private WebElement bookIdForIntercept;
 
@@ -84,6 +100,22 @@ public class JPAHomePage implements Page<JPAHomePage> {
     @CacheLookup
     @FindBy(id = "searchInQueryBookIdNoLazy")
     private WebElement bookIdForNoLazySetting;
+
+    @CacheLookup
+    @FindBy(id = "searchInQueryBookIdAndRegisterSession")
+    private WebElement bookIdAndRegisterSession;
+
+    @CacheLookup
+    @FindBy(id = "searchInQueryBookIdAndRegisterFlashAttribute")
+    private WebElement bookIdAndRegisterFlashAttribute;
+
+    @CacheLookup
+    @FindBy(id = "searchInQueryBookIdAcquiringNotForeignKey")
+    private WebElement bookIdAcquiringNotForeignKey;
+
+    @CacheLookup
+    @FindBy(id = "searchInQueryBookIdAcquiringForeignKey")
+    private WebElement bookIdAcquiringForeignKey;
 
     @CacheLookup
     @FindBy(xpath = "/html/body/div[2]/div/div[3]/ul/li[5]/a")
@@ -260,6 +292,30 @@ public class JPAHomePage implements Page<JPAHomePage> {
         return sysErrorPage;
     }
 
+    public RegisterConfirmPage registerSession() {
+        registerSessionBtn.click();
+        RegisterConfirmPage registerConfirmPage = new RegisterConfirmPage(driver);
+        return registerConfirmPage;
+    }
+
+    public SystemErrorPage registerFlashAttribute() {
+        SystemErrorPage systemErrorPage = new SystemErrorPage(driver);
+        registerFlashAttributeBtn.click();
+        return systemErrorPage;
+    }
+
+    public BookDetailsPage acquiringNotForeignKey() {
+        acquiringNotForeignKeyBtn.click();
+        BookDetailsPage bookDetailsPage = new BookDetailsPage(driver);
+        return bookDetailsPage;
+    }
+
+    public SystemErrorPage acquiringForeignKey() {
+        acquiringForeignKeyBtn.click();
+        SystemErrorPage systemErrorPage = new SystemErrorPage(driver);
+        return systemErrorPage;
+    }
+
     public JPAHomePage gotoSecondPageBookList() {
         secondPageBookList.click();
         return this;
@@ -397,6 +453,22 @@ public class JPAHomePage implements Page<JPAHomePage> {
 
     public void setNoLazyBookId(String val) {
         WebElementOperations.setValue(bookIdForNoLazySetting, val);
+    }
+
+    public void setBookIdAndRegisterSession(String val) {
+        WebElementOperations.setValue(bookIdAndRegisterSession, val);
+    }
+
+    public void setBookIdAndRegisterFlashAttribute(String val) {
+        WebElementOperations.setValue(bookIdAndRegisterFlashAttribute, val);
+    }
+
+    public void setBookIdAcquiringNotForeignKey(String val) {
+        WebElementOperations.setValue(bookIdAcquiringNotForeignKey, val);
+    }
+
+    public void setBookIdAcquiringForeignKey(String val) {
+        WebElementOperations.setValue(bookIdAcquiringForeignKey, val);
     }
 
     public boolean isBookDetailLinkPresent(Integer bookNo) {

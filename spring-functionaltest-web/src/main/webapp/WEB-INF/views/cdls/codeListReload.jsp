@@ -18,7 +18,7 @@
   <div>CDLS0201002</div>
   <form:form modelAttribute="updateCodeListForm"
     action="${pageContext.request.contextPath}/cdls/0201/002">
-    <form:select id="cdls0201002" path="id" items="${refreshCodeList}" />
+    <form:select id="cdls0201002" path="id" items="${CL_REFRESH_CODELIST}" />
     <form:errors path="id" />
     <p>
       Value:

@@ -26,6 +26,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
+@SuppressWarnings("deprecation")
 public class AsyncChainInterceptor implements
                                    AsyncClientHttpRequestInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(

@@ -15,6 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.bnmp;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anyOf;
 import static org.junit.Assert.*;
@@ -32,7 +33,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>同名同型フィールドのコピーができること。</li>
+     * <li>デフォルト設定で、同名同型フィールドのコピーができること。</li>
+     * <li>(異名同型のフィールドはコピーされないこと。)</li>
+     * <li>(コピー元に存在しないフィールドはコピーされないこと。)</li>
      * </ul>
      */
     @Test
@@ -48,23 +51,31 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.appendText(id("firstName"), "やまだ");
             webDriverOperations.appendText(id("lastName"), "はなこ");
             webDriverOperations.appendText(id("age"), "20");
-            webDriverOperations.click(id("copySameNameSameTypeBean"));
+            webDriverOperations.appendText(id("birthDate"), "2011-11-11");
+            webDriverOperations.click(id("copySameNameSameTypeField"));
         }
 
         // コピー先(Destination)の内容確認
-        // コピー元Beanからコピー先Beanへ、同名同型フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "やまだ"));
+            // コピー元Beanからコピー先Beanへ、同名同型フィールドの値がコピーされること。
             assertThat(webDriverOperations.getText(id("getLastName")), is(
                     "はなこ"));
             assertThat(webDriverOperations.getText(id("getAge")), is("20"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
+                    "2011/11/11"));
+
+            // コピー元Beanとコピー先Beanでフィールド名が異なればコピーされないこと。
+            assertThat(webDriverOperations.getText(id("getMyoji")), is(
+                    "DestinationMyoji"));
+
+            // コピー元に存在しないフィールドはコピーされないこと。
+            assertThat(webDriverOperations.getText(id("getSex")), is("M"));
         }
     }
 
     /**
      * <ul>
-     * <li>同名異型フィールドのコピーができること。</li>
+     * <li>デフォルト設定で、同名異型フィールドのコピーができること。</li>
      * </ul>
      */
     @Test
@@ -80,54 +91,27 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.appendText(id("firstName"), "やまだ");
             webDriverOperations.appendText(id("lastName"), "たかし");
             webDriverOperations.appendText(id("age"), "25");
+            webDriverOperations.appendText(id("birthDate"), "2011-11-11");
             webDriverOperations.click(id("copySameNameDifferenceTypeBean"));
         }
 
         // コピー先(Destination)の内容確認
-        // コピー元Beanからコピー先Beanへ、同名異型フィールドの値がコピーされること。
         {
+            // コピー元Beanからコピー先Beanへ、同名異型フィールドの値がコピーされること。
             assertThat(webDriverOperations.getText(id("getFirstName")), is(
                     "やまだ"));
             assertThat(webDriverOperations.getText(id("getLastName")), is(
                     "たかし"));
             assertThat(webDriverOperations.getText(id("getAge")), is("25"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
+                    "2011-11-11"));
         }
     }
 
     /**
      * <ul>
-     * <li>異名フィールドはコピーが無視がされること。</li>
-     * </ul>
-     */
-    @Test
-    public void testBNMP0102002() {
-
-        // メニュー画面の操作
-        {
-            webDriverOperations.click(id("bnmp0102002"));
-        }
-
-        // コピー元(Source)の内容入力
-        {
-            webDriverOperations.appendText(id("firstName"), "やまだ");
-            webDriverOperations.appendText(id("lastName"), "たかし");
-            webDriverOperations.appendText(id("age"), "25");
-            webDriverOperations.click(id("copyDifferenceNameSameTypeBean"));
-        }
-
-        // コピー先(Destination)の内容確認
-        // コピー元Beanに同名フィールドが存在しないフィールドは無視されること。
-        {
-            assertThat(webDriverOperations.getText(id("getMyoji")), is(""));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "たかし"));
-            assertThat(webDriverOperations.getText(id("getAge")), is("25"));
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>異名フィールドのコピーができること。</li>
+     * <li>カスタム設定で、マッピング定義した異名フィールドのコピーができること。</li>
+     * <li>（マッピング定義していない異名フィールドはコピーされないこと。）</li>
      * </ul>
      */
     @Test
@@ -143,16 +127,20 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.appendText(id("firstName"), "やまだ");
             webDriverOperations.appendText(id("lastName"), "たかし");
             webDriverOperations.appendText(id("age"), "25");
-            webDriverOperations.click(id("copyDifferenceNameBean"));
+            webDriverOperations.appendText(id("birthDate"), "2011-11-11");
+            webDriverOperations.click(id("copyDifferenceNameField"));
         }
 
         // コピー先(Destination)の内容確認
-        // コピー元Beanからコピー先Beanへ、異名フィールドの値がコピーされること。
         {
+            // コピー元Beanからコピー先Beanへ、異名フィールドの値がコピーされること。
             assertThat(webDriverOperations.getText(id("getMyoji")), is("やまだ"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "たかし"));
             assertThat(webDriverOperations.getText(id("getAge")), is("25"));
+            assertThat(webDriverOperations.getText(id("getTanjobi")), is(
+                    "2011/11/11"));
+
+            // マッピング定義していない異名フィールドはコピーされないこと。
+            assertThat(webDriverOperations.getText(id("getNamae")), is(""));
         }
     }
 
@@ -1156,7 +1144,7 @@ public class BeanMappingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>文字列型と日付・時刻型のフィールドでコピーができること。</li>
+     * <li>文字列型フィールドから日付・時刻型フィールドにコピーができること。</li>
      * </ul>
      */
     @Test
@@ -1170,7 +1158,29 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー元(Source)の内容入力
         {
             webDriverOperations.appendText(id("birthDate"),
-                    "2013/10/10 11:11:11.111");
+                    "2013-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateSqlDate"),
+                    "2013-10-10");
+            webDriverOperations.appendText(id("birthDateSqlTime"),
+                    "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateCalendar"),
+                    "2014-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateGregorianCalendar"),
+                    "2014-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateTimestamp"),
+                    "2015-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDate"),
+                    "2013-10-10");
+            webDriverOperations.appendText(id("birthDateLocalTime"),
+                    "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDateTime"),
+                    "2013-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateOffsetTime"),
+                    "11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateOffsetDateTime"),
+                    "2013-10-10 11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateZonedDateTime"),
+                    "2013-10-10 11:11:11.111+08:00[Asia/Shanghai]");
             webDriverOperations.click(id("stringToDate"));
         }
 
@@ -1179,6 +1189,140 @@ public class BeanMappingTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getBirthDate")), is(
                     "2013/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")),
+                    is("2013/10/10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")),
+                    is("11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateCalendar")),
+                    is("2014/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateGregorianCalendar")), is(
+                            "2014/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateTimestamp")),
+                    is("2015/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")),
+                    is("2013/10/10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalTime")),
+                    is("11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateLocalDateTime")), is(
+                            "2013/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateOffsetTime")), is("11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateOffsetDateTime")), is(
+                            "2013/10/10 11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateZonedDateTime")), is(
+                            "2013/10/10 11:11:11.111+08:00[Asia/Shanghai]"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>日付・時刻型フィールドから文字列型フィールドにコピーができること。</li>
+     * </ul>
+     */
+    @Test
+    public void testBNMP0304002() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("bnmp0304002"));
+        }
+
+        // コピー元(Source)の内容入力
+        // java.sqlは@DateTimeFormatに対応していないため、デフォルトの日付フォーマットで設定している。
+        {
+            webDriverOperations.appendText(id("birthDate"),
+                    "2013/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateSqlDate"),
+                    "2013-10-10");
+            webDriverOperations.appendText(id("birthDateSqlTime"), "11:11:11");
+            webDriverOperations.appendText(id("birthDateCalendar"),
+                    "2014/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateGregorianCalendar"),
+                    "2014/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateTimestamp"),
+                    "2015-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDate"),
+                    "2013/10/10");
+            webDriverOperations.appendText(id("birthDateLocalTime"),
+                    "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDateTime"),
+                    "2013/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateOffsetTime"),
+                    "11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateOffsetDateTime"),
+                    "2013/10/10 11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateZonedDateTime"),
+                    "2013/10/10 11:11:11.111+08:00");
+            webDriverOperations.click(id("dateToString"));
+        }
+
+        // コピー先(Destination)の内容確認
+        // コピー元Beanからコピー先Beanへコピーされること。
+        {
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
+                    "2013-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")),
+                    is("2013-10-10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")),
+                    is("11:11:11"));
+            assertThat(webDriverOperations.getText(id("getBirthDateCalendar")),
+                    is("2014-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateGregorianCalendar")), is(
+                            "2014-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateTimestamp")),
+                    is("2015-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")),
+                    is("2013-10-10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalTime")),
+                    is("11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateLocalDateTime")), is(
+                            "2013-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateOffsetTime")), is("11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateOffsetDateTime")), is(
+                            "2013-10-10 11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id(
+                    "getBirthDateZonedDateTime")), is(
+                            "2013-10-10 11:11:11.111+08:00"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>日付・時刻型フィールドから文字列型フィールドにコピーするとき、マッピング定義XMLファイルでSimpleDateFormatに定義されていない書式は使用できないこと。</li>
+     * </ul>
+     */
+    @Test
+    public void testBNMP0304003() {
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("bnmp0304003"));
+        }
+
+        // コピー元(Source)の内容入力
+        {
+            webDriverOperations.appendText(id("birthDateZonedDateTime"),
+                    "2013/10/10 11:11:11.111+08:00[Asia/Tokyo]");
+            webDriverOperations.click(id("dateToStringFailed"));
+        }
+
+        // システムエラー画面に遷移
+        // IllegalArgumentExceptionが発生すること。
+        {
+            assertThat(webDriverOperations.getTitle(), is("System Error!"));
+
+            assertThat(webDriverOperations.getText(By.xpath(
+                    "//div[2]/div/ul/li")), is(
+                            "[e.sf.cmmn.9001] System error occurred!"));
+            assertThat(webDriverOperations.getText(By.xpath("//ul[2]/li")),
+                    containsString("Illegal pattern character 'V'"));
         }
     }
 

@@ -16,7 +16,7 @@
       <td><span id="getCarColor">${f:h(car.color)}</span></td>
     </tr>
     <tr>
-      <td>release Date</td>
+      <td>Release Date</td>
       <td><span id="getCarReleaseDate"><fmt:formatDate pattern="yyyyMMdd"
             value="${car.releaseDate}" /></span></td>
     </tr>

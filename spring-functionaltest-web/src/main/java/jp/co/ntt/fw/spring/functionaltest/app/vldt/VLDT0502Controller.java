@@ -27,9 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class VLDT0502Controller {
 
-    @ModelAttribute(value = "roleForFormatterForm")
-    public RoleForFormatterForm roleForFormatterForm() {
-        return new RoleForFormatterForm();
+    @ModelAttribute(value = "roleForCollectionForm")
+    public RoleForCollectionForm roleForCollectionForm() {
+        return new RoleForCollectionForm();
     }
 
     @RequestMapping(value = "001", method = RequestMethod.GET)
@@ -38,12 +38,12 @@ public class VLDT0502Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handleValidate(@Valid RoleForFormatterForm form,
+    public String handleValidate(@Valid RoleForCollectionForm form,
             BindingResult result, Model model) {
         return form();
     }
 
     private String form() {
-        return "vldt/existInCheckForCollectionByFormatterForm";
+        return "vldt/existInCheckForCollectionForm";
     }
 }

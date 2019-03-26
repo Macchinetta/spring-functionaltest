@@ -36,10 +36,10 @@ public class SingleUploadForm implements Serializable {
 
     @UploadFileRequired
     @UploadFileNotEmpty
-    @UploadFileMaxSize.List({ @UploadFileMaxSize,
-            @UploadFileMaxSize(value = 250, groups = UploadFileMaxSize250byte.class) })
-    @UploadFileAllowedExtention.List({ @UploadFileAllowedExtention("txt"),
-            @UploadFileAllowedExtention(value = "jsp", groups = UploadFileAllowJsp.class) })
+    @UploadFileMaxSize
+    @UploadFileMaxSize(value = 250, groups = UploadFileMaxSize250byte.class)
+    @UploadFileAllowedExtention("txt")
+    @UploadFileAllowedExtention(value = "jsp", groups = UploadFileAllowJsp.class)
     private transient MultipartFile multipartFile;
 
     public MultipartFile getMultipartFile() {

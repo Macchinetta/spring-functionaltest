@@ -23,23 +23,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.context.support.ApplicationObjectSupport;
 
 public class WebDriverCreator extends ApplicationObjectSupport {
 
     @Inject
-    protected FirefoxDriverPrepare firefoxDriverPrepare;
+    private WebDriverManagerConfigurer webDriverManagerConfigurer;
 
     /**
      * デフォルトのWebDriver(Beanファイルに定義されているWebDriver)を作成する。
      * @return デフォルトのWebDriver
      */
     public WebDriver createDefaultWebDriver() {
-        WebDriver webDriver = getApplicationContext().getBean(WebDriver.class);
-
-        return registerWebDriverEventListener(webDriver);
+        return getApplicationContext().getBean(WebDriver.class);
     }
 
     /**
@@ -53,6 +51,7 @@ public class WebDriverCreator extends ApplicationObjectSupport {
      * @return WebDriver 動作対象のブラウザ
      */
     public WebDriver createLocaleSpecifiedDriver(String localeStr) {
+        webDriverManagerConfigurer.setUp();
 
         for (String activeProfile : getApplicationContext().getEnvironment()
                 .getActiveProfiles()) {
@@ -60,8 +59,6 @@ public class WebDriverCreator extends ApplicationObjectSupport {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--lang=" + localeStr);
                 return new ChromeDriver(options);
-            } else if ("firefox".equals(activeProfile)) {
-                break;
             } else if ("ie".equals(activeProfile)) {
                 throw new UnsupportedOperationException("InternetExplorerを使用してロケール指定のブラウザ起動はできません。");
             } else if ("phantomJs".equals(activeProfile)) {
@@ -70,17 +67,14 @@ public class WebDriverCreator extends ApplicationObjectSupport {
         }
 
         // デフォルトのブラウザはFirefoxとする
-        firefoxDriverPrepare.geckodriverSetup();
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", localeStr);
         profile.setPreference("browser.startup.homepage_override.mstone",
                 "ignore");
         profile.setPreference("network.proxy.type", 0);
         profile.setPreference("layout.css.devPixelsPerPx", "0.5");
-
-        WebDriver webDriver = new FirefoxDriver(profile);
-
-        return registerWebDriverEventListener(webDriver);
+        FirefoxOptions options = new FirefoxOptions().setProfile(profile);
+        return new FirefoxDriver(options);
     }
 
     /**
@@ -92,6 +86,7 @@ public class WebDriverCreator extends ApplicationObjectSupport {
      * @return ダウンロード機能を有効にしたWebDirverインスタンス
      */
     public WebDriver createDownloadableWebDriver(String downloadTempDirectory) {
+        webDriverManagerConfigurer.setUp();
         for (String activeProfile : getApplicationContext().getEnvironment()
                 .getActiveProfiles()) {
             if ("chrome".equals(activeProfile) || "ie".equals(activeProfile)
@@ -99,7 +94,8 @@ public class WebDriverCreator extends ApplicationObjectSupport {
                 throw new UnsupportedOperationException("FireFox以外のブラウザでダウンロード機能を使用するテストを実行することはできません。");
             }
         }
-        firefoxDriverPrepare.geckodriverSetup();
+
+        // デフォルトのブラウザはFirefoxとする
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("browser.download.dir", downloadTempDirectory);
         profile.setPreference("browser.download.folderList", 2);
@@ -117,25 +113,10 @@ public class WebDriverCreator extends ApplicationObjectSupport {
         profile.setPreference("browser.startup.homepage_override.mstone",
                 "ignore");
         profile.setPreference("network.proxy.type", 0);
-
-        WebDriver webDriver = new FirefoxDriver(profile);
+        FirefoxOptions options = new FirefoxOptions().setProfile(profile);
+        WebDriver webDriver = new FirefoxDriver(options);
         webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-        return registerWebDriverEventListener(webDriver);
-    }
-
-    /**
-     * WebDriverEventListenerを実行ドライバに登録
-     * @param webDriver テスト対象のwebDriver
-     * @return EventFiringWebDriver Listener処理を有したwebDriver
-     */
-    private EventFiringWebDriver registerWebDriverEventListener(
-            WebDriver webDriver) {
-        EventFiringWebDriver driver = new EventFiringWebDriver(webDriver);
-        driver.register(getApplicationContext().getBean(
-                WaitWebDriverEventListener.class));
-
-        return driver;
+        return webDriver;
     }
 
 }

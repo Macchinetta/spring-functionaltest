@@ -16,13 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class BeanMapperForm implements Serializable {
 
-    /**  */
     private static final long serialVersionUID = 1L;
 
     private String firstName;
@@ -31,8 +30,8 @@ public class BeanMapperForm implements Serializable {
 
     private Integer age;
 
-    @DateTimeFormat(pattern = "yyyyMMdd")
-    private DateTime birthDate;
+    @DateTimeFormat(pattern = "uuuu-MM-dd")
+    private LocalDate birthDate;
 
     public String getFirstName() {
         return firstName;
@@ -58,11 +57,11 @@ public class BeanMapperForm implements Serializable {
         this.age = age;
     }
 
-    public DateTime getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(DateTime birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 }

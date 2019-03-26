@@ -17,12 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.AllowedSortProperty;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Person;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.PersonSearchCriteria;
 
+@Validated
 public interface PersonService {
 
-    Page<Person> getPersons(PersonSearchCriteria criteria, Pageable pageable);
+    Page<Person> getPersons(PersonSearchCriteria criteria,
+            @AllowedSortProperty({ "person_id" }) Pageable pageable);
 
 }

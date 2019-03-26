@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,12 +39,24 @@ public class INTR0201Controller {
     }
 
     @RequestMapping(value = "006", method = RequestMethod.GET)
-    public String handle006() {
+    public String handle006(Model model) {
+        model.addAttribute("testNo", "006");
         return "intr/changeLocaleSession";
     }
 
     @RequestMapping(value = "006_check", method = RequestMethod.GET)
     public String handle006_check() {
+        return "intr/checkLocale";
+    }
+
+    @RequestMapping(value = "007", method = RequestMethod.GET)
+    public String handle007(Model model) {
+        model.addAttribute("testNo", "007");
+        return "intr/changeLocaleSession";
+    }
+
+    @RequestMapping(value = "007_check", method = RequestMethod.GET)
+    public String handle007_check() {
         return "intr/checkLocale";
     }
 

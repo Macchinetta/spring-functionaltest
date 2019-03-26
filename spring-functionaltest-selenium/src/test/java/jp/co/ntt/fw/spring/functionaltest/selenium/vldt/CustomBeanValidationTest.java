@@ -152,8 +152,8 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
     @Test
     public void testVLDT0402001() {
         String testId = "vldt0402001";
-        String target = "isbnCode";
-        String errorMessage = "ISBNコードは、ISBN(International Standard Book Number)-13の形式で入力してください。";
+        String target = "ipAddress";
+        String errorMessage = "IPアドレスは、IPv4(インターネットプロトコルバージョン4)アドレスの形式で入力してください。";
 
         // テスト画面表示
         {
@@ -164,7 +164,7 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target), "9784777517992");
+                webDriverOperations.overrideText(id(target), "192.168.0.1");
                 webDriverOperations.click(id(validate));
             }
 
@@ -179,7 +179,7 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target), "97847775a7992");
+                webDriverOperations.overrideText(id(target), "192.168.0.256");
                 webDriverOperations.click(id(validate));
             }
 

@@ -4,7 +4,7 @@
   <table class="table table-striped table-bordered table-condensed">
     <c:forEach var="emailAddresses" items="${resultBean.emailAddresses}" varStatus="rowStatus">
       <tr>
-        <td class="inputColumn">email&nbsp;${rowStatus.count}</td>
+        <td class="inputColumn">Email&nbsp;${rowStatus.count}</td>
         <td><span id="getEmail${rowStatus.count}">${f:h(emailAddresses.email)}</span></td>
       </tr>
     </c:forEach>

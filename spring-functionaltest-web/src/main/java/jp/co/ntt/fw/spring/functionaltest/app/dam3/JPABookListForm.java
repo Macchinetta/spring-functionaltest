@@ -27,6 +27,14 @@ public class JPABookListForm implements Serializable {
 
     private String searchInQueryBookIdNoLazy;
 
+    private String searchInQueryBookIdAndRegisterSession;
+
+    private String searchInQueryBookIdAndRegisterFlashAttribute;
+
+    private String searchInQueryBookIdAcquiringNotForeignKey;
+
+    private String searchInQueryBookIdAcquiringForeignKey;
+
     private String bookId;
 
     private String bookIdSrch;
@@ -102,6 +110,42 @@ public class JPABookListForm implements Serializable {
 
     public void setSearchInQueryBookIdNoLazy(String searchInQueryBookIdNoLazy) {
         this.searchInQueryBookIdNoLazy = searchInQueryBookIdNoLazy;
+    }
+
+    public String getSearchInQueryBookIdAndRegisterSession() {
+        return searchInQueryBookIdAndRegisterSession;
+    }
+
+    public void setSearchInQueryBookIdAndRegisterSession(
+            String searchInQueryBookIdAndRegisterSession) {
+        this.searchInQueryBookIdAndRegisterSession = searchInQueryBookIdAndRegisterSession;
+    }
+
+    public String getSearchInQueryBookIdAndRegisterFlashAttribute() {
+        return searchInQueryBookIdAndRegisterFlashAttribute;
+    }
+
+    public void setSearchInQueryBookIdAndRegisterFlashAttribute(
+            String searchInQueryBookIdAndRegisterFlashAttribute) {
+        this.searchInQueryBookIdAndRegisterFlashAttribute = searchInQueryBookIdAndRegisterFlashAttribute;
+    }
+
+    public String getSearchInQueryBookIdAcquiringNotForeignKey() {
+        return searchInQueryBookIdAcquiringNotForeignKey;
+    }
+
+    public void setSearchInQueryBookIdAcquiringNotForeignKey(
+            String searchInQueryBookIdAcquiringNotForeignKey) {
+        this.searchInQueryBookIdAcquiringNotForeignKey = searchInQueryBookIdAcquiringNotForeignKey;
+    }
+
+    public String getSearchInQueryBookIdAcquiringForeignKey() {
+        return searchInQueryBookIdAcquiringForeignKey;
+    }
+
+    public void setSearchInQueryBookIdAcquiringForeignKey(
+            String searchInQueryBookIdAcquiringForeignKey) {
+        this.searchInQueryBookIdAcquiringForeignKey = searchInQueryBookIdAcquiringForeignKey;
     }
 
     public String getBookId() {

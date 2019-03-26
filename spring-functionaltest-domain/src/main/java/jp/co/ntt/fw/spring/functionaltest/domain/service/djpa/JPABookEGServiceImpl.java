@@ -200,7 +200,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
         // Calling method
         JPABookEG jpaBookEGOrg = jpaBookEGMyProjectRepository
-                .findOneWithValidVersion(jpaBookEG.getBookId(), jpaBookEG
+                .findByIdWithValidVersion(jpaBookEG.getBookId(), jpaBookEG
                         .getVersion());
 
         jpaBookEGOrg.setTitle(jpaBookEG.getTitle());

@@ -160,8 +160,8 @@ public class SOAPTest extends SOAPTestSupport {
                 assertHttpStatusCode(500);
 
                 assertWebFaultIsInErrorBeans(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "may not be null", "todoId"),
-                        new ErrorBean("NotNull", "may not be null", "arg0"));
+                        new ErrorBean("NotNull", "must not be null", "todoId"),
+                        new ErrorBean("NotNull", "must not be null", "arg0"));
             }
         }
 
@@ -234,7 +234,7 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "may not be null", "title"));
+                        new ErrorBean("NotNull", "must not be null", "title"));
             }
         }
 
@@ -380,7 +380,7 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "may not be null", "todoId"));
+                        new ErrorBean("NotNull", "must not be null", "todoId"));
             }
         }
 
@@ -496,8 +496,8 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "may not be null", "todoId"),
-                        new ErrorBean("NotNull", "may not be null", "title"));
+                        new ErrorBean("NotNull", "must not be null", "todoId"),
+                        new ErrorBean("NotNull", "must not be null", "title"));
             }
         }
 

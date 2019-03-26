@@ -22,7 +22,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class ScopeMappingDto implements Serializable {
 
-    /**  */
     private static final long serialVersionUID = 1L;
 
     private String firstName;

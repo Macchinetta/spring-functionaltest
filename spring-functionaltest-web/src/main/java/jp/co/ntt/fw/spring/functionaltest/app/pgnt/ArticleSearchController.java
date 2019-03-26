@@ -107,5 +107,4 @@ public class ArticleSearchController {
         model.addAttribute("path", "articleSearchSortSpecified");
         return "pgnt/articleList";
     }
-
 }

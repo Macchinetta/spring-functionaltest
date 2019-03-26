@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -26,7 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.proxy.ProxyServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.codec.Base64;
 
 /**
  * アプリケーション内部ProxyServer用のサーブレット
@@ -157,7 +157,7 @@ public class InternalProxyServlet extends ProxyServlet {
         byte[] decoded;
         try {
             // Base64デコード
-            decoded = Base64.decode(base64Token);
+            decoded = Base64.getDecoder().decode(base64Token);
         } catch (IllegalArgumentException e) {
             logger.error(e.getMessage(), e);
             return null;

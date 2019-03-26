@@ -15,7 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401004;
 
-import java.lang.annotation.ElementType;
+import static java.lang.annotation.ElementType.TYPE;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -32,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @ControllerAdvice(annotations = LoginFormModelAttributeSetter.LoginFormModelAttribute.class)
 public class LoginFormModelAttributeSetter {
 
-    @Target(ElementType.TYPE)
+    @Target(TYPE)
     @Retention(RetentionPolicy.RUNTIME)
     public static @interface LoginFormModelAttribute {
     }

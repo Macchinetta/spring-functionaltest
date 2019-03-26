@@ -15,8 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE_USE;
+
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -24,8 +31,11 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE })
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired.List;
+
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(List.class)
 @Constraint(validatedBy = UploadFileRequiredValidator.class)
 public @interface UploadFileRequired {
     String message() default "{jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired.message}";
@@ -34,8 +44,8 @@ public @interface UploadFileRequired {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ ElementType.METHOD, ElementType.FIELD,
-            ElementType.ANNOTATION_TYPE })
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
+            TYPE_USE })
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
     @interface List {

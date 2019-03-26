@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.6.0.RELEASE</version>
+  <version>1.6.1.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.5.0.RC7</version>
+    <version>5.5.1.RELEASE</version>
     <relativePath />
   </parent>
 
@@ -429,10 +429,10 @@
         <version>${postgresql.version}</version>
       </dependency>
       <dependency>
-        <!-- ojdbc7.jar must be pre-installed in local repository. -->
+        <!-- ojdbc8.jar must be pre-installed in local repository. -->
         <groupId>com.oracle.jdbc</groupId>
-        <artifactId>ojdbc7</artifactId>
-        <version>${ojdbc7.version}</version>
+        <artifactId>ojdbc8</artifactId>
+        <version>${ojdbc8.version}</version>
       </dependency>
       <dependency>
         <!-- db2jcc4.jar must be pre-installed in local repository. -->
@@ -488,56 +488,6 @@
       <!-- == End Apache CXF == -->
 
       <!-- == Begin Test == -->
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-api</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-chrome-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-firefox-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-ie-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-edge-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-remote-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-safari-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-opera-driver</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-support</artifactId>
-        <version>${selenium.version}</version>
-      </dependency>
       <dependency>
         <groupId>io.github.bonigarcia</groupId>
         <artifactId>webdrivermanager</artifactId>
@@ -609,6 +559,29 @@
       </dependency>
       <!-- == End Jetty Proxy Server == -->
 
+      <!-- == Begin For JDK 11 == -->
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-core</artifactId>
+        <version>${jaxb-core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.xml.bind</groupId>
+        <artifactId>jaxb-impl</artifactId>
+        <version>${jaxb-impl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.jws</groupId>
+        <artifactId>javax.jws-api</artifactId>
+        <version>${javax.jws-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>${activation.version}</version>
+      </dependency>
+      <!-- == End For JDK 11 == -->
+
     </dependencies>
   </dependencyManagement>
   <properties>
@@ -628,9 +601,9 @@
     <org.apache.maven.plugins.maven-resources-plugin.version>2.6</org.apache.maven.plugins.maven-resources-plugin.version>
     <org.apache.maven.plugins.maven-site-plugin.version>3.1</org.apache.maven.plugins.maven-site-plugin.version>
     <org.apache.maven.plugins.maven-source-plugin.version>2.2</org.apache.maven.plugins.maven-source-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-report-plugin.version>2.4.3</org.apache.maven.plugins.maven-surefire-report-plugin.version>
+    <org.apache.maven.plugins.maven-surefire-report-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-report-plugin.version>
     <org.apache.maven.plugins.maven-war-plugin.version>2.2</org.apache.maven.plugins.maven-war-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-plugin.version>2.20.1</org.apache.maven.plugins.maven-surefire-plugin.version>
+    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.apache.maven.plugins.version>2.5</org.apache.maven.plugins.version>
     <org.codehaus.mojo.build-helper-maven-plugin.version>1.9.1</org.codehaus.mojo.build-helper-maven-plugin.version>
     <org.codehaus.mojo.emma-maven-plugin.version>1.0-alpha-3</org.codehaus.mojo.emma-maven-plugin.version>
@@ -640,17 +613,20 @@
     <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
     <org.codehaus.mojo.version>2.5</org.codehaus.mojo.version>
     <org.springframework.build.aws.version>3.0.0.RELEASE</org.springframework.build.aws.version>
-    <postgresql.version>42.2.4</postgresql.version>
-    <ojdbc7.version>12.1.0.2</ojdbc7.version>
+    <postgresql.version>42.2.5</postgresql.version>
+    <ojdbc8.version>18.3</ojdbc8.version>
     <db2jcc4.version>4.21.29</db2jcc4.version>
-    <selenium.version>3.0.1</selenium.version>
-    <webdrivermanager.version>1.6.2</webdrivermanager.version>
+    <webdrivermanager.version>3.1.1</webdrivermanager.version>
     <com.github.detro.ghostdriver.version>1.0.4</com.github.detro.ghostdriver.version>
     <com.jayway.restassured.version>2.7.0</com.jayway.restassured.version>
     <greenmail-spring.version>1.4.1</greenmail-spring.version>
     <cxf-rt.version>3.1.4</cxf-rt.version>
     <bouncycastle.version>1.59</bouncycastle.version>
     <jetty.version>9.2.14.v20151106</jetty.version>
+    <jaxb-core.version>2.3.0.1</jaxb-core.version>
+    <jaxb-impl.version>2.3.2</jaxb-impl.version>
+    <javax.jws-api.version>1.1</javax.jws-api.version>
+    <activation.version>1.1</activation.version>
     <!-- == Project Properties == -->
     <project.env.main.directory>src/main</project.env.main.directory>
     <project.env.target.name>spring-functionaltest-env</project.env.target.name>
@@ -859,6 +835,31 @@
         <project.env.main.directory>configs/webspheretr-db2</project.env.main.directory>
         <project.env.buildFinalName>${project.artifactId}-${project.version}-webspheretr-db2</project.env.buildFinalName>
       </properties>
+    </profile>
+    <profile>
+      <id>jdk11</id>
+      <activation>
+        <jdk>11</jdk>
+      </activation>
+      <properties>
+        <java-version>11</java-version>
+        <cargo.jvmargs>-Xms512m -Xmx1024m -Djava.locale.providers=COMPAT,CLDR,SPI -Djdk.tls.client.protocols=TLSv1.2 -Djdk.tls.server.protocols=TLSv1.2</cargo.jvmargs>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <systemProperties>
+                  <jdk.tls.client.protocols>TLSv1.2</jdk.tls.client.protocols>
+                </systemProperties>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
     </profile>
   </profiles>
 </project>

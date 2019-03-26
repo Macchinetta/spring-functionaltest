@@ -17,12 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.app.cspr;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.Confirm;
-
-import org.hibernate.validator.constraints.Email;
 
 @Confirm(field = "password")
 public class UserForm implements Serializable {

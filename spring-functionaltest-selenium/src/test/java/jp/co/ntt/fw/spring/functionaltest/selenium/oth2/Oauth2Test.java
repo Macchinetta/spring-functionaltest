@@ -1136,7 +1136,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         String messagePattern = "Error requesting access token.";
-        String stackTracePattern = "Caused by: org\\.springframework\\.web\\.client\\.HttpClientErrorException: 401 .*";
+        String stackTracePattern = "Caused by: org\\.springframework\\.web\\.client\\.HttpClientErrorException\\$Unauthorized: 401 .*";
         if (webDriverOperations.getApServerName() == ApServerName.WEBLOGIC) {
             messagePattern = "Access token denied.";
             stackTracePattern = "Caused by: org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.OAuth2Exception: Bad credentials";

@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
@@ -1697,6 +1698,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.appendText(id("password"), "spring1234");
         webDriverOperations.click(id("login"));
 
+        // 管理者情報が表示されるまで待機
+        webDriverOperations.waitForDisplayed(id("username"));
+
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Samson"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
@@ -1717,6 +1721,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.appendText(id("username"), "Samson");
         webDriverOperations.appendText(id("password"), "spring5432");
         webDriverOperations.click(id("login"));
+
+        // エラーページが表示されるまで待機
+        webDriverOperations.waitForDisplayed(id("loginError"));
 
         // 認証エラーとなることを確認
         assertThat(webDriverOperations.getText(id("loginError")), is(

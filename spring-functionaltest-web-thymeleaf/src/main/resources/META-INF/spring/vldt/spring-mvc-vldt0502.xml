@@ -10,7 +10,7 @@
 
   <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
 
-  <mvc:annotation-driven validator="validator" conversion-service="conversionService">
+  <mvc:annotation-driven validator="validator">
     <mvc:argument-resolvers>
       <ref bean="pageableHandlerMethodArgumentResolver" />
       <bean class="jp.co.ntt.fw.spring.functionaltest.app.aply.CommonParametersMethodArgumentResolver" />
@@ -29,14 +29,5 @@
   <context:annotation-config />
 
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.vldt.VLDT0502Controller" />
-
-  <!-- formatter -->
-  <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-    <property name="formatters">
-      <list>
-        <bean class="jp.co.ntt.fw.spring.functionaltest.app.vldt.formatter.RoleFormatter" />
-      </list>
-    </property>
-  </bean>
 
 </beans>

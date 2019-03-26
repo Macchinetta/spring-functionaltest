@@ -45,7 +45,7 @@ public class MyProjectRepositoryImpl<T, ID extends Serializable> extends
         }
     }
 
-    public T findOneWithValidVersion(ID id, Long version) {
+    public T findByIdWithValidVersion(ID id, Long version) {
 
         if (versionMethod == null) {
             throw new UnsupportedOperationException(String.format(

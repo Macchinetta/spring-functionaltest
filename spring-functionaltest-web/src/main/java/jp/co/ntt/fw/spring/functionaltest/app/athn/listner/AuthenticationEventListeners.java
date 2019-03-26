@@ -33,68 +33,68 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationEventListeners {
 
-    private static final Logger log = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             AuthenticationEventListeners.class);
 
     @EventListener
     public void handleBadCredentials(
             AuthenticationFailureBadCredentialsEvent event) {
-        log.info("Bad credentials is detected. username : {}", event
+        logger.info("Bad credentials is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationFailureDisabled(
             AuthenticationFailureDisabledEvent event) {
-        log.info("User deisabled is detected. username : {}", event
+        logger.info("User deisabled is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationFailureLocked(
             AuthenticationFailureLockedEvent event) {
-        log.info("User locked is detected. username : {}", event
+        logger.info("User locked is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationFailureExpired(
             AuthenticationFailureExpiredEvent event) {
-        log.info("Authentication expired is detected. username : {}", event
+        logger.info("Authentication expired is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationFailureCredentialsExpired(
             AuthenticationFailureCredentialsExpiredEvent event) {
-        log.info("Credentials expired is detected. username : {}", event
+        logger.info("Credentials expired is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationFailureServiceExceptionEvent(
             AuthenticationFailureServiceExceptionEvent event) {
-        log.info("ServiceException is detected. username : {}", event
+        logger.info("ServiceException is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
     @EventListener
     public void handleAuthenticationSuccess(AuthenticationSuccessEvent event) {
-        log.info("Autnenticated. username : {}", event.getAuthentication()
+        logger.info("Autnenticated. username : {}", event.getAuthentication()
                 .getName());
     }
 
     @EventListener
     public void handleSessionFixationProtection(
             SessionFixationProtectionEvent event) {
-        log.info("Session changed. sessionId : {}", event.getOldSessionId()
+        logger.info("Session changed. sessionId : {}", event.getOldSessionId()
                 + " to " + event.getNewSessionId());
     }
 
     @EventListener
     public void handleInteractiveAuthenticationSuccess(
             InteractiveAuthenticationSuccessEvent event) {
-        log.info("Autnenticate completed. username : {}", event
+        logger.info("Autnenticate completed. username : {}", event
                 .getAuthentication().getName());
     }
 

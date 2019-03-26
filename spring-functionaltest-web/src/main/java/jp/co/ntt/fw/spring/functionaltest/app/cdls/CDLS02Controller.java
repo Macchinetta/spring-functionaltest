@@ -46,11 +46,6 @@ public class CDLS02Controller {
         return new UpdateCodeListForm();
     }
 
-    @ModelAttribute("refreshCodeList")
-    public Map<String, String> setUpRefreshCodeList() {
-        return orderStatusService.getCodeListItem().asMap();
-    }
-
     @RequestMapping(value = "0201/001", method = RequestMethod.GET)
     public String handle01001(Model model, UpdateCodeListForm form) {
         return "cdls/codeListReload";

@@ -21,6 +21,10 @@ public interface JPABookLZService {
 
     JPABookLZ findById(Integer id);
 
+    JPABookLZ findByIdAcquiringNotForeignKey(Integer id);
+
+    JPABookLZ findByIdAcquiringForeignKey(Integer id);
+
     JPABookLZ addBook(JPABookLZ bookLZ);
 
 }

@@ -15,9 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
+import java.time.format.DateTimeFormatter;
+
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateMappingDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.StringToDateMappingDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateToStringMappingDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateToStringMappingFailedDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeNullEmptyDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeSpecifiedFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MappingFailedDto;
@@ -53,8 +57,18 @@ public class BNMP03Controller {
     }
 
     @RequestMapping(value = "0304/001", method = RequestMethod.GET)
-    public String handle04001(Model model, DateMappingForm form) {
+    public String handle04001(Model model, StringToDateMappingForm form) {
         return "bnmp/stringToDateMapping";
+    }
+
+    @RequestMapping(value = "0304/002", method = RequestMethod.GET)
+    public String handle04002(Model model, DateToStringMappingForm form) {
+        return "bnmp/dateToStringMapping";
+    }
+
+    @RequestMapping(value = "0304/003", method = RequestMethod.GET)
+    public String handle04003(Model model, DateToStringMappingForm form) {
+        return "bnmp/dateToStringMappingFailed";
     }
 
     @RequestMapping(value = "0305/001", method = RequestMethod.GET)
@@ -129,14 +143,77 @@ public class BNMP03Controller {
     }
 
     @RequestMapping(value = "stringToDateMapping", method = RequestMethod.POST, params = "stringToDate")
-    public String handleStringToDateMapping(Model model, DateMappingForm form) {
+    public String handleStringToDateMapping(Model model,
+            StringToDateMappingForm form) {
 
-        DateMappingDto destinationBean = beanMapper.map(form,
-                DateMappingDto.class);
+        StringToDateMappingDto destinationBean = beanMapper.map(form,
+                StringToDateMappingDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 
+        if (destinationBean.getBirthDateLocalDate() != null) {
+            model.addAttribute("birthDateLocalDate", destinationBean
+                    .getBirthDateLocalDate().format(DateTimeFormatter.ofPattern(
+                            "uuuu/MM/dd")));
+        }
+
+        if (destinationBean.getBirthDateLocalTime() != null) {
+            model.addAttribute("birthDateLocalTime", destinationBean
+                    .getBirthDateLocalTime().format(DateTimeFormatter.ofPattern(
+                            "HH:mm:ss.SSS")));
+        }
+
+        if (destinationBean.getBirthDateLocalDateTime() != null) {
+            model.addAttribute("birthDateLocalDateTime", destinationBean
+                    .getBirthDateLocalDateTime().format(DateTimeFormatter
+                            .ofPattern("uuuu/MM/dd HH:mm:ss.SSS")));
+        }
+
+        if (destinationBean.getBirthDateOffsetTime() != null) {
+            model.addAttribute("birthDateOffsetTime", destinationBean
+                    .getBirthDateOffsetTime().format(DateTimeFormatter
+                            .ofPattern("HH:mm:ss.SSSZZZZZ")));
+        }
+
+        if (destinationBean.getBirthDateOffsetDateTime() != null) {
+            model.addAttribute("birthDateOffsetDateTime", destinationBean
+                    .getBirthDateOffsetDateTime().format(DateTimeFormatter
+                            .ofPattern("uuuu/MM/dd HH:mm:ss.SSSZZZZZ")));
+        }
+
+        if (destinationBean.getBirthDateZonedDateTime() != null) {
+            model.addAttribute("birthDateZonedDateTime", destinationBean
+                    .getBirthDateZonedDateTime().format(DateTimeFormatter
+                            .ofPattern(
+                                    "uuuu/MM/dd HH:mm:ss.SSSZZZZZ'['VV']'")));
+        }
+
         return "bnmp/showBeanMappingStringToDateResult";
+    }
+
+    @RequestMapping(value = "dateToStringMapping", method = RequestMethod.POST, params = "dateToString")
+    public String handleDateToStringMapping(Model model,
+            DateToStringMappingForm form) {
+
+        DateToStringMappingDto destinationBean = beanMapper.map(form,
+                DateToStringMappingDto.class);
+
+        model.addAttribute("resultBean", destinationBean);
+
+        return "bnmp/showBeanMappingDateToStringResult";
+    }
+
+    @RequestMapping(value = "dateToStringMappingFailed", method = RequestMethod.POST, params = "dateToStringFailed")
+    public String handleDateToStringMappingFailed(Model model,
+            DateToStringMappingFailedForm form) {
+
+        DateToStringMappingFailedDto destinationBean = beanMapper.map(form,
+                DateToStringMappingFailedDto.class);
+
+        model.addAttribute("resultBean", destinationBean);
+
+        // IllegalArgumentExceptionが発生する為、以下URLはダミー
+        return "bnmp/";
     }
 
     @RequestMapping(value = "mappingFailed", method = RequestMethod.POST, params = "mappingFailed")
@@ -147,7 +224,7 @@ public class BNMP03Controller {
 
         model.addAttribute("resultBean", destinationBean);
 
-        // マッピングじExceptio発生する為、以下URLはダミー
+        // MappingExceptionが発生する為、以下URLはダミー
         return "bnmp/";
     }
 }

@@ -9,7 +9,7 @@
       <td><span id="getLastName">${f:h(resultBean.lastName)}</span></td>
     </tr>
     <tr>
-      <th class="inputColumn">age</th>
+      <th class="inputColumn">Age</th>
       <td><span id="getAge">${f:h(resultBean.age)}</span></td>
     </tr>
   </table>

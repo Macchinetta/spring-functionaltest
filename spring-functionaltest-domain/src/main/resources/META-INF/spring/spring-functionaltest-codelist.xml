@@ -118,6 +118,7 @@
         <entry key="ja" value-ref="CL_PRICE_JA" />
       </util:map>
     </property>
+    <property name="fallbackTo" value="en" />
   </bean>
 
   <bean id="CL_PRICE_EN" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
@@ -149,6 +150,7 @@
         <entry key="ja" value-ref="CL_DB_PRICE_JA" />
       </util:map>
     </property>
+    <property name="fallbackTo" value="en" />
   </bean>
 
   <bean id="CL_DB_PRICE_JA" parent="AbstractJdbcCodeList">
@@ -184,6 +186,7 @@
         </entry>
       </util:map>
     </property>
+    <property name="fallbackTo" value="en" />
   </bean>
 
   <bean id="CL_I18N_PRICE_MAP_CODE" class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
@@ -215,6 +218,7 @@
         </entry>
       </util:map>
     </property>
+    <property name="fallbackTo" value="en" />
   </bean>
 
   <task:scheduler id="taskScheduler" pool-size="10" />

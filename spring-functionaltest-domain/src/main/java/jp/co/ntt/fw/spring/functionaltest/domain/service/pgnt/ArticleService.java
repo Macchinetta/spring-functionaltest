@@ -15,15 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.AllowedSortProperty;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+@Validated
 public interface ArticleService {
 
     Page<Article> getArticles(ArticleSearchCriteria criteria,
-            Pageable pageable);
+            @AllowedSortProperty({ "article_id", "title" }) Pageable pageable);
 
 }

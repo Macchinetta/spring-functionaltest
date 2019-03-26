@@ -19,5 +19,6 @@
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.pgnt.PGNT06Controller" />
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.pgnt.ArticleSearchController" />
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.pgnt.CelebritySearchController" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.pgnt.PGNTControllerAdvice" />
 
 </beans>

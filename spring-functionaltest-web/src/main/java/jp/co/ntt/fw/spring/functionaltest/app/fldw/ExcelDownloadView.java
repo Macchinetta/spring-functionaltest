@@ -26,6 +26,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
@@ -162,77 +163,72 @@ public class ExcelDownloadView extends AbstractXlsxView {
         ListCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
 
         // fill in values in header row
-        Cell headerCell = headerRow.createCell(1, Cell.CELL_TYPE_BLANK);
+        Cell headerCell = headerRow.createCell(1, CellType.BLANK);
         headerCell.setCellValue("銀行");
         headerCell.setCellStyle(headerCellStyle);
 
         // fill in values in title row
-        Cell titleCell = titleRow.createCell(1, Cell.CELL_TYPE_BLANK);
+        Cell titleCell = titleRow.createCell(1, CellType.BLANK);
         titleCell.setCellValue("新規口座開設申込書");
         titleCell.setCellStyle(titleCellStyle);
 
         // fill in application date area
         Cell applicationDateCell = applicationDateRow.createCell(2,
-                Cell.CELL_TYPE_BLANK);
+                CellType.BLANK);
         applicationDateCell.setCellValue("申込日");
         applicationDateCell.setCellStyle(dataCellStyle);
 
         Cell applicationDateValueCell = applicationDateRow.createCell(3,
-                Cell.CELL_TYPE_BLANK);
+                CellType.BLANK);
         applicationDateValueCell.setCellValue(DateFormatUtils.format(dateFactory
                 .newDate(), "yyyy年MM月dd日"));
         applicationDateValueCell.setCellStyle(dataCellStyle);
 
         // fill in instructions
-        Cell instructionsCell = instructionsRow.createCell(1,
-                Cell.CELL_TYPE_BLANK);
+        Cell instructionsCell = instructionsRow.createCell(1, CellType.BLANK);
         instructionsCell.setCellValue("以下の項目にご記入くださいますようお願いいたします。");
         instructionsCell.setCellStyle(dataCellStyle);
 
         // fill in name, address and birthdate table
-        Cell nameCell = nameRow.createCell(2, Cell.CELL_TYPE_BLANK);
+        Cell nameCell = nameRow.createCell(2, CellType.BLANK);
         nameCell.setCellValue("お名前");
         nameCell.setCellStyle(dataCellStyle);
 
-        Cell nameValueCell = nameRow.createCell(3, Cell.CELL_TYPE_BLANK);
+        Cell nameValueCell = nameRow.createCell(3, CellType.BLANK);
         nameValueCell.setCellValue((String) model.get("name"));
         nameValueCell.setCellStyle(ListCellStyle);
 
-        Cell addressCell = addressRow.createCell(2, Cell.CELL_TYPE_BLANK);
+        Cell addressCell = addressRow.createCell(2, CellType.BLANK);
         addressCell.setCellValue("お住所");
         addressCell.setCellStyle(dataCellStyle);
 
-        Cell addressValueCell = addressRow.createCell(3, Cell.CELL_TYPE_BLANK);
+        Cell addressValueCell = addressRow.createCell(3, CellType.BLANK);
         addressValueCell.setCellValue((String) model.get("address"));
         addressValueCell.setCellStyle(ListCellStyle);
 
-        Cell birthdateCell = birthdateRow.createCell(2, Cell.CELL_TYPE_BLANK);
+        Cell birthdateCell = birthdateRow.createCell(2, CellType.BLANK);
         birthdateCell.setCellValue("生年月日");
         birthdateCell.setCellStyle(dataCellStyle);
 
-        Cell birthdateValueCell = birthdateRow.createCell(3,
-                Cell.CELL_TYPE_BLANK);
+        Cell birthdateValueCell = birthdateRow.createCell(3, CellType.BLANK);
         birthdateValueCell.setCellValue(DateFormatUtils.format(DateUtils
                 .parseDate((String) model.get("birthdate"), "yyyyMMdd"),
                 "yyyy年MM月dd日"));
         birthdateValueCell.setCellStyle(ListCellStyle);
 
         // fill in required documents information
-        Cell reqDocCell = reqdocRow.createCell(1, Cell.CELL_TYPE_BLANK);
+        Cell reqDocCell = reqdocRow.createCell(1, CellType.BLANK);
         reqDocCell.setCellValue("以下のリストからいずれかの本人確認書類をご用意ください。");
         reqDocCell.setCellStyle(dataCellStyle);
 
         // fill in document list items
-        Cell DocListItem1Cell = docListItem1Row.createCell(2,
-                Cell.CELL_TYPE_BLANK);
+        Cell DocListItem1Cell = docListItem1Row.createCell(2, CellType.BLANK);
         DocListItem1Cell.setCellValue("1. 運転免許証");
         DocListItem1Cell.setCellStyle(ListCellStyle);
-        Cell DocListItem2Cell = docListItem2Row.createCell(2,
-                Cell.CELL_TYPE_BLANK);
+        Cell DocListItem2Cell = docListItem2Row.createCell(2, CellType.BLANK);
         DocListItem2Cell.setCellValue("2. 外国人登録証明証 + パスポート");
         DocListItem2Cell.setCellStyle(ListCellStyle);
-        Cell DocListItem3Cell = docListItem3Row.createCell(2,
-                Cell.CELL_TYPE_BLANK);
+        Cell DocListItem3Cell = docListItem3Row.createCell(2, CellType.BLANK);
         DocListItem3Cell.setCellValue("3. 各種健康保険証 + 公共料金明細書");
         DocListItem3Cell.setCellStyle(ListCellStyle);
 

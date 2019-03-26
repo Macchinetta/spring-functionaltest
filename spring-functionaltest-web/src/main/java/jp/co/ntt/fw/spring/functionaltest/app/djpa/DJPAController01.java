@@ -59,4 +59,14 @@ public class DJPAController01 {
     public String handle0103003() {
         return "redirect:/djpa/book/list";
     }
+
+    @RequestMapping(value = "0103/004")
+    public String handle0103004() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0103/005")
+    public String handle0103005() {
+        return "redirect:/djpa/book/list";
+    }
 }

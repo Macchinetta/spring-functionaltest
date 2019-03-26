@@ -64,7 +64,7 @@
     <context:exclude-filter type="assignable"
       expression="jp.co.ntt.fw.spring.functionaltest.app.vldt.VLDT0304001Controller" />
     <context:exclude-filter type="regex"
-      expression="jp.co.ntt.fw.spring.functionaltest.app.vldt.VLDT050[2-3].*" />
+      expression="jp.co.ntt.fw.spring.functionaltest.app.vldt.VLDT0502Controller" />
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.dbsp.DBSP0303Controller.*" />
     <context:exclude-filter type="assignable"
