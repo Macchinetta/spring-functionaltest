@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.hamcrest.CoreMatchers.is;
 import static org.openqa.selenium.By.id;
 
 import java.util.ArrayList;
@@ -25,12 +26,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
+import org.hamcrest.Matchers;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.springframework.test.annotation.IfProfileValue;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -332,6 +338,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
             {
                 LocalDate ld = new LocalDate();
 
+                webDriverOperations.clearText(id(targets[0]));
                 webDriverOperations.overrideText(id(targets[1]), "a");
                 webDriverOperations.overrideText(id(targets[2]), "1234567");
                 webDriverOperations.overrideText(id(targets[3]), "99");
@@ -351,7 +358,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
                 webDriverOperations.overrideText(id(targets[14]), "aaa@aaa.");
                 webDriverOperations.overrideText(id(targets[15]),
                         "htt://aaa.com/");
-                webDriverOperations.clearText(id(targets[16]));
+                webDriverOperations.overrideText(id(targets[16]), " ");
                 webDriverOperations.clearText(id(targets[17]));
                 webDriverOperations.click(id(validate));
             }
@@ -407,7 +414,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
      * VLDT0101008
      * <ul>
      * <li>inclusive属性を省略の場合、エラーメッセージを出力しないことを確認する。<br>
-     * inclusive属性(false)の場合、エラーメッセージを出力することができることを確認する。
+     * inclusive属性(false)の場合、エラーメッセージを出力することができることを確認する。</li>
      * </ul>
      */
     @Test
@@ -445,7 +452,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
      * VLDT0101009
      * <ul>
      * <li>inclusive属性を省略の場合、エラーメッセージを出力することができることを確認する。<br>
-     * inclusive属性(false)の場合、エラーメッセージを出力することができることを確認する。
+     * inclusive属性(false)の場合、エラーメッセージを出力することができることを確認する。</li>
      * </ul>
      */
     @Test
@@ -477,6 +484,209 @@ public class SimpleValidationTest extends FunctionTestSupport {
                 assertThat(webDriverOperations.getText(id("priceFalse"
                         + errors)), is(errorPriceFalseMessage));
             }
+        }
+    }
+
+    /**
+     * VLDT0101010
+     * <ul>
+     * <li>th:errors="*{all}"で、エラーメッセージをまとめて出力することができることを確認する。</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testVLDT0101010() {
+        String testId = "vldt0101010";
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId));
+        }
+
+        // 実施条件1
+        {
+            // テスト実行
+            {
+                webDriverOperations.click(id(validate));
+            }
+
+            // 結果確認
+            {
+                String errorMessage = webDriverOperations.getText(id(
+                        "displayErrMessageForm.errors"));
+                assertThat(errorMessage, Matchers.allOf(containsString(
+                        "size must be between 1 and 20"), containsString(
+                                "size must be between 1 and 50"),
+                        containsString("may not be null")));
+
+            }
+        }
+    }
+
+    /**
+     * VLDT0101011
+     * <ul>
+     * <li>#fields.allErrors()でHTML構造を独自に定義して、エラーメッセージを出力することができることを確認する。</li>
+     * <li>#fields.hasAnyErrors()で、エラー有無の判定ができることを確認する。</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testVLDT0101011() {
+        String testId = "vldt0101011";
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId));
+        }
+
+        // 実施条件1
+        {
+            // テスト実行
+            {
+                webDriverOperations.click(id(validate));
+            }
+
+            // 結果確認
+            {
+                assertDisplayErrMessageFormLiMessages();
+            }
+        }
+    }
+
+    /**
+     * VLDT0101012
+     * <ul>
+     * <li>#fields.errors('*')でHTML構造を独自に定義して、エラーメッセージを出力することができることを確認する。</li>
+     * <li>#fields.hasErrors('*')で、エラー有無の判定ができることを確認する。</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testVLDT0101012() {
+        String testId = "vldt0101012";
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId));
+        }
+
+        // 実施条件1
+        {
+            // テスト実行
+            {
+                webDriverOperations.click(id(validate));
+            }
+
+            // 結果確認
+            {
+                assertDisplayErrMessageFormLiMessages();
+            }
+        }
+    }
+
+    /**
+     * VLDT0101013
+     * <ul>
+     * <li>エラー時に入力項目以外のスタイルを変更する方法を確認する。(th:classappend="${#fields.hasErrors('fieldName')} ? 'error-label'")</li>
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testVLDT0101013() {
+        String testId = "vldt0101013";
+        WebDriver driver = webDriverOperations.getWebDriver();
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId));
+        }
+
+        // 実施条件1（エラーになる）
+        {
+            // テスト実行
+            {
+                webDriverOperations.click(id(validate));
+            }
+
+            // 結果確認
+            {
+                assertThat(driver.findElement(By.id("labelName")).getAttribute(
+                        "class"), is("error-label"));
+                assertThat(driver.findElement(By.id("labelEmail")).getAttribute(
+                        "class"), is("error-label"));
+                assertThat(driver.findElement(By.id("labelAge")).getAttribute(
+                        "class"), is("error-label"));
+
+                assertDisplayErrMessageFormLiMessages();
+            }
+        }
+
+        // 実施条件2（エラーにならない）
+        {
+            // テスト実行
+            {
+                webDriverOperations.overrideText(By.id("name"), "name");
+                webDriverOperations.overrideText(By.id("email"), "a@b.com");
+                webDriverOperations.overrideText(By.id("age"), "20");
+                webDriverOperations.click(id(validate));
+            }
+
+            // 結果確認
+            {
+                assertThat(driver.findElement(By.id("labelName")).getAttribute(
+                        "class"), is(""));
+                assertThat(driver.findElement(By.id("labelEmail")).getAttribute(
+                        "class"), is(""));
+                assertThat(driver.findElement(By.id("labelAge")).getAttribute(
+                        "class"), is(""));
+            }
+        }
+    }
+
+    /**
+     * VLDT0101011～VLDT0101013共通確認項目
+     */
+    private void assertDisplayErrMessageFormLiMessages() {
+        WebElement ul = driver.findElement(By.id(
+                "displayErrMessageForm.errors"));
+        List<WebElement> liList = ul.findElements(By.xpath("./li"));
+        List<String> errorMessageList = new ArrayList<String>();
+        for (WebElement li : liList) {
+            errorMessageList.add(li.getText());
+        }
+
+        assertThat(errorMessageList, is(Matchers.containsInAnyOrder(
+                "size must be between 1 and 20",
+                "size must be between 1 and 50", "may not be null")));
+    }
+
+    /**
+     * VLDT0101014
+     * <ul>
+     * <li>#fields.allErrors()でHTML構造を独自に定義して、エラーメッセージを出力することができることを確認する。
+     * <li>#fields.hasAnyErrors()で、エラー有無の判定ができることを確認する。
+     * </ul>
+     */
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testVLDT0101014() {
+        String testId = "vldt0101014";
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId));
+
+            webDriverOperations.waitForDisplayed(ExpectedConditions
+                    .titleContains("Unhandled System Error!"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexStackTrace(
+                    "org.thymeleaf.TemplateEngine",
+                    "Cannot apply \"\\{th:errorclass,data-th-errorclass\\}\": this attribute requires the existence of a \"name\" \\(or \\[th:field, data-th-field\\]\\) attribute with non-empty value in the same host tag.");
         }
     }
 

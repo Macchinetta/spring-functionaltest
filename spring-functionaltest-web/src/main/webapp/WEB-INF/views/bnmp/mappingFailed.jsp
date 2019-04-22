@@ -5,7 +5,7 @@
     cssClass="form-horizontal" method="post" modelAttribute="mappingFailedForm">
     <legend>マッピング処理に失敗する場合の確認</legend>
     <div class="form-group">
-      <div class="col col-md-3">birthDate(yyyyMMdd)</div>
+      <div class="col col-md-3">Birth Date(yyyyMMdd)</div>
       <div class="col col-md-3">
         <form:input path="birthDate" cssClass="form-control input-sm" />
       </div>

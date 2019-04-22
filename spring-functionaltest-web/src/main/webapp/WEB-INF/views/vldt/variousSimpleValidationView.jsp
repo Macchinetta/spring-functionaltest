@@ -7,8 +7,7 @@
     <div class="form-group">
       <form:label path="notnull" class="col-sm-2 control-label">NotNull</form:label>
       <div class="col-sm-10">
-        <%--                 <form:input path="notnull" class="form-control" --%>
-        <%--                     placeholder="NotNull" /> --%>
+        <form:input path="notnull" class="form-control" placeholder="NotNull" />
         <form:errors path="notnull" class="text-danger" />
       </div>
     </div>

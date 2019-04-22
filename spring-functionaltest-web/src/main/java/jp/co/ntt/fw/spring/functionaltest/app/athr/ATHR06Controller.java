@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
@@ -133,11 +133,10 @@ public class ATHR06Controller {
         return "athr/loginForPathVariable";
     }
 
-    @RequestMapping({ "0601/019/account/{userName}",
-            "0601/020/account/{userName}", "0601/021/account/{userName}",
-            "0601/022/account/{userName}" })
-    public String handle0601019afterLogin(@PathVariable String userName,
-            Model model) {
+    @RequestMapping({ "0601/{testNo}/account/{userName}" })
+    public String handle0601019afterLogin(@PathVariable String testNo,
+            @PathVariable String userName, Model model) {
+        model.addAttribute("testNo", testNo);
         model.addAttribute("username", userName);
         return "athr/showForPathVariableDsp";
     }

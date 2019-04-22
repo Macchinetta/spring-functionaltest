@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <ul>
+        <li>start:<span th:text="${start}"></span></li> 
+        <li>end:<span th:text="${end}"></span></li>
+      </ul>
+      Differece of
+      <ul>
+        <li>hour:<span id="getHour" th:text="${hourResult}"></span></li>
+        <li>minute:<span id="getMinute" th:text="${minuteResult}"></span></li> 
+        <li>second:<span id="getSecond" th:text="${secondResult}"></span></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

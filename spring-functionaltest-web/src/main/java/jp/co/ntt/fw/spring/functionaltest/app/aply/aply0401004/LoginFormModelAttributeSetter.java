@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401004;
 
-import java.lang.annotation.ElementType;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import jp.co.ntt.fw.spring.functionaltest.app.aply.CommonParameters;
@@ -32,8 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @ControllerAdvice(annotations = LoginFormModelAttributeSetter.LoginFormModelAttribute.class)
 public class LoginFormModelAttributeSetter {
 
-    @Target(ElementType.TYPE)
-    @Retention(RetentionPolicy.RUNTIME)
+    @Target(TYPE)
+    @Retention(RUNTIME)
     public static @interface LoginFormModelAttribute {
     }
 

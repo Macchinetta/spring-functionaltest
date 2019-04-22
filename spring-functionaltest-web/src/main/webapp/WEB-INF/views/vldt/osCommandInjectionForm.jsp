@@ -1,7 +1,7 @@
 <div id="wrapper">
   <h1 id="screenTitle">OSコマンドインジェクション</h1>
 
-  <form:form method="post" action="${pageContext.request.contextPath}/vldt/07"
+  <form:form method="post" action="${pageContext.request.contextPath}/vldt/0701/001"
     modelAttribute="osCommandInjectionForm" class="form-horizontal">
 
     <div class="form-group">

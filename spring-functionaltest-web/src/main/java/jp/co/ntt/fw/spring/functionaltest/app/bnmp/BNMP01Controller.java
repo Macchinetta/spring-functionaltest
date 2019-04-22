@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
@@ -26,14 +26,13 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountDifferenceT
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountNonCumulativeDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountRemoveOrphansDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.BeanMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarBidirectionalDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.EmailDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.NestedFieldMapperDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameBeanMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameDifferenceTypeDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldIgnoreDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserCopyByReferenceDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceCollectionDto;
@@ -65,17 +64,12 @@ public class BNMP01Controller {
     CarService carService;
 
     @RequestMapping(value = "0101/001", method = RequestMethod.GET)
-    public String handle01001(Model model, BeanMapperForm form) {
+    public String handle01001(Model model, SameNameBeanMapperForm form) {
         return "bnmp/sameNameSameTypeMapping";
     }
 
     @RequestMapping(value = "0102/001", method = RequestMethod.GET)
     public String handle02001(Model model, BeanMapperForm form) {
-        return "bnmp/sameNameDifferenceTypeMapping";
-    }
-
-    @RequestMapping(value = "0102/002", method = RequestMethod.GET)
-    public String handle02002(Model model, BeanMapperForm form) {
         return "bnmp/sameNameDifferenceTypeMapping";
     }
 
@@ -102,6 +96,23 @@ public class BNMP01Controller {
     @RequestMapping(value = "0104/004", method = RequestMethod.GET)
     public String handle04004(Model model, CarForm form) {
         return "bnmp/unidirectionalBidirectionalMappingCreate";
+    }
+
+    @RequestMapping(value = "0104/005", method = RequestMethod.GET)
+    public String handle04005(Model model, CarClassBaseOneWayMappingForm form) {
+        return "bnmp/unidirectionalClassBaseMappingCreate";
+    }
+
+    @RequestMapping(value = "0104/006", method = RequestMethod.GET)
+    public String handle04006(Model model,
+            CarSameNameFieldOneWayMappingForm form) {
+        return "bnmp/unidirectionalSameNameFieldMappingCreate";
+    }
+
+    @RequestMapping(value = "0104/007", method = RequestMethod.GET)
+    public String handle04007(Model model,
+            CarSameNameFieldOneWayMappingDefinedFieldTagForm form) {
+        return "bnmp/unidirectionalSameNameFieldMappingDefinedFieldTagCreate";
     }
 
     @RequestMapping(value = "0105/001", method = RequestMethod.GET)
@@ -179,14 +190,17 @@ public class BNMP01Controller {
         return "bnmp/collectionTypeFieldMapping";
     }
 
-    @RequestMapping(value = "sameNameSameTypeMapping", method = RequestMethod.POST, params = "copySameNameSameTypeBean")
+    @RequestMapping(value = "sameNameSameTypeMapping", method = RequestMethod.POST, params = "copySameNameSameTypeField")
     public String handleSameNameSameTypeMapping(Model model,
-            BeanMapperForm form) {
+            SameNameBeanMapperForm form) {
 
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        BeanMapperDto destinationBean = beanMapper.map(form,
-                BeanMapperDto.class);
-
+        // コピー元Bean、コピー先Bean作成後、コピー先フィールドにコピー元フィールドとは異なる値を設定し、Mapperを使用してコピー元Beanからコピー先Beanへフィールドをコピーする。
+        SameNameBeanMapperDto destinationBean = new SameNameBeanMapperDto();
+        destinationBean.setMyoji("DestinationMyoji");
+        destinationBean.setLastName("DestinationLastName");
+        destinationBean.setAge(18);
+        destinationBean.setSex("M");
+        beanMapper.map(form, destinationBean);
         model.addAttribute("resultBean", destinationBean);
 
         return "bnmp/showBeanMappingSameFieldResult";
@@ -202,23 +216,10 @@ public class BNMP01Controller {
 
         model.addAttribute("resultBean", destinationBean);
 
-        return "bnmp/showBeanMappingSameFieldResult";
+        return "bnmp/showBeanMappingSameNameDifferenceTypeResult";
     }
 
-    @RequestMapping(value = "sameNameDifferenceTypeMapping", method = RequestMethod.POST, params = "copyDifferenceNameSameTypeBean")
-    public String handleDifferenceNameIgnoreMapping(Model model,
-            BeanMapperForm form) {
-
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        DifferenceFieldIgnoreDto destinationBean = beanMapper.map(form,
-                DifferenceFieldIgnoreDto.class);
-
-        model.addAttribute("resultBean", destinationBean);
-
-        return "bnmp/showBeanMappingDifferenceFieldResult";
-    }
-
-    @RequestMapping(value = "differenceNameMapping", method = RequestMethod.POST, params = "copyDifferenceNameBean")
+    @RequestMapping(value = "differenceNameMapping", method = RequestMethod.POST, params = "copyDifferenceNameField")
     public String handleDifferenceNameMapping(Model model,
             BeanMapperForm form) {
 
@@ -235,10 +236,11 @@ public class BNMP01Controller {
     public String handleUnidirectionalMappingCarCreate(CarForm form,
             RedirectAttributes redirectAttributes) {
 
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
+        // Mapperを使用して、コピー元Beanからコピー先Beanへフィールドの値をコピーする。
         CarUnidirectionalDto destinationBean = beanMapper.map(form,
                 CarUnidirectionalDto.class);
+
+        // 正方向マッピング結果をDBに登録する。
         Car car = carService.createCar(destinationBean);
 
         redirectAttributes.addFlashAttribute(car);
@@ -258,6 +260,7 @@ public class BNMP01Controller {
             @PathVariable("carId") String carId) {
 
         // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する
+        // 正方向マッピング結果を反映したコピー先BeanをDBから取得する。
         CarUnidirectionalDto destinationBean = carService
                 .getCarWithUnidirectionalDto(carId);
         // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされないこと。
@@ -272,10 +275,11 @@ public class BNMP01Controller {
     public String handleBidirectionalMappingCreate(CarForm form,
             RedirectAttributes redirectAttributes) {
 
-        // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
+        // Mapperを使用して、コピー元Beanからコピー先Beanへフィールドの値をコピーする。
         CarBidirectionalDto destinationBean = beanMapper.map(form,
                 CarBidirectionalDto.class);
+
+        // 正方向マッピング結果をDBに登録する。
         Car car = carService.createCar(destinationBean);
 
         redirectAttributes.addFlashAttribute(car);
@@ -295,6 +299,7 @@ public class BNMP01Controller {
             @PathVariable("carId") String carId) {
 
         // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する
+        // 正方向マッピング結果を反映したコピー先BeanをDBから取得する。
         CarBidirectionalDto destinationBean = carService
                 .getCarWithBidirectionalDto(carId);
         // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされること。
@@ -303,6 +308,133 @@ public class BNMP01Controller {
         model.addAttribute(carForm);
 
         return "bnmp/unidirectionalBidirectionalMappingDetail";
+    }
+
+    @RequestMapping(value = "unidirectionalClassBaseMapping", method = RequestMethod.POST, params = "copyUnidirectionalBean")
+    public String handleUnidirectionalClassBaseMappingCarCreate(
+            CarClassBaseOneWayMappingForm form,
+            RedirectAttributes redirectAttributes) {
+
+        // Mapperを使用して、コピー元Beanからコピー先Beanへフィールドの値をコピーする。
+        CarUnidirectionalDto destinationBean = beanMapper.map(form,
+                CarUnidirectionalDto.class);
+
+        // 正方向マッピング結果をDBに登録する。
+        Car car = carService.createCar(destinationBean);
+
+        redirectAttributes.addFlashAttribute(car);
+
+        return "redirect:/bnmp/unidirectionalClassBaseMapping/unidirectional?complete";
+    }
+
+    @RequestMapping(value = "unidirectionalClassBaseMapping/unidirectional", method = RequestMethod.GET, params = "complete")
+    public String handleUnidirectionalClassBaseMappingCarCreateComplete(
+            Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.bnmp.0001");
+        model.addAttribute(messages);
+        return "bnmp/unidirectionalClassBaseMappingComplete";
+    }
+
+    @RequestMapping(value = "unidirectionalClassBaseMapping/car/{carId}", method = RequestMethod.GET, params = "unidirectional")
+    public String handleUnidirectionalClassBaseMappingCarDetail(Model model,
+            @PathVariable("carId") String carId) {
+
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する
+        // 正方向マッピング結果を反映したコピー先BeanをDBから取得する。
+        CarUnidirectionalDto destinationBean = carService
+                .getCarWithUnidirectionalDto(carId);
+        // Dozerのバグのため、コピー先Beanからコピー元Beanへ、フィールドの値がコピーされる。
+        CarClassBaseOneWayMappingForm carForm = beanMapper.map(destinationBean,
+                CarClassBaseOneWayMappingForm.class);
+
+        model.addAttribute(carForm);
+
+        return "bnmp/unidirectionalClassBaseMappingDetail";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMapping", method = RequestMethod.POST, params = "copyUnidirectionalBean")
+    public String handleUnidirectionalSameNameFieldMappingCarCreate(
+            CarSameNameFieldOneWayMappingForm form,
+            RedirectAttributes redirectAttributes) {
+
+        // Mapperを使用して、コピー元Beanからコピー先Beanへフィールドの値をコピーする。
+        CarUnidirectionalDto destinationBean = beanMapper.map(form,
+                CarUnidirectionalDto.class);
+
+        // 正方向マッピング結果をDBに登録する。
+        Car car = carService.createCar(destinationBean);
+
+        redirectAttributes.addFlashAttribute(car);
+
+        return "redirect:/bnmp/unidirectionalSameNameFieldMapping/unidirectional?complete";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMapping/unidirectional", method = RequestMethod.GET, params = "complete")
+    public String handleUnidirectionalSameNameFieldMappingCarCreateComplete(
+            Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.bnmp.0001");
+        model.addAttribute(messages);
+        return "bnmp/unidirectionalSameNameFieldMappingComplete";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMapping/car/{carId}", method = RequestMethod.GET, params = "unidirectional")
+    public String handleUnidirectionalSameNameFieldMappingCarDetail(Model model,
+            @PathVariable("carId") String carId) {
+
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する
+        // 正方向マッピング結果を反映したコピー先BeanをDBから取得する。
+        CarUnidirectionalDto destinationBean = carService
+                .getCarWithUnidirectionalDto(carId);
+        // Dozerのバグのため、コピー先Beanからコピー元Beanへ、フィールドの値がコピーされる。
+        CarSameNameFieldOneWayMappingForm carForm = beanMapper.map(
+                destinationBean, CarSameNameFieldOneWayMappingForm.class);
+
+        model.addAttribute(carForm);
+
+        return "bnmp/unidirectionalSameNameFieldMappingDetail";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMappingDefinedFieldTag", method = RequestMethod.POST, params = "copyUnidirectionalBean")
+    public String handleUnidirectionalSameNameFieldMappingDefinedFieldTagCarCreate(
+            CarSameNameFieldOneWayMappingDefinedFieldTagForm form,
+            RedirectAttributes redirectAttributes) {
+
+        // Mapperを使用して、コピー元Beanからコピー先Beanへフィールドの値をコピーする。
+        CarUnidirectionalDto destinationBean = beanMapper.map(form,
+                CarUnidirectionalDto.class);
+
+        // 正方向マッピング結果をDBに登録する。
+        Car car = carService.createCar(destinationBean);
+
+        redirectAttributes.addFlashAttribute(car);
+
+        return "redirect:/bnmp/unidirectionalSameNameFieldMappingDefinedFieldTag/unidirectional?complete";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMappingDefinedFieldTag/unidirectional", method = RequestMethod.GET, params = "complete")
+    public String handleUnidirectionalSameNameFieldMappingDefinedFieldTagCarCreateComplete(
+            Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.bnmp.0001");
+        model.addAttribute(messages);
+        return "bnmp/unidirectionalSameNameFieldMappingDefinedFieldTagComplete";
+    }
+
+    @RequestMapping(value = "unidirectionalSameNameFieldMappingDefinedFieldTag/car/{carId}", method = RequestMethod.GET, params = "unidirectional")
+    public String handleUnidirectionalSameNameFieldMappingDefinedFieldTagCarDetail(
+            Model model, @PathVariable("carId") String carId) {
+
+        // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する
+        // 正方向マッピング結果を反映したコピー先BeanをDBから取得する。
+        CarUnidirectionalDto destinationBean = carService
+                .getCarWithUnidirectionalDto(carId);
+        // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされないこと。
+        CarSameNameFieldOneWayMappingDefinedFieldTagForm carForm = beanMapper
+                .map(destinationBean,
+                        CarSameNameFieldOneWayMappingDefinedFieldTagForm.class);
+
+        model.addAttribute(carForm);
+
+        return "bnmp/unidirectionalSameNameFieldMappingDefinedFieldTagDetail";
     }
 
     @RequestMapping(value = "nestedFieldMapping", method = RequestMethod.POST, params = "copyNestedFieldBean")

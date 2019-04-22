@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
@@ -24,6 +24,16 @@ public class DJPAController06 {
 
     @RequestMapping(value = "0601/001")
     public String handle0601001() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0601/003")
+    public String handle0601003() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0601/004")
+    public String handle0601004() {
         return "redirect:/djpa/book/list";
     }
 

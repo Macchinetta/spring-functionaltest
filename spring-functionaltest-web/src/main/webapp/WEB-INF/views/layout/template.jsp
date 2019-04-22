@@ -27,6 +27,13 @@
   href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css">
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
+<script type="text/javascript"></script>
 </head>
 <body>
   <tiles:insertAttribute name="header" />
@@ -35,13 +42,4 @@
   </div>
   <tiles:insertAttribute name="footer" />
 </body>
-<script type="text/javascript"
-  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
-<script type="text/javascript"
-  src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
-<script type="text/javascript">
-	
-</script>
 </html>

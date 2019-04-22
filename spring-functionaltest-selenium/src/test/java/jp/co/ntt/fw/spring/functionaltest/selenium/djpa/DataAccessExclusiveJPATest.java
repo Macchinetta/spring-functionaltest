@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,15 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +71,9 @@ public class DataAccessExclusiveJPATest extends
             // 疑似アプリの画面を表示するブラウザを2つ起動
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
+
+            getWebDriverOperations(0).setDefaultTimeoutForImplicitlyWait(20);
+            getWebDriverOperations(1).setDefaultTimeoutForImplicitlyWait(20);
 
             final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
@@ -154,6 +157,9 @@ public class DataAccessExclusiveJPATest extends
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
+            getWebDriverOperations(0).setDefaultTimeoutForImplicitlyWait(20);
+            getWebDriverOperations(1).setDefaultTimeoutForImplicitlyWait(20);
+
             final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
@@ -197,6 +203,9 @@ public class DataAccessExclusiveJPATest extends
 
         // 結果確認
         {
+            //　完了画面が出現するまで待機する
+            getWebDriverOperations(0).waitForDisplayed(id("bookForm"));
+
             // 画面1が、以下の条件を満たすこと
             // ・完了画面に遷移すること
             // ・入力した変更内容が反映されること

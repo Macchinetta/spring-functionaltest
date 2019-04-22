@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
@@ -29,7 +29,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.ReceivedEvent;
 
 public class JmsErrorHandler implements ErrorHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             JmsErrorHandler.class);
 
     @Inject
@@ -44,19 +44,19 @@ public class JmsErrorHandler implements ErrorHandler {
             MethodArgumentNotValidException ex = (MethodArgumentNotValidException) t
                     .getCause();
 
-            log.error("Validation Error!");
+            logger.error("Validation Error!");
 
         } else if (t.getCause() instanceof SystemException) {
             // SystemException
 
-            log.error("SystemException Error!");
+            logger.error("SystemException Error!");
             // messageに設定したTodoIdを引数にして受信完了を待っているスレッドの待機を解除するためにイベントを通知する
             eventPublisher.publishEvent(new ReceivedEvent<String>(this, t
                     .getCause().getMessage()));
         } else {
             // Other Error
 
-            log.error("Other Error!", t.getCause());
+            logger.error("Other Error!", t.getCause());
 
         }
 

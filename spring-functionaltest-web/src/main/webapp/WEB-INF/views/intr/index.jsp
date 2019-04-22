@@ -9,6 +9,9 @@
     <li><a id="intr0101002" href="${pageContext.request.contextPath}/intr/0101/002">intr0101002</a></li>
     <li><a id="intr0101003" href="${pageContext.request.contextPath}/intr/0101/003">intr0101003</a></li>
     <li><a id="intr0101004" href="${pageContext.request.contextPath}/intr/0101/004">intr0101004</a></li>
+    <li><a id="intr0101005" href="${pageContext.request.contextPath}/intr/0101/005">intr0101005</a></li>
+    <li><a id="intr0101006" href="${pageContext.request.contextPath}/intr/0101/005">intr0101006</a></li>
+    <li><a id="intr0101007" href="${pageContext.request.contextPath}/intr/0101/005">intr0101007</a></li>
     <li><a id="intr0102001" href="${pageContext.request.contextPath}/intr/0102/001">intr0102001</a></li>
     <li><a id="intr0102002" href="${pageContext.request.contextPath}/intr/0102/002">intr0102002</a></li>
     <li><a id="intr0102003" href="${pageContext.request.contextPath}/intr/0102/003">intr0102003</a></li>
@@ -21,11 +24,15 @@
     <li><a id="intr0201003" href="${pageContext.request.contextPath}/intr/0201/003">intr0201003</a></li>
     <li><a id="intr0201004" href="${pageContext.request.contextPath}/intr/0201/004">intr0201004</a></li>
     <li><a id="intr0201005" href="${pageContext.request.contextPath}/intr/0201/005">intr0201005</a></li>
+    <li><a id="intr0201006" href="${pageContext.request.contextPath}/intr/0201/006">intr0201006</a></li>
+    <li><a id="intr0201007" href="${pageContext.request.contextPath}/intr/0201/007">intr0201007</a></li>
+    <li><a id="intr0201008" href="${pageContext.request.contextPath}/intr/0201/008">intr0201008</a></li>
     <li><a id="intr0202001" href="${pageContext.request.contextPath}/intr/0202/001">intr0202001</a></li>
     <li><a id="intr0202002" href="${pageContext.request.contextPath}/intr/0202/002">intr0202002</a></li>
     <li><a id="intr0202003" href="${pageContext.request.contextPath}/intr/0202/003">intr0202003</a></li>
     <li><a id="intr0202004" href="${pageContext.request.contextPath}/intr/0202/004">intr0202004</a></li>
     <li><a id="intr0202005" href="${pageContext.request.contextPath}/intr/0202/005">intr0202005</a></li>
+    <li><a id="intr0202006" href="${pageContext.request.contextPath}/intr/0202/006">intr0202006</a></li>
   </ul>
 
   <div>[INTR03] エラーページを国際化する場合</div>

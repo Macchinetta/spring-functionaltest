@@ -11,7 +11,7 @@
 
       <form method="post" th:action="@{/vldt/0103/003/authentication}" class="form-horizontal">
 
-        <div th:if="${param.containsKey('error')}">
+        <div th:if="${param.keySet().contains('error')}">
           <div id="accountLoginError">
             <div th:if="${SPRING_SECURITY_LAST_EXCEPTION}" class="alert">
               <ul>

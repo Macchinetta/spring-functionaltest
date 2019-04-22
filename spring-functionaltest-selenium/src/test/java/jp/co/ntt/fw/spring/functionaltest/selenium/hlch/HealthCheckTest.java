@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.hlch;
 
@@ -31,14 +31,12 @@ import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-//Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class HealthCheckTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ヘルスチェック成功時、スタータスコード200とOK.の3文字が返ってくることを確認する。web.xmlにtrim-directive-whitespacesタグを設定することで、余計な改行を削除している。</li>
-     * <li>詳細は#798を参照。</li>
+     * <li>ヘルスチェック成功時、スタータスコード200とOK.の3文字が返ってくることを確認する。</li>
+     * <li>JSP版はweb.xmlにtrim-directive-whitespacesタグを設定することで、余計な改行を削除している。</li>
      * </ul>
      */
     @Test
@@ -58,9 +56,9 @@ public class HealthCheckTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ヘルスチェック成功時、スタータスコード200とOK.の3文字が返ってくることを確認する。JSPのpageディレクティブにtrimDirectiveWhitespacesを設定することで、余計な改行を削除している。</li>
-     * <li>WebLogic環境では、pageディレクティブより前になにか記載があった時、trimDirectiveWhitespacesが効かない場合がある。そのため、WebLogic環境では下記のテストはスキップする。</li>
-     * <li>詳細は#798を参照。</li>
+     * <li>ヘルスチェック成功時、スタータスコード200とOK.の3文字が返ってくることを確認する。</li>
+     * <li>JSP版はpageディレクティブにtrimDirectiveWhitespacesを設定したJSPを成功画面として出力する。</li>
+     * <li>Weblogic環境ではスキップする。詳細は#798を参照。</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.weblogic", value = "false")
@@ -102,7 +100,7 @@ public class HealthCheckTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexMessage(xTrack,
                     "^org.terasoluna.gfw.common.exception.ExceptionLogger$",
-                    "^\\[e.sf.cmn.9002\\] throw DB Error$");
+                    "^\\[e.sf.cmmn.9009\\] throw DB Error$");
             dbLogAssertOperations.assertNotContainsWarn(xTrack);
         }
 

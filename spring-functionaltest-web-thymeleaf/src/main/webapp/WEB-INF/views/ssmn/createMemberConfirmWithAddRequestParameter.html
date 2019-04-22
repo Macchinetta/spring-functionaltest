@@ -43,7 +43,7 @@
           </tr>
           <tr>
             <th>性別</th>
-            <td><span id="gender" th:text="${CL_GENDER[memberForm.gender]}"></span> <input
+            <td><span id="gender" th:text="${CL_GENDER['__${memberForm.gender}__']}"></span> <input
               type="hidden" name="gender" value="1"></td>
           </tr>
           <tr>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,14 +9,15 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -39,6 +40,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrderDetailsPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrderEntryPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.OrdersPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterBookPage;
+import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterConfirmPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.SystemErrorPage;
 
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
@@ -246,6 +248,40 @@ public class DataAccessJPATest extends FunctionTestSupport {
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0103003Click();
         jpaHomePage.setNoLazyBookId("0001");
         SystemErrorPage sysErrorPage = jpaHomePage.nolazyFetchSetting();
+
+        // Assertion for system error occurred due to lazy initialization.
+        assertThat(sysErrorPage.getErrorMessage(), is(
+                "could not initialize proxy - no Session"));
+    }
+
+    /**
+     * Error scenario for lazy loading(acquire Session outside of OpenEntityManagerInViewInterceptor)
+     */
+    @Test
+    public void testDJPA0103004() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0103004Click();
+        jpaHomePage.setBookIdAndRegisterSession("0001");
+        RegisterConfirmPage registerConfirmPage = jpaHomePage.registerSession();
+        SystemErrorPage sysErrorPage = registerConfirmPage
+                .accessOutOfLazyFetchScope();
+
+        // Assertion for system error occurred due to lazy initialization.
+        assertThat(sysErrorPage.getErrorMessage(), is(
+                "could not initialize proxy - no Session"));
+    }
+
+    /**
+     * Error scenario for lazy loading(acquire FlashAttribute outside of OpenEntityManagerInViewInterceptor)
+     */
+    @Test
+    public void testDJPA0103005() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0103005Click();
+        jpaHomePage.setBookIdAndRegisterFlashAttribute("0001");
+        SystemErrorPage sysErrorPage = jpaHomePage.registerFlashAttribute();
 
         // Assertion for system error occurred due to lazy initialization.
         assertThat(sysErrorPage.getErrorMessage(), is(
@@ -866,6 +902,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     @Test
     public void testDJPA0301001() {
+        clearAndCreateTestDataForDeliverOrder();
 
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
 
@@ -1238,11 +1275,56 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Load timing of the related-entity : Lazy Fetch
+     * Load timing of the related-entity : Lazy Fetch (fetch related-entity when acquire anything but foreign key)
      */
     @Test
     public void testDJPA0601003() {
-        testDJPA0103001();
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0601003Click();
+        jpaHomePage.setBookIdAcquiringNotForeignKey("0001");
+        BookDetailsPage lazyBookPage = jpaHomePage.acquiringNotForeignKey();
+
+        // Assertion for record earlier registered in DB.
+        assertThat(lazyBookPage.getBookIdVal(), is("1"));
+        assertThat(lazyBookPage.getTitle(), is("title1"));
+        assertThat(lazyBookPage.getCategoryName(), is("A01"));
+        assertThat(lazyBookPage.getClobCode(), is("54455354"));
+        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getPrice(), is("40"));
+        assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
+
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
+                null,
+                "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
+        Integer expVal = 1;
+        // confirmation of query is for dependent entity(i.e.JPACategoryLz )
+        assertThat(list.size(), is(expVal));
+    }
+
+    /**
+     * Load timing of the related-entity : Lazy Fetch (fetch related-entity when acquire foreign key)
+     * For changes Hibernate 5.2.12(HHH-11838)
+     */
+    @Test
+    public void testDJPA0601004() {
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0601004Click();
+        jpaHomePage.setBookIdAcquiringForeignKey("0001");
+        BookDetailsPage lazyBookPage = jpaHomePage.acquiringForeignKey();
+
+        // Assertion for record earlier registered in DB.
+        assertThat(lazyBookPage.getBookIdVal(), is("1"));
+        assertThat(lazyBookPage.getTitle(), is("title1"));
+        assertThat(lazyBookPage.getCategoryName(), is("A01"));
+        assertThat(lazyBookPage.getClobCode(), is("54455354"));
+        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getPrice(), is("40"));
+        assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
+
         List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
                 null,
                 "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");

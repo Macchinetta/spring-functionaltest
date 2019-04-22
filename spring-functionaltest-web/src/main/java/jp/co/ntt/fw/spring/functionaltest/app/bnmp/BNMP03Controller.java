@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,15 +9,16 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateMappingDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.StringToDateMappingDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateToStringMappingDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeNullEmptyDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeSpecifiedFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MappingFailedDto;
@@ -53,8 +54,13 @@ public class BNMP03Controller {
     }
 
     @RequestMapping(value = "0304/001", method = RequestMethod.GET)
-    public String handle04001(Model model, DateMappingForm form) {
+    public String handle04001(Model model, StringToDateMappingForm form) {
         return "bnmp/stringToDateMapping";
+    }
+
+    @RequestMapping(value = "0304/002", method = RequestMethod.GET)
+    public String handle04002(Model model, DateToStringMappingForm form) {
+        return "bnmp/dateToStringMapping";
     }
 
     @RequestMapping(value = "0305/001", method = RequestMethod.GET)
@@ -129,14 +135,27 @@ public class BNMP03Controller {
     }
 
     @RequestMapping(value = "stringToDateMapping", method = RequestMethod.POST, params = "stringToDate")
-    public String handleStringToDateMapping(Model model, DateMappingForm form) {
+    public String handleStringToDateMapping(Model model,
+            StringToDateMappingForm form) {
 
-        DateMappingDto destinationBean = beanMapper.map(form,
-                DateMappingDto.class);
+        StringToDateMappingDto destinationBean = beanMapper.map(form,
+                StringToDateMappingDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 
         return "bnmp/showBeanMappingStringToDateResult";
+    }
+
+    @RequestMapping(value = "dateToStringMapping", method = RequestMethod.POST, params = "dateToString")
+    public String handleDateToStringMapping(Model model,
+            DateToStringMappingForm form) {
+
+        DateToStringMappingDto destinationBean = beanMapper.map(form,
+                DateToStringMappingDto.class);
+
+        model.addAttribute("resultBean", destinationBean);
+
+        return "bnmp/showBeanMappingDateToStringResult";
     }
 
     @RequestMapping(value = "mappingFailed", method = RequestMethod.POST, params = "mappingFailed")
@@ -147,7 +166,7 @@ public class BNMP03Controller {
 
         model.addAttribute("resultBean", destinationBean);
 
-        // マッピングじExceptio発生する為、以下URLはダミー
+        // MappingExceptionが発生する為、以下URLはダミー
         return "bnmp/";
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,20 +9,24 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dam3;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assume.assumeThat;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
@@ -228,6 +232,11 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = todoListPage.registerBulkTodo();
 
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElementLocated(By.id("completedTodo"),
+                        "993"));
+
         // Assert the todo record count from DB table
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("993"));
         assertThat(todoListPage.getIncompletTodoCount(), equalTo("7"));
@@ -253,6 +262,11 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         TodoListPage todoListPage = dam3IndexPage.dam30202001Click();
 
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
+
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElementLocated(By.id("completedTodo"),
+                        "993"));
 
         // Assert the todo record count from DB table
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("993"));
@@ -871,6 +885,16 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         // confirm the last ToDo on the page
         isTodoPresent = todoListPage.isTodoDisplayed("0000001000");
         assertThat(isTodoPresent, is(true));
+    }
+
+    /**
+     * <ul>
+     * <li>DAM30507001 : Confirmation of Pagination search of Entity</li>
+     * <li>Sort search data</li>
+     * </ul>
+     */
+    @Ignore("test in testPGNT0102002, testPGNT0101001, testPGNT0101002")
+    public void testDAM30507001() {
     }
 
     /**

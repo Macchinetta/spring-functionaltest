@@ -2,26 +2,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
   xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
 
   <context:annotation-config />
 
   <mvc:view-controller path="/athr/loginForStaff" view-name="athr/loginForStaff" />
-  <mvc:view-controller path="/athr/loginForUrlHasRole" view-name="athr/loginForUrlHasRole" />
   <mvc:view-controller path="/athr/loginForRoleAdmin" view-name="athr/loginForRoleAdmin" />
   <mvc:view-controller path="/athr/loginForMethod" view-name="athr/loginForMethod" />
   <mvc:view-controller path="/athr/loginForRoleHierarchy" view-name="athr/loginForRoleHierarchy" />
-  <mvc:view-controller path="/athr/loginForJSPTagRoleAdmin" view-name="athr/loginForJSPTagRoleAdmin" />
+  <mvc:view-controller path="/athr/loginForJspTagRoleAdmin" view-name="athr/loginForJspTagRoleAdmin" />
   <mvc:view-controller path="/athr/methodAccessAllowedPage" view-name="athr/methodAccessAllowedPage" />
   <mvc:view-controller path="/athr/methodAccessDeniedPage" view-name="athr/methodAccessDeniedPage" />
   <mvc:view-controller path="/athr/hierarchyAccessDeniedPage" view-name="athr/hierarchyAccessDeniedPage" />
-  <mvc:view-controller path="/athr/urlPatternHasRoleAccessDeniedPage" view-name="athr/urlPatternHasRoleAccessDeniedPage" />
   <mvc:view-controller path="/athr/accessDeniedPage" view-name="athr/accessDeniedPage" />
 
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHRController" />

@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,23 +9,21 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.cspr;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -34,10 +32,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class CSRFProtectionTest extends FunctionTestSupport {
 
@@ -46,7 +47,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>CSRFトークンチェックを無効にした場合、CSRFトークンチェックが行われないことを確認する。
+     * <li>CSRFトークンチェックを無効にした場合、CSRFトークンチェックが行われないことを確認する。</li>
      * </ul>
      **/
     @Test
@@ -82,7 +83,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>CSRFトークンを自動で埋め込んだ場合、リクエストを送信できることを確認。
+     * <li>CSRFトークンを自動で埋め込んだ場合、リクエストを送信できることを確認。</li>
      * </ul>
      **/
     @Test
@@ -115,7 +116,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>CSRFトークンを明示的に埋め込んだ場合、リクエストを送信できることを確認。
+     * <li>CSRFトークンを明示的に埋め込んだ場合、リクエストを送信できることを確認。</li>
      * </ul>
      **/
     @Test
@@ -148,7 +149,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>htmlのformタグを使用する場合、アドレスバーにCSRFトークンの値を出さないでリクエストを送信できることを確認。
+     * <li>htmlのformタグを使用する場合、アドレスバーにCSRFトークンの値を出さないでリクエストを送信できることを確認。</li>
      * </ul>
      **/
     @Test
@@ -248,7 +249,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>CSRFトークンを改ざんして埋め込んだ場合、CSRFトークンチェックエラーになることを確認。
+     * <li>CSRFトークンを改ざんして埋め込んだ場合、CSRFトークンチェックエラーになることを確認。</li>
      * </ul>
      **/
     @Test
@@ -292,7 +293,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>セッションタイムアウトになった場合、CSRFトークンチェックエラーになることを確認。
+     * <li>セッションタイムアウトになった場合、CSRFトークンチェックエラーになることを確認。</li>
      * </ul>
      **/
     @Test
@@ -339,8 +340,8 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>CSRFトークンを改ざんして埋め込んだ場合、CSRFトークンチェックエラーになることを確認。
-     * <li>deniedHandlerを利用しない場合、ステータスコードに従ったエラー画面に遷移することを確認。
+     * <li>CSRFトークンを改ざんして埋め込んだ場合、CSRFトークンチェックエラーになることを確認。</li>
+     * <li>deniedHandlerを利用しない場合、ステータスコードに従ったエラー画面に遷移することを確認。</li>
      * </ul>
      **/
     @Test
@@ -384,7 +385,42 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Ajaxを利用してHTTPリクエストヘッダーからCSRFトークンを取得する場合、POSTで送信することができることを確認。
+     * <li>CSRFトークンを自動で埋め込んだ場合、リクエストを送信できることを確認。</li>
+     * <li>(th:actionの値を指定しない)</li>
+     * </ul>
+     **/
+    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @Test
+    public void testCSPR0201009() throws IOException {
+
+        webDriverOperations.click(id("cspr0201009"));
+
+        // 登録画面に遷移したことをチェック
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ユーザ登録画面(th:actionの値を指定しない)"));
+
+        webDriverOperations.appendText(id("userName"), "山田 太郎");
+        webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
+        webDriverOperations.appendText(id("password"), "spring12345");
+        webDriverOperations.appendText(id("confirmPassword"), "spring12345");
+
+        // CSRFトークンが設定されていることを確認
+        webDriverOperations.getJavascriptExecutor().executeScript(
+                "document.getElementsByName('_csrf')[0].setAttribute('type', 'text');");
+
+        webDriverOperations.saveScreenCapture();
+
+        webDriverOperations.click(id("confirm"));
+
+        // 確認画面に遷移したことをチェック
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ユーザ登録確認画面(th:actionの値を指定しない)"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>Ajaxを利用してHTTPリクエストヘッダーからCSRFトークンを取得する場合、POSTで送信することができることを確認。</li>
      * </ul>
      **/
     @Test
@@ -435,7 +471,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Ajaxを利用してHTTPリクエストヘッダーからCSRFトークンを取得する場合、GETで送信することができることを確認。
+     * <li>Ajaxを利用してHTTPリクエストヘッダーからCSRFトークンを取得する場合、GETで送信することができることを確認。</li>
      * </ul>
      **/
     @Test
@@ -466,7 +502,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Ajaxを利用してHTTPリクエストヘッダーから改ざんしたCSRFトークンを取得する場合、POSTで送信後、エラーになることを確認。
+     * <li>Ajaxを利用してHTTPリクエストヘッダーから改ざんしたCSRFトークンを取得する場合、POSTで送信後、エラーになることを確認。</li>
      * </ul>
      **/
     @Test
@@ -509,7 +545,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Ajaxを利用してHTTPリクエストヘッダーから改ざんしたCSRFトークンを取得する場合、GETで送信することができることを確認。
+     * <li>Ajaxを利用してHTTPリクエストヘッダーから改ざんしたCSRFトークンを取得する場合、GETで送信することができることを確認。</li>
      * </ul>
      **/
     @Test
@@ -544,7 +580,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>マルチパートリクエストを送信する場合、MultipartFilterを使用して、ファイルアップロードできることを確認。
+     * <li>マルチパートリクエストを送信する場合、MultipartFilterを使用して、ファイルアップロードできることを確認。</li>
      * </ul>
      **/
     @Test
@@ -571,7 +607,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>マルチパートリクエストを送信する場合、クエリパラメータでCSRFトークンを送信して、ファイルアップロードできることを確認。
+     * <li>マルチパートリクエストを送信する場合、クエリパラメータでCSRFトークンを送信して、ファイルアップロードできることを確認。</li>
      * </ul>
      **/
     @Test

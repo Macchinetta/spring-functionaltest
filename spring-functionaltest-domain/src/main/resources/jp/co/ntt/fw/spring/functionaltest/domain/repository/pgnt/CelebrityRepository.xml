@@ -26,8 +26,10 @@
     ,ROW_NUMBER() OVER(
     <choose>
       <when test="pageable.sort != null">
-        <foreach item="order" collection="pageable.sort">
-          ORDER BY ${order.property} ${order.direction}
+        ORDER BY
+        <foreach item="order" collection="pageable.sort" separator=",">
+          ${order.property}
+          ${order.direction}
         </foreach>
       </when>
       <otherwise>

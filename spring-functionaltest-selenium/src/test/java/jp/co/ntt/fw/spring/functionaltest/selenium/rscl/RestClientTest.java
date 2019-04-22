@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,16 +9,20 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rscl;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.Matchers.lessThan;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.className;
+import static org.openqa.selenium.By.id;
+
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,6 +46,14 @@ public class RestClientTest extends FunctionTestSupport {
     // RSCL1302001アサート用
     @Value("${rscl.asyncRestTemplate.maxPoolSize}")
     int maxPoolSize;
+
+    // RSCL1303003アサート用
+    @Value("${selenium.rscl.retryForDbLogAssert.interval:1000}")
+    private int retryInterval;
+
+    // RSCL1303003アサート用
+    @Value("${selenium.rscl.retryForDbLogAssert.max:3}")
+    private int retryMaxCount;
 
     /**
      * <ul>
@@ -1357,10 +1369,10 @@ public class RestClientTest extends FunctionTestSupport {
                         + "application/\\*\\+json\\], Content\\-Length=\\[0\\]\\}");
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "Request Body ");
-        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                webDriverOperations.getXTrack(), null,
-                "java\\.net\\.SocketTimeoutException",
-                "java\\.util\\.concurrent\\.ExecutionException");
+        tryAssertContainsByRegexExceptionMessageAndRetry(webDriverOperations
+                .getXTrack(), "..*InterceptorsAsyncRestClientServiceImpl.*",
+                "java\\.net\\..*",
+                "java\\.util\\.concurrent\\.ExecutionException", 0);
         dbLogAssertOperations.assertContainsByRegexMessage(
                 "..*AsyncLoggingInterceptor.*", "onFailure Called!");
         dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1558,5 +1570,36 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*",
                 ".*RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is true");
+    }
+
+    /**
+     * 指定したメッセージパターン(正規表現)に紐付く例外ログが出力されていることを検証する。
+     * <p>
+     * X-Track,出力元のロガー名パターンを指定することで対象を絞り込むことが可能である。
+     * </p>
+     * @param xTrack リクエストを一意に特定するための値（絞り込みを行わない場合はnullを指定）
+     * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
+     * @param messagePattern メッセージのパターン（必須）
+     * @param exceptionMessagePattern 例外情報のパターン(必須)
+     * @param retryCount リトライ実行回数
+     */
+    private void tryAssertContainsByRegexExceptionMessageAndRetry(String xTrack,
+            String loggerNamePattern, String messagePattern,
+            String exceptionMessagePattern, int retryCount) {
+        try {
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(xTrack,
+                    loggerNamePattern, messagePattern, exceptionMessagePattern);
+        } catch (AssertionError e) {
+            if (retryCount < retryMaxCount) {
+                retryCount++;
+                webDriverOperations.suspend(retryInterval,
+                        TimeUnit.MILLISECONDS);
+                tryAssertContainsByRegexExceptionMessageAndRetry(xTrack,
+                        loggerNamePattern, messagePattern,
+                        exceptionMessagePattern, retryCount);
+            } else {
+                throw e;
+            }
+        }
     }
 }

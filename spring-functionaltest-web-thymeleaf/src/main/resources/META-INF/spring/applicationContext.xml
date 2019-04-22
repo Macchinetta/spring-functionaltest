@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+  xmlns:jms="http://www.springframework.org/schema/jms"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/jms https://www.springframework.org/schema/jms/spring-jms.xsd">
 
   <import resource="classpath:/META-INF/spring/spring-functionaltest-domain.xml" />
 
@@ -54,18 +56,18 @@
         <entry key="InvalidRequestException" value="e.sf.cmmn.8002" />
         <entry key="HttpSessionRequiredException" value="e.sf.cmmn.8002" />
         <entry key="IntentionalException" value="e.sf.cmmn.8003" />
-        <entry key="HttpRequestMethodNotSupportedException" value="e.sf.cmn.6001" />
-        <entry key="MediaTypeNotAcceptableException" value="e.sf.cmn.6002" />
-        <entry key="HttpMediaTypeNotSupportedException" value="e.sf.cmn.6003" />
-        <entry key="MethodArgumentNotValidException" value="e.sf.cmn.7001" />
-        <entry key="BindException" value="e.sf.cmn.7002" />
-        <entry key="JsonParseException" value="e.sf.cmn.7003" />
-        <entry key="UnrecognizedPropertyException" value="e.sf.cmn.7004" />
-        <entry key="JsonMappingException" value="e.sf.cmn.7005" />
-        <entry key="TypeMismatchException" value="e.sf.cmn.7006" />
-        <entry key="OptimisticLockingFailureException" value="e.sf.cmn.8002" />
-        <entry key="PessimisticLockingFailureException" value="e.sf.cmn.8002" />
-        <entry key="DataAccessException" value="e.sf.cmn.9002" />
+        <entry key="HttpRequestMethodNotSupportedException" value="e.sf.cmmn.6001" />
+        <entry key="MediaTypeNotAcceptableException" value="e.sf.cmmn.6002" />
+        <entry key="HttpMediaTypeNotSupportedException" value="e.sf.cmmn.6003" />
+        <entry key="MethodArgumentNotValidException" value="e.sf.cmmn.7007" />
+        <entry key="BindException" value="e.sf.cmmn.7002" />
+        <entry key="JsonParseException" value="e.sf.cmmn.7003" />
+        <entry key="UnrecognizedPropertyException" value="e.sf.cmmn.7004" />
+        <entry key="JsonMappingException" value="e.sf.cmmn.7005" />
+        <entry key="TypeMismatchException" value="e.sf.cmmn.7006" />
+        <entry key="OptimisticLockingFailureException" value="e.sf.cmmn.8006" />
+        <entry key="PessimisticLockingFailureException" value="e.sf.cmmn.8006" />
+        <entry key="DataAccessException" value="e.sf.cmmn.9009" />
         <entry key="MappingException" value="e.sf.bnmp.0001" />
       </map>
     </property>
@@ -81,7 +83,19 @@
   <bean id="exceptionLoggingFilter" class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter">
     <property name="exceptionLogger" ref="exceptionLogger" />
   </bean>
+  
+  <bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+    <property name="attributes">
+      <map>
+        <entry key="foo" value="aaa" />
+      </map>
+    </property>
+  </bean>
 
   <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.config" />
+
+  <!-- JMS Setting -->
+  <jms:annotation-driven />
+  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.listener" />
 
 </beans>

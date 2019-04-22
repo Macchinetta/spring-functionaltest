@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE thlogic>
+<thlogic>
+  <attr sel="#css" th:href="@{/resources/app/css/styles.css}" />
+  <attr sel="#resultTable/tbody" th:remove="all-but-first">
+    <attr sel="tr[0]" th:each="item : ${items}">
+      <attr sel="td.itemName" th:text="${item.name}" />
+      <attr sel="td.itemPrice" th:text="${item.price}" />
+    </attr>
+  </attr>
+  <attr sel="#back" th:href="@{/thym/}" />
+
+  <attr sel="title" th:text="'Search Result Screen(decoupled.th.xml)'" />
+  <attr sel="h1" th:text="'Search Result(decoupled.th.xml)'" />
+</thlogic>

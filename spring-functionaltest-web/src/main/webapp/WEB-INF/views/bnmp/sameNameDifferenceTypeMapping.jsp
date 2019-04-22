@@ -17,14 +17,13 @@
       </div>
     </div>
     <div class="form-group">
-      <div class="col col-md-2">age</div>
+      <div class="col col-md-2">Age</div>
       <div class="col col-md-3">
         <form:input path="age" cssClass="form-control input-sm" />
       </div>
     </div>
     <div class="form-group">
-      <form:button name="copySameNameDifferenceTypeBean" class="btn btn-default">異名フィールドのコピー</form:button>
-      <form:button name="copyDifferenceNameSameTypeBean" class="btn btn-default">異名フィールドのコピー（無視）</form:button>
+      <form:button name="copySameNameDifferenceTypeBean" class="btn btn-default">同名異型フィールドのコピー</form:button>
     </div>
   </form:form>
 </div>

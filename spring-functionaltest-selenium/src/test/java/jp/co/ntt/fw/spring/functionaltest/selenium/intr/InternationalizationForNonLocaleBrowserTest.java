@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.intr;
 
@@ -27,8 +27,6 @@ import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-//Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class InternationalizationForNonLocaleBrowserTest extends
                                                          FunctionTestSupport {
 
@@ -84,6 +82,25 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("年齢"));
 
         webDriverOperations.saveScreenCapture("ForNonLocaleBrowser");
+
+    }
+
+    /**
+     * <ul>
+     * <li>Springのロケールを解決する機能にサポートロケールとデフォルトロケールを定義し、<br/>
+     * ロケールを指定しない場合、デフォルトロケールが使用されることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0101006() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0101006"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("name")), is("Name"));
+        assertThat(webDriverOperations.getText(id("gender")), is("Gender"));
+        assertThat(webDriverOperations.getText(id("age")), is("Age"));
+
     }
 
     /**
@@ -349,6 +366,115 @@ public class InternationalizationForNonLocaleBrowserTest extends
 
     /**
      * <ul>
+     * <li>画面操作でロケールを変更した場合、ロケールがsessionに保存され、プロパティから値が取得されることの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0201006() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0201006"));
+
+        // 英語に変更
+        webDriverOperations.click(id("english"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "changed locale."));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "Confirm change of locale on next screen"));
+        webDriverOperations.saveScreenCapture();
+
+        // back to /intr
+        webDriverOperations.click(id("top"));
+
+        // Locale 無し
+        webDriverOperations.click(id("intr0202006"));
+
+        // 日本語に変更
+        webDriverOperations.click(id("japanese"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "ロケールを変更しました。"));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "次の画面でのロケール変更を確認"));
+
+        // ブラウザのセッションIDを削除
+        webDriverOperations.deleteCookie("JSESSIONID");
+
+    }
+
+    /**
+     * <ul>
+     * <li>ignoreInvalidLocaleプロパティにfalseを設定する場合、無効なロケールのリクエストでエラーが発生することの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0201007() {
+        {
+            // Locale 無し
+            webDriverOperations.click(id("intr0201007"));
+
+            // 無効なロケールに変更
+            webDriverOperations.click(id("invalidLocale"));
+
+            // 確認画面に遷移
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(
+                    webDriverOperations.getXTrack(), null,
+                    "Locale part \"j@\" contains invalid characters",
+                    "java\\.lang\\.IllegalArgumentException");
+        }
+
+        // ブラウザのセッションIDを削除
+        webDriverOperations.deleteCookie("JSESSIONID");
+
+    }
+
+    /**
+     * <ul>
+     * <li>ignoreInvalidLocaleプロパティにtrueを設定する場合、無効なロケールのリクエストでエラーが発生しないことの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0201008() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0201008"));
+
+        // 日本語に変更
+        webDriverOperations.click(id("japanese"));
+
+        // 無効なロケールに変更
+        webDriverOperations.click(id("invalidLocale"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "ロケールを変更しました。"));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "次の画面でのロケール変更を確認"));
+
+        // ブラウザのセッションIDを削除
+        webDriverOperations.deleteCookie("JSESSIONID");
+
+    }
+
+    /**
+     * <ul>
      * <li>リクエストパラメータに指定したロケールがCookieに保存され、リクエストされたロケールが有効になることの確認</li>
      * </ul>
      */
@@ -571,9 +697,61 @@ public class InternationalizationForNonLocaleBrowserTest extends
 
     /**
      * <ul>
+     * <li>画面操作でロケールを変更した場合、ロケールがCookieに保存され、プロパティから値が取得されることの確認</li>
+     * </ul>
+     */
+    @Test
+    public void testINTR0202006() {
+        // Locale 無し
+        webDriverOperations.click(id("intr0202006"));
+
+        // 英語に変更
+        webDriverOperations.click(id("english"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "changed locale."));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "Confirm change of locale on next screen"));
+        webDriverOperations.saveScreenCapture();
+
+        // back to /intr
+        webDriverOperations.click(id("top"));
+
+        // Locale 無し
+        webDriverOperations.click(id("intr0202006"));
+
+        // 日本語に変更
+        webDriverOperations.click(id("japanese"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("changeMessage")), is(
+                "ロケールを変更しました。"));
+
+        // 確認画面に遷移
+        webDriverOperations.click(id("check"));
+
+        // 出力メッセージの確認
+        assertThat(webDriverOperations.getText(id("checkMessage")), is(
+                "次の画面でのロケール変更を確認"));
+
+        // Cookieの破棄
+        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        webDriverOperations.deleteCookie(localeCookieName);
+
+    }
+
+    /**
+     * <ul>
      * <li>Controllerを経由せずにJSPに直接遷移する場合に、ロケールが有効にならないことの確認</li>
      * </ul>
      */
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testINTR0301001() {
         // 実施条件1
@@ -640,6 +818,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
      * <li>Controllerを経由してJSPに遷移する場合に、ロケールが有効になることの確認</li>
      * </ul>
      */
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testINTR0301002() {
         // 実施条件1

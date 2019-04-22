@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
   th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}"
-  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 </head>
 <body>
@@ -32,7 +32,7 @@
           </tr>
         </table>
       </fieldset>
-      <form th:action="@{/athr/0201/001/logout}" method="post">
+      <form th:action="@{/athr/0201/logout}" method="post">
         <input type="submit" id="logout" class="btn btn-default" value="Logout">
       </form>
 

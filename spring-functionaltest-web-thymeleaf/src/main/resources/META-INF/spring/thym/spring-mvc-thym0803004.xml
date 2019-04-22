@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
+
+  <!-- Settings View Resolver. -->
+  <mvc:view-resolvers>
+    <mvc:bean-name />
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+      <property name="templateEngine" ref="templateEngine" />
+      <property name="characterEncoding" value="UTF-8" />
+    </bean>
+  </mvc:view-resolvers>
+
+  <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="/WEB-INF/views/" />
+    <property name="suffix" value=".html" />
+    <property name="templateMode" value="HTML" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="order" value="1" />
+    <property name="checkExistence" value="true" />
+  </bean>
+
+  <bean id="jsTemplateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+    <property name="prefix" value="/WEB-INF/js/" />
+    <property name="suffix" value=".js" />
+    <property name="templateMode" value="JAVASCRIPT" />
+    <property name="characterEncoding" value="UTF-8" />
+    <property name="order" value="2" />
+  </bean>
+
+  <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+    <property name="enableSpringELCompiler" value="true" />
+    <property name="templateResolvers">
+      <set>
+        <ref bean="templateResolver" />
+        <ref bean="jsTemplateResolver" />
+      </set>
+    </property>
+    <property name="additionalDialects">
+      <set>
+        <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+      </set>
+    </property>
+  </bean>
+
+  <context:annotation-config />
+
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM0803004Controller" />
+
+</beans>

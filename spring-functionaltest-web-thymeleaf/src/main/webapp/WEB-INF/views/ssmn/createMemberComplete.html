@@ -12,14 +12,7 @@
       <fieldset>
         <legend>個人情報登録完了</legend>
 
-        <div th:if="${resultMessages} !=null" class="alert"
-          th:classappend="|alert-${resultMessages.type}|">
-          <ul>
-            <li th:each="message : ${resultMessages}"
-              th:text="${#messages.msgWithParams(message.code, message.args)}"></li>
-          </ul>
-        </div>
-
+        <div th:replace="~{common/fragments :: messagesPanel}"></div>
 
         <table class="table table-striped table-bordered table-condensed">
           <tr>
@@ -48,7 +41,7 @@
           </tr>
           <tr>
             <th>性別</th>
-            <td><span id="gender" th:text="${CL_GENDER[member.gender]}"></span></td>
+            <td><span id="gender" th:text="${CL_GENDER['__${member.gender}__']}"></span></td>
           </tr>
           <tr>
             <th>郵便番号</th>

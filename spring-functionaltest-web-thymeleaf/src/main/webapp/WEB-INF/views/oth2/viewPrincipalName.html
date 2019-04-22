@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h1 id="title">
+        <span th:text="${title}"></span>
+      </h1>
+      <p>
+        response : <span id="response" th:text="${response}"></span>
+      </p>
+      <p>
+        token : <span id="token" th:text="${token}"></span>
+      </p>
+      <p>
+        name : <span id="name" th:text="${name}"></span>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

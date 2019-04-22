@@ -2,11 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
   xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
   <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
 
@@ -36,13 +36,13 @@
     <context:exclude-filter type="assignable"
       expression="jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0402001Controller" />
     <context:exclude-filter type="regex"
-      expression="jp.co.ntt.fw.spring.functionaltest.app.pgnt.PGNT0102..*" />
-    <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.SSMN04..*" />
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.SSMN06..*" />
     <context:exclude-filter type="assignable"
       expression="jp.co.ntt.fw.spring.functionaltest.app.ssmn.Cart" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.pgnt..*" />
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.prmn..*" />
     <context:exclude-filter type="regex"
@@ -72,7 +72,21 @@
     <context:exclude-filter type="regex"
       expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM050[1-2].*" />
     <context:exclude-filter type="regex"
-      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM06.*"/>
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM06.*" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM0701Controller" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.thym.THYM0803.*" />
+    <context:exclude-filter type="regex"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.dbsp.DBSP0303Controller.*" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0105Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0401Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0402Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS05Controller" />
   </context:component-scan>
 
   <mvc:view-controller path="/" view-name="welcome/index" />

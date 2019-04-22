@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <H2>Client</H2>
+      <h3 id="loginWith">Enter ResourceOwner Name and Password</h3>
+
+      <form th:action="@{/oth2/client/01/04/index}" th:object="${resourceOwner}" method="post">
+        <table>
+          <tr>
+            <td><label for="username">User:</label></td>
+            <td><input type="text" id="username" th:field="*{username}" /></td>
+          </tr>
+          <tr>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" id="password" th:field="*{password}" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><button name="submit" type="submit" id="send" value="Input">Input</button></td>
+          </tr>
+        </table>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

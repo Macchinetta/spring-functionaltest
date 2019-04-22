@@ -94,7 +94,7 @@
     <li><a id="athn1703001" href="${pageContext.request.contextPath}/athn/1703/001">athn1703001</a></li>
   </ul>
 
-  <div>[ATHN18] パスワードのハッシュ化ハッシュの拡張</div>
+  <div>[ATHN18] 非推奨パッケージのPasswordEncoderの利用</div>
   <ul>
     <li><a id="athn1801001" href="${pageContext.request.contextPath}/athn/1801/001">athn1801001</a>
     </li>

@@ -48,6 +48,8 @@
     <li><a id="exhn0701011" href="${pageContext.request.contextPath}/exhn/0701/011">exhn0701011</a></li>
     <li><a id="exhn0701012" href="${pageContext.request.contextPath}/exhn/0701/012">exhn0701012</a></li>
     <li><a id="exhn0701013" href="${pageContext.request.contextPath}/exhn/0701/013">exhn0701013</a></li>
+    <li><a id="exhn0701014" href="${pageContext.request.contextPath}/exhn/0701/014">exhn0701014</a></li>
+    <li><a id="exhn0701016" href="${pageContext.request.contextPath}/exhn/0701/016">exhn0701016</a></li>
   </ul>
 
   <div>[EXHN08] HandlerExceptionResolverLoggingInterceptorの拡張実装の確認</div>

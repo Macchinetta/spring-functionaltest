@@ -9,6 +9,8 @@
     <li><a id="djpa0103001" href="${pageContext.request.contextPath}/djpa/0103/001">djpa0103001</a></li>
     <li><a id="djpa0103002" href="${pageContext.request.contextPath}/djpa/0103/002">djpa0103002</a></li>
     <li><a id="djpa0103003" href="${pageContext.request.contextPath}/djpa/0103/003">djpa0103003</a></li>
+    <li><a id="djpa0103004" href="${pageContext.request.contextPath}/djpa/0103/004">djpa0103004</a></li>
+    <li><a id="djpa0103005" href="${pageContext.request.contextPath}/djpa/0103/005">djpa0103005</a></li>
   </ul>
   <hr>
   <div>JPA Confirmation : Interface Implementation</div>
@@ -54,6 +56,8 @@
   <div>The Process of fetching entities</div>
   <ul>
     <li><a id="djpa0601001" href="${pageContext.request.contextPath}/djpa/0601/001">djpa0601001</a></li>
+    <li><a id="djpa0601003" href="${pageContext.request.contextPath}/djpa/0601/003">djpa0601003</a></li>
+    <li><a id="djpa0601004" href="${pageContext.request.contextPath}/djpa/0601/004">djpa0601004</a></li>
     <li><a id="djpa0602001" href="${pageContext.request.contextPath}/djpa/0602/001">djpa0602001</a></li>
   </ul>
 

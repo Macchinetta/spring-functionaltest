@@ -1,5 +1,39 @@
 # Spring Functional Test
-This project provides functional tests of [Macchinetta Server Framework (1.x) Development Guideline](http://Macchinetta.github.io/server-guideline/current/ja).
+This project provides functional tests of Macchinetta Server Framework (1.x) Development Guideline.
+
+* [JSP](https://macchinetta.github.io/server-guideline/list/)
+* [Thymeleaf](https://macchinetta.github.io/server-guideline-thymeleaf/list/)
+
+## Project structure
+The build process of functional tests using JSP for View is built with the following projects.
+
+```console
+spring-functionaltest
+├── spring-functionaltest-env
+├── spring-functionaltest-model
+├── spring-functionaltest-webservice
+├── spring-functionaltest-domain
+├── spring-functionaltest-web
+├── spring-functionaltest-env-oauth2
+├── spring-functionaltest-domain-oauth2
+├── spring-functionaltest-web-oauth2-component
+├── spring-functionaltest-web-oauth2-db
+├── spring-functionaltest-web-oauth2-memory
+├── spring-functionaltest-web-oauth2-remote
+├── spring-functionaltest-initdb
+└── spring-functionaltest-selenium
+```
+
+If you want to use Thymeleaf for View, switch the web projects in the build process to the following project for Thymeleaf.
+
+```console
+spring-functionaltest
+├── spring-functionaltest-web-thymeleaf
+├── spring-functionaltest-web-oauth2-component-thymeleaf
+├── spring-functionaltest-web-oauth2-db-thymeleaf
+├── spring-functionaltest-web-oauth2-memory-thymeleaf
+└── spring-functionaltest-web-oauth2-remote-thymeleaf
+```
 
 ## How to perform functional test
 
@@ -22,9 +56,9 @@ By default, database owner is `postgres` user, and password of `postgres` user i
 
 #### Create database
 ```console
-$ createdb -U postgres spring-functionaltest --locale=C --encoding=UTF8 --template=template0
-$ createdb -U postgres spring-functionaltest-open --locale=C --encoding=UTF8 --template=template0
-$ createdb -U postgres spring-functionaltest-close --locale=C --encoding=UTF8 --template=template0
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest-open
+$ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest-close
 ```
 ### [Step 2] Clone a repository
 Clone the `Macchinetta/spring-functionaltest` repository into local machine.
@@ -33,18 +67,7 @@ Clone the `Macchinetta/spring-functionaltest` repository into local machine.
 $ git clone https://github.com/Macchinetta/spring-functionaltest.git
 ```
 
-### [Step 3] Place dependent libraries
-Place `iTextAsian-1.0.jar` and `ojdbc7-12.1.0.2.0.jar` on `spring-functionaltest-env/3rdparty`.
-You have to get these jar files in some way. 
-
-```console
-$ mv iTextAsian-1.0.jar spring-functionaltest-env/3rdparty/com/lowagie/iTextAsian/1.0
-$ mv ojdbc7-12.1.0.2.0.jar spring-functionaltest-env/3rdparty/com/oracle/ojdbc7/12.1.0.2.0/
-```
-
-If you'd like to use another version, it's necessary to change some configurations.
-
-### [Step 4] Build artifacts
+### [Step 3] Build artifacts
 Build artifacts using maven commands as follows.
 
 #### Case that use embedded H2 as database
@@ -52,8 +75,8 @@ Build artifacts using maven commands as follows.
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn clean install -am -pl spring-functionaltest-web
-$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
+$ mvn -U clean install -am -pl spring-functionaltest-web
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
 ```
 
 > **Note:**
@@ -62,8 +85,8 @@ $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functiona
 > you must compile with the target version 1.7 in accordance with the runtime environment JVM and exclude the source code that depends on JDK 1.8 .  
 > You can set the target version using `java-version` property, and in spring-functionaltest-web you can exclude using `build-for-jdk7` Maven Profile in addition to the default profile.
 >```console
-> $ mvn clean install -am -pl spring-functionaltest-web -Djava-version=1.7 -P local,build-for-jdk7
-> $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -Djava-version=1.7
+> $ mvn -U clean install -am -pl spring-functionaltest-web -Djava-version=1.7 -P local,build-for-jdk7
+> $ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -Djava-version=1.7
 >```
 
 #### Case that use PostgreSQL as database
@@ -71,15 +94,15 @@ $ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functiona
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn clean install -am -pl spring-functionaltest-web -P tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
-$ mvn clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat8-postgresql,warpack-env,warpack-jstl,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web -P tomcat85-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat85-postgresql,warpack-env,warpack-jstl,travis
 ```
 
 > **Note:**
 >
 > If you not use default user(`postgres`) or password(`P0stgres`), you should modify settings in `terasoluna-gfw-functionaltest-env/configs/travis/ContainerConfigXML/context.xml`.
 
-### [Step 5] Initialize database (Optional)
+### [Step 4] Initialize database (Optional)
 If PostgreSQL use as database, initialize database before run functional test.
 
 ```console
@@ -92,8 +115,8 @@ $ mvn -U sql:execute -pl spring-functionaltest-initdb -P local-postgres-close
 >
 > If you not use default user(`postgres`) or password(`P0stgres`), you should specify `-Ddb.username={your user}` or `-Ddb.password={your password}` or both.
 
-### [Step 6] Startup Tomcat8 and deploy war file
-Startup Tomcat8 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html).
+### [Step 5] Startup Tomcat85 and deploy war file
+Startup Tomcat85 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html).
 
 #### Case that use embedded H2 as database
 
@@ -111,25 +134,34 @@ $ mvn -U cargo:run -pl spring-functionaltest-web -P travis
 
 > **Note:**
 >
+> For both JSP and Thymeleaf, the same war file name will be used.  
+> you can access application at `http://localhost:8080/spring-functionaltest-web/`.
+
+> **Note:**
+>
 > Shutdown trigger is "Ctrl + C" on console.
 
-### [Step 7] Deploy OAuth war files
+### [Step 6] Deploy OAuth war files
 Deploy OAuth war files to already running container.
 
 ```console
 $ cd {your repository directory}
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
 ```
 
-### [Step 8] Run functional tests
+### [Step 7] Run functional tests
 Run tests using Selenium(`WebDriver`) on JUnit.
 
 ```console
 $ cd {your repository directory}
 $ mvn -U test -pl spring-functionaltest-selenium
 ```
+
+> **Note:**
+>
+> In the case of Thymeleaf, add `-Dtest.environment.view=thymeleaf`.
 
 > **Note:**
 >
@@ -178,10 +210,10 @@ Profiles that are available are as follows.
 
 |        environments       | specify maven profiles                                                               |
 |:-------------------------:|--------------------------------------------------------------------------------------|
+|      Tomcat8.5 + H2       | (not specify)                                                                        |
 |   Tomcat8.5 + Postgresql  | `tomcat85-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`|
 |Tomcat8.5 + Postgresql [^1]| `tomcat85-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                   |
 |  Tomcat8.5 + Oracle [^1]  | `tomcat85-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                       |
-|        Tomcat8 + H2       | (not specify)                                                                        |
 |    Tomcat8 + Postgresql   | `tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
 | Tomcat8 + Postgresql [^1] | `tomcat8-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
 |   Tomcat8 + Oracle [^1]   | `tomcat8-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
@@ -235,3 +267,20 @@ Profiles that are available are as follows.
 | using actual Message Queue | mqServer [^1]            |
 
 [^1]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination message queue.
+
+### How to switch specific test cases to run for various environments
+
+Using the system property(`-D`) with `@IfProfileValue`, enable to switch specific test cases to run in accordance with the environment that you want to run.
+
+```console
+$ cd {your repository directory}
+$ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment=mailServier
+```
+
+Properties that are available are as follows.
+
+|        properties         | description                                                                                                                                   |
+|:-------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------|
+|    test.environment       | Whether to run tests must use actual mail server.<br>Set **`mailServer`** when `spring.profiles.active` of application contains `mailServer`. |
+|   test.environment.view   | Whether to run tests depending on a specific HTML view template.<br>Set view template name **`jsp`**(default) or **`thymeleaf`**.             |
+| test.environment.weblogic | Skip specific tests if running on WebLogic Server.<br>Set **`true`** or **`false`**(default).                                                 |

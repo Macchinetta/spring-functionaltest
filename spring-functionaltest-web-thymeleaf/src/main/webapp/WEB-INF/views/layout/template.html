@@ -16,6 +16,12 @@
 <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}">
 <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}">
 <link rel="stylesheet" th:href="@{/resources/app/css/{functionId}.css(functionId=${functionId})}">
+<script type="text/javascript" th:src="@{/resources/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/resources/vendor/bootstrap/dist/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/resources/app/js/cmmn.js}"></script>
+<script type="text/javascript"
+  th:src="@{/resources/app/js/{functionId}.js(functionId=${functionId})}"></script>
+<script type="text/javascript"></script>
 <th:block id="head" th:replace="${head}"></th:block>
 </head>
 <body>
@@ -23,12 +29,4 @@
   <div id="body" th:replace="${body}"></div>
   <div id="footer" th:include="~{layout/footer :: footer}">footer</div>
 </body>
-<script type="text/javascript" th:src="@{/resources/vendor/jquery/jquery.min.js}"></script>
-<script th:src="@{/resources/vendor/bootstrap/dist/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/resources/app/js/cmmn.js}"></script>
-<script type="text/javascript"
-  th:src="@{/resources/app/js/{functionId}.js(functionId=${functionId})}"></script>
-<script type="text/javascript">
-    
-</script>
 </html>

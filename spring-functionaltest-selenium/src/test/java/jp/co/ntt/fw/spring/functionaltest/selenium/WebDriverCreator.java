@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
@@ -53,8 +53,6 @@ public class WebDriverCreator extends ApplicationObjectSupport {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--lang=" + localeStr);
                 return new ChromeDriver(options);
-            } else if ("firefox".equals(activeProfile)) {
-                break;
             } else if ("ie".equals(activeProfile)) {
                 throw new UnsupportedOperationException("InternetExplorerを使用してロケール指定のブラウザ起動はできません。");
             } else if ("phantomJs".equals(activeProfile)) {

@@ -13,3 +13,10 @@ CREATE TABLE t_article (
     ,publish_date timestamp NOT NULL
     ,CONSTRAINT pk_t_article PRIMARY KEY (article_id)
 );
+
+create table t_person (
+    person_id int not null,
+    firstname varchar(25) not null,
+    lastname varchar(25)  not null,
+    constraint pk_person primary key (person_id)
+);

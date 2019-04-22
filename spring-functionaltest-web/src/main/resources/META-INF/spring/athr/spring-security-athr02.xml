@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <sec:http pattern="/athr/0201/**" authentication-manager-ref="loginForStaffManager">
     <sec:form-login login-page="/athr/0201/001" login-processing-url="/athr/0201/001/authenticate"
       default-target-url="/athr/0201/001/afterLogin" />
     <sec:intercept-url pattern="/athr/0201/001/*" access="isAuthenticated()" />
-    <sec:logout logout-url="/athr/0201/001/logout" logout-success-url="/athr/"
+    <sec:logout logout-url="/athr/0201/logout" logout-success-url="/athr/"
       invalidate-session="true" delete-cookies="JSESSIONID" />
     <sec:intercept-url pattern="/athr/0201/002/restrict.*" access="isAuthenticated()" />
     <sec:intercept-url pattern="/athr/0201/002/restrict/" access="isAuthenticated()" />

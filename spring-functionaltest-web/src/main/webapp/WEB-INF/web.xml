@@ -135,6 +135,20 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>intr0101005AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/intr/spring-mvc-intr0101005.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>intr0101005AppServlet</servlet-name>
+    <url-pattern>/intr/0101/005</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>intr0102AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
@@ -188,6 +202,20 @@
   <servlet-mapping>
     <servlet-name>intr0201003AppServlet</servlet-name>
     <url-pattern>/intr/0201/003</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>intr0201008AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/intr/spring-mvc-intr0201008.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>intr0201008AppServlet</servlet-name>
+    <url-pattern>/intr/0201/008/*</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -272,6 +300,20 @@
   <servlet-mapping>
     <servlet-name>pgnt0102002AppServlet</servlet-name>
     <url-pattern>/pgnt/articleSearchDescArticleId</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>pgntAppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/pgnt/spring-mvc-pgnt.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>pgntAppServlet</servlet-name>
+    <url-pattern>/pgnt/*</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -545,15 +587,13 @@
   <servlet-mapping>
     <servlet-name>athrAppServlet</servlet-name>
     <url-pattern>/athr/loginForStaff</url-pattern>
-    <url-pattern>/athr/loginForUrlHasRole</url-pattern>
     <url-pattern>/athr/loginForRoleAdmin</url-pattern>
     <url-pattern>/athr/loginForMethod</url-pattern>
     <url-pattern>/athr/loginForRoleHierarchy</url-pattern>
-    <url-pattern>/athr/loginForJSPTagRoleAdmin</url-pattern>
+    <url-pattern>/athr/loginForJspTagRoleAdmin</url-pattern>
     <url-pattern>/athr/methodAccessAllowedPage</url-pattern>
     <url-pattern>/athr/methodAccessDeniedPage</url-pattern>
     <url-pattern>/athr/hierarchyAccessDeniedPage</url-pattern>
-    <url-pattern>/athr/urlPatternHasRoleAccessDeniedPage</url-pattern>
     <url-pattern>/athr/methodHierarchyAccessDeniedPage</url-pattern>
     <url-pattern>/athr/accessDeniedPage</url-pattern>
     <url-pattern>/athr/*</url-pattern>
@@ -898,6 +938,62 @@
   <servlet-mapping>
     <servlet-name>soapServlet</servlet-name>
     <url-pattern>/soap/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0105AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0105.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0105AppServlet</servlet-name>
+    <url-pattern>/cdls/0105/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0401AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0401.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0401AppServlet</servlet-name>
+    <url-pattern>/cdls/0401/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0402AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls0402.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0402AppServlet</servlet-name>
+    <url-pattern>/cdls/0402/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cdls0501AppServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:META-INF/spring/cdls/spring-mvc-cdls05.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cdls0501AppServlet</servlet-name>
+    <url-pattern>/cdls/0501/*</url-pattern>
   </servlet-mapping>
 
   <!-- For REST API start -->

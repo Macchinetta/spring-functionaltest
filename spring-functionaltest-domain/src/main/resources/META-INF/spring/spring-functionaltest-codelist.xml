@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:util="http://www.springframework.org/schema/util"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util-3.1.xsd
+    http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
   <bean id="jdbcTemplateForCodeList" class="org.springframework.jdbc.core.JdbcTemplate">
     <property name="dataSource" ref="dataSource" />
@@ -57,6 +58,187 @@
         <entry key="2" value="USER" />
       </util:map>
     </property>
+  </bean>
+
+  <!-- CDLS test -->
+
+  <bean id="CL_ORDERSTATUS" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+    <property name="map">
+      <util:map>
+        <entry key="1" value="Received" />
+        <entry key="2" value="Sent" />
+        <entry key="3" value="Cancelled" />
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_MONTH_ASC" class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+    <property name="from" value="1" />
+    <property name="to" value="12" />
+    <property name="valueFormat" value="%d" />
+    <property name="labelFormat" value="%02d" />
+    <property name="interval" value="1" />
+  </bean>
+
+  <bean id="CL_MONTH_DES" class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+    <property name="from" value="12" />
+    <property name="to" value="1" />
+    <property name="valueFormat" value="%d" />
+    <property name="labelFormat" value="%02d" />
+    <property name="interval" value="1" />
+  </bean>
+
+  <bean id="CL_NUMBER_WITHIN_RANGE_INTERVAL" class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+    <property name="from" value="10" />
+    <property name="to" value="50" />
+    <property name="interval" value="10" />
+  </bean>
+
+  <bean id="CL_NUMBER_WITHOUT_RANGE_INTERVAL" class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+    <property name="from" value="10" />
+    <property name="to" value="55" />
+    <property name="interval" value="10" />
+  </bean>
+
+  <bean id="CL_AUTHORITIES" parent="AbstractJdbcCodeList">
+    <property name="querySql"
+      value="SELECT authority_id, authority_name FROM t_authority ORDER BY authority_id" />
+    <property name="valueColumn" value="authority_id" />
+    <property name="labelColumn" value="authority_name" />
+  </bean>
+
+  <bean id="CL_ENUM_ORDERSTATUS" class="org.terasoluna.gfw.common.codelist.EnumCodeList">
+    <constructor-arg value="jp.co.ntt.fw.spring.functionaltest.domain.model.OrderStatus" />
+  </bean>
+
+  <bean id="CL_I18N_PRICE" class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
+    <property name="rowsByCodeList">
+      <util:map>
+        <entry key="en" value-ref="CL_PRICE_EN" />
+        <entry key="ja" value-ref="CL_PRICE_JA" />
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_PRICE_EN" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+    <property name="map">
+      <util:map>
+        <entry key="0" value="unlimited" />
+        <entry key="10000" value="Less than \\10,000" />
+        <entry key="20000" value="Less than \\20,000" />
+        <entry key="30000" value="Less than \\30,000" />
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_PRICE_JA" class="org.terasoluna.gfw.common.codelist.SimpleMapCodeList">
+    <property name="map">
+      <util:map>
+        <entry key="0" value="上限なし" />
+        <entry key="10000" value="10,000円以下" />
+        <entry key="20000" value="20,000円以下" />
+        <entry key="30000" value="30,000円以下" />
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_I18N_DB_PRICE" class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
+    <property name="rowsByCodeList">
+      <util:map>
+        <entry key="en" value-ref="CL_DB_PRICE_EN" />
+        <entry key="ja" value-ref="CL_DB_PRICE_JA" />
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_DB_PRICE_JA" parent="AbstractJdbcCodeList">
+    <property name="querySql" value="SELECT code, label FROM t_price WHERE locale = 'ja' ORDER BY code" />
+    <property name="valueColumn" value="code" />
+    <property name="labelColumn" value="label" />
+  </bean>
+
+  <bean id="CL_DB_PRICE_EN" parent="AbstractJdbcCodeList">
+    <property name="querySql" value="SELECT code, label FROM t_price WHERE locale = 'en' ORDER BY code" />
+    <property name="valueColumn" value="code" />
+    <property name="labelColumn" value="label" />
+  </bean>
+
+  <bean id="CL_I18N_PRICE_MAP_LOCALE" class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
+    <property name="rows">
+      <util:map>
+        <entry key="en">
+          <util:map>
+            <entry key="0" value="unlimited" />
+            <entry key="10000" value="Less than \\10,000" />
+            <entry key="20000" value="Less than \\20,000" />
+            <entry key="30000" value="Less than \\30,000" />
+          </util:map>
+        </entry>
+        <entry key="ja">
+          <util:map>
+            <entry key="0" value="上限なし" />
+            <entry key="10000" value="10,000円以下" />
+            <entry key="20000" value="20,000円以下" />
+            <entry key="30000" value="30,000円以下" />
+          </util:map>
+        </entry>
+      </util:map>
+    </property>
+  </bean>
+
+  <bean id="CL_I18N_PRICE_MAP_CODE" class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList">
+    <property name="columns">
+      <util:map>
+        <entry key="0">
+          <util:map>
+            <entry key="en" value="unlimited" />
+            <entry key="ja" value="上限なし" />
+          </util:map>
+        </entry>
+        <entry key="10000">
+          <util:map>
+            <entry key="en" value="Less than \\10,000" />
+            <entry key="ja" value="10,000円以下" />
+          </util:map>
+        </entry>
+        <entry key="20000">
+          <util:map>
+            <entry key="en" value="Less than \\20,000" />
+            <entry key="ja" value="20,000円以下" />
+          </util:map>
+        </entry>
+        <entry key="30000">
+          <util:map>
+            <entry key="en" value="Less than \\30,000" />
+            <entry key="ja" value="30,000円以下" />
+          </util:map>
+        </entry>
+      </util:map>
+    </property>
+  </bean>
+
+  <task:scheduler id="taskScheduler" pool-size="10" />
+  <task:scheduled-tasks scheduler="taskScheduler">
+    <task:scheduled ref="CL_CRON_REFRESH_CODELIST" method="refresh"
+      cron="${cdls.cron.codelist.refreshTime}" />
+  </task:scheduled-tasks>
+
+  <bean id="CL_CRON_REFRESH_CODELIST" parent="AbstractJdbcCodeList">
+    <property name="querySql"
+      value="SELECT authority_id, authority_name FROM t_authority ORDER BY authority_id" />
+    <property name="valueColumn" value="authority_id" />
+    <property name="labelColumn" value="authority_name" />
+  </bean>
+
+  <bean id="CL_REFRESH_CODELIST" parent="AbstractJdbcCodeList">
+    <property name="querySql"
+      value="SELECT authority_id, authority_name FROM t_authority ORDER BY authority_id" />
+    <property name="valueColumn" value="authority_id" />
+    <property name="labelColumn" value="authority_name" />
+  </bean>
+
+  <bean id="CL_YEAR_CODELIST" class="jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.DepYearCodeList">
+    <property name="dateFactory" ref="dateFactory" />
   </bean>
 
 </beans>

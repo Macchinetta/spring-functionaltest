@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rest;
 
@@ -400,7 +400,7 @@ public class RestAPITest extends RestTestSupport {
         // Confirm the error contents
         given().filters(new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().put("/members").then()
-                .statusCode(405).body("code", is("e.sf.cmn.6001")).body(
+                .statusCode(405).body("code", is("e.sf.cmmn.6001")).body(
                         "message", is("Request method not supported."));
     }
 
@@ -422,7 +422,7 @@ public class RestAPITest extends RestTestSupport {
         given().body(jsonBody).contentType(ContentType.JSON).filters(
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post("/members")
-                .then().statusCode(400).body("code", is("e.sf.cmn.7001")).body(
+                .then().statusCode(400).body("code", is("e.sf.cmmn.7007")).body(
                         "message", is(
                                 "Validation error occurred on item in the request body."))
                 .body("details.code", hasItems("NotEmpty")).body(
@@ -444,7 +444,7 @@ public class RestAPITest extends RestTestSupport {
         // Confirm the error contents
         given().filters(new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().get("/members?name=")
-                .then().statusCode(400).body("code", is("e.sf.cmn.7002")).body(
+                .then().statusCode(400).body("code", is("e.sf.cmmn.7002")).body(
                         "message", is(
                                 "Validation error occurred on item in the request parameters."))
                 .body("details.code", hasItems("NotEmpty")).body(
@@ -471,7 +471,7 @@ public class RestAPITest extends RestTestSupport {
         given().body(jsonBody).contentType(ContentType.JSON).filters(
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post("/members")
-                .then().statusCode(400).body("code", is("e.sf.cmn.7004")).body(
+                .then().statusCode(400).body("code", is("e.sf.cmmn.7004")).body(
                         "message", is("Unknown field exists in JSON."));
     }
 
@@ -530,8 +530,8 @@ public class RestAPITest extends RestTestSupport {
         given().filters(new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().put(
                         "/members/optimisticExp/").then().statusCode(409).body(
-                                "code", is("e.sf.cmn.8002")).body("message", is(
-                                        "Conflict with other processing occurred."));
+                                "code", is("e.sf.cmmn.8006")).body("message",
+                                        is("Conflict with other processing occurred."));
     }
 
     /**
@@ -574,7 +574,7 @@ public class RestAPITest extends RestTestSupport {
         given().filters(new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().get(
                         "/members/serviceUnavailable").then().statusCode(503)
-                .body("code", is("e.sf.cmn.0503")).body("message", is(
+                .body("code", is("e.sf.cmmn.9503")).body("message", is(
                         "Service is not available."));
     }
 
@@ -622,7 +622,7 @@ public class RestAPITest extends RestTestSupport {
                         "/members/unknownError").then().statusCode(508).header(
                                 "content-Type", containsString(
                                         "application/json;charset=UTF-8")).body(
-                                                "code", is("e.sf.cmn.0508"))
+                                                "code", is("e.sf.cmmn.0508"))
                 .body("message", is("サービス利用できないエラーが発生しました。"));
     }
 

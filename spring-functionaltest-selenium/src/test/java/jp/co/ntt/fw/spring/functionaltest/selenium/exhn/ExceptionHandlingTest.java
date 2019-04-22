@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 NTT Corporation.
+ * Copyright(c) 2014 NTT Corporation.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,9 +9,9 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.exhn;
 
@@ -347,13 +347,11 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
             assertThat(e.getResponseHeaders().getFirst("X-Error-Code"), is(
                     "e.sf.exhn.9000"));
 
-            List<String> cacheControlList = Arrays.asList(
-                    "no-cache, no-store, max-age=0, must-revalidate",
-                    "no-store");
+            List<String> cacheControlList = Arrays.asList("no-store");
             assertThat(e.getResponseHeaders().get("Cache-Control"), is(
                     cacheControlList));
             assertThat(e.getResponseHeaders().getExpires(), is(-1L));
-            assertThat(e.getResponseHeaders().getPragma(), is("no-cache"));
+            assertThat(e.getResponseHeaders().getPragma(), nullValue());
 
             throw e;
         }
@@ -504,17 +502,17 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>MissingServletRequestParameterException発生時ににHTTPステータスが400になることを確認する。</li>
+     * <li>MissingPathVariableException発生時ににHTTPステータスが500になることを確認する。</li>
      * </ul>
      */
-    @Test(expected = HttpClientErrorException.class)
+    @Test(expected = HttpServerErrorException.class)
     public void testEXHN0701005() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/005", String.class);
         } catch (HttpClientErrorException e) {
-            // 400 が返却されていること
-            assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+            // 500 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
 
             throw e;
         }
@@ -522,7 +520,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ServletRequestBindingException発生時ににHTTPステータスが400になることを確認する。</li>
+     * <li>MissingServletRequestParameterException発生時ににHTTPステータスが400になることを確認する。</li>
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
@@ -540,14 +538,32 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>ConversionNotSupportedExceptionn発生時ににHTTPステータスが500になることを確認する。</li>
+     * <li>ServletRequestBindingException発生時ににHTTPステータスが400になることを確認する。</li>
      * </ul>
      */
-    @Test(expected = HttpServerErrorException.class)
+    @Test(expected = HttpClientErrorException.class)
     public void testEXHN0701007() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/007", String.class);
+        } catch (HttpClientErrorException e) {
+            // 400 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>ConversionNotSupportedExceptionn発生時ににHTTPステータスが500になることを確認する。</li>
+     * </ul>
+     */
+    @Test(expected = HttpServerErrorException.class)
+    public void testEXHN0701008() throws IOException {
+        try {
+            restOperations.getForEntity(applicationContextUrl
+                    + "/exhn/0701/008", String.class);
         } catch (HttpServerErrorException e) {
             // 500 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -562,10 +578,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
-    public void testEXHN0701008() throws IOException {
+    public void testEXHN0701009() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
-                    + "/exhn/0701/008?id=a", String.class);
+                    + "/exhn/0701/009?id=a", String.class);
         } catch (HttpClientErrorException e) {
             // 400 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
@@ -580,10 +596,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
-    public void testEXHN0701009() throws IOException {
+    public void testEXHN0701010() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
-                    + "/exhn/0701/009", String.class);
+                    + "/exhn/0701/010", String.class);
         } catch (HttpClientErrorException e) {
             // 400 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
@@ -598,10 +614,10 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * </ul>
      */
     @Test(expected = HttpServerErrorException.class)
-    public void testEXHN0701010() throws IOException {
+    public void testEXHN0701011() throws IOException {
         try {
             restOperations.getForEntity(applicationContextUrl
-                    + "/exhn/0701/010", String.class);
+                    + "/exhn/0701/011", String.class);
         } catch (HttpServerErrorException e) {
             // 500 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -613,24 +629,6 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>MethodArgumentNotValidException発生時ににHTTPステータスが400になることを確認する。</li>
-     * </ul>
-     */
-    @Test(expected = HttpClientErrorException.class)
-    public void testEXHN0701011() throws IOException {
-        try {
-            restOperations.getForEntity(applicationContextUrl
-                    + "/exhn/0701/011", String.class);
-        } catch (HttpClientErrorException e) {
-            // 400 が返却されていること
-            assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
-
-            throw e;
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>MissingServletRequestPartException発生時ににHTTPステータスが400になることを確認する。</li>
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
@@ -648,7 +646,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>BindException発生時ににHTTPステータスが400になることを確認する。</li>
+     * <li>MissingServletRequestPartException発生時ににHTTPステータスが400になることを確認する。</li>
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
@@ -666,16 +664,34 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Handlerが見つからない場合にNoHandlerFoundException発生することを確認する。</li>
-     * <li>NoHandlerFoundException発生時にHTTPステータスが404になることを確認する。</li>
+     * <li>BindException発生時ににHTTPステータスが400になることを確認する。</li>
      * </ul>
      */
     @Test(expected = HttpClientErrorException.class)
     public void testEXHN0701014() throws IOException {
         try {
-            // 存在しないパスを指定する。
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/014", String.class);
+        } catch (HttpClientErrorException e) {
+            // 400 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Handlerが見つからない場合にNoHandlerFoundException発生することを確認する。</li>
+     * <li>NoHandlerFoundException発生時にHTTPステータスが404になることを確認する。</li>
+     * </ul>
+     */
+    @Test(expected = HttpClientErrorException.class)
+    public void testEXHN0701015() throws IOException {
+        try {
+            // 存在しないパスを指定する。
+            restOperations.getForEntity(applicationContextUrl
+                    + "/exhn/0701/015", String.class);
 
             Assert.fail();
         } catch (HttpClientErrorException e) {
@@ -695,14 +711,32 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>AsyncRequestTimeoutException発生時ににHTTPステータスが503になることを確認する。</li>
+     * </ul>
+     */
+    @Test(expected = HttpServerErrorException.class)
+    public void testEXHN0701016() throws IOException {
+        try {
+            restOperations.getForEntity(applicationContextUrl
+                    + "/exhn/0701/016", String.class);
+        } catch (HttpClientErrorException e) {
+            // 503 が返却されていること
+            assertThat(e.getStatusCode(), is(HttpStatus.SERVICE_UNAVAILABLE));
+
+            throw e;
+        }
+    }
+
+    /**
+     * <ul>
      * <li>throwExceptionIfNoHandlerFoundプロパティが設定されたDispatcherServletで、正常にリスクエストが処理されるかを確認する。</li>
      * </ul>
      */
     @Test
-    public void testEXHN0701015() throws IOException {
+    public void testEXHN0701017() throws IOException {
         try {
             ResponseEntity<String> res = restOperations.getForEntity(
-                    applicationContextUrl + "/exhn/0701/015", String.class);
+                    applicationContextUrl + "/exhn/0701/017", String.class);
 
             assertThat(res.getStatusCode(), is(HttpStatus.OK));
         } catch (HttpClientErrorException e) {

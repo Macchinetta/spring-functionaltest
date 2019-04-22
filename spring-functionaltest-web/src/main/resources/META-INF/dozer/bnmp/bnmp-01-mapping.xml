@@ -47,6 +47,48 @@
       <b>releaseDate</b>
     </field>
   </mapping>
+  <mapping type="one-way">
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarClassBaseOneWayMappingForm
+    </class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+    </class-b>
+  </mapping>
+  <mapping type="one-way">
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarSameNameFieldOneWayMappingForm
+    </class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+    </class-b>
+    <field>
+      <a>name</a>
+      <b>name</b>
+    </field>
+    <field>
+      <a>color</a>
+      <b>color</b>
+    </field>
+    <field>
+      <a>releaseDate</a>
+      <b>releaseDate</b>
+    </field>
+  </mapping>
+  <mapping>
+    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarSameNameFieldOneWayMappingDefinedFieldTagForm
+    </class-a>
+    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+    </class-b>
+    <field type="one-way">
+      <a>name</a>
+      <b>name</b>
+    </field>
+    <field type="one-way">
+      <a>color</a>
+      <b>color</b>
+    </field>
+    <field type="one-way">
+      <a>releaseDate</a>
+      <b>releaseDate</b>
+    </field>
+  </mapping>
   <mapping>
     <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.BeanMapperForm
     </class-a>

@@ -12,10 +12,11 @@
   <div th:include="~{layout/header :: header}">header</div>
   <div id="wrapper">
     <h1>File Upload Error!</h1>
+    <input type="hidden" id="statusCode" th:value="${T(org.springframework.http.HttpStatus).valueOf(#response.status)}" />
     <div class="alert alert-danger">
       <ul>
         <li
-          th:text="(${!#strings.isEmpty(exceptionCode)} ? |[${exceptionCode}] | : '') + #{e.sf.cmmn.9004}">
+          th:text="${#strings.isEmpty(exceptionCode)} ? #{e.sf.cmmn.9004} : |[${exceptionCode}] #{e.sf.cmmn.9004}|">
         </li>
       </ul>
     </div>

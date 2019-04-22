@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      DateISOFormat:<span id="getDateISO" th:text="${#temporals.formatISO(resultDate)}"></span><br />
+    </div>
+  </div>
+</body>
+</html>
