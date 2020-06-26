@@ -87,13 +87,6 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     }
 
     @Override
-    public String encryptQueryableText(String rawText) {
-        TextEncryptor queryableTextEncryptor = Encryptors.queryableText(secret,
-                salt);
-        return queryableTextEncryptor.encrypt(rawText);
-    }
-
-    @Override
     public byte[] encryptBytes(byte[] rawBytes) {
         BytesEncryptor bytesEncryptor = Encryptors.standard(secret, salt);
         return bytesEncryptor.encrypt(rawBytes);

@@ -26,7 +26,7 @@
     <li><a id="intr0201005" href="${pageContext.request.contextPath}/intr/0201/005">intr0201005</a></li>
     <li><a id="intr0201006" href="${pageContext.request.contextPath}/intr/0201/006">intr0201006</a></li>
     <li><a id="intr0201007" href="${pageContext.request.contextPath}/intr/0201/007">intr0201007</a></li>
-    <li><a id="intr0201008" href="${pageContext.request.contextPath}/intr/0201/008">intr0201008</a></li>
+    <li><a id="intr0201008" href="${pageContext.request.contextPath}/intr/0201/008/">intr0201008</a></li>
     <li><a id="intr0202001" href="${pageContext.request.contextPath}/intr/0202/001">intr0202001</a></li>
     <li><a id="intr0202002" href="${pageContext.request.contextPath}/intr/0202/002">intr0202002</a></li>
     <li><a id="intr0202003" href="${pageContext.request.contextPath}/intr/0202/003">intr0202003</a></li>

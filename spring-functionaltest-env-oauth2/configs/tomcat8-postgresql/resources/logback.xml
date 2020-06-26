@@ -47,6 +47,9 @@
   <logger name="jp.co.ntt.fw.spring.functionaltest">
     <level value="debug" />
   </logger>
+  <logger name="jp.co.ntt.fw.spring.functionaltest.domain.repository">
+    <level value="trace" />
+  </logger>
 
   <!-- TERASOLUNA -->
   <logger name="org.terasoluna.gfw">
@@ -76,11 +79,15 @@
     <level value="info" />
   </logger>
 
-  <logger name="jdbc.sqltiming">
+  <logger name="org.springframework.jdbc.core.JdbcTemplate">
     <level value="debug" />
   </logger>
-  <logger name="jdbc.resultsettable">
+
+  <logger name="org.hibernate.SQL" additivity="true">
     <level value="debug" />
+  </logger>
+  <logger name="org.hibernate.type">
+    <level value="trace" />
   </logger>
 
   <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">

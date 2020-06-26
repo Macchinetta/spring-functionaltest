@@ -121,7 +121,7 @@ public class FLUP0102Controller {
         fileUploadHelper.bindToModel(form.getMultipartFile(),
                 redirectAttributes);
 
-        return "redirect:/flup/0102?complete";
+        return "redirect:/flup/0102/?complete";
     }
 
 }

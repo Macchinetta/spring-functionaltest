@@ -28,10 +28,8 @@ public class ATHN02Controller {
     public String handle0201001(@AuthenticationPrincipal User userDetails,
             Model model) {
         model.addAttribute("testNo", "0201/001");
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
 
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 }

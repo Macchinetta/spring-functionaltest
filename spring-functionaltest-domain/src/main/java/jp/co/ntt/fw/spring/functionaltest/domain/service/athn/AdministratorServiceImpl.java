@@ -81,6 +81,21 @@ public class AdministratorServiceImpl implements AdministratorService {
     }
 
     @Override
+    public void createUsingArgon2Encode(Administrator administrator) {
+
+        if (findOneByUserName(administrator.getUsername()) != null) {
+            throw new BusinessException(ResultMessages.danger().add(
+                    "e.sf.athn.0001"));
+        }
+
+        administrator.setPassword(passwordEncodeSharedService
+                .passwordEncodeArgon2(administrator.getPassword()));
+        setAdministratorConfig(administrator);
+
+        administratorRepository.insert(administrator);
+    }
+
+    @Override
     public void createUsingDelegatingEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {

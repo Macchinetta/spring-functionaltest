@@ -85,14 +85,12 @@ public class ATHN18Controller {
     public String afterLoginUsingCustomPbkdf2Password(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingCustomPbkdf2Password";
     }

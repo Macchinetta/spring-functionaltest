@@ -23,6 +23,8 @@ public interface PasswordEncodeSharedService {
 
     String passwordEncodeSCrypt(String rawPassword);
 
+    String passwordEncodeArgon2(String rawPassword);
+
     String passwordEncodeDelegating(String rawPassword);
 
     String passwordEncodeCustomPbkdf2(String rawPassword);

@@ -45,7 +45,7 @@ if (!ajax)
 
         $.ajax(contextPath + "/ajax/" + path, {
             type : "POST",
-            contentType : "application/json;charset=utf-8",
+            contentType : "application/json",
             data : toJson($("#personalComputerForm")),
             dataType : "json"
         }).done(function(json, status, xhr) {
@@ -61,7 +61,7 @@ if (!ajax)
 
         $.ajax(contextPath + "/ajax/" + path, {
             type : "POST",
-            contentType : "application/json;charset=utf-8",
+            contentType : "application/json",
             data : toJson($("#personalComputerForm")),
             dataType : "json"
         }).done(function(json, status, xhr) {

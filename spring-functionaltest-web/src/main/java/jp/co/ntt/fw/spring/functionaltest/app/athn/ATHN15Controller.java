@@ -27,9 +27,7 @@ public class ATHN15Controller {
     @RequestMapping(value = "1501/001", params = "loginSuccess")
     public String handle1501LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1501/001");
         return "athn/topForCustomizedLogout";
     }

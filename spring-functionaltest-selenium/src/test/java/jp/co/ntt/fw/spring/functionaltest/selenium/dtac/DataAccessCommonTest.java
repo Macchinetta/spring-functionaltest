@@ -158,59 +158,6 @@ public class DataAccessCommonTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>log4jdbcを使用してDebugログを出力することを確認。</li>
-     * </ul>
-     */
-    @Ignore("Linux上で実行するとDEBUGログを検出できないため一旦保留")
-    public void testDTAC0201001() {
-
-        // 疑似アプリ画面表示
-        {
-            clickLink(id("dtac0101001"));
-        }
-
-        // ログイン
-        {
-            setInputString(id("username"), "Jack");
-            setInputString(id("password"), "spring1234");
-            clickButton(id("login"));
-            clickButton(id("back"));
-        }
-
-        // ログイン
-        {
-            setInputString(id("username"), "Ken");
-            setInputString(id("password"), "spring1234");
-            clickButton(id("login"));
-            clickButton(id("back"));
-        }
-
-        // ログイン
-        {
-            setInputString(id("username"), "Josh");
-            setInputString(id("password"), "spring1234");
-            clickButton(id("login"));
-            clickButton(id("back"));
-        }
-
-        // ログ確認
-        {
-            dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*jdbc.sqltiming.*",
-                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Jack'.*");
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*jdbc.sqltiming.*",
-                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Ken'.*");
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*jdbc.sqltiming.*",
-                    ".*SELECT.*username.*password.*FROM.*t_user.*WHERE.*username = 'Josh'.*");
-        }
-
-    }
-
-    /**
-     * <ul>
      * <li>JDBC例外が発生した場合に、データアクセス例外へ変換されることを確認。</li>
      * </ul>
      */

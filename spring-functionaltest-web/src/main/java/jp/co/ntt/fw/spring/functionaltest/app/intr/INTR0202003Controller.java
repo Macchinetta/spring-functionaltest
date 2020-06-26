@@ -20,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("intr")
 public class INTR0202003Controller {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "0202/003", method = RequestMethod.GET)
     public String handle003() {
         return "intr/userDetails";
     }

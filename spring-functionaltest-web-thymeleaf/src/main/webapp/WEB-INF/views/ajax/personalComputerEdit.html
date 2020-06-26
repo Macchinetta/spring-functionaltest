@@ -45,7 +45,7 @@
 
           $.ajax([[@{/ajax/}]] + path, {
               type : "POST",
-              contentType : "application/json;charset=utf-8",
+              contentType : "application/json",
               data : ajax.toJson($("#personalComputerForm")),
               dataType : "json"
           }).done(function(json, status, xhr) {
@@ -61,7 +61,7 @@
 
           $.ajax([[@{/ajax/}]] + path, {
               type : "POST",
-              contentType : "application/json;charset=utf-8",
+              contentType : "application/json",
                data : ajax.toJson($("#personalComputerForm")),
                 dataType : "json"
           }).done(function(json, status, xhr) {

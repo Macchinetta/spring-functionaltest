@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +71,9 @@ public class DataAccessExclusiveJPATest extends
             // 疑似アプリの画面を表示するブラウザを2つ起動
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
+
+            getWebDriverOperations(0).setDefaultTimeoutForImplicitlyWait(20);
+            getWebDriverOperations(1).setDefaultTimeoutForImplicitlyWait(20);
 
             final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
@@ -154,6 +157,9 @@ public class DataAccessExclusiveJPATest extends
             setUpWebDriver(0, testId);
             setUpWebDriver(1, testId);
 
+            getWebDriverOperations(0).setDefaultTimeoutForImplicitlyWait(20);
+            getWebDriverOperations(1).setDefaultTimeoutForImplicitlyWait(20);
+
             final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
@@ -197,6 +203,9 @@ public class DataAccessExclusiveJPATest extends
 
         // 結果確認
         {
+            //　完了画面が出現するまで待機する
+            getWebDriverOperations(0).waitForDisplayed(id("bookForm"));
+
             // 画面1が、以下の条件を満たすこと
             // ・完了画面に遷移すること
             // ・入力した変更内容が反映されること
@@ -211,12 +220,7 @@ public class DataAccessExclusiveJPATest extends
             // 画面2が、以下の条件を満たすこと
             // ・業務エラー完了画面に遷移すること
             // ・入力した変更内容が反映されないこと
-            // TODO:Hibernateのバグ対応版（5.2.1.Final）にアップデート後、if文の条件を!"H2".equals(dataBase)に戻す
-            // 修正理由:Hibernateのバグ(HHH-10797)によって、PostgreSQLで@QueryHint(name = "javax.persistence.lock.timeout", value =
-            // "0")を指定しても、
-            // NOWAIT句が付かなくなってしまったため
-            // 横展開としてガイドラインのissueを挙げている(https://github.com/terasolunaorg/guideline/issues/2372)
-            if (!"H2".equals(dataBase) && !"POSTGRESQL".equals(dataBase)) {
+            if (!"H2".equals(dataBase)) {
                 // As the first browser has locked the record, the second browser lock timeouts
                 // and exception is thrown
                 assertFailureView(1,

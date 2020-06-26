@@ -33,8 +33,5 @@
     </fieldset>
   </form:form>
   <br>
-  <form:form action="${pageContext.request.contextPath}/dtac/logout" method="post">
-    <input type="submit" id="logout" class="btn btn-default" value="ログアウト">
-  </form:form>
 
 </div>

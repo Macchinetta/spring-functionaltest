@@ -29,10 +29,8 @@ public class ATHN13Controller {
     public String handle1302LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1302/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 }

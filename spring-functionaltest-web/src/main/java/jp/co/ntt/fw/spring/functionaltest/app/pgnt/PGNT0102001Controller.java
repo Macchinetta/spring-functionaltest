@@ -29,7 +29,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Celebrity;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.CelebritySearchCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.CelebrityService;
 
-//@RequestMapping("pgnt")
+@RequestMapping("pgnt")
 @Controller
 public class PGNT0102001Controller {
 
@@ -42,7 +42,7 @@ public class PGNT0102001Controller {
         return criteria;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "celebritySearchDispFive", method = RequestMethod.GET)
     public String search(CelebritySearchCriteria criteria, Pageable pageable,
             Model model) {
 

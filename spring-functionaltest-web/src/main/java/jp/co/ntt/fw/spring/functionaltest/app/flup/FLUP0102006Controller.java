@@ -30,7 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
  */
-// @RequestMapping("/flup/0102")
+@RequestMapping("flup/0102")
 @Controller
 public class FLUP0102006Controller {
 
@@ -42,12 +42,12 @@ public class FLUP0102006Controller {
         return new SingleUploadForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "006", method = RequestMethod.GET)
     public String handle006Form() {
         return "flup/singleFileUploadForm";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "006", method = RequestMethod.POST)
     public String handle006Upload(@Validated SingleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
@@ -61,7 +61,7 @@ public class FLUP0102006Controller {
         return "redirect:/flup/0102/006?complate";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @RequestMapping(value = "006", method = RequestMethod.GET, params = "complete")
     public String handle006Complate() {
         return "flup/singleFileUploadComplete";
     }

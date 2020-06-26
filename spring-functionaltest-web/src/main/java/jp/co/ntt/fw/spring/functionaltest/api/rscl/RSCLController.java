@@ -27,6 +27,9 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -66,6 +69,12 @@ public class RSCLController {
     long readTimeout;
 
     private final CyclicBarrier barrierForAsyncThreadLimitation;
+
+    private final Lock lock = new ReentrantLock();
+
+    private final Condition startSignal = lock.newCondition();
+
+    private volatile boolean await;
 
     public RSCLController(
             @Value("${rscl.asyncRestTemplate.maxPoolSize}") int maxPoolSize) {
@@ -328,6 +337,53 @@ public class RSCLController {
         user.setName("test");
         user.setAge(20);
         return user;
+    }
+
+    /**
+     * <ul>
+     * <li>{@link #releaseForMaxPool()}が呼び出されるまで待機し、UserResourceを返却する。</li> <br>
+     * スレッド数制限確認用
+     * </ul>
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "awaitForMaxPool", method = RequestMethod.GET)
+    public UserResource awaitForMaxPool() throws InterruptedException {
+        UserResource user = new UserResource();
+        user.setName("test");
+        user.setAge(20);
+
+        long nanos = TimeUnit.SECONDS.toNanos(10L);
+        lock.lock();
+        try {
+            await = true;
+            while (await) {
+                if (nanos <= 0L) {
+                    return new UserResource();
+                }
+                nanos = startSignal.awaitNanos(nanos);
+            }
+            return user;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>{@link #awaitForMaxPool()}の待機を解除する。</li> <br>
+     * スレッド数制限確認用
+     * </ul>
+     */
+    @RequestMapping(value = "releaseForMaxPool", method = RequestMethod.GET)
+    public boolean releaseForMaxPool() {
+        lock.lock();
+        try {
+            await = false;
+            startSignal.signalAll();
+            return true;
+        } finally {
+            lock.unlock();
+        }
     }
 
     /**

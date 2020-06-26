@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.MessageSource;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.terasoluna.gfw.web.util.RequestUtils;
@@ -44,8 +45,7 @@ public class AjaxSupportAccessDeniedHandlerImpl extends
                         + messageSource.getMessage("e.sf.cspr.0001", null,
                                 request.getLocale()) + "\"}]}";
 
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 PrintWriter out = response.getWriter();
                 out.print(jsonObject);

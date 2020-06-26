@@ -29,33 +29,27 @@ public class ATHN12Controller {
     public String handle1201001LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1201/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
     @RequestMapping(value = "1201/001/afterLogin")
     public String handle1201001afterLogin(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1201/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
     @RequestMapping(value = "1202/001", params = "loginSuccess")
     public String handle1201002LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1202/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
 }

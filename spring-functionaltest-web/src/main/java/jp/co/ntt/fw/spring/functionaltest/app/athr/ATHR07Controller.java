@@ -39,15 +39,10 @@ public class ATHR07Controller {
     @RequestMapping(value = "0701/001/afterLogin")
     public String handle0701001afterLogin(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("userEmail", userDetails.getUsername()
+                + "@example.com");
         return "athr/showCustomizedAuthorizeErrorForAuthenticated";
     }
 

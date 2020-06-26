@@ -84,14 +84,12 @@ public class ATHN05Controller {
     public String afterLoginUsingBCryptPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingBCryptPassword";
     }
@@ -142,14 +140,12 @@ public class ATHN05Controller {
     public String afterLoginUsingPbkdf2Password(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingPbkdf2Password";
     }
@@ -200,16 +196,70 @@ public class ATHN05Controller {
     public String afterLoginUsingSCryptPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingSCryptPassword";
+    }
+
+    @RequestMapping(value = "/0501/007", method = RequestMethod.GET)
+    public String handle0501007(Model model, AdministratorForm form) {
+        return "athn/createAdministratorUsingArgon2Password";
+    }
+
+    @RequestMapping(value = "0501/007/createAdminUsingArgon2", method = RequestMethod.POST)
+    public String createAdministratorUsingArgon2Password(Model model,
+            @Validated AdministratorForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            return handle0501007(model, form);
+        }
+
+        // Administratorテーブルに管理者情報登録
+        Administrator administrator = new Administrator();
+        administrator.setUsername(form.getUsername());
+        administrator.setPassword(form.getPassword());
+        try {
+            administratorService.createUsingArgon2Encode(administrator);
+        } catch (BusinessException e) {
+            // 同じユーザ名が存在する場合エラー
+            model.addAttribute(e.getResultMessages());
+            return handle0501007(model, form);
+        }
+
+        // エンコード前のパスワード
+        redirectAttributes.addFlashAttribute("beforeEncodePassword", form
+                .getPassword());
+        redirectAttributes.addFlashAttribute(administrator);
+
+        return "redirect:/athn/0501/007/createCompleteAdminUsingArgon2?complete";
+    }
+
+    @RequestMapping(value = "0501/007/createCompleteAdminUsingArgon2", method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingArgon2Password(Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
+        model.addAttribute(messages);
+
+        return "athn/createCompleteAdministrator";
+    }
+
+    @RequestMapping(value = "0501/008/afterLogin")
+    public String afterLoginUsingArgon2Password(
+            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
+
+        return "athn/showAdministratorInfoUsingArgon2Password";
     }
 
     @RequestMapping(value = "/0502/001", method = RequestMethod.GET)
@@ -259,14 +309,12 @@ public class ATHN05Controller {
     public String afterLoginUsingDelegatingPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingDelegatingPassword";
     }

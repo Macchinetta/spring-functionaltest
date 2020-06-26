@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- BCrypPasswordEncoderを利用した認証処理 -->
   <sec:http pattern="/athn/0501/002/**" auto-config="false" authentication-manager-ref="loginWithBCryptPassword">
@@ -57,6 +57,23 @@
   </sec:authentication-manager>
 
   <bean id="athnPasswordEncoderSCrypt" class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
+
+  <!-- Argon2PasswordEncoderを利用した認証処理 -->
+  <sec:http pattern="/athn/0501/008/**" auto-config="false" authentication-manager-ref="loginWithArgon2Password">
+    <sec:form-login login-page="/athn/0501/008/login" login-processing-url="/athn/0501/008/authenticate"
+      default-target-url="/athn/0501/008/afterLogin" always-use-default-target="true" />
+    <sec:logout logout-url="/athn/0501/008/logout" logout-success-url="/athn/" />
+    <sec:intercept-url pattern="/athn/0501/008/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0501/008/**" access="isAuthenticated()" />
+  </sec:http>
+
+  <sec:authentication-manager id="loginWithArgon2Password">
+    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+      <sec:password-encoder ref="athnPasswordEncoderArgon2" />
+    </sec:authentication-provider>
+  </sec:authentication-manager>
+
+  <bean id="athnPasswordEncoderArgon2" class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
 
   <!-- DelegatingPasswordEncoder（applicationContextで定義）を利用した認証処理 -->
   <sec:http pattern="/athn/0502/002/**" auto-config="false" authentication-manager-ref="loginWithDelegatingPassword">

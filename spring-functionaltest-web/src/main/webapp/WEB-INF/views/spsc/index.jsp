@@ -32,6 +32,8 @@
     <li><a id="spsc0105001" href="${pageContext.request.contextPath}/spsc/0105/001">spsc0105001</a></li>
     <li><a id="spsc0105002" href="${pageContext.request.contextPath}/spsc/0105/002">spsc0105002</a></li>
     <li><a id="spsc0105003" href="${pageContext.request.contextPath}/spsc/0105/003">spsc0105003</a></li>
+    <li><a id="spsc0105004" href="${pageContext.request.contextPath}/spsc/0105/004">spsc0105004</a></li>
+    <li><a id="spsc0105005" href="${pageContext.request.contextPath}/spsc/0105/005">spsc0105005</a></li>
   </ul>
   <div>[spsc06] HPKPセキュリティヘッダの出力(HTTPS環境のみ)</div>
   <ul>

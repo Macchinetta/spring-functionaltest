@@ -42,11 +42,6 @@ public class ENCR01Controller {
         return "encr/encryptDecryptByTextEncryptor";
     }
 
-    @RequestMapping(value = "/0102/001", method = RequestMethod.GET)
-    public String handle0102001(Model model, EncryptionDataForm form) {
-        return "encr/encryptByTextEncryptorForSameResult";
-    }
-
     @RequestMapping(value = "/0103/001", method = RequestMethod.GET)
     public String handle0103001(Model model, EncryptionDataForm form) {
         return "encr/encryptDecryptByBytesEncryptor";
@@ -76,21 +71,6 @@ public class ENCR01Controller {
         model.addAttribute("decryptedText", encryptionDataService.decryptText(
                 encryptedText));
         return "encr/encryptCompleteByTextEncryptor";
-    }
-
-    @RequestMapping(value = "0102/001/encryptByTextEncryptorForSameResult", method = RequestMethod.POST)
-    public String encryptFirstByTextEncryptor(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            return handle0101001(model, form);
-        }
-
-        model.addAttribute("encryptedText", encryptionDataService
-                .encryptQueryableText(form.getRawText()));
-        model.addAttribute("encryptedText2", encryptionDataService
-                .encryptQueryableText(form.getRawText()));
-        return "encr/encryptCompleteByTextEncryptorForSameResult";
     }
 
     @RequestMapping(value = "0103/001/encryptDecryptByBytesEncryptor", method = RequestMethod.POST)

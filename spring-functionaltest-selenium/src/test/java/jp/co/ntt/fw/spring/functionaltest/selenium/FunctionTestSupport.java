@@ -46,7 +46,7 @@ import org.springframework.web.client.RestOperations;
         "classpath:META-INF/spring/seleniumContext.xml" })
 public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             FunctionTestSupport.class);
 
     private static WebDriver webDriver;
@@ -147,7 +147,7 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
         evidenceSavingDirectory = new File(String.format("%s/%s/%s",
                 evidenceBaseDirectory, simplePackageName, testCaseName));
 
-        LOGGER.debug("evidenceSavingDirectory is " + evidenceSavingDirectory
+        logger.debug("evidenceSavingDirectory is " + evidenceSavingDirectory
                 .getAbsolutePath());
 
         screenCapture.setUp(evidenceSavingDirectory);
@@ -331,7 +331,7 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
             try {
                 webDriver.quit();
             } catch (Throwable t) {
-                LOGGER.error("failed quit.", t);
+                logger.error("failed quit.", t);
             }
         }
         webDrivers.clear();
@@ -343,18 +343,18 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
             try {
                 screenCapture.save(webDriver, subTitle);
             } catch (Throwable t) {
-                LOGGER.error("failed screen capture.", t);
+                logger.error("failed screen capture.", t);
             }
             try {
                 pageSource.save(webDriver, subTitle);
             } catch (Throwable t) {
-                LOGGER.error("failed screen PageSource.", t);
+                logger.error("failed screen PageSource.", t);
             }
         }
         try {
             dbLog.save(subTitle);
         } catch (Throwable t) {
-            LOGGER.error("failed dbLog capture.", t);
+            logger.error("failed dbLog capture.", t);
         }
     }
 
@@ -364,18 +364,18 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
             try {
                 screenCapture.saveForced(webDriver, subTitle);
             } catch (Throwable t) {
-                LOGGER.error("failed screen capture.", t);
+                logger.error("failed screen capture.", t);
             }
             try {
                 pageSource.saveForced(webDriver, subTitle);
             } catch (Throwable t) {
-                LOGGER.error("failed screen PageSource.", t);
+                logger.error("failed screen PageSource.", t);
             }
         }
         try {
             dbLog.saveForced(subTitle);
         } catch (Throwable t) {
-            LOGGER.error("failed dbLog capture.", t);
+            logger.error("failed dbLog capture.", t);
         }
     }
 

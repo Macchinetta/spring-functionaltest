@@ -30,26 +30,6 @@
   </context-param>
 
   <servlet>
-    <servlet-name>appServlet</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <!-- ApplicationContext for Spring MVC -->
-      <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-    <multipart-config>
-      <max-file-size>512</max-file-size>
-      <max-request-size>8192</max-request-size>
-      <file-size-threshold>0</file-size-threshold>
-    </multipart-config>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>appServlet</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>flup0102AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
@@ -57,11 +37,6 @@
       <param-value>classpath*:META-INF/spring/flup/spring-mvc-flup0102.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <multipart-config>
-      <max-file-size>256</max-file-size>
-      <max-request-size>1024</max-request-size>
-      <file-size-threshold>64</file-size-threshold>
-    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>flup0102AppServlet</servlet-name>
@@ -76,11 +51,6 @@
       <param-value>classpath*:META-INF/spring/flup/spring-mvc-flup0102006.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <multipart-config>
-      <max-file-size>256</max-file-size>
-      <max-request-size>1024</max-request-size>
-      <file-size-threshold>64</file-size-threshold>
-    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>flup0102006AppServlet</servlet-name>
@@ -95,11 +65,6 @@
       <param-value>classpath*:META-INF/spring/flup/spring-mvc-flup0103.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <multipart-config>
-      <max-file-size>256</max-file-size>
-      <max-request-size>1024</max-request-size>
-      <file-size-threshold>64</file-size-threshold>
-    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>flup0103AppServlet</servlet-name>
@@ -114,22 +79,31 @@
       <param-value>classpath*:META-INF/spring/exhn/spring-mvc-exhn0601002.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
-    <multipart-config>
-      <max-file-size>512</max-file-size>
-      <max-request-size>8192</max-request-size>
-      <file-size-threshold>0</file-size-threshold>
-    </multipart-config>
   </servlet>
   <servlet-mapping>
     <servlet-name>exhn0601002AppServlet</servlet-name>
     <url-pattern>/exhn/0601/002/register</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>appServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <!-- ApplicationContext for Spring MVC -->
+      <param-value>classpath*:META-INF/spring/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>appServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
   <!-- JBoss Web Service Deployments -->
   <servlet>
     <servlet-name>TodoWebService</servlet-name>
-    <servlet-class>jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebServiceImpl
-    </servlet-class>
+    <servlet-class>jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebServiceImpl</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TodoWebService</servlet-name>
@@ -137,14 +111,95 @@
   </servlet-mapping>
 
   <filter>
+    <filter-name>MultipartFilterFLUP0102006</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartFLUP0102006Resolver</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>MultipartFilterFLUP0102006</filter-name>
+    <servlet-name>flup0102006AppServlet</servlet-name>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>MultipartFilterFLUP0102</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartFLUP0102Resolver</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>MultipartFilterFLUP0102</filter-name>
+    <url-pattern>/flup/0102/001</url-pattern>
+    <url-pattern>/flup/0102/002</url-pattern>
+    <url-pattern>/flup/0102/003</url-pattern>
+    <url-pattern>/flup/0102/004</url-pattern>
+    <url-pattern>/flup/0102/005</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>MultipartFilterFLUP0103002</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartFLUP0103002Resolver</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>MultipartFilterFLUP0103002</filter-name>
+    <url-pattern>/flup/0103/002</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>MultipartFilterFLUP0103001</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartFLUP0103001Resolver</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>MultipartFilterFLUP0103001</filter-name>
+    <url-pattern>/flup/0103/001</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>MultipartFilterEXHN</filter-name>
+    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartEXHNResolver</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>MultipartFilterEXHN</filter-name>
+    <url-pattern>/exhn/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>MultipartFilter</filter-name>
     <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+    <init-param>
+      <param-name>multipartResolverBeanName</param-name>
+      <param-value>filterMultipartResolver</param-value>
+    </init-param>
   </filter>
   <filter-mapping>
     <filter-name>MultipartFilter</filter-name>
-    <url-pattern>/flup/*</url-pattern>
+    <url-pattern>/flup/0101/*</url-pattern>
+    <url-pattern>/flup/0201/*</url-pattern>
+    <url-pattern>/flup/0202/*</url-pattern>
+    <url-pattern>/flup/0301/*</url-pattern>
+    <url-pattern>/flup/0401/*</url-pattern>
+    <url-pattern>/flup/0402/*</url-pattern>
+    <url-pattern>/flup/0501/*</url-pattern>
+    <url-pattern>/flup/0601/*</url-pattern>
+    <url-pattern>/flup/0801/*</url-pattern>
+    <url-pattern>/flup/0802/*</url-pattern>
     <url-pattern>/cspr/*</url-pattern>
-    <url-pattern>/exhn/*</url-pattern>
     <url-pattern>/rscl/*</url-pattern>
     <url-pattern>/emal/*</url-pattern>
     <url-pattern>/soap/*</url-pattern>
@@ -174,5 +229,4 @@
     <url-pattern>/athn/1703/001/authenticate</url-pattern>
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
-
 </web-fragment>

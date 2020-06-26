@@ -15,7 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.bnmp;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anyOf;
 import static org.junit.Assert.*;
@@ -1256,7 +1255,7 @@ public class BeanMappingTest extends FunctionTestSupport {
             webDriverOperations.appendText(id("birthDateOffsetDateTime"),
                     "2013/10/10 11:11:11.111+09:00");
             webDriverOperations.appendText(id("birthDateZonedDateTime"),
-                    "2013/10/10 11:11:11.111+08:00");
+                    "2013/10/10 11:11:11.111+09:00[Asia/Tokyo]");
             webDriverOperations.click(id("dateToString"));
         }
 
@@ -1290,39 +1289,7 @@ public class BeanMappingTest extends FunctionTestSupport {
                             "2013-10-10 11:11:11.111+09:00"));
             assertThat(webDriverOperations.getText(id(
                     "getBirthDateZonedDateTime")), is(
-                            "2013-10-10 11:11:11.111+08:00"));
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>日付・時刻型フィールドから文字列型フィールドにコピーするとき、マッピング定義XMLファイルでSimpleDateFormatに定義されていない書式は使用できないこと。</li>
-     * </ul>
-     */
-    @Test
-    public void testBNMP0304003() {
-        // メニュー画面の操作
-        {
-            webDriverOperations.click(id("bnmp0304003"));
-        }
-
-        // コピー元(Source)の内容入力
-        {
-            webDriverOperations.appendText(id("birthDateZonedDateTime"),
-                    "2013/10/10 11:11:11.111+08:00[Asia/Tokyo]");
-            webDriverOperations.click(id("dateToStringFailed"));
-        }
-
-        // システムエラー画面に遷移
-        // IllegalArgumentExceptionが発生すること。
-        {
-            assertThat(webDriverOperations.getTitle(), is("System Error!"));
-
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//div[2]/div/ul/li")), is(
-                            "[e.sf.cmmn.9001] System error occurred!"));
-            assertThat(webDriverOperations.getText(By.xpath("//ul[2]/li")),
-                    containsString("Illegal pattern character 'V'"));
+                            "2013-10-10 11:11:11.111+09:00[Asia/Tokyo]"));
         }
     }
 

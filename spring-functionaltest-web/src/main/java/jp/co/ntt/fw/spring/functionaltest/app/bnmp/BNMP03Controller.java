@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.StringToDateMappingDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateToStringMappingDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DateToStringMappingFailedDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeNullEmptyDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.ExcludeSpecifiedFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MappingFailedDto;
@@ -201,19 +200,6 @@ public class BNMP03Controller {
         model.addAttribute("resultBean", destinationBean);
 
         return "bnmp/showBeanMappingDateToStringResult";
-    }
-
-    @RequestMapping(value = "dateToStringMappingFailed", method = RequestMethod.POST, params = "dateToStringFailed")
-    public String handleDateToStringMappingFailed(Model model,
-            DateToStringMappingFailedForm form) {
-
-        DateToStringMappingFailedDto destinationBean = beanMapper.map(form,
-                DateToStringMappingFailedDto.class);
-
-        model.addAttribute("resultBean", destinationBean);
-
-        // IllegalArgumentExceptionが発生する為、以下URLはダミー
-        return "bnmp/";
     }
 
     @RequestMapping(value = "mappingFailed", method = RequestMethod.POST, params = "mappingFailed")

@@ -77,6 +77,42 @@ public class RSCL13Controller {
 
     }
 
+    @RequestMapping(value = "1302/002", method = RequestMethod.GET)
+    public String handle1302002First(Model model) {
+
+        model.addAttribute("testDescription",
+                "AsyncRestTemplateを使用して、REST APIを複数回連続で呼び出し、スレッドプールサイズの設定が行えていることを確認");
+        model.addAttribute("testId", "1302/002");
+
+        return "rscl/sendAsyncRestRequest";
+    }
+
+    @RequestMapping(value = "1302/002", method = RequestMethod.POST)
+    public String handle1302002(Model model) {
+
+        this.asyncRestClientService.confirmAsync03();
+
+        return "rscl/index";
+    }
+
+    @RequestMapping(value = "1302/003", method = RequestMethod.GET)
+    public String handle1302003First(Model model) {
+
+        model.addAttribute("testDescription",
+                "AsyncRestTemplateを使用して、REST APIを複数回連続で呼び出し、最大スレッドプールサイズの設定が行えていることを確認");
+        model.addAttribute("testId", "1302/003");
+
+        return "rscl/sendAsyncRestRequest";
+    }
+
+    @RequestMapping(value = "1302/003", method = RequestMethod.POST)
+    public String handle1302003(Model model) {
+
+        this.asyncRestClientService.confirmAsync04();
+
+        return "rscl/index";
+    }
+
     @RequestMapping(value = "1303/001", method = RequestMethod.GET)
     public String handle1303001First(Model model) {
 

@@ -17,6 +17,7 @@
       <package-name>org.hibernate.validator.*</package-name>
       <package-name>javax.validation.*</package-name>
       <package-name>com.fasterxml.jackson.*</package-name>
+      <package-name>org.apache.xmlbeans.*</package-name>
       <package-name>org.joda.*</package-name>
       <package-name>org.slf4j.*</package-name>
     </prefer-application-packages>

@@ -33,7 +33,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class SpringSecurityTest extends FunctionTestSupport {
@@ -410,6 +409,35 @@ public class SpringSecurityTest extends FunctionTestSupport {
         // レスポンスヘッダを確認
         assertThat(resultMap.get("Content-Security-Policy"), is(
                 "default-src 'self'; report-uri /csp_report;"));
+        assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
+    }
+
+    /**
+     * <ul>
+     * <li>HTTPをHTTPSに置き換えるようブラウザに指示するヘッダの出力を確認する。</li>
+     *
+     * <pre>
+     *  <sec:headers>
+     *      <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
+     *  </sec:headers>
+     * </pre>
+     * </ul>
+     **/
+    @Test
+    public void testSPSC0105004() throws IOException {
+
+        // レスポンスヘッダを取得
+        HttpHeaders requestHeaders = new HttpHeaders();
+        ResponseEntity<byte[]> entity = restTemplate.exchange(
+                applicationContextUrl + "/spsc/0105/004", HttpMethod.GET,
+                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+
+        HttpHeaders responseHeaders = entity.getHeaders();
+        Map<String, String> resultMap = responseHeaders.toSingleValueMap();
+
+        // レスポンスヘッダを確認
+        assertThat(resultMap.get("Content-Security-Policy"), is(
+                "upgrade-insecure-requests; default-src 'self';"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 

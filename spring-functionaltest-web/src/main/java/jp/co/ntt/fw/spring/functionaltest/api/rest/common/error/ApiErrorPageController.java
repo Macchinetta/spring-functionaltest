@@ -59,7 +59,7 @@ public class ApiErrorPageController {
                 httpStatus.getReasonPhrase());
         // 取得したエラー情報を応答
         return ResponseEntity.status(httpStatus).contentType(
-                MediaType.APPLICATION_JSON_UTF8).body(apiError);
+                MediaType.APPLICATION_JSON).body(apiError);
     }
 
 }

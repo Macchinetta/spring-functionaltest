@@ -35,7 +35,7 @@ import com.jayway.restassured.RestAssured;
 
 public abstract class RestTestSupport extends FunctionTestSupport {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
+    private static final Logger logger = LoggerFactory.getLogger(
             RestTestSupport.class);
 
     @Inject
@@ -74,7 +74,7 @@ public abstract class RestTestSupport extends FunctionTestSupport {
         try {
             restLog.save(writer, subTitle);
         } catch (Throwable t) {
-            LOGGER.error("failed restLog capture.", t);
+            logger.error("failed restLog capture.", t);
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class RestTestSupport extends FunctionTestSupport {
         try {
             restLog.saveForced(writer, subTitle);
         } catch (Throwable t) {
-            LOGGER.error("failed restLog capture.", t);
+            logger.error("failed restLog capture.", t);
         }
     }
 

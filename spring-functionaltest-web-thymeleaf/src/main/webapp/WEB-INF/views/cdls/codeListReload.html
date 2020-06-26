@@ -24,7 +24,7 @@
       <div>CDLS0201002</div>
       <form th:action="@{/cdls/0201/002}" th:object="${updateCodeListForm}" method="post">
         <select id="cdls0201002" th:field="*{id}">
-          <option th:each="authority : ${refreshCodeList}" th:value="${authority.key}"
+          <option th:each="authority : ${CL_REFRESH_CODELIST}" th:value="${authority.key}"
             th:text="${authority.value}"></option>
         </select> <span th:errors="*{id}"></span>
         <p>

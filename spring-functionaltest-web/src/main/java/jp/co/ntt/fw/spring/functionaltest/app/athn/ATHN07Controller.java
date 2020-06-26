@@ -27,10 +27,8 @@ public class ATHN07Controller {
     @RequestMapping(value = { "0701/001", "0702/001" }, params = "loginSuccess")
     public String handle0701LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
-        return "athn/topForDeafalutLogout";
+        model.addAttribute("username", userDetails.getUsername());
+        return "athn/topForDefaultLogout";
     }
 
 }

@@ -5,7 +5,6 @@
   <div>[ENCR01] Spring Securityの暗復号</div>
   <ul>
     <li><a id="encr0101001" href="${pageContext.request.contextPath}/encr/0101/001">encr0101001</a></li>
-    <li><a id="encr0102001" href="${pageContext.request.contextPath}/encr/0102/001">encr0102001</a></li>
     <li><a id="encr0103001" href="${pageContext.request.contextPath}/encr/0103/001">encr0103001</a></li>
     <li><a id="encr0104001" href="${pageContext.request.contextPath}/encr/0104/001">encr0104001</a></li>
     <li><a id="encr0105001" href="${pageContext.request.contextPath}/encr/0105/001">encr0105001</a></li>

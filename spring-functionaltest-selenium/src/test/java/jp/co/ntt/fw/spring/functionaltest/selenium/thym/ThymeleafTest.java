@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.By.id;
 
@@ -983,14 +984,18 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0803007"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Unhandled System Error!"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
+                "JavaScript And HTML Template By ViewResolver"));
+        // テンプレートJavaScriptを解決できないため、HTMLの<p>要素のテキストコンテンツが書き換えられない事を確認する。
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
+                "itemName")).getText(), is(""));
 
-        // テンプレートHTMLをテンプレートJavaScriptとして解釈する旨のERRORログが出力されていること。
+        // テンプレートJavaScriptをテンプレートHTMLとして解釈する旨のERRORログが出力されていること。
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexStackTrace(
                 "org.thymeleaf.TemplateEngine",
-                "Caused by: java.io.FileNotFoundException: Could not open ServletContext resource \\[/WEB-INF/js/thym/jsAndHtmlTemplate.js\\]");
+                "Caused by: java.io.FileNotFoundException: Could not open ServletContext resource \\[/WEB-INF/views/thym0803.html\\]",
+                greaterThanOrEqualTo(1L));
     }
 
     /**

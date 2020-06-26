@@ -33,9 +33,7 @@ public class SPSM04Controller {
     @RequestMapping(value = "0403/001/001", params = "loginSuccess")
     public String handle0401002001LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0403/001/001");
         return "spsm/validSession";
     }
@@ -49,9 +47,7 @@ public class SPSM04Controller {
     @RequestMapping(value = "0403/001/002", params = "loginSuccess")
     public String handle0401002002LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0403/001/002");
         return "spsm/validSession";
     }

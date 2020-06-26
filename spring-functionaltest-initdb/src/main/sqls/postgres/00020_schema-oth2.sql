@@ -21,7 +21,8 @@ create table if not exists users(
 
 create table if not exists authorities (
     username varchar(50) not null references users(username),
-    authority varchar(50) not null
+    authority varchar(50) not null,
+    primary key(username, authority)
 );
 
 create table if not exists clients (

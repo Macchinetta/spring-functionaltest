@@ -21,12 +21,13 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AuthenticationTest extends FunctionTestSupport {
 
@@ -773,6 +774,116 @@ public class AuthenticationTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>パスワードをArgon2PasswordEncoderでハッシュ化できることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501007() {
+
+        // メニュー画面の操作
+
+        webDriverOperations.click(id("athn0501007"));
+
+        // 管理者情報入力
+
+        webDriverOperations.appendText(id("username"), "Smith");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("create"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Smith"));
+        // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                .matcher(webDriverOperations.getText(id(
+                        "getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+    }
+
+    /**
+     * <ul>
+     * <li>Argon2PasswordEncoderでハッシュ化したパスワードを使用した場合、認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0501008() {
+
+        // テスト実行順不定の為、管理者登録処理から実施
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("athn0501007"));
+        }
+
+        // 管理者情報入力
+        {
+            webDriverOperations.appendText(id("username"), "Wesson");
+            webDriverOperations.appendText(id("password"), "spring1234");
+            webDriverOperations.click(id("create"));
+        }
+
+        // 管理者情報内容確認
+        String encodePassword;
+
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
+                "Wesson"));
+        // DBの中身と一致することを確認する為、事前に取得
+        encodePassword = webDriverOperations.getText(id(
+                "getAfterEncodePassword"));
+        // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                .matcher(webDriverOperations.getText(id(
+                        "getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                is("spring1234"));
+
+        // パスワードハッシュメニュー画面に戻る
+        webDriverOperations.click(id("goAthnMenu"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501008"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Wesson");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Wesson"));
+        // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                .matcher(webDriverOperations.getText(id("password")))
+                .matches());
+        // 表示されていたパスワードと一致すること
+        assertThat(webDriverOperations.getText(id("password")), is(
+                encodePassword));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0501008"));
+
+        // ログイン情報入力
+        webDriverOperations.appendText(id("username"), "Wesson");
+        webDriverOperations.appendText(id("password"), "spring5432");
+        webDriverOperations.click(id("login"));
+
+        // 認証エラーとなることを確認
+        assertThat(webDriverOperations.getText(id("loginError")), is(
+                "Bad credentials"));
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
      * <li>パスワードをDelegatingPasswordEncoder（Pbkdf2PasswordEncoderに委譲）でハッシュ化できることを確認。</li>
      * </ul>
      */
@@ -925,9 +1036,39 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Dave"));
-        // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
+        // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\{scrypt\\}\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password")))
+                .matches());
+
+        // ログアウトしてセッションを削除
+        webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>Argon2アルゴリズムでハッシュ化したパスワードをDelegatingPasswordEncoderで認証することができることを確認。</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN0502005() {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn0502002"));
+
+        // ログイン情報入力
+
+        webDriverOperations.appendText(id("username"), "Beretta");
+        webDriverOperations.appendText(id("password"), "spring1234");
+        webDriverOperations.click(id("login"));
+
+        // 管理者情報内容確認
+        assertThat(webDriverOperations.getText(id("username")), is("Beretta"));
+        // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
+        assertTrue(Pattern.compile(
+                "\\{argon2\\}\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
                 .matcher(webDriverOperations.getText(id("password")))
                 .matches());
 
@@ -966,7 +1107,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "Autnenticated. username : *");
+                    "Autnenticated. username : Josh");
         }
 
         // イベントハンドラが実行されることを確認(ログ)
@@ -982,8 +1123,11 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "Autnenticate completed. username : *");
+                    "Autnenticate completed. username : Josh");
         }
+
+        // ログアウトボタン押下
+        webDriverOperations.click(id("logout"));
 
     }
 
@@ -1018,7 +1162,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "Bad credentials is detected. username : *");
+                    "Bad credentials is detected. username : Josh");
         }
 
         // 入力条件設定（認証失敗：無効ユーザ）
@@ -1033,7 +1177,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "User deisabled is detected. username : *");
+                    "User deisabled is detected. username : Claire");
         }
 
         // 入力条件設定（認証失敗：アカウントロック）
@@ -1048,7 +1192,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "User locked is detected. username : *");
+                    "User locked is detected. username : Rock");
         }
 
         // 入力条件設定（認証失敗：アカウント有効期限切れ）
@@ -1063,7 +1207,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "Authentication expired is detected. username : *");
+                    "Authentication expired is detected. username : Edword");
         }
 
         // 入力条件設定（認証失敗パスワード有効期限切れ）
@@ -1078,7 +1222,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "Credentials expired is detected. username : *");
+                    "Credentials expired is detected. username : Jenkins");
         }
 
     }
@@ -1111,7 +1255,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*AuthenticationEventListeners",
-                    "ServiceException is detected. username : *");
+                    "ServiceException is detected. username : Josh");
         }
     }
 
@@ -1317,7 +1461,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*MyAuthenticationSuccessHandler",
-                    "Excute MyAuthenticationSuccessHandler. username : *");
+                    "Excute MyAuthenticationSuccessHandler. username : Josh");
         }
 
         // ログアウトボタン押下
@@ -1434,7 +1578,7 @@ public class AuthenticationTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*MyLogoutSuccessHandler",
-                    "Excute MyLogoutSuccessHandler. username : *");
+                    "Excute MyLogoutSuccessHandler. username : Josh");
         }
 
     }
@@ -1509,12 +1653,6 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("customerName")), is("Josh"));
         assertThat(webDriverOperations.getText(id("customerAddress")), is(
                 "san diego"));
-
-        // accountテーブルから情報を取得しているかのログ確認
-        // ローカルでログはとれるが、サーバではログが取れないので、とりあえず、コメントアウトする。
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage("jdbc\\.sqltiming",
-                ".*customer_address.*");
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1699,7 +1837,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 管理者情報が表示されるまで待機
-        webDriverOperations.waitForDisplayed(id("username"));
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElementLocated(By.id("screenTitle"),
+                        "DelegatingPasswordEncoderを使用して認証"));
 
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Samson"));
@@ -2106,6 +2246,49 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>LogoutSuccessEventのイベントハンドラが正常に実行されることを確認する。</li>
+     * <li>LogoutSuccessEventLister</li>
+     * </ul>
+     */
+    @Test
+    public void testATHN2301001() throws IOException {
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("athn2301001"));
+
+        // ログイン画面の確認
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                "ログインフォーム(LogoutSuccessEventHandle)"));
+
+        // 入力条件設定（認証成功）
+        webDriverOperations.overrideText(id("username"), "Emily");
+        webDriverOperations.overrideText(id("password"), "spring1234");
+
+        // ログインボタン押下
+        webDriverOperations.click(id("login"));
+
+        // 認証後のユーザ情報の確認
+        assertThat(webDriverOperations.getText(id("username")), is("Emily"));
+
+        // ログアウトボタン押下
+        webDriverOperations.click(id("logout"));
+
+        // ログインしていないことの確認
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
+                "ゲスト"));
+
+        // イベントハンドラが実行されることを確認(ログ)
+        {
+            dbLogAssertOperations.waitForAssertion(1000);
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    ".*AuthenticationEventListeners",
+                    "Logout completed. username : Emily");
+        }
 
     }
 

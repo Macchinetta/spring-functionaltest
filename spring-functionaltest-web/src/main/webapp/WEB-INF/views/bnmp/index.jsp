@@ -36,7 +36,6 @@
     <li><a id="bnmp0303001" href="${pageContext.request.contextPath}/bnmp/0303/001">bnmp0303001</a></li>
     <li><a id="bnmp0304001" href="${pageContext.request.contextPath}/bnmp/0304/001">bnmp0304001</a></li>
     <li><a id="bnmp0304002" href="${pageContext.request.contextPath}/bnmp/0304/002">bnmp0304002</a></li>
-    <li><a id="bnmp0304003" href="${pageContext.request.contextPath}/bnmp/0304/003">bnmp0304003</a></li>
     <li><a id="bnmp0305001" href="${pageContext.request.contextPath}/bnmp/0305/001">bnmp0305001</a></li>
   </ul>
 </div>

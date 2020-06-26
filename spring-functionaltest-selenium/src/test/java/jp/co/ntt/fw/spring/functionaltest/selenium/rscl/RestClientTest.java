@@ -39,13 +39,17 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class RestClientTest extends FunctionTestSupport {
 
+    // RSCL1302002アサート用
+    @Value("${rscl.asyncRestTemplate.corePoolSize}")
+    private int corePoolSize;
+
     // RSCL1302001アサート用
     @Value("${rscl.asyncRestTemplate.queueCapacity}")
-    int queueCapacity;
+    private int queueCapacity;
 
     // RSCL1302001アサート用
     @Value("${rscl.asyncRestTemplate.maxPoolSize}")
-    int maxPoolSize;
+    private int maxPoolSize;
 
     // RSCL1303003アサート用
     @Value("${selenium.rscl.retryForDbLogAssert.interval:1000}")
@@ -108,7 +112,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0102001 : "
-                        + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0102001 : "
                         + HttpStatus.OK.toString());
@@ -172,7 +176,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0104001 : "
-                        + MediaType.APPLICATION_JSON.toString());
+                        + MediaType.APPLICATION_JSON_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0104001 : "
                         + HttpStatus.OK.toString());
@@ -271,7 +275,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0107001 : "
-                        + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0107001 : "
                         + HttpStatus.OK.toString());
@@ -502,7 +506,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0202001 : "
-                        + MediaType.TEXT_PLAIN.toString());
+                        + MediaType.TEXT_PLAIN_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0202001 : "
                         + HttpStatus.OK.toString());
@@ -569,7 +573,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0204001 : "
-                        + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0204001 : "
                         + HttpStatus.OK.toString());
@@ -605,7 +609,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0205001 : "
-                        + MediaType.APPLICATION_FORM_URLENCODED.toString());
+                        + MediaType.APPLICATION_FORM_URLENCODED_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0205001 : "
                         + HttpStatus.OK.toString());
@@ -669,7 +673,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0209001 : "
-                        + MediaType.APPLICATION_JSON.toString());
+                        + MediaType.APPLICATION_JSON_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0209001 : "
                         + HttpStatus.OK.toString());
@@ -713,7 +717,7 @@ public class RestClientTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0211001 : "
-                        + MediaType.APPLICATION_XML.toString());
+                        + MediaType.APPLICATION_XML_VALUE);
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL0211001 : "
                         + HttpStatus.OK.toString());
@@ -1172,7 +1176,7 @@ public class RestClientTest extends FunctionTestSupport {
         // メニュー画面の操作
         webDriverOperations.click(id("rscl1302001"));
 
-        int thredCapacity = queueCapacity + maxPoolSize;
+        int threadCapacity = queueCapacity + maxPoolSize;
 
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
@@ -1191,8 +1195,52 @@ public class RestClientTest extends FunctionTestSupport {
                 ".*RSCL1302001 : CallCount = ..*, SuccessCount = ..*, FinishedCount = ..*");
         dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
                 .getXTrack(), "..*RestClientServiceImpl.*",
-                ".*RSCL1302001 : CallCount - FinishedCount = " + thredCapacity
-                        + ", SuccessCount - FinishedCount = " + thredCapacity);
+                ".*RSCL1302001 : CallCount - FinishedCount = " + threadCapacity
+                        + ", SuccessCount - FinishedCount = " + threadCapacity);
+    }
+
+    /**
+     * AsyncRestTemplateを使用した際のスレッドプールサイズの制限の設定
+     * @throws InterruptedException
+     */
+    @Test
+    public void testRSCL1302002() throws InterruptedException {
+        // メニュー画面の操作
+        webDriverOperations.click(id("rscl1302002"));
+
+        // 送信ボタン押下
+        webDriverOperations.click(id("send"));
+
+        // 出力内容をチェック
+        dbLogAssertOperations.waitForAssertion();
+
+        // スレッドプールサイズの確認
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*RestClientServiceImpl.*",
+                ".*RSCL1301002 : thread pool size = " + corePoolSize);
+
+    }
+
+    /**
+     * AsyncRestTemplateを使用した際の最大スレッドプールサイズの設定
+     * @throws InterruptedException
+     */
+    @Test
+    public void testRSCL1302003() throws InterruptedException {
+        // メニュー画面の操作
+        webDriverOperations.click(id("rscl1302003"));
+
+        // 送信ボタン押下
+        webDriverOperations.click(id("send"));
+
+        // 出力内容をチェック
+        dbLogAssertOperations.waitForAssertion();
+
+        // 最大プールサイズの確認
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "..*RestClientServiceImpl.*",
+                ".*RSCL1301003 : max thread pool size = " + maxPoolSize);
+
     }
 
     /**

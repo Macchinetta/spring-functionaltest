@@ -73,6 +73,8 @@
   <ul>
     <li><a id="rscl1301001" href="${pageContext.request.contextPath}/rscl/1301/001">rscl1301001</a></li>
     <li><a id="rscl1302001" href="${pageContext.request.contextPath}/rscl/1302/001">rscl1302001</a></li>
+    <li><a id="rscl1302002" href="${pageContext.request.contextPath}/rscl/1302/002">rscl1302002</a></li>
+    <li><a id="rscl1302003" href="${pageContext.request.contextPath}/rscl/1302/003">rscl1302003</a></li>
     <li><a id="rscl1303001" href="${pageContext.request.contextPath}/rscl/1303/001">rscl1303001</a></li>
     <li><a id="rscl1303002" href="${pageContext.request.contextPath}/rscl/1303/002">rscl1303002</a></li>
     <li><a id="rscl1303003" href="${pageContext.request.contextPath}/rscl/1303/003">rscl1303003</a></li>

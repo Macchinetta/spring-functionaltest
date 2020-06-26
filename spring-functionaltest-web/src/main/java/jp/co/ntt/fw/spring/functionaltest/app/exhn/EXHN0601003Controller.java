@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("exhn")
 public class EXHN0601003Controller {
 
     @Inject
@@ -41,7 +42,7 @@ public class EXHN0601003Controller {
         return employeeForm;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "0601/003", method = RequestMethod.GET)
     public String handle0601003(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
         model.addAttribute("testNumber", "0601/003");
@@ -49,7 +50,7 @@ public class EXHN0601003Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(params = "update")
+    @RequestMapping(value = "0601/003", params = "update")
     public String employeeUpdateCustomSystemExceptionResolver(
             EmployeeForm form) {
 
@@ -59,7 +60,7 @@ public class EXHN0601003Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(params = "backToIndex", method = RequestMethod.POST)
+    @RequestMapping(value = "0601/003", params = "backToIndex", method = RequestMethod.POST)
     public String backToIndex() {
         return "exhn/index";
     }

@@ -38,6 +38,10 @@ public class PasswordEncodeSharedServiceImpl implements
     PasswordEncoder passwordEncoderSCrypt;
 
     @Inject
+    @Named("athnPasswordEncoderArgon2")
+    PasswordEncoder passwordEncoderArgon2;
+
+    @Inject
     @Named("passwordEncoder")
     PasswordEncoder passwordEncoderDelegating;
 
@@ -69,6 +73,12 @@ public class PasswordEncodeSharedServiceImpl implements
     public String passwordEncodeSCrypt(String rawPassword) {
         // passwordをSCryptPasswordEncoderでエンコードする。
         return passwordEncoderSCrypt.encode(rawPassword);
+    }
+
+    @Override
+    public String passwordEncodeArgon2(String rawPassword) {
+        // passwordをArgon2PasswordEncoderでエンコードする。
+        return passwordEncoderArgon2.encode(rawPassword);
     }
 
     @Override

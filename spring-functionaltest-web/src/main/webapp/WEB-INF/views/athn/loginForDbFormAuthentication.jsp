@@ -29,10 +29,4 @@
       <input type="submit" id="login" class="btn btn-default" value="Login">
     </div>
   </form:form>
-  <form:form action="${pageContext.request.contextPath}/athn/0401/001/logout"
-    cssClass="form-horizontal" method="post">
-    <div class="form-group">
-      <input type="submit" id="logout" class="btn btn-default" value="Logout">
-    </div>
-  </form:form>
 </div>

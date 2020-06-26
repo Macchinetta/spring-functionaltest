@@ -26,6 +26,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.filter.log.RequestLoggingFilter;
@@ -108,7 +109,7 @@ public class RestAPITest extends RestTestSupport {
         given().filters(new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().get("/members").then()
                 .statusCode(200).header("content-Type", containsString(
-                        "application/json;")).body("[0].memberId", startsWith(
+                        MediaType.APPLICATION_JSON_VALUE)).body("[0].memberId", startsWith(
                                 "M0")).body("[0].firstName", equalTo(
                                         "FirstName1")).body("[0].lastName",
                                                 equalTo("LastName1")).body(
@@ -168,7 +169,7 @@ public class RestAPITest extends RestTestSupport {
                 new ResponseLoggingFilter(captor)).when().get(
                         "/members?name=FirstName&page=0&size=2").then()
                 .statusCode(200).header("content-Type", containsString(
-                        "application/json;")).body("content[0].memberId",
+                        MediaType.APPLICATION_JSON_VALUE)).body("content[0].memberId",
                                 startsWith("M0")).body("content[0].firstName",
                                         equalTo("FirstName1")).body(
                                                 "content[0].lastName", equalTo(
@@ -248,7 +249,7 @@ public class RestAPITest extends RestTestSupport {
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post("/members")
                 .then().statusCode(201).header("content-Type", containsString(
-                        "application/json;")).body("memberId", startsWith("M0"))
+                        MediaType.APPLICATION_JSON_VALUE)).body("memberId", startsWith("M0"))
                 .body("firstName", equalTo(firstName)).body("lastName", equalTo(
                         lastName)).body("genderCode", equalTo(genderCode)).body(
                                 "dateOfBirth", equalTo(dateOfBirth)).body(
@@ -621,7 +622,7 @@ public class RestAPITest extends RestTestSupport {
                 new ResponseLoggingFilter(captor)).when().get(
                         "/members/unknownError").then().statusCode(508).header(
                                 "content-Type", containsString(
-                                        "application/json;charset=UTF-8")).body(
+                                        MediaType.APPLICATION_JSON_VALUE)).body(
                                                 "code", is("e.sf.cmmn.0508"))
                 .body("message", is("サービス利用できないエラーが発生しました。"));
     }
@@ -756,7 +757,7 @@ public class RestAPITest extends RestTestSupport {
                 new ResponseLoggingFilter(captor)).when().head(
                         "/members/{memberId}", memberIds.get(0)).then()
                 .statusCode(200).header("content-Type", containsString(
-                        "application/json;")).header("Content-Length",
+                        MediaType.APPLICATION_JSON_VALUE)).header("Content-Length",
                                 new RestAssuredFunction<String, Integer>() {
                                     @Override
                                     public Integer apply(String t) {
@@ -896,7 +897,7 @@ public class RestAPITest extends RestTestSupport {
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post(
                         "/members/getMemberWithAdvice").then().statusCode(200)
-                .header("content-Type", containsString("application/json;"))
+                .header("content-Type", containsString(MediaType.APPLICATION_JSON_VALUE))
                 .body("memberId", startsWith("M0")).body("firstName", equalTo(
                         "FirstName" + i)).body("lastName", equalTo("LastName"
                                 + i)).body("genderCode", equalTo("1")).body(

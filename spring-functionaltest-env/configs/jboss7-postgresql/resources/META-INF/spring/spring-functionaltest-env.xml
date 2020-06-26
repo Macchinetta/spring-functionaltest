@@ -2,48 +2,32 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
   xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
-  <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/springFunctionaltestDataSource"
+  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/springFunctionaltestDataSource"
     expected-type="javax.sql.DataSource" />
 
-  <jee:jndi-lookup id="realDataSourceDefault" jndi-name="jdbc/springFunctionaltestDataSource"
+  <jee:jndi-lookup id="dataSourceDefault" jndi-name="jdbc/springFunctionaltestDataSource"
     expected-type="javax.sql.DataSource" />
 
-  <jee:jndi-lookup id="realDataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
+  <jee:jndi-lookup id="dataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
     expected-type="javax.sql.DataSource" />
 
-  <jee:jndi-lookup id="realDataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
+  <jee:jndi-lookup id="dataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
     expected-type="javax.sql.DataSource" />
-
-  <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSource" />
-  </bean>
-
-  <bean id="proxyDataSourceDefault" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceDefault" />
-  </bean>
-
-  <bean id="proxyDataSourceOpen" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceOpen" />
-  </bean>
-
-  <bean id="proxyDataSourceClose" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceClose" />
-  </bean>
 
   <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
     <property name="targetDataSources">
       <map>
-        <entry key="OPEN" value-ref="proxyDataSourceOpen" />
-        <entry key="CLOSE" value-ref="proxyDataSourceClose" />
+        <entry key="OPEN" value-ref="dataSourceOpen" />
+        <entry key="CLOSE" value-ref="dataSourceClose" />
       </map>
     </property>
-    <property name="defaultTargetDataSource" ref="proxyDataSourceDefault" />
+    <property name="defaultTargetDataSource" ref="dataSourceDefault" />
     <property name="dateFactory" ref="dateFactoryDtac" />
   </bean>
 
@@ -65,17 +49,13 @@
   </bean>
 
   <!-- Settings for DbAppender of logback. -->
-  <bean id="realDataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
+  <bean id="dataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
     destroy-method="close">
     <property name="driverClassName" value="org.h2.Driver" />
     <property name="url" value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
     <property name="username" value="sa" />
     <property name="password" value="" />
     <property name="defaultAutoCommit" value="false" />
-  </bean>
-
-  <bean id="dataSourceForLogging" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceForLogging" />
   </bean>
 
   <bean id="dbLogCleaner" class="jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner">
@@ -124,6 +104,48 @@
   <bean id="mailSenderConnError" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="${mail.smtp.host}" />
     <property name="port" value="${mail.smtp.port.invalid}" />
+  </bean>
+
+  <bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+10000000}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+1024}" />
+  </bean>
+
+  <bean id="filterMultipartFLUP0102Resolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+1024}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+64}" />
+  </bean>
+
+  <bean id="filterMultipartFLUP0102006Resolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+256}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+64}" />
+  </bean>
+
+  <bean id="filterMultipartFLUP0103Resolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+256}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+64}" />
+  </bean>
+
+  <bean id="filterMultipartFLUP0103001Resolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+128}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+64}" />
+  </bean>
+
+  <bean id="filterMultipartFLUP0103002Resolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+512}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+64}" />
+  </bean>
+
+  <bean id="filterMultipartEXHNResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- about header size +filesize for jboss size -->
+    <property name="maxUploadSize" value="#{${file.upload.request.header.size}+8192}" />
+    <property name="maxInMemorySize" value="#{${file.upload.request.header.size}+0}" />
   </bean>
 
   <!-- LocalValidatorFactoryBean setting move from spring-functionaltest-domain.xml -->

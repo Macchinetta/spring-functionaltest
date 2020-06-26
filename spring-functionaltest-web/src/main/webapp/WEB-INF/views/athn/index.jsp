@@ -46,11 +46,14 @@
     <li><a id="athn0501004" href="${pageContext.request.contextPath}/athn/0501/004/login">athn0501004</a></li>
     <li><a id="athn0501005" href="${pageContext.request.contextPath}/athn/0501/005">athn0501005</a></li>
     <li><a id="athn0501006" href="${pageContext.request.contextPath}/athn/0501/006/login">athn0501006</a></li>
+    <li><a id="athn0501007" href="${pageContext.request.contextPath}/athn/0501/007">athn0501007</a></li>
+    <li><a id="athn0501008" href="${pageContext.request.contextPath}/athn/0501/008/login">athn0501008</a></li>
 
     <li><a id="athn0502001" href="${pageContext.request.contextPath}/athn/0502/001">athn0502001</a></li>
     <li><a id="athn0502002" href="${pageContext.request.contextPath}/athn/0502/002/login">athn0502002</a></li>
     <li><a id="athn0502003" href="${pageContext.request.contextPath}/athn/0502/002/login">athn0502003</a></li>
     <li><a id="athn0502004" href="${pageContext.request.contextPath}/athn/0502/002/login">athn0502004</a></li>
+    <li><a id="athn0502005" href="${pageContext.request.contextPath}/athn/0502/002/login">athn0502005</a></li>
   </ul>
 
   <div>[ATHN06] 認証イベントのハンドリング</div>
@@ -132,5 +135,9 @@
 
     <li><a id="athn2201001showInfo"
       href="${pageContext.request.contextPath}/athn/2201?loginSuccess">athn2201001showInfo</a></li>
+  </ul>
+  <div>[ATHN23] ログアウト成功時の認証イベントのハンドリング</div>
+  <ul>
+    <li><a id="athn2301001" href="${pageContext.request.contextPath}/athn/2301/001/login">athn2301001</a></li>
   </ul>
 </div>

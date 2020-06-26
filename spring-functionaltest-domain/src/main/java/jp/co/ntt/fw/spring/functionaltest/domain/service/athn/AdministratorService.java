@@ -25,6 +25,8 @@ public interface AdministratorService {
 
     void createUsingSCryptEncode(Administrator administrator);
 
+    void createUsingArgon2Encode(Administrator administrator);
+
     void createUsingDelegatingEncode(Administrator administrator);
 
     void createUsingCustomPbkdf2Encode(Administrator administrator);

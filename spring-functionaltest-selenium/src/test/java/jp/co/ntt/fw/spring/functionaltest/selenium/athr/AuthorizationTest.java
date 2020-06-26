@@ -15,8 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.athr;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.isOneOf;
 import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.By.id;
 
@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -1445,9 +1446,8 @@ public class AuthorizationTest extends FunctionTestSupport {
                         "//div[2]/div/div/ul/li[2]")));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("contentType")), isOneOf(
-                "application/json", "application/json;charset=UTF-8",
-                "application/json; charset=UTF-8"));
+        assertThat(webDriverOperations.getText(id("contentType")),
+                containsString(MediaType.APPLICATION_JSON_VALUE));
 
         // アクセス拒否リンク押下
         webDriverOperations.click(id("denyLink"));

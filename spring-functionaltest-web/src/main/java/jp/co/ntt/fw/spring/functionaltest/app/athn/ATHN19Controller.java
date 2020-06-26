@@ -91,18 +91,13 @@ public class ATHN19Controller {
     public String afterLoginUsingMessagePassword(Principal principal,
             Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingMessagePassword";
     }
@@ -160,18 +155,13 @@ public class ATHN19Controller {
     public String afterLoginUsingMessageDelegatingPassword(Principal principal,
             Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            // principalからパスワードを取得できない為、DBから取得
-            Administrator administrator = administratorService
-                    .findOneByUserName(userDetails.getUsername());
-            model.addAttribute("administratorPassword", administrator
-                    .getPassword());
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        // principalからパスワードを取得できない為、DBから取得
+        Administrator administrator = administratorService.findOneByUserName(
+                userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator
+                .getPassword());
 
         return "athn/showAdministratorInfoUsingMessageDelegatingPassword";
     }

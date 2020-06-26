@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("exhn")
 public class EXHN0601004Controller {
 
     @Inject
@@ -39,7 +40,7 @@ public class EXHN0601004Controller {
         return employeeForm;
     }
 
-    @RequestMapping(params = "update")
+    @RequestMapping(value = "0601/004/001", params = "update")
     public String employeeUpdate(EmployeeForm form) {
 
         Employee inputEmployee = employeeHelper.convertToEntity(form);
@@ -48,7 +49,7 @@ public class EXHN0601004Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(params = "backToIndex")
+    @RequestMapping(value = "0601/004/001", params = "backToIndex")
     public String backToIndex() {
         return "exhn/index";
     }

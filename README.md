@@ -66,10 +66,10 @@ $ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-fu
 $ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-functionaltest-close
 ```
 ### [Step 2] Clone a repository
-Clone the `terasolunaorg/spring-functionaltest` repository into local machine.
+Clone the `Macchinetta/spring-functionaltest` repository into local machine.
 
 ```console
-$ git clone https://{remote host url}/terasolunaorg/spring-functionaltest.git
+$ git clone https://github.com/Macchinetta/spring-functionaltest.git
 ```
 
 ### [Step 3] Build artifacts
@@ -86,7 +86,7 @@ $ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functi
 
 > **Note:**
 >
-> Using JDK 11, add `-P local`. (Because JDK 11 automatically activate `jdk11` profile)
+> Using JDK 11, add `-P local,warpack-jaxb,warpack-activation`. (Specify the `local` profile explicitly because JDK 11 will automatically activate the `jdk11` profile.)
 
 #### Case that use PostgreSQL as database
 
@@ -99,7 +99,7 @@ $ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functi
 
 > **Note:**
 >
-> If you not use default user(`postgres`) or password(`P0stgres`), you should modify settings in `terasoluna-gfw-functionaltest-env/configs/travis/ContainerConfigXML/context.xml`.
+> If you not use default user(`postgres`) or password(`P0stgres`), you should modify settings in `spring-functionaltest-env/configs/tomcat9-postgresql/ContainerConfigXML/context.xml`.
 
 ### [Step 4] Initialize database (Optional)
 If PostgreSQL use as database, initialize database before run functional test.
@@ -216,9 +216,9 @@ Profiles that are available are as follows.
 | Tomcat7 + Postgresql      | `tomcat-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`  |
 | Tomcat7 + Postgresql [^1] | `tomcat-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                     |
 | Tomcat7 + Oracle [^1]     | `tomcat-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                         |
-|     Weblogic + Oracle     | `weblogic-oracle,warpack-env,warpack-exclude-jaxb`                                   |
-|     JBoss7 + Postgresql   | `jboss7-postgresql,warpack-env`                                                      |
-|     JBoss + Postgresql    | `jboss-postgresql,warpack-env,warpack-transaction`                                   |
+|     Weblogic + Oracle     | `weblogic-oracle,warpack-env`                                                        |
+|     JBoss7 + Postgresql   | `jboss7-postgresql,warpack-env,warpack-fileupload`                                   |
+|     JBoss + Postgresql    | `jboss-postgresql,warpack-env,warpack-transaction,warpack-fileupload`                |
 |  Interstage + Postgresql  | `interstage11-postgresql,warpack-env`                                                |
 |      WebOTX + Oracle      | `webotx-oracle,warpack-env`                                                          |
 |    WebSphere(LP) + DB2    | `webpsherelp-db2,warpack-env,change-wsdl-location`                                   |
@@ -230,10 +230,12 @@ Profiles that are available are as follows.
 
 Profiles for Java version are automatically activated.
 
-|   environments  | specify maven profile |
-|:---------------:|-----------------------|
-|      Java8      | (not specify)         |
-|      Java11     | `jdk11`               |
+|   environments  | specify maven profile                       |
+|:---------------:|---------------------------------------------|
+|      Java8      | (not specify)                               |
+|      Java11     | `jdk11,warpack-jaxb,warpack-activation` [^1]|
+
+[^1]: `warpack-xxx` is required if the activatin lib is not provided by the AP server(eg. Tomcat).
 
 ### How to switch bean definition for various environments
 

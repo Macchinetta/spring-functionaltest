@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
+@RequestMapping("ajax")
 public class AJAX0104001Controller {
 
     @Inject
@@ -50,7 +51,7 @@ public class AJAX0104001Controller {
         return new MessageBoardForm();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "0104/001/write", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public MessageBoardResult editForXml(

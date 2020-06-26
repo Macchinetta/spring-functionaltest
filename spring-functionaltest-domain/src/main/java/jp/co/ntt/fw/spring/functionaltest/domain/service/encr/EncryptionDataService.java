@@ -25,8 +25,6 @@ public interface EncryptionDataService {
 
     String decryptText(String encryptedText);
 
-    String encryptQueryableText(String rawText);
-
     byte[] encryptBytes(byte[] rawBytes);
 
     byte[] decryptBytes(byte[] encryptedBytes);

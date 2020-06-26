@@ -32,8 +32,5 @@
     </fieldset>
   </form:form>
   <br>
-  <form:form action="${pageContext.request.contextPath}/athn/1701/logout" method="post">
-    <input type="submit" id="logout" class="btn btn-default" value="Logout">
-  </form:form>
 
 </div>

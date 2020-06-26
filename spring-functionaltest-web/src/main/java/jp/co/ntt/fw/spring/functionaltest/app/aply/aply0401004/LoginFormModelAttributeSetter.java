@@ -16,9 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401004;
 
 import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import jp.co.ntt.fw.spring.functionaltest.app.aply.CommonParameters;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginFormModelAttributeSetter {
 
     @Target(TYPE)
-    @Retention(RetentionPolicy.RUNTIME)
+    @Retention(RUNTIME)
     public static @interface LoginFormModelAttribute {
     }
 

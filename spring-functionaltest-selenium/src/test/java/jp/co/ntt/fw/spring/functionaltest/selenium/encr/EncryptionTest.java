@@ -60,33 +60,6 @@ public class EncryptionTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>queryableTextメソッドで同一の暗号化結果を返すTextEncryptorが生成されることを確認。</li>
-     * </ul>
-     */
-    @Test
-    public void testENCR0102001() {
-
-        // メニュー画面の操作
-        {
-            webDriverOperations.click(id("encr0102001"));
-        }
-
-        // 暗号化情報入力
-        {
-            webDriverOperations.overrideText(id("rawText"), "John");
-            webDriverOperations.click(id("encrypt"));
-        }
-
-        // 暗復号結果確認
-        {
-            assertThat(webDriverOperations.getText(id("encryptedText")), is(
-                    webDriverOperations.getText(id("encryptedText2"))));
-        }
-
-    }
-
-    /**
-     * <ul>
      * <li>BytesEncryptorを使用してバイト配列の暗号化、復号ができることを確認。</li>
      * </ul>
      */

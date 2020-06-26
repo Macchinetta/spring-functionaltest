@@ -19,8 +19,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.co.ntt.fw.spring.functionaltest.app.athn.listner.AuthenticationEventListeners;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -39,7 +37,7 @@ public class SessionEventListeners {
             .getName().concat(".logout");
 
     private static final Logger logger = LoggerFactory.getLogger(
-            AuthenticationEventListeners.class);
+            SessionEventListeners.class);
 
     // (1)
     @Before(value = "execution(* org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler.logout(..))")
@@ -51,7 +49,7 @@ public class SessionEventListeners {
     }
 
     // (2)
-    @EventListener
+    @EventListener(HttpSessionDestroyedEvent.class)
     public void handleSessionTimeout(HttpSessionDestroyedEvent event) { // (3)
 
         // (4)

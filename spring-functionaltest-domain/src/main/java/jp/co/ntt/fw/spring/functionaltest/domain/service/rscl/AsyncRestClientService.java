@@ -23,4 +23,7 @@ public interface AsyncRestClientService {
 
     void confirmAsync02();
 
+    void confirmAsync03();
+
+    void confirmAsync04();
 }

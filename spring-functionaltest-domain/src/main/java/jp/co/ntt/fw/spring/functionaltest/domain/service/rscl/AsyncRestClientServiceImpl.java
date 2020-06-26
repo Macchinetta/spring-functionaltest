@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.client.AsyncRestTemplate;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.terasoluna.gfw.common.exception.SystemException;
 
@@ -47,10 +49,24 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
             AsyncRestClientServiceImpl.class);
 
     @Inject
+    @Named("restTemplate")
+    RestTemplate restTemplate;
+
+    @Inject
+    @Named("asyncRestTemplate")
     AsyncRestTemplate asyncRestTemplate;
 
     @Inject
+    @Named("asyncRestTemplateForCoreAndMaxSame")
+    AsyncRestTemplate asyncRestTemplateForCoreAndMaxSame;
+
+    @Inject
+    @Named("asyncTaskExecutor")
     ThreadPoolTaskExecutor asyncTaskExecutor;
+
+    @Inject
+    @Named("asyncTaskExecutorForCoreAndMaxSame")
+    ThreadPoolTaskExecutor asyncTaskExecutorForCoreAndMaxSame;
 
     @Value("${rscl.applicationContextUrl}/api/v1/rscl/{opt}")
     String uri;
@@ -60,6 +76,9 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
     @Value("${rscl.asyncRestTemplate.sleepMillis}")
     long sleepMillis;
+
+    @Value("${rscl.asyncRestTemplate.corePoolSize}")
+    int corePoolSize;
 
     @Value("${rscl.asyncRestTemplate.queueCapacity}")
     int queueCapacity;
@@ -143,7 +162,8 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
         int callCount = 0;
         int finishedCount = 0;
-        ThreadPoolExecutor executor = asyncTaskExecutor.getThreadPoolExecutor();
+        ThreadPoolExecutor executor = asyncTaskExecutorForCoreAndMaxSame
+                .getThreadPoolExecutor();
         try {
             // キューを溢れさせるため、queueCapacity + maxPoolSize + 1 回連続でRESTAPI呼び出しを行う。
             for (int i = 0; i < threadCapacity + 1; i++) {
@@ -169,7 +189,7 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
                 } else {
                     targetUri = getUri(uri, "noawait");
                 }
-                ListenableFuture<ResponseEntity<UserResource>> responseEntity = this.asyncRestTemplate
+                ListenableFuture<ResponseEntity<UserResource>> responseEntity = this.asyncRestTemplateForCoreAndMaxSame
                         .getForEntity(targetUri, UserResource.class);
                 responseEntity.addCallback(callback);
 
@@ -181,8 +201,8 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
         } catch (TaskRejectedException e) {
             // 例外が発生したらRestTemplateでバリアを解除し、プール内のスレッドの処理が進むようにする
-            asyncRestTemplate.getRestOperations().getForEntity(getUri(uri,
-                    "await"), UserResource.class);
+            asyncRestTemplateForCoreAndMaxSame.getRestOperations().getForEntity(
+                    getUri(uri, "await"), UserResource.class);
             await(countDownLatch, (sleepMillis * 2) + waitCompleteOffsetMillis);
 
             int finishedCallCount = callCount - finishedCount;
@@ -199,6 +219,57 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
         }
         // 9回とも正常に実行できてしまった場合はシステム例外
         throw new SystemException("e.sf.rscl.9008", "all tasks are executed.");
+    }
+
+    @Override
+    public void confirmAsync03() {
+        URI targetUri = this.getUri(this.uri, "noawait");
+
+        ThreadPoolExecutor executor = asyncTaskExecutor.getThreadPoolExecutor();
+
+        // コアプールサイズまで新しいスレッドが作成されるか確認するため、プールサイズの回数分繰り返す
+        for (int i = 0; i < corePoolSize; i++) {
+
+            try {
+                this.asyncRestTemplate.getForEntity(targetUri,
+                        UserResource.class).get();
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error(e.getMessage(), e);
+            }
+
+        }
+
+        logger.info("RSCL1301002 : thread pool size = {}", executor
+                .getPoolSize());
+    }
+
+    @Override
+    public void confirmAsync04() {
+
+        final int threadCapacity = queueCapacity + maxPoolSize;
+
+        URI targetUri = this.getUri(this.uri, "awaitForMaxPool");
+
+        ThreadPoolExecutor executor = asyncTaskExecutor.getThreadPoolExecutor();
+
+        // キュー サイズ + 最大スレッド数 の回数分繰り返し、最大スレッド数までスレッドが作成されるか確認する
+        for (int i = 0; i < threadCapacity; i++) {
+
+            // キュー に入るリクエストは待機しないようにする
+            if (i < maxPoolSize) {
+                targetUri = this.getUri(this.uri, "awaitForMaxPool");
+            } else {
+                targetUri = this.getUri(this.uri, "noawait");
+            }
+
+            this.asyncRestTemplate.getForEntity(targetUri, UserResource.class);
+        }
+
+        logger.info("RSCL1301003 : max thread pool size = {}", executor
+                .getPoolSize());
+
+        this.restTemplate.getForEntity(getUri(uri, "releaseForMaxPool"),
+                boolean.class);
     }
 
     /**

@@ -29,7 +29,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.ArticleService;
 
-//@RequestMapping("pgnt")
+@RequestMapping("pgnt")
 @Controller
 public class PGNT0102002Controller {
     @Inject
@@ -41,7 +41,7 @@ public class PGNT0102002Controller {
         return criteria;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "articleSearchDescArticleId", method = RequestMethod.GET)
     public String search(ArticleSearchCriteria criteria, Pageable pageable,
             Model model) {
 

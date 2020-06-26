@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.6.1.RELEASE</version>
+    <version>1.7.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
           <groupId>com.sun.mail</groupId>
-          <artifactId>javax.mail</artifactId>
+          <artifactId>jakarta.mail</artifactId>
         </dependency>
         <dependency>
           <groupId>org.apache.cxf</groupId>
@@ -209,6 +209,26 @@
         </plugins>
       </build>
     </profile>
+    <!-- Add profile for JAXB jars -->
+    <profile>
+      <id>warpack-jaxb</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.glassfish.jaxb</groupId>
+          <artifactId>jaxb-runtime</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <!-- Add profile for packaging Commons FileUpload jars -->
+    <profile>
+      <id>warpack-fileupload</id>
+      <dependencies>
+        <dependency>
+          <groupId>commons-fileupload</groupId>
+          <artifactId>commons-fileupload</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
     <profile>
       <id>jdk11</id>
       <activation>
@@ -216,14 +236,28 @@
       </activation>
       <dependencies>
         <dependency>
-          <groupId>javax.activation</groupId>
-          <artifactId>activation</artifactId>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>jakarta.activation</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>javax.activation</groupId>
-          <artifactId>javax.activation-api</artifactId>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
           <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <!-- When running with jdk11+local, redefine with "runtime" because it becomes "provided" in jdk11 profile -->
+    <profile>
+      <id>warpack-activation</id>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>jakarta.activation</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
         </dependency>
       </dependencies>
     </profile>
@@ -325,11 +359,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-library</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
@@ -357,13 +386,6 @@
       </exclusions>
     </dependency>
     <!-- == End For Report == -->
-
-    <!-- == Begin commons fileupload == -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-    </dependency>
-    <!-- == End commons fileupload == -->
 
     <!-- == Begin GreenMail-Spring == -->
     <dependency>
@@ -409,6 +431,15 @@
       <artifactId>bcprov-jdk15on</artifactId>
     </dependency>
     <!-- == End Password Encode == -->
+
+    <!-- not required in JDK8 and conflicts with JAXB implementation of some APserver in JDK11, set scope to provided. -->
+    <!-- == Begin JAXB == -->
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- == End JAXB == -->
 
   </dependencies>
   <properties>

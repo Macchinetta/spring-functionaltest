@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("cspr")
 public class CSPR0101005Controller {
 
     @ModelAttribute
@@ -28,7 +29,7 @@ public class CSPR0101005Controller {
         return new UserForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "0201/005", method = RequestMethod.GET)
     public String handle0101005() {
         return "cspr/userRegisterUseSpringFormToGet";
     }

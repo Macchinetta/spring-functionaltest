@@ -2,16 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:jee="http://www.springframework.org/schema/jee"
   xsi:schemaLocation="
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
     ">
 
-  <jee:jndi-lookup id="realDataSource" jndi-name="jdbc/springFunctionaltestDataSource"
+  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/springFunctionaltestDataSource"
     expected-type="javax.sql.DataSource" />
-
-  <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSource" />
-  </bean>
 
   <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.JdbcFixedJodaTimeDateFactory">
     <property name="dataSource" ref="dataSource" />

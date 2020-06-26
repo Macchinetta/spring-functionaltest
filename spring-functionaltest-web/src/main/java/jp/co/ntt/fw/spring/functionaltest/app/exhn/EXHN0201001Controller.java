@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequestMapping("exhn")
 public class EXHN0201001Controller {
 
     @Inject
@@ -44,7 +45,7 @@ public class EXHN0201001Controller {
         return employeeForm;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
     public String handle0201001(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
         model.addAttribute("testNumber", "0201/001");
@@ -52,7 +53,7 @@ public class EXHN0201001Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(params = "update", method = RequestMethod.POST)
+    @RequestMapping(value = "0201/001", params = "update", method = RequestMethod.POST)
     public String employeeUpdateThrowBusinessException(
             @Validated EmployeeForm form, BindingResult result, Model model,
             RedirectAttributes redirectAttrs) {
@@ -70,12 +71,12 @@ public class EXHN0201001Controller {
         return "redirect:/exhn/0201/001?complete";
     }
 
-    @RequestMapping(params = "complete")
+    @RequestMapping(value = "0201/001", params = "complete")
     public String employeeComplete() {
         return "exhn/employeeComplete";
     }
 
-    @RequestMapping(params = "backToIndex", method = RequestMethod.POST)
+    @RequestMapping(value = "0201/001", params = "backToIndex", method = RequestMethod.POST)
     public String backToIndex() {
         return "exhn/index";
     }

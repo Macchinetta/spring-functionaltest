@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <bean id="secureCacheControlHeadersWriter"
     class="org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter">
@@ -100,6 +100,22 @@
   <sec:http pattern="/spsc/0105/003">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
+    </sec:headers>
+    <sec:form-login />
+    <sec:logout />
+  </sec:http>
+
+  <sec:http pattern="/spsc/0105/004">
+    <sec:headers>
+      <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
+    </sec:headers>
+    <sec:form-login />
+    <sec:logout />
+  </sec:http>
+
+  <sec:http pattern="/spsc/0105/005">
+    <sec:headers>
+      <sec:content-security-policy policy-directives="upgrade-insecure-requests;" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />

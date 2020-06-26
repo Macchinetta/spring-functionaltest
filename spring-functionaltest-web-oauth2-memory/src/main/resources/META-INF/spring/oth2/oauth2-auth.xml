@@ -4,19 +4,19 @@
   xmlns:oauth2="http://www.springframework.org/schema/security/oauth2" xmlns:aop="http://www.springframework.org/schema/aop"
   xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
   xsi:schemaLocation="http://www.springframework.org/schema/security
-           http://www.springframework.org/schema/security/spring-security.xsd
+           https://www.springframework.org/schema/security/spring-security.xsd
            http://www.springframework.org/schema/jdbc
-           http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+           https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
            http://www.springframework.org/schema/security/oauth2
-           http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+           https://www.springframework.org/schema/security/spring-security-oauth2.xsd
            http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans.xsd
+           https://www.springframework.org/schema/beans/spring-beans.xsd
            http://www.springframework.org/schema/context
-           http://www.springframework.org/schema/context/spring-context.xsd
+           https://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd
+           https://www.springframework.org/schema/aop/spring-aop.xsd
            http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx.xsd">
+           https://www.springframework.org/schema/tx/spring-tx.xsd">
 
   <sec:http pattern="/oth2/oauth/*token*/**" authentication-manager-ref="oauth2AuthenticationManager">
     <sec:http-basic entry-point-ref="oauth2AuthenticationEntryPoint" />

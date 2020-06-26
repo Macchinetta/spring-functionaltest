@@ -15,12 +15,23 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SPSC01Controller {
+
+    @Value("${host.ip}")
+    private String connectIp;
+
+    @Value("${host.http.port}")
+    private String connectHttpPort;
+
+    @Value("${host.https.port}")
+    private String connectHttpsPort;
 
     @RequestMapping("0102/001")
     public String handle0102001() {
@@ -80,6 +91,19 @@ public class SPSC01Controller {
     @RequestMapping("0105/003")
     public String handle0105003() {
         return "spsc/result";
+    }
+
+    @RequestMapping("0105/004")
+    public String handle0105004() {
+        return "spsc/result";
+    }
+
+    @RequestMapping("0105/005")
+    public String handle0105005(Model model) {
+        model.addAttribute("connectIp", connectIp);
+        model.addAttribute("connectHttpPort", connectHttpPort);
+        model.addAttribute("connectHttpsPort", connectHttpsPort);
+        return "spsc/resultImage";
     }
 
     @RequestMapping("0106/001")

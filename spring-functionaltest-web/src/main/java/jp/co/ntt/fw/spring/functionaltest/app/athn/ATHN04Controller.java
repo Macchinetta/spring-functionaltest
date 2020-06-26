@@ -29,33 +29,27 @@ public class ATHN04Controller {
     public String handle040101LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0401/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
     @RequestMapping(value = "0402/001", params = "loginSuccess")
     public String handle040201LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0402/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
     @RequestMapping(value = "0402/004", params = "loginSuccess")
     public String handle040204LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0402/004");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
 }

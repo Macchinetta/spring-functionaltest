@@ -8,6 +8,11 @@ cp.maxIdle=16
 cp.minIdle=0
 cp.maxWait=60000
 
+# connection setting
+host.ip=${HOST_IP!'localhost'}
+host.http.port=${HTTP_PORT!'8080'}
+host.https.port=${HTTPS_PORT!'80'}
+
 # File Upload setting
 app.upload.temporaryDirectory=/tmp/spring-functionaltest-web/upload/temporaryDirectory/
 app.upload.directory=/tmp/spring-functionaltest-web/upload/uploadDirectory/
@@ -51,6 +56,7 @@ soap.connect.timeout.key=connection_timeout
 soap.connect.timeout.value=2
 
 # REST API Capacity (RestClient)
+rscl.asyncRestTemplate.corePoolSize=3
 rscl.asyncRestTemplate.queueCapacity=3
 rscl.asyncRestTemplate.maxPoolSize=5
 

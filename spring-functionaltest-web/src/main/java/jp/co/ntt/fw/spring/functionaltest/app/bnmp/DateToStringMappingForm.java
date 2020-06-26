@@ -64,7 +64,7 @@ public class DateToStringMappingForm implements Serializable {
     @DateTimeFormat(pattern = "uuuu/MM/dd HH:mm:ss.SSSZZZZZ")
     private OffsetDateTime birthDateOffsetDateTime;
 
-    @DateTimeFormat(pattern = "uuuu/MM/dd HH:mm:ss.SSSZZZZZ")
+    @DateTimeFormat(pattern = "uuuu/MM/dd HH:mm:ss.SSSZZZZZ'['VV']'")
     private ZonedDateTime birthDateZonedDateTime;
 
     public Date getBirthDate() {

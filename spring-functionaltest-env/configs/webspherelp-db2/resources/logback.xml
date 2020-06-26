@@ -47,6 +47,9 @@
   <logger name="jp.co.ntt.fw.spring.functionaltest">
     <level value="debug" />
   </logger>
+  <logger name="jp.co.ntt.fw.spring.functionaltest.domain.repository">
+    <level value="trace" />
+  </logger>
   <logger name="jp.co.ntt.fw.spring.functionaltest.app.lggn.LGGN0401Controller">
     <level value="trace" />
   </logger>
@@ -79,14 +82,15 @@
     <level value="info" />
   </logger>
 
-  <logger name="jdbc.sqltiming">
+  <logger name="org.springframework.jdbc.core.JdbcTemplate">
     <level value="debug" />
   </logger>
 
-  <logger name="jdbc.resultsettable">
-    <!-- spring-functionaltest/issues/1228 本項目のログレベルがinfo以下の場合、 ResultSetのテーブル内容をログに出力するためにResultSet.getMetaData()が呼び出されるが、 
-      ResultSetが0件の状態でgetMetaData()が呼び出されると 「操作が無効です: result set はクローズされています」という内容のSQLExceptionがスローされる。 この事象を回避するためにログレベルをerrorに設定している。 -->
-    <level value="error" />
+  <logger name="org.hibernate.SQL" additivity="true">
+    <level value="debug" />
+  </logger>
+  <logger name="org.hibernate.type">
+    <level value="trace" />
   </logger>
 
   <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager">

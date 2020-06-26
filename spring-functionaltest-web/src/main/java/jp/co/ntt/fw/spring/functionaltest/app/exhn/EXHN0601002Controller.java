@@ -33,6 +33,7 @@ import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestExcep
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Register;
 
 @Controller
+@RequestMapping("exhn")
 @SessionAttributes(value = "articleSessionInfo")
 public class EXHN0601002Controller {
 
@@ -53,7 +54,7 @@ public class EXHN0601002Controller {
         return articleSessionInfo;
     }
 
-    @RequestMapping(params = "upload")
+    @RequestMapping(value = "0601/002/register", params = "upload")
     public String uploadRegister(@Validated({ Register.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,

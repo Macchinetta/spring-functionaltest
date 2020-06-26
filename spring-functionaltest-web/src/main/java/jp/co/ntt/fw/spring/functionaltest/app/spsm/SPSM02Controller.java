@@ -41,23 +41,19 @@ public class SPSM02Controller {
     public String handle0102001LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/001");
         model.addAttribute("sessionform", form.getOeratorName());
-        return "spsm/topForDeafalut";
+        return "spsm/topForDefault";
     }
 
     @RequestMapping("0201/001/send")
     public String handle0102001send(@AuthenticationPrincipal User userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/001");
 
-        return "spsm/topForDeafalut";
+        return "spsm/topForDefault";
     }
 
     @RequestMapping("0202/001/login")
@@ -71,23 +67,19 @@ public class SPSM02Controller {
     public String handle002001LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0202/001");
         model.addAttribute("sessionform", form.getOeratorName());
-        return "spsm/topForDeafalut";
+        return "spsm/topForDefault";
     }
 
     @RequestMapping("0201/002/send")
     public String handle0102002send(@AuthenticationPrincipal User userDetails,
             Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/002");
 
-        return "spsm/topForDeafalut";
+        return "spsm/topForDefault";
     }
 
     @RequestMapping("0202/002/login")
@@ -101,12 +93,10 @@ public class SPSM02Controller {
     public String handle002002LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0202/002");
         model.addAttribute("sessionform", form.getOeratorName());
-        return "spsm/topForDeafalut";
+        return "spsm/topForDefault";
     }
 
 }

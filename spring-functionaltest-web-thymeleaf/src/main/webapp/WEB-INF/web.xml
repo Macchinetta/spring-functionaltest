@@ -1389,7 +1389,7 @@
   <!-- MIME type for static json response for double byte characters start -->
   <mime-mapping>
     <extension>json</extension>
-    <mime-type>application/json;charset=UTF-8</mime-type>
+    <mime-type>application/json</mime-type>
   </mime-mapping>
   <!-- MIME type for static json response for double byte characters end -->
   <!-- Error notified to Servlet Container specifally for REST API end -->

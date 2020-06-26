@@ -55,10 +55,8 @@ public class AjaxTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("returnStatus")), is(String
                 .valueOf(HttpStatus.OK.value())));
 
-        MediaType contentType = MediaType.parseMediaType((webDriverOperations
-                .getText(id("contentType"))));
-        assertThat(contentType.getType(), is("application"));
-        assertThat(contentType.getSubtype(), is("json"));
+        assertThat(webDriverOperations.getText(id("contentType")),
+                containsString(MediaType.APPLICATION_JSON_VALUE));
 
         assertThat(webDriverOperations.getText(By.xpath("//td[2]/a")), is(
                 "Spring Test Server 1"));
@@ -109,10 +107,8 @@ public class AjaxTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("returnStatus")), is(String
                 .valueOf(HttpStatus.OK.value())));
 
-        MediaType contentType = MediaType.parseMediaType((webDriverOperations
-                .getText(id("contentType"))));
-        assertThat(contentType.getType(), is("application"));
-        assertThat(contentType.getSubtype(), is("json"));
+        assertThat(webDriverOperations.getText(id("contentType")),
+                containsString(MediaType.APPLICATION_JSON_VALUE));
 
         assertThat(webDriverOperations.getText(By.xpath(
                 "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));
@@ -177,10 +173,8 @@ public class AjaxTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("returnStatus")), is(String
                 .valueOf(HttpStatus.OK.value())));
 
-        MediaType contentType = MediaType.parseMediaType((webDriverOperations
-                .getText(id("contentType"))));
-        assertThat(contentType.getType(), is("application"));
-        assertThat(contentType.getSubtype(), is("json"));
+        assertThat(webDriverOperations.getText(id("contentType")),
+                containsString(MediaType.APPLICATION_JSON_VALUE));
 
         assertThat(webDriverOperations.getText(By.xpath(
                 "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));

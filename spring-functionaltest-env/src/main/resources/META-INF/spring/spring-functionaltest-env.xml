@@ -2,13 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
   xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
-  <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+  <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="${database.driverClassName}" />
     <property name="url" value="${database.url}" />
     <property name="username" value="${database.username}" />
@@ -20,8 +20,7 @@
     <property name="maxWaitMillis" value="${cp.maxWait}" />
   </bean>
 
-  <bean id="realDataSourceDefault" class="org.apache.commons.dbcp2.BasicDataSource"
-    destroy-method="close">
+  <bean id="dataSourceDefault" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="${database.driverClassName}" />
     <property name="url" value="${database.url}" />
     <property name="username" value="${database.username}" />
@@ -33,8 +32,7 @@
     <property name="maxWaitMillis" value="${cp.maxWait}" />
   </bean>
 
-  <bean id="realDataSourceOpen" class="org.apache.commons.dbcp2.BasicDataSource"
-    destroy-method="close">
+  <bean id="dataSourceOpen" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="${database.driverClassName}" />
     <property name="url" value="${database.url.open}" />
     <property name="username" value="${database.username}" />
@@ -46,8 +44,7 @@
     <property name="maxWaitMillis" value="${cp.maxWait}" />
   </bean>
 
-  <bean id="realDataSourceClose" class="org.apache.commons.dbcp2.BasicDataSource"
-    destroy-method="close">
+  <bean id="dataSourceClose" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="${database.driverClassName}" />
     <property name="url" value="${database.url.close}" />
     <property name="username" value="${database.username}" />
@@ -59,22 +56,6 @@
     <property name="maxWaitMillis" value="${cp.maxWait}" />
   </bean>
 
-  <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSource" />
-  </bean>
-
-  <bean id="proxyDataSourceDefault" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceDefault" />
-  </bean>
-
-  <bean id="proxyDataSourceOpen" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceOpen" />
-  </bean>
-
-  <bean id="proxyDataSourceClose" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceClose" />
-  </bean>
-
   <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
     <jdbc:script location="classpath:/database/${database}-schema*.sql" encoding="UTF-8" />
     <jdbc:script location="classpath:/database/${database}-procedure*.sql" separator="~"
@@ -82,16 +63,14 @@
     <jdbc:script location="classpath:/database/${database}-dataload*.sql" encoding="UTF-8" />
   </jdbc:initialize-database>
 
-  <jdbc:initialize-database data-source="proxyDataSourceOpen"
-    ignore-failures="ALL">
+  <jdbc:initialize-database data-source="dataSourceOpen" ignore-failures="ALL">
     <jdbc:script location="classpath:/database/open/${database}-schema*.sql" encoding="UTF-8" />
     <jdbc:script location="classpath:/database/open/${database}-procedure*.sql"
       separator="~" encoding="UTF-8" />
     <jdbc:script location="classpath:/database/open/${database}-dataload*.sql" encoding="UTF-8" />
   </jdbc:initialize-database>
 
-  <jdbc:initialize-database data-source="proxyDataSourceClose"
-    ignore-failures="ALL">
+  <jdbc:initialize-database data-source="dataSourceClose" ignore-failures="ALL">
     <jdbc:script location="classpath:/database/close/${database}-schema*.sql" encoding="UTF-8" />
     <jdbc:script location="classpath:/database/close/${database}-procedure*.sql"
       separator="~" encoding="UTF-8" />
@@ -102,11 +81,11 @@
   <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
     <property name="targetDataSources">
       <map>
-        <entry key="OPEN" value-ref="proxyDataSourceOpen" />
-        <entry key="CLOSE" value-ref="proxyDataSourceClose" />
+        <entry key="OPEN" value-ref="dataSourceOpen" />
+        <entry key="CLOSE" value-ref="dataSourceClose" />
       </map>
     </property>
-    <property name="defaultTargetDataSource" ref="proxyDataSourceDefault" />
+    <property name="defaultTargetDataSource" ref="dataSourceDefault" />
     <property name="dateFactory" ref="dateFactoryDtac" />
   </bean>
 
@@ -129,17 +108,13 @@
 
 
   <!-- Settings for DbAppender of logback. -->
-  <bean id="realDataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
+  <bean id="dataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
     destroy-method="close">
     <property name="driverClassName" value="org.h2.Driver" />
     <property name="url" value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
     <property name="username" value="sa" />
     <property name="password" value="" />
     <property name="defaultAutoCommit" value="false" />
-  </bean>
-
-  <bean id="dataSourceForLogging" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-    <constructor-arg index="0" ref="realDataSourceForLogging" />
   </bean>
 
   <bean id="dbLogCleaner" class="jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner">

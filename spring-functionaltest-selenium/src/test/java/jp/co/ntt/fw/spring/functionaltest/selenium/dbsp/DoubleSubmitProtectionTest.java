@@ -40,6 +40,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.web.client.RestTemplate;
@@ -47,6 +49,9 @@ import org.springframework.web.client.RestTemplate;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class DoubleSubmitProtectionTest extends FunctionTestSupport {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            DoubleSubmitProtectionTest.class);
 
     @Value("${selenium.dbsp.waitForDownload.offsetSeconds:0}")
     private int offsetSecondsOfWaitForDownload;

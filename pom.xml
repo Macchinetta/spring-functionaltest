@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.6.1.RELEASE</version>
+  <version>1.7.0.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -28,13 +28,13 @@
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.5.1.RELEASE</version>
+    <version>5.6.0.RELEASE</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>http://terasoluna.org</url>
+  <url>https://macchinetta.github.io/</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
@@ -429,10 +429,9 @@
         <version>${postgresql.version}</version>
       </dependency>
       <dependency>
-        <!-- ojdbc8.jar must be pre-installed in local repository. -->
-        <groupId>com.oracle.jdbc</groupId>
+        <groupId>com.oracle.ojdbc</groupId>
         <artifactId>ojdbc8</artifactId>
-        <version>${ojdbc8.version}</version>
+        <version>${ojdbc.version}</version>
       </dependency>
       <dependency>
         <!-- db2jcc4.jar must be pre-installed in local repository. -->
@@ -457,14 +456,6 @@
         <version>${com.jayway.restassured.version}</version>
       </dependency>
       <!-- == End REST-assured == -->
-
-      <!-- == Begin Bouncy Castle == -->
-      <dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk15on</artifactId>
-        <version>${bouncycastle.version}</version>
-      </dependency>
-      <!-- == End Bouncy Castle == -->
 
       <!-- == Begin GreenMail-Spring == -->
       <dependency>
@@ -575,11 +566,6 @@
         <artifactId>javax.jws-api</artifactId>
         <version>${javax.jws-api.version}</version>
       </dependency>
-      <dependency>
-        <groupId>javax.activation</groupId>
-        <artifactId>activation</artifactId>
-        <version>${activation.version}</version>
-      </dependency>
       <!-- == End For JDK 11 == -->
 
     </dependencies>
@@ -613,20 +599,18 @@
     <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
     <org.codehaus.mojo.version>2.5</org.codehaus.mojo.version>
     <org.springframework.build.aws.version>3.0.0.RELEASE</org.springframework.build.aws.version>
-    <postgresql.version>42.2.5</postgresql.version>
-    <ojdbc8.version>18.3</ojdbc8.version>
+    <postgresql.version>42.2.9</postgresql.version>
+    <ojdbc.version>19.3.0.0</ojdbc.version>
     <db2jcc4.version>4.21.29</db2jcc4.version>
     <webdrivermanager.version>3.1.1</webdrivermanager.version>
     <com.github.detro.ghostdriver.version>1.0.4</com.github.detro.ghostdriver.version>
     <com.jayway.restassured.version>2.7.0</com.jayway.restassured.version>
     <greenmail-spring.version>1.4.1</greenmail-spring.version>
     <cxf-rt.version>3.1.4</cxf-rt.version>
-    <bouncycastle.version>1.59</bouncycastle.version>
     <jetty.version>9.2.14.v20151106</jetty.version>
     <jaxb-core.version>2.3.0.1</jaxb-core.version>
     <jaxb-impl.version>2.3.2</jaxb-impl.version>
     <javax.jws-api.version>1.1</javax.jws-api.version>
-    <activation.version>1.1</activation.version>
     <!-- == Project Properties == -->
     <project.env.main.directory>src/main</project.env.main.directory>
     <project.env.target.name>spring-functionaltest-env</project.env.target.name>
@@ -648,7 +632,7 @@
         </dependency>
         <dependency>
           <groupId>com.sun.mail</groupId>
-          <artifactId>javax.mail</artifactId>
+          <artifactId>jakarta.mail</artifactId>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -688,7 +672,7 @@
                     </dependency>
                     <dependency>
                       <groupId>com.sun.mail</groupId>
-                      <artifactId>javax.mail</artifactId>
+                      <artifactId>jakarta.mail</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.apache.activemq</groupId>

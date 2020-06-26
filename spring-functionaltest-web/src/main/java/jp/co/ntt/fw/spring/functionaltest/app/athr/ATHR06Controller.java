@@ -34,15 +34,10 @@ public class ATHR06Controller {
     @RequestMapping(value = "0601/001/afterLogin")
     public String handle0601001(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("userEmail", userDetails.getUsername()
+                + "@example.com");
         return "athr/showForAccessPolicy";
     }
 
@@ -59,15 +54,10 @@ public class ATHR06Controller {
     @RequestMapping(value = "0601/002/afterLogin")
     public String handle0601002(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("userEmail", userDetails.getUsername()
+                + "@example.com");
         return "athr/showForAccessPolicyIpAddressAllow";
     }
 
@@ -85,15 +75,10 @@ public class ATHR06Controller {
     @RequestMapping(value = "0601/003/afterLogin")
     public String handle0612003(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("userEmail", userDetails.getUsername()
+                + "@example.com");
         return "athr/showForAccessPolicyIpAddressDeny";
     }
 
@@ -111,15 +96,10 @@ public class ATHR06Controller {
     @RequestMapping(value = "0601/004/afterLogin")
     public String handle0601004(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
-        UserDetails userDetails = null;
-        if (authentication != null) {
-            userDetails = (UserDetails) authentication.getPrincipal();
-        }
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
-        }
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("userEmail", userDetails.getUsername()
+                + "@example.com");
         return "athr/showForAccessPolicyDenyAll";
     }
 

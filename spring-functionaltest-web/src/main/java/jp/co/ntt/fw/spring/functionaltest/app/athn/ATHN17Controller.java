@@ -69,11 +69,9 @@ public class ATHN17Controller {
     @RequestMapping(value = "1703/001", params = "loginSuccess")
     public String handle0101LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
-        if (userDetails != null) {
-            model.addAttribute("username", userDetails.getUsername());
-        }
+        model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1703/001");
-        return "athn/topForDeafalut";
+        return "athn/topForDefault";
     }
 
 }

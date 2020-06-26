@@ -13,9 +13,8 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package jp.co.ntt.fw.spring.functionaltest.app.athn.listner;
+package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.event;
 
-import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -27,6 +26,7 @@ import org.springframework.security.authentication.event.AuthenticationFailureLo
 import org.springframework.security.authentication.event.AuthenticationFailureServiceExceptionEvent;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
+import org.springframework.security.authentication.event.LogoutSuccessEvent;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionEvent;
 import org.springframework.stereotype.Component;
 
@@ -36,66 +36,71 @@ public class AuthenticationEventListeners {
     private static final Logger logger = LoggerFactory.getLogger(
             AuthenticationEventListeners.class);
 
-    @EventListener
+    @EventListener(AuthenticationFailureBadCredentialsEvent.class)
     public void handleBadCredentials(
             AuthenticationFailureBadCredentialsEvent event) {
         logger.info("Bad credentials is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationFailureDisabledEvent.class)
     public void handleAuthenticationFailureDisabled(
             AuthenticationFailureDisabledEvent event) {
         logger.info("User deisabled is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationFailureLockedEvent.class)
     public void handleAuthenticationFailureLocked(
             AuthenticationFailureLockedEvent event) {
         logger.info("User locked is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationFailureExpiredEvent.class)
     public void handleAuthenticationFailureExpired(
             AuthenticationFailureExpiredEvent event) {
         logger.info("Authentication expired is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationFailureCredentialsExpiredEvent.class)
     public void handleAuthenticationFailureCredentialsExpired(
             AuthenticationFailureCredentialsExpiredEvent event) {
         logger.info("Credentials expired is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationFailureServiceExceptionEvent.class)
     public void handleAuthenticationFailureServiceExceptionEvent(
             AuthenticationFailureServiceExceptionEvent event) {
         logger.info("ServiceException is detected. username : {}", event
                 .getAuthentication().getName());
     }
 
-    @EventListener
+    @EventListener(AuthenticationSuccessEvent.class)
     public void handleAuthenticationSuccess(AuthenticationSuccessEvent event) {
         logger.info("Autnenticated. username : {}", event.getAuthentication()
                 .getName());
     }
 
-    @EventListener
+    @EventListener(SessionFixationProtectionEvent.class)
     public void handleSessionFixationProtection(
             SessionFixationProtectionEvent event) {
         logger.info("Session changed. sessionId : {}", event.getOldSessionId()
                 + " to " + event.getNewSessionId());
     }
 
-    @EventListener
+    @EventListener(InteractiveAuthenticationSuccessEvent.class)
     public void handleInteractiveAuthenticationSuccess(
             InteractiveAuthenticationSuccessEvent event) {
         logger.info("Autnenticate completed. username : {}", event
                 .getAuthentication().getName());
     }
 
+    @EventListener(LogoutSuccessEvent.class)
+    public void handleLogoutSuccess(LogoutSuccessEvent event) {
+        logger.info("Logout completed. username : {}", event.getAuthentication()
+                .getName());
+    }
 }
