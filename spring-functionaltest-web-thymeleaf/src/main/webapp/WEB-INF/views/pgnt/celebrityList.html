@@ -37,8 +37,9 @@
       </form>
     </div>
 
-    <div th:if="${page} != null" th:object="${celebritySearchCriteria}"
-      th:with="query = |firstName='*{firstName}',lastName='*{lastName}',sort='*{sort}'|,
+    <div th:if="${page} != null"
+      th:with="query = 'firstName=${celebritySearchCriteria.firstName},
+        lastName=${celebritySearchCriteria.lastName},sort=${celebritySearchCriteria.sort}',
         pagination = ~{pgnt/fragment :: paginationWithQuery (${page}, ${query})}"
       th:remove="tag">
 

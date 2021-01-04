@@ -41,7 +41,7 @@
           <tr>
             <th>性別</th>
             <td><span id="gender"
-              th:text="${memberForm.gender} != null ? ${CL_GENDER['__${memberForm.gender}__']}"></span></td>
+              th:text="${memberForm.gender} != null ? ${CL_GENDER.get(memberForm.gender)}"></span></td>
           </tr>
           <tr>
             <th>郵便番号</th>

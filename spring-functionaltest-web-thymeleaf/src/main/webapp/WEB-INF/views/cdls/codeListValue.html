@@ -11,7 +11,7 @@
 
       <div>CDLS0106001</div>
       <div id="cdls0106001"
-        th:text="${orderStatusForm.id} != null ? ${CL_ORDERSTATUS['__${orderStatusForm.id}__']}">
+        th:text="${orderStatusForm.id} != null ? ${CL_ORDERSTATUS.get(orderStatusForm.id)}">
       </div>
     </div>
   </div>

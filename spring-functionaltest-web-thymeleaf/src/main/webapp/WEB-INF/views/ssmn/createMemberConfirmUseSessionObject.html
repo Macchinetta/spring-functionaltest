@@ -45,7 +45,7 @@
           <tr>
             <th>性別</th>
             <td><span id="gender"
-              th:text="${member.gender} != null ? ${CL_GENDER['__${member.gender}__']}"></span>
+              th:text="${member.gender} != null ? ${CL_GENDER.get(member.gender)}"></span>
               <input type="hidden" name="gender" value="1"></td>
           </tr>
           <tr>

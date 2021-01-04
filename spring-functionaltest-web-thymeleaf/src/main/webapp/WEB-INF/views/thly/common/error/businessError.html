@@ -10,7 +10,7 @@
     <h1>Business Error!</h1>
     <div class="error">
       <span
-        th:text="${#strings.isEmpty(exceptionCode)} ? #{e.xx.fw.8001} : |[${exceptionCode}] #{__${exceptionCode}__}|"></span>
+        th:text="${#strings.isEmpty(exceptionCode)} ? #{e.xx.fw.8001} : |[${exceptionCode}] #{${exceptionCode}}|"></span>
       <span th:replace="~{thly/common-parts :: messagesPanel}"></span>
     </div>
     <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>

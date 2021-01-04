@@ -20,7 +20,7 @@
     </div>
 
     <div th:if="${page} != null"
-      th:with="query = |title='${articleSearchCriteria.title}'|,
+      th:with="query = 'title=${articleSearchCriteria.title}',
         pagination = ~{pgnt/fragment :: paginationWithQuery (${page}, ${query})}"
       th:remove="tag">
 

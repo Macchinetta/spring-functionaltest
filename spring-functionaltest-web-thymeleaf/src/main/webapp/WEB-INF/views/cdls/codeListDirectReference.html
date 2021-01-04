@@ -22,8 +22,8 @@
     <div>
       <select id="cdls0501002" th:field="${codeListForm.code}">
         <option
-          th:each="price : ${@CL_I18N_PRICE.asMap('__${requestLocale}__').isEmpty()} ?
-          ${@CL_I18N_PRICE.asMap('__${fallBackLocale}__')} : ${@CL_I18N_PRICE.asMap('__${requestLocale}__')}"
+          th:each="price : ${@CL_I18N_PRICE.asMap(requestLocale).isEmpty()} ?
+          ${@CL_I18N_PRICE.asMap(fallBackLocale)} : ${@CL_I18N_PRICE.asMap(requestLocale)}"
           th:value="${price.key}" th:text="${price.value}"></option>
       </select>
     </div>
@@ -32,8 +32,8 @@
     <div>
       <select id="cdls0501003" th:field="${codeListForm.code}">
         <option
-          th:each="price : ${@CL_I18N_PRICE.asMap('__${requestLocale}__').isEmpty()} ?
-          ${@CL_I18N_PRICE.asMap('__${fallBackLocale}__')} : ${@CL_I18N_PRICE.asMap('__${requestLocale}__')}"
+          th:each="price : ${@CL_I18N_PRICE.asMap(requestLocale).isEmpty()} ?
+          ${@CL_I18N_PRICE.asMap(fallBackLocale)} : ${@CL_I18N_PRICE.asMap(requestLocale)}"
           th:value="${price.key}" th:text="${price.value}"></option>
       </select>
     </div>
@@ -42,8 +42,8 @@
     <div>
       <select id="cdls0501004" th:field="${codeListForm.code}">
         <option
-          th:each="price : ${@CL_I18N_PRICE.asMap('__${requestLocale}__').isEmpty()} ?
-          ${@CL_I18N_PRICE.asMap('__${fallBackLocale}__')} : ${@CL_I18N_PRICE.asMap('__${requestLocale}__')}"
+          th:each="price : ${@CL_I18N_PRICE.asMap(requestLocale).isEmpty()} ?
+          ${@CL_I18N_PRICE.asMap(fallBackLocale)} : ${@CL_I18N_PRICE.asMap(requestLocale)}"
           th:value="${price.key}" th:text="${price.value}"></option>
       </select>
     </div>
