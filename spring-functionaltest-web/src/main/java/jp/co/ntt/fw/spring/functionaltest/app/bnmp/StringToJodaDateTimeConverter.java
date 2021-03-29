@@ -15,10 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
-import com.github.dozermapper.core.DozerConverter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import com.github.dozermapper.core.DozerConverter;
 
 public class StringToJodaDateTimeConverter extends
                                            DozerConverter<String, DateTime> {

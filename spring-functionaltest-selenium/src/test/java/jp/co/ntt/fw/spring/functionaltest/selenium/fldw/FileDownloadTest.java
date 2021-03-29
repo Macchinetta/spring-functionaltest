@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.fldw;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -43,7 +43,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 

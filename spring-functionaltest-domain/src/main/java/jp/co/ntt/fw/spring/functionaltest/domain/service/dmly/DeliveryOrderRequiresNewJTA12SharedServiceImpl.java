@@ -20,10 +20,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.springframework.stereotype.Service;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
-
-import org.springframework.stereotype.Service;
 
 @Transactional(value = Transactional.TxType.REQUIRES_NEW)
 @Service

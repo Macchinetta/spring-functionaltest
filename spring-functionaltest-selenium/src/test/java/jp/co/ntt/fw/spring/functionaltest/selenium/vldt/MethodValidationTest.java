@@ -22,12 +22,12 @@ import static org.openqa.selenium.By.id;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class MethodValidationTest extends FunctionTestSupport {
 

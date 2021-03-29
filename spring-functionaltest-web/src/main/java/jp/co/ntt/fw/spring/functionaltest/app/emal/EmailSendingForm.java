@@ -18,9 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.io.Serializable;
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
-
 import org.springframework.web.multipart.MultipartFile;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
 
 public class EmailSendingForm implements Serializable {
 

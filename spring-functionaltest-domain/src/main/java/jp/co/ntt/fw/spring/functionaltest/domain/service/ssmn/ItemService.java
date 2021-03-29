@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 
 public interface ItemService {
 

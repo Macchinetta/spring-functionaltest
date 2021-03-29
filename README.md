@@ -282,5 +282,6 @@ Properties that are available are as follows.
 |        properties         | description                                                                                                                                   |
 |:-------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------|
 |    test.environment       | Whether to run tests must use actual mail server.<br>Set **`mailServer`** when `spring.profiles.active` of application contains `mailServer`. |
+|    jms.test.environment   | Whether to run tests must use actual mq server.<br>Set **`mqServer`** when `spring.profiles.active` of application contains `mqServer`. |
 |   test.environment.view   | Whether to run tests depending on a specific HTML view template.<br>Set view template name **`jsp`**(default) or **`thymeleaf`**.             |
 | test.environment.weblogic | Skip specific tests if running on WebLogic Server.<br>Set **`true`** or **`false`**(default).                                                 |

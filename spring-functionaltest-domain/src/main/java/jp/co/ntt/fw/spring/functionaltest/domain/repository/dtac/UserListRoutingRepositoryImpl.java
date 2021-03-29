@@ -17,11 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.dtac;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public class UserListRoutingRepositoryImpl extends SqlSessionDaoSupport
                                            implements

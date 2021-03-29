@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class DeliveryOrderUpdateBLogicImpl extends

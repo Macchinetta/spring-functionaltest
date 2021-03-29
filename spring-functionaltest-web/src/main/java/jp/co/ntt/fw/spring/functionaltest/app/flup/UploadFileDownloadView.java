@@ -29,12 +29,12 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
 import org.terasoluna.gfw.web.download.AbstractFileDownloadView;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 
 @Component("flup/uploadFileDownload")
 public class UploadFileDownloadView extends AbstractFileDownloadView {

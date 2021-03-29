@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.lggn;
 
-import static org.openqa.selenium.By.*;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
 import org.junit.Test;

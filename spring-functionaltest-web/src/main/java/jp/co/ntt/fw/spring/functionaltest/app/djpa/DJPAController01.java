@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.app.dam3.BookListForm;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.ntt.fw.spring.functionaltest.app.dam3.BookListForm;
 
 @Controller
 @RequestMapping("djpa")

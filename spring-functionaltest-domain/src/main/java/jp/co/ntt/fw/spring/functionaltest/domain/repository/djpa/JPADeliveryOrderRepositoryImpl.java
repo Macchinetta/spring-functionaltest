@@ -23,11 +23,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public class JPADeliveryOrderRepositoryImpl implements
                                             JPADeliveryOrderRepositoryCustom {

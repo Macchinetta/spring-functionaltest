@@ -15,11 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
+import java.time.DateTimeException;
+
 import javax.inject.Inject;
-
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
-
-import org.springframework.context.annotation.Lazy;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +25,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
+
 @RequestMapping("dnta")
 @Controller
 public class DNTA05Controller {
 
     @Inject
-    // JDK7向けのテスト実行時に、インスタンス生成の際のNoClassDefFoundErrorを回避するために@Lazyをつける
-    @Lazy
     DateAndTimeApiService dateAndTimeApiService;
 
     @ModelAttribute
@@ -89,7 +87,7 @@ public class DNTA05Controller {
                     .getSpecifiedDate(form.getYear(), form.getMonth(), form
                             .getDay()));
             return "dnta/showDateTime";
-        } catch (/* java.time.DateTimeException JDK7向けのテスト実行時に、インスタンス生成の際のNoClassDefFoundErrorを回避するため */RuntimeException e) {
+        } catch (DateTimeException e) {
             model.addAttribute("getResult", e);
             return "dnta/showCheckResult";
         }

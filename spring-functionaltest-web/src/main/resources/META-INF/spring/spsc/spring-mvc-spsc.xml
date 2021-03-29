@@ -13,7 +13,11 @@
   <context:annotation-config />
 
   <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSCController" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC01Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC02Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC03Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC04Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC05Controller" />
+  <bean class="jp.co.ntt.fw.spring.functionaltest.app.spsc.SPSC06Controller" />
 
   <mvc:view-controller path="/spsc/result" view-name="/spsc/result" />
 

@@ -44,7 +44,7 @@
   <bean id="jndiJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
     <property name="connectionFactory" ref="connectionFactory" />
     <property name="receiveTimeout" value="20000" />
-    <property name="destinationResolver" ref="jndiDestinationResolver" />
+    <property name="destinationResolver" ref="destinationResolver" />
   </bean>
 
   <bean id="jndiJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
@@ -55,7 +55,7 @@
   <bean id="jndiConCacheJmsTemplate" class="org.springframework.jms.core.JmsTemplate">
     <property name="connectionFactory" ref="cachingConnectionFactory" />
     <property name="receiveTimeout" value="20000" />
-    <property name="destinationResolver" ref="jndiDestinationResolver" />
+    <property name="destinationResolver" ref="destinationResolver" />
   </bean>
 
   <bean id="jndiConCacheJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
@@ -67,7 +67,7 @@
     <property name="connectionFactory" ref="cachingConnectionFactory" />
     <property name="pubSubDomain" value="true" />
     <property name="receiveTimeout" value="20000" />
-    <property name="destinationResolver" ref="jndiDestinationResolver" />
+    <property name="destinationResolver" ref="destinationResolver" />
   </bean>
 
   <bean id="topicJmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
@@ -82,7 +82,7 @@
     <property name="priority" value="${jms.mq.priority}" />
     <property name="deliveryMode" value="${jms.mq.deliveryMode}" />
     <property name="timeToLive" value="4000" />
-    <property name="destinationResolver" ref="jndiDestinationResolver" />
+    <property name="destinationResolver" ref="destinationResolver" />
   </bean>
 
   <bean id="selectedMessagingJmsTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">

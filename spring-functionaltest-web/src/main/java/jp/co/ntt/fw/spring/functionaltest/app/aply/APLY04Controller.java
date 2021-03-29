@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalException;
 
 @Controller
 @RequestMapping("aply")

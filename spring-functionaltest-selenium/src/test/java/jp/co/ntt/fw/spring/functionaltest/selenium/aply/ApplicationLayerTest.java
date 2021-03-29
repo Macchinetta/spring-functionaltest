@@ -26,9 +26,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
-
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -37,6 +34,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
 
 public class ApplicationLayerTest extends FunctionTestSupport {
 

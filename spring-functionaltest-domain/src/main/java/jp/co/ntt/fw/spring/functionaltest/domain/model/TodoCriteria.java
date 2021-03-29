@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.ibatis.type.Alias;
-
 //@Alias("DailyTodo")
 public class TodoCriteria implements Serializable {
 

@@ -15,6 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.oth2;
 
+import java.io.IOException;
+
 public interface OauthAuthorizationInitService {
 
     /**

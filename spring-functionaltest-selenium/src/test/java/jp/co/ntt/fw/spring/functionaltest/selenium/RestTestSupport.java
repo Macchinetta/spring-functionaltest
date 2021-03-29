@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
+import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.config.LogConfig.logConfig;
 import static com.jayway.restassured.config.RestAssuredConfig.config;
-import static com.jayway.restassured.RestAssured.given;
 
 import java.io.PrintStream;
 import java.io.StringWriter;

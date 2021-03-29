@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.bnmp;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.anyOf;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Test;
 import org.openqa.selenium.By;

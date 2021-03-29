@@ -17,9 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AdministratorService;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -31,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AdministratorService;
 
 @Controller
 public class ATHN05Controller {

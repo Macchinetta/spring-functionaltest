@@ -15,10 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dnta;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -1577,8 +1576,14 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("checkResult")), is(
                     "false"));
-            assertThat(webDriverOperations.getText(id("class")), is(
-                    "java.time.format.DateTimeParseException"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "^org\\.terasoluna\\.gfw\\.web\\.logging\\.TraceLoggingInterceptor$",
+                    ".*getResult=java\\.time\\.format\\.DateTimeParseException.*");
         }
     }
 
@@ -1605,9 +1610,16 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("checkResult")), is(
                     "false"));
-            assertThat(webDriverOperations.getText(id("class")), is(
-                    "java.time.format.DateTimeParseException"));
         }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "^org\\.terasoluna\\.gfw\\.web\\.logging\\.TraceLoggingInterceptor$",
+                    ".*getResult=java\\.time\\.format\\.DateTimeParseException.*");
+        }
+
     }
 
     /**
@@ -1659,9 +1671,16 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("checkResult")), is(
                     "false"));
-            assertThat(webDriverOperations.getText(id("class")), is(
-                    "java.time.format.DateTimeParseException"));
         }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "^org\\.terasoluna\\.gfw\\.web\\.logging\\.TraceLoggingInterceptor$",
+                    ".*getResult=java\\.time\\.format\\.DateTimeParseException.*");
+        }
+
     }
 
     /**
@@ -1687,9 +1706,16 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("checkResult")), is(
                     "false"));
-            assertThat(webDriverOperations.getText(id("class")), is(
-                    "java.time.format.DateTimeParseException"));
         }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "^org\\.terasoluna\\.gfw\\.web\\.logging\\.TraceLoggingInterceptor$",
+                    ".*getResult=java\\.time\\.format\\.DateTimeParseException.*");
+        }
+
     }
 
     /**
@@ -1861,10 +1887,12 @@ public class DateAndTimeApiTest extends FunctionTestSupport {
             webDriverOperations.click(id("getSpecifiedDate"));
         }
 
-        // 取得した文字列を確認
+        // ログの確認
         {
-            assertThat(webDriverOperations.getText(id("class")), is(
-                    "java.time.DateTimeException"));
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "^org\\.terasoluna\\.gfw\\.web\\.logging\\.TraceLoggingInterceptor$",
+                    ".*getResult=java\\.time\\.DateTimeException.*");
         }
     }
 

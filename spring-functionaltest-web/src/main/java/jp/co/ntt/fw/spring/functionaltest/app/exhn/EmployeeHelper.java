@@ -17,11 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
+import org.springframework.stereotype.Component;
 
 import com.github.dozermapper.core.Mapper;
-import org.springframework.stereotype.Component;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 
 @Component
 public class EmployeeHelper {

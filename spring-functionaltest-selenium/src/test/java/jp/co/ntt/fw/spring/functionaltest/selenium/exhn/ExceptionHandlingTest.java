@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -36,6 +34,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class ExceptionHandlingTest extends FunctionTestSupport {
 
@@ -492,7 +492,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         try {
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/004", String.class);
-        } catch (HttpClientErrorException e) {
+        } catch (HttpServerErrorException e) {
             // 500 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
 
@@ -701,7 +701,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         try {
             restOperations.getForEntity(applicationContextUrl
                     + "/exhn/0701/015", String.class);
-        } catch (HttpClientErrorException e) {
+        } catch (HttpServerErrorException e) {
             // 503 が返却されていること
             assertThat(e.getStatusCode(), is(HttpStatus.SERVICE_UNAVAILABLE));
 

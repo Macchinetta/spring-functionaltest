@@ -19,11 +19,6 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAsyncReceiveSynchronizingService;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -34,6 +29,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAsyncReceiveSynchronizingService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
 
 @Controller
 @RequestMapping("jmss")

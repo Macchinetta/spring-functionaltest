@@ -20,23 +20,19 @@ import java.text.SimpleDateFormat;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
-
-import org.springframework.context.annotation.Lazy;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
+
 @RequestMapping("dnta")
 @Controller
 public class DNTA03Controller {
 
     @Inject
-    // JDK7向けのテスト実行時に、インスタンス生成の際のNoClassDefFoundErrorを回避するために@Lazyをつける
-    @Lazy
     private DateAndTimeApiService dateAndTimeApiService;
 
     private static final int YEAR = 2012;

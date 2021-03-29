@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.pages.dam3;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
+import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
 
 public class OrderMB3PageListPage implements Page<OrderMB3PageListPage> {
 

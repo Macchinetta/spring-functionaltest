@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport;
 
 import java.util.List;
+
 import javax.activation.DataHandler;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

@@ -20,14 +20,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.IllegalTransactionStateException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
 
 @Transactional(value = Transactional.TxType.REQUIRED)
 @Service

@@ -19,15 +19,15 @@ import java.text.ParseException;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPABookInitializerService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderInitializerService;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPABookInitializerService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderInitializerService;
 
 /**
  * DAM3用のテストデータをクリア・作成するためのWEB APIを提供するクラス。

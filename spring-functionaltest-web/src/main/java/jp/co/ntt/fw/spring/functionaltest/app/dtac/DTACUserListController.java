@@ -17,10 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.dtac;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingService;
-import jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,6 +25,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingService;
+import jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory;
 
 @Controller
 @RequestMapping("dtac/user")

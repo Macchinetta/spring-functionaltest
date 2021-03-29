@@ -17,8 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
 import java.util.Date;
 
-import com.github.dozermapper.core.DozerConverter;
 import org.joda.time.LocalDateTime;
+
+import com.github.dozermapper.core.DozerConverter;
 
 public class DeliveryOrderConverter extends
                                     DozerConverter<LocalDateTime, Date> {

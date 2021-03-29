@@ -35,7 +35,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.util.StreamUtils;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
@@ -478,6 +477,11 @@ public class FileUploadTest extends FunctionTestSupport {
         }
     }
 
+    /**
+     * <ul>
+     * <li>トランザクショントークンによる2重送信防止機能を使用した場合に、ファイルアップロード時にも有効であることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testFLUP0202001() throws IOException {
         // メニュー画面の操作

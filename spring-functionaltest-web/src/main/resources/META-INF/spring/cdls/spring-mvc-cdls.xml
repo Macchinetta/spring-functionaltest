@@ -15,13 +15,11 @@
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
         <property name="codeListIdPattern" value="CL_.+" />
       </bean>

@@ -15,8 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
-import com.github.dozermapper.core.DozerConverter;
 import org.joda.time.DateTime;
+
+import com.github.dozermapper.core.DozerConverter;
 
 /**
  * JodaDateTimeToJodaDateTimeConverter<br>

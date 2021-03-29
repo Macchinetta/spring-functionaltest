@@ -15,17 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isIn;
+import static org.hamcrest.Matchers.in;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
-
-import org.springframework.beans.factory.annotation.Value;
 
 public class SOAPTestSupport extends FunctionTestSupport {
 
@@ -99,7 +100,7 @@ public class SOAPTestSupport extends FunctionTestSupport {
                 messageList.add(String.format("code:message:path=%s:%s:%s",
                         error.getCode(), error.getMessage(), error.getPath()));
             }
-            assertThat(logMessage, isIn(messageList));
+            assertThat(logMessage, is(in(messageList)));
         }
     }
 }

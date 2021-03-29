@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileAllowedExtention;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileMaxSize;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class SingleUploadForm implements Serializable {
 

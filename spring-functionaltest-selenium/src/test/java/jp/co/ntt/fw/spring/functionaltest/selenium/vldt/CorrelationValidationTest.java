@@ -15,20 +15,20 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.emptyString;
+import static org.junit.Assert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -93,7 +93,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[0] + errors)),
+                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
                         is(false));
             }
         }
@@ -110,7 +110,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
                         is(errorMessage));
             }
         }
@@ -152,7 +152,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[param][0]
+                assertThat(webDriverOperations.exists(id(targets[param][1]
                         + errors)), is(false));
             }
         }
@@ -172,7 +172,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[param][0]
+                assertThat(webDriverOperations.getText(id(targets[param][1]
                         + errors)), is(errorMessages[param]));
             }
         }
@@ -223,7 +223,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     /**
      * VLDT0201003
      * <ul>
-     * <li>複数フィールドの相関チェックでエラーになった際、全フィールドのハイライト表示とパスワードにのみエラーメッセージが表示されることを確認する。</li>
+     * <li>複数フィールドの相関チェックでエラーになった際、全フィールドのハイライト表示と確認パスワードにのみエラーメッセージが表示されることを確認する。</li>
      * </ul>
      */
     @Test
@@ -269,9 +269,9 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             {
                 // エラーメッセージ確認
                 assertThat(webDriverOperations.getText(id(targets[0] + errors)),
-                        is(errorMessage));
+                        is(emptyString()));
                 assertThat(webDriverOperations.getText(id(targets[1] + errors)),
-                        isEmptyString());
+                        is(errorMessage));
                 // CSS適用確認
                 assertThat(webDriverOperations.getWebDriver().findElement(id(
                         targets[0])).getAttribute("class"), is(
@@ -293,7 +293,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     public void testVLDT0202001() {
         String testId = "vldt0202001";
         String[] targets = { "password", "confirmPassword" };
-        String errorMessage = "not match the confirmation field.";
+        String errorMessage = "not match password.";
 
         // テスト画面表示
         {
@@ -311,7 +311,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[0] + errors)),
+                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
                         is(false));
             }
         }
@@ -328,7 +328,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
                         is(errorMessage));
             }
         }
@@ -337,14 +337,14 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     /**
      * VLDT0202002
      * <ul>
-     * <li>複数フィールドの相関チェックでエラーになった際、全フィールドのハイライト表示とパスワードにのみエラーメッセージが表示されることを確認する。</li>
+     * <li>複数フィールドの相関チェックでエラーになった際、全フィールドのハイライト表示と確認パスワードにのみエラーメッセージが表示されることを確認する。</li>
      * </ul>
      */
     @Test
     public void testVLDT0202002() {
         String testId = "vldt0202002";
         String[] targets = { "password", "confirmPassword" };
-        String errorMessage = "not match the confirmation field.";
+        String errorMessage = "not match password.";
 
         // テスト画面表示
         {
@@ -383,9 +383,9 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             {
                 // エラーメッセージ確認
                 assertThat(webDriverOperations.getText(id(targets[0] + errors)),
-                        is(errorMessage));
+                        is(emptyString()));
                 assertThat(webDriverOperations.getText(id(targets[1] + errors)),
-                        isEmptyString());
+                        is(errorMessage));
                 // CSS適用確認
                 assertThat(webDriverOperations.getWebDriver().findElement(id(
                         targets[0])).getAttribute("class"), is(

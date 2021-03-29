@@ -15,7 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -35,13 +38,14 @@ public class PasswordEqualsValidatorForMultiFieldHighlight implements
         String password = form.getPassword();
         String confirmPassword = form.getConfirmPassword();
 
-        if (password == null || confirmPassword == null)
+        if (!StringUtils.hasLength(password)) {
             return;
+        }
 
-        if (!password.equals(confirmPassword)) {
-            errors.rejectValue("password", "i.sf.vldt.5001",
+        if (!Objects.equals(password, confirmPassword)) {
+            errors.rejectValue("confirmPassword", "i.sf.vldt.5001",
                     "password and confirm password must be same.");
-            errors.rejectValue("confirmPassword", "i.sf.vldt.5003", "");
+            errors.rejectValue("password", "i.sf.vldt.5003", "");
         }
     }
 

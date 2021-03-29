@@ -17,11 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryEGCRUDRepository;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryEGCRUDRepository;
 
 @Service
 @Transactional(value = "jpaTransactionManager")

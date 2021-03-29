@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
 import java.util.Calendar;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.UserInfo;
-
 import org.springframework.stereotype.Service;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.UserInfo;
 
 @Service
 public class UserInfoUseBeanServiceImpl implements UserInfoUseBeanService {

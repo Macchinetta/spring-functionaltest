@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.CustomerRepository;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.CustomerRepository;
 
 public class ReservationUserDetailsService implements UserDetailsService {
     @Inject

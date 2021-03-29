@@ -24,17 +24,16 @@ import javax.xml.ws.BindingType;
 import javax.xml.ws.soap.MTOM;
 import javax.xml.ws.soap.SOAPBinding;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoService;
 import jp.co.ntt.fw.spring.functionaltest.ws.exception.WsExceptionHandler;
-import jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException;
 
 @MTOM

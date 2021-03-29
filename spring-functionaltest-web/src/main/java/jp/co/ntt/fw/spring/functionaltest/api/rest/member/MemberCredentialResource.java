@@ -22,9 +22,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class MemberCredentialResource implements Serializable {
 

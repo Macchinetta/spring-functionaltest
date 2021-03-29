@@ -15,8 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dam3;
 
-import com.github.dozermapper.core.DozerConverter;
 import org.springframework.security.crypto.codec.Hex;
+
+import com.github.dozermapper.core.DozerConverter;
 
 public class BookFormConverter extends DozerConverter<String, byte[]> {
     public BookFormConverter() {

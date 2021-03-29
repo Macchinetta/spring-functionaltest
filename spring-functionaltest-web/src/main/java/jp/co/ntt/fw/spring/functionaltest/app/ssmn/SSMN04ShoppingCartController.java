@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UrlPathHelper;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RequestMapping("shopping/cart")
 @TransactionTokenCheck("shopping/cart")

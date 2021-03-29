@@ -19,8 +19,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.terasoluna.gfw.common.exception.BusinessException;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
 
 @RequestMapping("ajax")
 @Controller

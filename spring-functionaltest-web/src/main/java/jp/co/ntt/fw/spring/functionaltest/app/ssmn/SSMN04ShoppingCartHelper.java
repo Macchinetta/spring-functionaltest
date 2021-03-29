@@ -20,13 +20,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Component;
+
+import com.github.dozermapper.core.Mapper;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Order;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderItem;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.ItemService;
-
-import com.github.dozermapper.core.Mapper;
-import org.springframework.stereotype.Component;
 
 @Component
 public class SSMN04ShoppingCartHelper {

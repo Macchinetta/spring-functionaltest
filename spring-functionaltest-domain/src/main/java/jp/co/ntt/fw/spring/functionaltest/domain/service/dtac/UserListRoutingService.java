@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dtac;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public interface UserListRoutingService {
 

@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
 import java.util.Collection;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,6 +26,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 
 @Service
 @Transactional

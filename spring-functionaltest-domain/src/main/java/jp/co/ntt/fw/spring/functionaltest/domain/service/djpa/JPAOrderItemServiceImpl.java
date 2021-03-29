@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAItem;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPAOrderItemRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPAOrderRepository;
@@ -120,7 +119,8 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
 
         JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getOne(orderItemId);
 
-        JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
+        // Need to get JpaOrder
+        jpaOrderRepository.findById(orderId).orElse(null);
 
         jpaOrderItemRepository.delete(jpaOrderItem);
     }

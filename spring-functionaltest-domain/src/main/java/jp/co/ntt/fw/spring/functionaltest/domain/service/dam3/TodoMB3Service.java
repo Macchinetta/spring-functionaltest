@@ -20,15 +20,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface TodoMB3Service {
 

@@ -39,35 +39,28 @@
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.terasoluna.gfw.web.logging.TraceLoggingInterceptor" />
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.terasoluna.gfw.web.token.transaction.TransactionTokenInterceptor" />
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/**" />
       <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.terasoluna.gfw.web.codelist.CodeListInterceptor">
         <property name="codeListIdPattern" value="CL_.+" />
       </bean>
     </mvc:interceptor>
     <mvc:interceptor>
       <mvc:mapping path="/aply/0402/**" />
-      <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="jp.co.ntt.fw.spring.functionaltest.app.aply.SuccessLoggingInterceptor" />
     </mvc:interceptor>
 
     <!-- OpenEntityManagerInViewInterceptor settings for Lazy Fetching of entity in Application Layer -->
     <mvc:interceptor>
       <mvc:mapping path="/djpa/book/interceptSrch/**" />
-      <mvc:exclude-mapping path="/resources/**" />
-      <mvc:exclude-mapping path="/**/*.html" />
       <bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
     </mvc:interceptor>
 

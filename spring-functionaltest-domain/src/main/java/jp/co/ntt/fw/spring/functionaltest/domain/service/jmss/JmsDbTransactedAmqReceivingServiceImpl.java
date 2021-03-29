@@ -19,20 +19,16 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
 @Transactional
 @Service
 public class JmsDbTransactedAmqReceivingServiceImpl implements
                                                     JmsDbTransactedAmqReceivingService {
-    private static final Logger logger = LoggerFactory.getLogger(
-            JmsDbTransactedAmqReceivingServiceImpl.class);
 
     @Inject
     JmsTodoRepository jmsTodoRepository;

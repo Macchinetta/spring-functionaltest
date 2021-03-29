@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.infra.mybatis.typehandler;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -15,8 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,21 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.persistence.metamodel.Metamodel;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAItem;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCmnConditionNoBoolean;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCommonCondition;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderSummary;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAItemService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderItemService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryOrderPropagationJTA12ServiceImpl;
-
-import org.apache.ibatis.session.SqlSessionFactory;
-import com.github.dozermapper.core.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -52,6 +36,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAItem;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCmnConditionNoBoolean;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCommonCondition;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderSummary;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAItemService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderItemService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderService;
 
 @Controller
 @RequestMapping("djpa/order")

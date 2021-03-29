@@ -22,9 +22,9 @@ import java.util.Map;
 import javax.jms.JMSException;
 import javax.validation.Valid;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-
 import org.springframework.messaging.Message;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsAmqReceivingService {
 

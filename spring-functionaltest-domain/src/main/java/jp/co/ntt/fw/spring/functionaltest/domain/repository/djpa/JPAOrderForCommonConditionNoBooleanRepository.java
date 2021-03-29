@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCmnConditionNoBoolean;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCmnConditionNoBoolean;
 
 public interface JPAOrderForCommonConditionNoBooleanRepository extends
                                                                JpaRepository<JPAOrderForCmnConditionNoBoolean, Integer> {

@@ -21,10 +21,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Service
 public class JmsJndiConSendingServiceImpl implements JmsJndiConSendingService {

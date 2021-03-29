@@ -15,9 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.emal;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
 import java.util.UUID;

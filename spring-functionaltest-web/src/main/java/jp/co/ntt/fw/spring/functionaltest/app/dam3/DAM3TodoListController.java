@@ -19,14 +19,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3Service;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3Service;
 
 @RequestMapping("dam3/todo")
 @Controller

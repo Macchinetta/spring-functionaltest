@@ -19,14 +19,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryStatus;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryType;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryOrderService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryStatusService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryTypeService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +27,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryStatus;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryType;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryOrderService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryStatusService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryTypeService;
 
 @RequestMapping("dmly/deliveryorder")
 @Controller

@@ -65,7 +65,7 @@ public class ExtendConstraintOfCommonLibraryTest extends FunctionTestSupport {
         String testId = "vldt0801001";
         String target = "password";
         String confirmedTarget = "confirmPassword";
-        String errorMessage = "{left} and {right} must be same.";
+        String errorMessage = "{right} and {left} must be same.";
 
         webDriverOperations.click(id(testId));
         // 同じ文字列を入力した場合はエラーが出ない
@@ -73,7 +73,7 @@ public class ExtendConstraintOfCommonLibraryTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id(confirmedTarget), "password");
         webDriverOperations.click(id(validate));
 
-        assertThat(webDriverOperations.exists(id(target + errors)), is(false));
+        assertThat(webDriverOperations.exists(id(confirmedTarget + errors)), is(false));
 
         // 異なる文字列を入力した場合はエラーが出る
         webDriverOperations.overrideText(id(target), "password");
@@ -81,8 +81,8 @@ public class ExtendConstraintOfCommonLibraryTest extends FunctionTestSupport {
                 "confirmPassword");
         webDriverOperations.click(id(validate));
 
-        assertThat(webDriverOperations.getText(id(target + errors)), is(
-                errorMessage.replace("{left}", target).replace("{right}",
+        assertThat(webDriverOperations.getText(id(confirmedTarget + errors)), is(
+                errorMessage.replace("{right}", target).replace("{left}",
                         confirmedTarget)));
     }
 }

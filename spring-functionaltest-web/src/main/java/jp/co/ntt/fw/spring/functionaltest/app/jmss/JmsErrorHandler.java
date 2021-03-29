@@ -24,7 +24,6 @@ import org.springframework.messaging.handler.annotation.support.MethodArgumentNo
 import org.springframework.util.ErrorHandler;
 import org.terasoluna.gfw.common.exception.SystemException;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.ReceivedEvent;
 
 public class JmsErrorHandler implements ErrorHandler {
@@ -40,9 +39,6 @@ public class JmsErrorHandler implements ErrorHandler {
 
         if (t.getCause() instanceof MethodArgumentNotValidException) {
             // Validation Error
-
-            MethodArgumentNotValidException ex = (MethodArgumentNotValidException) t
-                    .getCause();
 
             logger.error("Validation Error!");
 

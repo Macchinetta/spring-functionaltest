@@ -27,9 +27,6 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
-
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +41,9 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.terasoluna.gfw.common.exception.BusinessException;
-import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
 @Service
 public class JmsCacheConSendingServiceImpl implements

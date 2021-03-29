@@ -23,7 +23,7 @@ import javax.validation.constraints.Size;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.Confirm;
 
-@Confirm(field = "password")
+@Confirm(field = "password", confirmField = "confirmPassword")
 public class UserForm implements Serializable {
 
     private static final long serialVersionUID = 1L;

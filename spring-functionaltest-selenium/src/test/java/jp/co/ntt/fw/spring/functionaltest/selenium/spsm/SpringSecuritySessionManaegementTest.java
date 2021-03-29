@@ -28,14 +28,14 @@ import java.util.Base64;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
 public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
 
@@ -52,7 +52,7 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testSPSC0202001() throws IOException, URISyntaxException {
+    public void testSPSM0202001() throws IOException, URISyntaxException {
         // メニュー画面の操作
         webDriverOperations.click(id("spsm0202001"));
 
@@ -93,7 +93,7 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testSPSC0202002() throws IOException, URISyntaxException {
+    public void testSPSM0202002() throws IOException, URISyntaxException {
 
         // メニュー画面の操作
         webDriverOperations.click(id("spsm0202002"));
@@ -134,7 +134,7 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testSPSC0301004() throws IOException, URISyntaxException {
+    public void testSPSM0301004() throws IOException, URISyntaxException {
 
         String userid = "Josh";
         String password = "spring1234";

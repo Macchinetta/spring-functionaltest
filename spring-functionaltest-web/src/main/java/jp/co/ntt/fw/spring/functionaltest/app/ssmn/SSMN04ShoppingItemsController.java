@@ -16,9 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
 import javax.inject.Inject;
-
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.ItemService;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +30,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.util.UrlPathHelper;
 
-import javax.servlet.http.HttpServletRequest;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.ItemService;
 
 @RequestMapping("shopping/items")
 @Controller

@@ -21,11 +21,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
 
 @Component
 public class ReceiveMessageHelper {

@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.terasoluna.gfw.common.exception.SystemException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
 
 public interface JPABookService {
 

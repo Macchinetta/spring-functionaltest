@@ -22,12 +22,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -40,6 +34,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterService;
 
 @RequestMapping("cspr")
 @Controller

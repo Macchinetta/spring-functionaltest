@@ -25,12 +25,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.joda.time.format.DateTimeFormat;
+import org.springframework.stereotype.Service;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository;
-
-import org.joda.time.format.DateTimeFormat;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TodoMB3InitializerServiceImpl implements

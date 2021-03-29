@@ -459,7 +459,6 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // テスト実行(Hibernate Validator)
             {
-                LocalDate ld = new LocalDate();
 
                 webDriverOperations.overrideText(id(
                         hibernateValidatorTargets[0]), "1234567890123456");

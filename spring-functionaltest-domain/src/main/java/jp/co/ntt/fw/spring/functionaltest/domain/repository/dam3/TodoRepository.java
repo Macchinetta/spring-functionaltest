@@ -19,17 +19,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.AsClauseTodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
-
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.AsClauseTodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 
 public interface TodoRepository {
 

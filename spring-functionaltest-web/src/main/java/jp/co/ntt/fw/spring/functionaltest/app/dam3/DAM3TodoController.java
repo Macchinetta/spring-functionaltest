@@ -30,15 +30,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3Service;
-
-import com.github.dozermapper.core.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -54,6 +45,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.SystemException;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3Service;
 
 @RequestMapping("dam3/todo")
 @Controller

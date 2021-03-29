@@ -18,9 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 import java.io.Serializable;
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty;
-
 import org.springframework.web.multipart.MultipartFile;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty;
 
 public class MultipleUploadForm implements Serializable {
 

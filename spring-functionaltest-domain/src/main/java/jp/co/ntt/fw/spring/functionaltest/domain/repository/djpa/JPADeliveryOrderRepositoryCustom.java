@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public interface JPADeliveryOrderRepositoryCustom {
 

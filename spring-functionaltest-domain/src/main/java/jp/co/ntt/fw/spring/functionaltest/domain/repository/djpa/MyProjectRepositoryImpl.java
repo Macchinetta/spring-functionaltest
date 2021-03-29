@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;

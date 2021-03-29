@@ -20,8 +20,6 @@ import java.nio.charset.StandardCharsets;
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +33,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 @Service
 public class SessionMailSendingServiceImpl implements

@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.soap;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class UploadFileForm implements Serializable {
 

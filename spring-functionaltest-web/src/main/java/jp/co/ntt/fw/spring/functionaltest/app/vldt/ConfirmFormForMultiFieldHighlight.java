@@ -21,7 +21,7 @@ import javax.validation.constraints.NotEmpty;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmForMultiFieldHighlight;
 
-@ConfirmForMultiFieldHighlight(field = "password")
+@ConfirmForMultiFieldHighlight(field = "password", confirmField = "confirmPassword")
 public class ConfirmFormForMultiFieldHighlight implements Serializable {
 
     private static final long serialVersionUID = 1L;

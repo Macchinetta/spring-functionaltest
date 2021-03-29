@@ -25,14 +25,14 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractLinksSupportedResource;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 import com.fasterxml.jackson.annotation.JsonView;
+
+import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractLinksSupportedResource;
 
 public class MemberResource extends AbstractLinksSupportedResource implements
                             Serializable {

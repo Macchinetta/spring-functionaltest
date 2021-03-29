@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.dam3;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Before;

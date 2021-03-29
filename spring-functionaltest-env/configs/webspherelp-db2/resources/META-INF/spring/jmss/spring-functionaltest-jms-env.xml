@@ -48,8 +48,7 @@
       </property>
     </bean>
 
-    <bean id="jndiDestinationResolver" class="org.springframework.jms.support.destination.DynamicDestinationResolver">
-    </bean>
+    <bean id="destinationResolver" class="org.springframework.jms.support.destination.DynamicDestinationResolver" />
 
     <bean id="testQueue0403003B" class="org.apache.activemq.command.ActiveMQQueue">
       <constructor-arg index="0" value="TestQueue0403003B" />
@@ -70,7 +69,7 @@
     <jee:jndi-lookup id="testQueue0403003B" jndi-name="${jndi.prefix}jms/queue/TestQueue0403003B" />
 
     <!-- jms jndi -->
-    <bean id="jndiDestinationResolver" class="jp.co.ntt.fw.spring.functionaltest.infra.jmss.AddPrefixJndiDestinationResolver">
+    <bean id="destinationResolver" class="jp.co.ntt.fw.spring.functionaltest.infra.jmss.AddPrefixJndiDestinationResolver">
       <property name="resourceRef" value="${jmss.JndiDestinationResolver.resourceRef}" />
     </bean>
   </beans>

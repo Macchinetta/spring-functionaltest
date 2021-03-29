@@ -58,6 +58,7 @@ public class DataAccessExclusiveJPATest extends
     /**
      * DJPA0304001
      * <ul>
+     * <li>Setting Query Hints</li>
      * </ul>
      * @throws InterruptedException
      */
@@ -143,6 +144,7 @@ public class DataAccessExclusiveJPATest extends
     /**
      * DJPA0304002
      * <ul>
+     * <li>Setting Query Hints</li>
      * </ul>
      * @throws InterruptedException
      */

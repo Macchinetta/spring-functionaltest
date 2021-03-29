@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
-
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
 
 //@Service
 @Transactional(value = "jpaTransactionManager")

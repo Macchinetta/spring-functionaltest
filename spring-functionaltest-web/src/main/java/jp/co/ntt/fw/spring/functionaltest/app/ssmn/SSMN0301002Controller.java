@@ -17,14 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
-import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Address;
-import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Other;
-import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Personal;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Member;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.MemberService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +27,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
+import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Address;
+import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Other;
+import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Personal;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Member;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.MemberService;
 
 @Controller
 @SessionAttributes(types = MemberForm.class)

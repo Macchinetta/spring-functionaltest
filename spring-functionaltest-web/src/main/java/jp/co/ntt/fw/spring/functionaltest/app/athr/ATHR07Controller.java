@@ -17,17 +17,17 @@ package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
 import java.security.Principal;
 
-/*
- * Copyright(c) 2014-2015 NTT Corporation.
- */
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+/*
+ * Copyright(c) 2014-2015 NTT Corporation.
+ */
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
 
 @Controller
 public class ATHR07Controller {

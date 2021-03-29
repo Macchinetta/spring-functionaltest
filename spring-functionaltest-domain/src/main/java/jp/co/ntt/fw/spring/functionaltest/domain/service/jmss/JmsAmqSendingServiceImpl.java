@@ -28,8 +28,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-
 import org.apache.activemq.ActiveMQSession;
 import org.apache.activemq.BlobMessage;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +35,8 @@ import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Service
 public class JmsAmqSendingServiceImpl implements JmsAmqSendingService {

@@ -15,14 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.junit.Assert.assertThat;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.xpath;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -201,6 +203,12 @@ public class Oauth2RemoteTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("name")), is("demo"));
     }
 
+    /**
+     * <ul>
+     * <li>Check response from resource server when using the authorization code grant(GET).<br/>
+     * Re-access before access token's expiration date.</li>
+     * </ul>
+     */
     @Test
     public void testOTH20601001() {
 

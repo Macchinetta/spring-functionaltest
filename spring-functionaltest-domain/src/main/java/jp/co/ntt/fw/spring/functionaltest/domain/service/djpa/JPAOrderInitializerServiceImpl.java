@@ -20,14 +20,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAItem;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderStatus;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPAOrderRepository;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(value = "jpaTransactionManager")

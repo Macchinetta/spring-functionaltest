@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanInput;
-
 import org.springframework.stereotype.Component;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanInput;
 
 @Component
 public class VLDT06Helper {
