@@ -16,15 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.bnmp;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.EmailDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.MailAddressDto;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class BeanMappingHelper {
@@ -76,11 +75,8 @@ public class BeanMappingHelper {
         int listSize = sourceList.size();
         for (int i = 0; i < listSize; i++) {
             // オブジェクト参照先(アドレス)が一致するかチェック
-            if (sourceList.get(i) == destinationList.get(i)) {
-                objectRefferenceList.add(new Boolean(true));
-            } else {
-                objectRefferenceList.add(new Boolean(false));
-            }
+            objectRefferenceList.add(sourceList.get(i) == destinationList.get(
+                    i));
         }
         return objectRefferenceList;
     }

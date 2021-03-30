@@ -17,10 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp;
 
 import javax.inject.Inject;
 
-import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+
+import com.github.dozermapper.core.Mapper;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Car;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.bnmp.CarRepository;

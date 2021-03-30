@@ -40,11 +40,11 @@ public class InputFormProcessor extends AbstractAttributeTagProcessor {
 
         String classValue = tag.getAttributeValue("class");
 
-        if (StringUtils.isEmpty(classValue)) {
-            structureHandler.setAttribute("class", "form-input");
-        } else {
+        if (StringUtils.hasText(classValue)) {
             structureHandler.removeAttribute("class");
             structureHandler.setAttribute("class", classValue + " form-input");
+        } else {
+            structureHandler.setAttribute("class", "form-input");
         }
 
         IModelFactory modelFactory = context.getModelFactory();

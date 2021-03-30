@@ -18,12 +18,12 @@ package jp.co.ntt.fw.spring.functionaltest.app.dam3mb3;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.ItemMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderItemMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderStatusMB3;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMB3Helper {

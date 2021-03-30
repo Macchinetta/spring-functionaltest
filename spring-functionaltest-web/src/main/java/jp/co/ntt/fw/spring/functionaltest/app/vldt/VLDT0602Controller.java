@@ -17,10 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanInput;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanOutput;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +24,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanInput;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanOutput;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanService;
 
 @RequestMapping("vldt")
 @Controller

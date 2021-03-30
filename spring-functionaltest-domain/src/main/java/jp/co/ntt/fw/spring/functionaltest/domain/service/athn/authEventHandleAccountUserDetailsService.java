@@ -17,9 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
 import java.util.Collection;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.AccountRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -28,6 +25,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.AccountRepository;
 
 @Service
 public class authEventHandleAccountUserDetailsService implements

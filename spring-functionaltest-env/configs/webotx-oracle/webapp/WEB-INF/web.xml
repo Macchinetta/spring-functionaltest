@@ -3,6 +3,15 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
   version="3.0">
 
+  <context-param>
+    <param-name>logbackDisableServletContainerInitializer</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>ch.qos.logback.classic.servlet.LogbackServletContextListener</listener-class>
+  </listener>
+
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -528,7 +537,7 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>exhn0701014_015AppServlet</servlet-name>
+    <servlet-name>exhn0701014_016AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
@@ -541,9 +550,9 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>exhn0701014_015AppServlet</servlet-name>
+    <servlet-name>exhn0701014_016AppServlet</servlet-name>
     <url-pattern>/exhn/0701/014</url-pattern>
-    <url-pattern>/exhn/0701/015</url-pattern>
+    <url-pattern>/exhn/0701/016</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -1169,14 +1178,18 @@
     <error-code>415</error-code>
     <location>/WEB-INF/views/common/error/unsupportedMediaTypeError.jsp</location>
   </error-page>
+  <error-page>
+    <error-code>503</error-code>
+    <location>/WEB-INF/views/common/error/serviceUnavailableError.jsp</location>
+  </error-page>
   <!-- Error notified to Servlet Container specifally for REST API start -->
   <!-- Controller call from Servlet Container start -->
   <error-page>
-    <error-code>503</error-code>
+    <error-code>504</error-code>
     <location>/api/v1/DEFAULT_VIEW_INCLUSION-enable/error</location>
   </error-page>
   <error-page>
-    <error-code>504</error-code>
+    <error-code>505</error-code>
     <location>/api/v1/DEFAULT_VIEW_INCLUSION-enable/error</location>
   </error-page>
   <!-- Controller call from Servlet Container end -->

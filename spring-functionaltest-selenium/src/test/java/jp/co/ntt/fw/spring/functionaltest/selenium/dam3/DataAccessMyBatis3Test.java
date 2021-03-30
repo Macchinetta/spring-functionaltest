@@ -17,8 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.dam3;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assume.assumeThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
@@ -824,6 +823,11 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
 
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElementLocated(By.id("completedTodo"),
+                        "993"));
+
         todoListPage.setTodoTitleContent("TT");
         todoListPage.setTodoCreationDate("2016/12/30");
 
@@ -867,6 +871,11 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
+
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(ExpectedConditions
+                .textToBePresentInElementLocated(By.id("completedTodo"),
+                        "993"));
 
         todoListPage.setTodoTitleContent("TT");
         todoListPage.setTodoCreationDate("2016/12/30");

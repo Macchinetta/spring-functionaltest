@@ -29,6 +29,7 @@ public class DateFormatSlashDialect implements IExpressionObjectDialect {
     private static final Logger logger = LoggerFactory.getLogger(
             DateFormatSlashDialect.class);
 
+    @SuppressWarnings("serial")
     private Set<String> names = new HashSet<String>() {
         {
             add("dateformatslash");

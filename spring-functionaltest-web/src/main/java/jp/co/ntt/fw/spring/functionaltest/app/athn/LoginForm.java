@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 public class LoginForm implements Serializable {
 

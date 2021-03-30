@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Test;
@@ -43,6 +43,12 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
         return webDriverOperations.getText(by);
     }
 
+    /**
+     * VLDT0501001
+     * <ul>
+     * <li>共通ライブラリが提供するアノテーションのデフォルトメッセージを上書きできることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testVLDT0501001() {
 
@@ -67,7 +73,7 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
     /**
      * VLDT0502001
      * <ul>
-     * <li>コレクションに対する入力チェックが行えることを確認する。</li>
+     * <li>共通ライブラリが提供するアノテーションを利用し、コレクションに対して入力チェックが行えることを確認する。</li>
      * </ul>
      */
     @Test

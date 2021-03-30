@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,23 +40,18 @@ public class UploadFileAllowedExtentionValidator implements
     @Override
     public boolean isValid(MultipartFile multipartFile,
             ConstraintValidatorContext context) {
-        if (extentions.isEmpty()) {
+        if (CollectionUtils.isEmpty(extentions)) {
             return true;
         }
         if (multipartFile == null) {
             return true;
         }
-        if (StringUtils.isEmpty(multipartFile.getOriginalFilename())) {
+        String fileName = multipartFile.getOriginalFilename();
+        if (!StringUtils.hasText(fileName)) {
             return true;
         }
-        int extensionSeparatorPosition = multipartFile.getOriginalFilename()
-                .lastIndexOf(".");
-        String extention = "";
-        if (0 <= extensionSeparatorPosition) {
-            extention = multipartFile.getOriginalFilename().substring(
-                    (extensionSeparatorPosition + 1)).toLowerCase();
-        }
-        return extentions.contains(extention);
+        String extention = StringUtils.getFilenameExtension(fileName);
+        return StringUtils.hasText(extention) && extentions.contains(extention.toLowerCase());
     }
 
 }

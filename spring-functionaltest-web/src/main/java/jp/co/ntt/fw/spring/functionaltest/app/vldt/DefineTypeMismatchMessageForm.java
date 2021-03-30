@@ -17,6 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 

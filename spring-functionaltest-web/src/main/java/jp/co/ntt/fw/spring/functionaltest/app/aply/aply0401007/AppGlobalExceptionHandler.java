@@ -15,15 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401007;
 
-import jp.co.ntt.fw.spring.functionaltest.app.aply.CommonParameters;
-import jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401007.test1.AppPackage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jp.co.ntt.fw.spring.functionaltest.app.aply.CommonParameters;
+import jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401007.test1.AppPackage;
 
 @ControllerAdvice(basePackageClasses = AppPackage.class)
 public class AppGlobalExceptionHandler {

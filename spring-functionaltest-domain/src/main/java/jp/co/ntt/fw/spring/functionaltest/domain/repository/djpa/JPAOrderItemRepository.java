@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
 
 public interface JPAOrderItemRepository extends
                                         JpaRepository<JPAOrderItem, Integer> {

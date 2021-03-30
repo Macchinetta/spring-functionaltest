@@ -16,9 +16,10 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.cdls;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementWithText;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -573,6 +574,10 @@ public class CodeListTest extends FunctionTestSupport {
             Map<String, String> expectedValue) {
         // メニュー画面の操作
         webDriverOperations.click(id(testId));
+        webDriverOperations.waitForDisplayed(
+                invisibilityOfElementWithText(By.id("screenTitle"),
+                "CDLS コードリスト機能"));
+
         // 遷移先のページでのoptionの内容assart
         assartOptions(testId, expectedValue);
     }
@@ -588,6 +593,10 @@ public class CodeListTest extends FunctionTestSupport {
             Map<String, String> expectedValue) {
         // メニュー画面の操作
         webDriverOperations.click(id(testId));
+        webDriverOperations.waitForDisplayed(
+                invisibilityOfElementWithText(By.id("screenTitle"),
+                "CDLS コードリスト機能"));
+
         // 遷移先のページでのoptionの内容assart
         assartOptionValue(testId, expectedValue);
     }

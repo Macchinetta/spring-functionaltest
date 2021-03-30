@@ -17,13 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
-import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockDBLockService;

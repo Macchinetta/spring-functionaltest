@@ -21,6 +21,16 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Car;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountCopyByReferenceDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountDifferenceCollectionDto;
@@ -31,26 +41,17 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountRemoveOrpha
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarBidirectionalDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.EmailDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.NestedFieldMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameBeanMapperDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.SameNameDifferenceTypeDto;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserCopyByReferenceDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceCollectionDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceTypeDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserNonCumulativeDto;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserRemoveOrphansDto;
-
-import com.github.dozermapper.core.Mapper;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.terasoluna.gfw.common.message.ResultMessages;
 
 @RequestMapping("bnmp")
 @Controller

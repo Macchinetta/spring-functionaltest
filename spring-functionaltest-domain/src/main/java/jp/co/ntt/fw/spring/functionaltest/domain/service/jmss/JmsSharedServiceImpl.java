@@ -41,9 +41,6 @@ import javax.jms.JMSException;
 import javax.jms.QueueBrowser;
 import javax.jms.Session;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,6 +49,9 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.SystemException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
 @Service
 public class JmsSharedServiceImpl implements JmsSharedService {

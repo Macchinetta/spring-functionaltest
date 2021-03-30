@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-
 import org.springframework.core.io.InputStreamSource;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public interface SessionMailSendingService {
 

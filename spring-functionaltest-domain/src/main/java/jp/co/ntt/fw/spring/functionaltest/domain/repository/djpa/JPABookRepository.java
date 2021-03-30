@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
 
 public interface JPABookRepository extends JpaRepository<JPABook, String> {
 

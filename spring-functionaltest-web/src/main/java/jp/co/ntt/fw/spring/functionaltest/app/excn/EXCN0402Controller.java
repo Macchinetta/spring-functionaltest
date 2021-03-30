@@ -17,10 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockPessimisticLockService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
@@ -32,6 +28,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockPessimisticLockService;
 
 @Controller
 @RequestMapping("excn/0402")

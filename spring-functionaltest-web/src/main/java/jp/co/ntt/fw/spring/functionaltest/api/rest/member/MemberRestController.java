@@ -25,15 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.groups.Default;
 
-import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.Detail;
-import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PostMembers;
-import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PutMember;
-import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.Summary;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.rest.RestMemberForSpecificExceptionService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.rest.RestMemberService;
-
-import com.github.dozermapper.core.Mapper;
 import org.joda.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -50,6 +41,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.Detail;
+import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PostMembers;
+import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PutMember;
+import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.Summary;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.rest.RestMemberForSpecificExceptionService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.rest.RestMemberService;
 
 @RequestMapping("members")
 @RestController
@@ -255,14 +255,14 @@ public class MemberRestController {
      * <ul>
      * <li>サーブレットコンテナに通知されたエラーをエラーControllerでハンドリングしエラー応答を行う</li>
      * <li>サーブレットコンテナに通知されていないため、HttpServletResponseのsendErrorを利用</li>
-     * <li>503 Service Unavailableを通知する</li>
+     * <li>505 HTTP Version Not Supportedを通知する</li>
      * </ul>
      */
-    @RequestMapping(value = "serviceUnavailable", method = RequestMethod.GET)
+    @RequestMapping(value = "httpVersionNotSupport", method = RequestMethod.GET)
     public void responseServiceUnavailable(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
-        // Send 503 (Service Unavailable) error to servlet container
-        response.sendError(503);
+        // Send 505 (HTTP Version Not Supported) error to servlet container
+        response.sendError(505);
     }
 
     /**

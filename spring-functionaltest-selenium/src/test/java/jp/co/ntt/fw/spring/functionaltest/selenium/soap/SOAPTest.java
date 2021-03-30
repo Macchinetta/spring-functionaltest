@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.soap;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -160,8 +160,8 @@ public class SOAPTest extends SOAPTestSupport {
                 assertHttpStatusCode(500);
 
                 assertWebFaultIsInErrorBeans(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "must not be null", "todoId"),
-                        new ErrorBean("NotNull", "must not be null", "arg0"));
+                        new ErrorBean("NotNull", "null は許可されていません", "todoId"),
+                        new ErrorBean("NotNull", "null は許可されていません", "arg0"));
             }
         }
 
@@ -234,7 +234,7 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "must not be null", "title"));
+                        new ErrorBean("NotNull", "null は許可されていません", "title"));
             }
         }
 
@@ -380,7 +380,7 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "must not be null", "todoId"));
+                        new ErrorBean("NotNull", "null は許可されていません", "todoId"));
             }
         }
 
@@ -496,8 +496,8 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.ValidationFault,
-                        new ErrorBean("NotNull", "must not be null", "todoId"),
-                        new ErrorBean("NotNull", "must not be null", "title"));
+                        new ErrorBean("NotNull", "null は許可されていません", "todoId"),
+                        new ErrorBean("NotNull", "null は許可されていません", "title"));
             }
         }
 

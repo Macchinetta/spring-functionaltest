@@ -15,18 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 /**
  * VLDT 入力チェックテスト<br>

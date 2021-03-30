@@ -15,8 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.hlch;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 

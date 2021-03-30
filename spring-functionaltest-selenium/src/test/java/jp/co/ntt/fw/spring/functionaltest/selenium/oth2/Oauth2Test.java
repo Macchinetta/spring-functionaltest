@@ -17,15 +17,18 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
+import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -116,11 +119,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -139,11 +144,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101002"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.CREATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -161,11 +168,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101003"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.UPDATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -182,11 +191,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101004"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -204,11 +215,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -221,7 +234,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("oth20101001"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -243,6 +256,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
@@ -278,6 +293,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101002"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
@@ -313,6 +330,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101003"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
@@ -348,6 +367,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101004"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Deny resource access
         webDriverOperations.click(id("authorize"));
 
@@ -384,7 +405,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("oth20101010"));
         authServerLogin();
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));
@@ -411,7 +432,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         waitForImpligitGrant();
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 "implicit grant(scope:READ)"));
 
         // Wait until desplayed
@@ -438,7 +459,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         waitForImpligitGrant();
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 "implicit grant(scope:CREATE)"));
 
         // Wait until desplayed
@@ -465,7 +486,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         waitForImpligitGrant();
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 "implicit grant(scope:UPDATE)"));
 
         // Wait until desplayed
@@ -492,7 +513,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("authorize"));
 
         waitForImpligitGrant();
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 "implicit grant(scope:DELETE)"));
 
         webDriverOperations.suspend(waitForImpligitGrantSuspend,
@@ -511,6 +532,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
@@ -523,7 +546,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("oth20102001"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 "implicit grant(scope:READ)"));
 
         // Wait until desplayed
@@ -552,6 +575,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("authorize"));
 
@@ -666,7 +691,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));
@@ -691,7 +716,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -710,7 +735,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -730,7 +755,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -749,7 +774,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -767,7 +792,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("oth20103005"));
         authServerLogin();
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));
@@ -802,7 +827,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104001"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -825,7 +850,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104002"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -848,7 +873,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104003"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -871,7 +896,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104004"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -894,7 +919,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Resource Owner Credential Grant Menu operation
         webDriverOperations.click(id("oth20104005"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));
@@ -923,12 +948,14 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -948,11 +975,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -973,6 +1002,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
@@ -1029,6 +1060,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("scope.CREATE_approve"));
@@ -1036,7 +1069,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -1056,7 +1089,7 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -1078,6 +1111,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("scope.CREATE_approve"));
@@ -1085,7 +1120,7 @@ public class Oauth2Test extends FunctionTestSupport {
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -1103,6 +1138,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20502001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("scope.DELETE_approve"));
@@ -1113,7 +1150,7 @@ public class Oauth2Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -1131,6 +1168,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth21101002"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
@@ -1142,7 +1181,7 @@ public class Oauth2Test extends FunctionTestSupport {
             stackTracePattern = "Caused by: org\\.springframework\\.security\\.oauth2\\.common\\.exceptions\\.OAuth2Exception: Bad credentials";
         }
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));
@@ -1197,11 +1236,13 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth21101004"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        webDriverOperations.waitForDisplayed(titleIs("System Error!"));
         assertThat(webDriverOperations.getText(xpath(
                 "//div[@class='alert alert-danger']/ul[1]/li[1]")), is(
                         "[e.sf.oth2.9001] System error occurred!"));

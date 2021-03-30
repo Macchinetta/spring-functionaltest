@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.jmss;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import static org.openqa.selenium.By.id;
 
@@ -52,6 +52,12 @@ public class JMSTest extends FunctionTestSupport {
                 Void.class);
     }
 
+    /**
+     * JMSS0101001
+     * <ul>
+     * <li>ActiveMQ固有の定義でコネクションファクトリを取得し、メッセージが送受信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0101001() {
 
@@ -80,6 +86,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0102001
+     * <ul>
+     * <li>JNDI名による名前解決でコネクションファクトリを取得し、メッセージが送受信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0102001() {
 
@@ -108,6 +120,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0103001
+     * <ul>
+     * <li>CachingConnectionFactoryを使用し、メッセージが送受信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0103001() {
 
@@ -158,6 +176,12 @@ public class JMSTest extends FunctionTestSupport {
         testJMSS0102001();
     }
 
+    /**
+     * JMSS0301001
+     * <ul>
+     * <li>JmsTemplateを使用し、JMSのMessageが送信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0301001() {
 
@@ -197,6 +221,12 @@ public class JMSTest extends FunctionTestSupport {
         testJMSS0103001();
     }
 
+    /**
+     * JMSS0301003
+     * <ul>
+     * <li>JmsMessagingTemplateのsendメソッドを使用しメッセージ送信ができることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0301003() {
 
@@ -225,6 +255,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0301004
+     * <ul>
+     * <li>JmsMessagingTemplateのsendメソッドを使用しトピックにメッセージ送信ができることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0301004() {
 
@@ -252,6 +288,12 @@ public class JMSTest extends FunctionTestSupport {
                 "All of the subscriber has been received."));
     }
 
+    /**
+     * JMSS0302001
+     * <ul>
+     * <li>同一メッセージの大量送信の動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0302001() {
 
@@ -277,6 +319,12 @@ public class JMSTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("receiveCount")), is("3"));
     }
 
+    /**
+     * JMSS0303001
+     * <ul>
+     * <li>メッセージヘッダ(デリバリモード、優先度、TTL)を編集して送信した際の動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0303001() {
 
@@ -304,6 +352,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0303002
+     * <ul>
+     * <li>メッセージヘッダ(デリバリモード、優先度、TTL)を編集して送信した際の動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0303002() {
 
@@ -340,6 +394,12 @@ public class JMSTest extends FunctionTestSupport {
         testJMSS0103001();
     }
 
+    /**
+     * JMSS0401002
+     * <ul>
+     * <li>selectorによりメッセージの絞込みができることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0401002() {
 
@@ -360,6 +420,12 @@ public class JMSTest extends FunctionTestSupport {
                 "Not Received!"));
     }
 
+    /**
+     * JMSS0401003
+     * <ul>
+     * <li>selectorによりメッセージの絞込みができることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0401003() {
 
@@ -388,6 +454,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0402001
+     * <ul>
+     * <li>@SendToにより、メッセージが送信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0402001() {
 
@@ -415,6 +487,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0403001
+     * <ul>
+     * <li>JmsResponseにより、メッセージが送信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0403001() {
 
@@ -445,6 +523,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0403002
+     * <ul>
+     * <li>JmsResponseにより、メッセージが送信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0403002() {
 
@@ -474,6 +558,12 @@ public class JMSTest extends FunctionTestSupport {
                 "TestQueue0403001C"));
     }
 
+    /**
+     * JMSS403003
+     * <ul>
+     * <li>JmsResponseにより、メッセージが送信できることを確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0403003() {
 
@@ -503,6 +593,12 @@ public class JMSTest extends FunctionTestSupport {
                 "TestQueue0403003B"));
     }
 
+    /**
+     * JMSS0404001
+     * <ul>
+     * <li>Concurrencyの設定によるマルチスレッドの動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0404001() {
 
@@ -529,6 +625,12 @@ public class JMSTest extends FunctionTestSupport {
         assertThat(checkThreadIdAssertion(false, identifier), is(true));
     }
 
+    /**
+     * JMSS0404002
+     * <ul>
+     * <li>Concurrencyの設定によるマルチスレッドの動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0404002() {
 
@@ -555,6 +657,12 @@ public class JMSTest extends FunctionTestSupport {
         assertThat(checkThreadIdAssertion(true, identifier), is(true));
     }
 
+    /**
+     * JMSS0501001
+     * <ul>
+     * <li>メッセージの同期受信の動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0501001() {
 
@@ -578,6 +686,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0601001
+     * <ul>
+     * <li>送信時のトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0601001() {
 
@@ -602,6 +716,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0601002
+     * <ul>
+     * <li>送信時のトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0601002() {
 
@@ -623,6 +743,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0602001
+     * <ul>
+     * <li>同期受信時のトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0602001() {
 
@@ -647,6 +773,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0602002
+     * <ul>
+     * <li>同期受信時のトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0602002() {
 
@@ -668,6 +800,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0603001
+     * <ul>
+     * <li>@JmsListenerを使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0603001() {
         String identifier = UUID.randomUUID().toString();
@@ -695,6 +833,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0603002
+     * <ul>
+     * <li>@JmsListenerを使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0603002() {
 
@@ -724,6 +868,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0604001
+     * <ul>
+     * <li>送信時のJMSとDBの両方使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0604001() {
 
@@ -752,6 +902,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0604002
+     * <ul>
+     * <li>送信時のJMSとDBの両方使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0604002() {
 
@@ -776,6 +932,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0604005
+     * <ul>
+     * <li>非同期受信時のJMSとDBの両方使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0604005() {
 
@@ -804,6 +966,12 @@ public class JMSTest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JMSS0604006
+     * <ul>
+     * <li>非同期受信時のJMSとDBの両方使用したときのトランザクション管理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0604006() {
 
@@ -832,6 +1000,12 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_MQ_" + identifier));
     }
 
+    /**
+     * JMSS0701001
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701001() {
 
@@ -859,6 +1033,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0701002
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701002() {
 
@@ -886,6 +1066,12 @@ public class JMSTest extends FunctionTestSupport {
                 "Validated!! :" + identifier));
     }
 
+    /**
+     * JMSS0701003
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701003() {
         String identifier = UUID.randomUUID().toString();
@@ -912,6 +1098,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0701004
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701004() {
         String identifier = UUID.randomUUID().toString();
@@ -938,6 +1130,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0701005
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701005() {
         String identifier = UUID.randomUUID().toString();
@@ -964,6 +1162,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0701006
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701006() {
         String identifier = UUID.randomUUID().toString();
@@ -990,6 +1194,12 @@ public class JMSTest extends FunctionTestSupport {
                 identifier));
     }
 
+    /**
+     * JMSS0701007
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701007() {
         String identifier = UUID.randomUUID().toString();
@@ -1016,6 +1226,12 @@ public class JMSTest extends FunctionTestSupport {
                 "rollbacked_DB_" + identifier));
     }
 
+    /**
+     * JMSS0701008
+     * <ul>
+     * <li>受信データの入力チェック</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0701008() {
         String identifier = UUID.randomUUID().toString();
@@ -1053,6 +1269,12 @@ public class JMSTest extends FunctionTestSupport {
         testJMSS0701001();
     }
 
+    /**
+     * JMSS0802001
+     * <ul>
+     * <li>非同期受信メソッド内で例外をスローしたときの例外処理について動作を確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0802001() {
 
@@ -1080,6 +1302,12 @@ public class JMSTest extends FunctionTestSupport {
                 "SystemException Error.*");
     }
 
+    /**
+     * JMSS0803001
+     * <ul>
+     * <li>非同期受信メソッド内で例外をスローしたときのtry-catchによる例外処理が行われているか確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0803001() {
 
@@ -1107,6 +1335,12 @@ public class JMSTest extends FunctionTestSupport {
                 "ResultMessage \\[code=e.sf.jmss.8004");
     }
 
+    /**
+     * JMSS0803002
+     * <ul>
+     * <li>非同期受信メソッド内で例外をスローしたときのtry-catchによる例外処理が行われているか確認する。</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0803002() {
 
@@ -1134,6 +1368,12 @@ public class JMSTest extends FunctionTestSupport {
                 "BusinessException! :" + identifier));
     }
 
+    /**
+     * JMSS0901001
+     * <ul>
+     * <li>サイズの大きなデータの送受信</li>
+     * </ul>
+     */
     @Test
     public void testJMSS0901001() {
 

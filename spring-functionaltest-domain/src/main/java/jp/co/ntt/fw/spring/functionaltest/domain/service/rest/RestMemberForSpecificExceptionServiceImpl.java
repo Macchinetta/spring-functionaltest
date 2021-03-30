@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rest;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.message.DomainMessageCodes;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
-
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.message.DomainMessageCodes;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
 
 @Service
 public class RestMemberForSpecificExceptionServiceImpl implements

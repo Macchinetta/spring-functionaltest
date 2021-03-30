@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.cspr;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository;
 
 public class CommitterUserDetailsService implements UserDetailsService {
 

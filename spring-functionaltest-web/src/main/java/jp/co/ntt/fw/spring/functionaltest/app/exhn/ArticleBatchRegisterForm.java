@@ -20,9 +20,9 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
-
 import org.springframework.web.multipart.MultipartFile;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileRequired;
 
 public class ArticleBatchRegisterForm implements Serializable {
 

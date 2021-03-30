@@ -79,3 +79,9 @@ jndi.prefix=java:comp/env/
 oth2.server.protocol=${OAUTH2_PROTOCOL!'http'}
 oth2.server.host=${HOST_IP!'localhost'}
 oth2.server.port=${APSRV_WEB_PORT!'8080'}
+
+# Settings specific test cases to run for various environments
+test.environment=${MAIL_SERVER_PROFILE!'nonMailServer'}
+jms.test.environment=${MQ_SERVER_PROFILE!'nonMQServer'}
+test.environment.view=${TEST_ENV_VIEW!'jsp'}
+test.environment.weblogic=${TEST_ENV_WEBLOGIC!'false'}

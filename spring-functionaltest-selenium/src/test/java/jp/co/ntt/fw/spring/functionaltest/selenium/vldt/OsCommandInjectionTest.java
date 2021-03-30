@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Before;

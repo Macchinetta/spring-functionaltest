@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.rest;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
 
 public interface RestMemberService {
 

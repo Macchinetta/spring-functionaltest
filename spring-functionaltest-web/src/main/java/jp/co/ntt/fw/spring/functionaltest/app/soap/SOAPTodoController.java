@@ -23,10 +23,6 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoProxyService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -40,6 +36,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.terasoluna.gfw.common.exception.SystemException;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoProxyService;
 
 @RequestMapping("todo/{proxy}")
 @Controller

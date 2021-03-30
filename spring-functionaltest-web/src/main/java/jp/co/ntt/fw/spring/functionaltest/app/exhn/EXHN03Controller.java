@@ -17,11 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.ThrowErrorService;
-
-import com.github.dozermapper.core.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -39,6 +34,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.NestedServletException;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.ThrowErrorService;
 
 @Controller
 @RequestMapping("exhn")

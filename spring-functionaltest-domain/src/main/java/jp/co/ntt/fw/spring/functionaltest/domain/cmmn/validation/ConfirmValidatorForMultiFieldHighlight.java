@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 
+import java.util.Objects;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 public class ConfirmValidatorForMultiFieldHighlight implements
                                                     ConstraintValidator<ConfirmForMultiFieldHighlight, Object> {
@@ -35,7 +35,7 @@ public class ConfirmValidatorForMultiFieldHighlight implements
     @Override
     public void initialize(ConfirmForMultiFieldHighlight constraintAnnotation) {
         field = constraintAnnotation.field();
-        confirmField = "confirm" + StringUtils.capitalize(field);
+        confirmField = constraintAnnotation.confirmField();
         message = constraintAnnotation.message();
     }
 
@@ -44,16 +44,15 @@ public class ConfirmValidatorForMultiFieldHighlight implements
         BeanWrapper beanWrapper = new BeanWrapperImpl(value);
         Object fieldValue = beanWrapper.getPropertyValue(field);
         Object confirmFieldValue = beanWrapper.getPropertyValue(confirmField);
-        boolean matched = ObjectUtils.nullSafeEquals(fieldValue,
-                confirmFieldValue);
+        boolean matched = Objects.equals(fieldValue, confirmFieldValue);
         if (matched) {
             return true;
         } else {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(message)
-                    .addPropertyNode(field).addConstraintViolation();
+                    .addPropertyNode(confirmField).addConstraintViolation();
             context.buildConstraintViolationWithTemplate("").addPropertyNode(
-                    confirmField).addConstraintViolation();
+                    field).addConstraintViolation();
 
             return false;
         }

@@ -20,9 +20,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.OAuthClient;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2.OAuthClientRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +29,9 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.OAuthClient;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2.OAuthClientRepository;
 
 @Service("clientDetailsService")
 @Transactional

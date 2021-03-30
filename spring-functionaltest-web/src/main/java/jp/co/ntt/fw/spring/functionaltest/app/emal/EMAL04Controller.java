@@ -19,16 +19,16 @@ import java.util.Arrays;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.AuthErrorMailSendingService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.ConnectionErrorMailSendingService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.AuthErrorMailSendingService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.ConnectionErrorMailSendingService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
 
 @Controller
 @RequestMapping("emal")

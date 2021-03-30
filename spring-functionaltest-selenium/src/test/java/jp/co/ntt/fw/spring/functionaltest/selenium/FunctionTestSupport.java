@@ -21,8 +21,6 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -36,14 +34,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.annotation.ProfileValueSourceConfiguration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "classpath:META-INF/spring/seleniumContext.xml" })
+@ProfileValueSourceConfiguration(InfraPropertiesSystemProfileValueSource.class)
 public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
     private static final Logger logger = LoggerFactory.getLogger(

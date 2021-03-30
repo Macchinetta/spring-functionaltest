@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.Serializable;
 
-import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractTimeSupportedResource;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+
+import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractTimeSupportedResource;
 
 public class MemberResourceWithAdvice extends AbstractTimeSupportedResource
                                       implements Serializable {

@@ -20,6 +20,15 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.exception.SystemException;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookCrudRepository;
@@ -27,16 +36,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookEGCrudRe
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryEGCRUDRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryRepository;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.exception.SystemException;
 
 @Service
 @Transactional(value = "jpaTransactionManager")

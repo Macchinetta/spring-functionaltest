@@ -35,12 +35,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeUtility;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.SystemException;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
 
 @Service
 public class MailReceivingSharedServiceImpl implements

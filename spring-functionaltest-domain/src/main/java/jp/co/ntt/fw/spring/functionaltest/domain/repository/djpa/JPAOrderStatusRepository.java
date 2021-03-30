@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderStatus;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderStatus;
 
 public interface JPAOrderStatusRepository extends
                                           JpaRepository<JPAOrderStatus, String> {

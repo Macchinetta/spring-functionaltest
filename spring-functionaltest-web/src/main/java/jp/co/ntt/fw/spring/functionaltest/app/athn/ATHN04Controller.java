@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails;
 
 @Controller
 public class ATHN04Controller {

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.Confirm;
 
-@Confirm(field = "password")
+@Confirm(field = "password", confirmField = "confirmPassword")
 public class ConfirmForm implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -19,8 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.groups.Default;
 
-import jp.co.ntt.fw.spring.functionaltest.app.vldt.AuthorizedValidationForm.Anonymous;
-
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +30,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.app.vldt.AuthorizedValidationForm.Anonymous;
 
 @Controller
 @RequestMapping("vldt/0103/003")

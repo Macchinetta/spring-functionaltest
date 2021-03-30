@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.intr;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
 import org.junit.Ignore;

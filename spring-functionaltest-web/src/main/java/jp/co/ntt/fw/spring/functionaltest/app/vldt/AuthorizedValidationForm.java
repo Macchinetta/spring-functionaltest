@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 
 public class AuthorizedValidationForm implements Serializable {

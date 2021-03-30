@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
-
 import org.apache.ibatis.session.RowBounds;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 
 public interface DeliveryOrderRepository {
 

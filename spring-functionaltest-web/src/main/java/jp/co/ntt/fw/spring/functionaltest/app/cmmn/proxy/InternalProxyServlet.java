@@ -17,13 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Objects;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jetty.proxy.ProxyServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,8 +124,8 @@ public class InternalProxyServlet extends ProxyServlet {
         String[] credentials = getCredentialsFromHeader(header);
 
         // 認証情報の判定
-        if (credentials != null && StringUtils.equals(credentials[0],
-                InternalProxyServlet.proxyUserName) && StringUtils.equals(
+        if (credentials != null && Objects.equals(credentials[0],
+                InternalProxyServlet.proxyUserName) && Objects.equals(
                         credentials[1], InternalProxyServlet.proxyPassword)) {
             // 認証情報が正しい場合、trueを返す。
             return true;

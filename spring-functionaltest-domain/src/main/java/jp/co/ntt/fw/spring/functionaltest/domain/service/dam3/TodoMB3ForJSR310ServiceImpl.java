@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -27,6 +26,14 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.terasoluna.gfw.common.exception.SystemException;
+
+import com.github.dozermapper.core.Mapper;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DateMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryMB3Repository;
@@ -35,21 +42,9 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoBatchReposi
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoReUseRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository;
 
-import org.apache.commons.io.IOUtils;
-import com.github.dozermapper.core.Mapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.exception.SystemException;
-
 @Transactional
 @Service
 public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            TodoMB3ForJSR310ServiceImpl.class);
 
     @Inject
     TodoRepository todoRepository;

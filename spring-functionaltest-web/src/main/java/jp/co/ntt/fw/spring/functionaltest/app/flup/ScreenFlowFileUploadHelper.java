@@ -20,13 +20,13 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
 
 @Component
 public class ScreenFlowFileUploadHelper {

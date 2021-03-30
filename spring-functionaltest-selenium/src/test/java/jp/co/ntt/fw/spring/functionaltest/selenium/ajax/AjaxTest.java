@@ -15,9 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.ajax;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.By.id;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +29,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 

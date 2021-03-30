@@ -5,7 +5,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.7.1.RELEASE</version>
+    <version>1.8.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - DB Init</name>
@@ -70,7 +70,7 @@
         <db.username>cfw</db.username>
         <db.password>cfw</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
-        <db.groupId>com.oracle.ojdbc</db.groupId>
+        <db.groupId>com.oracle.database.jdbc</db.groupId>
         <db.artifactId>ojdbc8</db.artifactId>
         <db.version>${ojdbc.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
@@ -85,7 +85,7 @@
         <db.username>cfw_open</db.username>
         <db.password>cfw_open</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
-        <db.groupId>com.oracle.ojdbc</db.groupId>
+        <db.groupId>com.oracle.database.jdbc</db.groupId>
         <db.artifactId>ojdbc8</db.artifactId>
         <db.version>${ojdbc.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
@@ -100,7 +100,7 @@
         <db.username>cfw_close</db.username>
         <db.password>cfw_close</db.password>
         <db.driver>oracle.jdbc.driver.OracleDriver</db.driver>
-        <db.groupId>com.oracle.ojdbc</db.groupId>
+        <db.groupId>com.oracle.database.jdbc</db.groupId>
         <db.artifactId>ojdbc8</db.artifactId>
         <db.version>${ojdbc.version}</db.version>
         <db.delimiterType>row</db.delimiterType>

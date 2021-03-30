@@ -15,9 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;

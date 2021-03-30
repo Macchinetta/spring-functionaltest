@@ -17,10 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.dtac;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingService;
-
-import com.github.dozermapper.core.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -33,6 +29,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingService;
 
 @RequestMapping("dtac/user")
 @Controller

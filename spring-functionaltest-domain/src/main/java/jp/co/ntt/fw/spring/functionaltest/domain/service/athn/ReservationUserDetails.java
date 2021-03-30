@@ -19,11 +19,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
 
 public class ReservationUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;

@@ -19,7 +19,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import com.github.dozermapper.core.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -31,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.github.dozermapper.core.Mapper;
 
 @RequestMapping("shopping/cart")
 @Controller

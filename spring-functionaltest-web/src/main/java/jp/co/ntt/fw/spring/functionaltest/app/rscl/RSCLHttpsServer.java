@@ -30,8 +30,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 import javax.xml.bind.JAXB;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
-
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +40,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 /**
  * <ul>

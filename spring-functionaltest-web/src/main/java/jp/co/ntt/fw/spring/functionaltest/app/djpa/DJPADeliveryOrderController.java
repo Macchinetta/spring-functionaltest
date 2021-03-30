@@ -18,17 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.DeliveryOrderCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderService;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -43,6 +35,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.DeliveryOrderCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAOrderService;
 
 @Controller
 @RequestMapping("djpa/delivery/order")
@@ -292,7 +291,8 @@ public class DJPADeliveryOrderController {
     @RequestMapping(method = RequestMethod.GET, params = "orderDet")
     public String dispalyOrders(DeliveryOrderStatusForm form, Model model) {
         model.addAttribute("deliveryOrderStatusForm", form);
-        JPAOrder orde = jpaOrderService.getOrderDetail(1);
+        // Need to get JpaOrder.
+        jpaOrderService.getOrderDetail(1);
         return "djpa/jpaDeliverOrderUpdateForm";
     }
 

@@ -18,11 +18,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.cspr;
 import java.util.Collections;
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
 
 public class CommitterUserDetails extends User {
 

@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import java.util.concurrent.CountDownLatch;
@@ -58,6 +58,7 @@ public class DataAccessExclusiveJPATest extends
     /**
      * DJPA0304001
      * <ul>
+     * <li>Setting Query Hints</li>
      * </ul>
      * @throws InterruptedException
      */
@@ -143,6 +144,7 @@ public class DataAccessExclusiveJPATest extends
     /**
      * DJPA0304002
      * <ul>
+     * <li>Setting Query Hints</li>
      * </ul>
      * @throws InterruptedException
      */

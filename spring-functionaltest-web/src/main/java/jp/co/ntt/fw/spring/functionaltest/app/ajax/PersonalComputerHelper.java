@@ -21,11 +21,6 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.ajax.PersonalComputerService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.context.MessageSource;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
@@ -36,6 +31,11 @@ import org.terasoluna.gfw.common.message.ResultMessage;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.ajax.PersonalComputerService;
 
 @Component
 public class PersonalComputerHelper {

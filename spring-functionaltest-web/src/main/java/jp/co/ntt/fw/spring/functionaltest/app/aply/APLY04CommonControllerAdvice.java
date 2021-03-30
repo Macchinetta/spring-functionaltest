@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
-import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalException;
-
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalException;
 
 @ControllerAdvice
 @Order(3)

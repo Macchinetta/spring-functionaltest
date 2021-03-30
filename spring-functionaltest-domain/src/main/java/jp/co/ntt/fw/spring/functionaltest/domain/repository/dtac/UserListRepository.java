@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.dtac;
 
 import java.util.List;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-
 import org.apache.ibatis.session.RowBounds;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public interface UserListRepository {
 

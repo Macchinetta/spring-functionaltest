@@ -17,9 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -29,10 +31,13 @@ import javax.validation.Payload;
 
 import org.terasoluna.gfw.common.validator.constraints.Compare;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmUsingCompare.List;
+
 @Documented
 @Constraint(validatedBy = {})
-@Target({ TYPE, ANNOTATION_TYPE })
+@Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
 @Retention(RUNTIME)
+@Repeatable(List.class)
 @Compare(left = "", right = "", operator = Compare.Operator.EQUAL, requireBoth = true)
 public @interface ConfirmUsingCompare {
 
@@ -43,16 +48,16 @@ public @interface ConfirmUsingCompare {
 
     Class<? extends Payload>[] payload() default {};
 
-    @OverridesAttribute(constraint = Compare.class, name = "left")
+    @OverridesAttribute(constraint = Compare.class, name = "right")
     String field();
 
-    @OverridesAttribute(constraint = Compare.class, name = "right")
+    @OverridesAttribute(constraint = Compare.class, name = "left")
     String confirmField();
 
     @Documented
-    @Target({ TYPE, ANNOTATION_TYPE })
+    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
     @Retention(RUNTIME)
     @interface List {
-        Confirm[] value();
+        ConfirmUsingCompare[] value();
     }
 }

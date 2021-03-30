@@ -15,8 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.infra.dozer.converter;
 
-import com.github.dozermapper.core.DozerConverter;
 import org.joda.time.LocalDate;
+
+import com.github.dozermapper.core.DozerConverter;
 
 public class JodaLocalDateConverter extends
                                     DozerConverter<LocalDate, LocalDate> {

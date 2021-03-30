@@ -18,9 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.pgnt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -44,6 +45,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.click(id("pgnt0101001"));
         webDriverOperations.select(id("sort"), "No. DESC");
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5";
@@ -94,6 +96,7 @@ public class PaginationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("pgnt0101002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         assertThat(webDriverOperations.getText(By.xpath("//td")), is("1"));
@@ -311,6 +314,7 @@ public class PaginationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("pgnt0101003"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl() + "&size=2000";
         webDriverOperations.getWebDriver().get(searchURL);
@@ -352,6 +356,7 @@ public class PaginationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("pgnt0102001"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl() + "&size=5";
         webDriverOperations.getWebDriver().get(searchURL);
@@ -376,6 +381,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0102001"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         searchURL = webDriverOperations.getCurrentUrl() + "&size=6";
         webDriverOperations.getWebDriver().get(searchURL);
@@ -405,6 +411,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0102002() throws IOException {
         webDriverOperations.click(id("pgnt0102002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=title,ASC";
@@ -470,6 +477,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0102002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         assertThat(webDriverOperations.getText(By.xpath("//td")), is("2010"));
@@ -587,6 +595,7 @@ public class PaginationTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("pgnt0202001"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=article_id,ASC";
@@ -652,6 +661,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0202001"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         assertThat(webDriverOperations.getText(By.xpath("//td")), is("2010"));
@@ -728,6 +738,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0202002() throws IOException {
         webDriverOperations.click(id("pgnt0202002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=title,ASC";
@@ -793,6 +804,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0202002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         // 10件一覧表示しているかの確認
@@ -827,6 +839,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0202003() throws IOException {
         webDriverOperations.click(id("pgnt0202003"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=title,ASC";
@@ -892,6 +905,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0202003"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         // 11件一覧表示しているかの確認
@@ -927,6 +941,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0202004() throws IOException {
         webDriverOperations.click(id("pgnt0202004"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=title,ASC";
@@ -992,6 +1007,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0202004"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         // 12件一覧表示しているかの確認
@@ -1029,6 +1045,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0202005() throws IOException {
         webDriverOperations.click(id("pgnt0202005"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl()
                 + "&page=1&size=5&sort=title,ASC";
@@ -1094,6 +1111,7 @@ public class PaginationTest extends FunctionTestSupport {
         webDriverOperations.displayPage(getPackageRootUrl());
         webDriverOperations.click(id("pgnt0202005"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         // 10件一覧表示しているかの確認
@@ -1128,6 +1146,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0502001() throws IOException {
         webDriverOperations.click(id("pgnt0502001"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 取得データの比較
         // 10件一覧表示しているかの確認
@@ -1173,6 +1192,7 @@ public class PaginationTest extends FunctionTestSupport {
     public void testPGNT0502002() throws IOException {
         webDriverOperations.click(id("pgnt0502002"));
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         String searchURL = webDriverOperations.getCurrentUrl() + "&size=26";
         webDriverOperations.getWebDriver().get(searchURL);
@@ -1259,6 +1279,7 @@ public class PaginationTest extends FunctionTestSupport {
 
         webDriverOperations.appendText(id("firstName"), "spring");
         webDriverOperations.click(id("searchBtn"));
+        webDriverOperations.waitForDisplayed(urlContains("Search"));
 
         // 一覧のヘッダ部が出力されていることをチェック
         assertThat(webDriverOperations.exists(By.xpath("//th")), is(true));

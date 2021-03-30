@@ -79,7 +79,7 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0201/001", method = RequestMethod.GET)
     public String handle01001(FormObjectForm form, Model model) {
-        form.setValue1(new Integer("1234567"));
+        form.setValue1(1234567);
         return "aply/formObjectForm";
     }
 
@@ -90,7 +90,7 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0201/002", method = RequestMethod.GET)
     public String handle01002(FormObjectForm form, Model model) {
-        form.setValue2(new Integer("2345678"));
+        form.setValue2(2345678);
         return "aply/formObjectForm";
     }
 
@@ -101,7 +101,7 @@ public class APLY02Controller {
 
     @RequestMapping(value = "0201/003", method = RequestMethod.GET)
     public String handle01003(FormObjectForm form, Model model) {
-        form.setValue3(new Integer("3456789"));
+        form.setValue3(3456789);
         return "aply/formObjectForm";
     }
 

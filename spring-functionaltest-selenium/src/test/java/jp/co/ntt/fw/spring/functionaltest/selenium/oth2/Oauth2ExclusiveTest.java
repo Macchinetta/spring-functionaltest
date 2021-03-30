@@ -15,13 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
@@ -67,6 +69,7 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
         operations.overrideText(id("username"), userName);
         operations.overrideText(id("password"), "demo");
         operations.click(id("send"));
+        operations.waitForDisplayed(textToBe(xpath("//h1"), "OAuth Approval"));
     }
 
     private void inputResourceOwnerCredential(WebDriverOperations operations) {
@@ -96,7 +99,8 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
 
         operationsGet.click(id("scope.READ_approve"));
         operationsGet.click(id("authorize"));
-        assertThat(operationsGet.getText(id("title")), is(TITLE_GET_OPERATION));
+        operationsGet.waitForDisplayed(textToBe(id("title"),
+                TITLE_GET_OPERATION));
         assertThat(operationsGet.getText(id("response")), is("Success"));
 
         operationsPost.click(id("oth20101002"));
@@ -104,7 +108,7 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
 
         operationsPost.click(id("scope.CREATE_approve"));
         operationsPost.click(id("authorize"));
-        assertThat(operationsPost.getText(id("title")), is(
+        operationsPost.waitForDisplayed(textToBe(id("title"),
                 TITLE_POST_OPERATION));
         assertThat(operationsPost.getText(id("response")), is("Success"));
 
@@ -112,7 +116,8 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
         operationsGet.click(id("springTestTop"));
         operationsGet.click(id("oth2Link"));
         operationsGet.click(id("oth20101001"));
-        assertThat(operationsGet.getText(id("title")), is(TITLE_GET_OPERATION));
+        operationsGet.waitForDisplayed(textToBe(id("title"),
+                TITLE_GET_OPERATION));
         assertThat(operationsGet.getText(id("response")), is("Success"));
 
     }
@@ -135,7 +140,8 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
 
         operationsGet.click(id("scope.READ_approve"));
         operationsGet.click(id("authorize"));
-        assertThat(operationsGet.getText(id("title")), is(TITLE_GET_OPERATION));
+        operationsGet.waitForDisplayed(textToBe(id("title"),
+                TITLE_GET_OPERATION));
         assertThat(operationsGet.getText(id("response")), is("Success"));
 
         // setup WebDriver for demo user
@@ -147,7 +153,7 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
         // Resource Owner Credential Grant Menu operation
         operationsGetOtherClient.click(id("oth20104001"));
 
-        assertThat(operationsGetOtherClient.getText(id("title")), is(
+        operationsGetOtherClient.waitForDisplayed(textToBe(id("title"),
                 TITLE_GET_OPERATION));
         assertThat(operationsGetOtherClient.getText(id("response")), is(
                 "Success"));
@@ -175,7 +181,8 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
         operationsGet.click(id("scope.UPDATE_approve"));
         operationsGet.click(id("scope.DELETE_approve"));
         operationsGet.click(id("authorize"));
-        assertThat(operationsGet.getText(id("title")), is(TITLE_GET_OPERATION));
+        operationsGet.waitForDisplayed(textToBe(id("title"),
+                TITLE_GET_OPERATION));
         assertThat(operationsGet.getText(id("response")), is("Success"));
 
         String token_before = operationsGet.getText(id("token"));
@@ -189,7 +196,8 @@ public class Oauth2ExclusiveTest extends FunctionTestSupportForMultiBrowser {
 
         operationsGet.click(id("scope.READ_approve"));
         operationsGet.click(id("authorize"));
-        assertThat(operationsGet.getText(id("title")), is(TITLE_GET_OPERATION));
+        operationsGet.waitForDisplayed(textToBe(id("title"),
+                TITLE_GET_OPERATION));
         assertThat(operationsGet.getText(id("response")), is("Success"));
 
         String token_after = operationsGet.getText(id("token"));

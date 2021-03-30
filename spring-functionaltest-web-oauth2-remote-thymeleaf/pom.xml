@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.7.1.RELEASE</version>
+    <version>1.8.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer OAuth2 Remote For Thymeleaf</name>
@@ -163,14 +163,14 @@
       <artifactId>thymeleaf-extras-java8time</artifactId>
     </dependency>
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
     <!-- == End Thymeleaf == -->
 
     <!-- == Begin Tomcat == -->
-    <!-- Servlet API 3.0 & JSP API 2.2 -->
+    <!-- Servlet API 4.0 & JSP API 2.3 -->
     <dependency>
       <groupId>org.apache.tomcat</groupId>
       <artifactId>tomcat-jsp-api</artifactId>

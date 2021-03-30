@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.hlch;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.hlch.HealthCheckService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.hlch.HealthCheckService;
 
 @RequestMapping("hlch")
 @Controller

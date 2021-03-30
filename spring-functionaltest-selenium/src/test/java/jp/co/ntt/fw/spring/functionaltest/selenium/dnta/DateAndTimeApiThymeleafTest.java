@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.dnta;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import static org.openqa.selenium.By.*;
+import static org.openqa.selenium.By.id;
 
 import java.util.ArrayList;
 import java.util.List;

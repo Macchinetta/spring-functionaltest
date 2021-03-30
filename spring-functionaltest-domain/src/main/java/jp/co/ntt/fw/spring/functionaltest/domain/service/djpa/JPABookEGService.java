@@ -16,10 +16,11 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
 import java.util.List;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
 public interface JPABookEGService {
 

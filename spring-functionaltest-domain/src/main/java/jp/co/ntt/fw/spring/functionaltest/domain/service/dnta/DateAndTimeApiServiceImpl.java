@@ -17,19 +17,20 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dnta;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.infra.datefactory.dnta.DateAndTimeApiDateFactory;
-
+import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.date.DefaultClassicDateFactory;
 
+import jp.co.ntt.fw.spring.functionaltest.infra.datefactory.dnta.DateAndTimeApiDateFactory;
+
+@Service
 public class DateAndTimeApiServiceImpl implements DateAndTimeApiService {
 
-    // @Inject
+    @Inject
     DefaultClassicDateFactory dateFactory;
 
     @Override

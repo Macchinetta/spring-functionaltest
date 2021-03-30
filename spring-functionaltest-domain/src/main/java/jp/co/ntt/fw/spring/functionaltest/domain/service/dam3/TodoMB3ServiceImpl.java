@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -31,23 +30,10 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.AsClauseTodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryMB3Repository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoBatchRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoReUseRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import com.github.dozermapper.core.Mapper;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
@@ -62,6 +48,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.exception.SystemException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.AsClauseTodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria2;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryMB3Repository;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoBatchRepository;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoReUseRepository;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoSearchCriteria;
 
 @Transactional
 @Service

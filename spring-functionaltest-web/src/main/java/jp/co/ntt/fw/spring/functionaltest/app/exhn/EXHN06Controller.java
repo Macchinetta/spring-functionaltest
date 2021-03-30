@@ -20,9 +20,9 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.validation.groups.Default;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -141,7 +141,7 @@ public class EXHN06Controller {
             RedirectAttributes redirectAttrs) throws IOException {
         String uploadTemporaryFileId = articleSessionInfo
                 .getUploadTemporaryFileId();
-        if (result.hasErrors() || StringUtils.isEmpty(uploadTemporaryFileId)) {
+        if (result.hasErrors() || !StringUtils.hasText(uploadTemporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
 

@@ -16,14 +16,15 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.dbsp;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
+import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 import java.io.IOException;
 
 import org.junit.Test;
 import org.openqa.selenium.Cookie;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
@@ -56,7 +57,7 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
                 // 画面遷移
                 webDriverOperations.click(id(buttonNames[i]));
                 // 各画面へ遷移したことをチェック
-                assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
                         screenTitles[i]));
             }
         }
@@ -66,16 +67,14 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
         {
             // エラー画面表示まで待機
             String expectedTitle = "Transaction Token Error!";
-            browsers[0].waitForDisplayed(ExpectedConditions.titleContains(
-                    expectedTitle));
-            assertThat(browsers[0].getTitle(), is(expectedTitle));
+            browsers[0].waitForDisplayed(titleIs(expectedTitle));
         }
         // 二番目以降のブラウザは正常に次の画面へ遷移できることを確認
         for (int i = 1; i < 11; i++) {
             // 画面遷移
             browsers[i].click(id("fourth"));
             // 各画面へ遷移したことをチェック
-            assertThat(browsers[i].getText(id("screenTitle")), is(
+            browsers[i].waitForDisplayed(textToBe(id("screenTitle"),
                     "fourthView"));
         }
     }
@@ -106,12 +105,10 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
                     {
                         // エラー画面表示まで待機
                         String expectedTitle = "Transaction Token Error!";
-                        browsers[j].waitForDisplayed(ExpectedConditions
-                                .titleContains(expectedTitle));
-                        assertThat(browsers[j].getTitle(), is(expectedTitle));
+                        browsers[j].waitForDisplayed(titleIs(expectedTitle));
                     }
                 } else {
-                    assertThat(browsers[j].getText(id("screenTitle")), is(
+                    browsers[j].waitForDisplayed(textToBe(id("screenTitle"),
                             screenTitles[i]));
                 }
             }
@@ -143,13 +140,13 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
         // NameSpaceはcreate
         browsers[1].click(id("dbsp0303004"));
         for (WebDriverOperations browser : browsers) {
-            assertThat(browser.getText(id("screenTitle")), is("firstView"));
+            browser.waitForDisplayed(textToBe(id("screenTitle"), "firstView"));
         }
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
                 browsers[j].click(id(buttonNames[i]));
-                assertThat(browsers[j].getText(id("screenTitle")), is(
+                browsers[j].waitForDisplayed(textToBe(id("screenTitle"),
                         screenTitles[i]));
                 // トランザクショントークンを保持する第二、第三、第四画面にて、トークンのNameSpace情報を取得する。
                 if (i < 3) {

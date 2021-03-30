@@ -20,10 +20,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.Gender;
-
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.Gender;
 
 public class GenderTypeHandler extends BaseTypeHandler<Gender> {
 

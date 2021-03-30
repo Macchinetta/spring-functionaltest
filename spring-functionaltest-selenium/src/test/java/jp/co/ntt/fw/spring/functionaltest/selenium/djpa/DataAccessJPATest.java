@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Timestamp;
@@ -370,7 +370,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * 
+     * JPARepository Default Method Confirmation. Method Under Test : boolean exists(ID id)
      */
     @Test
     public void testDJPA0201004() {
@@ -406,6 +406,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void delete(ID id)
+     */
     @Test
     public void testDJPA0201005() {
 
@@ -430,6 +433,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void deleteInBatch(Iterable<T> entities)
+     */
     @Test
     public void testDJPA0201006() {
         clearAndCreateTestDataForBook();
@@ -472,6 +478,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S> save(Iterable<S> entities).
+     */
     @Test
     public void testDJPA0201007() {
 
@@ -517,6 +526,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookCnt, is("21"));
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : List<T> findAll(Sort sort)
+     */
     @Test
     public void testDJPA0201009_1() {
         clearAndCreateTestDataForBook();
@@ -599,6 +611,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : List<T> findAll(Sort sort)
+     */
     @Test
     public void testDJPA0201009_2() {
         clearAndCreateTestDataForBook();
@@ -692,6 +707,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void delete(Iterable<? extends T> entities)
+     */
     @Test
     public void testDJPA0201010() {
         clearAndCreateTestDataForBook();
@@ -713,6 +731,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookCnt, is("0"));
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : T saveAndFlush(T entity)
+     */
     @Test
     public void testDJPA0201011() {
         clearAndCreateTestDataForBook();
@@ -744,6 +765,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
 
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void delete(T entity)
+     */
     @Test
     public void testDJPA0201012() {
         clearAndCreateTestDataForBook();
@@ -768,7 +792,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * 
+     * JPARepository Default Method Confirmation. Method Under Test : T flush(T entity)
      */
     @Test
     public void testDJPA0201013() {
@@ -815,6 +839,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity specific Repository
+     * interface by creating and inheriting a common project specific interface in which only the required methods are defined
+     */
     @Test
     public void testDJPA0202001() {
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
@@ -859,6 +887,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
 
+    /**
+     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity specific Repository
+     * interface without inheriting any interface of Spring Data or common interface
+     */
     @Test
     public void testDJPA0202002() {
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
@@ -904,6 +936,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
 
+    /**
+     * Method to specify a query using @Query annotation.
+     */
     @Test
     public void testDJPA0301001() {
         clearAndCreateTestDataForDeliverOrder();
@@ -949,6 +984,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
     }
 
+    /**
+     * Method to specify a query using @Query annotation. Confirmation of @Query annotation for forward search, backward serach
+     * and partial search
+     */
     @Test
     public void testDJPA0301002() {
         clearAndCreateTestDataForDeliverOrder();
@@ -1011,6 +1050,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
+    /**
+     * Specify the query using method name based on naming conventions
+     */
     @Test
     public void testDJPA0302001() {
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
@@ -1051,6 +1093,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getDeliveryStatus(), is("受付"));
     }
 
+    /**
+     * Specify the Named query in properties file
+     */
     @Test
     public void testDJPA0303001() {
         clearAndCreateTestDataForDeliverOrder();
@@ -1308,8 +1353,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Load timing of the related-entity : Lazy Fetch (cant't fetch related-entity when acquire foreign key)
-     * For changes Hibernate 5.2.12(HHH-11838)
+     * Load timing of the related-entity : Lazy Fetch (cant't fetch related-entity when acquire foreign key) For changes
+     * Hibernate 5.2.12(HHH-11838)
      */
     @Test
     public void testDJPA0601004() {

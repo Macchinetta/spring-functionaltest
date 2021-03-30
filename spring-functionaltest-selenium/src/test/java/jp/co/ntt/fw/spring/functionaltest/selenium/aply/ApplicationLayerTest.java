@@ -18,16 +18,13 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.aply;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -37,6 +34,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
 
 public class ApplicationLayerTest extends FunctionTestSupport {
 
@@ -1099,7 +1099,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "must not be null"));
+                    "null は許可されていません"));
         }
         // ログの確認
         {
@@ -1269,7 +1269,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "must not be null"));
+                    "null は許可されていません"));
         }
         // ログの確認
         {
@@ -1354,7 +1354,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の確認
         {
             assertThat(webDriverOperations.getText(id("value4.errors")), is(
-                    "must not be null"));
+                    "null は許可されていません"));
         }
         // ログの確認
         {

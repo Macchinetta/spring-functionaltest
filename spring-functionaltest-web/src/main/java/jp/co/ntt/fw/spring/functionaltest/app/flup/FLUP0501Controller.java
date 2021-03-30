@@ -20,8 +20,8 @@ import java.io.IOException;
 import javax.inject.Inject;
 import javax.validation.groups.Default;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -83,7 +83,7 @@ public class FLUP0501Controller {
             RedirectAttributes redirectAttributes) throws IOException {
         String temporaryFileId = screenFlowUploadSessionInfo
                 .getTemporaryFileId();
-        if (result.hasErrors() || StringUtils.isEmpty(temporaryFileId)) {
+        if (result.hasErrors() || !StringUtils.hasText(temporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
 
@@ -119,7 +119,7 @@ public class FLUP0501Controller {
             RedirectAttributes redirectAttributes) throws IOException {
         String temporaryFileId = screenFlowUploadSessionInfo
                 .getTemporaryFileId();
-        if (result.hasErrors() || StringUtils.isEmpty(temporaryFileId)) {
+        if (result.hasErrors() || !StringUtils.hasText(temporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
 

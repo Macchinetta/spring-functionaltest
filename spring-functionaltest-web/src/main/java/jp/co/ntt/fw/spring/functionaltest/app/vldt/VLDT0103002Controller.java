@@ -17,15 +17,15 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import javax.validation.groups.Default;
 
-import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Japanese;
-import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Singaporean;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Japanese;
+import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Singaporean;
 
 @Controller
 @RequestMapping("vldt/0103/002")

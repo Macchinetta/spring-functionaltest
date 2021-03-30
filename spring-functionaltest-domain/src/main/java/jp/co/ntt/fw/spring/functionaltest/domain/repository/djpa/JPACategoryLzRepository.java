@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
 import java.io.Serializable;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryLZ;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryLZ;
 
 public interface JPACategoryLzRepository extends
                                          JpaRepository<JPACategoryLZ, Serializable> {

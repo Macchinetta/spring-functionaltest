@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.oth2;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.OAuthClient;
-
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.OAuthClient;
 
 public class OAuthClientDetails extends BaseClientDetails {
 

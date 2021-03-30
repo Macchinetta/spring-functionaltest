@@ -17,14 +17,15 @@ package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.athr.SystemConfigService;
-
-import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.github.dozermapper.core.Mapper;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.athr.SystemConfigService;
 
 @Controller
 public class ATHR09Controller {

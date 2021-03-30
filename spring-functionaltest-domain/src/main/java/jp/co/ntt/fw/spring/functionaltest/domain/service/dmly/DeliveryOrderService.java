@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 
 public interface DeliveryOrderService {
 

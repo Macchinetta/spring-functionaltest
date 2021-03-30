@@ -17,10 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 
 @RequestMapping("jmss")
 @Controller

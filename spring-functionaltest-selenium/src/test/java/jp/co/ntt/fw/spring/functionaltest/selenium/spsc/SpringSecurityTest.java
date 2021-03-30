@@ -15,9 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.spsc;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNull;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.By.name;
 
 import java.io.IOException;
 import java.util.Map;
@@ -82,12 +84,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </pre>
      **/
     @Test
-    public void testSPSC0102001() throws IOException {
+    public void testSPSC0201001() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0102/001", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0201/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -119,12 +121,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </pre>
      **/
     @Test
-    public void testSPSC0102002() throws IOException {
+    public void testSPSC0201002() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0102/002", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0201/002", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -155,12 +157,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </pre>
      **/
     // @Test
-    public void testSPSC0102003() throws IOException {
+    public void testSPSC0201003() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0102/003", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0201/003", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -197,12 +199,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0102004() throws IOException {
+    public void testSPSC0201004() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0102/004", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0201/004", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -234,12 +236,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0102006() throws IOException {
+    public void testSPSC0201006() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0102/006", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0201/006", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -262,12 +264,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0103001() throws IOException {
+    public void testSPSC0301001() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0103/001", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0301/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -291,12 +293,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      **/
     @Ignore("リクエストパスがJSPパスに変更されたタイミングでパスマッチングを行い失敗するため実施不可(issues#93)")
     @Test
-    public void testSPSC0104001() throws IOException {
+    public void testSPSC0401001() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0104/001/notsecure/001",
+                applicationContextUrl + "/spsc/0401/001/notsecure/001",
                 HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
                 byte[].class);
 
@@ -309,7 +311,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
         assertNull(resultMap.get("Expires"));
 
         entity = restTemplate.exchange(applicationContextUrl
-                + "/spsc/0104/001/secure/001", HttpMethod.GET,
+                + "/spsc/0401/001/secure/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         requestHeaders2 = entity.getHeaders();
@@ -335,12 +337,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0105001() throws IOException {
+    public void testSPSC0501001() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0105/001", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0501/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -365,12 +367,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0105002() throws IOException {
+    public void testSPSC0501002() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0105/002", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0501/002", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -395,12 +397,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0105003() throws IOException {
+    public void testSPSC0501003() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0105/003", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0501/003", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -424,12 +426,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * </ul>
      **/
     @Test
-    public void testSPSC0105004() throws IOException {
+    public void testSPSC0501004() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0105/004", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0501/004", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -460,12 +462,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")
     @Test
-    public void testSPSC0106001() throws IOException {
+    public void testSPSC0601001() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0106/001", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0601/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -497,12 +499,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")
     @Test
-    public void testSPSC0106002() throws IOException {
+    public void testSPSC0601002() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0106/002", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0601/002", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
@@ -536,12 +538,12 @@ public class SpringSecurityTest extends FunctionTestSupport {
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")
     @Test
-    public void testSPSC0106003() throws IOException {
+    public void testSPSC0601003() throws IOException {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0106/003", HttpMethod.GET,
+                applicationContextUrl + "/spsc/0601/003", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();

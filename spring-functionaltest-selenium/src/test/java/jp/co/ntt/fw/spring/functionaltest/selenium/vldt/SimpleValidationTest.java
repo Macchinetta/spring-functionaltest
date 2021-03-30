@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 
@@ -459,8 +459,6 @@ public class SimpleValidationTest extends FunctionTestSupport {
 
             // テスト実行(Hibernate Validator)
             {
-                LocalDate ld = new LocalDate();
-
                 webDriverOperations.overrideText(id(
                         hibernateValidatorTargets[0]), "1234567890123456");
                 webDriverOperations.overrideText(id(

@@ -15,14 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.openqa.selenium.By.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -95,11 +97,13 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20201001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -117,11 +121,13 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20201002"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.CREATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_POST_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -139,11 +145,13 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20201003"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.UPDATE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_PUT_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -161,11 +169,13 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20201004"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.DELETE_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_DELETE_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -184,7 +194,7 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         webDriverOperations.click(id("oth20201001"));
         authServerLogin();
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));
@@ -204,11 +214,13 @@ public class Oauth2InMemoryTest extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20201001"));
         authServerLogin();
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
         webDriverOperations.click(id("authorize"));
 
-        assertThat(webDriverOperations.getText(id("title")), is(
+        webDriverOperations.waitForDisplayed(textToBe(By.id("title"),
                 TITLE_GET_OPERATION));
         assertThat(webDriverOperations.getText(id("response")), is("Success"));
         assertThat(webDriverOperations.getText(id("token")), not(""));

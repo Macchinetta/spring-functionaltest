@@ -18,12 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dtac;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.inject.Named;
-
-import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.dtac.UserListRoutingRepository;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.data.domain.Page;
@@ -32,6 +27,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
+import jp.co.ntt.fw.spring.functionaltest.domain.repository.dtac.UserListRoutingRepository;
 
 @Transactional
 @Service

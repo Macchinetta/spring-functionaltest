@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.OauthRevokeTokenClientService;
 
 @RequestMapping("oth2/client/token")

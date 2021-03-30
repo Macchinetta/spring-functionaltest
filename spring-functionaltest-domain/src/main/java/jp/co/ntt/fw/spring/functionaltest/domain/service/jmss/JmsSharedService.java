@@ -23,9 +23,9 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-
 import org.springframework.jms.core.JmsTemplate;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsSharedService {
 

@@ -26,11 +26,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.terasoluna.gfw.common.query.QueryEscapeUtils;
+
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public class TDeliveryOrderRepositoryImpl implements
                                           TDeliveryOrderRepositoryCustom {

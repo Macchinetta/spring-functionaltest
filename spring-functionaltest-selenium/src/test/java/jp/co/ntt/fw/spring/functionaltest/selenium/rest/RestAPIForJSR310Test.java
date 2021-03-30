@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rest;
 
-import static com.jayway.restassured.RestAssured.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assume.*;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -105,12 +105,6 @@ public class RestAPIForJSR310Test extends RestTestSupport {
      */
     @Test
     public void testREST0901001() throws Exception {
-        // RESTサーバのJavaの実行環境のバージョンを取得する
-        int version = getJavaVersion();
-
-        // RESTサーバのJavaの実行環境のバージョンが1.8以上であればテストを実行する
-        assumeThat(8 <= version, is(true));
-
         // Request Body 作成
         LocalDate date = LocalDate.of(2016, 7, 14);
         LocalTime time = LocalTime.of(13, 43, 35, 200);

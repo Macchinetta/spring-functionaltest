@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.athr;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;

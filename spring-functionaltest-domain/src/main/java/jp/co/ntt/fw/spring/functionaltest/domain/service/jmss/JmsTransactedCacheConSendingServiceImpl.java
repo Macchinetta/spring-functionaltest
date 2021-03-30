@@ -20,24 +20,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
+
 @Transactional("sendJmsTransactionManager")
 @Service
 public class JmsTransactedCacheConSendingServiceImpl implements
                                                      JmsTransactedCacheConSendingService {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            JmsTransactedCacheConSendingServiceImpl.class);
 
     @Inject
     JmsSharedService jmsSharedService;
