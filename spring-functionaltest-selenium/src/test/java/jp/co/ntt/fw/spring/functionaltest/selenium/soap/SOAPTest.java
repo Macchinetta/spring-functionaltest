@@ -159,7 +159,7 @@ public class SOAPTest extends SOAPTestSupport {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
 
-                assertWebFaultIsInErrorBeans(WebFaultType.ValidationFault,
+                assertWebFaultIsInErrorBeans(WebFaultType.VALIDATION_FAULT,
                         new ErrorBean("NotNull", "null は許可されていません", "todoId"),
                         new ErrorBean("NotNull", "null は許可されていません", "arg0"));
             }
@@ -233,7 +233,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(WebFaultType.ValidationFault,
+                assertWebFault(WebFaultType.VALIDATION_FAULT,
                         new ErrorBean("NotNull", "null は許可されていません", "title"));
             }
         }
@@ -379,7 +379,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(WebFaultType.ValidationFault,
+                assertWebFault(WebFaultType.VALIDATION_FAULT,
                         new ErrorBean("NotNull", "null は許可されていません", "todoId"));
             }
         }
@@ -495,7 +495,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(WebFaultType.ValidationFault,
+                assertWebFault(WebFaultType.VALIDATION_FAULT,
                         new ErrorBean("NotNull", "null は許可されていません", "todoId"),
                         new ErrorBean("NotNull", "null は許可されていません", "title"));
             }
@@ -778,7 +778,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(WebFaultType.AccessDeniedFault,
+                assertWebFault(WebFaultType.ACCESS_DEFINED_FAULT,
                         new ErrorBean("org.springframework.security.access.AccessDeniedException", "Access is denied", null));
             }
         }
@@ -848,7 +848,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
-                assertWebFault(WebFaultType.ResourceNotFoundFault,
+                assertWebFault(WebFaultType.RESOURCE_NOT_FOUND_FAULT,
                         new ErrorBean("e.sf.soap.5001", "Resource not found", null));
             }
         }
@@ -881,7 +881,7 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(500);
-            assertWebFault(WebFaultType.BusinessFault,
+            assertWebFault(WebFaultType.BUSINESS_FAULT,
                     new ErrorBean("e.sf.soap.8001", "Exceed todo count max", null));
         }
 

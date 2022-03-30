@@ -861,12 +861,9 @@ public class DAM3TodoController {
     private List<TodoMB3> getTodoListFromCSVFile(File tempFile) {
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         File file = new File(tempFile.getAbsoluteFile().getAbsolutePath());
-        FileReader fileRdr = null;
-        BufferedReader bufRdr = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyy/mm/dd");
-        try {
-            fileRdr = new FileReader(file);
-            bufRdr = new BufferedReader(fileRdr);
+        try (FileReader fileRdr = new FileReader(file);
+                BufferedReader bufRdr = new BufferedReader(fileRdr)) {
             String line = null;
 
             while ((line = bufRdr.readLine()) != null) {
@@ -883,21 +880,6 @@ public class DAM3TodoController {
             logger.debug(e.getMessage());
         } catch (ParseException e) {
             logger.debug(e.getMessage());
-        } finally {
-            if (null != fileRdr) {
-                try {
-                    fileRdr.close();
-                } catch (IOException e) {
-                    logger.debug(e.getMessage());
-                }
-            }
-            if (null != bufRdr) {
-                try {
-                    bufRdr.close();
-                } catch (IOException e) {
-                    logger.debug(e.getMessage());
-                }
-            }
         }
         return todolist;
     }

@@ -58,7 +58,7 @@ public class Oauth2Test extends FunctionTestSupport {
     @Value("${selenium.oth2.waitForImpligitGrant.interval:1000}")
     private int waitForImpligitGrantInterval;
 
-    @Value("${selenium.oth2.waitForImpligitGrant.suspend:10000}")
+    @Value("${selenium.oth2.waitForImpligitGrant.suspend:45000}")
     private int waitForImpligitGrantSuspend;
 
     @Before
@@ -119,7 +119,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -144,7 +145,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101002"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.CREATE_approve"));
@@ -168,7 +170,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101003"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.UPDATE_approve"));
@@ -191,7 +194,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101004"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.DELETE_approve"));
@@ -215,7 +219,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -256,7 +261,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Deny resource access
         webDriverOperations.click(id("authorize"));
@@ -293,7 +299,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101002"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Deny resource access
         webDriverOperations.click(id("authorize"));
@@ -330,7 +337,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101003"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Deny resource access
         webDriverOperations.click(id("authorize"));
@@ -367,7 +375,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101004"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Deny resource access
         webDriverOperations.click(id("authorize"));
@@ -532,7 +541,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -575,7 +585,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("authorize"));
@@ -948,7 +959,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -975,7 +987,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1002,7 +1015,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20102001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1060,7 +1074,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1111,7 +1126,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20101001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1138,7 +1154,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth20502001"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1168,7 +1185,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth21101002"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));
@@ -1236,7 +1254,8 @@ public class Oauth2Test extends FunctionTestSupport {
         // Menu operation
         webDriverOperations.click(id("oth21101004"));
         authServerLogin();
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "OAuth Approval"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "OAuth Approval"));
 
         // Approve resource access
         webDriverOperations.click(id("scope.READ_approve"));

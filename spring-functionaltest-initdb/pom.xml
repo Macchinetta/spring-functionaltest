@@ -5,7 +5,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.0.RELEASE</version>
+    <version>1.8.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - DB Init</name>
@@ -161,6 +161,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>sql-maven-plugin</artifactId>
+        <version>1.5</version>
         <dependencies>
           <dependency>
             <groupId>${db.groupId}</groupId>

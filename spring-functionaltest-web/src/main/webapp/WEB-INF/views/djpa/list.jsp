@@ -4,6 +4,7 @@
     <form:form modelAttribute="jpaBookListForm"
       action="${pageContext.request.contextPath}/djpa/book/register">
       <form:button name="form" class="btn btn-default">登録</form:button>
+      <form:button name="multiSaveFlush" class="btn btn-default">複数登録</form:button>
     </form:form>
   </div>
 
@@ -21,6 +22,8 @@
           <th><form:button name="deletOne" class="btn btn-default btn-right">Delete One</form:button></th>
           <th><form:button name="deletIterable" class="btn btn-default btn-right">Delete Iterables</form:button></th>
           <th><form:button name="deleteEntity" class="btn btn-default btn-right">Delete Entity</form:button></th>
+          <th><form:button name="deleteAllById" class="btn btn-default btn-right">Delete All By Id</form:button></th>
+          <th><form:button name="deleteAllByIdInBatch" class="btn btn-default btn-right">Delete All By Id In Batch</form:button></th>
       </form:form>
 
       <form:form modelAttribute="jpaBookListForm"

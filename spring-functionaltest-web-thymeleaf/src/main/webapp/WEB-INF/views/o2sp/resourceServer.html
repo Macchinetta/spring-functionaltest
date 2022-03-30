@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <div>Login to Keycloak using: demo/demo</div>
+      <br/>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div>InterceptUrl</div>
+          <br/>
+          <!-- すべてのスコープを設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_ALL</div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodeAllInterceptGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=GET&amp;pattern=intercept}">GET</a> <a
+              id="o2spAuthorizationCodeAllInterceptCreate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=CREATE&amp;pattern=intercept}">CREATE</a> <a
+              id="o2spAuthorizationCodeAllInterceptUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=UPDATE&amp;pattern=intercept}">UPDATE</a> <a
+              id="o2spAuthorizationCodeAllInterceptDelete" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=DELETE&amp;pattern=intercept}">DELETE</a>
+            </li>
+          </ul>
+
+          <!-- READ及びDELETEのみスコープに設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_PARTIAL - InterceptUrl </div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodePartialInterceptGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=GET&amp;pattern=intercept}">GET</a> <a
+              id="o2spAuthorizationCodePartialInterceptCreate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=CREATE&amp;pattern=intercept}">CREATE</a> <a
+              id="o2spAuthorizationCodePartialInterceptUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=UPDATE&amp;pattern=intercept}">UPDATE</a> <a
+              id="o2spAuthorizationCodePartialInterceptDelete" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=DELETE&amp;pattern=intercept}">DELETE</a>
+            </li>
+          </ul>
+          
+          <!-- READスコープのみを設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_READ - InterceptUrl </div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodeReadInterceptGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_read&amp;scope=GET&amp;pattern=intercept}">GET</a> <a
+              id="o2spAuthorizationCodeReadInterceptUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_read&amp;scope=UPDATE&amp;pattern=intercept}">UPDATE</a>
+            </li>
+          </ul>
+          
+          <!-- 認可サーバに登録されていないクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_READ - WRONG_SCOPE - InterceptUrl </div>
+          <ul class="list-group">
+            <li class="list-group-item"><a
+              id="o2spAuthorizationCodeWrongInterceptGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_wrong&amp;scope=GET&amp;pattern=intercept}">GET</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div>PreAuthorize</div>
+          <br/>
+          <!-- すべてのスコープを設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_ALL - PreAnnotation</div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodeAllAnnotationGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=GET&amp;pattern=annotation}">GET</a> <a
+              id="o2spAuthorizationCodeAllAnnotationCreate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=CREATE&amp;pattern=annotation}">CREATE</a> <a
+              id="o2spAuthorizationCodeAllAnnotationUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=UPDATE&amp;pattern=annotation}">UPDATE</a> <a
+              id="o2spAuthorizationCodeAllAnnotationDelete" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_all&amp;scope=DELETE&amp;pattern=annotation}">DELETE</a>
+            </li>
+          </ul>
+
+          <!-- READ及びDELETEのみスコープに設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_PARTIAL - PreAnnotation</div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodePartialAnnotationGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=GET&amp;pattern=annotation}">GET</a> <a
+              id="o2spAuthorizationCodePartialAnnotationCreate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=CREATE&amp;pattern=annotation}">CREATE</a> <a
+              id="o2spAuthorizationCodePartialAnnotationUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=UPDATE&amp;pattern=annotation}">UPDATE</a> <a
+              id="o2spAuthorizationCodePartialAnnotationDelete" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_partial&amp;scope=DELETE&amp;pattern=annotation}">DELETE</a>
+            </li>
+          </ul>
+          
+          <!-- READスコープのみを設定できるクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_READ - PreAnnotation</div>
+          <ul class="list-group">
+            <li class="list-group-item"><a 
+              id="o2spAuthorizationCodeReadAnnotationGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_read&amp;scope=GET&amp;pattern=annotation}">GET</a> <a
+              id="o2spAuthorizationCodeReadAnnotationUpdate" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_read&amp;scope=UPDATE&amp;pattern=annotation}">UPDATE</a>
+            </li>
+          </ul>
+          
+          <!-- 認可サーバに登録されていないクライアントに対する処理 -->
+          <div>Authorization Code Grant - SCOPE_READ - WRONG_SCOPE - PreAnnotation</div>
+          <ul class="list-group">
+            <li class="list-group-item"><a
+              id="o2spAuthorizationCodeWrongAnnotationGet" th:href="@{/o2sp/resource/authorize?grant_type=authorization_code&amp;registrationId=registration_wrong&amp;scope=GET&amp;pattern=annotation}">GET</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <p>=======================================================================</p>
+      <div>
+        <div th:if="${message} != null">
+          <h2>RESULT : <span id="result" th:text="${message}"></span></h2>
+          
+          <h2>Access Token</h2>
+          <p>Access Token Issued : <span id="accessTokenIssued" th:text="${accessTokenIssued}"></span></p>
+          <p>Access Token Expires : <span id="accessTokenExpires" th:text="${accessTokenExpires}"></span></p>
+          <p>Access Token Scopes : <span id="accessTokenScopes" th:text="${accessTokenScopes}"></span></p>
+          <p>Access Token Type : <span id="accessTokenType" th:text="${accessTokenType}"></span></p>
+          <p>Access Token Value : <span id="accessTokeValue" th:text="${accessTokeValue}"></span></p>
+          
+          <h2>Refresh Token</h2>
+          <p>Refresh Token Issued : <span id="refreshTokenIssued" th:text="${refreshTokenIssued}"></span></p>
+          <p>Refresh Token Expires : <span id="refreshTokenExpires" th:text="${refreshTokenExpires}"></span></p>
+          <p>Refresh Token Value : <span id="refreshTokeValue" th:text="${refreshTokeValue}"></span></p>
+        </div>
+      </div>
+      <p>=======================================================================</p>
+      
+      <form th:action="@{/o2sp/logout}" method="post">
+        <div class="form-group">
+          <input type="submit" id="logout" class="btn btn-default" value="Logout">
+        </div>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

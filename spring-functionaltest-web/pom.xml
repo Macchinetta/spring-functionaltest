@@ -7,11 +7,20 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.0.RELEASE</version>
+    <version>1.8.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer</name>
   <description>Web layer of Spring Functional Test</description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 
   <profiles>
     <profile>
@@ -25,8 +34,8 @@
           <artifactId>spring-functionaltest-env</artifactId>
         </dependency>
         <dependency>
-          <groupId>com.sun.mail</groupId>
-          <artifactId>jakarta.mail</artifactId>
+         <groupId>com.sun.mail</groupId>
+         <artifactId>jakarta.mail</artifactId>
         </dependency>
         <dependency>
           <groupId>org.apache.cxf</groupId>
@@ -341,6 +350,14 @@
       <scope>provided</scope>
     </dependency>
     <!-- == End activemq == -->
+
+    <!-- == Begin Jakarta Mail == -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- == End Jakarta Mail == -->
 
     <!-- == Begin Password Encode == -->
     <dependency>

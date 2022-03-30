@@ -289,6 +289,15 @@ public class DJPACommonController {
 
     }
 
+    @RequestMapping(value = "register", method = RequestMethod.POST, params = "multiSaveFlush")
+    public String registerBulkFlush(RedirectAttributes redirectAttrs) {
+
+        jpaBookService.saveMultipleFlush();
+
+        return "redirect:/djpa/book/list";
+
+    }
+
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "errorReg")
     public String registerBookRollback(Model model, BookForm bookForm,
             RedirectAttributes redirectAttrs) throws Exception {
@@ -396,8 +405,8 @@ public class DJPACommonController {
     }
 
     /**
-     * This method demonstrates when acquire FlashAttribute outside of
-     * OpenEntityManagerInViewInterceptor, LazyInitializationException occur.
+     * This method demonstrates when acquire FlashAttribute outside of OpenEntityManagerInViewInterceptor,
+     * LazyInitializationException occur.
      * @param bookListForm
      * @param redirectAttrs
      * @return
@@ -419,7 +428,8 @@ public class DJPACommonController {
 
     @RequestMapping(value = "redirectRegisterComplete", method = RequestMethod.GET)
     public String redirectRegisterComplete(
-            @ModelAttribute("book") JPABookLZ book, Model model) {
+            @ModelAttribute(name = "book", binding = false) JPABookLZ book,
+            Model model) {
 
         // when acquire CategoryName, LazyInitializationException will thrown
         model.addAttribute("bookCategory", book.getCategory()
@@ -638,6 +648,24 @@ public class DJPACommonController {
         String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
         Iterable<String> iterable = Arrays.asList(idArray);
         jpaBookService.deleteInBatch(iterable);
+        return "redirect:list";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteAllById")
+    public String defaultDeleteAllById(JPABookListForm bookListForm) {
+        // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
+        String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
+        Iterable<String> iterable = Arrays.asList(idArray);
+        jpaBookService.deleteAllById(iterable);
+        return "redirect:list";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteAllByIdInBatch")
+    public String defaultDeleteAllByIdInBatch(JPABookListForm bookListForm) {
+        // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
+        String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
+        Iterable<String> iterable = Arrays.asList(idArray);
+        jpaBookService.deleteAllByIdInBatch(iterable);
         return "redirect:list";
     }
 

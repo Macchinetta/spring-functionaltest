@@ -95,6 +95,21 @@ public class DJPAController02 {
         return "redirect:/djpa/book/list";
     }
 
+    @RequestMapping(value = "0201/014")
+    public String handle0201014() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0201/015")
+    public String handle0201015() {
+        return "redirect:/djpa/book/list";
+    }
+
+    @RequestMapping(value = "0201/016")
+    public String handle0201016() {
+        return "redirect:/djpa/book/list";
+    }
+
     @RequestMapping(value = "0202/001")
     public String handle0202001() {
         return "redirect:/djpa/book/pgList";

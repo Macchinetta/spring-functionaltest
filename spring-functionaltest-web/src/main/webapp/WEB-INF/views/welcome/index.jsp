@@ -72,7 +72,9 @@
     <li><a id="jmssLink" href="${pageContext.request.contextPath}/jmss/">[JMSS]
         JMSテスト</a></li>
     <li><a id="oth2Link" href="${pageContext.request.contextPath}/oth2/">[OTH2]
-        OAuth2テスト</a></li>
+        Spring Security OAuth2テスト - deprecated</a></li>
+    <li><a id="o2spLink" href="${pageContext.request.contextPath}/o2sp/">[O2SP]
+        OAuth2テスト（Spring Security）</a></li>
     <li><a id="dbspLink" href="${pageContext.request.contextPath}/dbsp/">[DBSP]
         二重送信防止テスト</a></li>
     <li><a id="cdlsLink" href="${pageContext.request.contextPath}/cdls/">[CDLS]

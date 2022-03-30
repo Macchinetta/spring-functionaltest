@@ -85,10 +85,6 @@ public class JPABookEG {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime lastModifiedDate;
 
-    public JPABookEG() {
-
-    }
-
     @JoinColumn(name = "category_id")
     @ManyToOne(targetEntity = JPACategoryEG.class)
     JPACategoryEG category;

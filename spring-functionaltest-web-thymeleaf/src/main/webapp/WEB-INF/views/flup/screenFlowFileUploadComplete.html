@@ -50,7 +50,7 @@
             <label for="descriptionText" class="col col-md-2 control-label">説明</label>
             <div class="col col-md-10">
             <span id="descriptionText" class="display-item form-control"
-              th:utext="*{description} ? *{#strings.replace(#strings.escapeXml(description), T(java.lang.System).getProperty('line.separator'), '&lt;br /&gt;')} : ''"></span>
+              th:utext="*{description} ? *{#strings.escapeXml(description).replaceAll('(\r\n|\r|\n)', '&lt;br /&gt;')} : ''"></span>
             </div>
           </div>
 

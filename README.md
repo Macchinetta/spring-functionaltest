@@ -24,6 +24,7 @@ spring-functionaltest
 ├── spring-functionaltest-web-oauth2-db
 ├── spring-functionaltest-web-oauth2-memory
 ├── spring-functionaltest-web-oauth2-remote
+├── spring-functionaltest-web-oauth2-resource
 ├── spring-functionaltest-initdb
 └── spring-functionaltest-selenium
 ```
@@ -36,7 +37,8 @@ spring-functionaltest
 ├── spring-functionaltest-web-oauth2-component-thymeleaf
 ├── spring-functionaltest-web-oauth2-db-thymeleaf
 ├── spring-functionaltest-web-oauth2-memory-thymeleaf
-└── spring-functionaltest-web-oauth2-remote-thymeleaf
+├── spring-functionaltest-web-oauth2-remote-thymeleaf
+└── spring-functionaltest-web-oauth2-resource-thymeleaf
 ```
 
 ## How to perform functional test
@@ -47,7 +49,7 @@ spring-functionaltest
 * "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8u144 earlier](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)) installed
 * [Maven](https://maven.apache.org/download.cgi) installed (Can run `mvn` command)
 * Firefox([for personal](https://www.mozilla.org/en-US/firefox/all/) or [ESR](https://www.mozilla.org/en-US/firefox/organizations/all/)) installed (ESR is used on our CI environment)
-* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.23.0` recommended) placed and register in the environment variable.
+* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.30.0` recommended) placed and register in the environment variable.
 
 ### [Step 1] Create database of PostgreSQL (Optional)
 If [PostgreSQL](http://www.postgresql.org/) use as database , you need to create database of PostgreSQL into local machine. (PostgreSQL can download via [here site](http://www.postgresql.org/download/)).
@@ -81,7 +83,7 @@ Build artifacts using maven commands as follows.
 $ cd {your repository directory}
 $ git checkout {target branch}
 $ mvn -U clean install -am -pl spring-functionaltest-web
-$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote,spring-functionaltest-web-oauth2-resource
 ```
 
 > **Note:**
@@ -94,8 +96,12 @@ $ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functi
 $ cd {your repository directory}
 $ git checkout {target branch}
 $ mvn -U clean install -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
-$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote,spring-functionaltest-web-oauth2-resource -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
 ```
+
+> **Note:**
+>
+> Using JDK 11, add `-P warpack-jaxb`.
 
 > **Note:**
 >
@@ -148,6 +154,7 @@ $ cd {your repository directory}
 $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
 $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
 $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
+$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-resource  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-resource
 ```
 
 ### [Step 7] Run functional tests
@@ -207,22 +214,7 @@ Profiles that are available are as follows.
 |    Tomcat9 + Postgresql   | `tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
 | Tomcat9 + Postgresql [^1] | `tomcat9-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
 |  Tomcat9 + Oracle [^1]    | `tomcat9-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
-|   Tomcat8.5 + Postgresql  | `tomcat85-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`|
-|Tomcat8.5 + Postgresql [^1]| `tomcat85-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                   |
-|  Tomcat8.5 + Oracle [^1]  | `tomcat85-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                       |
-|    Tomcat8 + Postgresql   | `tomcat8-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
-| Tomcat8 + Postgresql [^1] | `tomcat8-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
-|   Tomcat8 + Oracle [^1]   | `tomcat8-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
-| Tomcat7 + Postgresql      | `tomcat-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis`  |
-| Tomcat7 + Postgresql [^1] | `tomcat-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                     |
-| Tomcat7 + Oracle [^1]     | `tomcat-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                         |
 |     Weblogic + Oracle     | `weblogic-oracle,warpack-env`                                                        |
-|     JBoss7 + Postgresql   | `jboss7-postgresql,warpack-env,warpack-fileupload`                                   |
-|     JBoss + Postgresql    | `jboss-postgresql,warpack-env,warpack-transaction,warpack-fileupload`                |
-|  Interstage + Postgresql  | `interstage11-postgresql,warpack-env`                                                |
-|      WebOTX + Oracle      | `webotx-oracle,warpack-env`                                                          |
-|    WebSphere(LP) + DB2    | `webpsherelp-db2,warpack-env,change-wsdl-location`                                   |
-|    WebSphere(TR) + DB2    | `webpsheretr-db2,warpack-env,change-wsdl-location`                                   |
 
 [^1]: Please deploy spring-functionaltest-web.war, spring-functionaltest-env.jar, and context.xml.
 

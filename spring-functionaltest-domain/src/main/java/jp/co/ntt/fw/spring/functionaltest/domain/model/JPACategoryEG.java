@@ -32,10 +32,6 @@ public class JPACategoryEG {
     @Column(name = "name", nullable = true, length = 1024)
     private String categoryName;
 
-    public JPACategoryEG() {
-
-    }
-
     public int getCategoryId() {
         return categoryId;
     }

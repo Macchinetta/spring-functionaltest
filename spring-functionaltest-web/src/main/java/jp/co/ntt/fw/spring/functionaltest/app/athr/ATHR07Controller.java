@@ -22,12 +22,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-/*
- * Copyright(c) 2014-2015 NTT Corporation.
- */
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
 
 @Controller
 public class ATHR07Controller {
@@ -44,11 +38,6 @@ public class ATHR07Controller {
         model.addAttribute("userEmail", userDetails.getUsername()
                 + "@example.com");
         return "athr/showCustomizedAuthorizeErrorForAuthenticated";
-    }
-
-    @RequestMapping(value = "0701/001/api/select", method = RequestMethod.GET)
-    public void search(CommitterCriteria criteria) {
-
     }
 
 }

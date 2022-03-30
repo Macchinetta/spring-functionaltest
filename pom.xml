@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.8.0.RELEASE</version>
+  <version>1.8.1.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -17,24 +17,26 @@
     <module>spring-functionaltest-web-oauth2-db</module>
     <module>spring-functionaltest-web-oauth2-memory</module>
     <module>spring-functionaltest-web-oauth2-remote</module>
+    <module>spring-functionaltest-web-oauth2-resource</module>
     <module>spring-functionaltest-web-thymeleaf</module>
     <module>spring-functionaltest-web-oauth2-component-thymeleaf</module>
     <module>spring-functionaltest-web-oauth2-db-thymeleaf</module>
     <module>spring-functionaltest-web-oauth2-memory-thymeleaf</module>
     <module>spring-functionaltest-web-oauth2-remote-thymeleaf</module>
+    <module>spring-functionaltest-web-oauth2-resource-thymeleaf</module>
     <module>spring-functionaltest-initdb</module>
     <module>spring-functionaltest-selenium</module>
   </modules>
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.7.0.RELEASE</version>
+    <version>5.7.1.RELEASE</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>https://macchinetta.github.io/</url>
+  <url>http://terasoluna.org</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
@@ -76,86 +78,6 @@
       </snapshots>
     </repository>
   </repositories>
-  <reporting>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${org.apache.maven.plugins.maven-checkstyle-plugin.version}</version>
-        <configuration>
-          <enableRulesSummary>false</enableRulesSummary>
-          <configLocation>${checkstyle.rule.xml}</configLocation>
-          <consoleOutput>true</consoleOutput>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>${org.apache.maven.plugins.maven-javadoc-plugin.version}</version>
-        <configuration>
-          <encoding>${encoding}</encoding>
-          <docencoding>${encoding}</docencoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>${org.apache.maven.plugins.maven-project-info-reports-plugin.version}</version>
-        <configuration>
-          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>${org.apache.maven.plugins.version}</version>
-        <configuration>
-          <encoding>UTF-8</encoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>${org.apache.maven.plugins.maven-site-plugin.version}</version>
-        <configuration>
-          <locales>ja</locales>
-          <inputEncoding>${encoding}</inputEncoding>
-          <outputEncoding>${encoding}</outputEncoding>
-          <siteDirectory>${basedir}/src/site</siteDirectory>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>${org.apache.maven.plugins.maven-surefire-report-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>emma-maven-plugin</artifactId>
-        <version>${org.codehaus.mojo.emma-maven-plugin.version}</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>${maven-jxr-plugin.version}</version>
-        <configuration>
-          <aggregate>false</aggregate>
-          <inputEncoding>${encoding}</inputEncoding>
-          <outputEncoding>${encoding}</outputEncoding>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>${org.codehaus.mojo.version}</version>
-        <configuration>
-          <inputEncoding>${encoding}</inputEncoding>
-          <outputEncoding>${encoding}</outputEncoding>
-          <includeFilterFile>${findbugs.includefilter.xml}</includeFilterFile>
-          <xmlOutput>true</xmlOutput>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
   <build>
     <extensions>
       <extension>
@@ -179,7 +101,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>${maven-failsafe-plugin.version}</version>
+          <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
           <executions>
             <execution>
               <goals>
@@ -187,6 +109,11 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -223,15 +150,6 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>${org.apache.maven.plugins.version}</version>
-          <configuration>
-            <source>${java-version}</source>
-            <target>${java-version}</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-war-plugin.version}</version>
           <configuration>
@@ -256,7 +174,7 @@
         </plugin>
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
-          <artifactId>cargo-maven2-plugin</artifactId>
+          <artifactId>cargo-maven3-plugin</artifactId>
           <configuration>
             <container>
               <timeout>300000</timeout>
@@ -273,24 +191,9 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-eclipse-plugin</artifactId>
-          <version>${maven-eclipse-plugin.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>sql-maven-plugin</artifactId>
-          <version>${org.codehaus.mojo.sql-maven-plugin.version}</version>
-        </plugin>
-        <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
-          <version>${formatter-maven-plugin.version}</version>
+          <version>${net.revelc.code.formatter.formatter-maven-plugin.version}</version>
           <configuration>
             <configFile>${project.root.basedir}/eclipse/formatter.xml
             </configFile>
@@ -310,25 +213,29 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>xml-maven-plugin</artifactId>
-          <version>${xml-maven-plugin.version}</version>
+          <version>${org.codehaus.mojo.xml-maven-plugin.version}</version>
           <configuration>
             <indentSize>2</indentSize>
           </configuration>
         </plugin>
         <plugin>
-          <groupId>com.google.code.maven-license-plugin</groupId>
-          <artifactId>maven-license-plugin</artifactId>
-          <version>${com.google.code.maven-license-plugin.version}</version>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${com.mycila.license-maven-plugin.version}</version>
           <configuration>
-            <header>${project.root.basedir}/license/header.txt</header>
-            <includes>
-              <include>src/main/java/**/*.java</include>
-              <include>src/test/java/**/*.java</include>
-            </includes>
+            <licenseSets>
+              <licenseSet>
+                <header>${project.root.basedir}/license/header.txt</header>
+                <includes>
+                  <include>src/main/java/**/*.java</include>
+                  <include>src/test/java/**/*.java</include>
+                </includes>
+                <headerDefinitions>
+                  <headerDefinition>${project.root.basedir}/license/header-definition.xml</headerDefinition>
+                </headerDefinitions>
+              </licenseSet>
+            </licenseSets>
             <encoding>${encoding}</encoding>
-            <headerDefinitions>
-              <headerDefinition>${project.root.basedir}/license/header-definition.xml</headerDefinition>
-            </headerDefinitions>
           </configuration>
         </plugin>
         <plugin>
@@ -582,39 +489,40 @@
       </dependency>
       <!-- == End For JDK 11 == -->
 
+      <!-- == Begin Spring Security OAuth - deprecated == -->
+      <dependency>
+        <groupId>org.springframework.security.oauth</groupId>
+        <artifactId>spring-security-oauth2</artifactId>
+        <version>${spring-security-oauth.version}</version>
+      </dependency>
+      <!-- == End Spring Security OAuth - deprecated== -->
+      
+      <!-- == Begin Spring Security OAuth2 == -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-jwt</artifactId>
+        <version>${spring.security.jwt}</version>
+      </dependency>
+      <!-- == End Spring Security OAuth2 == -->
+
     </dependencies>
   </dependencyManagement>
   <properties>
     <!-- == Maven Plugin Versions == -->
-    <formatter-maven-plugin.version>2.0.1</formatter-maven-plugin.version>
-    <xml-maven-plugin.version>1.0.1</xml-maven-plugin.version>
-    <com.google.code.maven-license-plugin.version>1.4.0</com.google.code.maven-license-plugin.version>
-    <maven-eclipse-plugin.version>2.6</maven-eclipse-plugin.version>
-    <maven-failsafe-plugin.version>2.19</maven-failsafe-plugin.version>
-    <maven-jxr-plugin.version>2.1</maven-jxr-plugin.version>
-    <org.apache.maven.archetype.version>2.2</org.apache.maven.archetype.version>
-    <org.apache.maven.plugins.maven-checkstyle-plugin.version>2.9.1</org.apache.maven.plugins.maven-checkstyle-plugin.version>
-    <org.apache.maven.plugins.maven-compiler-plugin.version>2.5.1</org.apache.maven.plugins.maven-compiler-plugin.version>
-    <org.apache.maven.plugins.maven-dependency-plugin.version>2.5</org.apache.maven.plugins.maven-dependency-plugin.version>
-    <org.apache.maven.plugins.maven-javadoc-plugin.version>2.8.1</org.apache.maven.plugins.maven-javadoc-plugin.version>
-    <org.apache.maven.plugins.maven-project-info-reports-plugin.version>2.5.1</org.apache.maven.plugins.maven-project-info-reports-plugin.version>
-    <org.apache.maven.plugins.maven-resources-plugin.version>2.6</org.apache.maven.plugins.maven-resources-plugin.version>
-    <org.apache.maven.plugins.maven-site-plugin.version>3.1</org.apache.maven.plugins.maven-site-plugin.version>
-    <org.apache.maven.plugins.maven-source-plugin.version>2.2</org.apache.maven.plugins.maven-source-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-report-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-report-plugin.version>
-    <org.apache.maven.plugins.maven-war-plugin.version>2.2</org.apache.maven.plugins.maven-war-plugin.version>
-    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M3</org.apache.maven.plugins.maven-surefire-plugin.version>
-    <org.apache.maven.plugins.version>2.5</org.apache.maven.plugins.version>
-    <org.codehaus.mojo.build-helper-maven-plugin.version>1.9.1</org.codehaus.mojo.build-helper-maven-plugin.version>
-    <org.codehaus.mojo.emma-maven-plugin.version>1.0-alpha-3</org.codehaus.mojo.emma-maven-plugin.version>
-    <org.codehaus.mojo.sql-maven-plugin.version>1.5</org.codehaus.mojo.sql-maven-plugin.version>
-    <com.google.code.maven-replacer-plugin.version>1.5.2</com.google.code.maven-replacer-plugin.version>
+    <org.apache.maven.plugins.maven-war-plugin.version>3.3.1</org.apache.maven.plugins.maven-war-plugin.version>
+    <org.codehaus.mojo.build-helper-maven-plugin.version>3.2.0</org.codehaus.mojo.build-helper-maven-plugin.version>
+    <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M5</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M5</org.apache.maven.plugins.maven-surefire-plugin.version>
+    <net.revelc.code.formatter.formatter-maven-plugin.version>2.15.0</net.revelc.code.formatter.formatter-maven-plugin.version>
+    <org.codehaus.mojo.xml-maven-plugin.version>1.0.2</org.codehaus.mojo.xml-maven-plugin.version>
+    <com.mycila.license-maven-plugin.version>4.1</com.mycila.license-maven-plugin.version>
+    <com.google.code.maven-replacer-plugin.version>1.5.3</com.google.code.maven-replacer-plugin.version>
     <!-- == Dependency Versions == -->
+    <org.apache.maven.archetype.version>2.2</org.apache.maven.archetype.version>
     <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
-    <org.codehaus.mojo.version>2.5</org.codehaus.mojo.version>
     <org.springframework.build.aws.version>3.0.0.RELEASE</org.springframework.build.aws.version>
-    <postgresql.version>42.2.9</postgresql.version>
-    <ojdbc.version>19.3.0.0</ojdbc.version>
+    <postgresql.version>42.3.1</postgresql.version>
+    <ojdbc.version>21.3.0.0</ojdbc.version>
     <db2jcc4.version>4.21.29</db2jcc4.version>
     <webdrivermanager.version>3.1.1</webdrivermanager.version>
     <com.github.detro.ghostdriver.version>1.0.4</com.github.detro.ghostdriver.version>
@@ -623,9 +531,11 @@
     <cxf-rt.version>3.1.4</cxf-rt.version>
     <jetty.version>9.2.14.v20151106</jetty.version>
     <jaxb-core.version>2.3.0.1</jaxb-core.version>
-    <jaxb-impl.version>2.3.2</jaxb-impl.version>
+    <jaxb-impl.version>2.3.5</jaxb-impl.version>
     <jakarta.jws-api.version>2.1.0</jakarta.jws-api.version>
     <jakarta.interceptor-api.version>1.2.5</jakarta.interceptor-api.version>
+    <spring-security-oauth.version>2.5.1.RELEASE</spring-security-oauth.version>
+    <spring.security.jwt>1.1.1.RELEASE</spring.security.jwt>
     <!-- == Project Properties == -->
     <project.env.main.directory>src/main</project.env.main.directory>
     <project.env.target.name>spring-functionaltest-env</project.env.target.name>
@@ -677,7 +587,7 @@
             </plugin>
             <plugin>
               <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
+              <artifactId>cargo-maven3-plugin</artifactId>
               <configuration>
                 <container>
                   <dependencies>
@@ -688,6 +598,10 @@
                     <dependency>
                       <groupId>com.sun.mail</groupId>
                       <artifactId>jakarta.mail</artifactId>
+                    </dependency>
+                    <dependency>
+                      <groupId>com.sun.activation</groupId>
+                      <artifactId>jakarta.activation</artifactId>
                     </dependency>
                     <dependency>
                       <groupId>org.apache.activemq</groupId>
@@ -730,70 +644,6 @@
       </build>
     </profile>
     <profile>
-      <id>interstage11-oracle</id>
-      <properties>
-        <project.env.main.directory>configs/interstage11-oracle</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-interstage11-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>jboss-postgresql</id>
-      <properties>
-        <project.env.main.directory>configs/jboss-postgresql</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-jboss-postgresql</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>jboss7-postgresql</id>
-      <properties>
-        <project.env.main.directory>configs/jboss7-postgresql</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-jboss7-postgresql</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>tomcat-oracle</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat-oracle</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>tomcat-postgresql</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat-postgresql</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat-postgresql</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>tomcat8-oracle</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat8-oracle</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat8-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>tomcat8-postgresql</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat8-postgresql</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat8-postgresql</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>tomcat85-postgresql</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat85-postgresql</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat85-postgresql</project.env.buildFinalName>
-      </properties>
-    </profile>
-
-    <profile>
-      <id>tomcat85-oracle</id>
-      <properties>
-        <project.env.main.directory>configs/tomcat85-oracle</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-tomcat85-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
       <id>tomcat9-postgresql</id>
       <properties>
         <project.env.main.directory>configs/tomcat9-postgresql</project.env.main.directory>
@@ -812,27 +662,6 @@
       <properties>
         <project.env.main.directory>configs/weblogic-oracle</project.env.main.directory>
         <project.env.buildFinalName>${project.artifactId}-${project.version}-weblogic-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>webotx-oracle</id>
-      <properties>
-        <project.env.main.directory>configs/webotx-oracle</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-webotx-oracle</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>webspherelp-db2</id>
-      <properties>
-        <project.env.main.directory>configs/webspherelp-db2</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-webspherelp-db2</project.env.buildFinalName>
-      </properties>
-    </profile>
-    <profile>
-      <id>webspheretr-db2</id>
-      <properties>
-        <project.env.main.directory>configs/webspheretr-db2</project.env.main.directory>
-        <project.env.buildFinalName>${project.artifactId}-${project.version}-webspheretr-db2</project.env.buildFinalName>
       </properties>
     </profile>
     <profile>

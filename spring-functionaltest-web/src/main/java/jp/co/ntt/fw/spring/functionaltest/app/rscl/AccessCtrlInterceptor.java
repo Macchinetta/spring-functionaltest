@@ -87,35 +87,33 @@ public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
      */
     private ClientHttpResponse execute(HttpRequest request, byte[] body,
             ClientHttpRequestExecution execution) throws IOException {
-        ClientHttpResponse res = null;
 
+        ClientHttpResponse res = null;
         int retryCount = 0;
+        HttpStatus statusCode = null;
+
         while (true) {
             List<String> xRetryValue = new ArrayList<String>();
             xRetryValue.add(String.valueOf(retryCount));
             request.getHeaders().put("x-Retry", xRetryValue);
             res = execution.execute(request, body);
+            statusCode = res.getStatusCode();
 
             // ステータスコードが503はリトライ
-            if (!HttpStatus.SERVICE_UNAVAILABLE.equals(res.getStatusCode())) {
-                if (logger.isInfoEnabled()) {
-                    logger.info("StatusCode({}) ", res.getStatusCode());
-                }
+            if (!HttpStatus.SERVICE_UNAVAILABLE.equals(statusCode)) {
+
+                logger.info("StatusCode({}) ", statusCode);
 
                 break;
             } else {
-
                 if (retryCount == retryMaxCount) {
                     break;
                 }
-
                 retryCount++;
 
-                if (logger.isWarnEnabled()) {
-                    logger.warn(
-                            "An error ({}) occurred on the server. (The number of retries：{} Times)",
-                            res.getStatusCode(), retryCount);
-                }
+                logger.warn(
+                        "An error ({}) occurred on the server. (The number of retries：{} Times)",
+                        statusCode, retryCount);
 
                 try {
                     Thread.sleep((long) (retryWaitTimeCoefficient

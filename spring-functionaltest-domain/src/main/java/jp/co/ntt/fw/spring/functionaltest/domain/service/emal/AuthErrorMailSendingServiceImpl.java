@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 import java.nio.charset.StandardCharsets;
 
 import javax.inject.Inject;
+import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -36,13 +37,13 @@ public class AuthErrorMailSendingServiceImpl implements
     @Inject
     MailReceivingSharedService mailReceivingService;
 
-    @Value("${mail2.from.address}")
+    @Value("${mail.auth.from.address}")
     String fromAddress;
 
-    @Value("${mail2.pop3.host}")
+    @Value("${mail.auth.pop3.host}")
     String pop3host;
 
-    @Value("${mail2.pop3.port}")
+    @Value("${mail.auth.pop3.port}")
     int pop3port;
 
     @Value("${mail.from.user}")
@@ -52,31 +53,26 @@ public class AuthErrorMailSendingServiceImpl implements
     String pop3password;
 
     @Override
-    public void sendMessage(final String to, final String text) {
+    public void sendMessage(final String to, final String text, Store store) {
 
-        try {
-            mailSenderAuthError.send(new MimeMessagePreparator() {
+        mailSenderAuthError.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    helper.setText(text);
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
-
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                helper.setText(text);
+            }
+        });
     }
 
     @Override
-    public void popBeforeSmtp() {
+    public Store popBeforeSmtp() {
 
-        mailReceivingService.connect(pop3host, pop3port, pop3user,
+        return mailReceivingService.connect(pop3host, pop3port, pop3user,
                 pop3password);
 
     }

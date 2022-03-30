@@ -38,11 +38,17 @@ public interface JPABookService {
 
     JPABook addBookWithRollback(JPABook jpaBook) throws SystemException;
 
+    List<JPABook> saveMultipleFlush();
+
     void deleteAllInBatch();
 
     void delete(String bookId);
 
     void deleteInBatch(Iterable<String> iterable);
+
+    void deleteAllById(Iterable<String> iterable);
+
+    void deleteAllByIdInBatch(Iterable<String> iterable);
 
     void delete(Iterable<? extends JPABook> entities);
 

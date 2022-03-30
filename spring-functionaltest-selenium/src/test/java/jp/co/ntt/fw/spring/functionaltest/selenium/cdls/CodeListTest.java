@@ -574,9 +574,8 @@ public class CodeListTest extends FunctionTestSupport {
             Map<String, String> expectedValue) {
         // メニュー画面の操作
         webDriverOperations.click(id(testId));
-        webDriverOperations.waitForDisplayed(
-                invisibilityOfElementWithText(By.id("screenTitle"),
-                "CDLS コードリスト機能"));
+        webDriverOperations.waitForDisplayed(invisibilityOfElementWithText(By
+                .id("screenTitle"), "CDLS コードリスト機能"));
 
         // 遷移先のページでのoptionの内容assart
         assartOptions(testId, expectedValue);
@@ -593,9 +592,8 @@ public class CodeListTest extends FunctionTestSupport {
             Map<String, String> expectedValue) {
         // メニュー画面の操作
         webDriverOperations.click(id(testId));
-        webDriverOperations.waitForDisplayed(
-                invisibilityOfElementWithText(By.id("screenTitle"),
-                "CDLS コードリスト機能"));
+        webDriverOperations.waitForDisplayed(invisibilityOfElementWithText(By
+                .id("screenTitle"), "CDLS コードリスト機能"));
 
         // 遷移先のページでのoptionの内容assart
         assartOptionValue(testId, expectedValue);

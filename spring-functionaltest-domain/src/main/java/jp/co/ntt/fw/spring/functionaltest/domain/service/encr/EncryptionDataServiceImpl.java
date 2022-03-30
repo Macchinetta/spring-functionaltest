@@ -308,7 +308,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
     @Override
     public String decryptBytesByAesWithGcm(String encryptedText) {
-        return Utf8.decode(decryptBytesbyAesWithGcm(Hex.decode(encryptedText)));
+        return Utf8.decode(decryptBytesByAesWithGcm(Hex.decode(encryptedText)));
     }
 
     private byte[] encryptBytesByAesWithGcm(byte[] rawBytes) {
@@ -316,7 +316,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         return gcmBytesEncryptor.encrypt(rawBytes);
     }
 
-    private byte[] decryptBytesbyAesWithGcm(byte[] encryptedBytes) {
+    private byte[] decryptBytesByAesWithGcm(byte[] encryptedBytes) {
         BytesEncryptor gcmBytesEncryptor = Encryptors.stronger(secret, salt);
         return gcmBytesEncryptor.decrypt(encryptedBytes);
     }

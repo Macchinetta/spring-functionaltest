@@ -93,7 +93,7 @@ public class FileDownloadView extends AbstractPdfView {
         parentTable.setWidths(relativeWidth);
         parentTable.getDefaultCell().setBorder(0000);
 
-        // 申込日　table
+        // 申込日 table
         PdfPTable applicationDateTable = new PdfPTable(12);
         float TableWidth[] = { mm2pixel(20.0f), mm2pixel(7.0f), mm2pixel(7.0f),
                 mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
@@ -185,7 +185,7 @@ public class FileDownloadView extends AbstractPdfView {
 
         nameAndAddressTable.addCell(new Phrase("生年月日", normalFont));
 
-        // 生年月日　table
+        // 生年月日 table
         PdfPTable birthDateTable = new PdfPTable(11);
         float birthDateTableWidth[] = { mm2pixel(7.0f), mm2pixel(7.0f),
                 mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),

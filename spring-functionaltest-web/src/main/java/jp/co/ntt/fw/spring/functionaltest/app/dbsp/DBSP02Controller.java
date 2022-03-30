@@ -65,11 +65,9 @@ public class DBSP02Controller {
         }
         File file = new File(userCreateForm.getFilePath() + "\\userData.txt");
         String userDataText = "";
-        try {
-            FileWriter filewriter = new FileWriter(file);
+        try (FileWriter filewriter = new FileWriter(file)) {
             filewriter.write(userDataText + userCreateForm.getFirstName() + " "
                     + userCreateForm.getLastName() + "\n");
-            filewriter.close();
         } catch (IOException e) {
             logger.warn("I/O Error", e);
         }

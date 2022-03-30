@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <H2>Client</H2>
+      <h3 id="loginWith">Login with Username and Password</h3>
+
+      <div th:if="${param.error} !=null">
+        <div th:if="${session.SPRING_SECURITY_LAST_EXCEPTION} != null" class="alert alert-danger">
+          <ul>
+            <li th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></li>
+          </ul>
+        </div>
+      </div>
+
+      <form th:action="@{/o2sp/login}" method="post">
+        <table>
+          <tr>
+            <td><label for="username">User:</label></td>
+            <td><input type="text" id="username" name="username" /></td>
+          </tr>
+          <tr>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" id="password" name="password" /></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><input name="submit" type="submit" id="send" value="Login" /></td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

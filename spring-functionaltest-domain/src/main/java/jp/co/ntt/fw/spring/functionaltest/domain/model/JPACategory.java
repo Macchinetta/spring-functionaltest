@@ -36,10 +36,6 @@ public class JPACategory {
     @Column(name = "name", nullable = true, length = 1024)
     private String categoryName;
 
-    public JPACategory() {
-
-    }
-
     public String getCategoryId() {
         return categoryId;
     }

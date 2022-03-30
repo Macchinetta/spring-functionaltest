@@ -113,7 +113,8 @@ public class ATHR06Controller {
         return "athr/loginForPathVariable";
     }
 
-    @RequestMapping({ "0601/{testNo}/account/{userName}", "0601/{testNo}/account/{userName}.*" })
+    @RequestMapping({ "0601/{testNo}/account/{userName}",
+            "0601/{testNo}/account/{userName}.*" })
     public String handle0601019afterLogin(@PathVariable String testNo,
             @PathVariable String userName, Model model) {
         model.addAttribute("testNo", testNo);

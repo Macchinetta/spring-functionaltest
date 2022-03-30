@@ -21,26 +21,26 @@ app.upload.directory=/tmp/spring-functionaltest-web/upload/uploadDirectory/
 enabledValue=true
 
 # Email settings (No-auth)
-mail.smtp.host=${MAIL_HOST!'localhost'}
-mail.smtp.port=${POSTFIX_NOAUTH_SMTP_PORT!'7025'}
-mail.pop3.host=${MAIL_HOST!'localhost'}
-mail.pop3.port=${DOVECOT_NOAUTH_POP3_PORT!'7110'}
-mail.smtp.port.invalid=7024
+mail.noauth.smtp.host=${MAIL_HOST!'localhost'}
+mail.noauth.smtp.port=${POSTFIX_NOAUTH_SMTP_PORT!'7025'}
+mail.noauth.pop3.host=${MAIL_HOST!'localhost'}
+mail.noauth.pop3.port=${DOVECOT_NOAUTH_POP3_PORT!'7110'}
+mail.noauth.smtp.port.invalid=7024
 
 # Email settings (With-auth)
-mail2.smtp.host=${MAIL_HOST!'localhost'}
-mail2.smtp.port=${POSTFIX_AUTH_SMTP_PORT!'7025'}
-mail2.smtp.user=info@auth-example.com
-mail2.smtp.password=Ntt01
-mail2.pop3.host=${MAIL_HOST!'localhost'}
-mail2.pop3.port=${DOVECOT_AUTH_POP3_PORT!'7110'}
-mail2.smtp.password.invalid=password
+mail.auth.smtp.host=${MAIL_HOST!'localhost'}
+mail.auth.smtp.port=${POSTFIX_AUTH_SMTP_PORT!'7025'}
+mail.auth.smtp.user=info@auth-example.com
+mail.auth.smtp.password=Ntt01
+mail.auth.pop3.host=${MAIL_HOST!'localhost'}
+mail.auth.pop3.port=${DOVECOT_AUTH_POP3_PORT!'7110'}
+mail.auth.smtp.password.invalid=password
 
 # Email settings ('From' account)
 mail.from.user=info
 mail.from.password=Ntt01
-mail.from.address=info@noauth-example.com
-mail2.from.address=info@auth-example.com
+mail.noauth.from.address=info@noauth-example.com
+mail.auth.from.address=info@auth-example.com
 
 # SOAP&RSCL connect settings
 connect.host=localhost

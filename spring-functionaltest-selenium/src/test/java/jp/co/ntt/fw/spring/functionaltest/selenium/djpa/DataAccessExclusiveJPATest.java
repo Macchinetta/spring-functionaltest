@@ -205,7 +205,7 @@ public class DataAccessExclusiveJPATest extends
 
         // 結果確認
         {
-            //　完了画面が出現するまで待機する
+            // 完了画面が出現するまで待機する
             getWebDriverOperations(0).waitForDisplayed(id("bookForm"));
 
             // 画面1が、以下の条件を満たすこと

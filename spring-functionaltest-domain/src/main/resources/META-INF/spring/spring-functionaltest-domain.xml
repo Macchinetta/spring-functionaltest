@@ -37,7 +37,7 @@
   <!-- Add End -->
 
   <bean id="templateMessage" class="org.springframework.mail.SimpleMailMessage">
-    <property name="from" value="${mail.from.address}" />
+    <property name="from" value="${mail.noauth.from.address}" />
     <property name="subject" value="Registration confirmation." />
   </bean>
 

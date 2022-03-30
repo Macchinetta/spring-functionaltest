@@ -245,8 +245,8 @@ public class APLY01Controller {
         String[] messageArgs = { "@RequestMapping(value = \"0102/008\")" };
         model.addAttribute("resultMessage", messageSource.getMessage(
                 "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
-        // Testで失敗してしまうため、SonarQube指摘は未対応としています。
         Cookie cookie = new Cookie("HELLO", "helloworld!");
+        cookie.setHttpOnly(true);
         response.addCookie(cookie);
         return "aply/handleRequestSetCookieFromHttpServletResponseForm";
     }

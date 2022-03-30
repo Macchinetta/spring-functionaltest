@@ -41,11 +41,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum WebFaultType {
 
-    @XmlEnumValue("AccessDeniedFault") ACCESS_DENIED_FAULT(
-            "AccessDeniedFault"), @XmlEnumValue("BusinessFault") BUSINESS_FAULT(
-                    "BusinessFault"), @XmlEnumValue("ResourceNotFoundFault") RESOURCE_NOT_FOUND_FAULT(
-                            "ResourceNotFoundFault"), @XmlEnumValue("ValidationFault") VALIDATION_FAULT(
-                                    "ValidationFault");
+    @XmlEnumValue("AccessDeniedFault")
+    ACCESS_DENIED_FAULT("AccessDeniedFault"), @XmlEnumValue("BusinessFault")
+    BUSINESS_FAULT("BusinessFault"), @XmlEnumValue("ResourceNotFoundFault")
+    RESOURCE_NOT_FOUND_FAULT(
+            "ResourceNotFoundFault"), @XmlEnumValue("ValidationFault")
+    VALIDATION_FAULT("ValidationFault");
+
     private final String value;
 
     WebFaultType(String v) {

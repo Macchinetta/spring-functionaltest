@@ -195,7 +195,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * 		<sec:xss-protection />
      * 	</sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -232,7 +231,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * <pre>
      * <sec:frame-options policy="SAMEORIGIN" />
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -260,7 +258,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * <pre>
      * <sec:header name="X-WebKit-CSP" value="default-src 'self'"/>
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -288,7 +285,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      * <pre>
      * <sec:header name="X-WebKit-CSP" value="default-src 'self'"/>
      * </pre>
-     *
      * </ul>
      **/
     @Ignore("リクエストパスがJSPパスに変更されたタイミングでパスマッチングを行い失敗するため実施不可(issues#93)")
@@ -333,7 +329,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      <sec:content-security-policy policy-directives="default-src 'self'" />
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -363,7 +358,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" report-only="true" />
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -393,7 +387,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Test
@@ -457,7 +450,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      </sec:hpkp>
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")
@@ -494,7 +486,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      </sec:hpkp>
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")
@@ -533,7 +524,6 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *      </sec:hpkp>
      *  </sec:headers>
      * </pre>
-     *
      * </ul>
      **/
     @Ignore("spring-functionaltest-webがHTTP環境のため実施不可")

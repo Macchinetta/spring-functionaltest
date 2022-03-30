@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.0.RELEASE</version>
+    <version>1.8.1.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -424,6 +424,14 @@
       <scope>provided</scope>
     </dependency>
     <!-- == End activemq == -->
+
+    <!-- == Begin Jakarta Mail == -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>jakarta.mail</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- == End Jakarta Mail == -->
 
     <!-- == Begin Password Encode == -->
     <dependency>

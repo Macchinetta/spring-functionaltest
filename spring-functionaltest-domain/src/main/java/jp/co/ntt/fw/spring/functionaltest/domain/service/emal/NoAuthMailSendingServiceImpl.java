@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 import java.util.Calendar;
 
 import javax.inject.Inject;
+import javax.mail.Store;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -36,10 +37,10 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
     @Inject
     MailReceivingSharedService mailReceivingService;
 
-    @Value("${mail.pop3.host}")
+    @Value("${mail.noauth.pop3.host}")
     String pop3host;
 
-    @Value("${mail.pop3.port}")
+    @Value("${mail.noauth.pop3.port}")
     int pop3port;
 
     @Value("${mail.from.user}")
@@ -50,31 +51,38 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
 
     @Override
     public void sendSimpleMessage(String to, String cc, String bcc,
-            String replyTo, String text) {
+            String replyTo, String text, Store store) {
 
-        try {
-
-            SimpleMailMessage message = new SimpleMailMessage(templateMessage);
-            message.setTo(to);
-            message.setCc(cc);
-            message.setBcc(bcc);
-            message.setReplyTo(replyTo);
-            Calendar cal = Calendar.getInstance();
-            cal.set(2015, 6, 6);
-            message.setSentDate(cal.getTime());
-            message.setText(text);
-            mailSenderNoAuth.send(message);
-
-        } finally {
-            mailReceivingService.close();
-        }
+        SimpleMailMessage message = new SimpleMailMessage(templateMessage);
+        message.setTo(to);
+        message.setCc(cc);
+        message.setBcc(bcc);
+        message.setReplyTo(replyTo);
+        Calendar cal = Calendar.getInstance();
+        cal.set(2015, 6, 6);
+        message.setSentDate(cal.getTime());
+        message.setText(text);
+        mailSenderNoAuth.send(message);
 
     }
 
     @Override
-    public void popBeforeSmtp() {
+    public void sendSimpleMessages(String[] to, String[] cc, String[] bcc,
+            String text, Store store) {
 
-        mailReceivingService.connect(pop3host, pop3port, pop3user,
+        SimpleMailMessage message = new SimpleMailMessage(templateMessage);
+        message.setTo(to);
+        message.setCc(cc);
+        message.setBcc(bcc);
+        message.setText(text);
+        mailSenderNoAuth.send(message);
+
+    }
+
+    @Override
+    public Store popBeforeSmtp() {
+
+        return mailReceivingService.connect(pop3host, pop3port, pop3user,
                 pop3password);
 
     }

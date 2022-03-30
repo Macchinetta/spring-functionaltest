@@ -694,27 +694,28 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     @Test
     public void testAPLY0201003() throws IOException {
 
-        // // メニュー画面の操作
-        // {
-        // webDriverOperations.click(id("aply0201003"));
-        // }
-        // // フォームオブジェクトの実装 入力画面の操作
-        // {
-        // assertThat(webDriverOperations.getWebDriver().findElement(
-        // id("value3")).getAttribute("value"), is("$3,456,789.00"));
-        //
-        // webDriverOperations.click(id("submit"));
-        // }
-        //
-        // // Controllerの実装方法画面の確認
-        // {
-        // assertThat(webDriverOperations.getText(id("value3")), is("3456789"));
-        // }
-        // // ログの確認
-        // {
-        // dbLogAssertOperations.waitForAssertion();
-        // dbLogAssertOperations.assertNotContainsWarnAndError();
-        // }
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0201003"));
+        }
+        // フォームオブジェクトの実装 入力画面の操作
+        {
+            assertThat(webDriverOperations.getWebDriver().findElement(id(
+                    "value3")).getAttribute("value"), is("$3,456,789.00"));
+
+            webDriverOperations.click(id("submit"));
+        }
+
+        // Controllerの実装方法画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("value3")), is(
+                    "3456789"));
+        }
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError();
+        }
     }
 
     /**
@@ -2957,7 +2958,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
-     * <li>千の位の区切り文字　"." POINT</li>
+     * <li>千の位の区切り文字 "." POINT</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -2986,7 +2987,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
-     * <li>千の位の区切り文字　" " WHITESPACE</li>
+     * <li>千の位の区切り文字 " " WHITESPACE</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -3015,7 +3016,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
-     * <li>千の位の区切り文字　"" NONE</li>
+     * <li>千の位の区切り文字 "" NONE</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -3043,7 +3044,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
-     * <li>千の位の区切り文字　"." DEFAULT(Local依存)</li>
+     * <li>千の位の区切り文字 "." DEFAULT(Local依存)</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -3074,7 +3075,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
-     * <li>小数点　"," COMMA</li>
+     * <li>小数点 "," COMMA</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -3103,7 +3104,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
-     * <li>小数点　"　" WHITESPACE</li>
+     * <li>小数点 " " WHITESPACE</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -3132,7 +3133,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
-     * <li>小数点　"" NONE</li>
+     * <li>小数点 "" NONE</li>
      * <li>小数点に NONEは使用すべきでない為、"?"が付与される。</li>
      * </ul>
      * @see org.thymeleaf.util.NumberUtils#computeDecimalFormatSymbols(NumberPointType, NumberPointType, Locale)
@@ -3163,7 +3164,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
-     * <li>小数点　"." DEFAULT(Locale依存)</li>
+     * <li>小数点 "." DEFAULT(Locale依存)</li>
      * </ul>
      */
     @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })

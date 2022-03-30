@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 import java.nio.charset.StandardCharsets;
 
 import javax.inject.Inject;
+import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
@@ -53,13 +54,13 @@ public class SessionMailSendingServiceImpl implements
     @Inject
     MailReceivingSharedService mailReceivingService;
 
-    @Value("${mail.from.address}")
+    @Value("${mail.noauth.from.address}")
     String fromAddress;
 
-    @Value("${mail.pop3.host}")
+    @Value("${mail.noauth.pop3.host}")
     String pop3host;
 
-    @Value("${mail.pop3.port}")
+    @Value("${mail.noauth.pop3.port}")
     int pop3port;
 
     @Value("${mail.from.user}")
@@ -69,192 +70,161 @@ public class SessionMailSendingServiceImpl implements
     String pop3password;
 
     @Override
-    public void sendSimpleMessage(String to, String text) {
+    public void sendSimpleMessage(String to, String text, Store store) {
 
-        try {
-            SimpleMailMessage message = new SimpleMailMessage(templateMessage);
-            message.setTo(to);
-            message.setText(text);
-            mailSenderSession.send(message);
-
-        } finally {
-            mailReceivingService.close();
-        }
+        SimpleMailMessage message = new SimpleMailMessage(templateMessage);
+        message.setTo(to);
+        message.setText(text);
+        mailSenderSession.send(message);
 
     }
 
     @Override
-    public void sendTextMimeMail(final String to, final String text) {
+    public void sendTextMimeMail(final String to, final String text,
+            Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    helper.setText(text);
-                }
-            });
-
-        } finally {
-            mailReceivingService.close();
-        }
-
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                helper.setText(text);
+            }
+        });
     }
 
     @Override
-    public void sendHtmlMimeMail(final String to, final String text) {
+    public void sendHtmlMimeMail(final String to, final String text,
+            Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    helper.setText(text, true);
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                helper.setText(text, true);
+            }
+        });
     }
 
     @Override
     public void sendAttachmentMimeMail(final String to, final String text,
-            final String filename, final InputStreamSource attachment) {
+            final String filename, final InputStreamSource attachment,
+            Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    helper.setText(text);
-                    helper.addAttachment(filename, attachment);
-                }
-            });
-
-        } finally {
-            mailReceivingService.close();
-        }
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                helper.setText(text);
+                helper.addAttachment(filename, attachment);
+            }
+        });
 
     }
 
     @Override
     public void sendInlineMimeMail(final String to, final String text,
             final String cid, final InputStreamSource inline,
-            final String contentType) {
+            final String contentType, Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    helper.setText(text, true);
-                    helper.addInline(cid, inline, contentType);
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                helper.setText(text, true);
+                helper.addInline(cid, inline, contentType);
 
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
+            }
+        });
     }
 
     @Override
     public void sendTemplatedMail(final String to, final User user,
-            final String templateName) {
+            final String templateName, Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                            .name());
-                    helper.setFrom("\"髙山\" <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject("お知らせ①");
-                    Template template = freemarkerConfiguration.getTemplate(
-                            templateName + ".ftl");
-                    String text = FreeMarkerTemplateUtils
-                            .processTemplateIntoString(template, user);
-                    helper.setText(text, true);
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
+                        .name());
+                helper.setFrom("\"髙山\" <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject("お知らせ①");
+                Template template = freemarkerConfiguration.getTemplate(
+                        templateName + ".ftl");
+                String text = FreeMarkerTemplateUtils.processTemplateIntoString(
+                        template, user);
+                helper.setText(text, true);
+            }
+        });
     }
 
     @Override
-    public void sendIso2022jpMail(final String to, final String text) {
+    public void sendIso2022jpMail(final String to, final String text,
+            Store store) {
 
-        try {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-            mailSenderSession.send(new MimeMessagePreparator() {
-
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    String iso2022jpBadChars = "―－～∥￠￡￢";
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "ISO-2022-JP");
-                    helper.setFrom(convertISO2022JPCharacters(iso2022jpBadChars
-                            + " <" + fromAddress + ">"));
-                    helper.setTo(convertISO2022JPCharacters(to));
-                    helper.setSubject(convertISO2022JPCharacters(
-                            iso2022jpBadChars));
-                    helper.setText(convertISO2022JPCharacters(text));
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                String iso2022jpBadChars = "―－～∥￠￡￢";
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "ISO-2022-JP");
+                helper.setFrom(convertISO2022JPCharacters(iso2022jpBadChars
+                        + " <" + fromAddress + ">"));
+                helper.setTo(convertISO2022JPCharacters(to));
+                helper.setSubject(convertISO2022JPCharacters(
+                        iso2022jpBadChars));
+                helper.setText(convertISO2022JPCharacters(text));
+            }
+        });
     }
 
     @Override
-    public void sendExternalCharMail(final String to, final String text) {
+    public void sendExternalCharMail(final String to, final String text,
+            Store store) {
 
-        try {
-            mailSenderSession.send(new MimeMessagePreparator() {
+        mailSenderSession.send(new MimeMessagePreparator() {
 
-                @Override
-                public void prepare(MimeMessage mimeMessage) throws Exception {
-                    String externalChars = "㈱ｻﾝﾌﾟﾙ～①";
-                    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "ISO-2022-JP");
-                    helper.setFrom(externalChars + " <" + fromAddress + ">");
-                    helper.setTo(to);
-                    helper.setSubject(externalChars);
-                    helper.setText(text);
-                }
-            });
-        } finally {
-            mailReceivingService.close();
-        }
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                String externalChars = "㈱ｻﾝﾌﾟﾙ～①";
+                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "ISO-2022-JP");
+                helper.setFrom(externalChars + " <" + fromAddress + ">");
+                helper.setTo(to);
+                helper.setSubject(externalChars);
+                helper.setText(text);
+            }
+        });
     }
 
     @Override
-    public void popBeforeSmtp() {
+    public Store popBeforeSmtp() {
         if (logger.isDebugEnabled()) {
             logger.debug(pop3host + ":" + pop3port + "[" + pop3user + ","
                     + pop3password + "]");
         }
-        mailReceivingService.connect(pop3host, pop3port, pop3user,
+
+        return mailReceivingService.connect(pop3host, pop3port, pop3user,
                 pop3password);
 
     }

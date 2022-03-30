@@ -142,7 +142,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
                 .toString());
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, message.getText());
+        map.put(JmsProperty.UUID_KEY.name(), message.getText());
         jmsSharedService.writeMapToFile(temporaryDirectory, message.getText(),
                 map);
         // 受信完了を待っているスレッドの待機を解除するためにイベントを通知する
@@ -158,9 +158,9 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
                 .toString());
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.HEADER_KEY1, (String) jmsTodoMessage
-                .getHeaders().get(JmsSharedService.HEADER_KEY1));
-        map.put(JmsSharedService.UUID_KEY, jmsTodoMessage.getPayload()
+        map.put(JmsProperty.HEADER_KEY1.name(), (String) jmsTodoMessage
+                .getHeaders().get(JmsProperty.HEADER_KEY1.name()));
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodoMessage.getPayload()
                 .getJmsTodoId());
 
         jmsSharedService.writeMapToFile(temporaryDirectory, jmsTodoMessage
@@ -245,10 +245,10 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         logger.debug("Received Message! {}", message);
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, message.getText());
-        map.put(JmsSharedService.PRIORITY, String.valueOf(message
+        map.put(JmsProperty.UUID_KEY.name(), message.getText());
+        map.put(JmsProperty.PRIORITY.name(), String.valueOf(message
                 .getJMSPriority()));
-        map.put(JmsSharedService.DELIVERY_MODE, String.valueOf(message
+        map.put(JmsProperty.DELIVERY_MODE.name(), String.valueOf(message
                 .getJMSDeliveryMode()));
 
         jmsSharedService.writeMapToFile(temporaryDirectory, message.getText(),
@@ -265,7 +265,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         logger.debug("Received Message! {}", jmsTodo);
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, jmsTodo.getJmsTodoId());
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodo.getJmsTodoId());
 
         jmsSharedService.writeMapToFile(temporaryDirectory, jmsTodo
                 .getJmsTodoId(), map);
@@ -279,7 +279,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         logger.debug("Received Message! {}", jmsTodo);
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, jmsTodo.getJmsTodoId());
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodo.getJmsTodoId());
 
         jmsSharedService.writeMapToFile(temporaryDirectory, jmsTodo
                 .getJmsTodoId(), map);
@@ -307,9 +307,9 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         logger.debug("Received Message! {}", jmsTodoMessage);
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, jmsTodoMessage.getPayload()
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodoMessage.getPayload()
                 .getJmsTodoId());
-        map.put(JmsSharedService.RECEIVE_QUEUE, "TestQueue0403001B");
+        map.put(JmsProperty.RECEIVE_QUEUE.name(), "TestQueue0403001B");
 
         jmsSharedService.writeMapToFile(temporaryDirectory, jmsTodoMessage
                 .getPayload().getJmsTodoId(), map);
@@ -327,9 +327,9 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         logger.debug("Received Message! {}", jmsTodoMessage);
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.UUID_KEY, jmsTodoMessage.getPayload()
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodoMessage.getPayload()
                 .getJmsTodoId());
-        map.put(JmsSharedService.RECEIVE_QUEUE, "TestQueue0403001C");
+        map.put(JmsProperty.RECEIVE_QUEUE.name(), "TestQueue0403001C");
 
         jmsSharedService.writeMapToFile(temporaryDirectory, jmsTodoMessage
                 .getPayload().getJmsTodoId(), map);
@@ -347,11 +347,11 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
                 .toString());
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put(JmsSharedService.HEADER_KEY1, (String) jmsTodoMessage
-                .getHeaders().get(JmsSharedService.HEADER_KEY1));
-        map.put(JmsSharedService.UUID_KEY, jmsTodoMessage.getPayload()
+        map.put(JmsProperty.HEADER_KEY1.name(), (String) jmsTodoMessage
+                .getHeaders().get(JmsProperty.HEADER_KEY1.name()));
+        map.put(JmsProperty.UUID_KEY.name(), jmsTodoMessage.getPayload()
                 .getJmsTodoId());
-        map.put(JmsSharedService.RECEIVE_QUEUE, "TestQueue0403003B");
+        map.put(JmsProperty.RECEIVE_QUEUE.name(), "TestQueue0403003B");
 
         String todoId = jmsTodoMessage.getPayload().getJmsTodoId();
         jmsSharedService.writeMapToFile(temporaryDirectory, todoId, map);

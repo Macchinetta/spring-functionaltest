@@ -23,6 +23,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -33,11 +34,14 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
  * </ul>
  */
 public class RequestFactoryBean implements
-                                FactoryBean<ClientHttpRequestFactory> {
+                                FactoryBean<ClientHttpRequestFactory>,
+                                DisposableBean {
 
     private String keyStoreFileName;
 
     private char[] keyStorePassword;
+
+    private HttpComponentsClientHttpRequestFactory factory;
 
     @Override
     public ClientHttpRequestFactory getObject() throws Exception {
@@ -64,9 +68,9 @@ public class RequestFactoryBean implements
                 sslContext).build();
 
         // RestTemplateへ渡すRequestFactoryの作成
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory(httpClient);
+        this.factory = new HttpComponentsClientHttpRequestFactory(httpClient);
 
-        return factory;
+        return this.factory;
     }
 
     @Override
@@ -87,4 +91,10 @@ public class RequestFactoryBean implements
         this.keyStorePassword = keyStorePassword;
     }
 
+    @Override
+    public void destroy() throws Exception {
+        if (this.factory != null) {
+            this.factory.destroy();
+        }
+    }
 }

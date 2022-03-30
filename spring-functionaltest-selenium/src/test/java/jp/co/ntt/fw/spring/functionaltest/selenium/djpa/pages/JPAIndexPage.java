@@ -114,6 +114,18 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     private WebElement jpaRepoDefFlushLink;
 
     @CacheLookup
+    @FindBy(id = "djpa0201014")
+    private WebElement jpaRepoDefSaveAllAndFlushEntityList;
+
+    @CacheLookup
+    @FindBy(id = "djpa0201015")
+    private WebElement jpaRepoDefDeleteAllById;
+
+    @CacheLookup
+    @FindBy(id = "djpa0201016")
+    private WebElement jpaRepoDefDeleteAllByIdInBatch;
+
+    @CacheLookup
     @FindBy(id = "djpa0202001")
     private WebElement jpaCustomRepositoryLink;
 
@@ -404,6 +416,24 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     public JPAHomePage djpa0201013Click() {
         JPAHomePage homePage = new JPAHomePage(driver);
         jpaRepoDefFlushLink.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0201014Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        jpaRepoDefSaveAllAndFlushEntityList.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0201015Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        jpaRepoDefDeleteAllById.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0201016Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        jpaRepoDefDeleteAllByIdInBatch.click();
         return homePage;
     }
 

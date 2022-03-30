@@ -31,10 +31,6 @@ public class JPACategoryLZ {
     @Column(name = "name", nullable = true, length = 1024)
     private String categoryName;
 
-    public JPACategoryLZ() {
-
-    }
-
     public int getCategoryId() {
         return categoryId;
     }

@@ -73,7 +73,8 @@ public class ExtendConstraintOfCommonLibraryTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id(confirmedTarget), "password");
         webDriverOperations.click(id(validate));
 
-        assertThat(webDriverOperations.exists(id(confirmedTarget + errors)), is(false));
+        assertThat(webDriverOperations.exists(id(confirmedTarget + errors)), is(
+                false));
 
         // 異なる文字列を入力した場合はエラーが出る
         webDriverOperations.overrideText(id(target), "password");
@@ -81,8 +82,8 @@ public class ExtendConstraintOfCommonLibraryTest extends FunctionTestSupport {
                 "confirmPassword");
         webDriverOperations.click(id(validate));
 
-        assertThat(webDriverOperations.getText(id(confirmedTarget + errors)), is(
-                errorMessage.replace("{right}", target).replace("{left}",
+        assertThat(webDriverOperations.getText(id(confirmedTarget + errors)),
+                is(errorMessage.replace("{right}", target).replace("{left}",
                         confirmedTarget)));
     }
 }

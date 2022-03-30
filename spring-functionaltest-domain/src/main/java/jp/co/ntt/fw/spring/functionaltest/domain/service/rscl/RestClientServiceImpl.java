@@ -27,9 +27,6 @@ import javax.inject.Inject;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 
 import org.apache.commons.io.FileUtils;
@@ -236,7 +233,7 @@ public class RestClientServiceImpl implements RestClientService {
             }
         }
 
-        // 　byteデータを送信して、byteデータを受信する。
+        // byteデータを送信して、byteデータを受信する。
         RequestEntity<byte[]> requestEntity = RequestEntity.post(targetUri)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).body(bufs);
         ResponseEntity<byte[]> res = this.restTemplate.exchange(requestEntity,
@@ -269,7 +266,7 @@ public class RestClientServiceImpl implements RestClientService {
     public String exchangeWithStringHttpMessageConverter(String message) {
         URI targetUri = this.getUri(this.uri, "str");
 
-        // 　Stringデータを送信して、Stringデータを受信する。
+        // Stringデータを送信して、Stringデータを受信する。
         String sendStr = message;
         RequestEntity<String> requestEntity = RequestEntity.post(targetUri)
                 .contentType(MediaType.TEXT_PLAIN).accept(MediaType.TEXT_PLAIN)
@@ -305,7 +302,7 @@ public class RestClientServiceImpl implements RestClientService {
             throw new SystemException("e.sf.rscl.9001", "input/output error.", e1);
         }
 
-        // 　Resourceデータを送信して、Resourceデータを受信する。
+        // Resourceデータを送信して、Resourceデータを受信する。
         RequestEntity<Resource> requestEntity = RequestEntity.post(targetUri)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM).body(sendRsc);
         ResponseEntity<Resource> res = this.restTemplate.exchange(requestEntity,
@@ -368,34 +365,26 @@ public class RestClientServiceImpl implements RestClientService {
             throw new SystemException("e.sf.rscl.9002", "parse configuration error.", e1);
         }
 
-        // 　Sourceデータを送信して、Sourceデータを受信する。
+        // Sourceデータを送信して、Sourceデータを受信する。
         RequestEntity<Source> requestEntity = RequestEntity.post(targetUri)
                 .contentType(MediaType.APPLICATION_XML).accept(
                         MediaType.APPLICATION_XML).body(sendSrc);
-        ResponseEntity<Source> res = this.restTemplate.exchange(requestEntity,
-                Source.class);
+        ResponseEntity<DOMSource> res = this.restTemplate.exchange(
+                requestEntity, DOMSource.class);
 
-        Source rcvSrc = res.getBody();
+        DOMSource rcvSrc = res.getBody();
         for (String contentType : res.getHeaders().get("Content-Type")) {
             logger.info("RSCL0204001 : {}", contentType);
         }
         logger.info("RSCL0204001 : {}", res.getStatusCode());
 
         // 受信したXMlソースを解析
-        try {
-            DOMResult rslt = new DOMResult();
-            TransformerFactory.newInstance().newTransformer().transform(rcvSrc,
-                    rslt);
-            Document doc = (Document) rslt.getNode();
+        Document doc = (Document) rcvSrc.getNode();
 
-            resUser.setName(doc.getElementsByTagName("name").item(0)
-                    .getFirstChild().getNodeValue());
-            resUser.setAge(Integer.parseInt(doc.getElementsByTagName("age")
-                    .item(0).getFirstChild().getNodeValue()));
-
-        } catch (TransformerException e) {
-            throw new SystemException("e.sf.rscl.9003", "transform error.", e);
-        }
+        resUser.setName(doc.getElementsByTagName("name").item(0).getFirstChild()
+                .getNodeValue());
+        resUser.setAge(Integer.parseInt(doc.getElementsByTagName("age").item(0)
+                .getFirstChild().getNodeValue()));
 
         return resUser;
     }
@@ -411,7 +400,7 @@ public class RestClientServiceImpl implements RestClientService {
         sendMap.add("name", user.getName());
         sendMap.add("age", String.valueOf(user.getAge()));
 
-        // 　MultiValueMapを送信して、MultiValueMapを受信する。
+        // MultiValueMapを送信して、MultiValueMapを受信する。
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
                 .post(targetUri).contentType(
                         MediaType.APPLICATION_FORM_URLENCODED).accept(

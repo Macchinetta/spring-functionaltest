@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
-import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsProperty;
 
 @Controller
 @RequestMapping("jmss")
@@ -52,8 +52,8 @@ public class JMSS03ReceivingController {
                 form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(
-                    JmsSharedService.UUID_KEY));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
+                    .name()));
         }
 
         return "jmss/jmsReceive";
@@ -67,8 +67,8 @@ public class JMSS03ReceivingController {
                 form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(
-                    JmsSharedService.UUID_KEY));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
+                    .name()));
         }
 
         return "jmss/jmsReceive";
@@ -114,11 +114,12 @@ public class JMSS03ReceivingController {
                 form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(
-                    JmsSharedService.UUID_KEY));
-            model.addAttribute("priority", map.get(JmsSharedService.PRIORITY));
-            model.addAttribute("deliveryMode", map.get(
-                    JmsSharedService.DELIVERY_MODE));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
+                    .name()));
+            model.addAttribute("priority", map.get(JmsProperty.PRIORITY
+                    .name()));
+            model.addAttribute("deliveryMode", map.get(JmsProperty.DELIVERY_MODE
+                    .name()));
         }
 
         return "jmss/jmsReceive";

@@ -457,7 +457,7 @@ public class RSCLController {
     /**
      * <ul>
      * <li>JavaBeanのリストをXML文字列で返却。</li> <br>
-     * XML　⇒　JavaBeanのリスト確認用。
+     * XML ⇒ JavaBeanのリスト確認用。
      * </ul>
      * @return
      */

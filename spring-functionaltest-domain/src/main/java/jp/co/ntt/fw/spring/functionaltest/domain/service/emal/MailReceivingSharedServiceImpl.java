@@ -26,13 +26,13 @@ import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage.RecipientType;
 import javax.mail.internet.MimeUtility;
 
 import org.slf4j.Logger;
@@ -48,10 +48,8 @@ public class MailReceivingSharedServiceImpl implements
     private static final Logger logger = LoggerFactory.getLogger(
             MailReceivingSharedServiceImpl.class);
 
-    Store store;
-
     @Override
-    public void connect(String host, int port, String user, String password) {
+    public Store connect(String host, int port, String user, String password) {
 
         Properties props = new Properties();
         props.put("mail.pop3.host", host);
@@ -63,8 +61,11 @@ public class MailReceivingSharedServiceImpl implements
 
         Session session = Session.getInstance(props);
         try {
-            store = session.getStore("pop3");
+            Store store = session.getStore("pop3");
             store.connect(user, password);
+
+            return store;
+
         } catch (MessagingException e) {
             throw new SystemException("e.xx.xx.0001", "connecting via pop3 failed.", e);
         }
@@ -72,7 +73,7 @@ public class MailReceivingSharedServiceImpl implements
     }
 
     @Override
-    public MailMessage receive(String identifier) {
+    public MailMessage receive(String identifier, Store store) {
 
         MailMessage mail = null;
         Folder folder = null;
@@ -105,14 +106,6 @@ public class MailReceivingSharedServiceImpl implements
                     // ignore
                 }
             }
-            if (store != null) {
-                try {
-                    store.close();
-                    store = null;
-                } catch (MessagingException e) {
-                    // ignore
-                }
-            }
 
         }
 
@@ -121,11 +114,11 @@ public class MailReceivingSharedServiceImpl implements
     }
 
     @Override
-    public MailMessage receive(String identifier,
-            int retryCount) throws InterruptedException {
+    public MailMessage receive(String identifier, int retryCount,
+            Store store) throws InterruptedException {
 
         for (int i = 0; i < retryCount; i++) {
-            MailMessage mail = receive(identifier);
+            MailMessage mail = receive(identifier, store);
             if (mail != null) {
                 return mail;
             }
@@ -230,18 +223,6 @@ public class MailReceivingSharedServiceImpl implements
             }
         }
 
-    }
-
-    @Override
-    public void close() {
-        if (store != null) {
-            try {
-                store.close();
-                store = null;
-            } catch (MessagingException e) {
-                // ignore
-            }
-        }
     }
 
 }

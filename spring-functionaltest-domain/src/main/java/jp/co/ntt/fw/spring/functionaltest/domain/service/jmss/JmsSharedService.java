@@ -29,20 +29,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsSharedService {
 
-    static String UUID_KEY = "UUID_KEY";
-
-    static String HEADER_KEY1 = "HEADER_KEY1";
-
-    static String RECEIVE_QUEUE = "RECEIVE_QUEUE";
-
-    static String ERROR_KEY1 = "ERROR_KEY1";
-
-    static String DELIVERY_MODE = "DELIVERY_MODE";
-
-    static String PRIORITY = "PRIORITY";
-
-    static String TTL = "TTL";
-
     void purgeMessageFrom(List<String> destinationNameList,
             boolean pubsubDomain);
 

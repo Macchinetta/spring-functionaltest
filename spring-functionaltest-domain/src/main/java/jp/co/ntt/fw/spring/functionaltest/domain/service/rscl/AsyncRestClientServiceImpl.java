@@ -167,22 +167,7 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
         try {
             // キューを溢れさせるため、queueCapacity + maxPoolSize + 1 回連続でRESTAPI呼び出しを行う。
             for (int i = 0; i < threadCapacity + 1; i++) {
-                long totalMillis = 0L;
-                // activeスレッドがMAXプールサイズ以下で、キューがMAXキュー数まで詰まっている場合は一時待機
-                while ((executor.getActiveCount() < maxPoolSize) && (executor
-                        .getQueue().size() == queueCapacity)) {
-                    try {
-                        Thread.sleep(waitStartQueuedTaskMillis);
-                    } catch (InterruptedException e) {
-                        // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
-                        throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
-                    }
-                    totalMillis += waitStartQueuedTaskMillis;
-                    // 直前のREST API 呼出しの応答が変えるであろう「sleepMillis」m秒 までは繰り返し待つ
-                    if (Long.compare(sleepMillis, totalMillis) <= 0) {
-                        throw new SystemException("e.sf.rscl.9007", "queued task is not start.");
-                    }
-                }
+                awaitRepeatedly(executor);
                 URI targetUri;
                 if (i < maxPoolSize) {
                     targetUri = getUri(uri, "await");
@@ -297,6 +282,31 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>繰り返し待機させる</li>
+     * </ul>
+     * @param executor activeスレッドやキューのサイズを獲得するためのexecutor
+     */
+    private void awaitRepeatedly(ThreadPoolExecutor executor) {
+        long totalMillis = 0L;
+        // activeスレッドがMAXプールサイズ以下で、キューがMAXキュー数まで詰まっている場合は一時待機
+        while ((executor.getActiveCount() < maxPoolSize) && (executor.getQueue()
+                .size() == queueCapacity)) {
+            try {
+                Thread.sleep(waitStartQueuedTaskMillis);
+            } catch (InterruptedException e) {
+                // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
+                throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
+            }
+            totalMillis += waitStartQueuedTaskMillis;
+            // 直前のREST API 呼出しの応答が返るであろう「sleepMillis」秒 までは繰り返し待つ
+            if (Long.compare(sleepMillis, totalMillis) <= 0) {
+                throw new SystemException("e.sf.rscl.9007", "queued task is not start.");
+            }
         }
     }
 }

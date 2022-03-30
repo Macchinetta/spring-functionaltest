@@ -66,13 +66,6 @@ public class ObjectFactory {
     private final static QName _GetTodosResponse_QNAME = new QName("http://functionaltest.spring.fw.ntt.co.jp/todo", "getTodosResponse");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package:
-     * jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport
-     */
-    public ObjectFactory() {
-    }
-
-    /**
      * Create an instance of {@link UploadFile }
      */
     public UploadFile createUploadFile() {

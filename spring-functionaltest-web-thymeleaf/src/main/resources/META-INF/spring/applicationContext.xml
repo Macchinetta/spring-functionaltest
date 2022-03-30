@@ -59,6 +59,7 @@
         <value>i18n/application-messages_rscl</value>
         <value>i18n/application-messages-soap</value>
         <value>i18n/application-messages-oth2</value>
+        <value>i18n/application-messages-o2sp</value>
       </list>
     </property>
   </bean>

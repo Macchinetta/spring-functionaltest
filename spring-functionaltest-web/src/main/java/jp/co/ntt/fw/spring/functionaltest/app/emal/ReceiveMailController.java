@@ -16,6 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.Store;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,12 +49,17 @@ public class ReceiveMailController {
     @RequestMapping(value = "receivemail", method = RequestMethod.POST)
     public String handleReceiveMail(Model model,
             EmailReceivingForm form) throws InterruptedException {
-        mailReceivingSharedService.connect(form.getHost(), form.getPort(), form
-                .getUser(), form.getPassword());
-        MailMessage mail = mailReceivingSharedService.receive(form
-                .getIdentifier(), 5);
-        model.addAttribute("mail", mail);
-        mailReceivingSharedService.close();
+
+        try (Store store = mailReceivingSharedService.connect(form.getHost(),
+                form.getPort(), form.getUser(), form.getPassword())) {
+
+            MailMessage mail = mailReceivingSharedService.receive(form
+                    .getIdentifier(), 5, store);
+            model.addAttribute("mail", mail);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "emal/receiveMail";
     }
 

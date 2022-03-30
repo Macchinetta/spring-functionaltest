@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
 import javax.inject.Inject;
+import javax.mail.Store;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -34,10 +35,10 @@ public class AuthMailSendingServiceImpl implements AuthMailSendingService {
     @Inject
     MailReceivingSharedService mailReceivingService;
 
-    @Value("${mail2.pop3.host}")
+    @Value("${mail.auth.pop3.host}")
     String pop3host;
 
-    @Value("${mail2.pop3.port}")
+    @Value("${mail.auth.pop3.port}")
     int pop3port;
 
     @Value("${mail.from.user}")
@@ -48,27 +49,21 @@ public class AuthMailSendingServiceImpl implements AuthMailSendingService {
 
     @Override
     public void sendSimpleMessage(String[] to, String[] cc, String[] bcc,
-            String text) {
+            String text, Store store) {
 
-        try {
-
-            SimpleMailMessage message = new SimpleMailMessage(templateMessage);
-            message.setTo(to);
-            message.setCc(cc);
-            message.setBcc(bcc);
-            message.setText(text);
-            mailSenderAuth.send(message);
-
-        } finally {
-            mailReceivingService.close();
-        }
+        SimpleMailMessage message = new SimpleMailMessage(templateMessage);
+        message.setTo(to);
+        message.setCc(cc);
+        message.setBcc(bcc);
+        message.setText(text);
+        mailSenderAuth.send(message);
 
     }
 
     @Override
-    public void popBeforeSmtp() {
+    public Store popBeforeSmtp() {
 
-        mailReceivingService.connect(pop3host, pop3port, pop3user,
+        return mailReceivingService.connect(pop3host, pop3port, pop3user,
                 pop3password);
 
     }

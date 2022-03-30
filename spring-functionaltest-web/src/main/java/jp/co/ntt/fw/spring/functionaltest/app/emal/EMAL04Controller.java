@@ -18,6 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.util.Arrays;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.Store;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,36 +82,56 @@ public class EMAL04Controller {
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=authenticationException")
     public String handleAuthenticationException(Model model,
             EmailSendingForm form) {
-        authErrorMailSendingService.popBeforeSmtp();
-        authErrorMailSendingService.sendMessage(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = authErrorMailSendingService.popBeforeSmtp()) {
+            authErrorMailSendingService.sendMessage(form.getTo().get(0), form
+                    .getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=parseException")
     public String handleParseException(Model model, EmailSendingForm form) {
-        sessionMailSendingService.popBeforeSmtp();
-        sessionMailSendingService.sendSimpleMessage(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendSimpleMessage(form.getTo().get(0),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=preparationException")
     public String handlePreparationException(Model model,
             EmailSendingForm form) {
-        sessionMailSendingService.popBeforeSmtp();
         User user = new User();
         user.setUsername(form.getText());
-        sessionMailSendingService.sendTemplatedMail(form.getTo().get(0), user,
-                form.getTemplateName());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendTemplatedMail(form.getTo().get(0),
+                    user, form.getTemplateName(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=sendException")
     public String handleSendException(Model model, EmailSendingForm form) {
-        connectionErrorMailSendingService.popBeforeSmtp();
-        connectionErrorMailSendingService.sendMessage(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = connectionErrorMailSendingService.popBeforeSmtp()) {
+            connectionErrorMailSendingService.sendMessage(form.getTo().get(0),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 

@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.text.MatchesPattern.matchesPattern;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
@@ -102,10 +103,12 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.appendText(id("confirmPassword"), "spring12345");
 
         // CSRFトークンが設定されていることを確認
-        webDriverOperations.getJavascriptExecutor().executeScript(
-                "document.getElementsByName('_csrf')[0].setAttribute('type', 'text');");
-
-        webDriverOperations.saveScreenCapture();
+        String csrfToken = webDriverOperations.getJavascriptExecutor()
+                .executeScript(
+                        "return document.getElementsByName('_csrf')[1].value")
+                .toString();
+        assertThat(csrfToken, matchesPattern(
+                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
@@ -135,10 +138,12 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.appendText(id("confirmPassword"), "spring12345");
 
         // CSRFトークンが設定されていることを確認
-        webDriverOperations.getJavascriptExecutor().executeScript(
-                "document.getElementsByName('_csrf')[0].setAttribute('type', 'text');");
-
-        webDriverOperations.saveScreenCapture();
+        String csrfToken = webDriverOperations.getJavascriptExecutor()
+                .executeScript(
+                        "return document.getElementsByName('_csrf')[1].value")
+                .toString();
+        assertThat(csrfToken, matchesPattern(
+                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
@@ -406,10 +411,12 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.appendText(id("confirmPassword"), "spring12345");
 
         // CSRFトークンが設定されていることを確認
-        webDriverOperations.getJavascriptExecutor().executeScript(
-                "document.getElementsByName('_csrf')[0].setAttribute('type', 'text');");
-
-        webDriverOperations.saveScreenCapture();
+        String csrfToken = webDriverOperations.getJavascriptExecutor()
+                .executeScript(
+                        "return document.getElementsByName('_csrf')[1].value")
+                .toString();
+        assertThat(csrfToken, matchesPattern(
+                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
@@ -594,10 +601,13 @@ public class CSRFProtectionTest extends FunctionTestSupport {
                         .getFile());
 
         // CSRFトークンが設定されていることを確認
-        webDriverOperations.getJavascriptExecutor().executeScript(
-                "document.getElementsByName('_csrf')[0].setAttribute('type', 'text');");
+        String csrfToken = webDriverOperations.getJavascriptExecutor()
+                .executeScript(
+                        "return document.getElementsByName('_csrf')[1].value")
+                .toString();
+        assertThat(csrfToken, matchesPattern(
+                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
-        webDriverOperations.saveScreenCapture();
         webDriverOperations.click(id("uploadButton"));
 
         // 完了画面に遷移したことをチェック

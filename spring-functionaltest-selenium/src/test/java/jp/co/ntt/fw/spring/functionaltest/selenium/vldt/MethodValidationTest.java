@@ -166,8 +166,9 @@ public class MethodValidationTest extends FunctionTestSupport {
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(containsString("propertyPath=convertUserId.arg0,"),
-                    containsString("propertyPath=convertUserId.userId,")));
+            assertThat(logMessage, anyOf(containsString(
+                    "propertyPath=convertUserId.arg0,"), containsString(
+                            "propertyPath=convertUserId.userId,")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -286,9 +287,10 @@ public class MethodValidationTest extends FunctionTestSupport {
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
                     "interpolatedMessage='過去の日付にしてください',"));
-            assertThat(logMessage, anyOf(
-                    containsString("propertyPath=convertUserInfo.arg0.visitDate,"),
-                    containsString("propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate")));
+            assertThat(logMessage, anyOf(containsString(
+                    "propertyPath=convertUserInfo.arg0.visitDate,"),
+                    containsString(
+                            "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{javax.validation.constraints.Past.message}'"));
         }
@@ -331,9 +333,10 @@ public class MethodValidationTest extends FunctionTestSupport {
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(
-                    containsString("propertyPath=convertUserInfo.arg0.visitDate,"),
-                    containsString("propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,")));
+            assertThat(logMessage, anyOf(containsString(
+                    "propertyPath=convertUserInfo.arg0.visitDate,"),
+                    containsString(
+                            "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }
@@ -376,9 +379,10 @@ public class MethodValidationTest extends FunctionTestSupport {
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(
-                    containsString("propertyPath=convertUserInfo.arg0.visitMessage,"),
-                    containsString("propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,")));
+            assertThat(logMessage, anyOf(containsString(
+                    "propertyPath=convertUserInfo.arg0.visitMessage,"),
+                    containsString(
+                            "propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
         }

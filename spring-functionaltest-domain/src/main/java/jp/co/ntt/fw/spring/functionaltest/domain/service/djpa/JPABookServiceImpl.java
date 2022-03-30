@@ -16,6 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,12 +33,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.SystemException;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategory;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookCrudRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookEGCrudRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryEGCRUDRepository;
-import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPACategoryRepository;
 
 @Service
 @Transactional(value = "jpaTransactionManager")
@@ -45,16 +47,10 @@ public class JPABookServiceImpl implements JPABookService {
     JPABookRepository jpaBookRepository;
 
     @Inject
-    JPACategoryRepository jpaCategoryRepository;
-
-    @Inject
     JPACategoryEGCRUDRepository jpaCategoryEGCRUDRepository;
 
     @Inject
     JPABookCrudRepository jpaBookCRUDRepository;
-
-    @Inject
-    JPABookEGCrudRepository jpaBookCrudRepository;
 
     @Value("${rollback.msg}")
     protected String rollbackMsg;
@@ -104,6 +100,63 @@ public class JPABookServiceImpl implements JPABookService {
         return book;
     }
 
+    @Override
+    @Transactional(value = "jpaTransactionManager")
+    public List<JPABook> saveMultipleFlush() {
+        List<JPABook> entities = new ArrayList<JPABook>();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2013, 11, 24);
+        Date utilDate = cal.getTime();
+        java.sql.Date releaseDate = new java.sql.Date(utilDate.getTime());
+
+        JPABook book = new JPABook();
+        book.setBookId("0000000001");
+        book.setCategory(new JPACategory());
+        book.getCategory().setCategoryId("0000000001");
+        book.setTitle("TitleA011");
+        book.setPrice(10000);
+        book.setReleaseDate(releaseDate);
+        book.setClobCode("CodeA011");
+        book.setBlobCode("CodeA011".getBytes());
+        entities.add(book);
+
+        book = new JPABook();
+        book.setBookId("0000000002");
+        book.setCategory(new JPACategory());
+        book.getCategory().setCategoryId("0000000001");
+        book.setTitle("TitleA012");
+        book.setPrice(10000);
+        book.setReleaseDate(releaseDate);
+        book.setClobCode("CodeA012");
+        book.setBlobCode("CodeA012".getBytes());
+        entities.add(book);
+
+        book = new JPABook();
+        book.setBookId("0000000003");
+        book.setCategory(new JPACategory());
+        book.getCategory().setCategoryId("0000000001");
+        book.setTitle("TitleA013");
+        book.setPrice(10000);
+        book.setReleaseDate(releaseDate);
+        book.setClobCode("CodeA013");
+        book.setBlobCode("CodeA013".getBytes());
+        entities.add(book);
+
+        book = new JPABook();
+        book.setBookId("0000000004");
+        book.setCategory(new JPACategory());
+        book.getCategory().setCategoryId("0000000002");
+        book.setTitle("TitleB011");
+        book.setPrice(10000);
+        book.setReleaseDate(releaseDate);
+        book.setClobCode("CodeB011");
+        book.setBlobCode("CodeB011".getBytes());
+        entities.add(book);
+
+        return jpaBookRepository.saveAllAndFlush(entities);
+    }
+
     @Transactional(value = "jpaTransactionManager")
     @Override
     public void deleteAllInBatch() {
@@ -127,7 +180,17 @@ public class JPABookServiceImpl implements JPABookService {
     public void deleteInBatch(Iterable<String> iterable) {
         Iterable<JPABook> bookList = jpaBookCRUDRepository.findAllById(
                 iterable);
-        jpaBookRepository.deleteInBatch(bookList);
+        jpaBookRepository.deleteAllInBatch(bookList);
+    }
+
+    @Override
+    public void deleteAllById(Iterable<String> iterable) {
+        jpaBookRepository.deleteAllById(iterable);
+    }
+
+    @Override
+    public void deleteAllByIdInBatch(Iterable<String> iterable) {
+        jpaBookRepository.deleteAllByIdInBatch(iterable);
     }
 
     @Override

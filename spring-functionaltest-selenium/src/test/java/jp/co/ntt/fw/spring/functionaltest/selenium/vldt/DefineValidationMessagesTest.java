@@ -347,7 +347,8 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
     /**
      * VLDT0305001
      * <ul>
-     * <li>Bean Validationが管理するメッセージプロパティファイルに${validatedValue}を含むメッセージを定義した場合、入力チェックエラー時に設定したメッセージに入力値が埋め込まれた状態で出力されることを確認する。</li>
+     * <li>Bean
+     * Validationが管理するメッセージプロパティファイルに${validatedValue}を含むメッセージを定義した場合、入力チェックエラー時に設定したメッセージに入力値が埋め込まれた状態で出力されることを確認する。</li>
      * </ul>
      */
     @Test

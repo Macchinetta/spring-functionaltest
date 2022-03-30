@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>spring-functionaltest-web-oauth2-resource-thymeleaf</artifactId>
+  <packaging>war</packaging>
+  <parent>
+    <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
+    <artifactId>spring-functionaltest</artifactId>
+    <version>1.8.1.RELEASE</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <name>Spring Functional Test - Web Layer OAuth2 Resource server For Thymeleaf</name>
+  <description>Resource server of Spring Functional Test For Thymeleaf</description>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warName>spring-functionaltest-web-oauth2-resource</warName>
+          <webResources>
+            <webResource>
+              <directory>${project.root.basedir}/spring-functionaltest-web-oauth2-resource/src/main/webapp/resources</directory>
+              <targetPath>resources</targetPath>
+            </webResource>
+            <webResource>
+              <directory>${project.root.basedir}/spring-functionaltest-web-oauth2-resource/src/main/webapp/WEB-INF/views</directory>
+              <targetPath>WEB-INF/views</targetPath>
+              <exclude>**/*.jsp</exclude>
+            </webResource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.root.basedir}/spring-functionaltest-web-oauth2-resource/src/main/java</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-resources</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>${project.root.basedir}/spring-functionaltest-web-oauth2-resource/src/main/resources</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>spring-functionaltest-env-oauth2</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- == Begin TERASOLUNA == -->
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-security-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <!-- == End TERASOLUNA == -->
+
+    <!-- == Begin Thymeleaf == -->
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring5</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-java8time</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- == End Thymeleaf == -->
+
+    <!-- == Begin Tomcat == -->
+    <!-- Servlet API 4.0 & JSP API 2.3 -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jsp-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <!-- == End Tomcat == -->
+    
+    <!-- == Begin Spring Security OAuth2 == -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-jwt</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-resource-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
+    </dependency>
+    <!-- == End Spring Security OAuth2 == -->
+
+  </dependencies>
+  <properties>
+    <project.env.target.name>spring-functionaltest-env-oauth2</project.env.target.name>
+    <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+    <cargo.deployable.artifactId>${project.artifactId}</cargo.deployable.artifactId>
+    <cargo.deployable.warName>spring-functionaltest-web-oauth2-resource</cargo.deployable.warName>
+  </properties>
+</project>

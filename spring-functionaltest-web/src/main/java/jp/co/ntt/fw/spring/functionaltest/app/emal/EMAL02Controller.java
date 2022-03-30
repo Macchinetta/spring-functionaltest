@@ -18,7 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.util.Arrays;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.Store;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +45,9 @@ public class EMAL02Controller {
 
     @Inject
     AuthMailSendingService authMailSendingService;
+
+    @Value("${test.environment}")
+    String testEnvironment;
 
     @ModelAttribute
     EmailSendingForm setUpForm() {
@@ -70,36 +76,75 @@ public class EMAL02Controller {
         form.setTo(Arrays.asList("", ""));
         form.setCc(Arrays.asList("", ""));
         form.setBcc(Arrays.asList("", ""));
-        form.setTestcase("pluralRecipients");
+
+        if ("mailServer".equals(testEnvironment)) {
+            form.setTestcase("authPluralRecipients");
+        } else {
+            form.setTestcase("noAuthPluralRecipients");
+        }
+
         return "emal/sendMail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=simpleMessage")
     public String handleSimpleMessage(Model model, EmailSendingForm form,
             RedirectAttributes attrs) {
-        sessionMailSendingService.popBeforeSmtp();
-        sessionMailSendingService.sendSimpleMessage(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendSimpleMessage(form.getTo().get(0),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=allProperties")
     public String handleAllProperties(Model model, EmailSendingForm form) {
-        noAuthMailSendingService.popBeforeSmtp();
-        noAuthMailSendingService.sendSimpleMessage(form.getTo().get(0), form
-                .getCc().get(0), form.getBcc().get(0), form.getReplyTo(), form
-                        .getText());
+
+        try (Store store = noAuthMailSendingService.popBeforeSmtp()) {
+            noAuthMailSendingService.sendSimpleMessage(form.getTo().get(0), form
+                    .getCc().get(0), form.getBcc().get(0), form.getReplyTo(),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=pluralRecipients")
-    public String handlePluralRecipients(Model model, EmailSendingForm form) {
-        authMailSendingService.popBeforeSmtp();
-        authMailSendingService.sendSimpleMessage(form.getTo().toArray(
-                new String[form.getTo().size()]), form.getCc().toArray(
-                        new String[form.getCc().size()]), form.getBcc().toArray(
-                                new String[form.getBcc().size()]), form
-                                        .getText());
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=noAuthPluralRecipients")
+    public String handleNoAuthPluralRecipients(Model model,
+            EmailSendingForm form) {
+
+        try (Store store = noAuthMailSendingService.popBeforeSmtp()) {
+            noAuthMailSendingService.sendSimpleMessages(form.getTo().toArray(
+                    new String[form.getTo().size()]), form.getCc().toArray(
+                            new String[form.getCc().size()]), form.getBcc()
+                                    .toArray(new String[form.getBcc().size()]),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
+        return "redirect:/emal/receivemail";
+    }
+
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=authPluralRecipients")
+    public String handleAuthPluralRecipients(Model model,
+            EmailSendingForm form) {
+
+        try (Store store = authMailSendingService.popBeforeSmtp()) {
+            authMailSendingService.sendSimpleMessage(form.getTo().toArray(
+                    new String[form.getTo().size()]), form.getCc().toArray(
+                            new String[form.getCc().size()]), form.getBcc()
+                                    .toArray(new String[form.getBcc().size()]),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 

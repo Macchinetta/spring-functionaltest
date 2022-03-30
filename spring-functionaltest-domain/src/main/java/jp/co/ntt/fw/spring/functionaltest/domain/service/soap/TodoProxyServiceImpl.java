@@ -192,7 +192,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
      * Web Service Proxyを取得する。
      * @param webServiceKey Web Service Proxyを取得するキー
      * @return Web Service Proxyオブジェクト
-     * @exception SystemException　キーに該当するWeb Service Proxyオブジェクトが存在しない。
+     * @exception SystemException キーに該当するWeb Service Proxyオブジェクトが存在しない。
      */
     private TodoWebService getWebService(String webServiceKey) {
         if (todoWebServices.containsKey(webServiceKey)) {

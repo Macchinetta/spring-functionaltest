@@ -48,7 +48,7 @@ public class VLDT0601Controller {
 
         String userId = "beforeNull".equals(form.getUserId()) ? null
                 : form.getUserId();
-        //テストの内容的にnullをメソッドに渡さないと意味がないため、SonarQube指摘に未対応としています。
+        // テストの内容的にnullをメソッドに渡さないと意味がないため、SonarQube指摘に未対応としています。
         String convertUserId = userIdUseService.convertUserId(userId);
 
         model.addAttribute("userId", convertUserId);

@@ -51,7 +51,8 @@ public class UploadFileAllowedExtentionValidator implements
             return true;
         }
         String extention = StringUtils.getFilenameExtension(fileName);
-        return StringUtils.hasText(extention) && extentions.contains(extention.toLowerCase());
+        return StringUtils.hasText(extention) && extentions.contains(extention
+                .toLowerCase());
     }
 
 }

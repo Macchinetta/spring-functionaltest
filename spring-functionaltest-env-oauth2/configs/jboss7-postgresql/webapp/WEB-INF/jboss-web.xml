@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-web xsi:schemaLocation="http://www.jboss.org/j2ee/schema/jboss-web_10_0.xsd"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.jboss.com/xml/ns/javaee"
-  version="10.0">
-<!--   JBoss 7.0 and earlier need this setting #311.  -->
-<!--   <default-encoding>UTF-8</default-encoding> -->
-</jboss-web>

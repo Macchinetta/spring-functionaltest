@@ -18,6 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.util.Arrays;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.Store;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,11 +52,17 @@ public class EMAL05Controller {
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=templatedMessage")
     public String handleTemplatedMessage(Model model, EmailSendingForm form) {
-        sessionMailSendingService.popBeforeSmtp();
+
         User user = new User();
         user.setUsername(form.getText());
-        sessionMailSendingService.sendTemplatedMail(form.getTo().get(0), user,
-                form.getTemplateName());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendTemplatedMail(form.getTo().get(0),
+                    user, form.getTemplateName(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 

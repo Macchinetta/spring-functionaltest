@@ -70,8 +70,8 @@ public class WebElementOperations {
 
     /**
      * ドロップダウンメニューから指定した項目を選択する。
-     * @param item　ドロップダウンメニュー(selectタグ)の要素
-     * @param val　選択する項目
+     * @param item ドロップダウンメニュー(selectタグ)の要素
+     * @param val 選択する項目
      */
     public static void setSort(WebElement item, String val) {
         Select dropdown = new Select(item);

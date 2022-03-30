@@ -130,6 +130,14 @@ public class JPAHomePage implements Page<JPAHomePage> {
     private WebElement deleteInBatch;
 
     @CacheLookup
+    @FindBy(id = "deleteAllById")
+    private WebElement deleteAllById;
+
+    @CacheLookup
+    @FindBy(id = "deleteAllByIdInBatch")
+    private WebElement deleteAllByIdInBatch;
+
+    @CacheLookup
     @FindBy(id = "deletOne")
     private WebElement deletOne;
 
@@ -156,6 +164,10 @@ public class JPAHomePage implements Page<JPAHomePage> {
     @CacheLookup
     @FindBy(id = "multiSave")
     private WebElement saveEntityListBtn;
+
+    @CacheLookup
+    @FindBy(id = "multiSaveFlush")
+    private WebElement saveAllAndFlushEntityListBtn;
 
     @CacheLookup
     @FindBy(id = "count")
@@ -345,6 +357,18 @@ public class JPAHomePage implements Page<JPAHomePage> {
         return jpaHomePage;
     }
 
+    public JPAHomePage jpaRepoDefDelAllById() {
+        deleteAllById.click();
+        JPAHomePage jpaHomePage = new JPAHomePage(driver);
+        return jpaHomePage;
+    }
+
+    public JPAHomePage jpaRepoDefDelAllByIdInBatch() {
+        deleteAllByIdInBatch.click();
+        JPAHomePage jpaHomePage = new JPAHomePage(driver);
+        return jpaHomePage;
+    }
+
     public JPAHomePage jpaRepoDefExists() {
         defJPAExists.click();
         JPAHomePage jpaHomePage = new JPAHomePage(driver);
@@ -353,6 +377,12 @@ public class JPAHomePage implements Page<JPAHomePage> {
 
     public JPAHomePage jpaRepoDefSaveEntityList() {
         saveEntityListBtn.click();
+        JPAHomePage jpaHomePage = new JPAHomePage(driver);
+        return jpaHomePage;
+    }
+
+    public JPAHomePage jpaRepoDefSaveAllAndFlushEntityList() {
+        saveAllAndFlushEntityListBtn.click();
         JPAHomePage jpaHomePage = new JPAHomePage(driver);
         return jpaHomePage;
     }

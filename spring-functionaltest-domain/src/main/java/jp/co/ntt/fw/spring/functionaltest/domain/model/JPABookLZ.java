@@ -78,10 +78,6 @@ public class JPABookLZ {
      * details is in common with the entity that has these properties as columns in DB table. END::
      */
 
-    public JPABookLZ() {
-
-    }
-
     @ManyToOne(targetEntity = JPACategoryLZ.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     JPACategoryLZ category;

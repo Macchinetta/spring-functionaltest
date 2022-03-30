@@ -49,7 +49,7 @@ public class SOAPTestSupport extends FunctionTestSupport {
 
     /**
      * ログ出力されたWebFaultExceptionを検証する。
-     * @param type　エラー種別
+     * @param type エラー種別
      * @param errors エラー詳細
      */
     protected void assertWebFault(WebFaultType type, ErrorBean... errors) {
@@ -75,7 +75,7 @@ public class SOAPTestSupport extends FunctionTestSupport {
 
     /**
      * ログ出力されたWebFaultExceptionを検証する。
-     * @param type　エラー種別
+     * @param type エラー種別
      * @param errors エラー詳細
      */
     protected void assertWebFaultIsInErrorBeans(WebFaultType type,

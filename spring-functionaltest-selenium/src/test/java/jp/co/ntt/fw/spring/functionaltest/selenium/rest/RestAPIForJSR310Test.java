@@ -124,8 +124,9 @@ public class RestAPIForJSR310Test extends RestTestSupport {
                 new RequestLoggingFilter(captor),
                 new ResponseLoggingFilter(captor)).when().post(
                         "/datetime/getAmericaDateTime").then().statusCode(200)
-                .header("content-Type", containsString(MediaType.APPLICATION_JSON_VALUE))
-                .body("dateTime", is(zoneDtStr));
+                .header("content-Type", containsString(
+                        MediaType.APPLICATION_JSON_VALUE)).body("dateTime", is(
+                                zoneDtStr));
 
     }
 }

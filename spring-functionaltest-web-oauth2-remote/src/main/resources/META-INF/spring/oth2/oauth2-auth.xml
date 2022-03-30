@@ -59,7 +59,7 @@
     <property name="clientDetailsService" ref="clientDetailsService" />
     <property name="approvalStore" ref="oauth2ApprovalStore" />
     <property name="requestFactory" ref="oauth2RequestFactory" />
-    <property name="approvalExpiryInSeconds" value="45" />
+    <property name="approvalExpiryInSeconds" value="105" />
   </bean>
 
   <bean id="oauth2ApprovalStore" class="org.springframework.security.oauth2.provider.approval.JdbcApprovalStore">

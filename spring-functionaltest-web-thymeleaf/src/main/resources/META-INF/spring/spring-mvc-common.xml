@@ -147,6 +147,8 @@
         </value>
         <value>org.springframework.web.util.NestedServletException
         </value>
+        <value>org.springframework.security.oauth2.client.ClientAuthorizationRequiredException
+        </value>
       </array>
     </property>
     <property name="defaultErrorView" value="common/error/systemError" />

@@ -23,8 +23,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookLZ;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPABookLZService;
@@ -43,8 +43,8 @@ public class DJPASessionController {
     }
 
     /**
-     * This method demonstrates when acquire Session outside of
-     * OpenEntityManagerInViewInterceptor, LazyInitializationException occur.
+     * This method demonstrates when acquire Session outside of OpenEntityManagerInViewInterceptor, LazyInitializationException
+     * occur.
      * @param model
      * @param bookListForm
      * @return
@@ -64,8 +64,11 @@ public class DJPASessionController {
     }
 
     @RequestMapping(value = "getRegisterSession", method = RequestMethod.POST)
-    public String getRegisterSession(@SessionAttribute("book") JPABookLZ book,
-            Model model) {
+    public String getRegisterSession(
+            @ModelAttribute(name = "book", binding = false) JPABookLZ book,
+            Model model, SessionStatus sessionStatus) {
+
+        sessionStatus.setComplete();
 
         // when acquire CategoryName, LazyInitializationException will thrown
         model.addAttribute("bookCategory", book.getCategory()

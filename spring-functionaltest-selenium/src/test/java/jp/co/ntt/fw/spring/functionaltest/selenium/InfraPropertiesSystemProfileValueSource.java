@@ -23,7 +23,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.test.annotation.ProfileValueSource;
 
 public class InfraPropertiesSystemProfileValueSource implements
-                                                        ProfileValueSource {
+                                                     ProfileValueSource {
 
     private static Properties properties;
 

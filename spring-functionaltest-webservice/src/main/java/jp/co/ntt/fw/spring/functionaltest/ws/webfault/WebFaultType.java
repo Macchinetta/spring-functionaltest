@@ -16,5 +16,5 @@
 package jp.co.ntt.fw.spring.functionaltest.ws.webfault;
 
 public enum WebFaultType {
-    AccessDeniedFault, BusinessFault, ResourceNotFoundFault, ValidationFault,
+    ACCESS_DEFINED_FAULT, BUSINESS_FAULT, RESOURCE_NOT_FOUND_FAULT, VALIDATION_FAULT,
 }

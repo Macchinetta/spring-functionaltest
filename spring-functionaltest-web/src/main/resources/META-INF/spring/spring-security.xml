@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security"
+  xmlns:context="http://www.springframework.org/schema/context"
   xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
@@ -10,7 +12,8 @@
   <!-- テストデータを操作するためのWEB APIは認証・認可の対象外とする -->
   <sec:http pattern="/**/testdata/*" security="none" />
 
-  <bean id="noOpPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+  <bean id="noOpPasswordEncoder"
+    class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
 
   <!-- ATHR0401002 Protection -->
   <!-- ATHR0401002 Protection -->
@@ -122,7 +125,8 @@
   <import resource="classpath:META-INF/spring/cspr/spring-security-cspr.xml" />
 
   <!-- CSRF Protection -->
-  <bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
+  <bean id="csrfTokenRepository"
+    class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
 
   <!-- VLDT Protection -->
   <import resource="classpath:META-INF/spring/vldt/spring-security-vldt.xml" />
@@ -151,7 +155,8 @@
   <import resource="classpath:META-INF/spring/soap/spring-security-soap.xml" />
 
   <!-- UserID Protection -->
-  <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
+  <bean id="userIdMDCPutFilter"
+    class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
     <property name="removeValue" value="true" />
   </bean>
 
@@ -167,6 +172,8 @@
 
   <import resource="classpath:META-INF/spring/oth2/spring-security-oth2.xml" />
 
+  <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
+
   <!-- All setting -->
   <sec:http>
     <sec:form-login />
@@ -177,25 +184,29 @@
 
   <sec:authentication-manager></sec:authentication-manager>
 
-  <bean id="accessDeniedHandler" class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
+  <bean id="accessDeniedHandler"
+    class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
     <constructor-arg index="0">
       <map>
         <entry key="org.springframework.security.web.csrf.InvalidCsrfTokenException">
           <bean
             class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.security.AjaxSupportAccessDeniedHandlerImpl">
-            <property name="errorPage" value="/WEB-INF/views/common/error/invalidCsrfTokenError.jsp" />
+            <property name="errorPage"
+              value="/WEB-INF/views/common/error/invalidCsrfTokenError.jsp" />
           </bean>
         </entry>
         <entry key="org.springframework.security.web.csrf.MissingCsrfTokenException">
           <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-            <property name="errorPage" value="/WEB-INF/views/common/error/missingCsrfTokenError.jsp" />
+            <property name="errorPage"
+              value="/WEB-INF/views/common/error/missingCsrfTokenError.jsp" />
           </bean>
         </entry>
       </map>
     </constructor-arg>
     <constructor-arg index="1">
       <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/WEB-INF/views/common/error/accessDeniedError.jsp" />
+        <property name="errorPage"
+          value="/WEB-INF/views/common/error/accessDeniedError.jsp" />
       </bean>
     </constructor-arg>
   </bean>

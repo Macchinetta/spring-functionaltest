@@ -143,8 +143,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -157,8 +157,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -178,11 +178,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
             cat.setCategoryId("0000000005");
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                    .parseDateTime("2016/12/29").toDate());
+            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
+                    .toDate());
             todoMB3.setFinished(true);
-            todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                    .parseDateTime("2016/12/30"));
+            todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime("2016/12/30"));
             todoMB3.setCategory(cat);
             todoMB3.setTodoId(String.format("%010d", i));
             todoMB3.setTodoTitle("TT" + i);
@@ -207,11 +206,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
             cat.setCategoryId("0000000005");
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                    .parseDateTime("2016/12/29").toDate());
+            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
+                    .toDate());
             todoMB3.setFinished(true);
-            todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                    .parseDateTime("2016/12/30"));
+            todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime("2016/12/30"));
             todoMB3.setCategory(cat);
             todoMB3.setTodoId(String.format("%010d", i));
             todoMB3.setTodoTitle("TT" + i);
@@ -231,8 +229,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
                 .getCategory().getName());
         todoMB3.setFinished(false);
         todoMB3.setTodoTitle(null);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -410,8 +408,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
 
         todoMB3.setCategory(categoryMB3);
         try {
@@ -428,8 +426,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
 
         todoMB3.setCategory(categoryMB3);
         try {
@@ -445,8 +443,8 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
         CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
+                .toDate());
         todoMB3.setCategory(categoryMB3);
         todoRepository.createUsingAutoIncreament(todoMB3);
         return todoMB3;
@@ -464,12 +462,12 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
 
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                    .parseDateTime("2016/12/29").toDate());
+            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
+                    .toDate());
             if (i % 2 == 0) {
                 cat.setCategoryId("0000000005");
-                todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                        .parseDateTime("2016/12/30"));
+                todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime(
+                        "2016/12/30"));
                 todoMB3.setFinished(true);
             } else {
                 cat.setCategoryId("0000000003");

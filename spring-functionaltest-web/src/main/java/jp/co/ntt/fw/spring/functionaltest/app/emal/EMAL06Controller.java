@@ -18,6 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.util.Arrays;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
+import javax.mail.Store;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,17 +58,27 @@ public class EMAL06Controller {
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=iso2022jpCharMail")
     public String handleIso2022jpCharMail(Model model, EmailSendingForm form) {
-        sessionMailSendingService.popBeforeSmtp();
-        sessionMailSendingService.sendIso2022jpMail(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendIso2022jpMail(form.getTo().get(0),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 
     @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=externalCharMail")
     public String handleExternalCharMail(Model model, EmailSendingForm form) {
-        sessionMailSendingService.popBeforeSmtp();
-        sessionMailSendingService.sendExternalCharMail(form.getTo().get(0), form
-                .getText());
+
+        try (Store store = sessionMailSendingService.popBeforeSmtp()) {
+            sessionMailSendingService.sendExternalCharMail(form.getTo().get(0),
+                    form.getText(), store);
+        } catch (MessagingException e) {
+            // ignore
+        }
+
         return "redirect:/emal/receivemail";
     }
 

@@ -128,7 +128,7 @@ public class JmsCacheConSendingServiceImpl implements
         jmsSharedService.purgeMessageFrom(destinationNameList, false);
 
         MessageHeaderAccessor accessor = new MessageHeaderAccessor();
-        accessor.setHeader(JmsSharedService.HEADER_KEY1, id);
+        accessor.setHeader(JmsProperty.HEADER_KEY1.name(), id);
 
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);

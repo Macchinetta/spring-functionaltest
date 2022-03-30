@@ -517,7 +517,7 @@ public class DBLogAssertOperations {
      * @param xTrack リクエストを一意に特定するための値（絞り込みを行わない場合はnullを指定）
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
-     * @return　指定したメッセージパターン(正規表現)に一致するログ
+     * @return 指定したメッセージパターン(正規表現)に一致するログ
      */
     public List<String> getLogByRegexMessage(String xTrack,
             String loggerNamePattern, String messagePattern) {
@@ -616,7 +616,7 @@ public class DBLogAssertOperations {
      * @param xTrack リクエストを一意に特定するための値（絞り込みを行わない場合はnullを指定）
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
-     * @return　指定したメッセージパターン(正規表現)に一致するログのイベントID
+     * @return 指定したメッセージパターン(正規表現)に一致するログのイベントID
      */
     public List<Long> getLogEventIdByRegexMessage(String xTrack,
             String loggerNamePattern, String messagePattern) {
@@ -648,9 +648,10 @@ public class DBLogAssertOperations {
 
     /**
      * 指定したメッセージパターン(正規表現),ログレベルに一致するログが1件出力されている事を検証する。
-     * <p>出力元のロガー名を指定することで対象を絞り込むことが可能である。</p>
-     * 
-     * @param message　メッセージパターン
+     * <p>
+     * 出力元のロガー名を指定することで対象を絞り込むことが可能である。
+     * </p>
+     * @param message メッセージパターン
      * @param level ログレベル
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      */
@@ -663,9 +664,10 @@ public class DBLogAssertOperations {
 
     /**
      * 指定したメッセージパターン(正規表現),ログレベルに一致するログがMatcherに指定された回数出力されている事を検証する。
-     * <p>出力元のロガー名を指定することで対象を絞り込むことが可能である。</p>
-     * 
-     * @param message　メッセージパターン
+     * <p>
+     * 出力元のロガー名を指定することで対象を絞り込むことが可能である。
+     * </p>
+     * @param message メッセージパターン
      * @param level ログレベル
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      * @param matcher 任意のMatcher(必須)

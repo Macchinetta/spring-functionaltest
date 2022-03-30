@@ -37,16 +37,25 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class EmailTest extends FunctionTestSupport {
 
-    @Value("${mail.pop3.host}")
-    private String mailPop3Host;
+    @Value("${mail.noauth.pop3.host}")
+    private String mailNoauthPop3Host;
 
-    @Value("${mail.pop3.port}")
-    private String mailPop3Port;
+    @Value("${mail.noauth.pop3.port}")
+    private String mailNoauthPop3Port;
 
-    @Value("${selenium.app.email.domain}")
-    private String mailDomain;
+    @Value("${selenium.app.noauth.email.domain}")
+    private String mailNoauthDomain;
 
-    @Value("${mail.from.address}")
+    @Value("${mail.auth.pop3.host}")
+    private String mailAuthPop3Host;
+
+    @Value("${mail.auth.pop3.port}")
+    private String mailAuthPop3Port;
+
+    @Value("${selenium.app.auth.email.domain}")
+    private String mailAuthDomain;
+
+    @Value("${mail.noauth.from.address}")
     private String from;
 
     /**
@@ -65,13 +74,13 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0201001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -82,7 +91,7 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("subject")), is(
                 "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
     }
 
@@ -102,16 +111,17 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0201002"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
-        webDriverOperations.overrideText(id("cc0"), "foo@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailDomain);
-        webDriverOperations.overrideText(id("replyTo"), "reply@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("replyTo"), "reply@"
+                + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -123,11 +133,11 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("subject")), is(
                 "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("cc")), is("foo@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("date")), startsWith(
                 "2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
@@ -151,16 +161,17 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0201002"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
-        webDriverOperations.overrideText(id("cc0"), "foo@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailDomain);
-        webDriverOperations.overrideText(id("replyTo"), "reply@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("replyTo"), "reply@"
+                + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -171,18 +182,18 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("subject")), is(
                 "Registration confirmation."));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("cc")), is("foo@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("date")), startsWith(
                 "2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "foo");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -191,8 +202,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "bar");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -204,10 +215,10 @@ public class EmailTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>APサーバのメールセッションを使用せず、認証ありの場合に、メール送信できることを確認する。</li>
      * <li>SimpleMailMessageを使用して複数の宛先を設定した場合に、メール送信できることを確認する。</li>
      * </ul>
      */
+    @IfProfileValue(name = "test.environment", value = "nonMailServer")
     @Test
     public void testEMAL0201004() {
 
@@ -218,23 +229,28 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0201003"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
-        webDriverOperations.overrideText(id("to1"), "hoge2@" + mailDomain);
-        webDriverOperations.overrideText(id("cc0"), "foo@" + mailDomain);
-        webDriverOperations.overrideText(id("cc1"), "foo2@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc1"), "bar2@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("to1"), "hoge2@"
+                + mailNoauthDomain);
+        webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("cc1"), "foo2@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("bcc1"), "bar2@"
+                + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        // GreenMail用（1件受信してチェック）
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
-        webDriverOperations.overrideText(id("user"), "hoge" + mailDomain);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
+        webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
         webDriverOperations.click(id("receiveMail"));
+
+        // 送信内容（＝受信内容）の確認
+        // GreenMail用（1件受信してチェック）
+        assertThat(webDriverOperations.getText(id("body")), is(text));
 
     }
 
@@ -255,18 +271,18 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0201003"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
-        webDriverOperations.overrideText(id("to1"), "hoge2@" + mailDomain);
-        webDriverOperations.overrideText(id("cc0"), "foo@" + mailDomain);
-        webDriverOperations.overrideText(id("cc1"), "foo2@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailDomain);
-        webDriverOperations.overrideText(id("bcc1"), "bar2@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailAuthDomain);
+        webDriverOperations.overrideText(id("to1"), "hoge2@" + mailAuthDomain);
+        webDriverOperations.overrideText(id("cc0"), "foo@" + mailAuthDomain);
+        webDriverOperations.overrideText(id("cc1"), "foo2@" + mailAuthDomain);
+        webDriverOperations.overrideText(id("bcc0"), "bar@" + mailAuthDomain);
+        webDriverOperations.overrideText(id("bcc1"), "bar2@" + mailAuthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -276,8 +292,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge2");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -287,8 +303,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "foo");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -298,8 +314,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "foo2");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -309,8 +325,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "bar");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -320,8 +336,8 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailAuthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailAuthPop3Port);
         webDriverOperations.overrideText(id("user"), "bar2");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -346,13 +362,13 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0301001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -363,7 +379,7 @@ public class EmailTest extends FunctionTestSupport {
                 + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString("text/plain"));
@@ -385,13 +401,13 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0302001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -402,7 +418,7 @@ public class EmailTest extends FunctionTestSupport {
                 + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString("text/html"));
@@ -423,7 +439,7 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0303001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.overrideText(id("filename"), "説明①.txt");
         webDriverOperations.referUploadFile(id("multipartFile"),
@@ -431,8 +447,8 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -443,7 +459,7 @@ public class EmailTest extends FunctionTestSupport {
                 + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
         assertThat(webDriverOperations.getText(id("attachment")), is(
                 "説明①.txt"));
@@ -466,7 +482,7 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0304001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.overrideText(id("cid"), "identifier1234");
         webDriverOperations.referUploadFile(id("multipartFile"),
@@ -474,8 +490,8 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -486,7 +502,7 @@ public class EmailTest extends FunctionTestSupport {
                 + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
         assertThat(webDriverOperations.getText(id("inline")), is(
                 "<identifier1234>"));
@@ -505,7 +521,7 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0401001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), "Hello!");
         webDriverOperations.click(id("sendMail"));
 
@@ -549,7 +565,7 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0401003"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), "Hello!");
         webDriverOperations.select(id("templateName"), "non-existence");
         webDriverOperations.click(id("sendMail"));
@@ -572,7 +588,7 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0401004"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), "Hello!");
         webDriverOperations.click(id("sendMail"));
 
@@ -598,15 +614,15 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.click(id("emal0501001"));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "hoge@" + mailDomain);
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.select(id("templateName"),
                 "registration-confirmation");
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -617,7 +633,7 @@ public class EmailTest extends FunctionTestSupport {
                 + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
         assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailDomain));
+                + mailNoauthDomain));
         String expectedBodyPattern = "<html>\\s*<body>\\s*"
                 + "<h3>Hi &lt;script&gt;alert\\(&quot;あいう①～③&quot;\\);&lt;/script&gt;"
                 + ".*" + identifier + ".*"
@@ -646,13 +662,13 @@ public class EmailTest extends FunctionTestSupport {
 
         // メールの送信
         webDriverOperations.overrideText(id("to0"), "\"" + iso2022jpBadChars
-                + "\" <hoge@" + mailDomain + ">");
+                + "\" <hoge@" + mailNoauthDomain + ">");
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -665,7 +681,7 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("subject")), is(
                 expectedConverted));
         assertThat(webDriverOperations.getText(id("to")), is("\""
-                + expectedConverted + "\" <hoge@" + mailDomain + ">"));
+                + expectedConverted + "\" <hoge@" + mailNoauthDomain + ">"));
         assertThat(webDriverOperations.getText(id("body")), is(expectedConverted
                 + "<!-- " + identifier + " -->"));
     }
@@ -688,13 +704,13 @@ public class EmailTest extends FunctionTestSupport {
 
         // メールの送信
         webDriverOperations.overrideText(id("to0"), "\"" + externalChars
-                + "\" <hoge@" + mailDomain + ">");
+                + "\" <hoge@" + mailNoauthDomain + ">");
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
-        webDriverOperations.overrideText(id("host"), mailPop3Host);
-        webDriverOperations.overrideText(id("port"), mailPop3Port);
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
         webDriverOperations.overrideText(id("user"), "hoge");
         webDriverOperations.overrideText(id("password"), "Ntt01");
         webDriverOperations.overrideText(id("identifier"), identifier);
@@ -706,7 +722,7 @@ public class EmailTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("subject")), is(
                 externalChars));
         assertThat(webDriverOperations.getText(id("to")), is("\""
-                + externalChars + "\" <hoge@" + mailDomain + ">"));
+                + externalChars + "\" <hoge@" + mailNoauthDomain + ">"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
     }
 

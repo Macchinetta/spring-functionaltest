@@ -462,7 +462,8 @@ public class SessionManagementTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>セッションオブジェクトをControllerの処理メソッドの引数に@ModelAttributeアノテーションを付けずに取得する時、そのセッションオブジェクトが Modelに存在しない場合は、新しいオブジェクトが生成されること。</li>
+     * <li>セッションオブジェクトをControllerの処理メソッドの引数に@ModelAttributeアノテーションを付けずに取得する時、そのセッションオブジェクトが
+     * Modelに存在しない場合は、新しいオブジェクトが生成されること。</li>
      * </ul>
      */
     @Test

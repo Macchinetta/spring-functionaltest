@@ -840,6 +840,190 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
+     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S> saveAllAndFlush(Iterable<S>
+     * entities).
+     */
+    @Test
+    public void testDJPA0201014() {
+        clearTestDataForBook();
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0201014Click();
+
+        jpaHomePage.jpaRepoDefSaveAllAndFlushEntityList();
+
+        // getting the count of book from DB
+        jpaHomePage = jpaHomePage.jpaRepoDefCount();
+
+        // getting count value
+        String bookCnt = jpaHomePage.getBookCount();
+
+        // confirming four records.
+        assertThat(bookCnt, is("4"));
+
+        BookDetailsPage bookDetailsPage = jpaHomePage.displayBookDetails(1);
+
+        assertThat(bookDetailsPage.getBookIdVal(), is("0000000001"));
+        assertThat(bookDetailsPage.getCategoryName(), is("A01"));
+        assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
+        assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
+        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getPrice(), is("10000"));
+        assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
+
+        jpaHomePage = bookDetailsPage.goBackToBookListPage();
+
+        bookDetailsPage = jpaHomePage.displayBookDetails(2);
+
+        assertThat(bookDetailsPage.getBookIdVal(), is("0000000002"));
+        assertThat(bookDetailsPage.getCategoryName(), is("A01"));
+        assertThat(bookDetailsPage.getTitle(), is("TitleA012"));
+        assertThat(bookDetailsPage.getClobCode(), is("CodeA012"));
+        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getPrice(), is("10000"));
+        assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
+
+        jpaHomePage = bookDetailsPage.goBackToBookListPage();
+
+        bookDetailsPage = jpaHomePage.displayBookDetails(3);
+
+        assertThat(bookDetailsPage.getBookIdVal(), is("0000000003"));
+        assertThat(bookDetailsPage.getCategoryName(), is("A01"));
+        assertThat(bookDetailsPage.getTitle(), is("TitleA013"));
+        assertThat(bookDetailsPage.getClobCode(), is("CodeA013"));
+        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getPrice(), is("10000"));
+        assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
+
+        jpaHomePage = bookDetailsPage.goBackToBookListPage();
+
+        bookDetailsPage = jpaHomePage.displayBookDetails(4);
+
+        assertThat(bookDetailsPage.getBookIdVal(), is("0000000004"));
+        assertThat(bookDetailsPage.getCategoryName(), is("B01"));
+        assertThat(bookDetailsPage.getTitle(), is("TitleB011"));
+        assertThat(bookDetailsPage.getClobCode(), is("CodeB011"));
+        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
+                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getPrice(), is("10000"));
+        assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
+    }
+
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void deleteAllById(Iterable<? extends ID> ids)
+     */
+    @Test
+    public void testDJPA0201015() {
+        clearAndCreateTestDataForBook();
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0201015Click();
+
+        jpaHomePage.setBookIdForDefJPADeleteOpn(
+                "0000000003,0000000004,0000000007,0000000010");
+
+        // Deleting the above set books
+        jpaHomePage = jpaHomePage.jpaRepoDefDelAllById();
+
+        // getting the count of book from DB
+        jpaHomePage = jpaHomePage.jpaRepoDefCount();
+
+        // getting count value
+        String bookCnt = jpaHomePage.getBookCount();
+
+        // confirming four records.
+        assertThat(bookCnt, is("17"));
+
+        /**
+         * One by one check whether the books with above ids have really been deleted successfully?
+         */
+        // confirmation for bookId : 0000000003
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000003");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        String message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000004
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000004");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000007
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000007");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000010
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000010");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+    }
+
+    /**
+     * JPARepository Default Method Confirmation. Method Under Test : void deleteAllByIdInBatch(Iterable<ID> ids)
+     */
+    @Test
+    public void testDJPA0201016() {
+        clearAndCreateTestDataForBook();
+
+        JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
+
+        JPAHomePage jpaHomePage = jpaIndexPage.djpa0201016Click();
+
+        jpaHomePage.setBookIdForDefJPADeleteOpn(
+                "0000000004,0000000005,0000000008,0000000011");
+
+        // Deleting the above set books
+        jpaHomePage = jpaHomePage.jpaRepoDefDelAllByIdInBatch();
+
+        // getting the count of book from DB
+        jpaHomePage = jpaHomePage.jpaRepoDefCount();
+
+        // getting count value
+        String bookCnt = jpaHomePage.getBookCount();
+
+        // confirming four records.
+        assertThat(bookCnt, is("17"));
+
+        /**
+         * One by one check whether the books with above ids have really been deleted successfully?
+         */
+        // confirmation for bookId : 0000000004
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000004");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        String message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000005
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000005");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000008
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000008");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+        // confirmation for bookId : 0000000011
+        jpaHomePage.setBookIdForDefJPASearchOpn("0000000011");
+        jpaHomePage = jpaHomePage.jpaRepoDefExists();
+        message = jpaHomePage.getBookAvailabityMessage();
+        assertThat(message, is("Book Not Available!!"));
+
+    }
+
+    /**
      * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity specific Repository
      * interface by creating and inheriting a common project specific interface in which only the required methods are defined
      */

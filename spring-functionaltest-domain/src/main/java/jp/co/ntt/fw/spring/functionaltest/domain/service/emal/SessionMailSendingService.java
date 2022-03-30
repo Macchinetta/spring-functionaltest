@@ -15,29 +15,32 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
+import javax.mail.Store;
+
 import org.springframework.core.io.InputStreamSource;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public interface SessionMailSendingService {
 
-    public void sendSimpleMessage(String to, String text);
+    public void sendSimpleMessage(String to, String text, Store store);
 
-    public void sendTextMimeMail(String to, String text);
+    public void sendTextMimeMail(String to, String text, Store store);
 
-    public void sendHtmlMimeMail(String to, String text);
+    public void sendHtmlMimeMail(String to, String text, Store store);
 
     public void sendAttachmentMimeMail(String to, String text, String filename,
-            InputStreamSource attachment);
+            InputStreamSource attachment, Store store);
 
     public void sendInlineMimeMail(String to, String text, String cid,
-            InputStreamSource inline, String contentType);
+            InputStreamSource inline, String contentType, Store store);
 
-    public void sendTemplatedMail(String to, User user, String templateName);
+    public void sendTemplatedMail(String to, User user, String templateName,
+            Store store);
 
-    public void sendIso2022jpMail(String to, String text);
+    public void sendIso2022jpMail(String to, String text, Store store);
 
-    public void sendExternalCharMail(String to, String text);
+    public void sendExternalCharMail(String to, String text, Store store);
 
-    public void popBeforeSmtp();
+    public Store popBeforeSmtp();
 }

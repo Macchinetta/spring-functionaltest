@@ -15,10 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
+import javax.mail.Store;
+
 public interface AuthMailSendingService {
 
     public void sendSimpleMessage(String[] to, String[] cc, String[] bcc,
-            String text);
+            String text, Store store);
 
-    public void popBeforeSmtp();
+    public Store popBeforeSmtp();
 }

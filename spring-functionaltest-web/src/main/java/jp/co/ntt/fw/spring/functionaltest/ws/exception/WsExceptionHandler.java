@@ -52,18 +52,18 @@ public class WsExceptionHandler {
         WebFaultBean faultInfo = null;
 
         if (e instanceof AccessDeniedException) {
-            faultInfo = new WebFaultBean(WebFaultType.AccessDeniedFault);
+            faultInfo = new WebFaultBean(WebFaultType.ACCESS_DEFINED_FAULT);
             faultInfo.addError(e.getClass().getName(), e.getMessage());
         } else if (e instanceof ConstraintViolationException) {
-            faultInfo = new WebFaultBean(WebFaultType.ValidationFault);
+            faultInfo = new WebFaultBean(WebFaultType.VALIDATION_FAULT);
             this.addErrors(faultInfo, ((ConstraintViolationException) e)
                     .getConstraintViolations());
         } else if (e instanceof ResourceNotFoundException) {
-            faultInfo = new WebFaultBean(WebFaultType.ResourceNotFoundFault);
+            faultInfo = new WebFaultBean(WebFaultType.RESOURCE_NOT_FOUND_FAULT);
             this.addErrors(faultInfo, ((ResourceNotFoundException) e)
                     .getResultMessages());
         } else if (e instanceof BusinessException) {
-            faultInfo = new WebFaultBean(WebFaultType.BusinessFault);
+            faultInfo = new WebFaultBean(WebFaultType.BUSINESS_FAULT);
             this.addErrors(faultInfo, ((BusinessException) e)
                     .getResultMessages());
         } else {

@@ -78,10 +78,6 @@ public class JPABook {
      * details is in common with the entity that has these properties as columns in DB table. END::
      */
 
-    public JPABook() {
-
-    }
-
     @ManyToOne(targetEntity = JPACategory.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     JPACategory category;

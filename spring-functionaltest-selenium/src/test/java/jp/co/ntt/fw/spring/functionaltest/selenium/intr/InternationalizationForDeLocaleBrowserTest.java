@@ -72,7 +72,7 @@ public class InternationalizationForDeLocaleBrowserTest extends
      */
     @Test
     public void testINTR0101004() {
-        //template engineの取得
+        // template engineの取得
         TemplateEngineName name = webDriverOperations.getTemplateEngineName();
 
         // ドイツ語Locale

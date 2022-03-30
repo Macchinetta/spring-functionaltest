@@ -42,7 +42,7 @@ public class AJAX0302Controller {
 
     @RequestMapping(value = "0302/001/edit", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<?> edit(@Validated PersonalComputerForm form,
+    public ResponseEntity<Object> edit(@Validated PersonalComputerForm form,
             Locale locale) {
 
         PersonalComputerResult result;
@@ -50,13 +50,11 @@ public class AJAX0302Controller {
             result = personalComputerHelper.updateAndBindPersonalComputerResult(
                     form, locale);
         } catch (BusinessException e) {
-
-            return new ResponseEntity<ErrorResults>(personalComputerHelper
-                    .setBusinessExceptionErrorResults(e,
-                            locale), HttpStatus.CONFLICT);
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(
+                    personalComputerHelper.setBusinessExceptionErrorResults(e,
+                            locale));
         }
-
-        return new ResponseEntity<PersonalComputerResult>(result, HttpStatus.OK);
+        return ResponseEntity.ok().body(result);
     }
 
     @ExceptionHandler(BindException.class)

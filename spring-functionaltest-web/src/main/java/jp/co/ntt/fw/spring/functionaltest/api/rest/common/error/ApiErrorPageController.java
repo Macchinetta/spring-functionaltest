@@ -40,7 +40,8 @@ public class ApiErrorPageController {
     private final Map<HttpStatus, String> errorCodeMap = new HashMap<HttpStatus, String>();
 
     public ApiErrorPageController() {
-        errorCodeMap.put(HttpStatus.HTTP_VERSION_NOT_SUPPORTED, "e.sf.cmmn.9505");
+        errorCodeMap.put(HttpStatus.HTTP_VERSION_NOT_SUPPORTED,
+                "e.sf.cmmn.9505");
     }
 
     // エラー応答を行う処理メソッド
