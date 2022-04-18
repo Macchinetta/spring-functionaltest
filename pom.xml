@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.8.1.RELEASE</version>
+  <version>1.8.1.SP1.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -30,13 +30,13 @@
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.7.1.RELEASE</version>
+    <version>5.7.1.SP1.RELEASE</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>http://terasoluna.org</url>
+  <url>https://macchinetta.github.io/</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
