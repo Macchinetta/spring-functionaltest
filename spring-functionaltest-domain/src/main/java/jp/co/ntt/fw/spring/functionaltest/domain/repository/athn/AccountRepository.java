@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.athn;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 
 public interface AccountRepository {
-    Account findOneByUsername(String username);
+    Account findByUsername(String username);
 
     Account save(Account account);
 }

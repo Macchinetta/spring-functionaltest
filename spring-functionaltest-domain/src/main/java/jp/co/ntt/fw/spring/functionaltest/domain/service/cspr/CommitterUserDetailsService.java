@@ -33,7 +33,7 @@ public class CommitterUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(
             String username) throws UsernameNotFoundException {
 
-        Committer committer = committerRepository.findOneByName(username);
+        Committer committer = committerRepository.findByName(username);
 
         if (committer == null) {
             // TODO get property

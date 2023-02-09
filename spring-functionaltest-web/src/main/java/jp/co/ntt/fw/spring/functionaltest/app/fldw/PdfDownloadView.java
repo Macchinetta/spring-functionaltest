@@ -78,6 +78,8 @@ public class PdfDownloadView extends AbstractPdfView {
 
         document.open();
 
+        document.add(new Paragraph(model.get("serverTime").toString()));
+
         // title
         Paragraph paragraph = new Paragraph(new Phrase("新規口座開設申込書", titleFont));
         paragraph.setAlignment(Element.ALIGN_CENTER);

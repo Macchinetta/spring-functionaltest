@@ -26,6 +26,7 @@ public class UploadFileRequiredValidator implements
 
     @Override
     public void initialize(UploadFileRequired constraint) {
+        // The default implementation
     }
 
     @Override

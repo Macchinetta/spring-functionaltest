@@ -32,6 +32,7 @@ public class UnusedUserIdValidator implements
 
     @Override
     public void initialize(UnusedUserId constraintAnnotation) {
+        // The default implementation
     }
 
     @Override

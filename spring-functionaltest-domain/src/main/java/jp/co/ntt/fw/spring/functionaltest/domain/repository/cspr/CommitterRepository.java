@@ -21,11 +21,12 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
 
 public interface CommitterRepository {
 
-    Committer findOneByName(String name);
+    Committer findByName(String name);
 
     long countByCriteria(CommitterCriteria committerCriteria);
 
-    List<Committer> findCommiterByCriteria(CommitterCriteria committerCriteria);
+    List<Committer> findAllByCommitterCriteria(
+            CommitterCriteria committerCriteria);
 
     void update(Committer committer);
 

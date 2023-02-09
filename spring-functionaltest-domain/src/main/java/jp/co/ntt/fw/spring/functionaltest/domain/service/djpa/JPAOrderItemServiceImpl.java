@@ -117,7 +117,8 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     @Transactional(value = "jpaTransactionManager")
     public void deleteOrderItemNoSuccess(Integer orderItemId, Integer orderId) {
 
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getById(orderItemId);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getReferenceById(
+                orderItemId);
         // Need to get JpaOrder.
         jpaOrderRepository.findById(orderId);
         jpaOrderItemRepository.delete(jpaOrderItem);

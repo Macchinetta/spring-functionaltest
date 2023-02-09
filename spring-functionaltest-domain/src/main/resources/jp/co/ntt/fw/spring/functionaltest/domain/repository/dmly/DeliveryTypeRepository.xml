@@ -22,7 +22,7 @@
     delivery_type_id ASC
   </select>
 
-  <select id="findOneByTypeName" resultMap="deliveryTypeResultMap" parameterType="String">
+  <select id="findByTypeName" resultMap="deliveryTypeResultMap" parameterType="String">
     <include refid="selectPhrase" />
     WHERE
     delivery_type_name = #{deliveryTypeName}

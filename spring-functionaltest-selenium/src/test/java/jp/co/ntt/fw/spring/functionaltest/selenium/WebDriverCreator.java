@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import javax.inject.Inject;
 
@@ -115,7 +115,7 @@ public class WebDriverCreator extends ApplicationObjectSupport {
         profile.setPreference("network.proxy.type", 0);
         FirefoxOptions options = new FirefoxOptions().setProfile(profile);
         WebDriver webDriver = new FirefoxDriver(options);
-        webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         return webDriver;
     }
 

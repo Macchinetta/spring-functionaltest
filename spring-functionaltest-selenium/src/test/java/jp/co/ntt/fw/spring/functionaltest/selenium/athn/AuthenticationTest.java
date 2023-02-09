@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -1289,7 +1290,14 @@ public class AuthenticationTest extends FunctionTestSupport {
                 + "/athn/0701/001?loginSuccess"));
 
         // ログアウトボタン押下
-        webDriverOperations.click(id("logout"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("logout"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // パスの確認（ログアウト成功）
         assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
@@ -1335,7 +1343,14 @@ public class AuthenticationTest extends FunctionTestSupport {
                 + "/athn/0702/001?loginSuccess"));
 
         // ログアウトボタン押下
-        webDriverOperations.click(id("logout"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("logout"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // パスの確認（ログアウト成功）
         assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl

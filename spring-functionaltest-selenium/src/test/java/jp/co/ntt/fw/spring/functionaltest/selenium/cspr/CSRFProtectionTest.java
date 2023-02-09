@@ -79,7 +79,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "ユーザ登録確認画面"));
     }
 

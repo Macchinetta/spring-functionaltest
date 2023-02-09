@@ -74,6 +74,10 @@ public class ExcelDownloadView extends AbstractXlsxView {
         sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 8));
         Row headerRow = sheet.createRow(1);
 
+        // Create merged region and corresponding row for the server time
+        sheet.addMergedRegion(new CellRangeAddress(3, 3, 1, 8));
+        Row serverTimeRow = sheet.createRow(3);
+
         // Create merged region and corresponding row for the report title
         sheet.addMergedRegion(new CellRangeAddress(4, 5, 1, 8));
         Row titleRow = sheet.createRow(4);
@@ -133,6 +137,14 @@ public class ExcelDownloadView extends AbstractXlsxView {
         headerCellStyle.setWrapText(true);
         headerCellStyle.setFont(setFont);
 
+        // This is for server time Style
+        CellStyle serverTimeCellStyle = (CellStyle) workbook.createCellStyle();
+        Font setServerTimeCellStyleFont = (Font) workbook.createFont();
+        setServerTimeCellStyleFont.setFontHeightInPoints((short) 10);
+        serverTimeCellStyle.setFont(setServerTimeCellStyleFont);
+        serverTimeCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        serverTimeCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
         // This is for title Style
         CellStyle titleCellStyle = (CellStyle) workbook.createCellStyle();
         Font setTitleFont = (Font) workbook.createFont();
@@ -166,6 +178,11 @@ public class ExcelDownloadView extends AbstractXlsxView {
         Cell headerCell = headerRow.createCell(1, CellType.BLANK);
         headerCell.setCellValue("銀行");
         headerCell.setCellStyle(headerCellStyle);
+
+        // fill in values in server time row
+        Cell serverTimeCell = serverTimeRow.createCell(1, CellType.BLANK);
+        serverTimeCell.setCellValue(model.get("serverTime").toString());
+        serverTimeCell.setCellStyle(serverTimeCellStyle);
 
         // fill in values in title row
         Cell titleCell = titleRow.createCell(1, CellType.BLANK);

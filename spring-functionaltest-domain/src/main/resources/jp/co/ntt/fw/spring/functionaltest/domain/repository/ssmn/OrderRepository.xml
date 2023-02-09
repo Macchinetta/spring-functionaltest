@@ -12,10 +12,6 @@
     TO_NUMBER(s_order.nextval) FROM DUAL
   </select>
 
-  <select id="getOrderSequence" resultType="long" databaseId="db2">
-    values (NEXT VALUE FOR s_order)
-  </select>
-
   <!-- BEGIN Order -->
   <insert id="createOrder">
     INSERT INTO t_order

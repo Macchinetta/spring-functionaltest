@@ -20,7 +20,6 @@
     <!-- Root ApplicationContext -->
     <param-value>
             classpath*:META-INF/spring/applicationContext.xml
-            classpath*:META-INF/spring/oth2/oauth2-client.xml
             classpath*:META-INF/spring/spring-security.xml
             classpath*:META-INF/spring/flup/applicationContext-flup.xml
             classpath*:META-INF/spring/aply/applicationContext-aply.xml
@@ -106,14 +105,6 @@
   <filter-mapping>
     <filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
     <url-pattern>/djpa/book/filterSrch</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>oauth2ClientContextFilter</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>oauth2ClientContextFilter</filter-name>
-    <url-pattern>/oth2/*</url-pattern>
   </filter-mapping>
   <servlet>
     <servlet-name>intr0101AppServlet</servlet-name>

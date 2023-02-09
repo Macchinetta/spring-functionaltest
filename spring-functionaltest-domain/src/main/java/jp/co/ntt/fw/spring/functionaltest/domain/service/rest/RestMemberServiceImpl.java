@@ -99,7 +99,7 @@ public class RestMemberServiceImpl implements RestMemberService {
     @Transactional(readOnly = true)
     public RestMember getMember(String memberId) {
         // find member
-        RestMember member = restMemberRepository.findOne(memberId);
+        RestMember member = restMemberRepository.findByMemberId(memberId);
         if (member == null) {
             // If member is not exists
             throw new ResourceNotFoundException(ResultMessages.error().add(
@@ -192,9 +192,9 @@ public class RestMemberServiceImpl implements RestMemberService {
     public void deleteMember(String memberId) {
 
         // First Delete from credential (Child)
-        restMemberRepository.deleteCredential(memberId);
+        restMemberRepository.deleteCredentialByMemberId(memberId);
         // Delete member
-        restMemberRepository.deleteMember(memberId);
+        restMemberRepository.deleteMemberByMemberId(memberId);
 
     }
 

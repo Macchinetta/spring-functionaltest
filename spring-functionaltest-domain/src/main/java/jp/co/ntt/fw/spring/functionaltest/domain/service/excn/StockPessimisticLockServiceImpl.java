@@ -46,7 +46,7 @@ public class StockPessimisticLockServiceImpl implements
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -60,7 +60,7 @@ public class StockPessimisticLockServiceImpl implements
     public Stock buy(Stock stock, int purchasingQuantity) {
         Stock subject = null;
         try {
-            subject = stockRepository.selectByItemCodeWithPessimisticLock(stock
+            subject = stockRepository.findByItemCodeWithPessimisticLock(stock
                     .getItemCode());
         } catch (PessimisticLockingFailureException e) {
             latchToupdate.countDown();

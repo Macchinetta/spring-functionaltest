@@ -26,6 +26,7 @@ public class UploadFileNotEmptyValidator implements
 
     @Override
     public void initialize(UploadFileNotEmpty constraint) {
+        // The default implementation
     }
 
     @Override

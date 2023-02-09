@@ -48,7 +48,7 @@ public class ReloadCodeListServiceImpl implements ReloadCodeListService {
     @Override
     @Transactional
     public void updateAuthorityTableValue(CodeList updateCodeList) {
-        updateCodeListRepository.updateAuthorityTableValue(updateCodeList);
+        updateCodeListRepository.updateAuthorityTableValueById(updateCodeList);
     }
 
     @Override

@@ -47,19 +47,4 @@ public interface JPAStockRepository extends JpaRepository<JPAStock, String> {
     JPAStock findOneForUpdateUsingPessimisticLockExcp(
             @Param("itemCode") String itemCode);
 
-    /**
-     * タイムアウト値をゼロにする（DB2用）
-     * @return
-     */
-    @Modifying
-    @Query(value = "SET CURRENT LOCK TIMEOUT NOT WAIT", nativeQuery = true)
-    void setCurrentLockTimeoutNotWait();
-
-    /**
-     * タイムアウト値をデフォルト値に戻す（DB2用）
-     * @return
-     */
-    @Modifying
-    @Query(value = "SET CURRENT LOCK TIMEOUT NULL", nativeQuery = true)
-    void setCurrentLockTimeoutDefault();
 }

@@ -23,7 +23,7 @@ CREATE TABLE t_book_lz (
     ,blob_code BLOB
     ,CONSTRAINT pk_book_lz PRIMARY KEY (book_id)
     ,CONSTRAINT fk_book_lz FOREIGN KEY (category_id) REFERENCES m_category_lz(category_id)
-    ,UNIQUE KEY UniqueTitle (title)
+    ,CONSTRAINT UniqueTitle UNIQUE (title)
 );
 
 

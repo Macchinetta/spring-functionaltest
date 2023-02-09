@@ -19,7 +19,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 
 public interface EmployeeRepository {
 
-    Employee findOneById(int employeeId);
+    Employee findById(int employeeId);
 
     long countByEmployeeName(Employee employee);
 

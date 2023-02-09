@@ -214,7 +214,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(
             Integer bookId, Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdate(bookId);
+        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdate(bookId);
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
@@ -229,7 +229,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(
             Integer bookId, Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdateNoExcp(
+        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdateNoExcp(
                 bookId);
         try {
             Thread.sleep(sleepTime);

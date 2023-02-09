@@ -161,7 +161,8 @@
   </bean>
 
   <!-- ATHR0201002 Protection and ATHR0201002 Protection 等の対応のため最後に定義 -->
-  <sec:http pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**" create-session="stateless">
+  <sec:http pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**" create-session="stateless"
+    once-per-request="false">
     <sec:form-login />
     <sec:logout />
     <sec:csrf disabled="true" />
@@ -170,12 +171,10 @@
   <!-- RSCL Protection -->
   <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
 
-  <import resource="classpath:META-INF/spring/oth2/spring-security-oth2.xml" />
-
   <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
 
   <!-- All setting -->
-  <sec:http>
+  <sec:http once-per-request="false">
     <sec:form-login />
     <sec:logout />
     <sec:access-denied-handler ref="accessDeniedHandler" />

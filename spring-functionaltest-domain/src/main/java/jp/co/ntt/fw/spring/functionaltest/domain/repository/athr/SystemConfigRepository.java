@@ -19,7 +19,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
 
 public interface SystemConfigRepository {
 
-    SystemConfig findOneByDevice(String device);
+    SystemConfig findByDevice(String device);
 
     void insert(SystemConfig systemConfig);
 

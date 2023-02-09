@@ -42,15 +42,13 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
     @Override
     public SystemConfig findDeviceForAdmin(String device, String userName) {
-        SystemConfig systemConfig = systemConfigRepository.findOneByDevice(
-                device);
+        SystemConfig systemConfig = systemConfigRepository.findByDevice(device);
         return systemConfig;
     }
 
     @Override
     public SystemConfig findDeviceForStaff(String device, String userName) {
-        SystemConfig systemConfig = systemConfigRepository.findOneByDevice(
-                device);
+        SystemConfig systemConfig = systemConfigRepository.findByDevice(device);
         return systemConfig;
     }
 }

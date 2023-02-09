@@ -165,8 +165,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
@@ -184,8 +183,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo == null && jmsTodoInDB == null) {
@@ -212,8 +210,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
@@ -231,8 +228,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(
                 "rollbacked_" + form.getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {

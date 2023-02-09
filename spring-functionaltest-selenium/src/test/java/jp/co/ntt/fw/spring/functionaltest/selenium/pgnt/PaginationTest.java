@@ -24,7 +24,7 @@ import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -1526,7 +1526,7 @@ public class PaginationTest extends FunctionTestSupport {
         try {
             // Immediate time-out value set
             webDriverOperations.getWebDriver().manage().timeouts()
-                    .implicitlyWait(1, TimeUnit.SECONDS);
+                    .implicitlyWait(Duration.ofSeconds(1));
 
             // pagination no display
             webDriverOperations.getWebDriver().findElement(By.xpath(
@@ -1553,7 +1553,7 @@ public class PaginationTest extends FunctionTestSupport {
         try {
             // Immediate time-out value set
             webDriverOperations.getWebDriver().manage().timeouts()
-                    .implicitlyWait(1, TimeUnit.SECONDS);
+                    .implicitlyWait(Duration.ofSeconds(1));
 
             // pagination no display
             webDriverOperations.getWebDriver().findElement(By.xpath(

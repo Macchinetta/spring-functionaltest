@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <sec:http pattern="/api/v1/rscl/**" create-session="stateless"
-    authentication-manager-ref="rsclAuthenticationManager">
+    authentication-manager-ref="rsclAuthenticationManager" once-per-request="false">
     <sec:http-basic />
     <sec:csrf disabled="true" />
     <sec:intercept-url pattern="/api/v1/rscl/basic" access="hasRole('ROLE_USER')" />

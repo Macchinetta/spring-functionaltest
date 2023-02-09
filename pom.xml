@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
   <artifactId>spring-functionaltest</artifactId>
-  <version>1.8.1.SP1.RELEASE</version>
+  <version>1.8.2.RELEASE</version>
   <packaging>pom</packaging>
   <modules>
     <module>spring-functionaltest-env</module>
@@ -12,17 +12,8 @@
     <module>spring-functionaltest-domain</module>
     <module>spring-functionaltest-web</module>
     <module>spring-functionaltest-env-oauth2</module>
-    <module>spring-functionaltest-domain-oauth2</module>
-    <module>spring-functionaltest-web-oauth2-component</module>
-    <module>spring-functionaltest-web-oauth2-db</module>
-    <module>spring-functionaltest-web-oauth2-memory</module>
-    <module>spring-functionaltest-web-oauth2-remote</module>
     <module>spring-functionaltest-web-oauth2-resource</module>
     <module>spring-functionaltest-web-thymeleaf</module>
-    <module>spring-functionaltest-web-oauth2-component-thymeleaf</module>
-    <module>spring-functionaltest-web-oauth2-db-thymeleaf</module>
-    <module>spring-functionaltest-web-oauth2-memory-thymeleaf</module>
-    <module>spring-functionaltest-web-oauth2-remote-thymeleaf</module>
     <module>spring-functionaltest-web-oauth2-resource-thymeleaf</module>
     <module>spring-functionaltest-initdb</module>
     <module>spring-functionaltest-selenium</module>
@@ -30,13 +21,13 @@
   <parent>
     <groupId>org.terasoluna.gfw</groupId>
     <artifactId>terasoluna-gfw-parent</artifactId>
-    <version>5.7.1.SP1.RELEASE</version>
+    <version>5.7.2.RELEASE</version>
     <relativePath />
   </parent>
 
   <name>Spring Functional Test - Multi Project</name>
   <description>Parent project for Spring Functional Test</description>
-  <url>https://macchinetta.github.io/</url>
+  <url>http://terasoluna.org</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
@@ -114,6 +105,11 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+          <configuration>
+            <systemProperties>
+              <jdk.tls.client.protocols>TLSv1.2</jdk.tls.client.protocols>
+            </systemProperties>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
@@ -274,11 +270,6 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-domain-oauth2</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>spring-functionaltest-webservice</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -289,47 +280,7 @@
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-component</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-db</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-remote</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-memory</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
         <artifactId>spring-functionaltest-web-thymeleaf</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-component-thymeleaf</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-db-thymeleaf</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-remote-thymeleaf</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>${project.groupId}</groupId>
-        <artifactId>spring-functionaltest-web-oauth2-memory-thymeleaf</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -354,27 +305,21 @@
         <artifactId>ojdbc8</artifactId>
         <version>${ojdbc.version}</version>
       </dependency>
-      <dependency>
-        <!-- db2jcc4.jar must be pre-installed in local repository. -->
-        <groupId>com.ibm</groupId>
-        <artifactId>db2jcc4</artifactId>
-        <version>${db2jcc4.version}</version>
-      </dependency>
       <!-- == End Database == -->
 
       <!-- == Begin phantomjsdriver == -->
       <dependency>
-        <groupId>com.github.detro.ghostdriver</groupId>
+        <groupId>com.codeborne</groupId>
         <artifactId>phantomjsdriver</artifactId>
-        <version>${com.github.detro.ghostdriver.version}</version>
+        <version>${com.codeborne.version}</version>
       </dependency>
       <!-- == End phantomjsdriver == -->
 
       <!-- == Begin REST-assured == -->
       <dependency>
-        <groupId>com.jayway.restassured</groupId>
+        <groupId>io.rest-assured</groupId>
         <artifactId>rest-assured</artifactId>
-        <version>${com.jayway.restassured.version}</version>
+        <version>${io.restassured.version}</version>
       </dependency>
       <!-- == End REST-assured == -->
 
@@ -407,70 +352,6 @@
       </dependency>
       <!-- == End Test == -->
 
-      <!-- == Begin Jetty Proxy Server == -->
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-proxy</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-util</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-client</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-http</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-io</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-deploy</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-webapp</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-servlet</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-security</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>${jetty.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-xml</artifactId>
-        <version>${jetty.version}</version>
-      </dependency>
-      <!-- == End Jetty Proxy Server == -->
-
       <!-- == Begin For JDK 11 == -->
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
@@ -489,21 +370,21 @@
       </dependency>
       <!-- == End For JDK 11 == -->
 
-      <!-- == Begin Spring Security OAuth - deprecated == -->
+      <!-- == Begin logback-db == -->
       <dependency>
-        <groupId>org.springframework.security.oauth</groupId>
-        <artifactId>spring-security-oauth2</artifactId>
-        <version>${spring-security-oauth.version}</version>
+        <groupId>ch.qos.logback.db</groupId>
+        <artifactId>logback-classic-db</artifactId>
+        <version>${logback-db.version}</version>
       </dependency>
-      <!-- == End Spring Security OAuth - deprecated== -->
-      
-      <!-- == Begin Spring Security OAuth2 == -->
+      <!-- == End logback-db == -->
+
+      <!-- == Begin PDFBox== -->
       <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-jwt</artifactId>
-        <version>${spring.security.jwt}</version>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>${pdfbox.version}</version>
       </dependency>
-      <!-- == End Spring Security OAuth2 == -->
+      <!-- == End PDFBox== -->
 
     </dependencies>
   </dependencyManagement>
@@ -521,21 +402,19 @@
     <org.apache.maven.archetype.version>2.2</org.apache.maven.archetype.version>
     <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
     <org.springframework.build.aws.version>3.0.0.RELEASE</org.springframework.build.aws.version>
-    <postgresql.version>42.3.1</postgresql.version>
-    <ojdbc.version>21.3.0.0</ojdbc.version>
-    <db2jcc4.version>4.21.29</db2jcc4.version>
-    <webdrivermanager.version>3.1.1</webdrivermanager.version>
-    <com.github.detro.ghostdriver.version>1.0.4</com.github.detro.ghostdriver.version>
-    <com.jayway.restassured.version>2.7.0</com.jayway.restassured.version>
-    <greenmail-spring.version>1.4.1</greenmail-spring.version>
-    <cxf-rt.version>3.1.4</cxf-rt.version>
-    <jetty.version>9.2.14.v20151106</jetty.version>
+    <postgresql.version>42.5.1</postgresql.version>
+    <ojdbc.version>21.8.0.0</ojdbc.version>
+    <webdrivermanager.version>5.3.1</webdrivermanager.version>
+    <com.codeborne.version>1.5.0</com.codeborne.version>
+    <io.restassured.version>5.3.0</io.restassured.version>
+    <greenmail-spring.version>1.6.11</greenmail-spring.version>
+    <cxf-rt.version>3.5.5</cxf-rt.version>
     <jaxb-core.version>2.3.0.1</jaxb-core.version>
-    <jaxb-impl.version>2.3.5</jaxb-impl.version>
+    <jaxb-impl.version>2.3.7</jaxb-impl.version>
     <jakarta.jws-api.version>2.1.0</jakarta.jws-api.version>
     <jakarta.interceptor-api.version>1.2.5</jakarta.interceptor-api.version>
-    <spring-security-oauth.version>2.5.1.RELEASE</spring-security-oauth.version>
-    <spring.security.jwt>1.1.1.RELEASE</spring.security.jwt>
+    <logback-db.version>1.2.11.1</logback-db.version>
+    <pdfbox.version>2.0.27</pdfbox.version>
     <!-- == Project Properties == -->
     <project.env.main.directory>src/main</project.env.main.directory>
     <project.env.target.name>spring-functionaltest-env</project.env.target.name>
@@ -543,6 +422,7 @@
     <project.root.basedir>${project.basedir}</project.root.basedir>
     <cargo.deployable.artifactId>spring-functionaltest-web</cargo.deployable.artifactId>
     <cargo.deployable.warName>spring-functionaltest-web</cargo.deployable.warName>
+    <cargo.jvmargs>-Xms512m -Xmx1024m -Djdk.tls.client.protocols=TLSv1.2 -Djdk.tls.server.protocols=TLSv1.2</cargo.jvmargs>
     <encoding>UTF-8</encoding>
     <java-version>1.8</java-version>
   </properties>
@@ -673,21 +553,16 @@
         <java-version>11</java-version>
         <cargo.jvmargs>-Xms512m -Xmx1024m -Djava.locale.providers=COMPAT,CLDR,SPI -Djdk.tls.client.protocols=TLSv1.2 -Djdk.tls.server.protocols=TLSv1.2</cargo.jvmargs>
       </properties>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <configuration>
-                <systemProperties>
-                  <jdk.tls.client.protocols>TLSv1.2</jdk.tls.client.protocols>
-                </systemProperties>
-              </configuration>
-            </plugin>
-          </plugins>
-        </pluginManagement>
-      </build>
+    </profile>
+    <profile>
+      <id>jdk17</id>
+      <activation>
+        <jdk>17</jdk>
+      </activation>
+      <properties>
+        <java-version>17</java-version>
+        <cargo.jvmargs>-Xms512m -Xmx1024m -Djava.locale.providers=COMPAT,CLDR,SPI -Djdk.tls.client.protocols=TLSv1.2 -Djdk.tls.server.protocols=TLSv1.2</cargo.jvmargs>
+      </properties>
     </profile>
   </profiles>
 </project>

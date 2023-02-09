@@ -47,7 +47,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -58,7 +58,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
 
     @Override
     public Stock buy(Stock stock, int purchasingQuantity, long sleepMillis) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
 
         subject.setQuantity(purchasingQuantity);
         // できるだけ同時にDBアクセスするように同期する
@@ -70,7 +70,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
         }
         // RDBMSによる行ロック中に、別スレッドの更新処理が実行されるようにするために、ロックを取得したスレッドを一定時間停止する。
         sleep(sleepMillis);
-        return stockRepository.selectByItemCode(stock.getItemCode());
+        return stockRepository.findByItemCode(stock.getItemCode());
     }
 
     private void await() {

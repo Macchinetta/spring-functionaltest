@@ -30,7 +30,7 @@
     t_system_config
   </sql>
 
-  <select id="findOneByDevice" resultMap="systemConfig-resultMap" parameterType="String">
+  <select id="findByDevice" resultMap="systemConfig-resultMap" parameterType="String">
     <include refid="selectSystemConfig" />
     WHERE
     device = #{device}

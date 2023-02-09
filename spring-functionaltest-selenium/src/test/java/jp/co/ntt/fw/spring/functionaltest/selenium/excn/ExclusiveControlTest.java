@@ -18,12 +18,14 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.excn;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
@@ -52,6 +54,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      */
     private void setUpWebDriver(int webDriverId, String testId) {
         WebDriverOperations operations = setUpWebDriverOperations(webDriverId);
+        operations.setDefaultTimeoutForImplicitlyWait(120);
         operations.click(id(testId));
     }
 
@@ -781,6 +784,9 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
     private void assertCompleteView(int webDriverId, String itemCode,
             String itemName, int quantity, int version) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
+
+        operations.waitForDisplayed(textToBe(By.xpath("//h1"), "売買完了"));
+
         assertThat(operations.getText(id("screenTitle")), is("売買完了"));
         assertThat(operations.getText(id("result_itemCode")), is(itemCode));
         assertThat(operations.getText(id("result_itemName")), is(itemName));

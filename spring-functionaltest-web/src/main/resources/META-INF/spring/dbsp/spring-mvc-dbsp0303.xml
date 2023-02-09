@@ -125,8 +125,6 @@
       <array>
         <value>org.springframework.security.access.AccessDeniedException
         </value>
-        <value>org.springframework.security.oauth2.client.resource.UserRedirectRequiredException
-        </value>
         <value>org.springframework.web.util.NestedServletException
         </value>
       </array>

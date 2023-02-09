@@ -59,6 +59,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         }
         // トップ画面での操作
         {
+            webDriverOperations.setDefaultTimeoutForImplicitlyWait(60);
             webDriverOperations.getWebDriver().manage().window().maximize();
         }
     }
@@ -2055,6 +2056,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage.setTodoForSearch("0000000001");
 
         TodoDetailsPage todoDetailsPage = todoListPage.searchUsingStoredProc();
+
+        webDriverOperations.waitForDisplayed(id("finished"));
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));

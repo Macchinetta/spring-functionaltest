@@ -38,8 +38,8 @@ public class PersonalComputerServiceImpl implements PersonalComputerService {
     @Override
     public PersonalComputer getPersonalComputer(int personalComputerId) {
 
-        PersonalComputer personalComputer = personalComputerRepository
-                .findOneByID(personalComputerId);
+        PersonalComputer personalComputer = personalComputerRepository.findById(
+                personalComputerId);
 
         return personalComputer;
     }

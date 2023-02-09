@@ -9,7 +9,7 @@
     <result property="datetime" column="date_time" />
   </resultMap>
 
-  <select id="findOneById" parameterType="String" resultMap="jmsTodoResultMap">
+  <select id="findById" parameterType="String" resultMap="jmsTodoResultMap">
     SELECT
     jms_todo_id,
     description,

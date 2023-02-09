@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUnusedUserId(String userId) {
-        return (userRepository.existsUser(userId) <= 0);
+        return (userRepository.existsByUserId(userId) <= 0);
     }
 
 }

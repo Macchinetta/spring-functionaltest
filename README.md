@@ -4,10 +4,6 @@ This project provides functional tests of Macchinetta Server Framework (1.x) Dev
 * [JSP](https://macchinetta.github.io/server-guideline/list/)
 * [Thymeleaf](https://macchinetta.github.io/server-guideline-thymeleaf/list/)
 
-## Test case design
-
-Please refer to [docs](./docs/README.md).
-
 ## Project structure
 The build process of functional tests using JSP for View is built with the following projects.
 
@@ -19,11 +15,6 @@ spring-functionaltest
 ├── spring-functionaltest-domain
 ├── spring-functionaltest-web
 ├── spring-functionaltest-env-oauth2
-├── spring-functionaltest-domain-oauth2
-├── spring-functionaltest-web-oauth2-component
-├── spring-functionaltest-web-oauth2-db
-├── spring-functionaltest-web-oauth2-memory
-├── spring-functionaltest-web-oauth2-remote
 ├── spring-functionaltest-web-oauth2-resource
 ├── spring-functionaltest-initdb
 └── spring-functionaltest-selenium
@@ -34,10 +25,6 @@ If you want to use Thymeleaf for View, switch the web projects in the build proc
 ```console
 spring-functionaltest
 ├── spring-functionaltest-web-thymeleaf
-├── spring-functionaltest-web-oauth2-component-thymeleaf
-├── spring-functionaltest-web-oauth2-db-thymeleaf
-├── spring-functionaltest-web-oauth2-memory-thymeleaf
-├── spring-functionaltest-web-oauth2-remote-thymeleaf
 └── spring-functionaltest-web-oauth2-resource-thymeleaf
 ```
 
@@ -45,18 +32,17 @@ spring-functionaltest
 
 **Preconditions are as follow:**
 
-* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [JDK 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html) installed (`JAVA_HOME` defined as environment variable)
-* "JCE Unlimited Strength Jurisdiction Policy Files" (for [JDK 8u144 earlier](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)) installed
+* [JDK 8 or JDK 11 or JDK 17](https://developers.redhat.com/products/openjdk/download) installed (`JAVA_HOME` defined as environment variable)
 * [Maven](https://maven.apache.org/download.cgi) installed (Can run `mvn` command)
-* Firefox([for personal](https://www.mozilla.org/en-US/firefox/all/) or [ESR](https://www.mozilla.org/en-US/firefox/organizations/all/)) installed (ESR is used on our CI environment)
-* [geckodriver](https://github.com/mozilla/geckodriver/releases) (`v0.30.0` recommended) placed and register in the environment variable.
+* Firefox([for personal](https://www.mozilla.org/en-US/firefox/all/#product-desktop-release) or [ESR](https://www.mozilla.org/en-US/firefox/all/#product-desktop-esr)) installed (ESR is used on our CI environment)
+
 
 ### [Step 1] Create database of PostgreSQL (Optional)
 If [PostgreSQL](http://www.postgresql.org/) use as database , you need to create database of PostgreSQL into local machine. (PostgreSQL can download via [here site](http://www.postgresql.org/download/)).
 
 > **Note:**
 >
-> If [H2](http://www.h2database.com/) use as database, you can skip this step.
+> If [H2](http://www.h2database.com/html/main.html) use as database, you can skip this step.
 
 #### Download & install
 By default, database owner is `postgres` user, and password of `postgres` user is `'P0stgres'`.
@@ -71,7 +57,7 @@ $ createdb -U postgres --locale=C --encoding=UTF8 --template=template0 spring-fu
 Clone the `Macchinetta/spring-functionaltest` repository into local machine.
 
 ```console
-$ git clone https://github.com/Macchinetta/spring-functionaltest.git
+$ git clone https://{remote host url}/Macchinetta/spring-functionaltest.git
 ```
 
 ### [Step 3] Build artifacts
@@ -83,12 +69,12 @@ Build artifacts using maven commands as follows.
 $ cd {your repository directory}
 $ git checkout {target branch}
 $ mvn -U clean install -am -pl spring-functionaltest-web
-$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote,spring-functionaltest-web-oauth2-resource
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-resource
 ```
 
 > **Note:**
 >
-> Using JDK 11, add `-P local,warpack-jaxb,warpack-activation`. (Specify the `local` profile explicitly because JDK 11 will automatically activate the `jdk11` profile.)
+> Using JDK 11 or JDK17, add `-P local,warpack-jaxb,warpack-activation`. (Specify the `local` profile explicitly because JDK 11 or JDK 17 will automatically activate the `jdk11` or `jdk17` profile.)
 
 #### Case that use PostgreSQL as database
 
@@ -96,12 +82,12 @@ $ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functi
 $ cd {your repository directory}
 $ git checkout {target branch}
 $ mvn -U clean install -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
-$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-db,spring-functionaltest-web-oauth2-memory,spring-functionaltest-web-oauth2-remote,spring-functionaltest-web-oauth2-resource -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
+$ mvn -U clean install -am -pl spring-functionaltest-web-oauth2-resource -P tomcat9-postgresql,warpack-env,warpack-jstl,travis
 ```
 
 > **Note:**
 >
-> Using JDK 11, add `-P warpack-jaxb`.
+> Using JDK 11 or JDK17, add `-P warpack-jaxb`.
 
 > **Note:**
 >
@@ -121,7 +107,7 @@ $ mvn -U sql:execute -pl spring-functionaltest-initdb -P local-postgres-close
 > If you not use default user(`postgres`) or password(`P0stgres`), you should specify `-Ddb.username={your user}` or `-Ddb.password={your password}` or both.
 
 ### [Step 5] Startup Tomcat9 and deploy war file
-Startup Tomcat9 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven2+plugin.html).
+Startup Tomcat9 and deploy war file using [CARGO maven plugin](https://codehaus-cargo.github.io/cargo/Maven+3+Plugin.html).
 
 #### Case that use embedded H2 as database
 
@@ -151,9 +137,6 @@ Deploy OAuth war files to already running container.
 
 ```console
 $ cd {your repository directory}
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-db -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-db
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-memory -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-memory
-$ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-remote  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-remote
 $ mvn -U cargo:deploy -pl spring-functionaltest-web -Dcargo.deployable.artifactId=spring-functionaltest-web-oauth2-resource  -Dcargo.deployable.warName=spring-functionaltest-web-oauth2-resource
 ```
 
@@ -162,7 +145,7 @@ Run tests using Selenium(`WebDriver`) on JUnit.
 
 ```console
 $ cd {your repository directory}
-$ mvn -U test -pl spring-functionaltest-selenium
+$ mvn -U test -pl spring-functionaltest-selenium -Dwdm.cachePath=/opt/geckodriver -Dwdm.geckoDriverVersion=0.32.0
 ```
 
 > **Note:**
@@ -171,8 +154,11 @@ $ mvn -U test -pl spring-functionaltest-selenium
 
 > **Note:**
 >
-> If GeckoDriver is not registered in the path, [webdrivermanager](https://github.com/bonigarcia/webdrivermanager) will download it automatically.
-> Configure using [properties](https://github.com/bonigarcia/webdrivermanager#webdrivermanager-api) in `wdm.properties` or Java System Properties.
+> By dafault latest version [geckodriver](https://github.com/mozilla/geckodriver/releases) will download automatically to `~/.cache/selenium` by [webdrivermanager](https://github.com/bonigarcia/webdrivermanager).
+> To specify the download directory, specify "`-Dwdm.cachePath`" in the startup argument.
+> To specify the version of geckoDriver, specify "`-Dwdm.geckoDriverVersion`" in the startup argument.
+>
+> See  [advanced-configuration](https://bonigarcia.dev/webdrivermanager/#advanced-configuration) for configuration details.
 
 ## Appendix
 
@@ -201,7 +187,7 @@ Using the maven profile , build the war in accordance with the environment that 
 ```console
 $ cd {your repository directory}
 $ git checkout {target branch}
-$ mvn -U package -am -pl spring-functionaltest-web -P weblogic-oracle,warpack-env
+$ mvn -U package -am -pl spring-functionaltest-web -P tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis
 ```
 
 Profiles that are available are as follows.
@@ -213,8 +199,6 @@ Profiles that are available are as follows.
 |        Tomcat9 + H2       | (not specify)                                                                        |
 |    Tomcat9 + Postgresql   | `tomcat9-postgresql,warpack-env,warpack-jstl,warpack-cxf,warpack-transaction,travis` |
 | Tomcat9 + Postgresql [^1] | `tomcat9-postgresql,warpack-jstl,warpack-cxf,warpack-transaction`                    |
-|  Tomcat9 + Oracle [^1]    | `tomcat9-oracle,warpack-jstl,warpack-cxf,warpack-transaction`                        |
-|     Weblogic + Oracle     | `weblogic-oracle,warpack-env`                                                        |
 
 [^1]: Please deploy spring-functionaltest-web.war, spring-functionaltest-env.jar, and context.xml.
 
@@ -225,9 +209,10 @@ Profiles for Java version are automatically activated.
 |   environments  | specify maven profile                       |
 |:---------------:|---------------------------------------------|
 |      Java8      | (not specify)                               |
-|      Java11     | `jdk11,warpack-jaxb,warpack-activation` [^1]|
+|      Java11     | `jdk11,warpack-jaxb,warpack-activation` [^2]|
+|      Java17     | `jdk17,warpack-jaxb,warpack-activation` [^2]|
 
-[^1]: `warpack-xxx` is required if the activatin lib is not provided by the AP server(eg. Tomcat).
+[^2]: `warpack-xxx` is required if the activatin lib is not provided by the AP server(eg. Tomcat).
 
 ### How to switch bean definition for various environments
 
@@ -247,18 +232,18 @@ Profiles that are available are as follows.
 |       environments       | specify spring profiles   |
 |:------------------------:|---------------------------|
 | using embedded GreenMail | `nonMailServer` (default) |
-| using actual Mail Server | `mailServer` [^1]         |
+| using actual Mail Server | `mailServer` [^3]         |
 
-[^1]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination mail server.
+[^3]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination mail server.
 
 #### Connecting message queue
 
 |        environments        | specify spring profiles   |
 |:--------------------------:|---------------------------|
 | using embedded ActiveMQ    | `nonMqServer` (default)   |
-| using actual Message Queue | `mqServer` [^1]           |
+| using actual Message Queue | `mqServer` [^4]           |
 
-[^1]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination message queue.
+[^4]: Please correct the set values of the spring-functionaltest-infra.properties files according to the destination message queue.
 
 ### How to switch specific test cases to run for various environments
 
@@ -276,4 +261,3 @@ Properties that are available are as follows.
 |    test.environment       | Whether to run tests must use actual mail server.<br>Set **`mailServer`** when `spring.profiles.active` of application contains `mailServer`. |
 |    jms.test.environment   | Whether to run tests must use actual mq server.<br>Set **`mqServer`** when `spring.profiles.active` of application contains `mqServer`. |
 |   test.environment.view   | Whether to run tests depending on a specific HTML view template.<br>Set view template name **`jsp`**(default) or **`thymeleaf`**.             |
-| test.environment.weblogic | Skip specific tests if running on WebLogic Server.<br>Set **`true`** or **`false`**(default).                                                 |

@@ -6,7 +6,8 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- SOAPのリクエストに対してCSRF対策を行わないようにする -->
-  <sec:http pattern="/ws/**" create-session="stateless" authentication-manager-ref="soapAuthenticationManager">
+  <sec:http pattern="/ws/**" create-session="stateless"
+    authentication-manager-ref="soapAuthenticationManager" once-per-request="false">
     <sec:csrf disabled="true" />
     <sec:http-basic />
   </sec:http>

@@ -25,6 +25,6 @@ public interface UserRepository {
      * @param userId
      * @return
      */
-    long existsUser(String userId);
+    long existsByUserId(String userId);
 
 }

@@ -19,6 +19,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.DateMB3;
 
 public interface ShowDateMB3Repository {
 
-    DateMB3 selectDate(String todoId);
+    DateMB3 findByTodoId(String todoId);
 
 }

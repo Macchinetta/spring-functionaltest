@@ -31,7 +31,7 @@ public class ReservationUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(
             String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findOneByName(username);
+        Customer customer = customerRepository.findByName(username);
         if (customer == null) {
             throw new UsernameNotFoundException(username + " is not found."); // TODO to property file
         }

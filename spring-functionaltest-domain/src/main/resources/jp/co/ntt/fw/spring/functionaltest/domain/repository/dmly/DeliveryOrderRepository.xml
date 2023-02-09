@@ -222,7 +222,7 @@
     delivery_no = #{deliveryNo}
   </update>
 
-  <delete id="delete" parameterType="Integer">
+  <delete id="deleteByDeliveryNo" parameterType="Integer">
     <bind name="deliveryNo" value="_parameter" />
     DELETE FROM
     t_delivery_order
@@ -267,12 +267,6 @@
   <update id="clear">
     TRUNCATE TABLE
     t_delivery_order
-  </update>
-
-  <update id="clear" databaseId="db2">
-    TRUNCATE TABLE
-    t_delivery_order
-    IMMEDIATE
   </update>
 
 </mapper>

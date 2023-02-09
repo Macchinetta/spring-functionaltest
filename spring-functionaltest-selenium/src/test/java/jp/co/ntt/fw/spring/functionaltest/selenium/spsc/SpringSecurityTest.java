@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.name;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 import java.util.Map;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -55,7 +57,14 @@ public class SpringSecurityTest extends FunctionTestSupport {
     public void testSPSC0101001() throws IOException {
 
         // メニュー画面の操作
-        webDriverOperations.click(id("spsc0101001"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("spsc0101001"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // デフォルトのログイン画面の確認
         // ユーザ

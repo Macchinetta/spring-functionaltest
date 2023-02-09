@@ -273,7 +273,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
 
     @Override
     public JmsTodo find(String jmsTodoId) {
-        return jmsTodoRepository.findOneById(jmsTodoId);
+        return jmsTodoRepository.findById(jmsTodoId);
     }
 
 }

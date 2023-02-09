@@ -31,7 +31,7 @@ public class JmsValidationServiceImpl implements JmsValidationService {
 
     @Override
     public void validate(JmsTodo jmsTodo) throws IOException {
-
+        // No Operation
     }
 
     @Override

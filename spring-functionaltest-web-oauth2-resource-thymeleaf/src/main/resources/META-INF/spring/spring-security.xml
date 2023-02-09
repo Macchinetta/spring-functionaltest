@@ -10,7 +10,7 @@
   <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
 
   <sec:http pattern="/resources/**" security="none" />
-  <sec:http>
+  <sec:http once-per-request="false">
     <sec:form-login />
     <sec:logout />
     <sec:access-denied-handler ref="accessDeniedHandler" />

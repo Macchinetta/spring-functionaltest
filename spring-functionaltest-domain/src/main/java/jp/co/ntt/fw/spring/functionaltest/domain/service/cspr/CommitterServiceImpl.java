@@ -36,8 +36,8 @@ public class CommitterServiceImpl implements CommitterService {
     @Override
     public List<Committer> getCommitters(CommitterCriteria criteria) {
 
-        List<Committer> committers = committerRepository.findCommiterByCriteria(
-                criteria);
+        List<Committer> committers = committerRepository
+                .findAllByCommitterCriteria(criteria);
 
         return committers;
     }

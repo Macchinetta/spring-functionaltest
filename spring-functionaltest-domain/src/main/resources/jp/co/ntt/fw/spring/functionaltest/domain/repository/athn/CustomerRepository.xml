@@ -24,7 +24,7 @@
     t_customer
   </sql>
 
-  <select id="findOneByName" resultMap="customer-resultMap" parameterType="String">
+  <select id="findByName" resultMap="customer-resultMap" parameterType="String">
     <include refid="selectCustomer" />
     WHERE
     customer_name = #{customerName}

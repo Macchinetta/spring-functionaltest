@@ -5,8 +5,9 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http  pattern="/athr/0802/**" auto-config="false" authentication-manager-ref="loginForStaffManager"
-    entry-point-ref="ajaxAuthenticationEntryPoint">
+  <sec:http pattern="/athr/0802/**" auto-config="false"
+    authentication-manager-ref="loginForStaffManager" entry-point-ref="ajaxAuthenticationEntryPoint"
+    once-per-request="false">
 
     <sec:form-login login-processing-url="/athr/0802/customerAuthenticate"
       default-target-url="/athn/0802/001?loginSuccess" always-use-default-target="true" />

@@ -22,7 +22,9 @@
     <sec:authentication-provider user-service-ref="authEventHandleUserDetailsService" />
   </sec:authentication-manager>
 
-  <sec:http pattern="/athn/1601/**" authentication-manager-ref="authEventSystemFailureHandleUserLoginManager">
+  <sec:http pattern="/athn/1601/**"
+    authentication-manager-ref="authEventSystemFailureHandleUserLoginManager"
+    once-per-request="false">
     <sec:form-login login-page="/athn/1601/001/login" login-processing-url="/athn/1601/authenticate"
       default-target-url="/athn/1601/001?loginSuccess" always-use-default-target="true"
       authentication-failure-handler-ref="authenticationSystemFailureHandler" />

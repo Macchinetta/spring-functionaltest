@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.1.SP1.RELEASE</version>
+    <version>1.8.2.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -247,6 +247,24 @@
         </dependency>
       </dependencies>
     </profile>
+    <profile>
+      <id>jdk17</id>
+      <activation>
+        <jdk>17</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>jakarta.activation</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>
     <!-- When running with jdk11+local, redefine with "runtime" because it becomes "provided" in jdk11 profile -->
     <profile>
       <id>warpack-activation</id>
@@ -387,6 +405,13 @@
     </dependency>
     <!-- == End For Report == -->
 
+    <!-- == Begin Log4j 2 to SLF4J Adapter == -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-to-slf4j</artifactId>
+    </dependency>
+    <!-- == End Log4j 2 to SLF4J Adapter == -->
+
     <!-- == Begin GreenMail-Spring == -->
     <dependency>
       <groupId>com.icegreen</groupId>
@@ -436,7 +461,7 @@
     <!-- == Begin Password Encode == -->
     <dependency>
       <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
+      <artifactId>bcprov-jdk18on</artifactId>
     </dependency>
     <!-- == End Password Encode == -->
 

@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athr/0301/001/**" auto-config="false" authentication-manager-ref="loginForMethodManager">
+  <sec:http pattern="/athr/0301/001/**" auto-config="false"
+    authentication-manager-ref="loginForMethodManager" once-per-request="false">
     <sec:form-login login-page="/athr/0301/001" login-processing-url="/athr/0301/001/authenticate"
       default-target-url="/athr/0301/001/afterLogin" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />

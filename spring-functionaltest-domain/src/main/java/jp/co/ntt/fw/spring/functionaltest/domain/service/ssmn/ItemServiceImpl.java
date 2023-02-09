@@ -52,7 +52,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item getItem(String itemId) {
-        Item item = itemRepository.findOne(itemId);
+        Item item = itemRepository.findByItemId(itemId);
         if (item == null) {
             throw new ResourceNotFoundException(String.format(
                     "Specified item is not found. itemId is '%s'.", itemId));

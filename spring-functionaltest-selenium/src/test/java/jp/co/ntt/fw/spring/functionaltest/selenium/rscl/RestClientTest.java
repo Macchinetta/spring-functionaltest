@@ -76,6 +76,8 @@ public class RestClientTest extends FunctionTestSupport {
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
 
+        webDriverOperations.waitForDisplayed(id("screenTitle"));
+
         // 確認画面に遷移したことをチェック
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "RESTクライアント処理結果【ユーザ情報出力】"));
@@ -236,6 +238,8 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
+
+        webDriverOperations.waitForDisplayed(id("screenTitle"));
 
         // 確認画面に遷移したことをチェック
         assertThat(webDriverOperations.getText(id("screenTitle")), is(

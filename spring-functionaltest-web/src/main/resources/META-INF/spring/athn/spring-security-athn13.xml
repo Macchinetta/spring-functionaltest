@@ -34,7 +34,8 @@
     <property name="userDetailsService" ref="authEventHandleUserDetailsService" />
   </bean>
 
-  <sec:http pattern="/athn/1302/**" authentication-manager-ref="authFailureEventHandleUserLoginManager">
+  <sec:http pattern="/athn/1302/**"
+    authentication-manager-ref="authFailureEventHandleUserLoginManager" once-per-request="false">
     <sec:form-login login-page="/athn/1302/001/login" login-processing-url="/athn/1302/001/authenticate"
       default-target-url="/athn/1302/001?loginSuccess" always-use-default-target="true"
       authentication-failure-handler-ref="authenticationFailureHandler" />

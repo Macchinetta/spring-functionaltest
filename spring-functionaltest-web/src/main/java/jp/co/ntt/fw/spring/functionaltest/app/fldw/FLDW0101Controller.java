@@ -17,6 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.fldw;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -45,7 +48,10 @@ public class FLDW0101Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "pdf")
     public String handle001Pdf(Model model,
-            ContentDownloadForm form) throws UnsupportedEncodingException, IOException {
+            ContentDownloadForm form) throws UnsupportedEncodingException, IOException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = format.parse("2013/12/09");
+        model.addAttribute("serverTime", date);
         fileDownloadHelper.bindToModel(model, form);
         return "pdfDownloadView";
     }

@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <sec:http pattern="/messages/**">
+  <sec:http pattern="/messages/**" once-per-request="false">
     <sec:intercept-url pattern="/messages/intercept/**" method="GET" access="hasAuthority('SCOPE_READ')" />
     <sec:intercept-url pattern="/messages/intercept/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />
     <sec:intercept-url pattern="/messages/intercept/**" method="PUT" access="hasAuthority('SCOPE_UPDATE')" />

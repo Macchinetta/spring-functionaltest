@@ -19,7 +19,8 @@
     <property name="roleHierarchy" ref="authorizationRoleHierarchy" />
   </bean>
 
-  <sec:http pattern="/athr/0901/001/**" authentication-manager-ref="loginForRoleHierarchyManager">
+  <sec:http pattern="/athr/0901/001/**"
+    authentication-manager-ref="loginForRoleHierarchyManager" once-per-request="false">
     <sec:form-login login-page="/athr/0901/001" login-processing-url="/athr/0901/001/authenticate"
       default-target-url="/athr/0901/001/afterLogin" />
     <sec:logout logout-url="/athr/0901/001/logout" logout-success-url="/athr/"
@@ -41,7 +42,8 @@
       value="SELECT username, authority FROM t_staff WHERE username = ? and enabled = ${enabledValue} " />
   </bean>
 
-  <sec:http pattern="/athr/0901/002/**" authentication-manager-ref="loginForJspRoleHierarchyManager">
+  <sec:http pattern="/athr/0901/002/**"
+    authentication-manager-ref="loginForJspRoleHierarchyManager" once-per-request="false">
     <sec:form-login login-page="/athr/0901/002" login-processing-url="/athr/0901/002/authenticate"
       default-target-url="/athr/0901/002/afterLogin" />
     <sec:logout logout-url="/athr/0901/002/logout" logout-success-url="/athr/"
@@ -71,7 +73,8 @@
     </property>
   </bean>
 
-  <sec:http pattern="/athr/0901/003/**" authentication-manager-ref="loginForMethodRoleHierarchyManager">
+  <sec:http pattern="/athr/0901/003/**"
+    authentication-manager-ref="loginForMethodRoleHierarchyManager" once-per-request="false">
     <sec:form-login login-page="/athr/0901/003" login-processing-url="/athr/0901/003/authenticate"
       default-target-url="/athr/0901/003/afterLogin" />
     <sec:logout logout-url="/athr/0901/003/logout" logout-success-url="/athr/"

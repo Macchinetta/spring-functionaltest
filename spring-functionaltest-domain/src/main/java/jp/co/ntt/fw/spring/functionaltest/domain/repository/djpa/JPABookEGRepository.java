@@ -35,12 +35,12 @@ public interface JPABookEGRepository extends JpaRepository<JPABookEG, Integer> {
     @Query("SELECT book FROM JPABookEG book WHERE book.bookId = :bookId ORDER BY book.bookId")
     @QueryHints(value = {
             @QueryHint(name = "javax.persistence.lock.timeout", value = "0") })
-    JPABookEG findOneForUpdate(@Param("bookId") Integer bookId);
+    JPABookEG findByBookIdForUpdate(@Param("bookId") Integer bookId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT book FROM JPABookEG book WHERE book.bookId = :bookId ORDER BY book.bookId")
     @QueryHints(value = {
             @QueryHint(name = "javax.persistence.lock.timeout", value = "12000") })
-    JPABookEG findOneForUpdateNoExcp(@Param("bookId") Integer bookId);
+    JPABookEG findByBookIdForUpdateNoExcp(@Param("bookId") Integer bookId);
 
 }

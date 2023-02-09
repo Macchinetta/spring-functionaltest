@@ -8,7 +8,8 @@
 
   <!-- CSPR設定(deniedHandlerを使用しない) -->
   <sec:http pattern="/cspr/notUseDeniedHandler/**" auto-config="false"
-    entry-point-ref="committerLoginUrlAuthenticationEntryPoint" authentication-manager-ref="committerAuthenticationManager">
+    entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="committerAuthenticationManager" once-per-request="false">
     <sec:intercept-url pattern="/cspr/0301/001" access="hasRole('ROLE_USER')" />
     <sec:intercept-url pattern="/cspr/0301/003" access="hasRole('ROLE_USER')" />
     <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
@@ -19,8 +20,9 @@
   </sec:http>
 
   <!-- CSPR基本設定(deniedHandlerを使用する) -->
-  <sec:http pattern="/cspr/**" auto-config="false" entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
-    authentication-manager-ref="committerAuthenticationManager">
+  <sec:http pattern="/cspr/**" auto-config="false"
+    entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="committerAuthenticationManager" once-per-request="false">
     <sec:intercept-url pattern="/cspr/0301/001" access="hasRole('ROLE_USER')" />
     <sec:intercept-url pattern="/cspr/0301/003" access="hasRole('ROLE_USER')" />
     <sec:access-denied-handler ref="accessDeniedHandler" />
@@ -35,7 +37,8 @@
 
   <!-- CSPR基本設定(CSRFを使用しない) -->
   <sec:http pattern="/disabledcspr/**" auto-config="false"
-    entry-point-ref="committerLoginUrlAuthenticationEntryPoint" authentication-manager-ref="committerAuthenticationManager">
+    entry-point-ref="committerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="committerAuthenticationManager" once-per-request="false">
 
     <sec:csrf disabled="true" />
 

@@ -24,7 +24,8 @@
     </constructor-arg>
   </bean>
 
-  <sec:http pattern="/athn/1901/002/**" auto-config="false" authentication-manager-ref="loginWithMessageDigestPassword">
+  <sec:http pattern="/athn/1901/002/**" auto-config="false"
+    authentication-manager-ref="loginWithMessageDigestPassword" once-per-request="false">
     <sec:form-login login-page="/athn/1901/002" login-processing-url="/athn/1901/002/authenticate"
       default-target-url="/athn/1901/002/afterLogin" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
@@ -33,7 +34,7 @@
   </sec:http>
 
   <sec:http pattern="/athn/1901/004/**" auto-config="false"
-    authentication-manager-ref="loginWithMessageDigestDelegatingPassword">
+    authentication-manager-ref="loginWithMessageDigestDelegatingPassword" once-per-request="false">
     <sec:form-login login-page="/athn/1901/004" login-processing-url="/athn/1901/004/authenticate"
       default-target-url="/athn/1901/004/afterLogin" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />

@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/intr/0301/001/**" auto-config="false" authentication-manager-ref="userLoginManager">
+  <sec:http pattern="/intr/0301/001/**" auto-config="false"
+    authentication-manager-ref="userLoginManager" once-per-request="false">
     <sec:form-login login-page="/intr/0301/001/login" login-processing-url="/intr/0301/001/authentication"
       default-target-url="/intr" />
     <sec:intercept-url pattern="/intr/0301/001/goToError" access="hasRole('STAFF')" />

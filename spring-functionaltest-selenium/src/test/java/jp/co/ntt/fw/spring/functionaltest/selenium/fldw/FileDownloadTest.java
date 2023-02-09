@@ -18,8 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.fldw;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedInputStream;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +36,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -125,19 +129,16 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedPdf = new ClassPathResource("/testdata/fldw/日本語ファイル名.pdf");
 
         // ダウンロードされたファイルを読み込む
-        File file = new File(downloadTempDirectory
+        File actualPdf = new File(downloadTempDirectory
                 .toString(), downloadPdfFileName);
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+        FileInputStream actualPdfInputStream = new FileInputStream(actualPdf);
 
         // ファイルダウンロードの確認
-        String actual = readPdfAsStringWithoutRoot(inputStream);
-        String expected = readPdfAsStringWithoutRoot(expectedPdf
-                .getInputStream());
-
-        assertThat(actual, is(expected));
+        assertPdfEquals(expectedPdf.getInputStream(), actualPdfInputStream);
 
         // ダウンロードファイルを削除
-        file.delete();
+        actualPdfInputStream.close();
+        actualPdf.delete();
 
         // ログの確認
         dbLogAssertOperations.waitForAssertion();
@@ -289,5 +290,48 @@ public class FileDownloadTest extends FunctionTestSupport {
             }
         }
         return (int) size;
+    }
+
+    private void assertPdfEquals(InputStream expected,
+            InputStream actual) throws IOException {
+        try (PDDocument expectedDoc = PDDocument.load(expected);
+                PDDocument actualDoc = PDDocument.load(actual)) {
+            // ページ数を比較する
+            assertThat(expectedDoc.getNumberOfPages(), is(actualDoc
+                    .getNumberOfPages()));
+
+            PDFRenderer expectedRenderer = new PDFRenderer(expectedDoc);
+            PDFRenderer actualRenderer = new PDFRenderer(actualDoc);
+
+            // PDFを画像化して比較する
+            for (int i = 0; i < expectedDoc.getNumberOfPages(); i++) {
+                BufferedImage expectedImage = expectedRenderer
+                        .renderImageWithDPI(i, 72, ImageType.RGB);
+                BufferedImage actualImage = actualRenderer.renderImageWithDPI(i,
+                        72, ImageType.RGB);
+
+                // サイズを比較する
+                assertThat(expectedImage.getWidth(), is(actualImage
+                        .getWidth()));
+                assertThat(expectedImage.getHeight(), is(actualImage
+                        .getHeight()));
+
+                // 画像を比較する
+                assertTrue(compareImage(expectedImage, actualImage));
+
+            }
+        }
+    }
+
+    private boolean compareImage(BufferedImage expectedImage,
+            BufferedImage actualImage) throws IOException {
+        for (int x = 0; x < expectedImage.getWidth(); x++) {
+            for (int y = 0; y < expectedImage.getHeight(); y++) {
+                if (expectedImage.getRGB(x, y) != actualImage.getRGB(x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

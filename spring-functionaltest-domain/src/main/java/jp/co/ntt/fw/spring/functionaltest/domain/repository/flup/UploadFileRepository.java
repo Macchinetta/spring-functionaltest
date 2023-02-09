@@ -19,7 +19,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 
 public interface UploadFileRepository {
 
-    UploadFile findOne(String fileId);
+    UploadFile findByFileId(String fileId);
 
     void insert(UploadFile uoloadFile);
 

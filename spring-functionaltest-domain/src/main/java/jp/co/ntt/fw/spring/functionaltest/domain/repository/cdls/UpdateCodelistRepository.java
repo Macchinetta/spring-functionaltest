@@ -19,5 +19,5 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
 
 public interface UpdateCodelistRepository {
 
-    long updateAuthorityTableValue(CodeList updatedateCodeList);
+    long updateAuthorityTableValueById(CodeList updatedateCodeList);
 }

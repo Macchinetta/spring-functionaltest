@@ -19,7 +19,8 @@
     </constructor-arg>
   </bean>
 
-  <sec:http pattern="/athr/0701/**" authentication-manager-ref="loginForStaffManager">
+  <sec:http pattern="/athr/0701/**" authentication-manager-ref="loginForStaffManager"
+    once-per-request="false">
     <sec:form-login login-page="/athr/0701/001" login-processing-url="/athr/0701/001/authenticate"
       default-target-url="/athr/0701/001/afterLogin" />
     <sec:intercept-url pattern="/athr/0701/001/afterLogin" access="isAuthenticated()" />

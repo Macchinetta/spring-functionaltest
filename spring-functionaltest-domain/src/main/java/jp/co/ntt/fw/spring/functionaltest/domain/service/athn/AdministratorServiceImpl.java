@@ -160,7 +160,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Administrator findOneByUserName(String userName) {
-        Administrator administrator = administratorRepository.findOneByUserName(
+        Administrator administrator = administratorRepository.findByUserName(
                 userName);
         return administrator;
     }

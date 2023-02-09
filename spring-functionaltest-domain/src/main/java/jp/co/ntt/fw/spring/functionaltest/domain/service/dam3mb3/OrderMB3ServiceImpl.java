@@ -58,20 +58,20 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
     @Override
     @Transactional(readOnly = true)
     public OrderMB3 findOne(int id) {
-        return orderMB3Repository.findOne(id);
+        return orderMB3Repository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public OrderMB3 findOneCondSts(int id, String statusCode) {
-        return orderMB3Repository.findOneCondSts(id, statusCode);
+        return orderMB3Repository.findByCondSts(id, statusCode);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<OrderMB3> findPageMyBatis3(Pageable pageable) {
 
-        long total = orderMB3Repository.countById();
+        long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
             RowBounds rowBounds = new RowBounds((int) pageable
@@ -87,7 +87,7 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
     @Transactional(readOnly = true)
     public Page<OrderMB3> findPageMyBatis3Scroll(Pageable pageable) {
 
-        long total = orderMB3Repository.countById();
+        long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
             RowBounds rowBounds = new RowBounds((int) pageable

@@ -6,7 +6,8 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- DelegatingPasswordEncoder（カスタマイズ）を利用した認証処理 -->
-  <sec:http pattern="/athn/1801/002/**" auto-config="false" authentication-manager-ref="loginWithCustomPbkdf2Password">
+  <sec:http pattern="/athn/1801/002/**" auto-config="false"
+    authentication-manager-ref="loginWithCustomPbkdf2Password" once-per-request="false">
     <sec:form-login login-page="/athn/1801/002/login" login-processing-url="/athn/1801/002/authenticate"
       default-target-url="/athn/1801/002/afterLogin" always-use-default-target="true" />
     <sec:logout logout-url="/athn/1801/002/logout" logout-success-url="/athn/" />

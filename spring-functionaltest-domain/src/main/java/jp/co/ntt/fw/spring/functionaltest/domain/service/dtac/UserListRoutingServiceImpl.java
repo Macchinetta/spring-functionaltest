@@ -55,7 +55,7 @@ public class UserListRoutingServiceImpl implements UserListRoutingService {
     }
 
     public User getUser(String username) {
-        return userListRoutingRepository.findOneByUsername(username);
+        return userListRoutingRepository.findByUsername(username);
     }
 
     public void register(User user) {

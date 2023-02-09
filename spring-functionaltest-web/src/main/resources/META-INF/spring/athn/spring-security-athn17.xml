@@ -8,8 +8,9 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 
-  <sec:http pattern="/athn/1701/**" auto-config="false" entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
-    authentication-manager-ref="customerAuthenticationManager">
+  <sec:http pattern="/athn/1701/**" auto-config="false"
+    entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
+    authentication-manager-ref="customerAuthenticationManager" once-per-request="false">
     <sec:form-login login-processing-url="/athn/1701/customerAuthenticate"
       default-target-url="/athn/1701/001?loginSuccess" always-use-default-target="true" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
@@ -35,7 +36,8 @@
     class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ReservationUserDetailsService">
   </bean>
 
-  <sec:http pattern="/athn/1702/**" auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
+  <sec:http pattern="/athn/1702/**" auto-config="false"
+    entry-point-ref="loginUrlAuthenticationEntryPoint" once-per-request="false">
 
     <sec:custom-filter position="FORM_LOGIN_FILTER" ref="companyIdUsernamePasswordAuthenticationFilter" />
 
@@ -100,7 +102,8 @@
   <bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
 
 
-  <sec:http pattern="/athn/1703/**" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/1703/**" authentication-manager-ref="userLoginManagerForAthn"
+    once-per-request="false">
     <sec:form-login login-page="/athn/1703/001" login-processing-url="/athn/1703/001/authenticate"
       default-target-url="/athn/1703/001?loginSuccess" always-use-default-target="true" />
     <sec:logout logout-url="/athn/1703/001/logout" logout-success-url="/athn/1703/001" />

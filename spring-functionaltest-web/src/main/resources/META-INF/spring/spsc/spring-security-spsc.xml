@@ -17,30 +17,30 @@
     </constructor-arg>
   </bean>
 
-  <sec:http pattern="/spsc/0101/001">
+  <sec:http pattern="/spsc/0101/001" once-per-request="false">
     <sec:form-login />
     <sec:logout />
     <sec:intercept-url pattern="/login" access="permitAll" />
     <sec:intercept-url pattern="/**" access="isAuthenticated()" />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/001">
+  <sec:http pattern="/spsc/0201/001" once-per-request="false">
     <sec:form-login />
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/002">
+  <sec:http pattern="/spsc/0201/002" once-per-request="false">
     <sec:headers disabled="true" />
     <sec:form-login />
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/003">
+  <sec:http pattern="/spsc/0201/003" once-per-request="false">
     <sec:form-login />
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/004">
+  <sec:http pattern="/spsc/0201/004" once-per-request="false">
     <sec:headers defaults-disabled="true">
       <sec:cache-control />
       <sec:content-type-options />
@@ -51,12 +51,12 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/005">
+  <sec:http pattern="/spsc/0201/005" once-per-request="false">
     <sec:form-login />
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/006">
+  <sec:http pattern="/spsc/0201/006" once-per-request="false">
     <sec:headers>
       <sec:frame-options policy="SAMEORIGIN" />
     </sec:headers>
@@ -64,7 +64,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0301/001">
+  <sec:http pattern="/spsc/0301/001" once-per-request="false">
     <sec:headers>
       <sec:header name="X-WebKit-CSP" value="default-src 'self'" />
     </sec:headers>
@@ -72,7 +72,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0401/001/**">
+  <sec:http pattern="/spsc/0401/001/**" once-per-request="false">
     <sec:headers defaults-disabled="true">
       <sec:header ref="secureCacheControlHeadersWriter" />
     </sec:headers>
@@ -80,7 +80,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/001">
+  <sec:http pattern="/spsc/0501/001" once-per-request="false">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'" />
     </sec:headers>
@@ -88,7 +88,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/002">
+  <sec:http pattern="/spsc/0501/002" once-per-request="false">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;"
         report-only="true" />
@@ -97,7 +97,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/003">
+  <sec:http pattern="/spsc/0501/003" once-per-request="false">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
     </sec:headers>
@@ -105,7 +105,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/004">
+  <sec:http pattern="/spsc/0501/004" once-per-request="false">
     <sec:headers>
       <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
     </sec:headers>
@@ -113,7 +113,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/005">
+  <sec:http pattern="/spsc/0501/005" once-per-request="false">
     <sec:headers>
       <sec:content-security-policy policy-directives="upgrade-insecure-requests;" />
     </sec:headers>
@@ -121,7 +121,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/001">
+  <sec:http pattern="/spsc/0601/001" once-per-request="false">
     <sec:headers>
       <sec:hpkp report-only="false" max-age-seconds="1">
         <sec:pins>
@@ -136,7 +136,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/002">
+  <sec:http pattern="/spsc/0601/002" once-per-request="false">
     <sec:headers>
       <sec:hpkp max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
         <sec:pins>
@@ -151,7 +151,7 @@
     <sec:logout />
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/003">
+  <sec:http pattern="/spsc/0601/003" once-per-request="false">
     <sec:headers>
       <sec:hpkp report-only="false" max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
         <sec:pins>

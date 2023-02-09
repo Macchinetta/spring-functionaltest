@@ -21,12 +21,14 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 import java.util.UUID;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.annotation.IfProfileValue;
@@ -524,6 +526,9 @@ public class EmailTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), "Hello!");
         webDriverOperations.click(id("sendMail"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "System Error!"));
 
         // システムエラー画面に遷移
         assertThat(webDriverOperations.getTitle(), is("System Error!"));

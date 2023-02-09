@@ -22,6 +22,7 @@ public class IPv4Validator implements ConstraintValidator<IPv4, String> {
 
     @Override
     public void initialize(IPv4 constraintAnnotation) {
+        // The default implementation
     }
 
     @Override

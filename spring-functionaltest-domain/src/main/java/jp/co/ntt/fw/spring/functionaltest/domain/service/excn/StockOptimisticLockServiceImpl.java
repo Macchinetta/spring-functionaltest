@@ -48,7 +48,7 @@ public class StockOptimisticLockServiceImpl implements
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -59,14 +59,14 @@ public class StockOptimisticLockServiceImpl implements
 
     @Override
     public Stock buy(Stock stock, int purchasingQuantity) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
         subject.setQuantity(subject.getQuantity() - purchasingQuantity);
         return updateWithOptimisticLock(subject);
     }
 
     @Override
     public Stock buyByHiddenVersion(Stock stock, int purchasingQuantity) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
         subject.setVersion(stock.getVersion());
         subject.setQuantity(subject.getQuantity() - purchasingQuantity);
         return updateWithOptimisticLock(subject);

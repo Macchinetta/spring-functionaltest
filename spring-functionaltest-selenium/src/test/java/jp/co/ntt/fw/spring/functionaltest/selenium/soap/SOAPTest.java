@@ -754,6 +754,7 @@ public class SOAPTest extends SOAPTestSupport {
             }
             // 結果の確認
             {
+                webDriverOperations.waitForDisplayed(id("todos"));
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
                 dbLogAssertOperations.waitForAssertion();
@@ -846,7 +847,7 @@ public class SOAPTest extends SOAPTestSupport {
             }
             // 結果の確認
             {
-                dbLogAssertOperations.waitForAssertion();
+                dbLogAssertOperations.waitForAssertion(500);
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.RESOURCE_NOT_FOUND_FAULT,
                         new ErrorBean("e.sf.soap.5001", "Resource not found", null));

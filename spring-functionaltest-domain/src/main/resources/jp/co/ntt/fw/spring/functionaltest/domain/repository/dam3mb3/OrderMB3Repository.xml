@@ -52,7 +52,7 @@
     ct ON ct.code = ic.category_code
   </sql>
 
-  <select id="findOne" parameterType="_int" resultMap="orderResultMap">
+  <select id="findById" parameterType="_int" resultMap="orderResultMap">
     <bind name="orderTable" value="'t_order_mb3'" />
     <include refid="selectFromJoin" />
     WHERE
@@ -72,7 +72,7 @@
     category_code ASC
   </select>
 
-  <select id="findOneCondSts" resultMap="orderResultMap">
+  <select id="findByCondSts" resultMap="orderResultMap">
     <bind name="orderTable" value="'t_order_mb3'" />
     <include refid="selectFromJoin" />
     WHERE
@@ -84,7 +84,7 @@
     category_code ASC
   </select>
 
-  <select id="countById" resultType="_long">
+  <select id="count" resultType="_long">
     SELECT
     COUNT(*)
     FROM

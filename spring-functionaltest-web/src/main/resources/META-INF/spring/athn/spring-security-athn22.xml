@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/2201/**" auto-config="false" authentication-manager-ref="loginForRememberMeUserInfoManager">
+  <sec:http pattern="/athn/2201/**" auto-config="false"
+    authentication-manager-ref="loginForRememberMeUserInfoManager" once-per-request="false">
     <sec:form-login login-page="/athn/2201/loginForRememberMe" login-processing-url="/athn/2201/authenticate"
       default-target-url="/athn/2201?loginSuccess" />
     <sec:remember-me key="spring-test-km/ylnHv" user-service-ref="loginForRememberMeUserInfoDetailsService" />

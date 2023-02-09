@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/spsm/0501/001/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+  <sec:http pattern="/spsm/0501/001/**" auto-config="false"
+    authentication-manager-ref="loginForSessionUserInfoManager" once-per-request="false">
     <sec:form-login login-page="/spsm/0501/001" login-processing-url="/spsm/0501/001/authenticate"
       default-target-url="/spsm/0501/001?loginSuccess" />
 
@@ -20,7 +21,8 @@
       invalidate-session="true" delete-cookies="JSESSIONID" />
   </sec:http>
 
-  <sec:http pattern="/spsm/0501/002/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+  <sec:http pattern="/spsm/0501/002/**" auto-config="false"
+    authentication-manager-ref="loginForSessionUserInfoManager" once-per-request="false">
     <sec:form-login login-page="/spsm/0501/002" login-processing-url="/spsm/0501/002/authenticate"
       default-target-url="/spsm/0501/002?loginSuccess" />
     <sec:session-management>

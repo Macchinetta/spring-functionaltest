@@ -24,7 +24,7 @@ app.upload.temporaryDirectory=/tmp/spring-functionaltest-web/upload/temporaryDir
 app.upload.directory=/tmp/spring-functionaltest-web/upload/uploadDirectory/
 
 # enabled column value
-enabledValue=1
+enabledValue=true
 
 # Email settings (No-auth)
 mail.noauth.smtp.host=localhost

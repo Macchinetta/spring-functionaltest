@@ -44,7 +44,7 @@ public class AccountService {
 
     @Transactional
     public Account findOneByUserName(String username) {
-        Account account = accountRepository.findOneByUsername(username);
+        Account account = accountRepository.findByUsername(username);
         if (account == null) {
             throw new UsernameNotFoundException("user not found.");
         }

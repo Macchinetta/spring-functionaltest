@@ -21,7 +21,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
 
 public interface PersonalComputerRepository {
 
-    PersonalComputer findOneByID(int personalComputerId);
+    PersonalComputer findById(int personalComputerId);
 
     long countByCriteria(PersonalComputerCriteria criteria);
 

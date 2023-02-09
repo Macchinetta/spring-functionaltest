@@ -38,6 +38,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     @Inject
     private OAuth2AuthorizedClientManager authorizedClientManager;
 
+    @Override
     public OAuth2AccessToken getToken(String registrationId) {
 
         Authentication authentication = SecurityContextHolder.getContext()

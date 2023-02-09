@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/vldt/0103/003/**" auto-config="false" authentication-manager-ref="userLoginManager">
+  <sec:http pattern="/vldt/0103/003/**" auto-config="false"
+    authentication-manager-ref="userLoginManager" once-per-request="false">
     <sec:form-login login-page="/vldt/authorizedValidationView" login-processing-url="/vldt/0103/003/authentication"
       default-target-url="/vldt/0103/003?LoginSuccess" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />

@@ -9,9 +9,3 @@ evidence
 bower.json
 .idea
 *.iml
-*.jar
-/docs/
-*.doc*
-*.ppt*
-*.xls*
-!/spring-functionaltest-selenium/src/test/resources/testdata/fldw/日本語ファイル名.xlsx

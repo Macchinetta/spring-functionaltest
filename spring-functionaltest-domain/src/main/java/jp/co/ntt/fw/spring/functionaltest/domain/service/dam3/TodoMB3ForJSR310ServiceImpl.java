@@ -104,7 +104,7 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
 
     @Override
     public DateMB3 findCreatedAtOne(String todoId) {
-        DateMB3 dateMB3 = showDateMB3Repository.selectDate(todoId);
+        DateMB3 dateMB3 = showDateMB3Repository.findByTodoId(todoId);
         return dateMB3;
 
     }

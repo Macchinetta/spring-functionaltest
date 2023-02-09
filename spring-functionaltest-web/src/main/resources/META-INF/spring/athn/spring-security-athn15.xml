@@ -9,7 +9,8 @@
     <property name="defaultTargetUrl" value="/athn/1501/logoutComplete" />
   </bean>
 
-  <sec:http pattern="/athn/1501/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/1501/**" auto-config="false"
+    authentication-manager-ref="userLoginManagerForAthn" once-per-request="false">
     <sec:form-login login-page="/athn/1501/001/login" default-target-url="/athn/1501/001?loginSuccess"
       always-use-default-target="true" login-processing-url="/athn/1501/001/authenticate" />
     <sec:logout logout-url="/athn/1501/001/logout" success-handler-ref="logoutSuccessHandler" />

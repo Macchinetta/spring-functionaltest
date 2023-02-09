@@ -69,7 +69,7 @@
     ORDER BY member_id ASC
   </select>
 
-  <select id="findOne" parameterType="string" resultMap="RestMemberResultMap">
+  <select id="findByMemberId" parameterType="string" resultMap="RestMemberResultMap">
     <include refid="selectRestMember" />
     WHERE
     member.member_id = #{memberId}
@@ -104,10 +104,6 @@
 
     <selectKey keyProperty="memberId" resultType="string" order="BEFORE" databaseId="oracle">
       SELECT 'M'||TO_CHAR(s_rest_member.nextval,'FM000000000') FROM DUAL
-    </selectKey>
-
-    <selectKey keyProperty="memberId" resultType="string" order="BEFORE" databaseId="db2">
-      values 'M'|| LPAD(NEXT VALUE FOR s_rest_member, 9, '0')
     </selectKey>
 
     INSERT INTO
@@ -188,13 +184,13 @@
     AND version = #{version}
   </update>
 
-  <delete id="deleteCredential" parameterType="string">
+  <delete id="deleteCredentialByMemberId" parameterType="string">
     DELETE FROM t_rest_member_credential
     WHERE
     member_id = #{memberId}
   </delete>
 
-  <delete id="deleteMember" parameterType="string">
+  <delete id="deleteMemberByMemberId" parameterType="string">
     DELETE FROM t_rest_member
     WHERE
     member_id =

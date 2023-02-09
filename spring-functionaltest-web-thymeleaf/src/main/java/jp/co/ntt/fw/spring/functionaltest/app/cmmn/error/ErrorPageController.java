@@ -118,4 +118,9 @@ public class ErrorPageController {
     public String unsupportedMediaTypeError() {
         return "common/error/unsupportedMediaTypeError";
     }
+
+    @RequestMapping("serviceUnavailableError")
+    public String serviceUnavailableError() {
+        return "common/error/serviceUnavailableError";
+    }
 }

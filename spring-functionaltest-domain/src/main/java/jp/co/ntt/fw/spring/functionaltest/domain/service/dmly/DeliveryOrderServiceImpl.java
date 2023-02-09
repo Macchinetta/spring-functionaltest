@@ -74,7 +74,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     }
 
     public void register(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository.findOneByTypeName(
+        DeliveryType deliveryType = deliveryTypeRepository.findByTypeName(
                 deliveryOrder.getDeliveryType().getDeliveryTypeName());
         deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
                 .getDeliveryTypeId());
@@ -84,7 +84,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     }
 
     public void update(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository.findOneByTypeName(
+        DeliveryType deliveryType = deliveryTypeRepository.findByTypeName(
                 deliveryOrder.getDeliveryType().getDeliveryTypeName());
         deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
                 .getDeliveryTypeId());
@@ -94,7 +94,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     }
 
     public void delete(Integer deliveryNo) {
-        deliveryOrderRepository.delete(deliveryNo);
+        deliveryOrderRepository.deleteByDeliveryNo(deliveryNo);
 
         return;
     }

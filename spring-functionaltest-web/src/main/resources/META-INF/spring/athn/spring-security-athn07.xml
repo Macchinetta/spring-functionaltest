@@ -5,7 +5,8 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/0701/001/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/0701/001/**" auto-config="false"
+    authentication-manager-ref="userLoginManagerForAthn" once-per-request="false">
     <sec:form-login login-page="/athn/0701/001/login" default-target-url="/athn/0701/001?loginSuccess"
       always-use-default-target="true" login-processing-url="/athn/0701/001/authenticate" />
     <sec:logout />
@@ -13,7 +14,8 @@
     <sec:intercept-url pattern="/athn/0701/**" access="isAuthenticated()" />
   </sec:http>
 
-  <sec:http pattern="/athn/0702/001/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/0702/001/**" auto-config="false"
+    authentication-manager-ref="userLoginManagerForAthn" once-per-request="false">
     <sec:form-login login-page="/athn/0702/001/login" default-target-url="/athn/0702/001?loginSuccess"
       always-use-default-target="true" login-processing-url="/athn/0702/001/authenticate" />
     <sec:logout delete-cookies="JSESSIONID" />

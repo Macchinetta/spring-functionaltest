@@ -25,7 +25,7 @@ CREATE TABLE t_rest_member_credential (
     ,last_modified_at TIMESTAMP NOT NULL
     ,version integer NOT NULL
     ,CONSTRAINT pk_t_rest_member_credential PRIMARY KEY (member_id)
-    ,CONSTRAINT uk_t_rest_member_credential UNIQUE KEY (sign_id)
+    ,CONSTRAINT uk_t_rest_member_credential UNIQUE (sign_id)
     ,CONSTRAINT fk_t_rest_member_credential FOREIGN KEY (member_id) REFERENCES t_rest_member(member_id)
 );
 

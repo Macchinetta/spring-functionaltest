@@ -147,7 +147,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Transactional(readOnly = true)
     @Override
     public UploadFile getUploadFile(String fileId) {
-        UploadFile loadedUploadFile = uploadFileRepository.findOne(fileId);
+        UploadFile loadedUploadFile = uploadFileRepository.findByFileId(fileId);
         if (loadedUploadFile == null) {
             throw new ResourceNotFoundException(String.format(
                     "Specified uploaded file not found. file id is '%s'.",

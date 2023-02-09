@@ -10,8 +10,8 @@ INSERT INTO m_category_lz (category_id, name) VALUES ('0000000006', 'C02');
 INSERT INTO m_category_lz (category_id, name) VALUES ('0000000007', 'Z');
 
 
-INSERT INTO t_book_lz (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0001','0000000001','title1',40,'2013-01-01','54455354','3534343535333534');
-INSERT INTO t_book_lz (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0002','0000000001','title2',40,'2013-01-02','54455322','3534343535333534');
+INSERT INTO t_book_lz (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0001','0000000001','title1',40,'2013-01-01','54455354',cast('54455354' as blob));
+INSERT INTO t_book_lz (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0002','0000000001','title2',40,'2013-01-02','54455322',cast('54455354' as blob));
 
 
 INSERT INTO m_category_eg (category_id, name) VALUES (1, 'A01');
@@ -23,8 +23,8 @@ INSERT INTO m_category_eg (category_id, name) VALUES (6, 'C02');
 INSERT INTO m_category_eg (category_id, name) VALUES (7, 'Z07');
 
 
-INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code,version, created_by, created_date, last_modified_by ,last_modified_date) values (1,1,'Manual Title 1',40,'2013-01-01','54455354','3534343535333534',0, 'By InitDB', timestamp '2015-01-01 01:01:01', 'By InitDB', timestamp '2015-01-01 01:01:01');
-INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code,version, created_by, created_date, last_modified_by ,last_modified_date) values (2,1,'Manual Title 2',40,'2013-01-02','54455322','3534343535333232',0, 'By InitDB', timestamp '2015-01-01 01:01:01', 'By InitDB', timestamp '2015-01-01 01:01:01');
+INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code,version, created_by, created_date, last_modified_by ,last_modified_date) values (1,1,'Manual Title 1',40,'2013-01-01','54455354',cast('54455354' as blob),0, 'By InitDB', timestamp '2015-01-01 01:01:01', 'By InitDB', timestamp '2015-01-01 01:01:01');
+INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code,version, created_by, created_date, last_modified_by ,last_modified_date) values (2,1,'Manual Title 2',40,'2013-01-02','54455322',cast('54455322' as blob),0, 'By InitDB', timestamp '2015-01-01 01:01:01', 'By InitDB', timestamp '2015-01-01 01:01:01');
 --INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0003','0000000002','title3',40,'2013-01-03','54455353','54455353');
 --INSERT INTO t_book_eg (book_id,category_id,title,price,release_date,clob_code,blob_code) values ('0004','0000000006','title4',40,'2013-01-04','54455324','54455324');
 

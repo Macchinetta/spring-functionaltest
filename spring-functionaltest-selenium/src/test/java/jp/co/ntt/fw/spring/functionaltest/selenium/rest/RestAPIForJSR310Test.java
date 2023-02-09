@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.rest;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -32,10 +32,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import com.jayway.restassured.filter.log.RequestLoggingFilter;
-import com.jayway.restassured.filter.log.ResponseLoggingFilter;
-import com.jayway.restassured.http.ContentType;
-
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
 import jp.co.ntt.fw.spring.functionaltest.selenium.RestTestSupport;
 
 public class RestAPIForJSR310Test extends RestTestSupport {

@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.1.SP1.RELEASE</version>
+    <version>1.8.2.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Domain Layer</name>
@@ -84,13 +84,6 @@
 <!--     <dependency> -->
 <!--       <groupId>com.oracle.database.jdbc</groupId> -->
 <!--       <artifactId>ojdbc8</artifactId> -->
-<!--       <scope>provided</scope> -->
-<!--       <optional>true</optional> -->
-<!--     </dependency> -->
-    <!-- Once you have installed db2jcc4.jar into local repository, please remove this comment out. -->
-<!--     <dependency> -->
-<!--       <groupId>com.ibm</groupId> -->
-<!--       <artifactId>db2jcc4</artifactId> -->
 <!--       <scope>provided</scope> -->
 <!--       <optional>true</optional> -->
 <!--     </dependency> -->
@@ -172,13 +165,6 @@
     </dependency>
     <!-- == End activemq == -->
 
-    <!-- == Begin oauth == -->
-    <dependency>
-      <groupId>org.springframework.security.oauth</groupId>
-      <artifactId>spring-security-oauth2</artifactId>
-    </dependency>
-    <!-- == End oauth == -->
-    
     <!-- == Begin Spring Security OAuth2 == -->
     <dependency>
       <groupId>org.springframework.security</groupId>
@@ -195,6 +181,13 @@
     </dependency>
     <!-- == End Spring Security OAuth2 == -->
 
+    <!-- == Begin logback-db == -->
+    <dependency>
+      <groupId>ch.qos.logback.db</groupId>
+      <artifactId>logback-classic-db</artifactId>
+    </dependency>
+    <!-- == End logback-db == -->
+
   </dependencies>
   <properties>
     <project.root.basedir>${project.parent.basedir}</project.root.basedir>
@@ -204,6 +197,18 @@
       <id>jdk11</id>
       <activation>
         <jdk>11</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>jakarta.annotation</groupId>
+          <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>jdk17</id>
+      <activation>
+        <jdk>17</jdk>
       </activation>
       <dependencies>
         <dependency>

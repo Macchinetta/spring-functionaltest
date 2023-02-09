@@ -22,7 +22,7 @@
     t_item
   </sql>
 
-  <select id="findOne" resultMap="item-resultMap" parameterType="String">
+  <select id="findByItemId" resultMap="item-resultMap" parameterType="String">
     <include refid="selectItem" />
     WHERE
     item_id = #{itemId}

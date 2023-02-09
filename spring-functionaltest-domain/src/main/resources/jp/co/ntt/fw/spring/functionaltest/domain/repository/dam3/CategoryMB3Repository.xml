@@ -16,13 +16,13 @@
     m_todo_cat
   </sql>
 
-  <select id="findOneByName" resultMap="categoryResultMap" parameterType="String">
+  <select id="findByName" resultMap="categoryResultMap" parameterType="String">
     <include refid="selectCategory" />
     WHERE
     name = #{name}
   </select>
 
-  <select id="selectTodoCategoryIdAutoMap" parameterType="String" resultType="CategoryMB3">
+  <select id="findByCategoryId" parameterType="String" resultType="CategoryMB3">
     <bind name="categoryId" value="_parameter" />
     SELECT
     category_id

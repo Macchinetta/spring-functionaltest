@@ -15,7 +15,7 @@
     <result property="finished" column="finished" />
     <result property="createdAt" column="created_at" />
     <association property="category" column="category_id" javaType="CategoryMB3"
-      select="findOneByTodoCategoryId" />
+      select="findByTodoCategoryId" />
   </resultMap>
 
   <update id="updateFinishedByTodIds">

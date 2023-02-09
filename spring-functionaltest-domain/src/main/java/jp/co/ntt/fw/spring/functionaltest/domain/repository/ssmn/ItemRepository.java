@@ -23,7 +23,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 
 public interface ItemRepository {
 
-    Item findOne(String itemId);
+    Item findByItemId(String itemId);
 
     long count();
 

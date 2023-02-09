@@ -18,7 +18,7 @@
     <result property="desc1" column="desc1" />
     <result property="desc2" column="desc2" />
     <association property="category" column="category_id" javaType="CategoryMB3"
-      select="findOneByTodoCategoryId" />
+      select="findByTodoCategoryId" />
   </resultMap>
 
   <resultMap id="todoResultMapForPostgres" type="TodoMB3">
@@ -31,17 +31,17 @@
     <result property="desc1" column="desc1" typeHandler="BlobInputStreamTypeHandlerForPostgres" />
     <result property="desc2" column="desc2" typeHandler="ClobReaderTypeHandlerForPostgres" />
     <association property="category" column="category_id" javaType="CategoryMB3"
-      select="findOneByTodoCategoryId" />
+      select="findByTodoCategoryId" />
   </resultMap>
 
-  <select id="selectTodoByAutoMap" parameterType="String" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByTodoIdIncludeSelectPhrase" parameterType="String" resultType="AutoMapTodoMB3">
     <bind name="todoId" value="_parameter" />
     <include refid="selectPhrase" />
     WHERE
     todo_id = #{todoId}
   </select>
 
-  <select id="selectTodoByAsClause" parameterType="String" resultType="AsClauseTodoMB3">
+  <select id="findAsClauseByTodoId" parameterType="String" resultType="AsClauseTodoMB3">
     <bind name="todoId" value="_parameter" />
     SELECT
     todo_id AS "todoNum"
@@ -58,7 +58,7 @@
   </select>
 
 
-  <select id="findOneByTodoCategoryId" parameterType="String" resultMap="todoCategoryResultMap">
+  <select id="findByTodoCategoryId" parameterType="String" resultMap="todoCategoryResultMap">
     <bind name="categoryId" value="_parameter" />
     SELECT
     category_id
@@ -120,14 +120,14 @@
     </where>
   </sql>
 
-  <select id="findOneByTodoId" parameterType="String" resultMap="todoResultMap">
+  <select id="findByTodoId" parameterType="String" resultMap="todoResultMap">
     <bind name="todoId" value="_parameter" />
     <include refid="selectPhrase" />
     WHERE
     todo_id = #{todoId}
   </select>
 
-  <select id="findOneByTodoId" parameterType="String" resultMap="todoResultMapForPostgres"
+  <select id="findByTodoId" parameterType="String" resultMap="todoResultMapForPostgres"
     databaseId="postgres">
     <bind name="todoId" value="_parameter" />
     <include refid="selectPhrase" />
@@ -393,7 +393,7 @@
     todo_id = #{todoId}
   </update>
 
-  <select id="findOne" parameterType="string" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByTodoId" parameterType="string" resultType="AutoMapTodoMB3">
     SELECT
     todo_id,
     todo_title,
@@ -407,7 +407,7 @@
     todo_id = #{todoId}
   </select>
 
-  <select id="findOneUsingCompositeKey" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByCompositeKey" resultType="AutoMapTodoMB3">
     SELECT
     todo_id,
     todo_title,
@@ -422,7 +422,7 @@
     AND category_id= #{categoryId}
   </select>
 
-  <select id="findOneUsingCompositeKeyNoParamAnnot" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByCompositeKeyNoParamAnnot" resultType="AutoMapTodoMB3">
     SELECT
     todo_id,
     todo_title,
@@ -438,7 +438,7 @@
     #{param2}
   </select>
 
-  <select id="findAllByCriteria" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
+  <select id="findAllAutoMapByCriteria" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
         <![CDATA[
         SELECT
             todo_id,
@@ -458,7 +458,7 @@
         ]]>
   </select>
 
-  <select id="findAllByCriteriaRetMap" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
+  <select id="findAllAutoMapByCriteriaRetMap" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
         <![CDATA[
         SELECT
             todo_id,
@@ -628,17 +628,6 @@
         ]]>
   </delete>
 
-  <delete id="deleteOlderFinishedTodo" parameterType="date" databaseId="db2">
-        <![CDATA[
-        DELETE FROM
-            t_todo
-        WHERE
-            finished = 1
-        AND
-            created_at  < #{criteriaDate}
-        ]]>
-  </delete>
-
   <select id="findAllByCriteriaIFEle" parameterType="TodoCriteria" resultType="TodoMB3">
     SELECT
     todo_id,
@@ -717,25 +706,18 @@
     </where>
   </select>
 
-  <!-- findOneBySP for h2, postgres -->
-  <select id="findOneBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE">
+  <!-- findAutoMapBySP for h2, postgres -->
+  <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE">
     {call findTodo(#{todoId})}
   </select>
 
-  <!-- findOneBySP for oracle -->
-  <select id="findOneBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE"
+  <!-- findAutoMapBySP for oracle -->
+  <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE"
     databaseId="oracle">
     select * from table( findTodo(#{todoId}))
   </select>
 
-  <!-- findOneBySP for db2 -->
-  <select id="findOneBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE"
-    databaseId="db2">
-    select * from table( findTodo(#{todoId}))
-  </select>
-
-
-  <select id="findByUsingClassTypeAlias" parameterType="TodoSearchCriteria" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByUsingClassTypeAlias" parameterType="TodoSearchCriteria" resultType="AutoMapTodoMB3">
     SELECT
     todo_id,
     todo_title,
@@ -759,7 +741,7 @@
     </where>
   </select>
 
-  <select id="findByUsingOverwrittenDefltTypeAliasName" parameterType="DailyTodo" resultType="AutoMapTodoMB3">
+  <select id="findAutoMapByUsingOverwrittenDefltTypeAliasName" parameterType="DailyTodo" resultType="AutoMapTodoMB3">
     SELECT
     todo_id,
     todo_title,
@@ -783,7 +765,7 @@
     </where>
   </select>
 
-  <select id="findUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMap">
+  <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMap">
     SELECT
     todo_id,
     todo_title,
@@ -813,7 +795,7 @@
     todo_id
   </select>
 
-  <select id="findUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMapForPostgres"
+  <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMapForPostgres"
     databaseId="postgres">
     SELECT
     todo_id,
