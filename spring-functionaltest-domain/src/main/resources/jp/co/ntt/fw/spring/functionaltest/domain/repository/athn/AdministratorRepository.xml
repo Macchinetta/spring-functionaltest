@@ -20,7 +20,7 @@
     t_administrator
   </sql>
 
-  <select id="findOneByUserName" parameterType="String" resultMap="administratorResultMap">
+  <select id="findByUserName" parameterType="String" resultMap="administratorResultMap">
     <bind name="username" value="_parameter" />
     <include refid="selectPhrase" />
     WHERE

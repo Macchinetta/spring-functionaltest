@@ -20,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -30,6 +28,7 @@ import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookEGCrudRepository;
@@ -214,7 +213,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(
             Integer bookId, Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdate(bookId);
+        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdate(bookId);
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
@@ -229,7 +228,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
     public JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(
             Integer bookId, Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository.findOneForUpdateNoExcp(
+        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdateNoExcp(
                 bookId);
         try {
             Thread.sleep(sleepTime);

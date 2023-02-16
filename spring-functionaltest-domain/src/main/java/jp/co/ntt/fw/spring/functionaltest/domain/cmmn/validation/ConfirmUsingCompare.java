@@ -25,12 +25,11 @@ import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.validation.Constraint;
-import javax.validation.OverridesAttribute;
-import javax.validation.Payload;
-
 import org.terasoluna.gfw.common.validator.constraints.Compare;
 
+import jakarta.validation.Constraint;
+import jakarta.validation.OverridesAttribute;
+import jakarta.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmUsingCompare.List;
 
 @Documented

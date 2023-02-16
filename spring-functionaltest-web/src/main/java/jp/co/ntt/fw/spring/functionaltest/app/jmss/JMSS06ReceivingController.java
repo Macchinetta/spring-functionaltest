@@ -17,19 +17,19 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAsyncReceiveSynchronizingService;
@@ -60,7 +60,7 @@ public class JMSS06ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTranSuccess")
+    @PostMapping(value = "receivemessage", params = "testCase=sendTranSuccess")
     public String receiveMessage_SendOK(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -76,7 +76,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTranFail")
+    @PostMapping(value = "receivemessage", params = "testCase=sendTranFail")
     public String receiveMessage_SendNG(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -92,7 +92,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=reciTranSuccess")
+    @PostMapping(value = "receivemessage", params = "testCase=reciTranSuccess")
     public String receiveMessage_ReceiveOK(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -108,7 +108,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=reciTranFail")
+    @PostMapping(value = "receivemessage", params = "testCase=reciTranFail")
     public String receiveMessage_ReceiveNG(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -124,7 +124,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=asyncTranSuccess")
+    @PostMapping(value = "receivemessage", params = "testCase=asyncTranSuccess")
     public String receiveMessage_AsyncOK(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -140,7 +140,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=asyncTranFail")
+    @PostMapping(value = "receivemessage", params = "testCase=asyncTranFail")
     public String receiveMessage_AsyncNG(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -157,7 +157,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseSuccess")
+    @PostMapping(value = "receivemessage", params = "testCase=sendTxBestEffort1PhaseSuccess")
     public String receiveMessage_sendTxBestEffort1PhaseOK(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -165,8 +165,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
@@ -176,7 +175,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseFail")
+    @PostMapping(value = "receivemessage", params = "testCase=sendTxBestEffort1PhaseFail")
     public String receiveMessage_sendTxBestEffort1PhaseNG(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -184,8 +183,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo == null && jmsTodoInDB == null) {
@@ -204,7 +202,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseSuccess")
+    @PostMapping(value = "receivemessage", params = "testCase=receTxBestEffort1PhaseSuccess")
     public String receiveMessage_receTxBestEffort1PhaseOK(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -212,8 +210,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
                 .getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
@@ -223,7 +220,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseFail")
+    @PostMapping(value = "receivemessage", params = "testCase=receTxBestEffort1PhaseFail")
     public String receiveMessage_receTxBestEffort1PhaseNG(Model model,
             JmsReceivingForm form) throws InterruptedException, IOException {
 
@@ -231,8 +228,7 @@ public class JMSS06ReceivingController {
         JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(
                 "rollbacked_" + form.getJmsTodoId());
 
-        JmsTodo jmsTodoInDB = jmsTodoRepository.findOneById(form
-                .getJmsTodoId());
+        JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
@@ -252,7 +248,7 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "await")
+    @GetMapping(value = "await")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void awaitUntilReceivedMessages(
@@ -260,7 +256,7 @@ public class JMSS06ReceivingController {
         jmsAsyncReceiveSynchronizingService.await(jmsTodoId);
     }
 
-    @RequestMapping(value = "clear")
+    @GetMapping(value = "clear")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void clear() throws IOException {

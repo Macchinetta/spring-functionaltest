@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public abstract class AbstractTimeSupportedResource {
 

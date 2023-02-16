@@ -17,14 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import jakarta.inject.Inject;
 
 @Controller
 public class EXHN08Controller {
@@ -32,7 +32,7 @@ public class EXHN08Controller {
     @Inject
     MessageSource messageSource;
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle0801001() {
         // 意図的にRuntimeExceptionをthrowしているためSonarQube指摘には未対応としています。
         throw new RuntimeException(messageSource.getMessage("e.sf.exhn.8030",

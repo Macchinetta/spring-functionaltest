@@ -15,28 +15,25 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac;
 
-import org.joda.time.DateTime;
+import java.time.LocalTime;
+
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
 public class RoutingDataSource extends AbstractRoutingDataSource { // (1)
 
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Override
     protected Object determineCurrentLookupKey() {
 
-        DateTime dateTime = dateFactory.newDateTime();
-        int hour = dateTime.getHourOfDay();
+        LocalTime localTime = LocalTime.now(clockFactory.fixed());
+        int hour = localTime.getHour();
 
-        if (7 <= hour && hour <= 23) {
-            return "OPEN";
-        } else {
-            return "CLOSE";
-        }
+        return (7 <= hour && hour <= 23) ? "OPEN" : "CLOSE";
     }
 
-    public void setDateFactory(JodaTimeDateFactory dateFactory) {
-        this.dateFactory = dateFactory;
+    public void setClockFactory(ClockFactory clockFactory) {
+        this.clockFactory = clockFactory;
     }
 }

@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SPSC05Controller {
@@ -32,27 +32,27 @@ public class SPSC05Controller {
     @Value("${host.https.port}")
     private String connectHttpsPort;
 
-    @RequestMapping("0501/001")
+    @GetMapping("0501/001")
     public String handle0501001() {
         return "spsc/result";
     }
 
-    @RequestMapping("0501/002")
+    @GetMapping("0501/002")
     public String handle0501002() {
         return "spsc/result";
     }
 
-    @RequestMapping("0501/003")
+    @GetMapping("0501/003")
     public String handle0501003() {
         return "spsc/result";
     }
 
-    @RequestMapping("0501/004")
+    @GetMapping("0501/004")
     public String handle0501004() {
         return "spsc/result";
     }
 
-    @RequestMapping("0501/005")
+    @GetMapping("0501/005")
     public String handle0501005(Model model) {
         model.addAttribute("connectIp", connectIp);
         model.addAttribute("connectHttpPort", connectHttpPort);

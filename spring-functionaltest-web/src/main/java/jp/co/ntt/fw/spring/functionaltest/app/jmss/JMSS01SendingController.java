@@ -18,16 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsCacheConSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsJndiConSendingService;
@@ -61,14 +61,14 @@ public class JMSS01SendingController {
         return form;
     }
 
-    @RequestMapping(value = "0101/001", method = RequestMethod.GET)
+    @GetMapping(value = "0101/001")
     public String handle0101001(JmsSendingForm form) {
 
         form.setTestCase("activeMqCon");
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0102/001", method = RequestMethod.GET)
+    @GetMapping(value = "0102/001")
     public String handle0102001(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -76,7 +76,7 @@ public class JMSS01SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0103/001", method = RequestMethod.GET)
+    @GetMapping(value = "0103/001")
     public String handle0103001(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -84,7 +84,7 @@ public class JMSS01SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=activeMqCon")
+    @PostMapping(value = "sendmessage", params = "testCase=activeMqCon")
     public String sendMessageAmqCon(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -93,7 +93,7 @@ public class JMSS01SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=jndiCon")
+    @PostMapping(value = "sendmessage", params = "testCase=jndiCon")
     public String sendMessageJndiCon(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -102,7 +102,7 @@ public class JMSS01SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=cacheCon")
+    @PostMapping(value = "sendmessage", params = "testCase=cacheCon")
     public String sendMessageCacheCon(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 

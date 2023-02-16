@@ -17,32 +17,33 @@ package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.groups.Default;
-
-import org.joda.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.github.dozermapper.core.Mapper;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.Detail;
 import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PostMembers;
 import jp.co.ntt.fw.spring.functionaltest.api.rest.member.MemberResource.PutMember;
@@ -62,7 +63,7 @@ public class MemberRestController {
     RestMemberForSpecificExceptionService restMemberForSpecificExceptionService;
 
     @Inject
-    Mapper beanMapper;
+    MemberRestBeanMapper beanMapper;
 
     /**
      * getMembers
@@ -70,7 +71,7 @@ public class MemberRestController {
      * <li>検索条件に一致するMemberリソースのページ検索 （Pagable利用）</li>
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.GET, params = "name")
+    @GetMapping(params = "name")
     @ResponseStatus(HttpStatus.OK)
     public Page<MemberResource> getMembers(@Validated MembersSearchQuery query,
             Pageable pageable) {
@@ -80,7 +81,7 @@ public class MemberRestController {
 
         List<MemberResource> memberResources = new ArrayList<>();
         for (RestMember member : page.getContent()) {
-            memberResources.add(beanMapper.map(member, MemberResource.class));
+            memberResources.add(beanMapper.map(member));
         }
         Page<MemberResource> responseResource = new PageImpl<>(memberResources, pageable, page
                 .getTotalElements());
@@ -94,7 +95,7 @@ public class MemberRestController {
      * <li>Memberリソース一覧完全取得</li>
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MemberResource> getMembers() {
 
@@ -102,7 +103,7 @@ public class MemberRestController {
 
         List<MemberResource> memberResources = new ArrayList<>();
         for (RestMember member : restMembers) {
-            memberResources.add(beanMapper.map(member, MemberResource.class));
+            memberResources.add(beanMapper.map(member));
         }
 
         return memberResources;
@@ -114,15 +115,14 @@ public class MemberRestController {
      * <li>特定のMemberリソースを取得</li>
      * </ul>
      */
-    @RequestMapping(value = "{memberId}", method = { RequestMethod.GET })
+    @GetMapping(value = "{memberId}")
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMember(@PathVariable("memberId") String memberId,
             UriComponentsBuilder uriBuilder) {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member);
 
         responseResource.addSelf(uriBuilder.path("/members").pathSegment(
                 memberId).build().toUri());
@@ -136,21 +136,19 @@ public class MemberRestController {
      * <li>Memberリソースを追加</li>
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<MemberResource> postMembers(@RequestBody @Validated({
             PostMembers.class,
             Default.class }) MemberResource requestedResource,
             UriComponentsBuilder uriBuilder) {
 
-        RestMember creatingMember = beanMapper.map(requestedResource,
-                RestMember.class);
+        RestMember creatingMember = beanMapper.map(requestedResource);
 
         RestMember createdMember = restMemberService.createMember(
                 creatingMember);
 
-        MemberResource responseResource = beanMapper.map(createdMember,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(createdMember);
 
         URI createdUri = uriBuilder.path("/members/{memberId}").buildAndExpand(
                 responseResource.getMemberId()).toUri();
@@ -164,20 +162,18 @@ public class MemberRestController {
      * <li>特定のMemberリソースを修正</li>
      * </ul>
      */
-    @RequestMapping(value = "{memberId}", method = RequestMethod.PUT)
+    @PutMapping(value = "{memberId}")
     @ResponseStatus(HttpStatus.OK)
     public MemberResource putMember(@PathVariable("memberId") String memberId,
             @RequestBody @Validated({ PutMember.class,
                     Default.class }) MemberResource requestedResource) {
 
-        RestMember updatingMember = beanMapper.map(requestedResource,
-                RestMember.class);
+        RestMember updatingMember = beanMapper.map(requestedResource);
 
         RestMember updatedMember = restMemberService.updateMember(memberId,
                 updatingMember);
 
-        MemberResource responseResource = beanMapper.map(updatedMember,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(updatedMember);
 
         return responseResource;
     }
@@ -188,7 +184,7 @@ public class MemberRestController {
      * <li>特定のMemberリソースを削除</li>
      * </ul>
      */
-    @RequestMapping(value = "{memberId}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "{memberId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMember(@PathVariable("memberId") String memberId) {
 
@@ -202,7 +198,7 @@ public class MemberRestController {
      * <li>Business Exception 発生させるメソッド</li>
      * </ul>
      */
-    @RequestMapping(value = "businessExp/{memberId}", method = RequestMethod.PUT)
+    @PutMapping(value = "businessExp/{memberId}")
     public void callBusinessException(
             @PathVariable("memberId") String memberId) {
         restMemberForSpecificExceptionService.callBusinessException(memberId);
@@ -214,7 +210,7 @@ public class MemberRestController {
      * <li>ObjectOptimisticLockingFailureException Exception 発生させるメソッド</li>
      * </ul>
      */
-    @RequestMapping(value = "optimisticExp", method = RequestMethod.PUT)
+    @PutMapping(value = "optimisticExp")
     public void callOptimisticFailureException() {
         restMemberForSpecificExceptionService.callOptimisticFailureException(
                 "memberId");
@@ -226,7 +222,7 @@ public class MemberRestController {
      * <li>通常のException 発生させるメソッド</li>
      * </ul>
      */
-    @RequestMapping(value = "exp", method = RequestMethod.PUT)
+    @PutMapping(value = "exp")
     public void callException() {
         restMemberForSpecificExceptionService.callException("memberId");
     }
@@ -243,7 +239,7 @@ public class MemberRestController {
      * <li>508 Unknown Errorを通知する</li>
      * </ul>
      */
-    @RequestMapping(value = "unknownError", method = RequestMethod.GET)
+    @GetMapping(value = "unknownError")
     public void responseUnknownError(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         // Send 508 (Unknown Error) error to servlet container
@@ -258,7 +254,7 @@ public class MemberRestController {
      * <li>505 HTTP Version Not Supportedを通知する</li>
      * </ul>
      */
-    @RequestMapping(value = "httpVersionNotSupport", method = RequestMethod.GET)
+    @GetMapping(value = "httpVersionNotSupport")
     public void responseServiceUnavailable(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         // Send 505 (HTTP Version Not Supported) error to servlet container
@@ -273,7 +269,7 @@ public class MemberRestController {
      * <li>504 Gateway Timeoutを通知する</li>
      * </ul>
      */
-    @RequestMapping(value = "gatewayTimeout", method = RequestMethod.GET)
+    @GetMapping(value = "gatewayTimeout")
     public void responseGatewayTimeout(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         // Send 504 (Gateway Timeout) error to servlet container
@@ -287,8 +283,7 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Summary.class)
-    @RequestMapping(value = "{memberId}", params = "format=summary", method = {
-            RequestMethod.GET })
+    @GetMapping(value = "{memberId}", params = "format=summary")
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMemberSummary(
             @PathVariable("memberId") String memberId,
@@ -296,8 +291,7 @@ public class MemberRestController {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member);
 
         responseResource.addSelf(uriBuilder.path("/members").pathSegment(
                 memberId).build().toUri());
@@ -312,8 +306,7 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Detail.class)
-    @RequestMapping(value = "{memberId}", params = "format=detail", method = {
-            RequestMethod.GET })
+    @GetMapping(value = "{memberId}", params = "format=detail")
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMemberDetail(
             @PathVariable("memberId") String memberId,
@@ -321,8 +314,7 @@ public class MemberRestController {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member);
 
         responseResource.addSelf(uriBuilder.path("/members").pathSegment(
                 memberId).build().toUri());
@@ -336,8 +328,7 @@ public class MemberRestController {
      * <li>特定のMemberリソースを取得</li>
      * </ul>
      */
-    @RequestMapping(value = "getMemberWithAdvice", method = {
-            RequestMethod.POST })
+    @PostMapping(value = "getMemberWithAdvice")
     @ResponseStatus(HttpStatus.OK)
     public MemberResourceWithAdvice getMemberWithAdvice(
             @RequestBody MemberResourceWithAdvice requestedResource,
@@ -348,8 +339,8 @@ public class MemberRestController {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResourceWithAdvice responseResource = beanMapper.map(member,
-                MemberResourceWithAdvice.class);
+        MemberResourceWithAdvice responseResource = beanMapper.mapWithAdvice(
+                member);
         responseResource.setStartDateTime(startDateTime);
 
         return responseResource;

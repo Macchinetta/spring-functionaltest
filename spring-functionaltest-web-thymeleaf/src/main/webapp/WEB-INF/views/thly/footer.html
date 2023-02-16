@@ -15,7 +15,7 @@
     </p>
     <p id="copyright">
       Copyright &copy; 20XX CompanyName (X-Track:<span id="xTrack"
-        th:text="${#request.getAttribute('X-Track')}">12345678</span>)
+        th:text="${xTrack} != null ? ${xTrack} : 'no model'"></span>)
     </p>
   </div>
 </body>

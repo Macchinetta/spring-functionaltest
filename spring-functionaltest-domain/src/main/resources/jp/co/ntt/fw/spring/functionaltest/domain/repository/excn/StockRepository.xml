@@ -10,7 +10,7 @@
     <result property="version" column="version" />
   </resultMap>
 
-  <select id="selectByItemCode" parameterType="String" resultMap="stockResultMap">
+  <select id="findByItemCode" parameterType="String" resultMap="stockResultMap">
     <bind name="itemCode" value="_parameter" />
     SELECT
     item_code,
@@ -23,7 +23,7 @@
     item_code = #{itemCode}
   </select>
 
-  <select id="selectByItemCodeWithPessimisticLock" parameterType="String" resultMap="stockResultMap">
+  <select id="findByItemCodeWithPessimisticLock" parameterType="String" resultMap="stockResultMap">
     <bind name="itemCode" value="_parameter" />
     SELECT
     item_code,
@@ -35,22 +35,6 @@
     WHERE
     item_code = #{itemCode}
     FOR UPDATE NOWAIT
-  </select>
-
-  <select id="selectByItemCodeWithPessimisticLock" parameterType="String" resultMap="stockResultMap"
-    databaseId="db2">
-    <bind name="itemCode" value="_parameter" />
-    SELECT
-    item_code,
-    item_name,
-    quantity,
-    version
-    FROM
-    stock
-    WHERE
-    item_code = #{itemCode}
-    FOR UPDATE WITH
-    RS
   </select>
 
   <update id="updateQuantity" parameterType="jp.co.ntt.fw.spring.functionaltest.domain.model.Stock">
@@ -80,14 +64,6 @@
     WHERE
     item_code = #{itemCode}
     AND version = #{version}
-  </update>
-
-  <update id="setCurrentLockTimeoutNotWait" databaseId="db2">
-    SET CURRENT LOCK TIMEOUT NOT WAIT
-  </update>
-
-  <update id="setCurrentLockTimeoutDefault" databaseId="db2">
-    SET CURRENT LOCK TIMEOUT NULL
   </update>
 
 </mapper>

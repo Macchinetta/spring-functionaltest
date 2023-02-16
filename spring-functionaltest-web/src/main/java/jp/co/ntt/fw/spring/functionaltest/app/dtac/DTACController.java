@@ -18,28 +18,29 @@ package jp.co.ntt.fw.spring.functionaltest.app.dtac;
 import java.security.Principal;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("dtac")
 public class DTACController {
 
-    @RequestMapping
+    @GetMapping
     public String handleIndex() {
         return "dtac/index";
     }
 
-    @RequestMapping(value = "login")
+    @GetMapping(value = "login")
     public String handleLognin() {
         return "dtac/login";
     }
 
-    @RequestMapping(value = "login", params = "loginSuccess")
+    @GetMapping(value = "login", params = "loginSuccess")
     public String handleLogninSuccess(Principal principal) {
         return "redirect:/dtac/user/list";
     }
 
-    @RequestMapping(value = "select")
+    @GetMapping(value = "select")
     public String handleSelect() {
         return "dtac/select";
     }

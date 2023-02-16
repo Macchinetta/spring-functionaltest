@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
 import java.util.List;
 
-import javax.persistence.QueryHint;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,6 +25,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
+import jakarta.persistence.QueryHint;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public interface JPADeliveryOrderRepository extends
@@ -63,7 +62,7 @@ public interface JPADeliveryOrderRepository extends
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.deliveryStatus = :deliveryStatus ORDER BY delOrder.deliverNumber")
     @QueryHints(value = {
-            @QueryHint(name = "javax.persistence.query.timeout", value = "1001") })
+            @QueryHint(name = "jakarta.persistence.query.timeout", value = "1001") })
     List<JPADeliveryOrder> getByDeliveryStatus(
             @Param("deliveryStatus") String statusCode);
 

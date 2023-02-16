@@ -16,39 +16,40 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DeliveryOrderCriteria implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Date fromAcceptDatetime;
+    private LocalDateTime fromAcceptDatetime;
 
-    private Date toAcceptDatetime;
+    private LocalDateTime toAcceptDatetime;
 
-    private Date updateCompletionDatetime;
+    private LocalDateTime updateCompletionDatetime;
 
-    public Date getFromAcceptDatetime() {
+    public LocalDateTime getFromAcceptDatetime() {
         return fromAcceptDatetime;
     }
 
-    public void setFromAcceptDatetime(Date fromAcceptDatetime) {
+    public void setFromAcceptDatetime(LocalDateTime fromAcceptDatetime) {
         this.fromAcceptDatetime = fromAcceptDatetime;
     }
 
-    public Date getToAcceptDatetime() {
+    public LocalDateTime getToAcceptDatetime() {
         return toAcceptDatetime;
     }
 
-    public void setToAcceptDatetime(Date toAcceptDatetime) {
+    public void setToAcceptDatetime(LocalDateTime toAcceptDatetime) {
         this.toAcceptDatetime = toAcceptDatetime;
     }
 
-    public Date getUpdateCompletionDatetime() {
+    public LocalDateTime getUpdateCompletionDatetime() {
         return updateCompletionDatetime;
     }
 
-    public void setUpdateCompletionDatetime(Date updateCompletionDatetime) {
+    public void setUpdateCompletionDatetime(
+            LocalDateTime updateCompletionDatetime) {
         this.updateCompletionDatetime = updateCompletionDatetime;
     }
 

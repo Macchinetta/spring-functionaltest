@@ -18,19 +18,19 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.inject.Inject;
-import javax.jms.JMSException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 
+import jakarta.inject.Inject;
+import jakarta.jms.JMSException;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsCacheConSendingService;
@@ -82,7 +82,7 @@ public class JMSS06SendingController {
         return form;
     }
 
-    @RequestMapping(value = "0601/001", method = RequestMethod.GET)
+    @GetMapping(value = "0601/001")
     public String handle0601001(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -92,7 +92,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0601/002", method = RequestMethod.GET)
+    @GetMapping(value = "0601/002")
     public String handle0601002(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -102,7 +102,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0602/001", method = RequestMethod.GET)
+    @GetMapping(value = "0602/001")
     public String handle0602001(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -112,7 +112,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0602/002", method = RequestMethod.GET)
+    @GetMapping(value = "0602/002")
     public String handle0602002(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -122,7 +122,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0603/001", method = RequestMethod.GET)
+    @GetMapping(value = "0603/001")
     public String handle0603001(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -132,7 +132,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0603/002", method = RequestMethod.GET)
+    @GetMapping(value = "0603/002")
     public String handle0603002(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -142,7 +142,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/001", method = RequestMethod.GET)
+    @GetMapping(value = "0604/001")
     public String handle0604001(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -152,7 +152,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/002", method = RequestMethod.GET)
+    @GetMapping(value = "0604/002")
     public String handle0604002(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -162,7 +162,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/005", method = RequestMethod.GET)
+    @GetMapping(value = "0604/005")
     public String handle0604005(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -172,7 +172,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "0604/006", method = RequestMethod.GET)
+    @GetMapping(value = "0604/006")
     public String handle0604006(JmsSendingForm form) {
 
         // Formオブジェクトに値設定
@@ -182,7 +182,7 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTranSuccess")
+    @PostMapping(value = "sendmessage", params = "testCase=sendTranSuccess")
     public String sendMessage_SendOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
 
@@ -207,7 +207,7 @@ public class JMSS06SendingController {
     @Inject
     JmsTodoRepository jmsTodoRepository;
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTranFail")
+    @PostMapping(value = "sendmessage", params = "testCase=sendTranFail")
     public String sendMessage_SendNG(JmsSendingForm form,
             RedirectAttributes attrs) throws JMSException, IOException {
 
@@ -233,7 +233,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranSuccess")
+    @PostMapping(value = "sendmessage", params = "testCase=reciTranSuccess")
     public String sendMessage_ReceiveOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
 
@@ -259,7 +259,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranFail")
+    @PostMapping(value = "sendmessage", params = "testCase=reciTranFail")
     public String sendMessage_ReceiveNG(JmsSendingForm form,
             RedirectAttributes attrs) throws JMSException, InterruptedException {
 
@@ -289,7 +289,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=asyncTranSuccess")
+    @PostMapping(value = "sendmessage", params = "testCase=asyncTranSuccess")
     public String sendMessage_asyncOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException, JMSException {
 
@@ -302,7 +302,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=asyncTranFail")
+    @PostMapping(value = "sendmessage", params = "testCase=asyncTranFail")
     public String sendMessage_asyncNG(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -315,7 +315,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseSuccess")
+    @PostMapping(value = "sendmessage", params = "testCase=sendTxBestEffort1PhaseSuccess")
     public String sendMessage_sendTxBestEffort1PhaseOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -328,7 +328,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseFail")
+    @PostMapping(value = "sendmessage", params = "testCase=sendTxBestEffort1PhaseFail")
     public String sendMessage_sendTxBestEffort1PhaseNG(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -346,7 +346,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseSuccess")
+    @PostMapping(value = "sendmessage", params = "testCase=receTxBestEffort1PhaseSuccess")
     public String sendMessage_receTxBestEffort1PhaseOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -360,7 +360,7 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseFail")
+    @PostMapping(value = "sendmessage", params = "testCase=receTxBestEffort1PhaseFail")
     public String sendMessage_receTxBestEffort1PhaseNG(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 

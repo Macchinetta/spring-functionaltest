@@ -12,8 +12,8 @@
   <import resource="classpath:META-INF/spring/spring-functionaltest-infra.xml" />
   <import resource="classpath:META-INF/spring/spring-functionaltest-jpa-infra.xml" />
   <import resource="classpath:META-INF/spring/spring-functionaltest-codelist.xml" />
-  <import resource="classpath:META-INF/spring/spring-functionaltest-domain-ws.xml" />
-
+  <!-- FY2022 SOAP スコープアウト -->
+  <!-- <import resource="classpath:META-INF/spring/spring-functionaltest-domain-ws.xml" /> -->
   <context:component-scan
     base-package="jp.co.ntt.fw.spring.functionaltest.domain,
     									  jp.co.ntt.fw.spring.functionaltest.infra.spring.data" />

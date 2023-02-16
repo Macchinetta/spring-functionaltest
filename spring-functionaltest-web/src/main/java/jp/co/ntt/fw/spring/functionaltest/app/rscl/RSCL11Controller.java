@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.terasoluna.gfw.common.exception.BusinessException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.InterceptorsRestClientService;
 
@@ -33,7 +33,7 @@ public class RSCL11Controller {
     @Inject
     InterceptorsRestClientService interceptorsRestClientService;
 
-    @RequestMapping(value = "1102/001", method = RequestMethod.GET)
+    @GetMapping(value = "1102/001")
     public String handle1102001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -43,7 +43,7 @@ public class RSCL11Controller {
         return "rscl/extensionOfRest";
     }
 
-    @RequestMapping(value = "1102/001", method = RequestMethod.POST)
+    @PostMapping(value = "1102/001")
     public String handle1102001(Model model) {
         UserResource rcvUser = this.interceptorsRestClientService
                 .confirmInterceptor0101();
@@ -54,7 +54,7 @@ public class RSCL11Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "1103/002", method = RequestMethod.GET)
+    @GetMapping(value = "1103/002")
     public String handle1102002First(Model model) {
 
         model.addAttribute("testDescription",
@@ -64,7 +64,7 @@ public class RSCL11Controller {
         return "rscl/extensionOfRest";
     }
 
-    @RequestMapping(value = "1103/002", method = RequestMethod.POST)
+    @PostMapping(value = "1103/002")
     public String handle1102002(Model model) {
         UserResource rcvUser = this.interceptorsRestClientService
                 .confirmInterceptor0102();
@@ -75,7 +75,7 @@ public class RSCL11Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "1104/001", method = RequestMethod.GET)
+    @GetMapping(value = "1104/001")
     public String handle1104001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -85,7 +85,7 @@ public class RSCL11Controller {
         return "rscl/extensionOfRest";
     }
 
-    @RequestMapping(value = "1104/001", method = RequestMethod.POST)
+    @PostMapping(value = "1104/001")
     public void handle1104001(Model model) {
 
         try {
@@ -95,7 +95,7 @@ public class RSCL11Controller {
         }
     }
 
-    @RequestMapping(value = "1105/001", method = RequestMethod.GET)
+    @GetMapping(value = "1105/001")
     public String handle1105001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -105,7 +105,7 @@ public class RSCL11Controller {
         return "rscl/extensionOfRest";
     }
 
-    @RequestMapping(value = "1105/001", method = RequestMethod.POST)
+    @PostMapping(value = "1105/001")
     public String handle1105001(Model model) {
 
         UserResource rcvUser = this.interceptorsRestClientService

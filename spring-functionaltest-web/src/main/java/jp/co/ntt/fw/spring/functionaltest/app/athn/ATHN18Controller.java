@@ -15,20 +15,19 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AdministratorService;
 
@@ -38,12 +37,12 @@ public class ATHN18Controller {
     @Inject
     AdministratorService administratorService;
 
-    @RequestMapping(value = "/1801/001", method = RequestMethod.GET)
+    @GetMapping(value = "/1801/001")
     public String handle1801001(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingCustomPbkdf2Password";
     }
 
-    @RequestMapping(value = "1801/001/createAdminUsingCustomPbkdf2", method = RequestMethod.POST)
+    @PostMapping(value = "1801/001/createAdminUsingCustomPbkdf2")
     public String createAdministratorUsingCustomPbkdf2Password(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -72,7 +71,7 @@ public class ATHN18Controller {
         return "redirect:/athn/1801/001/createCompleteAdminUsingCustomPbkdf2?complete";
     }
 
-    @RequestMapping(value = "1801/001/createCompleteAdminUsingCustomPbkdf2", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "1801/001/createCompleteAdminUsingCustomPbkdf2", params = "complete")
     public String createCompleteAdministratorUsingCustomPbkdf2Password(
             Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
@@ -81,7 +80,7 @@ public class ATHN18Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "1801/002/afterLogin")
+    @GetMapping(value = "1801/002/afterLogin")
     public String afterLoginUsingCustomPbkdf2Password(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 

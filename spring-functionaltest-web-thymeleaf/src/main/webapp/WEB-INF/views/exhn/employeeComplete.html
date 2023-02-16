@@ -8,7 +8,7 @@
     <div id="wrapper">
       <h3 id="screenTitle">社員情報編集完了画面</h3>
 
-      <form th:action="@{/exhn/{testNumber}(testNumber=${testNumber})}" class="form-horizontal"
+      <form th:action="@{/exhn{testNumber}(testNumber=${testNumber})}" class="form-horizontal"
         method="get" th:object="${employeeForm}">
         <fieldset>
           <legend>社員情報</legend>

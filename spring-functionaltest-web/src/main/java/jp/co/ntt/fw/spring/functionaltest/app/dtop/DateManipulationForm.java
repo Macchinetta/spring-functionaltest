@@ -17,28 +17,23 @@ package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
 import java.io.Serializable;
 
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class DateManipulationForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private LocalDate targetIncDecDate;
+    private String targetIncDecDate;
 
     private Integer targetIncreaseNum;
 
     private Integer targetDecreaseNum;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private LocalDate targetStartEndDate;
+    private String targetStartEndDate;
 
-    public LocalDate getTargetIncDecDate() {
+    public String getTargetIncDecDate() {
         return targetIncDecDate;
     }
 
-    public void setTargetIncDecDate(LocalDate targetIncDecDate) {
+    public void setTargetIncDecDate(String targetIncDecDate) {
         this.targetIncDecDate = targetIncDecDate;
     }
 
@@ -58,11 +53,11 @@ public class DateManipulationForm implements Serializable {
         this.targetDecreaseNum = targetDecreaseNum;
     }
 
-    public LocalDate getTargetStartEndDate() {
+    public String getTargetStartEndDate() {
         return targetStartEndDate;
     }
 
-    public void setTargetStartEndDate(LocalDate targetStartEndDate) {
+    public void setTargetStartEndDate(String targetStartEndDate) {
         this.targetStartEndDate = targetStartEndDate;
     }
 }

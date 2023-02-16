@@ -15,13 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class IPv4Validator implements ConstraintValidator<IPv4, String> {
 
     @Override
     public void initialize(IPv4 constraintAnnotation) {
+        // The default implementation
     }
 
     @Override

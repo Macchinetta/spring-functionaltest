@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3;
 
 import java.io.BufferedWriter;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -93,7 +93,7 @@ public interface TodoMB3Service {
 
     boolean delete(TodoMB3 todo);
 
-    int deleteOlderFinishedTodo(Date date);
+    int deleteOlderFinishedTodo(LocalDate date);
 
     List<TodoMB3> findAllByCriteriaIFEle(TodoCriteria todoCriteria);
 

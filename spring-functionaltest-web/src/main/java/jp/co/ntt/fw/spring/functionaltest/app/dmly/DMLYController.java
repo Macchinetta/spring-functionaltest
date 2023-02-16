@@ -16,13 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("dmly")
 public class DMLYController {
 
-    @RequestMapping
+    @GetMapping
     public String handle() {
         return "dmly/index";
     }

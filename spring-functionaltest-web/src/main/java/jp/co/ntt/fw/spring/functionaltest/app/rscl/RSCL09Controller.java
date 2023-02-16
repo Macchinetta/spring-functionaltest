@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.RestClientService;
 
@@ -32,7 +32,7 @@ public class RSCL09Controller {
     @Inject
     RestClientService restClientService;
 
-    @RequestMapping(value = "0901/001", method = RequestMethod.GET)
+    @GetMapping(value = "0901/001")
     public String handle0901001First(Model model) {
 
         model.addAttribute("testDescription", "File Upload");
@@ -41,7 +41,7 @@ public class RSCL09Controller {
         return "rscl/fileUpload";
     }
 
-    @RequestMapping(value = "0901/001", method = RequestMethod.POST)
+    @PostMapping(value = "0901/001")
     public String handle0901001(Model model) {
 
         UserResource rcvUser = this.restClientService.upload();

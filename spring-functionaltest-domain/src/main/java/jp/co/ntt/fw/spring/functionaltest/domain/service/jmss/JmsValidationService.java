@@ -17,10 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
 import java.io.IOException;
 
-import javax.validation.Valid;
-
 import org.springframework.validation.annotation.Validated;
 
+import jakarta.validation.Valid;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Validated

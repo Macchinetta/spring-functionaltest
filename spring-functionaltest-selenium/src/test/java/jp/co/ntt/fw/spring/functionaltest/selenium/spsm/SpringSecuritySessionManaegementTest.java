@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.spsm;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 
 import java.io.IOException;
@@ -26,14 +27,13 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
@@ -150,9 +150,9 @@ public class SpringSecuritySessionManaegementTest extends FunctionTestSupport {
         ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
                 requestEntity, byte[].class);
 
-        org.springframework.http.HttpStatus status = responseEntity
+        org.springframework.http.HttpStatusCode status = responseEntity
                 .getStatusCode();
-        assertThat(status, is(org.springframework.http.HttpStatus.OK));
+        assertTrue(status.is2xxSuccessful());
 
         // セッション操作が行われてないことを確認する(作成)
         dbLogAssertOperations.waitForAssertion(1000);

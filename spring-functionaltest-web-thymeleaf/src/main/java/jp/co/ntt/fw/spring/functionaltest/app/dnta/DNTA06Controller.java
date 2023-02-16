@@ -27,8 +27,8 @@ import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("dnta")
 @Controller
@@ -80,101 +80,101 @@ public class DNTA06Controller {
         SET_TEMPORALS.add(DATE_TIME_02);
     }
 
-    @RequestMapping(value = "0601/001", method = RequestMethod.GET)
+    @GetMapping(value = "0601/001")
     public String handleDateTimeFormat(Model model) {
         model.addAttribute("resultDate", DATE_TIME);
         return "dnta/showFormat";
     }
 
-    @RequestMapping(value = "0601/002", method = RequestMethod.GET)
+    @GetMapping(value = "0601/002")
     public String handleDateFormat(Model model) {
         model.addAttribute("resultDate", DATE);
         return "dnta/showFormat";
     }
 
-    @RequestMapping(value = "0601/003", method = RequestMethod.GET)
+    @GetMapping(value = "0601/003")
     public String handleTimeFormat(Model model) {
         model.addAttribute("resultDate", TIME);
         return "dnta/showFormat";
     }
 
-    @RequestMapping(value = "0601/004", method = RequestMethod.GET)
+    @GetMapping(value = "0601/004")
     public String handleFormatError(Model model) {
         model.addAttribute("resultDate", NOW_DATE);
         return "dnta/showFormat";
     }
 
-    @RequestMapping(value = "0602/001", method = RequestMethod.GET)
+    @GetMapping(value = "0602/001")
     public String handleFormat(Model model) {
         model.addAttribute("resultDate", DATE_TIME);
         model.addAttribute("locale", Locale.ENGLISH);
         return "dnta/showSingleFormat";
     }
 
-    @RequestMapping(value = "0602/002", method = RequestMethod.GET)
+    @GetMapping(value = "0602/002")
     public String handleFormatLocale(Model model) {
         model.addAttribute("resultDate", ARRAY_TEMPORALS);
         model.addAttribute("locale", Locale.ENGLISH);
         return "dnta/showArrayFormat";
     }
 
-    @RequestMapping(value = "0602/003", method = RequestMethod.GET)
+    @GetMapping(value = "0602/003")
     public String handleArrayFormat(Model model) {
         model.addAttribute("resultDate", LIST_TEMPORALS);
         model.addAttribute("locale", Locale.ENGLISH);
         return "dnta/showListFormat";
     }
 
-    @RequestMapping(value = "0602/004", method = RequestMethod.GET)
+    @GetMapping(value = "0602/004")
     public String handleArrayFormatLocale(Model model) {
         model.addAttribute("resultDate", SET_TEMPORALS);
         model.addAttribute("locale", Locale.ENGLISH);
         return "dnta/showSetFormat";
     }
 
-    @RequestMapping(value = "0602/005", method = RequestMethod.GET)
+    @GetMapping(value = "0602/005")
     public String handleFormatISO(Model model) {
         model.addAttribute("resultDate", DATE_TIME);
         return "dnta/showFormatISO";
     }
 
-    @RequestMapping(value = "0602/006", method = RequestMethod.GET)
+    @GetMapping(value = "0602/006")
     public String handleArrayFormatISO(Model model) {
         model.addAttribute("resultDate", ARRAY_TEMPORALS);
         return "dnta/showArrayFormatISO";
     }
 
-    @RequestMapping(value = "0602/007", method = RequestMethod.GET)
+    @GetMapping(value = "0602/007")
     public String handleListFormatISO(Model model) {
         model.addAttribute("resultDate", LIST_TEMPORALS);
         return "dnta/showListFormatISO";
     }
 
-    @RequestMapping(value = "0602/008", method = RequestMethod.GET)
+    @GetMapping(value = "0602/008")
     public String handleSetFormatISO(Model model) {
         model.addAttribute("resultDate", SET_TEMPORALS);
         return "dnta/showSetFormatISO";
     }
 
-    @RequestMapping(value = "0603/001", method = RequestMethod.GET)
+    @GetMapping(value = "0603/001")
     public String handleDateField(Model model) {
         model.addAttribute("resultDate", DATE_TIME);
         return "dnta/showDateField";
     }
 
-    @RequestMapping(value = "0603/002", method = RequestMethod.GET)
+    @GetMapping(value = "0603/002")
     public String handleDateFieldArray(Model model) {
         model.addAttribute("resultDate", ARRAY_TEMPORALS);
         return "dnta/showArrayDateField";
     }
 
-    @RequestMapping(value = "0603/003", method = RequestMethod.GET)
+    @GetMapping(value = "0603/003")
     public String handleDateFieldList(Model model) {
         model.addAttribute("resultDate", LIST_TEMPORALS);
         return "dnta/showListDateField";
     }
 
-    @RequestMapping(value = "0603/004", method = RequestMethod.GET)
+    @GetMapping(value = "0603/004")
     public String handleDateFieldSet(Model model) {
         model.addAttribute("resultDate", SET_TEMPORALS);
         return "dnta/showSetDateField";

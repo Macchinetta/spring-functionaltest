@@ -22,34 +22,61 @@
   <bean id="jmsErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.JmsErrorHandler" />
 
   <!-- JMS Listener Containers -->
-  <jms:listener-container factory-id="topicContainerFactory" error-handler="jmsErrorHandler"
-    destination-resolver="destinationResolver" destination-type="topic"
-    transaction-manager="asyncReceiveJmsTransactionManager" cache="consumer" />
+
+  <jms:listener-container factory-id="topicContainerFactory"
+      connection-factory="dynamicConnectionFactory"
+      error-handler="jmsErrorHandler"
+      destination-resolver="destinationResolver"
+      transaction-manager="asyncReceiveJmsTransactionManager"
+      destination-type="topic"
+      acknowledge="transacted"
+      cache="consumer"
+   />
 
   <jms:listener-container factory-id="conCacheDynamicNoTranContainerFactory"
-    connection-factory="dynamicConnectionFactory" error-handler="jmsErrorHandler" />
+    connection-factory="dynamicConnectionFactory"
+    error-handler="jmsErrorHandler"
+  />
 
   <jms:listener-container factory-id="jmsListenerContainerFactory"
-    error-handler="jmsErrorHandler" destination-resolver="destinationResolver" acknowledge="transacted" />
+    connection-factory="dynamicConnectionFactory"
+    error-handler="jmsErrorHandler"
+    destination-resolver="destinationResolver"
+    acknowledge="transacted"
+  />
 
   <jms:listener-container factory-id="conCacheNoTranContainerFactory"
-    error-handler="jmsErrorHandler" destination-resolver="destinationResolver" />
-
+    connection-factory="dynamicConnectionFactory"
+    error-handler="jmsErrorHandler"
+    destination-resolver="destinationResolver"
+  />
+  
   <!-- try-catch用リスナーコンテナ追記 -->
   <jms:listener-container factory-id="conCacheTryCatchContainerFactory"
-    connection-factory="dynamicConnectionFactory" destination-resolver="destinationResolver" />
+    connection-factory="dynamicConnectionFactory"
+    destination-resolver="destinationResolver"
+  />
 
   <jms:listener-container factory-id="conCacheConcurrentSingleContainerFactory"
-    concurrency="1" error-handler="jmsErrorHandler" destination-resolver="destinationResolver" />
+    connection-factory="dynamicConnectionFactory"
+    concurrency="1"
+    error-handler="jmsErrorHandler"
+    destination-resolver="destinationResolver"
+  />
 
   <jms:listener-container factory-id="conCacheConcurrentMultipleContainerFactory"
-    concurrency="5-10" error-handler="jmsErrorHandler" destination-resolver="destinationResolver" />
+    connection-factory="dynamicConnectionFactory"
+    concurrency="5-10"
+    error-handler="jmsErrorHandler"
+    destination-resolver="destinationResolver"
+    cache="consumer"
+  />
 
   <jms:listener-container factory-id="conCacheChainedTranContainerFactory"
-    error-handler="jmsErrorHandler" destination-resolver="destinationResolver" acknowledge="transacted" />
-
-  <jms:listener-container factory-id="topicContainerFactory" error-handler="jmsErrorHandler"
-    destination-resolver="destinationResolver" acknowledge="transacted" cache="consumer"
-    destination-type="topic" />
+    connection-factory="dynamicConnectionFactory"
+    error-handler="jmsErrorHandler"
+    destination-resolver="destinationResolver"
+    acknowledge="transacted"
+  />
 
 </beans>

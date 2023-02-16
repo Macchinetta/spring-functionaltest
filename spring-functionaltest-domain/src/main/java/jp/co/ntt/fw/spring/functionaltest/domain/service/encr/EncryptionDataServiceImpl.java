@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -32,6 +33,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.security.spec.MGF1ParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -39,6 +41,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -168,8 +172,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     @Override
     public byte[] encryptByPublicKey(String rawText, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+            Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             return cipher.doFinal(rawText.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
             throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
@@ -181,6 +186,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
             throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
         }
     }
 
@@ -188,8 +195,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     public String decryptByPrivateKey(byte[] encryptedBytes,
             PrivateKey privateKey) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             return new String(cipher.doFinal(
                     encryptedBytes), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
@@ -202,7 +210,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
             throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
-        }
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
+        } 
     }
 
     @Override
@@ -231,7 +241,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
                     stream));
 
             Process proc = Runtime.getRuntime().exec(
-                    "openssl rsautl -decrypt -inkey " + privateKeyFilePath
+                    "openssl pkeyutl -decrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -inkey " + privateKeyFilePath
                             + " -in " + encryptedFilePath + " -out "
                             + decryptedFilePath);
             proc.waitFor();
@@ -266,7 +276,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
                     StandardCharsets.UTF_8));
 
             Process proc = Runtime.getRuntime().exec(
-                    "openssl rsautl -encrypt -keyform DER -pubin -inkey "
+                    "openssl pkeyutl -encrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -keyform DER -pubin -inkey "
                             + publicKeyFilePath + " -in " + rawTextFilePath
                             + " -out " + encryptedFilePath);
             proc.waitFor();
@@ -333,8 +343,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
         BytesEncryptor aes = Encryptors.standard(new String(Hex.encode(random)),
                 salt);
         try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            final Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            final Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, key, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             byte[] secret = cipher.doFinal(random);
 
             byte[] data = new byte[2];
@@ -358,6 +369,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
         } catch (IOException e) {
             throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
         }
 
     }
@@ -382,8 +395,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
             byte[] random = new byte[length];
             no_bytes_read = input.read(random);
-            final Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, key);
+            final Cipher cipher = Cipher.getInstance(
+                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, key, new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             String secret = new String(Hex.encode(cipher.doFinal(random)));
             byte[] buffer = new byte[text.length - random.length - 2];
             no_bytes_read = input.read(buffer);
@@ -403,6 +417,8 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
         } catch (IOException e) {
             throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
         }
     }
 

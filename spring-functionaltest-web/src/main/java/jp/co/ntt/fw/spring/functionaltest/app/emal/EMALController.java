@@ -16,13 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("emal")
 public class EMALController {
 
-    @RequestMapping
+    @GetMapping
     public String handle() {
         return "emal/index";
     }

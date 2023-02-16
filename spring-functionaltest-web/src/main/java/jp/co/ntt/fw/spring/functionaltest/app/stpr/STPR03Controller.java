@@ -19,9 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("stpr")
 @Controller
@@ -32,12 +33,12 @@ public class STPR03Controller {
         return new StringProcessing03Form();
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String handle0301001() {
         return "stpr/lengthConsideringSurrogateInput";
     }
 
-    @RequestMapping(value = "0301/001/lengthConsideringSurrogate", method = RequestMethod.POST)
+    @PostMapping(value = "0301/001/lengthConsideringSurrogate")
     public String handle0301001LengthConsideringSurrogate(Model model,
             StringProcessing03Form form) {
 
@@ -50,12 +51,12 @@ public class STPR03Controller {
         return "stpr/lengthConsideringSurrogateResult";
     }
 
-    @RequestMapping(value = "0302/001", method = RequestMethod.GET)
+    @GetMapping(value = "0302/001")
     public String handle0302001() {
         return "stpr/substringConsideringSurrogateInput";
     }
 
-    @RequestMapping(value = "0302/001/substringConsideringSurrogate", method = RequestMethod.POST)
+    @PostMapping(value = "0302/001/substringConsideringSurrogate")
     public String handle0302001SubstringConsideringSurrogate(Model model,
             @Validated StringProcessing03Form form, BindingResult result) {
 
@@ -76,12 +77,12 @@ public class STPR03Controller {
         return "stpr/substringConsideringSurrogateResult";
     }
 
-    @RequestMapping(value = "0303/001", method = RequestMethod.GET)
+    @GetMapping(value = "0303/001")
     public String handle0303001() {
         return "stpr/splitInput";
     }
 
-    @RequestMapping(value = "0303/001/split", method = RequestMethod.POST)
+    @PostMapping(value = "0303/001/split")
     public String handle0303001Split(Model model, StringProcessing03Form form) {
 
         String str = form.getTargetValue();

@@ -15,17 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 
@@ -45,21 +45,21 @@ public class EXHN0201001Controller {
         return employeeForm;
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle0201001(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0201/001");
+        model.addAttribute("testNumber", "/0201/001");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0201/001", params = "update", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001", params = "update")
     public String employeeUpdateThrowBusinessException(
             @Validated EmployeeForm form, BindingResult result, Model model,
             RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
-            model.addAttribute("testNumber", "0201/001");
+            model.addAttribute("testNumber", "/0201/001");
             return "exhn/employeeEdit";
         }
 
@@ -71,12 +71,12 @@ public class EXHN0201001Controller {
         return "redirect:/exhn/0201/001?complete";
     }
 
-    @RequestMapping(value = "0201/001", params = "complete")
+    @GetMapping(value = "0201/001", params = "complete")
     public String employeeComplete() {
         return "exhn/employeeComplete";
     }
 
-    @RequestMapping(value = "0201/001", params = "backToIndex", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001", params = "backToIndex")
     public String backToIndex() {
         return "exhn/index";
     }

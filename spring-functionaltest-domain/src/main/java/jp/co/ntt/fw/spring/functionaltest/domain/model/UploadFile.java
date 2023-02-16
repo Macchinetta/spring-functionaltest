@@ -16,8 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 
 public class UploadFile implements Serializable {
 
@@ -33,7 +33,7 @@ public class UploadFile implements Serializable {
 
     private String description;
 
-    private Date uploadedAt;
+    private LocalDate uploadedAt;
 
     public String getFileId() {
         return fileId;
@@ -79,11 +79,11 @@ public class UploadFile implements Serializable {
         this.description = description;
     }
 
-    public Date getUploadedAt() {
+    public LocalDate getUploadedAt() {
         return uploadedAt;
     }
 
-    public void setUploadedAt(Date uploadedAt) {
+    public void setUploadedAt(LocalDate uploadedAt) {
         this.uploadedAt = uploadedAt;
     }
 

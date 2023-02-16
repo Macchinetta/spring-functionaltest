@@ -19,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-// @RequestMapping("thym/0702")
+// @GetMapping("thym/0702")
 @Controller
 public class THYM0702Controller {
 
@@ -37,7 +37,7 @@ public class THYM0702Controller {
         return items;
     }
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle001() {
         return "thym/searchResultDecoupled";
     }

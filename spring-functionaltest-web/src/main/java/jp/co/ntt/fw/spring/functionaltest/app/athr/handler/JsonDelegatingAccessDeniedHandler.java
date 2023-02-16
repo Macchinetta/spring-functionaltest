@@ -18,14 +18,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.athr.handler;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class JsonDelegatingAccessDeniedHandler implements AccessDeniedHandler {
 

@@ -17,13 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.inject.Inject;
 
 @RequestMapping("aply")
 @Controller
@@ -37,9 +38,9 @@ public class APLY0102010Controller {
         return new HandleRequestForm();
     }
 
-    @RequestMapping(value = "0102/010")
+    @GetMapping(value = "0102/010")
     public String handle02010(CommonParameters commonParams, Model model) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/010\")",
+        String[] messageArgs = { "@GetMapping(value = \"0102/010\")",
                 commonParams.getCommonParam1(), commonParams
                         .getCommonParam2() };
         model.addAttribute("resultMessage", messageSource.getMessage(

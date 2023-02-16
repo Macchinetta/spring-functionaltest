@@ -23,19 +23,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
-
-import org.apache.activemq.ActiveMQSession;
-import org.apache.activemq.BlobMessage;
+import org.apache.activemq.artemis.jms.client.ActiveMQSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Service;
 
+import jakarta.inject.Inject;
+import jakarta.jms.BytesMessage;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.Session;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Service
@@ -89,9 +88,11 @@ public class JmsAmqSendingServiceImpl implements JmsAmqSendingService {
 
                     ActiveMQSession activeMQSession = (ActiveMQSession) session;
 
-                    BlobMessage blobMessage = activeMQSession.createBlobMessage(
+                    BytesMessage message = activeMQSession.createBytesMessage();
+                    message.setObjectProperty("JMS_AMQ_InputStream",
                             inputStream);
-                    return blobMessage;
+
+                    return message;
                 }
             });
         }

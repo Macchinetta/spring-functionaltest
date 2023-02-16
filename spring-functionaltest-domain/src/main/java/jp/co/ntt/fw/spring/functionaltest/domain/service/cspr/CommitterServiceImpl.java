@@ -17,11 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.cspr;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository;
@@ -36,8 +35,8 @@ public class CommitterServiceImpl implements CommitterService {
     @Override
     public List<Committer> getCommitters(CommitterCriteria criteria) {
 
-        List<Committer> committers = committerRepository.findCommiterByCriteria(
-                criteria);
+        List<Committer> committers = committerRepository
+                .findAllByCommitterCriteria(criteria);
 
         return committers;
     }

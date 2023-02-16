@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 public class AddressForm implements Serializable {
 

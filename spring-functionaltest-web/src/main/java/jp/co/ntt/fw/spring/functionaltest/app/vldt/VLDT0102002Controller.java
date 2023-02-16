@@ -21,9 +21,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("vldt/0102/002")
@@ -38,12 +39,12 @@ public class VLDT0102002Controller {
         return form;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/nestedCollectionValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validate")
+    @PostMapping(params = "validate")
     public String handleValidate(@Validated NestedCollectionValidationForm form,
             BindingResult result) {
 
@@ -53,7 +54,7 @@ public class VLDT0102002Controller {
         return "redirect:/vldt/0102/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "add")
+    @PostMapping(params = "add")
     public String handleAdd(NestedCollectionValidationForm form, Model model) {
 
         LinkedList<AddressForm> addresses = form.getAddresses();
@@ -62,7 +63,7 @@ public class VLDT0102002Controller {
         return "vldt/nestedCollectionValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "remove")
+    @PostMapping(params = "remove")
     public String handleRemove(NestedCollectionValidationForm form,
             Model model) {
 

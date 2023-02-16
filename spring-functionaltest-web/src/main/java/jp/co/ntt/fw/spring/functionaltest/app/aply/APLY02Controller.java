@@ -21,8 +21,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,10 +28,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import jakarta.inject.Inject;
 
 @RequestMapping("aply")
 @Controller
@@ -77,51 +78,51 @@ public class APLY02Controller {
                         .getCurrencyInstance(), true));
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle01001(FormObjectForm form, Model model) {
         form.setValue1(1234567);
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/001")
+    @PostMapping(value = "0201/001")
     public String handle01001submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle01002(FormObjectForm form, Model model) {
         form.setValue2(2345678);
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/002")
+    @PostMapping(value = "0201/002")
     public String handle01002submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/003", method = RequestMethod.GET)
+    @GetMapping(value = "0201/003")
     public String handle01003(FormObjectForm form, Model model) {
         form.setValue3(3456789);
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/003")
+    @PostMapping(value = "0201/003")
     public String handle01003submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/004", method = RequestMethod.GET)
+    @GetMapping(value = "0201/004")
     public String handle01004(FormObjectForm form, Model model) {
         form.setValue4(BigDecimal.valueOf(0.44));
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/004")
+    @PostMapping(value = "0201/004")
     public String handle01004submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/005", method = RequestMethod.GET)
+    @GetMapping(value = "0201/005")
     public String handle01005(FormObjectForm form,
             Model model) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -129,23 +130,23 @@ public class APLY02Controller {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/005")
+    @PostMapping(value = "0201/005")
     public String handle01005submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/006", method = RequestMethod.GET)
+    @GetMapping(value = "0201/006")
     public String handle01006(FormObjectForm form, Model model) {
         form.setValue6(Long.valueOf(6666666666l));
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0201/006")
+    @PostMapping(value = "0201/006")
     public String handle01006submit(FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0201/007", method = RequestMethod.GET)
+    @GetMapping(value = "0201/007")
     public String handle01007(
             @ModelAttribute("formObjectForm2") FormObjectForm form,
             Model model) {
@@ -153,58 +154,58 @@ public class APLY02Controller {
         return "aply/formObjectForm2";
     }
 
-    @RequestMapping(value = "0201/007")
+    @PostMapping(value = "0201/007")
     public String handle01007_1(
             @ModelAttribute("formObjectForm2") FormObjectForm form,
             Model model) {
         return "aply/formObjectComplete2";
     }
 
-    @RequestMapping(value = "0202/001", method = RequestMethod.GET)
+    @GetMapping(value = "0202/001")
     public String handle02001(Model model) {
         return "aply/formInitConfirm";
     }
 
-    @RequestMapping(value = "0202/002", method = RequestMethod.GET)
+    @GetMapping(value = "0202/002")
     public String handle02002(Model model) {
         return "aply/formInitConfirm";
     }
 
-    @RequestMapping(value = "0202/003", method = RequestMethod.GET)
+    @GetMapping(value = "0202/003")
     public String handle02003(Model model) {
         return "aply/formInitConfirm";
     }
 
-    @RequestMapping(value = "0203/001", method = RequestMethod.GET)
+    @GetMapping(value = "0203/001")
     public String handle03001(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/001")
+    @PostMapping(value = "0203/001")
     public String handle03001_1(@Validated FormObjectForm form, Model model) {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/002", method = RequestMethod.GET)
+    @GetMapping(value = "0203/002")
     public String handle03002(
             @ModelAttribute("formObjectForm2") FormObjectForm form,
             Model model) {
         return "aply/formObjectForm2";
     }
 
-    @RequestMapping(value = "0203/002")
+    @PostMapping(value = "0203/002")
     public String handle03002_1(
             @ModelAttribute("formObjectForm2") @Validated FormObjectForm form,
             Model model) {
         return "aply/formObjectComplete2";
     }
 
-    @RequestMapping(value = "0203/003", method = RequestMethod.GET)
+    @GetMapping(value = "0203/003")
     public String handle03003(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/003")
+    @PostMapping(value = "0203/003")
     public String handle03003(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -213,12 +214,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/004", method = RequestMethod.GET)
+    @GetMapping(value = "0203/004")
     public String handle03004(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/004")
+    @PostMapping(value = "0203/004")
     public String handle03004(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -227,12 +228,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/005", method = RequestMethod.GET)
+    @GetMapping(value = "0203/005")
     public String handle03005(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/005")
+    @PostMapping(value = "0203/005")
     public String handle03005(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasGlobalErrors()) {
@@ -241,12 +242,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/006", method = RequestMethod.GET)
+    @GetMapping(value = "0203/006")
     public String handle03006(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/006")
+    @PostMapping(value = "0203/006")
     public String handle03006(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasGlobalErrors()) {
@@ -255,12 +256,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/007", method = RequestMethod.GET)
+    @GetMapping(value = "0203/007")
     public String handle03007(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/007")
+    @PostMapping(value = "0203/007")
     public String handle03007(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasFieldErrors()) {
@@ -269,12 +270,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/008", method = RequestMethod.GET)
+    @GetMapping(value = "0203/008")
     public String handle03008(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/008")
+    @PostMapping(value = "0203/008")
     public String handle03008(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasFieldErrors()) {
@@ -283,12 +284,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/009", method = RequestMethod.GET)
+    @GetMapping(value = "0203/009")
     public String handle03009(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/009")
+    @PostMapping(value = "0203/009")
     public String handle03009(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasFieldErrors("value3")) {
@@ -297,12 +298,12 @@ public class APLY02Controller {
         return "aply/formObjectComplete";
     }
 
-    @RequestMapping(value = "0203/010", method = RequestMethod.GET)
+    @GetMapping(value = "0203/010")
     public String handle03010(Model model) {
         return "aply/formObjectForm";
     }
 
-    @RequestMapping(value = "0203/010")
+    @PostMapping(value = "0203/010")
     public String handle03010(@Validated FormObjectForm form,
             BindingResult result, Model model) {
         if (result.hasFieldErrors("value3")) {

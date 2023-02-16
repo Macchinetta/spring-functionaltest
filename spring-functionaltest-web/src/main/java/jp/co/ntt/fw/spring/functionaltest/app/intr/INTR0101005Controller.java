@@ -16,14 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("intr")
 public class INTR0101005Controller {
 
-    @RequestMapping(value = "0101/005", method = RequestMethod.GET)
+    @GetMapping(value = "0101/005")
     public String handle005() {
         return "intr/userDetails";
     }

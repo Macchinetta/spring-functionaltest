@@ -21,9 +21,10 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("stpr")
 @Controller
@@ -34,7 +35,7 @@ public class STPR04Controller {
         return new StringProcessing04Form();
     }
 
-    @RequestMapping(value = "04", method = RequestMethod.GET)
+    @GetMapping(value = "04")
     public String handle0401001(Model model) {
         Map<String, String> normalizationFormMap = new LinkedHashMap<String, String>();
         for (Normalizer.Form form : Normalizer.Form.values()) {
@@ -44,8 +45,7 @@ public class STPR04Controller {
         return "stpr/normalizerInput";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFD" })
+    @PostMapping(value = "normalizer", params = { "normalizationForm=NFD" })
     public String handle0401001Normalizer(Model model,
             StringProcessing04Form form) {
 
@@ -55,8 +55,7 @@ public class STPR04Controller {
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFC" })
+    @PostMapping(value = "normalizer", params = { "normalizationForm=NFC" })
     public String handle0402001Normalizer(Model model,
             StringProcessing04Form form) {
 
@@ -66,8 +65,7 @@ public class STPR04Controller {
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFKD" })
+    @PostMapping(value = "normalizer", params = { "normalizationForm=NFKD" })
     public String handle0403001Normalizer(Model model,
             StringProcessing04Form form) {
 
@@ -77,8 +75,7 @@ public class STPR04Controller {
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFKC" })
+    @PostMapping(value = "normalizer", params = { "normalizationForm=NFKC" })
     public String handle0404001Normalizer(Model model,
             StringProcessing04Form form) {
 

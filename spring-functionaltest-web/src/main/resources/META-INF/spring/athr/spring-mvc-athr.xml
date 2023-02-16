@@ -22,14 +22,7 @@
   <mvc:view-controller path="/athr/hierarchyAccessDeniedPage" view-name="athr/hierarchyAccessDeniedPage" />
   <mvc:view-controller path="/athr/accessDeniedPage" view-name="athr/accessDeniedPage" />
 
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHRController" />
-  <!-- <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR01Controller" /> -->
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR02Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR03Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR04Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR06Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR07Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR08Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR09Controller" />
+  <!-- MapStructの為component-scanに変更 -->
+  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app.athr" />
 
 </beans>

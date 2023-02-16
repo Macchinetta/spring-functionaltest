@@ -18,18 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Person;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.CelebritySearchCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.PersonSearchCriteria;
@@ -54,7 +52,7 @@ public class PGNT06Controller {
         return criteria;
     }
 
-    @RequestMapping(value = "0602/001", method = RequestMethod.GET)
+    @GetMapping(value = "0602/001")
     public String handle0602001(Model model,
             @PageableDefault(size = 100) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -63,7 +61,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/002", method = RequestMethod.GET)
+    @GetMapping(value = "0602/002")
     public String handle0602002(Model model,
             @PageableDefault(size = 30) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -72,7 +70,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/003", method = RequestMethod.GET)
+    @GetMapping(value = "0602/003")
     public String handle0602003(Model model,
             @PageableDefault(size = 15) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -81,7 +79,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/004", method = RequestMethod.GET)
+    @GetMapping(value = "0602/004")
     public String handle0602004(Model model,
             @PageableDefault Pageable pageable) {
         List<Person> nameList = new ArrayList<Person>();
@@ -89,14 +87,14 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/005", method = RequestMethod.GET)
+    @GetMapping(value = "0602/005")
     public String handle0602005(Model model,
             @PageableDefault Pageable pageable) {
         model.addAttribute("page", null);
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/006", method = RequestMethod.GET)
+    @GetMapping(value = "0602/006")
     public String handle0602006(Model model,
             @PageableDefault(size = 100) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -105,7 +103,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/007", method = RequestMethod.GET)
+    @GetMapping(value = "0602/007")
     public String handle0602007(Model model,
             @PageableDefault(size = 100) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -114,7 +112,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/008", method = RequestMethod.GET)
+    @GetMapping(value = "0602/008")
     public String handle0602008(Model model,
             @PageableDefault(size = 100) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -123,7 +121,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/009", method = RequestMethod.GET)
+    @GetMapping(value = "0602/009")
     public String handle0602009(Model model,
             @PageableDefault(size = 15) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -132,7 +130,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/010", method = RequestMethod.GET)
+    @GetMapping(value = "0602/010")
     public String handle0602010(Model model,
             @PageableDefault(size = 15) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -141,7 +139,7 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0602/011", method = RequestMethod.GET)
+    @GetMapping(value = "0602/011")
     public String handle0602011(Model model,
             @PageableDefault(size = 15) Pageable pageable) {
         Page<Person> page = personService.getPersons(new PersonSearchCriteria(),
@@ -150,13 +148,13 @@ public class PGNT06Controller {
         return "pgnt/personList";
     }
 
-    @RequestMapping(value = "0603/001")
+    @GetMapping(value = "0603/001")
     public String handle0603001(Model model) {
         model.addAttribute("path", "celebritySearch");
         return "pgnt/celebrityList";
     }
 
-    @RequestMapping(value = "0603/002")
+    @GetMapping(value = "0603/002")
     public String handle0603002(Model model) {
         model.addAttribute("path", "celebritySearch");
         return "pgnt/celebrityList";

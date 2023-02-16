@@ -15,17 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
-import javax.inject.Inject;
-
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookLZ;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPABookLZService;
 
@@ -49,7 +48,7 @@ public class DJPASessionController {
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "registerSession")
+    @PostMapping(value = "interceptSrch", params = "registerSession")
     public String registerSession(Model model, JPABookListForm bookListForm) {
         Integer bookId = Integer.valueOf(bookListForm
                 .getSearchInQueryBookIdAndRegisterSession());
@@ -63,7 +62,7 @@ public class DJPASessionController {
 
     }
 
-    @RequestMapping(value = "getRegisterSession", method = RequestMethod.POST)
+    @PostMapping(value = "getRegisterSession")
     public String getRegisterSession(
             @ModelAttribute(name = "book", binding = false) JPABookLZ book,
             Model model, SessionStatus sessionStatus) {

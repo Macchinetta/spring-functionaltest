@@ -27,13 +27,13 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderMB3;
 
 public interface OrderMB3Repository {
 
-    long countById();
+    long count();
 
     int findMaxOrderId();
 
-    OrderMB3 findOne(int id);
+    OrderMB3 findById(int id);
 
-    OrderMB3 findOneCondSts(@Param("id") int id,
+    OrderMB3 findByCondSts(@Param("id") int id,
             @Param("statusCode") String statusCode);
 
     List<OrderMB3> findAll();

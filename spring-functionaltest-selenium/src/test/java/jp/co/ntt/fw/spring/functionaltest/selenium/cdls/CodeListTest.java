@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -405,8 +404,7 @@ public class CodeListTest extends FunctionTestSupport {
         // システムの西暦を画面から取得
         String systemYear = webDriverOperations.getText(By.id("systemYear"));
 
-        assartOptions(optionsElementId, exptectedDepYearFactory(new DateTime()
-                .withYear(Integer.valueOf(systemYear))));
+        assartOptions(optionsElementId, exptectedDepYearFactory(systemYear));
     }
 
     /**
@@ -774,10 +772,10 @@ public class CodeListTest extends FunctionTestSupport {
      * AbstractCodeList使用時の期待値を作成する。
      * @return AbstractCodeList使用時の期待値
      */
-    private Map<String, String> exptectedDepYearFactory(DateTime dateTime) {
+    private Map<String, String> exptectedDepYearFactory(String dateTime) {
 
-        String thisYear = String.valueOf(dateTime.getYear());
-        String nextYear = String.valueOf(dateTime.getYear() + 1);
+        String thisYear = dateTime;
+        String nextYear = String.valueOf(Integer.valueOf(dateTime) + 1);
 
         Map<String, String> year = new LinkedHashMap<>();
         year.put(thisYear, thisYear);

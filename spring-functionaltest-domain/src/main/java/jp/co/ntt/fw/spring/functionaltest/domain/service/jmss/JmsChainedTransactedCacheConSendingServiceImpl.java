@@ -15,18 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import org.joda.time.DateTime;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Transactional("sendChainedTransactionManager")
@@ -52,7 +51,7 @@ public class JmsChainedTransactedCacheConSendingServiceImpl implements
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
+        jmsTodo.setDatetime(LocalDateTime.now());
 
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604001",
@@ -74,7 +73,7 @@ public class JmsChainedTransactedCacheConSendingServiceImpl implements
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
+        jmsTodo.setDatetime(LocalDateTime.now());
 
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604002",

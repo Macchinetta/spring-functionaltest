@@ -15,7 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -38,7 +39,7 @@ public class DateOfBirthValidator implements Validator {
         if (dateOfBirth == null)
             return;
 
-        if (dateOfBirth.plusYears(age).getYear() != (new LocalDate()).getYear())
+        if (dateOfBirth.plusYears(age).getYear() != LocalDate.now().getYear())
             errors.rejectValue("age", "i.sf.vldt.5002",
                     "Age and Date of Birth is inconsistent.");
     }

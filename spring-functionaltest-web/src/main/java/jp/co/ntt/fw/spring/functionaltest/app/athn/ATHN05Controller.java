@@ -15,20 +15,19 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AdministratorService;
 
@@ -38,12 +37,12 @@ public class ATHN05Controller {
     @Inject
     AdministratorService administratorService;
 
-    @RequestMapping(value = "/0501/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0501/001")
     public String handle0501001(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingBCryptPassword";
     }
 
-    @RequestMapping(value = "0501/001/createAdminUsingBCrypt", method = RequestMethod.POST)
+    @PostMapping(value = "0501/001/createAdminUsingBCrypt")
     public String createAdministratorUsingBCryptPassword(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -72,7 +71,7 @@ public class ATHN05Controller {
         return "redirect:/athn/0501/001/createCompleteAdminUsingBCrypt?complete";
     }
 
-    @RequestMapping(value = "0501/001/createCompleteAdminUsingBCrypt", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0501/001/createCompleteAdminUsingBCrypt", params = "complete")
     public String createCompleteAdministratorUsingBCryptPassword(Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
         model.addAttribute(messages);
@@ -80,7 +79,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0501/002/afterLogin")
+    @GetMapping(value = "0501/002/afterLogin")
     public String afterLoginUsingBCryptPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
@@ -94,12 +93,12 @@ public class ATHN05Controller {
         return "athn/showAdministratorInfoUsingBCryptPassword";
     }
 
-    @RequestMapping(value = "/0501/003", method = RequestMethod.GET)
+    @GetMapping(value = "/0501/003")
     public String handle0501003(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingPbkdf2Password";
     }
 
-    @RequestMapping(value = "0501/003/createAdminUsingPbkdf2", method = RequestMethod.POST)
+    @PostMapping(value = "0501/003/createAdminUsingPbkdf2")
     public String createAdministratorUsingPbkdf2Password(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -128,7 +127,7 @@ public class ATHN05Controller {
         return "redirect:/athn/0501/003/createCompleteAdminUsingPbkdf2?complete";
     }
 
-    @RequestMapping(value = "0501/003/createCompleteAdminUsingPbkdf2", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0501/003/createCompleteAdminUsingPbkdf2", params = "complete")
     public String createCompleteAdministratorUsingPbkdf2Password(Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
         model.addAttribute(messages);
@@ -136,7 +135,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0501/004/afterLogin")
+    @GetMapping(value = "0501/004/afterLogin")
     public String afterLoginUsingPbkdf2Password(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
@@ -150,12 +149,12 @@ public class ATHN05Controller {
         return "athn/showAdministratorInfoUsingPbkdf2Password";
     }
 
-    @RequestMapping(value = "/0501/005", method = RequestMethod.GET)
+    @GetMapping(value = "/0501/005")
     public String handle0501005(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingSCryptPassword";
     }
 
-    @RequestMapping(value = "0501/005/createAdminUsingSCrypt", method = RequestMethod.POST)
+    @PostMapping(value = "0501/005/createAdminUsingSCrypt")
     public String createAdministratorUsingSCryptPassword(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -184,7 +183,7 @@ public class ATHN05Controller {
         return "redirect:/athn/0501/005/createCompleteAdminUsingSCrypt?complete";
     }
 
-    @RequestMapping(value = "0501/005/createCompleteAdminUsingSCrypt", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0501/005/createCompleteAdminUsingSCrypt", params = "complete")
     public String createCompleteAdministratorUsingSCryptPassword(Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
         model.addAttribute(messages);
@@ -192,7 +191,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0501/006/afterLogin")
+    @GetMapping(value = "0501/006/afterLogin")
     public String afterLoginUsingSCryptPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
@@ -206,12 +205,12 @@ public class ATHN05Controller {
         return "athn/showAdministratorInfoUsingSCryptPassword";
     }
 
-    @RequestMapping(value = "/0501/007", method = RequestMethod.GET)
+    @GetMapping(value = "/0501/007")
     public String handle0501007(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingArgon2Password";
     }
 
-    @RequestMapping(value = "0501/007/createAdminUsingArgon2", method = RequestMethod.POST)
+    @PostMapping(value = "0501/007/createAdminUsingArgon2")
     public String createAdministratorUsingArgon2Password(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -240,7 +239,7 @@ public class ATHN05Controller {
         return "redirect:/athn/0501/007/createCompleteAdminUsingArgon2?complete";
     }
 
-    @RequestMapping(value = "0501/007/createCompleteAdminUsingArgon2", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0501/007/createCompleteAdminUsingArgon2", params = "complete")
     public String createCompleteAdministratorUsingArgon2Password(Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
         model.addAttribute(messages);
@@ -248,7 +247,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0501/008/afterLogin")
+    @GetMapping(value = "0501/008/afterLogin")
     public String afterLoginUsingArgon2Password(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 
@@ -262,12 +261,12 @@ public class ATHN05Controller {
         return "athn/showAdministratorInfoUsingArgon2Password";
     }
 
-    @RequestMapping(value = "/0502/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0502/001")
     public String handle0502001(Model model, AdministratorForm form) {
         return "athn/createAdministratorUsingDelegatingPassword";
     }
 
-    @RequestMapping(value = "0502/001/createAdminUsingDelegating", method = RequestMethod.POST)
+    @PostMapping(value = "0502/001/createAdminUsingDelegating")
     public String createAdministratorUsingDelegatingPassword(Model model,
             @Validated AdministratorForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -296,7 +295,7 @@ public class ATHN05Controller {
         return "redirect:/athn/0502/001/createCompleteAdminUsingDelegating?complete";
     }
 
-    @RequestMapping(value = "0502/001/createCompleteAdminUsingDelegating", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0502/001/createCompleteAdminUsingDelegating", params = "complete")
     public String createCompleteAdministratorUsingDelegatingPassword(
             Model model) {
         ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
@@ -305,7 +304,7 @@ public class ATHN05Controller {
         return "athn/createCompleteAdministrator";
     }
 
-    @RequestMapping(value = "0502/002/afterLogin")
+    @GetMapping(value = "0502/002/afterLogin")
     public String afterLoginUsingDelegatingPassword(
             @AuthenticationPrincipal UserDetails userDetails, Model model) {
 

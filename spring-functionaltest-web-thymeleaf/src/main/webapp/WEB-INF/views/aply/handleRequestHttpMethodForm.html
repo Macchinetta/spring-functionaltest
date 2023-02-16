@@ -9,20 +9,25 @@
 
       <h1 id="screenTitle">Controllerの実装方法(HTTPメソッドの設定)</h1>
 
-      <form th:action="@{/aply/0101/002_1}" method="post" class="form-horizontal"
+      <form th:action="@{/aply/0101/001_1}" method="get" class="form-horizontal">
+        <div th:errors="${handleRequestForm.*}"></div>
+        <input id="aply0101001_1" class="btn btn-default" value="HTTPメソッドをGETのみ指定（GET送信）"
+          type="submit" />
+      </form>
+      <form th:action="@{/aply/0101/001_2}" method="post" class="form-horizontal"
         th:object="${handleRequestForm}">
-        <button id="aply0101002_1" name="aply0101002_1" class="btn btn-default" type="submit"
+        <button id="aply0101001_2" name="aply0101001_2" class="btn btn-default" type="submit"
           value="Submit">HTTPメソッドをPOSTのみ指定（POST送信）</button>
       </form>
-      <form th:action="@{/aply/0101/002_2}" method="post" class="form-horizontal"
-        th:object="${handleRequestForm}">
-        <button id="aply0101002_2post" name="aply0101002_2post" class="btn btn-default"
-          type="submit" value="Submit">HTTPメソッドをPOSTとGETのみ指定（POST送信）</button>
-      </form>
-      <form th:action="@{/aply/0101/002_2}" method="get" class="form-horizontal">
+      <form th:action="@{/aply/0101/001_3}" method="get" class="form-horizontal">
         <div th:errors="${handleRequestForm.*}"></div>
-        <input id="aply0101002_2get" class="btn btn-default" value="HTTPメソッドをPOSTとGETのみ指定（GET送信）"
+        <input id="aply0101001_3get" class="btn btn-default" value="HTTPメソッドをPOSTとGETのみ指定（GET送信）"
           type="submit" />
+      </form>
+      <form th:action="@{/aply/0101/001_3}" method="post" class="form-horizontal"
+        th:object="${handleRequestForm}">
+        <button id="aply0101001_3post" name="aply0101001_3post" class="btn btn-default"
+          type="submit" value="Submit">HTTPメソッドをPOSTとGETのみ指定（POST送信）</button>
       </form>
 
     </div>

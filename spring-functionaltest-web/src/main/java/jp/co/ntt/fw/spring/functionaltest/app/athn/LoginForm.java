@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 public class LoginForm implements Serializable {
 

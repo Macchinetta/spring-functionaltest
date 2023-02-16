@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,12 +24,12 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.github.dozermapper.core.Mapper;
+import jakarta.inject.Inject;
 
 @RequestMapping("shopping/cart")
 @Controller
@@ -47,15 +45,15 @@ public class SSMN04ShoppingCartAjaxController {
     MessageSource messageSource;
 
     @Inject
-    Mapper beanMapper;
+    ShoppingCartBeanMapper beanMapper;
 
-    @RequestMapping(method = RequestMethod.POST, params = "add")
+    @PostMapping(params = "add")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CartItemAddResult addItem(CartItemForm form, Locale locale) {
 
         // カートに商品を追加する
-        CartItem cartItem = beanMapper.map(form, CartItem.class);
+        CartItem cartItem = beanMapper.map(form);
         shoppingCartHelper.addItem(cartItem, cart);
 
         // カートに商品を追加したことを通知するメッセージを設定する

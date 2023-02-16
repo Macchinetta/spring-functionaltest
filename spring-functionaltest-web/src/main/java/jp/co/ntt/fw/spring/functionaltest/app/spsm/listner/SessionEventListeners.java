@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.spsm.listner;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -29,6 +27,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.session.HttpSessionDestroyedEvent;
 import org.springframework.stereotype.Component;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Aspect
 @Component

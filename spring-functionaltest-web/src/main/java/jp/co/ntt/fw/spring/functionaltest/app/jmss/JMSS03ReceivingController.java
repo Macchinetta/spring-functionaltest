@@ -19,15 +19,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsProperty;
 
@@ -44,7 +43,7 @@ public class JMSS03ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=jmsMessage")
+    @PostMapping(value = "receivemessage", params = "testCase=jmsMessage")
     public String receiveMessageJmsMessage(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -59,7 +58,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=addKey")
+    @PostMapping(value = "receivemessage", params = "testCase=addKey")
     public String receiveMessageAddKey(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -74,7 +73,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=topic")
+    @PostMapping(value = "receivemessage", params = "testCase=topic")
     public String receiveMessageTopic(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -91,7 +90,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=many")
+    @PostMapping(value = "receivemessage", params = "testCase=many")
     public String receiveMessageMany(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -106,7 +105,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=callback")
+    @PostMapping(value = "receivemessage", params = "testCase=callback")
     public String receiveMessageCallback(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -125,7 +124,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=withHeadersOK")
+    @PostMapping(value = "receivemessage", params = "testCase=withHeadersOK")
     public String receiveMessageWithHeadersOK(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
@@ -140,7 +139,7 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=withHeadersNG")
+    @PostMapping(value = "receivemessage", params = "testCase=withHeadersNG")
     public String receiveMessageWithWithHeadersNG(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {

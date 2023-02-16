@@ -24,9 +24,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -41,13 +42,13 @@ public class DBSP02Controller {
         return new UserCreateForm();
     }
 
-    @RequestMapping(value = "0201/001/create", method = RequestMethod.GET, params = "form")
+    @GetMapping(value = "0201/001/create", params = "form")
     public String createForm(UserCreateForm userCreateForm,
             BindingResult bindingResult) {
         return "dbsp/createForm";
     }
 
-    @RequestMapping(value = "0201/001/create", method = RequestMethod.POST, params = "confirm")
+    @PostMapping(value = "0201/001/create", params = "confirm")
     public String createConfirm(@Validated UserCreateForm userCreateForm,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -56,7 +57,7 @@ public class DBSP02Controller {
         return "dbsp/createConfirm";
     }
 
-    @RequestMapping(value = "0201/001/create", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001/create")
     public String create(@Validated UserCreateForm userCreateForm,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
@@ -77,7 +78,7 @@ public class DBSP02Controller {
         return "redirect:/dbsp/0201/001/create?complete";
     }
 
-    @RequestMapping(value = "0201/001/create", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "0201/001/create", params = "complete")
     public String createComplete() {
         return "dbsp/createComplete";
     }

@@ -170,7 +170,7 @@ public class MethodValidationTest extends FunctionTestSupport {
                     "propertyPath=convertUserId.arg0,"), containsString(
                             "propertyPath=convertUserId.userId,")));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -210,7 +210,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません', propertyPath=convertUserId.<return value>,"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -292,7 +292,7 @@ public class MethodValidationTest extends FunctionTestSupport {
                     containsString(
                             "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate")));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.Past.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.Past.message}'"));
         }
     }
 
@@ -338,7 +338,7 @@ public class MethodValidationTest extends FunctionTestSupport {
                     containsString(
                             "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,")));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -384,7 +384,7 @@ public class MethodValidationTest extends FunctionTestSupport {
                     containsString(
                             "propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,")));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -426,7 +426,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.arg0,"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -468,7 +468,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.<return value>,"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -510,7 +510,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -552,7 +552,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
         }
     }
 
@@ -594,7 +594,7 @@ public class MethodValidationTest extends FunctionTestSupport {
             assertThat(logMessage, containsString(
                     "interpolatedMessage='過去の日付にしてください', propertyPath=convertUserInfo.<return value>.userInfo.dateOfBirth"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{javax.validation.constraints.Past.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.Past.message}'"));
         }
     }
 }

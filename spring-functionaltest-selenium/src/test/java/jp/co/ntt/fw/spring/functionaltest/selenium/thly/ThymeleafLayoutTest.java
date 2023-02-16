@@ -113,14 +113,14 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // フラグメントのコンテンツのみ挿入されていることの確認
         {
             assertFalse(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/div")));
+                    "id('authority-input')/div[@class='col-md-4']/div/div")));
             assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/select/option[@value='STAFF_MNG']")));
+                    "id('authority-input')/div[@class='col-md-4']/div/select/option[@value='STAFF_MNG']")));
             assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/select/option[@value='SHOW_SHOPPING_MNG']")));
+                    "id('authority-input')/div[@class='col-md-4']/div/select/option[@value='SHOW_SHOPPING_MNG']")));
             WebElement selectElement = webDriverOperations.getWebDriver()
                     .findElement(By.xpath(
-                            "id('authority-input')/div[@class='col-md-4']/select"));
+                            "id('authority-input')/div[@class='col-md-4']/div/select"));
             assertThat(selectElement.getAttribute("disabled"), is(nullValue()));
             assertThat(selectElement.getAttribute("style"), is(""));
         }
@@ -156,11 +156,11 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // フラグメント部分のHTMLで引数として受け取った値（変数）を出力できることの確認
         {
             assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='STAFF_MNG']")));
+                    "id('authority-input')/div[@class='col-md-4']/div/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='STAFF_MNG']")));
             assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='SHOW_SHOPPING_MNG']")));
+                    "id('authority-input')/div[@class='col-md-4']/div/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='SHOW_SHOPPING_MNG']")));
             assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='STOCK_MNG' and @selected='selected']")));
+                    "id('authority-input')/div[@class='col-md-4']/div/select[@disabled='disabled' and @style='background-color: whitesmoke;']/option[@value='STOCK_MNG' and @selected='selected']")));
         }
     }
 

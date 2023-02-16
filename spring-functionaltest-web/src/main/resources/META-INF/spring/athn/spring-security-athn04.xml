@@ -5,21 +5,22 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/0401/**" authentication-manager-ref="dbUserLoginManager">
-
+  <sec:http pattern="/athn/0401/**" request-matcher="ant" authentication-manager-ref="dbUserLoginManager">
     <sec:form-login login-page="/athn/0401/001/login" login-processing-url="/athn/0401/001/authenticate"
       default-target-url="/athn/0401/001?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0401/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0401/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0401/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0401/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0401/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
-  <sec:http pattern="/athn/0402/001/**" authentication-manager-ref="dbUserLoginManagerForSpecifiedPass">
-
+  <sec:http pattern="/athn/0402/001/**" request-matcher="ant" authentication-manager-ref="dbUserLoginManagerForSpecifiedPass">
     <sec:form-login login-page="/athn/0402/001/login" login-processing-url="/athn/0402/001/authenticate"
       default-target-url="/athn/0402/001?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0402/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0402/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0402/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0402/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0402/001/**" access="isAuthenticated()" />
   </sec:http>
 
@@ -31,12 +32,12 @@
 
   <bean id="athnPasswordEncoderSpecifiedPass" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-  <sec:http pattern="/athn/0402/004/**" authentication-manager-ref="dbUserLoginManagerForSpecifiedHash">
-
+  <sec:http pattern="/athn/0402/004/**" request-matcher="ant" authentication-manager-ref="dbUserLoginManagerForSpecifiedHash">
     <sec:form-login login-page="/athn/0402/004/login" login-processing-url="/athn/0402/004/authenticate"
       default-target-url="/athn/0402/004?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0402/004/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0402/004/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0402/004/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0402/004/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0402/004/**" access="isAuthenticated()" />
   </sec:http>
 

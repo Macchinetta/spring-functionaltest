@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.1.SP1.RELEASE</version>
+    <version>1.9.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer For Thymeleaf</name>
@@ -85,35 +85,6 @@
           <groupId>${project.groupId}</groupId>
           <artifactId>spring-functionaltest-env</artifactId>
         </dependency>
-        <dependency>
-          <groupId>com.sun.mail</groupId>
-          <artifactId>jakarta.mail</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.cxf</groupId>
-          <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.cxf</groupId>
-          <artifactId>cxf-rt-transports-http</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.transaction</groupId>
-          <artifactId>jakarta.transaction-api</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.activemq</groupId>
-          <artifactId>activemq-client</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.activemq</groupId>
-          <artifactId>activemq-broker</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.jms</groupId>
-          <artifactId>jakarta.jms-api</artifactId>
-          <scope>runtime</scope>
-        </dependency>
       </dependencies>
     </profile>
     <profile>
@@ -130,20 +101,6 @@
         </dependency>
       </dependencies>
     </profile>
-    <!-- Add profile for packaging Apache CXF jars -->
-    <profile>
-      <id>warpack-cxf</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.cxf</groupId>
-          <artifactId>cxf-rt-frontend-jaxws</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.cxf</groupId>
-          <artifactId>cxf-rt-transports-http</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
     <!-- Add profile for packaging jakarta Transaction jars -->
     <profile>
       <id>warpack-transaction</id>
@@ -153,61 +110,6 @@
           <artifactId>jakarta.transaction-api</artifactId>
         </dependency>
       </dependencies>
-    </profile>
-    <!-- Add profile for the web service to see a local WSDL file. for Running on Websphere -->
-    <profile>
-      <id>change-wsdl-location</id>
-      <properties>
-        <replacer.file>${project.basedir}/src/main/java/jp/co/ntt/fw/spring/functionaltest/ws/soap/TodoWebServiceImpl.java</replacer.file>
-        <replacer.token>endpointInterface =
-          "jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService"\)</replacer.token>
-        <replacer.value>endpointInterface =
-          "jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService",
-          wsdlLocation =
-          "WEB-INF/wsdl/todoWebService_wsdl.wsdl"\)</replacer.value>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.google.code.maven-replacer-plugin</groupId>
-            <artifactId>replacer</artifactId>
-            <executions>
-              <execution>
-                <id>replace</id>
-                <phase>process-resources</phase>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <configuration>
-                  <file>${replacer.file}</file>
-                  <replacements>
-                    <replacement>
-                      <token>${replacer.token}</token>
-                      <value>${replacer.value}</value>
-                    </replacement>
-                  </replacements>
-                </configuration>
-              </execution>
-              <execution>
-                <id>undo-replace</id>
-                <phase>compile</phase>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <configuration>
-                  <file>${replacer.file}</file>
-                  <replacements>
-                    <replacement>
-                      <token>${replacer.value}</token>
-                      <value>${replacer.token}</value>
-                    </replacement>
-                  </replacements>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
     <!-- Add profile for JAXB jars -->
     <profile>
@@ -219,56 +121,9 @@
         </dependency>
       </dependencies>
     </profile>
-    <!-- Add profile for packaging Commons FileUpload jars -->
-    <profile>
-      <id>warpack-fileupload</id>
-      <dependencies>
-        <dependency>
-          <groupId>commons-fileupload</groupId>
-          <artifactId>commons-fileupload</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
-    <profile>
-      <id>jdk11</id>
-      <activation>
-        <jdk>11</jdk>
-      </activation>
-      <dependencies>
-        <dependency>
-          <groupId>com.sun.activation</groupId>
-          <artifactId>jakarta.activation</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.activation</groupId>
-          <artifactId>jakarta.activation-api</artifactId>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-    <!-- When running with jdk11+local, redefine with "runtime" because it becomes "provided" in jdk11 profile -->
-    <profile>
-      <id>warpack-activation</id>
-      <dependencies>
-        <dependency>
-          <groupId>com.sun.activation</groupId>
-          <artifactId>jakarta.activation</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>jakarta.activation</groupId>
-          <artifactId>jakarta.activation-api</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
   </profiles>
 
   <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>spring-functionaltest-env</artifactId>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>spring-functionaltest-domain</artifactId>
@@ -279,6 +134,24 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>spring-functionaltest-env</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>jakarta.mail</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>jakarta.transaction</groupId>
+      <artifactId>jakarta.transaction-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.jms</groupId>
+      <artifactId>jakarta.jms-api</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>spring-functionaltest-webservice</artifactId>
@@ -309,16 +182,6 @@
       <groupId>org.terasoluna.gfw</groupId>
       <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
       <type>pom</type>
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.tiles</groupId>
-          <artifactId>tiles-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.tiles</groupId>
-          <artifactId>tiles-jsp</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- == End TERASOLUNA == -->
 
@@ -329,15 +192,11 @@
     </dependency>
     <dependency>
       <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf-spring5</artifactId>
+      <artifactId>thymeleaf-spring6</artifactId>
     </dependency>
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity5</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-java8time</artifactId>
+      <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>
@@ -346,29 +205,60 @@
     </dependency>
     <!-- == End Thymeleaf == -->
 
-    <!-- XXE Injection Countermeasure -->
+    <!-- == Begin XXE Injection Countermeasure == -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-oxm</artifactId>
     </dependency>
+    <!-- == End XXE Injection Countermeasure == -->
 
-    <!-- == Begin Unit Test == -->
+    <!-- == Begin Password Encode == -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk18on</artifactId>
+    </dependency>
+    <!-- == End Password Encode == -->
+
+    <!-- == Begin Mail == -->
+    <dependency>
+      <groupId>com.icegreen</groupId>
+      <artifactId>greenmail-spring</artifactId>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.sun.mail</groupId>
+          <artifactId>jakarta.mail</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>jakarta.mail</artifactId>
+    </dependency>
+    <!-- == End Mail == -->
+
+    <!-- == Begin Jakarta Activation == -->
+    <dependency>
+      <groupId>jakarta.activation</groupId>
+      <artifactId>jakarta.activation-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <scope>test</scope>
+      <groupId>org.eclipse.angus</groupId>
+      <artifactId>angus-activation</artifactId>
+      <scope>runtime</scope>
     </dependency>
-    <!-- == End Unit Test == -->
+    <!-- == End Jakarta Activation == -->
+
+    <!-- == Begin Jetty Proxy Server == -->
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-proxy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-deploy</artifactId>
+    </dependency>
+    <!-- == End Jetty Proxy Server == -->
 
     <!-- == Begin For Report == -->
     <dependency>
@@ -387,67 +277,30 @@
     </dependency>
     <!-- == End For Report == -->
 
-    <!-- == Begin GreenMail-Spring == -->
+    <!-- == Begin Log4j 2 to SLF4J Adapter == -->
     <dependency>
-      <groupId>com.icegreen</groupId>
-      <artifactId>greenmail-spring</artifactId>
-      <scope>runtime</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.sun.mail</groupId>
-          <artifactId>javax.mail</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-to-slf4j</artifactId>
     </dependency>
-    <!-- == End GreenMail-Spring == -->
+    <!-- == End Log4j 2 to SLF4J Adapter == -->
 
-    <!-- == Begin Jetty Proxy Server == -->
+    <!-- == Begin Unit Test == -->
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-proxy</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-deploy</artifactId>
-    </dependency>
-    <!-- == End Jetty Proxy Server == -->
-
-    <!-- == Begin activemq == -->
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-client</artifactId>
-      <scope>provided</scope>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-broker</artifactId>
-      <scope>provided</scope>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
     </dependency>
-    <!-- == End activemq == -->
-
-    <!-- == Begin Jakarta Mail == -->
-    <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>jakarta.mail</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <!-- == End Jakarta Mail == -->
-
-    <!-- == Begin Password Encode == -->
-    <dependency>
-      <groupId>org.bouncycastle</groupId>
-      <artifactId>bcprov-jdk15on</artifactId>
-    </dependency>
-    <!-- == End Password Encode == -->
-
-    <!-- not required in JDK8 and conflicts with JAXB implementation of some APserver in JDK11, set scope to provided. -->
-    <!-- == Begin JAXB == -->
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <!-- == End JAXB == -->
+    <!-- == End Unit Test == -->
 
   </dependencies>
   <properties>

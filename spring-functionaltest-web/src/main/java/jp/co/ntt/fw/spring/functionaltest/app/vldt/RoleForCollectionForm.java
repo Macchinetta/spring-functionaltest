@@ -17,9 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.util.List;
 
-import javax.validation.constraints.NotEmpty;
-
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
+
+import jakarta.validation.constraints.NotEmpty;
 
 public class RoleForCollectionForm {
     @NotEmpty

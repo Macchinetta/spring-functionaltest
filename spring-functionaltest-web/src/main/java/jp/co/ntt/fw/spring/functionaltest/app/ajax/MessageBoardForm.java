@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class MessageBoardForm implements Serializable {

@@ -20,14 +20,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNull;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.name;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +35,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class SpringSecurityTest extends FunctionTestSupport {
@@ -55,7 +56,14 @@ public class SpringSecurityTest extends FunctionTestSupport {
     public void testSPSC0101001() throws IOException {
 
         // メニュー画面の操作
-        webDriverOperations.click(id("spsc0101001"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("spsc0101001"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // デフォルトのログイン画面の確認
         // ユーザ
@@ -102,7 +110,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
         assertThat(resultMap.get("X-Frame-Options"), is("DENY"));
-        assertThat(resultMap.get("X-XSS-Protection"), is("1; mode=block"));
+        assertThat(resultMap.get("X-XSS-Protection"), is("0"));
         assertNull(resultMap.get("Content-Security-Policy"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
         assertNull(resultMap.get("Public-Key-Pins"));
@@ -216,7 +224,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
         assertThat(resultMap.get("X-Frame-Options"), is("DENY"));
-        assertThat(resultMap.get("X-XSS-Protection"), is("1; mode=block"));
+        assertThat(resultMap.get("X-XSS-Protection"), is("0"));
         assertNull(resultMap.get("Content-Security-Policy"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
         assertNull(resultMap.get("Public-Key-Pins"));

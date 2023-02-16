@@ -15,21 +15,20 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.util.UrlPathHelper;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.ItemService;
 
@@ -43,7 +42,7 @@ public class SSMN04ShoppingItemsController {
 
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
 
-    @RequestMapping(method = RequestMethod.GET, params = "init")
+    @GetMapping(params = "init")
     public String init(SessionStatus sessionStatus,
             HttpServletRequest request) {
         sessionStatus.setComplete();
@@ -52,14 +51,14 @@ public class SSMN04ShoppingItemsController {
                 + "/shopping/items";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String items(@PageableDefault(20) Pageable pageable, Model model) {
         Page<Item> page = itemService.getItems(pageable);
         model.addAttribute("page", page);
         return "ssmn/shoppingItems";
     }
 
-    @RequestMapping(value = "{itemId}", method = RequestMethod.GET)
+    @GetMapping(value = "{itemId}")
     public String item(@PathVariable("itemId") String itemId, Model model) {
         Item item = itemService.getItem(itemId);
         model.addAttribute(item);

@@ -17,10 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Service
@@ -31,7 +30,7 @@ public class JmsValidationServiceImpl implements JmsValidationService {
 
     @Override
     public void validate(JmsTodo jmsTodo) throws IOException {
-
+        // No Operation
     }
 
     @Override

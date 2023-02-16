@@ -17,15 +17,15 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.inject.Inject;
-import javax.mail.Store;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+
+import jakarta.inject.Inject;
+import jakarta.mail.Store;
+import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class AuthErrorMailSendingServiceImpl implements

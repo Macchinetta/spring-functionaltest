@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 public interface UserIdUseService {

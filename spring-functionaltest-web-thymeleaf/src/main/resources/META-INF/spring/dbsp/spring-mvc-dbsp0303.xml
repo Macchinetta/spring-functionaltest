@@ -67,7 +67,7 @@
   <!-- Settings View Resolver. -->
   <mvc:view-resolvers>
     <mvc:bean-name />
-    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+    <bean class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
       <property name="templateEngine" ref="templateEngine" />
       <property name="characterEncoding" value="UTF-8" />
       <property name="forceContentType" value="true" />
@@ -75,20 +75,19 @@
     </bean>
   </mvc:view-resolvers>
 
-  <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+  <bean id="templateResolver" class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="/WEB-INF/views/" />
     <property name="suffix" value=".html" />
     <property name="templateMode" value="HTML" />
     <property name="characterEncoding" value="UTF-8" />
   </bean>
 
-  <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+  <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
     <property name="enableSpringELCompiler" value="true" />
     <property name="templateResolver" ref="templateResolver" />
     <property name="additionalDialects">
       <set>
-        <bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect" />
-        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+        <bean class="org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect" />
       </set>
     </property>
   </bean>
@@ -118,7 +117,6 @@
         <entry key="InvalidRequestException" value="common/error/operationError" />
         <entry key="MultipartException" value="common/error/fileUploadError" />
         <entry key="HttpSessionRequiredException" value="common/error/operationError" />
-        <entry key="MappingException" value="common/error/beanMappingError" />
         <entry key="IntentionalException" value="common/error/intentionalError" />
         <!-- <entry key="AccessDeniedException" value="common/error/accessDeniedError" /> -->
       </map>
@@ -132,7 +130,6 @@
         <entry key="common/error/dataAccessError" value="500" />
         <entry key="common/error/operationError" value="400" />
         <entry key="common/error/fileUploadError" value="400" />
-        <entry key="common/error/beanMappingError" value="500" />
         <entry key="common/error/intentionalError" value="500" />
         <!-- <entry key="common/error/accessDeniedError" value="403" /> -->
       </map>
@@ -141,9 +138,7 @@
       <array>
         <value>org.springframework.security.access.AccessDeniedException
         </value>
-        <value>org.springframework.security.oauth2.client.resource.UserRedirectRequiredException
-        </value>
-        <value>org.springframework.web.util.NestedServletException
+        <value>jakarta.servlet.ServletException
         </value>
       </array>
     </property>

@@ -27,7 +27,7 @@ public interface StockRepository {
      * @param itemCode
      * @return
      */
-    Stock selectByItemCode(String itemCode);
+    Stock findByItemCode(String itemCode);
 
     /**
      * 単一検索（悲観的ロック）<br>
@@ -37,7 +37,7 @@ public interface StockRepository {
      * @param itemCode
      * @return
      */
-    Stock selectByItemCodeWithPessimisticLock(String itemCode);
+    Stock findByItemCodeWithPessimisticLock(String itemCode);
 
     /**
      * 数量更新<br>
@@ -68,17 +68,5 @@ public interface StockRepository {
      * @return
      */
     int updateQuantityWithOptimisticLock(Stock stock);
-
-    /**
-     * タイムアウト値をゼロにする（DB2用）
-     * @return
-     */
-    int setCurrentLockTimeoutNotWait();
-
-    /**
-     * タイムアウト値をデフォルト値に戻す（DB2用）
-     * @return
-     */
-    int setCurrentLockTimeoutDefault();
 
 }

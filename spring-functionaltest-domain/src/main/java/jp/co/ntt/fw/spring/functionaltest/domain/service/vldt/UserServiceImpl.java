@@ -15,11 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.vldt.UserRepository;
 
 @Service
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUnusedUserId(String userId) {
-        return (userRepository.existsUser(userId) <= 0);
+        return (userRepository.existsByUserId(userId) <= 0);
     }
 
 }

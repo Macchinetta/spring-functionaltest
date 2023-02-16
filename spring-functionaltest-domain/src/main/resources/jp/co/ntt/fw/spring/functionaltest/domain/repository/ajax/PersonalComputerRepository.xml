@@ -88,7 +88,7 @@
   </select>
 
 
-  <select id="findOneByID" parameterType="int" resultMap="personalComputerResultMap">
+  <select id="findById" parameterType="int" resultMap="personalComputerResultMap">
     <include refid="selectPhrase" />
     WHERE
     personal_computer_id = #{personalComputerId}

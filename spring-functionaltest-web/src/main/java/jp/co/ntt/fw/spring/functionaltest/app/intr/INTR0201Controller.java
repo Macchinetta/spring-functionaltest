@@ -17,45 +17,44 @@ package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class INTR0201Controller {
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "004", method = RequestMethod.GET)
+    @GetMapping(value = "004")
     public String handle004() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "005", method = RequestMethod.GET)
+    @GetMapping(value = "005")
     public String handle005() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "006", method = RequestMethod.GET)
+    @GetMapping(value = "006")
     public String handle006(Model model) {
         model.addAttribute("testNo", "006");
         return "intr/changeLocaleSession";
     }
 
-    @RequestMapping(value = "006_check", method = RequestMethod.GET)
+    @GetMapping(value = "006_check")
     public String handle006_check() {
         return "intr/checkLocale";
     }
 
-    @RequestMapping(value = "007", method = RequestMethod.GET)
+    @GetMapping(value = "007")
     public String handle007(Model model) {
         model.addAttribute("testNo", "007");
         return "intr/changeLocaleSession";
     }
 
-    @RequestMapping(value = "007_check", method = RequestMethod.GET)
+    @GetMapping(value = "007_check")
     public String handle007_check() {
         return "intr/checkLocale";
     }

@@ -20,8 +20,6 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.inject.Inject;
-
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +27,7 @@ import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.excn.StockRepository;
 
@@ -48,7 +47,7 @@ public class StockOptimisticLockServiceImpl implements
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -59,14 +58,14 @@ public class StockOptimisticLockServiceImpl implements
 
     @Override
     public Stock buy(Stock stock, int purchasingQuantity) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
         subject.setQuantity(subject.getQuantity() - purchasingQuantity);
         return updateWithOptimisticLock(subject);
     }
 
     @Override
     public Stock buyByHiddenVersion(Stock stock, int purchasingQuantity) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
         subject.setVersion(stock.getVersion());
         subject.setQuantity(subject.getQuantity() - purchasingQuantity);
         return updateWithOptimisticLock(subject);

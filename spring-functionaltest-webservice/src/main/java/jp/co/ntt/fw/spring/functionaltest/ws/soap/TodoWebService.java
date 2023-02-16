@@ -17,13 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.ws.soap;
 
 import java.util.List;
 
-import javax.activation.DataHandler;
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
-import javax.jws.WebResult;
-import javax.jws.WebService;
-import javax.xml.bind.annotation.XmlMimeType;
-
+import jakarta.activation.DataHandler;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebResult;
+import jakarta.jws.WebService;
+import jakarta.xml.bind.annotation.XmlMimeType;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException;
 

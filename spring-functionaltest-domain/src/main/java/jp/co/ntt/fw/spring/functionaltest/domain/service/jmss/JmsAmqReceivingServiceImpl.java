@@ -29,9 +29,6 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.inject.Inject;
-import javax.jms.JMSException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +43,8 @@ import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
+import jakarta.jms.JMSException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
@@ -136,7 +135,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
 
     @Override
     public void receiveMessageByJmsMessage(
-            javax.jms.TextMessage message) throws IOException, JMSException {
+            jakarta.jms.TextMessage message) throws IOException, JMSException {
 
         logger.debug("Received Message![TestQueue0301001] {}", message
                 .toString());
@@ -223,7 +222,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
 
     @Override
     public void receiveMessageMany(
-            javax.jms.TextMessage message) throws IOException, JMSException, InterruptedException {
+            jakarta.jms.TextMessage message) throws IOException, JMSException, InterruptedException {
 
         logger.debug("Received Message! {}", message);
 
@@ -240,7 +239,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
 
     @Override
     public void receiveMessageByCallback(
-            javax.jms.TextMessage message) throws IOException, JMSException {
+            jakarta.jms.TextMessage message) throws IOException, JMSException {
 
         logger.debug("Received Message! {}", message);
 
@@ -568,7 +567,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         // JMSからメッセージ件数取得
         String distinationName = "TestQueue0601001";
         String messageSelector = null;
-        List<javax.jms.Message> msgs = jmsSharedService.getMessagesSelected(
+        List<jakarta.jms.Message> msgs = jmsSharedService.getMessagesSelected(
                 jndiConCacheJmsTemplate, distinationName, messageSelector);
 
         if (msgs.size() == 0) {
@@ -596,7 +595,7 @@ public class JmsAmqReceivingServiceImpl implements JmsAmqReceivingService {
         // JMSからメッセージ件数取得
         String distinationName = "TestQueue0601002";
         String messageSelector = null;
-        List<javax.jms.Message> msgs = jmsSharedService.getMessagesSelected(
+        List<jakarta.jms.Message> msgs = jmsSharedService.getMessagesSelected(
                 jndiConCacheJmsTemplate, distinationName, messageSelector);
 
         if (msgs.size() == 0) {

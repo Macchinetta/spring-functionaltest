@@ -17,16 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.encr;
 
 import java.util.Base64;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.BytesKeys;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
 
@@ -37,22 +37,22 @@ public class ENCR02Controller {
     @Inject
     EncryptionDataService encryptionDataService;
 
-    @RequestMapping(value = "/0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0201/001")
     public String handle0201001(Model model, EncryptionDataForm form) {
         return "encr/generateBytesKey";
     }
 
-    @RequestMapping(value = "/0202/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0202/001")
     public String handle0202001(Model model, EncryptionDataForm form) {
         return "encr/generateSameBytesKey";
     }
 
-    @RequestMapping(value = "/0203/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0203/001")
     public String handle0203001(Model model, EncryptionDataForm form) {
         return "encr/generateStringKey";
     }
 
-    @RequestMapping(value = "0201/001/generateBytesKey", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001/generateBytesKey")
     public String generateBytesKey(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -65,7 +65,7 @@ public class ENCR02Controller {
         return "encr/generateBytesKeyComplete";
     }
 
-    @RequestMapping(value = "0202/001/generateSameBytesKey", method = RequestMethod.POST)
+    @PostMapping(value = "0202/001/generateSameBytesKey")
     public String generateSameBytesKey(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -82,7 +82,7 @@ public class ENCR02Controller {
         return "encr/generateSameBytesKeyComplete";
     }
 
-    @RequestMapping(value = "0203/001/generateStringKey", method = RequestMethod.POST)
+    @PostMapping(value = "0203/001/generateStringKey")
     public String generateStringKey(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {

@@ -5,30 +5,34 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/spsm/0501/001/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+  <sec:http pattern="/spsm/0501/001/**" request-matcher="ant"
+    auto-config="false"
+    authentication-manager-ref="loginForSessionUserInfoManager">
     <sec:form-login login-page="/spsm/0501/001" login-processing-url="/spsm/0501/001/authenticate"
       default-target-url="/spsm/0501/001?loginSuccess" />
-
-    <sec:intercept-url pattern="/spsm/0501/001/login" access="permitAll" />
-
-    <sec:intercept-url pattern="/spsm/0501/**" access="isAuthenticated()" />
     <sec:session-management>
       <sec:concurrency-control error-if-maximum-exceeded="false"
         max-sessions="2" expired-url="/" />
     </sec:session-management>
-    <sec:logout logout-url="/spsm/0501/001/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/spsm/0501/001/logout" logout-success-url="/athn"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/spsm/0501/001/login" access="permitAll" />
+    <sec:intercept-url pattern="/spsm/0501/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsm/0501/002/**" auto-config="false" authentication-manager-ref="loginForSessionUserInfoManager">
+  <sec:http pattern="/spsm/0501/002/**" request-matcher="ant"
+    auto-config="false"
+    authentication-manager-ref="loginForSessionUserInfoManager">
     <sec:form-login login-page="/spsm/0501/002" login-processing-url="/spsm/0501/002/authenticate"
       default-target-url="/spsm/0501/002?loginSuccess" />
     <sec:session-management>
       <sec:concurrency-control error-if-maximum-exceeded="true"
         max-sessions="2" />
     </sec:session-management>
-    <sec:logout logout-url="/spsm/0501/002/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/spsm/0501/002/logout" logout-success-url="/athn"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
   <sec:authentication-manager id="loginForSessionUserInfoManager">

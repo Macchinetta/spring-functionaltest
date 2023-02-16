@@ -18,11 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.domain.model;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.persistence.Transient;
-
-import org.joda.time.DateTime;
+import jakarta.persistence.Transient;
 
 public class TodoMB3 implements Serializable {
 
@@ -36,11 +34,11 @@ public class TodoMB3 implements Serializable {
 
     private boolean finished;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
     private long version;
 
-    private DateTime completeAt;
+    private LocalDate completeAt;
 
     private transient InputStream desc1;
 
@@ -112,11 +110,11 @@ public class TodoMB3 implements Serializable {
         return version;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -132,11 +130,11 @@ public class TodoMB3 implements Serializable {
         this.category = category;
     }
 
-    public DateTime getCompleteAt() {
+    public LocalDate getCompleteAt() {
         return completeAt;
     }
 
-    public void setCompleteAt(DateTime completeAt) {
+    public void setCompleteAt(LocalDate completeAt) {
         this.completeAt = completeAt;
     }
 

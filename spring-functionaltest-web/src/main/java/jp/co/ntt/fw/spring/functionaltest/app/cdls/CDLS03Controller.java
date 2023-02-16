@@ -15,14 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.ReloadCodeListService;
 
 @RequestMapping("cdls")
@@ -37,7 +36,7 @@ public class CDLS03Controller {
         return new CodeListForm();
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String handle01001(Model model) {
         model.addAttribute("systemYear", orderStatusService.getSystemYear());
         return "cdls/customizeCodeList";

@@ -18,14 +18,13 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Transactional("sendJmsTransactionManager")

@@ -20,13 +20,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thym/0201")
 public class THYM0201Controller {
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle001(Model model) {
 
         SearchForm form = new SearchForm();
@@ -34,7 +35,7 @@ public class THYM0201Controller {
         return "thym/search";
     }
 
-    @RequestMapping("002")
+    @GetMapping("002")
     public String handle002(Model model) {
 
         List<Item> items = new ArrayList<Item>();
@@ -47,7 +48,7 @@ public class THYM0201Controller {
         return "thym/searchResult";
     }
 
-    @RequestMapping("003")
+    @GetMapping("003")
     public String handle003(Model model) {
 
         SearchForm form = new SearchForm();
@@ -56,7 +57,7 @@ public class THYM0201Controller {
         return "thym/search";
     }
 
-    @RequestMapping("004")
+    @GetMapping("004")
     public String handle004(Model model) {
 
         SearchForm form = new SearchForm();

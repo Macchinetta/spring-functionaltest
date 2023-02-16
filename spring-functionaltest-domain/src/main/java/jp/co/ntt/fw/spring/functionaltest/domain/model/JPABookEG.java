@@ -16,25 +16,24 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.persistence.Version;
-
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.persistence.Version;
 
 @Entity
 @Table(name = "t_book_eg")
@@ -73,8 +72,7 @@ public class JPABookEG {
 
     @Column(name = "created_date")
     @CreatedDate
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "last_modified_by")
     @LastModifiedBy
@@ -82,8 +80,7 @@ public class JPABookEG {
 
     @Column(name = "last_modified_date")
     @LastModifiedDate
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    private DateTime lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     @JoinColumn(name = "category_id")
     @ManyToOne(targetEntity = JPACategoryEG.class)
@@ -169,11 +166,11 @@ public class JPABookEG {
         this.createdBy = createdBy;
     }
 
-    public DateTime getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(DateTime createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -185,11 +182,11 @@ public class JPABookEG {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public DateTime getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(DateTime lastModifiedDate) {
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

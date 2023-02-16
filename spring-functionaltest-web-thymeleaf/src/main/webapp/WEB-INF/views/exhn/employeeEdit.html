@@ -10,7 +10,7 @@
 
       <div th:replace="~{common/fragments :: messagesPanel}"></div>
 
-      <form th:action="@{/exhn/{testNumber}(testNumber=${testNumber})}" class="form-horizontal"
+      <form th:action="@{/exhn{testNumber}(testNumber=${testNumber})}" class="form-horizontal"
         method="post" th:object="${employeeForm}">
         <fieldset>
           <legend>社員情報</legend>

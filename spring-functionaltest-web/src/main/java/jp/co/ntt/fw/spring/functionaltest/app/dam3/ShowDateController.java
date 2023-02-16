@@ -15,13 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dam3;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DateMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3ForJSR310Service;
 
@@ -32,7 +31,7 @@ public class ShowDateController {
     @Inject
     TodoMB3ForJSR310Service todoMB3ForJSR310Service;
 
-    @RequestMapping(value = "date", method = RequestMethod.GET)
+    @GetMapping(value = "date")
     public String getDate(Model model) {
 
         DateMB3 dateMB3 = todoMB3ForJSR310Service.findCreatedAtOne(

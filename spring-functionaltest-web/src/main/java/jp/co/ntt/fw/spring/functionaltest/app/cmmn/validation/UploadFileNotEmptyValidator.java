@@ -15,17 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class UploadFileNotEmptyValidator implements
                                          ConstraintValidator<UploadFileNotEmpty, MultipartFile> {
 
     @Override
     public void initialize(UploadFileNotEmpty constraint) {
+        // The default implementation
     }
 
     @Override

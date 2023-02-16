@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 
 public class MembersSearchQuery implements Serializable {
     private static final long serialVersionUID = 1L;

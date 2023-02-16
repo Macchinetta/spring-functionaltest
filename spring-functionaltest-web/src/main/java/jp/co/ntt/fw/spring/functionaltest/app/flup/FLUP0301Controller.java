@@ -17,17 +17,17 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.validation.groups.Default;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.SingleUploadForm.UploadFileMaxSize250byte;
 
 /**
@@ -45,43 +45,43 @@ public class FLUP0301Controller {
         return new SingleUploadForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001Form() {
         return form();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     public String handle001Upload(@Validated SingleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002Form() {
         return form();
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST)
+    @PostMapping(value = "002")
     public String handle002Upload(@Validated SingleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.GET)
+    @GetMapping(value = "003")
     public String handle003Form() {
         return form();
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.POST)
+    @PostMapping(value = "003")
     public String handle003Upload(@Validated({ UploadFileMaxSize250byte.class,
             Default.class }) SingleUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String handleComplate() {
         return "flup/singleFileUploadComplete";
     }

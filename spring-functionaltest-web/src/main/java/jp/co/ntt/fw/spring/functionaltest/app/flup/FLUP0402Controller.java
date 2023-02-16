@@ -17,15 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.inject.Inject;
 
 /**
  * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
@@ -42,31 +43,31 @@ public class FLUP0402Controller {
         return new MultipleUploadForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001Form() {
         return form();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     public String handle001Upload(@Validated MultipleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002Form() {
         return form();
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST)
+    @PostMapping(value = "002")
     public String handle002Upload(@Validated MultipleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String handleComplate() {
         return "flup/multiFileUploadComplete";
     }

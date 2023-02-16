@@ -16,8 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class OrderHistoryMB3 implements Serializable {
 
@@ -29,13 +28,13 @@ public class OrderHistoryMB3 implements Serializable {
 
     private String memo;
 
-    private DateTime updTime;
+    private LocalDateTime updTime;
 
-    public DateTime getUpdTime() {
+    public LocalDateTime getUpdTime() {
         return updTime;
     }
 
-    public void setUpdTime(DateTime updTime) {
+    public void setUpdTime(LocalDateTime updTime) {
         this.updTime = updTime;
     }
 

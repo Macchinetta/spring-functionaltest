@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.CelebritySearchCriteria;
 
@@ -32,19 +32,19 @@ public class PGNT05Controller {
         return criteria;
     }
 
-    @RequestMapping(value = "0502/001")
+    @GetMapping(value = "0502/001")
     public String handle0502001(Model model) {
         model.addAttribute("path", "celebritySearch");
         return "pgnt/celebrityList";
     }
 
-    @RequestMapping(value = "0502/002")
+    @GetMapping(value = "0502/002")
     public String handle0502002(Model model) {
         model.addAttribute("path", "celebritySearch");
         return "pgnt/celebrityList";
     }
 
-    @RequestMapping(value = "0502/003")
+    @GetMapping(value = "0502/003")
     public String handle0502003(Model model) {
         model.addAttribute("path", "celebritySearch");
         return "pgnt/celebrityList";

@@ -16,10 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
-import javax.validation.constraints.Null;
-
-import org.joda.time.DateTime;
+import jakarta.validation.constraints.Null;
 
 public class JmsTodo implements Serializable {
 
@@ -30,7 +29,7 @@ public class JmsTodo implements Serializable {
     @Null
     private String description;
 
-    private DateTime datetime;
+    private LocalDateTime datetime;
 
     private boolean finished;
 
@@ -42,11 +41,11 @@ public class JmsTodo implements Serializable {
         this.jmsTodoId = jmsTodoId;
     }
 
-    public DateTime getDatetime() {
+    public LocalDateTime getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(DateTime datetime) {
+    public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
     }
 

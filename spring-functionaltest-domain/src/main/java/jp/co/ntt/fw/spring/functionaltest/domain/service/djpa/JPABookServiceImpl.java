@@ -21,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategory;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;

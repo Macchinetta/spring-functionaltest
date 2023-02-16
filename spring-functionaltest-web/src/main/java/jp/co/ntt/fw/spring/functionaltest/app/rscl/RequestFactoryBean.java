@@ -21,8 +21,19 @@ import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.cookie.StandardCookieSpec;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
+import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactoryBuilder;
+import org.apache.hc.core5.http.io.SocketConfig;
+import org.apache.hc.core5.http.ssl.TLS;
+import org.apache.hc.core5.pool.PoolConcurrencyPolicy;
+import org.apache.hc.core5.pool.PoolReusePolicy;
+import org.apache.hc.core5.util.TimeValue;
+import org.apache.hc.core5.util.Timeout;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -40,6 +51,18 @@ public class RequestFactoryBean implements
     private String keyStoreFileName;
 
     private char[] keyStorePassword;
+
+    private int maxConnTotal = 2;
+
+    private int maxConnPerRoute = 1;
+
+    private long soTimeoutMilliseconds = 180_000L;
+
+    private long connectionTimeToLiveSeconds = 60L;
+
+    private long connectTimeoutSeconds = 5L;
+
+    private long responseTimeoutSeconds = 10L;
 
     private HttpComponentsClientHttpRequestFactory factory;
 
@@ -63,9 +86,35 @@ public class RequestFactoryBean implements
 
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
-        // SSLコンテキストを設定したHTTPClientの作成
-        HttpClient httpClient = HttpClientBuilder.create().setSSLContext(
-                sslContext).build();
+        // @formatter:off
+        PoolingHttpClientConnectionManager connectionManager = PoolingHttpClientConnectionManagerBuilder.create()
+                .setSSLSocketFactory(
+                        SSLConnectionSocketFactoryBuilder.create()
+                        .setSslContext(sslContext)
+                        .setTlsVersions(TLS.V_1_3, TLS.V_1_2)
+                        .build())
+                .setDefaultSocketConfig(
+                        SocketConfig.custom()
+                        .setSoTimeout(Timeout.ofMilliseconds(soTimeoutMilliseconds))
+                        .build())
+                .setMaxConnTotal(this.maxConnTotal)
+                .setMaxConnPerRoute(this.maxConnPerRoute)
+                .setPoolConcurrencyPolicy(PoolConcurrencyPolicy.STRICT)
+                .setConnPoolPolicy(PoolReusePolicy.LIFO)
+                .setConnectionTimeToLive(TimeValue.ofSeconds(this.connectionTimeToLiveSeconds))
+                .build();
+        // @formatter:on
+
+        // @formatter:off
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(connectionManager)
+                .setDefaultRequestConfig(
+                        RequestConfig.custom()
+                        .setConnectTimeout(Timeout.ofSeconds(this.connectTimeoutSeconds))
+                        .setResponseTimeout(Timeout.ofSeconds(this.responseTimeoutSeconds))
+                        .setCookieSpec(StandardCookieSpec.STRICT).build())
+                .build();
+        // @formatter:on
 
         // RestTemplateへ渡すRequestFactoryの作成
         this.factory = new HttpComponentsClientHttpRequestFactory(httpClient);
@@ -83,6 +132,13 @@ public class RequestFactoryBean implements
         return true;
     }
 
+    @Override
+    public void destroy() throws Exception {
+        if (this.factory != null) {
+            this.factory.destroy();
+        }
+    }
+
     public void setKeyStoreFileName(String keyStoreFileName) {
         this.keyStoreFileName = keyStoreFileName;
     }
@@ -91,10 +147,29 @@ public class RequestFactoryBean implements
         this.keyStorePassword = keyStorePassword;
     }
 
-    @Override
-    public void destroy() throws Exception {
-        if (this.factory != null) {
-            this.factory.destroy();
-        }
+    public void setMaxConnTotal(int maxConnTotal) {
+        this.maxConnTotal = maxConnTotal;
     }
+
+    public void setMaxConnPerRoutes(int maxConnPerRoute) {
+        this.maxConnPerRoute = maxConnPerRoute;
+    }
+
+    public void setSoTimeoutMilliseconds(long soTimeoutMilliseconds) {
+        this.soTimeoutMilliseconds = soTimeoutMilliseconds;
+    }
+
+    public void setConnectionTimeToLiveSeconds(
+            long connectionTimeToLiveSeconds) {
+        this.connectionTimeToLiveSeconds = connectionTimeToLiveSeconds;
+    }
+
+    public void setConnectTimeoutSeconds(long connectTimeoutSeconds) {
+        this.connectTimeoutSeconds = connectTimeoutSeconds;
+    }
+
+    public void setResponseTimeoutSeconds(long responseTimeoutSeconds) {
+        this.responseTimeoutSeconds = responseTimeoutSeconds;
+    }
+
 }

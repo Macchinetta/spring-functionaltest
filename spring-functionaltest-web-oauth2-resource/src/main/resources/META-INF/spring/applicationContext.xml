@@ -14,17 +14,17 @@
         <constructor-arg name="idToPasswordEncoder">
             <map>
                 <entry key="pbkdf2">
-                    <bean class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" />
+                    <bean class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" factory-method="defaultsForSpringSecurity_v5_8"/>
                 </entry>
                 <entry key="bcrypt">
                     <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
                 </entry>
-                <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk15on.jar to the dependency.
+                <!-- When using commented out PasswordEncoders, you need to add bcprov-jdk18on.jar to the dependency.
                 <entry key="argon2">
-                    <bean class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
+                    <bean class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder factory-method="defaultsForSpringSecurity_v5_8" />
                 </entry>
                 <entry key="scrypt">
-                    <bean class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
+                    <bean class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder factory-method="defaultsForSpringSecurity_v5_8" />
                 </entry>
                 -->
             </map>
@@ -33,11 +33,6 @@
 
     <context:property-placeholder
         location="classpath*:/META-INF/spring/*.properties" />
-
-    <bean id="beanMapper" class="com.github.dozermapper.spring.DozerBeanMapperFactoryBean">
-        <property name="mappingFiles"
-            value="classpath*:/META-INF/dozer/**/*-mapping.xml" />
-    </bean>
 
     <!-- Message -->
     <bean id="messageSource"
@@ -75,5 +70,7 @@
         class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
         <property name="exceptionLogger" ref="exceptionLogger" />
     </bean>
+
+    <bean id="defaultClockFactory" class="org.terasoluna.gfw.common.time.DefaultClockFactory" />
 
 </beans>

@@ -16,23 +16,22 @@
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class INTR0102Controller {
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.GET)
+    @GetMapping(value = "003")
     public String handle003() {
         return "intr/userDetails";
     }

@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Pattern;
 
 public class OsCommandInjectionForm {
     @Pattern(regexp = "batch0\\d\\.sh")

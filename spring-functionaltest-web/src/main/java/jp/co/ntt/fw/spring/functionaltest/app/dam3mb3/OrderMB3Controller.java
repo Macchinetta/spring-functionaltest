@@ -17,19 +17,18 @@ package jp.co.ntt.fw.spring.functionaltest.app.dam3mb3;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.ItemMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderMB3;
@@ -51,14 +50,14 @@ public class OrderMB3Controller {
         return form;
     }
 
-    @RequestMapping(value = "list")
+    @GetMapping(value = "list")
     public String list(Model model) {
         List<OrderMB3> orderMB3List = orderMB3Service.findAll();
         model.addAttribute("orderMB3List", orderMB3List);
         return "dam3mb3/orderList";
     }
 
-    @RequestMapping(value = "detail/{id}")
+    @GetMapping(value = "detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOne(id.intValue());
         OrderMB3Form orderMB3Form = orderMB3Helper.chengeOrderMB3ToForm(
@@ -67,12 +66,12 @@ public class OrderMB3Controller {
         return "dam3mb3/orderUpdateForm";
     }
 
-    @RequestMapping(value = "register")
+    @GetMapping(value = "register")
     public String register(Model model) {
         return "dam3mb3/orderRegistForm";
     }
 
-    @RequestMapping(value = "detailCondSts/{id}/{sts}")
+    @GetMapping(value = "detailCondSts/{id}/{sts}")
     public String detailCondSts(@PathVariable("id") Integer id,
             @PathVariable("sts") String sts, Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOneCondSts(id.intValue(), sts);
@@ -80,7 +79,7 @@ public class OrderMB3Controller {
         return "dam3mb3/orderCompleteForm";
     }
 
-    @RequestMapping(value = "listPageMyBatis3")
+    @GetMapping(value = "listPageMyBatis3")
     public String listPageMyBatis3(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
@@ -90,7 +89,7 @@ public class OrderMB3Controller {
         return "dam3mb3/orderListPager";
     }
 
-    @RequestMapping(value = "listPageMyBatis3Scroll")
+    @GetMapping(value = "listPageMyBatis3Scroll")
     public String listPageMyBatis3Scroll(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
@@ -100,14 +99,14 @@ public class OrderMB3Controller {
         return "dam3mb3/orderListPager";
     }
 
-    @RequestMapping(value = "complete/{id}")
+    @GetMapping(value = "complete/{id}")
     public String complete(@PathVariable("id") Integer id, Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOne(id.intValue());
         model.addAttribute("order", orderMB3);
         return "dam3mb3/orderCompleteForm";
     }
 
-    @RequestMapping(value = "showCatDetl", method = RequestMethod.GET, params = "catDisplay")
+    @GetMapping(value = "showCatDetl", params = "catDisplay")
     public String getCategoryDetail(OrderMB3Form orderMB3Form, Model model) {
 
         List<CategoryMB3> categories = orderMB3Service
@@ -118,7 +117,7 @@ public class OrderMB3Controller {
         return "dam3mb3/orderList";
     }
 
-    @RequestMapping(value = "showCatDetl", method = RequestMethod.GET, params = "catDisplayLazy")
+    @GetMapping(value = "showCatDetl", params = "catDisplayLazy")
     public String getCategoryDetailLazy(OrderMB3Form orderMB3Form,
             Model model) {
 
@@ -130,7 +129,7 @@ public class OrderMB3Controller {
         return "dam3mb3/orderList";
     }
 
-    @RequestMapping(value = "showList", method = RequestMethod.GET, params = "first")
+    @GetMapping(value = "showList", params = "first")
     public String getItemCode(
             @PageableDefault(page = 0, size = 2, direction = Direction.DESC) Pageable pageable,
             OrderMB3Form orderMB3Form, Model model) {
@@ -142,7 +141,7 @@ public class OrderMB3Controller {
 
     }
 
-    @RequestMapping(value = "showList", method = RequestMethod.GET)
+    @GetMapping(value = "showList")
     public String getPageByItemCode(
             @PageableDefault(page = 0, size = 2, direction = Direction.DESC) Pageable pageable,
             OrderMB3Form orderMB3Form, Model model) {

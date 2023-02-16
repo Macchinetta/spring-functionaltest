@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 
 @RequestMapping("jmss")
@@ -29,7 +29,7 @@ public class JMSController {
     @Inject
     JmsAmqReceivingService jmsAmqReceivingService;
 
-    @RequestMapping
+    @GetMapping
     public String handle() {
         return "jmss/index";
     }

@@ -26,24 +26,25 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
-@RequestMapping("/aply")
+import jakarta.inject.Inject;
+
+@RequestMapping("aply")
 @Controller
 public class APLY10Controller {
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -52,7 +53,7 @@ public class APLY10Controller {
                 new StringTrimmerEditor(true));
     }
 
-    @RequestMapping(value = "1001/001")
+    @GetMapping(value = "1001/001")
     public String handle01001(Model model) {
         // モデルに格納される値
         model.addAttribute("valueUsingThText",
@@ -60,7 +61,7 @@ public class APLY10Controller {
         return "aply/showValueUsingThText";
     }
 
-    @RequestMapping(value = "1001/002")
+    @GetMapping(value = "1001/002")
     public String handle01002(Model model) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatInteger", 7777);
@@ -68,7 +69,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/003")
+    @GetMapping(value = "1001/003")
     public String handle01003(Model model) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatDecimal", 3333.55);
@@ -76,7 +77,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatDecimal";
     }
 
-    @RequestMapping(value = "1001/004")
+    @GetMapping(value = "1001/004")
     public String handle01004(Model model) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatPercent", 0.345);
@@ -84,15 +85,16 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatPercent";
     }
 
-    @RequestMapping(value = "1001/005")
+    @GetMapping(value = "1001/005")
     public String handle01005(Model model) {
         // モデルに格納される値
         model.addAttribute("testcaseId", "APLY1001005");
-        model.addAttribute("valueUsingDateFormat", dateFactory.newDate());
+        model.addAttribute("valueUsingDateFormat", Date.from(clockFactory
+                .fixed().instant()));
         return "aply/showValueUsingDateFormat";
     }
 
-    @RequestMapping(value = "1001/006")
+    @GetMapping(value = "1001/006")
     public String handle01006(Model model) {
         // モデルに格納される値
         Calendar calendar = Calendar.getInstance();
@@ -102,7 +104,7 @@ public class APLY10Controller {
         return "aply/showValueUsingCalendarFormat";
     }
 
-    @RequestMapping(value = "1001/007")
+    @GetMapping(value = "1001/007")
     public String handle01007(Model model) {
         // モデルに格納される値
         Integer[] array = { 1111, 2222, 3333 };
@@ -111,7 +113,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/008")
+    @GetMapping(value = "1001/008")
     public String handle01008(Model model) {
         // モデルに格納される値
         List<Integer> list = new ArrayList<>();
@@ -123,7 +125,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/009")
+    @GetMapping(value = "1001/009")
     public String handle01009(Model model) {
         // モデルに格納される値
         Set<Integer> set = new HashSet<>();
@@ -135,7 +137,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/010")
+    @GetMapping(value = "1001/010")
     public String handle01010(Model model) {
         // モデルに格納される値
         BigDecimal[] array = { BigDecimal.valueOf(1111.1), BigDecimal.valueOf(
@@ -145,7 +147,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatDecimal";
     }
 
-    @RequestMapping(value = "1001/011")
+    @GetMapping(value = "1001/011")
     public String handle01011(Model model) {
         // モデルに格納される値
         List<BigDecimal> list = new ArrayList<>();
@@ -157,7 +159,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatDecimal";
     }
 
-    @RequestMapping(value = "1001/012")
+    @GetMapping(value = "1001/012")
     public String handle01012(Model model) {
         // モデルに格納される値
         Set<BigDecimal> set = new LinkedHashSet<>();
@@ -169,7 +171,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatDecimal";
     }
 
-    @RequestMapping(value = "1001/013")
+    @GetMapping(value = "1001/013")
     public String handle01013(Model model) {
         // モデルに格納される値
         Double[] array = { 0.111, 0.222, 0.333 };
@@ -178,7 +180,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatPercent";
     }
 
-    @RequestMapping(value = "1001/014")
+    @GetMapping(value = "1001/014")
     public String handle01014(Model model) {
         // モデルに格納される値
         List<Double> list = new ArrayList<>();
@@ -190,7 +192,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatPercent";
     }
 
-    @RequestMapping(value = "1001/015")
+    @GetMapping(value = "1001/015")
     public String handle01015(Model model) {
         // モデルに格納される値
         Set<Double> set = new LinkedHashSet<>();
@@ -202,7 +204,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatPercent";
     }
 
-    @RequestMapping(value = "1001/{caseId:01[6|8|9]|020}")
+    @GetMapping(value = "1001/{caseId:01[6|8|9]|020}")
     public String handle01016_18_19_20(Model model,
             @PathVariable String caseId) {
         // モデルに格納される値
@@ -211,7 +213,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/{caseId:02[2-5]}")
+    @GetMapping(value = "1001/{caseId:02[2-5]}")
     public String handle01022_25(Model model, @PathVariable String caseId) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatDecimal", 3333.55);
@@ -219,7 +221,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatDecimal";
     }
 
-    @RequestMapping(value = "1001/026")
+    @GetMapping(value = "1001/026")
     public String handle01026(Model model) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatInteger", 99);
@@ -227,7 +229,7 @@ public class APLY10Controller {
         return "aply/showValueUsingNumberFormatInteger";
     }
 
-    @RequestMapping(value = "1001/027")
+    @GetMapping(value = "1001/027")
     public String handle01027(Model model) {
         // モデルに格納される値
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
@@ -244,7 +246,7 @@ public class APLY10Controller {
         return "aply/showValueUsingDateFormat";
     }
 
-    @RequestMapping(value = "1001/028")
+    @GetMapping(value = "1001/028")
     public String handle01028(Model model) {
         // モデルに格納される値
         List<Date> list = new ArrayList<>();
@@ -261,7 +263,7 @@ public class APLY10Controller {
         return "aply/showValueUsingDateFormat";
     }
 
-    @RequestMapping(value = "1001/029")
+    @GetMapping(value = "1001/029")
     public String handle01029(Model model) {
         // モデルに格納される値
         Set<Date> set = new LinkedHashSet<>();
@@ -278,7 +280,7 @@ public class APLY10Controller {
         return "aply/showValueUsingDateFormat";
     }
 
-    @RequestMapping(value = "1001/030")
+    @GetMapping(value = "1001/030")
     public String handle01030(Model model) {
         // モデルに格納される値
         Calendar calendar1 = Calendar.getInstance();
@@ -293,7 +295,7 @@ public class APLY10Controller {
         return "aply/showValueUsingCalendarFormat";
     }
 
-    @RequestMapping(value = "1001/031")
+    @GetMapping(value = "1001/031")
     public String handle01031(Model model) {
         // モデルに格納される値
         Calendar calendar1 = Calendar.getInstance();
@@ -311,7 +313,7 @@ public class APLY10Controller {
         return "aply/showValueUsingCalendarFormat";
     }
 
-    @RequestMapping(value = "1001/032")
+    @GetMapping(value = "1001/032")
     public String handle01032(Model model) {
         // モデルに格納される値
         Calendar calendar1 = Calendar.getInstance();
@@ -329,178 +331,178 @@ public class APLY10Controller {
         return "aply/showValueUsingCalendarFormat";
     }
 
-    @RequestMapping(value = "1002/001")
+    @GetMapping(value = "1002/001")
     public String handle02001(Model model) {
         return "aply/linkUrlContextRelativePath";
     }
 
-    @RequestMapping(value = "1002/002")
+    @GetMapping(value = "1002/002")
     public String handle02002(Model model) {
         return "aply/linkUrlPageRelativePath";
     }
 
-    @RequestMapping(value = "1002/003")
+    @GetMapping(value = "1002/003")
     public String handle02003(Model model) {
         model.addAttribute("userId", 3);
         return "aply/linkUrlUsingParameter";
     }
 
-    @RequestMapping(value = "1002/004")
+    @GetMapping(value = "1002/004")
     public String handle02004(Model model) {
         model.addAttribute("userId", 3);
         return "aply/linkUrlUsingVariable";
     }
 
-    @RequestMapping(value = "1002/005")
+    @GetMapping(value = "1002/005")
     public String handle02005(Model model) {
         return "aply/requestUrlUsingMvcUrl";
     }
 
-    @RequestMapping(value = "1002/006")
+    @GetMapping(value = "1002/006")
     public String handle02006(Model model) {
         model.addAttribute("userId", null);
         return "aply/linkUrlUsingParameterCaseNull";
     }
 
-    @RequestMapping(value = "1002/address")
+    @GetMapping(value = "1002/address")
     public String handleMvcUrl(Model model) {
         return "aply/requestUrlUsingMvcUrl";
     }
 
-    @RequestMapping(value = "1003/001")
+    @GetMapping(value = "1003/001")
     public String handle03001(Model model) {
         return "aply/showMessage";
     }
 
-    @RequestMapping(value = "1003/002")
+    @GetMapping(value = "1003/002")
     public String handle03002(Model model) {
         model.addAttribute("textCombiningUsingPlus", "Hello World!");
         return "aply/showTextCombiningUsingPlus";
     }
 
-    @RequestMapping(value = "1003/003")
+    @GetMapping(value = "1003/003")
     public String handle03003(Model model) {
         model.addAttribute("textCombiningUsingPipe", "Hello World!");
         return "aply/showTextCombiningUsingPipe";
     }
 
-    @RequestMapping(value = "1003/004")
+    @GetMapping(value = "1003/004")
     public String handle03004(Model model) {
         model.addAttribute("textCombiningCaseNull", null);
         return "aply/showTextCombiningCaseNull";
     }
 
-    @RequestMapping(value = "1004/001")
+    @GetMapping(value = "1004/001")
     public String handle04001(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "comparator")
+    @PostMapping(value = "1004/displaySwitching", params = "comparator")
     public String handleInputDisplayConditionalExpressionsUsingComparator(
             Model model, ThymeleafForm thymeleafForm) {
         return "aply/displayConditionalExpressionsUsingComparator";
     }
 
-    @RequestMapping(value = "1004/002")
+    @GetMapping(value = "1004/002")
     public String handle04002(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "arithmeticOperation")
+    @PostMapping(value = "1004/displaySwitching", params = "arithmeticOperation")
     public String handleInputDisplayConditionalExpressionsUsingArithmeticOperation(
             Model model, ThymeleafForm thymeleafForm) {
         return "aply/displayConditionalExpressionsUsingArithmeticOperation";
     }
 
-    @RequestMapping(value = "1004/003")
+    @GetMapping(value = "1004/003")
     public String handle04003(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "defaultExpressions")
+    @PostMapping(value = "1004/displaySwitching", params = "defaultExpressions")
     public String handleInputDisplayDefaultExpressions(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/displayDefaultExpressions";
     }
 
-    @RequestMapping(value = "1005/001")
+    @GetMapping(value = "1005/001")
     public String handle05001(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST, params = "thIfFormat")
+    @PostMapping(value = "1005/displaySwitching", params = "thIfFormat")
     public String handleInputDisplaySwitchingUsingThIf(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showDisplaySwitchingUsingThIf";
     }
 
-    @RequestMapping(value = "1005/002")
+    @GetMapping(value = "1005/002")
     public String handle05002(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST, params = "thSwitchFormat")
+    @PostMapping(value = "1005/displaySwitching", params = "thSwitchFormat")
     public String handleInputDisplaySwitchingUsingCChoose(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showDisplaySwitchingUsingThSwitch";
     }
 
-    @RequestMapping(value = "1006/001")
+    @GetMapping(value = "1006/001")
     public String handle06001(Model model, ThymeleafFormListForm form) {
         return "aply/inputCollectionInModel";
     }
 
-    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST, params = "collectionInModel")
+    @PostMapping(value = "1006/collectionInModel", params = "collectionInModel")
     public String handleInputCollectionInModel(Model model,
             ThymeleafFormListForm thymeleafFormListform) {
         return "aply/showCollectionInModel";
     }
 
-    @RequestMapping(value = "1006/002")
+    @GetMapping(value = "1006/002")
     public String handle06002(Model model, ThymeleafFormListForm form) {
         return "aply/inputCollectionInModel";
     }
 
-    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST, params = "collectionInModelUsingStatus")
+    @PostMapping(value = "1006/collectionInModel", params = "collectionInModelUsingStatus")
     public String handleInputCollectionUsingThObject(Model model,
             ThymeleafFormListForm thymeleafFormListForm) {
         return "aply/showCollectionInModelUsingStatus";
     }
 
-    @RequestMapping(value = "1007/001")
+    @GetMapping(value = "1007/001")
     public String handle07001(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputValue";
     }
 
-    @RequestMapping(value = "1007/showValue", method = RequestMethod.POST, params = "thObject")
+    @PostMapping(value = "1007/showValue", params = "thObject")
     public String handleInputValueUsingThObject(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showValueUsingThObject";
     }
 
-    @RequestMapping(value = "1007/002")
+    @GetMapping(value = "1007/002")
     public String handle07002(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputValue";
     }
 
-    @RequestMapping(value = "1007/showValue", method = RequestMethod.POST, params = "thWith")
+    @PostMapping(value = "1007/showValue", params = "thWith")
     public String handleInputValueUsingThWith(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showValueUsingThWith";
     }
 
-    @RequestMapping(value = "1008/001")
+    @GetMapping(value = "1008/001")
     public String handle08001(Model model, ThymeleafForm thymeleafForm) {
         return "aply/inputFormObjectBindHtmlForm";
     }
 
-    @RequestMapping(value = "1008/bindFormObject", method = RequestMethod.POST, params = "bindFormObject")
+    @PostMapping(value = "1008/bindFormObject", params = "bindFormObject")
     public String handleBindFormObject(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showFormObjectBindHtmlForm";
     }
 
-    @RequestMapping(value = "1009/001")
+    @GetMapping(value = "1009/001")
     public String handle09001(Model model) {
         // モデルに格納される値
         List<Integer> list = new ArrayList<>();
@@ -512,7 +514,7 @@ public class APLY10Controller {
         return "aply/showValueUsingAggregates";
     }
 
-    @RequestMapping(value = "1009/002")
+    @GetMapping(value = "1009/002")
     public String handle09002(Model model) {
         // モデルに格納される値
         List<Integer> list = new ArrayList<>();

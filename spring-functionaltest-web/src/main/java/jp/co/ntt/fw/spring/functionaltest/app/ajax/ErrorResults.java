@@ -19,8 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResult;
 
 @XmlRootElement

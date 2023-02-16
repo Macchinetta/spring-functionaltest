@@ -15,13 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.RowBounds;
-import org.joda.time.DateTime;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,13 +29,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.message.DomainMessageCodes;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMemberCredential;
@@ -51,13 +48,13 @@ public class RestMemberServiceImpl implements RestMemberService {
     RestMemberRepository restMemberRepository;
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Inject
     PasswordEncoder passwordEncoder;
 
     @Inject
-    Mapper beanMapper;
+    RestMemberBeanMapper beanMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -99,7 +96,7 @@ public class RestMemberServiceImpl implements RestMemberService {
     @Transactional(readOnly = true)
     public RestMember getMember(String memberId) {
         // find member
-        RestMember member = restMemberRepository.findOne(memberId);
+        RestMember member = restMemberRepository.findByMemberId(memberId);
         if (member == null) {
             // If member is not exists
             throw new ResourceNotFoundException(ResultMessages.error().add(
@@ -120,10 +117,10 @@ public class RestMemberServiceImpl implements RestMemberService {
                 .getCredential();
 
         // get processing current date time
-        DateTime currentDateTime = dateFactory.newDateTime();
+        LocalDateTime currentDate = LocalDateTime.now(clockFactory.fixed());
 
-        creatingMember.setCreatedAt(currentDateTime);
-        creatingMember.setLastModifiedAt(currentDateTime);
+        creatingMember.setCreatedAt(currentDate);
+        creatingMember.setLastModifiedAt(currentDate);
 
         // decide sign id(email-address)
         String signId = creatingCredential.getSignId();
@@ -135,8 +132,8 @@ public class RestMemberServiceImpl implements RestMemberService {
         // encrypt password
         String rawPassword = creatingCredential.getPassword();
         creatingCredential.setPassword(passwordEncoder.encode(rawPassword));
-        creatingCredential.setPasswordLastChangedAt(currentDateTime);
-        creatingCredential.setLastModifiedAt(currentDateTime);
+        creatingCredential.setPasswordLastChangedAt(currentDate);
+        creatingCredential.setLastModifiedAt(currentDate);
 
         // save member & member credential
         try {
@@ -166,11 +163,11 @@ public class RestMemberServiceImpl implements RestMemberService {
         RestMember member = getMember(memberId);
 
         // override updating member attributes
-        beanMapper.map(updatingMember, member, "member.update");
+        beanMapper.map(updatingMember, member);
 
         // get processing current date time
-        DateTime currentDateTime = dateFactory.newDateTime();
-        member.setLastModifiedAt(currentDateTime);
+        LocalDateTime currentDate = LocalDateTime.now(clockFactory.fixed());
+        member.setLastModifiedAt(currentDate);
 
         // save updating member
         boolean updated = restMemberRepository.updateMember(member);
@@ -192,9 +189,9 @@ public class RestMemberServiceImpl implements RestMemberService {
     public void deleteMember(String memberId) {
 
         // First Delete from credential (Child)
-        restMemberRepository.deleteCredential(memberId);
+        restMemberRepository.deleteCredentialByMemberId(memberId);
         // Delete member
-        restMemberRepository.deleteMember(memberId);
+        restMemberRepository.deleteMemberByMemberId(memberId);
 
     }
 

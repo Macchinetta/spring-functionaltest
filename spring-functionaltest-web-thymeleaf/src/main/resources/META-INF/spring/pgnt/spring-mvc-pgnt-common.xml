@@ -12,13 +12,13 @@
 
   <context:annotation-config />
 
-  <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+  <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
     <property name="enableSpringELCompiler" value="true" />
     <property name="templateResolver" ref="templateResolver" />
     <property name="additionalDialects">
       <set>
-        <bean class="org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect" />
-        <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+        <bean class="org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect" />
+<!--         <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" /> -->
         <bean class="jp.co.ntt.fw.spring.functionaltest.app.pgnt.PageInfoDialect" />
       </set>
     </property>

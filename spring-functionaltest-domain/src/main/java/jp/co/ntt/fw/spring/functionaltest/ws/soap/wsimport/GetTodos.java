@@ -15,16 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>
  * getTodos complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="getTodos">
  *   &lt;complexContent>

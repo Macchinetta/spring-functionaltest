@@ -17,18 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.rscl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertFalse;
-import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.id;
-
-import java.util.concurrent.TimeUnit;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.IfProfileValue;
@@ -38,26 +33,6 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 //Thymeleaf版未実装のためJSPのみ実行
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class RestClientTest extends FunctionTestSupport {
-
-    // RSCL1302002アサート用
-    @Value("${rscl.asyncRestTemplate.corePoolSize}")
-    private int corePoolSize;
-
-    // RSCL1302001アサート用
-    @Value("${rscl.asyncRestTemplate.queueCapacity}")
-    private int queueCapacity;
-
-    // RSCL1302001アサート用
-    @Value("${rscl.asyncRestTemplate.maxPoolSize}")
-    private int maxPoolSize;
-
-    // RSCL1303003アサート用
-    @Value("${selenium.rscl.retryForDbLogAssert.interval:1000}")
-    private int retryInterval;
-
-    // RSCL1303003アサート用
-    @Value("${selenium.rscl.retryForDbLogAssert.max:3}")
-    private int retryMaxCount;
 
     /**
      * <ul>
@@ -75,6 +50,8 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
+
+        webDriverOperations.waitForDisplayed(id("screenTitle"));
 
         // 確認画面に遷移したことをチェック
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -236,6 +213,8 @@ public class RestClientTest extends FunctionTestSupport {
 
         // 送信ボタン押下
         webDriverOperations.click(id("send"));
+
+        webDriverOperations.waitForDisplayed(id("screenTitle"));
 
         // 確認画面に遷移したことをチェック
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -982,6 +961,112 @@ public class RestClientTest extends FunctionTestSupport {
 
     /**
      * <ul>
+     * <li>RSCL0604001 ： setConnectTimeoutメソッドの動作確認</li>
+     * </ul>
+     */
+    @Test
+    public void testRSCL0604001() {
+        // メニュー画面の操作
+        webDriverOperations.click(id("rscl0601007"));
+
+        // 送信ボタン押下
+        webDriverOperations.click(id("set"));
+
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "System Error!"));
+
+        // システムエラー画面に遷移
+        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        // 期待するエラーが発生しているかエラーログチェック
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring",
+                "\\[e.sf.cmmn.9001\\].* failed: Connect timed out");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*org.apache.hc.client5.http.ConnectTimeoutException.*Connect timed out");
+    }
+
+    /**
+     * <ul>
+     * <li>RSCL0605001 ： setResponseTimeoutメソッドの動作確認</li>
+     * </ul>
+     */
+    @Test
+    public void testRSCL0605001() {
+        // メニュー画面の操作
+        webDriverOperations.click(id("rscl0601004"));
+
+        // 送信ボタン押下
+        webDriverOperations.click(id("set"));
+
+        // データ反映までの待ち時間
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "System Error!"));
+
+        // システムエラー画面に遷移
+        assertThat(webDriverOperations.getTitle(), is("System Error!"));
+        // 期待するエラーが発生しているかエラーログチェック
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring",
+                "\\[e.sf.cmmn.9001\\].*: Read timed out");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                ".*java.net.SocketTimeoutException.*");
+    }
+
+    /**
+     * <ul>
+     * <li>RSCL0606001 ： setSoTimeoutメソッドの動作確認</li>
+     * <li>サーバ側でSSLハンドシェイクの処理を待ち続けてしまうため、 再度テストを実施する場合はサーバ側がタイムアウトするのを待つか再起動する必要がある。</li>
+     * </ul>
+     * @throws InterruptedException
+     */
+    @Test
+    public void testRSCL0606001() throws InterruptedException {
+
+        // 正常に動作することを確認
+        {
+            // メニュー画面の操作
+            webDriverOperations.click(id("rscl0601008"));
+
+            // 送信ボタン押下
+            webDriverOperations.click(id("set"));
+
+            // 確認画面に遷移したことをチェック
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(
+                    "RESTクライアント処理結果【ユーザ情報出力】"));
+            // 出力内容をチェック
+            assertThat(webDriverOperations.getText(id("userName")), is("test"));
+            assertThat(webDriverOperations.getText(id("userAge")), is("20"));
+        }
+
+        // SoTimeoutによるタイムアウト
+        {
+            webDriverOperations.displayPage(getPackageRootUrl());
+
+            // メニュー画面の操作
+            webDriverOperations.click(id("rscl0601009"));
+
+            // 送信ボタン押下
+            webDriverOperations.click(id("set"));
+
+            // データ反映までの待ち時間
+            webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
+                    "System Error!"));
+
+            // システムエラー画面に遷移
+            assertThat(webDriverOperations.getTitle(), is("System Error!"));
+            // 期待するエラーが発生しているかエラーログチェック
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "org.terasoluna.gfw.common.exception.ExceptionLogger.Monitoring",
+                    "\\[e.sf.cmmn.9001\\].*: Read timed out");
+            dbLogAssertOperations.assertContainsByRegexStackTrace(
+                    ".*org.apache.hc.client5.http.ConnectTimeoutException.*8994.*Read timed out");
+        }
+
+    }
+
+    /**
+     * <ul>
      * <li>ファイルアップロード</li>
      * </ul>
      */
@@ -1135,403 +1220,6 @@ public class RestClientTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>AsyncRestTemplateを使用した実装</li>
-     * </ul>
-     * @throws InterruptedException
-     */
-    @Test
-    public void testRSCL1301001() throws InterruptedException {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1301001"));
-
-        // 入力条件設定
-        webDriverOperations.overrideText(id("path"), "1301");
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "RESTクライアント処理結果【ユーザ情報出力】"));
-        // 出力内容をチェック
-        assertThat(webDriverOperations.getText(id("userName")), is(
-                "test_1301"));
-        assertThat(webDriverOperations.getText(id("userAge")), is("20"));
-
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*RestClientServiceImpl.*", ".*RSCL1301001 : "
-                        + HttpStatus.OK.toString());
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*RestClientServiceImpl.*",
-                ".*RSCL1301001 : CountDownLatch = 0");
-    }
-
-    /**
-     * AsyncRestTemplateを使用した際のスレッド数の制限の設定
-     * @throws InterruptedException
-     */
-    @Test
-    public void testRSCL1302001() throws InterruptedException {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1302001"));
-
-        int threadCapacity = queueCapacity + maxPoolSize;
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 出力内容をチェック
-        // TaskRejectedExceptionが発生したか確認
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                webDriverOperations.getXTrack(), null,
-                ".*java\\.util\\.concurrent\\.ThreadPoolExecutor..*did not accept task: "
-                        + "org\\.springframework\\.http\\.client\\.SimpleBufferingAsyncClientHttpRequest..*",
-                "org\\.springframework\\.core\\.task\\.TaskRejectedException");
-        // RestAPIの呼び出し回数確認
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*RestClientServiceImpl.*",
-                ".*RSCL1302001 : CallCount = ..*, SuccessCount = ..*, FinishedCount = ..*");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*RestClientServiceImpl.*",
-                ".*RSCL1302001 : CallCount - FinishedCount = " + threadCapacity
-                        + ", SuccessCount - FinishedCount = " + threadCapacity);
-    }
-
-    /**
-     * AsyncRestTemplateを使用した際のスレッドプールサイズの制限の設定
-     * @throws InterruptedException
-     */
-    @Test
-    public void testRSCL1302002() throws InterruptedException {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1302002"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 出力内容をチェック
-        dbLogAssertOperations.waitForAssertion();
-
-        // スレッドプールサイズの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*RestClientServiceImpl.*",
-                ".*RSCL1301002 : thread pool size = " + corePoolSize);
-
-    }
-
-    /**
-     * AsyncRestTemplateを使用した際の最大スレッドプールサイズの設定
-     * @throws InterruptedException
-     */
-    @Test
-    public void testRSCL1302003() throws InterruptedException {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1302003"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 出力内容をチェック
-        dbLogAssertOperations.waitForAssertion();
-
-        // 最大プールサイズの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*RestClientServiceImpl.*",
-                ".*RSCL1301003 : max thread pool size = " + maxPoolSize);
-
-    }
-
-    /**
-     * <ul>
-     * <li>RSCL1303001 : 非同期リクエストの前とレスポンスが返却された後に共通処理を適用できることを確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testRSCL1303001() {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1303001"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "RESTクライアント処理結果【ユーザ情報出力】"));
-        // 出力内容をチェック
-        assertFalse(webDriverOperations.exists(className("alert-error")));
-        assertThat(webDriverOperations.getText(id("userName")), is("test"));
-        assertThat(webDriverOperations.getText(id("userAge")), is("20"));
-
-        // 各InterceptorとCallbakの呼び出しをチェック
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncChainInterceptor.*",
-                "AsyncChainInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncLoggingInterceptor.*",
-                "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*",
-                "Request Header \\[Accept:\\\"application/xml, text/xml, "
-                        + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Request Body ");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "onSuccess Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncChainInterceptor.*", "onSuccess Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*InterceptorsAsyncRestClientServiceImpl.*",
-                "onSuccess Called!");
-        // 呼び出し順をチェック
-        Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "AsyncChainInterceptor Called!").get(0);
-        Long loggingInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*",
-                        "AsyncLoggingInterceptor Called!").get(0);
-        assertThat(chainInterceptEventId, lessThan(loggingInterceptEventId));
-
-        Long loggingCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*", "onSuccess Called!")
-                .get(0);
-        Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "onSuccess Called!").get(0);
-        Long serviceCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*InterceptorsAsyncRestClientServiceImpl.*",
-                        "onSuccess Called!").get(0);
-        assertThat(loggingCallbackEventId, lessThan(chainCallbackEventId));
-        assertThat(chainCallbackEventId, lessThan(serviceCallbackEventId));
-    }
-
-    /**
-     * <ul>
-     * <li>RSCL1303002 : 非同期リクエストのステータスコードが正常系(2xx)以外の場合の挙動を確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testRSCL1303002() {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1303002"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "RESTクライアント処理結果【ユーザ情報出力】"));
-        // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")), is(
-                "user information can not be acquired"));
-        assertThat(webDriverOperations.getText(id("userName")), is(""));
-        assertThat(webDriverOperations.getText(id("userAge")), is(""));
-
-        // 各InterceptorとCallbakの呼び出しをチェック
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncChainInterceptor.*",
-                "AsyncChainInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncLoggingInterceptor.*",
-                "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*",
-                "Request Header \\[Accept:\\\"application/xml, text/xml, "
-                        + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Request Body ");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "onSuccess Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncChainInterceptor.*", "onSuccess Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*InterceptorsAsyncRestClientServiceImpl.*",
-                "onFailure Called!");
-        // 呼び出し順をチェック
-        Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "AsyncChainInterceptor Called!").get(0);
-        Long loggingInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*",
-                        "AsyncLoggingInterceptor Called!").get(0);
-        assertThat(chainInterceptEventId, lessThan(loggingInterceptEventId));
-
-        Long loggingCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*", "onSuccess Called!")
-                .get(0);
-        Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "onSuccess Called!").get(0);
-        Long serviceCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*InterceptorsAsyncRestClientServiceImpl.*",
-                        "onFailure Called!").get(0);
-        assertThat(loggingCallbackEventId, lessThan(chainCallbackEventId));
-        assertThat(chainCallbackEventId, lessThan(serviceCallbackEventId));
-    }
-
-    /**
-     * <ul>
-     * <li>RSCL1303003 : 非同期リクエストが行われる前に例外（接続エラーなど）が発生した場合に、例外をハンドリングできることを確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testRSCL1303003() {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1303003"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "RESTクライアント処理結果【ユーザ情報出力】"));
-        // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")), is(
-                "user information can not be acquired"));
-        assertThat(webDriverOperations.getText(id("userName")), is(""));
-        assertThat(webDriverOperations.getText(id("userAge")), is(""));
-
-        // 各InterceptorとCallbakの呼び出しをチェック
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncChainInterceptor.*",
-                "AsyncChainInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncLoggingInterceptor.*",
-                "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*",
-                "Request Header \\[Accept:\\\"application/xml, text/xml, "
-                        + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Request Body ");
-        tryAssertContainsByRegexExceptionMessageAndRetry(webDriverOperations
-                .getXTrack(), "..*InterceptorsAsyncRestClientServiceImpl.*",
-                "java\\.net\\..*",
-                "java\\.util\\.concurrent\\.ExecutionException", 0);
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "onFailure Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Communication Error");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncChainInterceptor.*", "onFailure Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*InterceptorsAsyncRestClientServiceImpl.*",
-                "onFailure Called!");
-        // 呼び出し順をチェック
-        Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "AsyncChainInterceptor Called!").get(0);
-        Long loggingInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*",
-                        "AsyncLoggingInterceptor Called!").get(0);
-        assertThat(chainInterceptEventId, lessThan(loggingInterceptEventId));
-
-        Long loggingCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*", "onFailure Called!")
-                .get(0);
-        Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "onFailure Called!").get(0);
-        Long serviceCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*InterceptorsAsyncRestClientServiceImpl.*",
-                        "onFailure Called!").get(0);
-        assertThat(loggingCallbackEventId, lessThan(chainCallbackEventId));
-        assertThat(chainCallbackEventId, lessThan(serviceCallbackEventId));
-    }
-
-    /**
-     * <ul>
-     * <li>RSCL1303004 : 非同期リクエストのレスポンス返却時に例外（読み込みタイムアウト）が発生した場合に、例外がハンドリングできることを確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testRSCL1303004() {
-        // メニュー画面の操作
-        webDriverOperations.click(id("rscl1303004"));
-
-        // 送信ボタン押下
-        webDriverOperations.click(id("send"));
-
-        // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "RESTクライアント処理結果【ユーザ情報出力】"));
-        // 出力内容をチェック
-        assertThat(webDriverOperations.getText(className("alert-error")), is(
-                "user information can not be acquired"));
-        assertThat(webDriverOperations.getText(id("userName")), is(""));
-        assertThat(webDriverOperations.getText(id("userAge")), is(""));
-
-        // 各InterceptorとCallbakの呼び出しをチェック
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncChainInterceptor.*",
-                "AsyncChainInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), "..*AsyncLoggingInterceptor.*",
-                "AsyncLoggingInterceptor Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*",
-                "Request Header \\[Accept:\\\"application/xml, text/xml, "
-                        + "application/json, application/\\*\\+xml, "
-                        + "application/\\*\\+json\\\", Content\\-Length:\\\"0\\\"\\]");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Request Body ");
-        dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                webDriverOperations.getXTrack(), null,
-                "java\\.net\\.SocketTimeoutException",
-                "java\\.util\\.concurrent\\.ExecutionException");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "onFailure Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncLoggingInterceptor.*", "Communication Error");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*AsyncChainInterceptor.*", "onFailure Called!");
-        dbLogAssertOperations.assertContainsByRegexMessage(
-                "..*InterceptorsAsyncRestClientServiceImpl.*",
-                "onFailure Called!");
-        // 呼び出し順をチェック
-        Long chainInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "AsyncChainInterceptor Called!").get(0);
-        Long loggingInterceptEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*",
-                        "AsyncLoggingInterceptor Called!").get(0);
-        assertThat(chainInterceptEventId, lessThan(loggingInterceptEventId));
-
-        Long loggingCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*AsyncLoggingInterceptor.*", "onFailure Called!")
-                .get(0);
-        Long chainCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null, "..*AsyncChainInterceptor.*",
-                        "onFailure Called!").get(0);
-        Long serviceCallbackEventId = dbLogAssertOperations
-                .getLogEventIdByRegexMessage(null,
-                        "..*InterceptorsAsyncRestClientServiceImpl.*",
-                        "onFailure Called!").get(0);
-        assertThat(loggingCallbackEventId, lessThan(chainCallbackEventId));
-        assertThat(chainCallbackEventId, lessThan(serviceCallbackEventId));
-    }
-
-    /**
-     * <ul>
      * <li>RSCL1401001 : HttpComponentsClientHttpRequestFactoryを使用してProxyホストとポートを指定する場合(Basic認証あり)</li>
      * </ul>
      */
@@ -1620,34 +1308,4 @@ public class RestClientTest extends FunctionTestSupport {
                 ".*RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is true");
     }
 
-    /**
-     * 指定したメッセージパターン(正規表現)に紐付く例外ログが出力されていることを検証する。
-     * <p>
-     * X-Track,出力元のロガー名パターンを指定することで対象を絞り込むことが可能である。
-     * </p>
-     * @param xTrack リクエストを一意に特定するための値（絞り込みを行わない場合はnullを指定）
-     * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
-     * @param messagePattern メッセージのパターン（必須）
-     * @param exceptionMessagePattern 例外情報のパターン(必須)
-     * @param retryCount リトライ実行回数
-     */
-    private void tryAssertContainsByRegexExceptionMessageAndRetry(String xTrack,
-            String loggerNamePattern, String messagePattern,
-            String exceptionMessagePattern, int retryCount) {
-        try {
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(xTrack,
-                    loggerNamePattern, messagePattern, exceptionMessagePattern);
-        } catch (AssertionError e) {
-            if (retryCount < retryMaxCount) {
-                retryCount++;
-                webDriverOperations.suspend(retryInterval,
-                        TimeUnit.MILLISECONDS);
-                tryAssertContainsByRegexExceptionMessageAndRetry(xTrack,
-                        loggerNamePattern, messagePattern,
-                        exceptionMessagePattern, retryCount);
-            } else {
-                throw e;
-            }
-        }
-    }
 }

@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.cdls;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.codelist.CodeList;
 import org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Service
 public class CodeListServiceImpl implements CodeListService {

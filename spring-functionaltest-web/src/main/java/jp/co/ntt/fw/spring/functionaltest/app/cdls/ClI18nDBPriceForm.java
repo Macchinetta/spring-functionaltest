@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class ClI18nDBPriceForm {
 

@@ -15,13 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UrlPathHelper;
@@ -29,6 +27,8 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Order;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.OrderService;
 
@@ -48,14 +48,14 @@ public class SSMN04ShoppingOrderController {
 
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
 
-    @RequestMapping(method = RequestMethod.POST, params = "order")
+    @PostMapping(params = "order")
     @TransactionTokenCheck(value = "order", type = TransactionTokenType.BEGIN)
     public String shoppingOrderComfirm(Model model) {
         model.addAttribute(cart);
         return "ssmn/shoppingOrderConfirm";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @TransactionTokenCheck(value = "order")
     public String createOrder(RedirectAttributes redirectAttributes,
             HttpServletRequest request) {
@@ -75,7 +75,7 @@ public class SSMN04ShoppingOrderController {
                 + "/shopping/order?complete";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String createOrderComplete(SessionStatus sessionStatus) {
         cart.clearItems();
         return "ssmn/shoppingOrderComplete";

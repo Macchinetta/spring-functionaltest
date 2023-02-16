@@ -8,13 +8,14 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 
-  <sec:http pattern="/athn/1701/**" auto-config="false" entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
+  <sec:http pattern="/athn/1701/**" request-matcher="ant" auto-config="false" entry-point-ref="customerLoginUrlAuthenticationEntryPoint"
     authentication-manager-ref="customerAuthenticationManager">
     <sec:form-login login-processing-url="/athn/1701/customerAuthenticate"
       default-target-url="/athn/1701/001?loginSuccess" always-use-default-target="true" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    <sec:logout logout-url="/athn/1701/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/athn/1701/logout" logout-success-url="/athn"
       delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="customerAuthenticationManager">
@@ -35,15 +36,12 @@
     class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ReservationUserDetailsService">
   </bean>
 
-  <sec:http pattern="/athn/1702/**" auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
-
+  <sec:http pattern="/athn/1702/**" request-matcher="ant" auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
     <sec:custom-filter position="FORM_LOGIN_FILTER" ref="companyIdUsernamePasswordAuthenticationFilter" />
-
     <sec:csrf token-repository-ref="csrfTokenRepository" />
-
-    <sec:logout logout-url="/athn/1702/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/athn/1702/logout" logout-success-url="/athn"
       delete-cookies="JSESSIONID" />
-
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <bean id="loginUrlAuthenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
@@ -60,6 +58,7 @@
     </property>
     <property name="authenticationManager" ref="authenticationManager" />
     <property name="sessionAuthenticationStrategy" ref="sessionAuthenticationStrategy" />
+    <property name="securityContextRepository" ref="securityContextRepository" />
     <property name="authenticationFailureHandler">
       <bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
         <constructor-arg value="/athn/1702/001?error" />
@@ -84,6 +83,9 @@
     <property name="passwordEncoder" ref="passwordEncoder" />
   </bean>
 
+
+  <bean id="securityContextRepository"
+    class="org.springframework.security.web.context.HttpSessionSecurityContextRepository" />
   <bean id="sessionAuthenticationStrategy"
     class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
     <constructor-arg>
@@ -100,13 +102,15 @@
   <bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
 
 
-  <sec:http pattern="/athn/1703/**" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/1703/**" request-matcher="ant" authentication-manager-ref="userLoginManagerForAthn">
     <sec:form-login login-page="/athn/1703/001" login-processing-url="/athn/1703/001/authenticate"
       default-target-url="/athn/1703/001?loginSuccess" always-use-default-target="true" />
     <sec:logout logout-url="/athn/1703/001/logout" logout-success-url="/athn/1703/001" />
     <sec:intercept-url pattern="/athn/1703/001/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1703/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1703/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1703/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
 </beans>

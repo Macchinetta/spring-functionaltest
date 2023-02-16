@@ -21,10 +21,9 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-import javax.jms.JMSException;
-
 import org.springframework.jms.core.JmsTemplate;
 
+import jakarta.jms.JMSException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsSharedService {
@@ -62,10 +61,10 @@ public interface JmsSharedService {
 
     Object readFileToObject(String path) throws IOException;
 
-    List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate,
+    List<jakarta.jms.Message> getMessages(JmsTemplate jmsTemplate,
             String distinationName) throws JMSException;
 
-    List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
+    List<jakarta.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
             String distinationName, String messageSelector) throws JMSException;
 
     void insert(JmsTodo jmsTodo);

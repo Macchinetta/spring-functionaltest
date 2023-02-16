@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class THYM0605004Controller {
 
-    @RequestMapping
+    @GetMapping
     public String testTHYM0605004() {
         return "thym/cacheable";
     }

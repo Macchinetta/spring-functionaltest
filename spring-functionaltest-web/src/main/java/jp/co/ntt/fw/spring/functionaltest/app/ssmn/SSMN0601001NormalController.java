@@ -15,24 +15,22 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
 import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Address;
 import jp.co.ntt.fw.spring.functionaltest.app.ssmn.MemberForm.Other;
@@ -49,7 +47,7 @@ public class SSMN0601001NormalController {
             SSMN0601001NormalController.class);
 
     @Inject
-    Mapper beanMapper;
+    SSMNBeanMapper beanMapper;
 
     @Inject
     MemberService memberService;
@@ -59,18 +57,18 @@ public class SSMN0601001NormalController {
         return new MemberForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle01001(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "redirect:/ssmn/0601/001/synchronism?createForm";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "createForm")
+    @GetMapping(params = "createForm")
     public String createMemberForm() {
         return "ssmn/createMemberAll";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "confirm")
+    @PostMapping(params = "confirm")
     public String createMemberConfirm(@Validated({ Personal.class,
             Address.class, Other.class }) MemberForm form,
             BindingResult result) {
@@ -82,7 +80,7 @@ public class SSMN0601001NormalController {
         return "ssmn/createMemberConfirm";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String createMember(@Validated({ Personal.class, Address.class,
             Other.class }) MemberForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -94,7 +92,7 @@ public class SSMN0601001NormalController {
         logger.info(
                 "[Session Synchronization Confirmation]SSMN0601001NormalController createMember process start");
 
-        Member member = beanMapper.map(form, Member.class);
+        Member member = beanMapper.map(form);
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
@@ -107,14 +105,14 @@ public class SSMN0601001NormalController {
         return "redirect:/ssmn/0601/001/synchronism?complete";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String createMemberComplete(Model model,
             SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "ssmn/createMemberComplete";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "redo")
+    @PostMapping(params = "redo")
     public String createRedoMember() {
         return "ssmn/createMemberAll";
     }

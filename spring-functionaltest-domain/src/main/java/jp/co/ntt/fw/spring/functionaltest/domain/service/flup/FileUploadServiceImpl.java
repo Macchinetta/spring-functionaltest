@@ -21,16 +21,16 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.UUID;
-
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.flup.UploadFileRepository;
 
@@ -47,7 +47,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     UploadFileRepository uploadFileRepository;
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     public UploadFile saveFileToDisc(InputStream content,
             UploadFile newUploadFile) throws IOException {
@@ -55,7 +55,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         String fileId = generateFileId();
 
         newUploadFile.setFileId(fileId);
-        newUploadFile.setUploadedAt(dateFactory.newDate());
+        newUploadFile.setUploadedAt(LocalDate.now(clockFactory.fixed()));
 
         // ファイルのDB登録
         uploadFileRepository.insert(newUploadFile);
@@ -98,7 +98,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         String fileId = generateFileId();
 
         newUploadFile.setFileId(fileId);
-        newUploadFile.setUploadedAt(dateFactory.newDate());
+        newUploadFile.setUploadedAt(LocalDate.now(clockFactory.fixed()));
 
         // ファイルのDB登録
         uploadFileRepository.insert(newUploadFile);
@@ -133,7 +133,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
         newUploadFile.setFileId(fileId);
         newUploadFile.setContent(content);
-        newUploadFile.setUploadedAt(dateFactory.newDate());
+        newUploadFile.setUploadedAt(LocalDate.now(clockFactory.fixed()));
 
         // ファイルのDB登録
         uploadFileRepository.insert(newUploadFile);
@@ -147,7 +147,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Transactional(readOnly = true)
     @Override
     public UploadFile getUploadFile(String fileId) {
-        UploadFile loadedUploadFile = uploadFileRepository.findOne(fileId);
+        UploadFile loadedUploadFile = uploadFileRepository.findByFileId(fileId);
         if (loadedUploadFile == null) {
             throw new ResourceNotFoundException(String.format(
                     "Specified uploaded file not found. file id is '%s'.",

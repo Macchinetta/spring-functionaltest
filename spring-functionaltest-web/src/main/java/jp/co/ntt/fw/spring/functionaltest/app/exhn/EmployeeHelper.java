@@ -15,20 +15,19 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.inject.Inject;
-
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 
+@Order(100)
 @Component
 public class EmployeeHelper {
 
     @Inject
-    Mapper beanMapper;
+    EmployeeBeanMapper beanMapper;
 
     @Inject
     EmployeeService employeeService;
@@ -39,7 +38,7 @@ public class EmployeeHelper {
     }
 
     Employee convertToEntity(EmployeeForm form) {
-        Employee employee = beanMapper.map(form, Employee.class);
+        Employee employee = beanMapper.map(form);
         // 更新対象は、ID 1のユーザのみ
         employee.setEmployeeId(1);
         return employee;

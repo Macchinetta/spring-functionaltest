@@ -24,21 +24,23 @@
     </constructor-arg>
   </bean>
 
-  <sec:http pattern="/athn/1901/002/**" auto-config="false" authentication-manager-ref="loginWithMessageDigestPassword">
+  <sec:http pattern="/athn/1901/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithMessageDigestPassword">
     <sec:form-login login-page="/athn/1901/002" login-processing-url="/athn/1901/002/authenticate"
       default-target-url="/athn/1901/002/afterLogin" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    <sec:logout logout-url="/athn/1901/002/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/athn/1901/002/logout" logout-success-url="/athn"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
-  <sec:http pattern="/athn/1901/004/**" auto-config="false"
+  <sec:http pattern="/athn/1901/004/**" request-matcher="ant" auto-config="false"
     authentication-manager-ref="loginWithMessageDigestDelegatingPassword">
     <sec:form-login login-page="/athn/1901/004" login-processing-url="/athn/1901/004/authenticate"
       default-target-url="/athn/1901/004/afterLogin" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    <sec:logout logout-url="/athn/1901/004/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/athn/1901/004/logout" logout-success-url="/athn"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithMessageDigestPassword">

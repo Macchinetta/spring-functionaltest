@@ -16,10 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 public class DefineTypeMismatchMessageForm implements Serializable {
 
@@ -47,7 +46,7 @@ public class DefineTypeMismatchMessageForm implements Serializable {
 
     private Date date;
 
-    private DateTime datetime;
+    private LocalDateTime localdatetime;
 
     private LocalDate localdate;
 
@@ -141,12 +140,12 @@ public class DefineTypeMismatchMessageForm implements Serializable {
         this.date = date;
     }
 
-    public DateTime getDatetime() {
-        return datetime;
+    public LocalDateTime getLocaldatetime() {
+        return localdatetime;
     }
 
-    public void setDatetime(DateTime datetime) {
-        this.datetime = datetime;
+    public void setLocaldatetime(LocalDateTime datetime) {
+        this.localdatetime = datetime;
     }
 
     public LocalDate getLocaldate() {

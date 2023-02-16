@@ -16,8 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 public class RestMemberCredential implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,9 +29,9 @@ public class RestMemberCredential implements Serializable {
 
     private String previousPassword;
 
-    private DateTime passwordLastChangedAt;
+    private LocalDateTime passwordLastChangedAt;
 
-    private DateTime lastModifiedAt;
+    private LocalDateTime lastModifiedAt;
 
     private long version;
 
@@ -68,19 +67,19 @@ public class RestMemberCredential implements Serializable {
         this.previousPassword = previousPassword;
     }
 
-    public DateTime getPasswordLastChangedAt() {
+    public LocalDateTime getPasswordLastChangedAt() {
         return passwordLastChangedAt;
     }
 
-    public void setPasswordLastChangedAt(DateTime passwordLastChangedAt) {
+    public void setPasswordLastChangedAt(LocalDateTime passwordLastChangedAt) {
         this.passwordLastChangedAt = passwordLastChangedAt;
     }
 
-    public DateTime getLastModifiedAt() {
+    public LocalDateTime getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(DateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
 

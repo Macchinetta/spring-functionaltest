@@ -15,31 +15,34 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.cdls;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.joda.time.DateTime;
 import org.terasoluna.gfw.common.codelist.AbstractCodeList;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
 public class DepYearCodeList extends AbstractCodeList {
 
-    private JodaTimeDateFactory dateFactory;
+    private ClockFactory clockFactory;
 
-    public void setDateFactory(JodaTimeDateFactory dateFactory) {
-        this.dateFactory = dateFactory;
+    public void setClockFactory(ClockFactory clockFactory) {
+        this.clockFactory = clockFactory;
     }
 
     @Override
     public Map<String, String> asMap() {
-        DateTime dateTime = dateFactory.newDateTime();
-        DateTime nextYearDateTime = dateTime.plusYears(1);
+        Clock clock = clockFactory.fixed();
+        LocalDateTime localDateTime = LocalDateTime.now(clock);
+        LocalDateTime nextYearDateTime = localDateTime.plusYears(1);
 
         Map<String, String> depYearMap = new LinkedHashMap<>();
 
-        String thisYear = dateTime.toString("Y");
-        String nextYear = nextYearDateTime.toString("Y");
+        String thisYear = String.valueOf(localDateTime.getYear());
+        String nextYear = String.valueOf(nextYearDateTime.getYear());
+
         depYearMap.put(thisYear, thisYear);
         depYearMap.put(nextYear, nextYear);
 

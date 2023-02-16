@@ -15,27 +15,27 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.infra.spring.data;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.TemporalAccessor;
 import java.util.Optional;
 
-import javax.inject.Inject;
-
-import org.joda.time.DateTime;
 import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.stereotype.Component;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
+
+import jakarta.inject.Inject;
 
 @Component
 public class AuditDateTimeProvider implements DateTimeProvider {
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Override
     public Optional<TemporalAccessor> getNow() {
-        DateTime currentDateTime = dateFactory.newDateTime();
-        Instant instant = currentDateTime.toGregorianCalendar().toInstant();
+        Clock clock = clockFactory.fixed();
+        Instant instant = clock.instant();
         return Optional.of(instant);
     }
 

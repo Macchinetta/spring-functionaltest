@@ -15,15 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
-import javax.persistence.LockModeType;
-import javax.persistence.QueryHint;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.QueryHint;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
 public interface JPABookEGRepository extends JpaRepository<JPABookEG, Integer> {
@@ -34,13 +33,13 @@ public interface JPABookEGRepository extends JpaRepository<JPABookEG, Integer> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT book FROM JPABookEG book WHERE book.bookId = :bookId ORDER BY book.bookId")
     @QueryHints(value = {
-            @QueryHint(name = "javax.persistence.lock.timeout", value = "0") })
-    JPABookEG findOneForUpdate(@Param("bookId") Integer bookId);
+            @QueryHint(name = "jakarta.persistence.lock.timeout", value = "0") })
+    JPABookEG findByBookIdForUpdate(@Param("bookId") Integer bookId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT book FROM JPABookEG book WHERE book.bookId = :bookId ORDER BY book.bookId")
     @QueryHints(value = {
-            @QueryHint(name = "javax.persistence.lock.timeout", value = "12000") })
-    JPABookEG findOneForUpdateNoExcp(@Param("bookId") Integer bookId);
+            @QueryHint(name = "jakarta.persistence.lock.timeout", value = "12000") })
+    JPABookEG findByBookIdForUpdateNoExcp(@Param("bookId") Integer bookId);
 
 }

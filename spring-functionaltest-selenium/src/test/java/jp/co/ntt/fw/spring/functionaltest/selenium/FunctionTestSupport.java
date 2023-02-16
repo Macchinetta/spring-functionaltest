@@ -19,8 +19,6 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -40,6 +38,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -314,7 +313,7 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * @return パッケージに割り振られているルートのURL
      */
     protected String getPackageRootUrl() {
-        return applicationContextUrl + "/" + simplePackageName + "/";
+        return applicationContextUrl + "/" + simplePackageName;
     }
 
     private WebDriver newDefaultWebDriver() {

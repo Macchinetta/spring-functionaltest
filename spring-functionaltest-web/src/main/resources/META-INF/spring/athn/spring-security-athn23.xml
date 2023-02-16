@@ -5,11 +5,13 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/2301/**" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/2301/**" request-matcher="ant" authentication-manager-ref="userLoginManagerForAthn">
     <sec:form-login login-page="/athn/2301/001/login" login-processing-url="/athn/2301/001/authenticate"
       default-target-url="/athn/2301/001?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/2301/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/2301/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/2301/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/2301/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/2301/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 </beans>

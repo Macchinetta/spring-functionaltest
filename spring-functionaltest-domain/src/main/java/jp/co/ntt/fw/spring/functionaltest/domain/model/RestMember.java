@@ -16,9 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class RestMember implements Serializable {
 
@@ -42,9 +41,9 @@ public class RestMember implements Serializable {
 
     private String address;
 
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 
-    private DateTime lastModifiedAt;
+    private LocalDateTime lastModifiedAt;
 
     private long version;
 
@@ -134,19 +133,19 @@ public class RestMember implements Serializable {
         this.address = address;
     }
 
-    public DateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public DateTime getLastModifiedAt() {
+    public LocalDateTime getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(DateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
 

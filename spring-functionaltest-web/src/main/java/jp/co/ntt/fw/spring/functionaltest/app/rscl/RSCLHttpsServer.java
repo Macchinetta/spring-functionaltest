@@ -24,16 +24,15 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
-import javax.xml.bind.JAXB;
 
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 
 import com.sun.net.httpserver.HttpExchange;
@@ -41,32 +40,29 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
 
+import jakarta.xml.bind.JAXB;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 /**
  * <ul>
  * テスト用簡易HTTPSサーバクラス。<br>
- * rsclContext.xml にて Bean定義して起動している。
+ * applicationContext-rscl.xml にて Bean定義して起動している。
  * </ul>
  */
-@SuppressWarnings("restriction")
 public class RSCLHttpsServer {
-    private static final Logger logger = LoggerFactory.getLogger(
+    private static final Logger LOGGER = LoggerFactory.getLogger(
             RSCLHttpsServer.class);
 
-    @Value("${rscl.keystore.filename}")
-    String keyStoreFileName;
+    private String keyStoreFileName;
 
-    @Value("${rscl.keystore.password}")
-    char[] keyStorePassword;
+    private char[] keyStorePassword;
 
-    @Value("${rscl.httpsserver.port}")
-    int port;
+    private int port;
 
     private HttpsServer server = null;
 
     public void startServer() {
-        logger.debug("call startServer");
+        LOGGER.debug("call startServer");
 
         try {
             this.server = HttpsServer.create(new InetSocketAddress(this.port),
@@ -90,49 +86,78 @@ public class RSCLHttpsServer {
             sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
             this.server.setHttpsConfigurator(new HttpsConfigurator(sslContext));
 
-            this.server.createContext("/api/v1/rscl", new HttpHandler() {
-                @Override
-                public void handle(
-                        HttpExchange httpexchange) throws IOException {
-                    logger.debug("receive");
-
-                    // userのXMｌ化
-                    UserResource user = new UserResource();
-                    user.setName("test");
-                    user.setAge(20);
-                    StringBuilderWriter writer = new StringBuilderWriter();
-                    JAXB.marshal(user, writer);
-
-                    // 送信データ
-                    String sendStr = writer.toString();
-
-                    // ヘッダ設定
-                    httpexchange.getResponseHeaders().add("Content-Type",
-                            MediaType.APPLICATION_XML_VALUE);
-                    httpexchange.sendResponseHeaders(200, sendStr.length());
-
-                    // ボディ設定
-                    OutputStream os = httpexchange.getResponseBody();
-                    os.write(sendStr.getBytes());
-                    os.flush();
-                    os.close();
-                }
-            });
+            this.server.createContext("/api/v1/rscl", new RSCLHttpHandler(0));
+            this.server.createContext("/api/v1/rscl2", new RSCLHttpHandler(6));
+            this.server.createContext("/api/v1/rscl3", new RSCLHttpHandler(6));
+            this.server.createContext("/api/v1/rscl4", new RSCLHttpHandler(20));
 
             this.server.setExecutor(null);
             this.server.start();
 
-            logger.debug("RSCL HTTPS Server started.");
+            LOGGER.debug("RSCL HTTPS Server started.");
         } catch (IOException | NoSuchAlgorithmException | KeyStoreException | CertificateException | UnrecoverableKeyException | KeyManagementException e) {
-            logger.error("RSCL用HTTPSサーバ起動でエラー", e);
+            LOGGER.error("RSCL用HTTPSサーバ起動でエラー", e);
         }
     }
 
     public void stopServer() {
-        logger.debug("call stopServer");
+        LOGGER.debug("call stopServer");
 
         if (this.server != null) {
             this.server.stop(0);
+        }
+    }
+
+    public void setKeyStoreFileName(String keyStoreFileName) {
+        this.keyStoreFileName = keyStoreFileName;
+    }
+
+    public void setKeyStorePassword(char[] keyStorePassword) {
+        this.keyStorePassword = keyStorePassword;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    private class RSCLHttpHandler implements HttpHandler {
+        private static final Logger LOGGER = LoggerFactory.getLogger(
+                RSCLHttpHandler.class);
+
+        private long sleepSeconds;
+
+        public RSCLHttpHandler(long sleepSeconds) {
+            this.sleepSeconds = sleepSeconds;
+        }
+
+        @Override
+        public void handle(HttpExchange httpexchange) throws IOException {
+            LOGGER.debug("receive");
+
+            try {
+                TimeUnit.SECONDS.sleep(this.sleepSeconds);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // userのXML化
+            UserResource user = new UserResource("test", 20);
+            StringBuilderWriter writer = new StringBuilderWriter();
+            JAXB.marshal(user, writer);
+
+            // 送信データ
+            String sendStr = writer.toString();
+
+            // ヘッダ設定
+            httpexchange.getResponseHeaders().add("Content-Type",
+                    MediaType.APPLICATION_XML_VALUE);
+            httpexchange.sendResponseHeaders(200, sendStr.length());
+
+            // ボディ設定
+            try (OutputStream os = httpexchange.getResponseBody()) {
+                os.write(sendStr.getBytes());
+                os.flush();
+            }
         }
     }
 

@@ -17,19 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.CodeListService;
 
@@ -37,7 +34,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.CodeListService;
 public class CDLS0105Controller {
 
     @Inject
-    Mapper beanMapper;
+    CDLSBeanMapper beanMapper;
 
     @Inject
     CodeListService codeListService;
@@ -57,22 +54,22 @@ public class CDLS0105Controller {
         return new ClI18nDBPriceForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "001", params = "locale")
     public String handle05001() {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "002", params = "locale")
     public String handle05002(Model model) {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "003", params = "locale")
     public String handle05003(Model model) {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.POST, params = "post")
+    @PostMapping(value = "003", params = "post")
     public String handle05003Post(RedirectAttributes redirectAttrs,
             Locale locale, @Validated ClI18nPriceForm form,
             BindingResult result) {
@@ -81,7 +78,7 @@ public class CDLS0105Controller {
             return "cdls/simpleI18nCodeList";
         }
 
-        CodeList codeList = beanMapper.map(form, CodeList.class);
+        CodeList codeList = beanMapper.map(form);
 
         redirectAttrs.addFlashAttribute("i18nPriceCodeListValue",
                 (codeListService.getI18nPriceCodeListValue(codeList.getId(),
@@ -91,12 +88,12 @@ public class CDLS0105Controller {
         return "redirect:003";
     }
 
-    @RequestMapping(value = "004", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "004", params = "locale")
     public String handle05004(Model model) {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "004", method = RequestMethod.POST, params = "post")
+    @PostMapping(value = "004", params = "post")
     public String handle05004Post(RedirectAttributes redirectAttrs,
             Locale locale, @Validated ClI18nPriceForm form,
             BindingResult result) {
@@ -105,7 +102,7 @@ public class CDLS0105Controller {
             return "cdls/simpleI18nCodeList";
         }
 
-        CodeList codeList = beanMapper.map(form, CodeList.class);
+        CodeList codeList = beanMapper.map(form);
 
         redirectAttrs.addFlashAttribute("i18nPriceCodeListValue",
                 (codeListService.getI18nPriceCodeListValue(codeList.getId(),
@@ -115,22 +112,22 @@ public class CDLS0105Controller {
         return "redirect:004";
     }
 
-    @RequestMapping(value = "005", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "005", params = "locale")
     public String handle05005() {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "006", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "006", params = "locale")
     public String handle05006() {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "007", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "007", params = "locale")
     public String handle05007(Model model) {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "007", method = RequestMethod.POST, params = "post")
+    @PostMapping(value = "007", params = "post")
     public String handle05007Post(RedirectAttributes redirectAttrs,
             Locale locale, @Validated ClI18nDBPriceForm form,
             BindingResult result) {
@@ -139,7 +136,7 @@ public class CDLS0105Controller {
             return "cdls/simpleI18nCodeList";
         }
 
-        CodeList codeList = beanMapper.map(form, CodeList.class);
+        CodeList codeList = beanMapper.map(form);
 
         redirectAttrs.addFlashAttribute("i18nDBPriceCodeListValue",
                 (codeListService.getI18nDBPriceCodeListValue(codeList.getId(),
@@ -149,12 +146,12 @@ public class CDLS0105Controller {
         return "redirect:007";
     }
 
-    @RequestMapping(value = "008", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "008", params = "locale")
     public String handle05008(Model model) {
         return "cdls/simpleI18nCodeList";
     }
 
-    @RequestMapping(value = "008", method = RequestMethod.POST, params = "post")
+    @PostMapping(value = "008", params = "post")
     public String handle05008Post(RedirectAttributes redirectAttrs,
             Locale locale, @Validated ClI18nDBPriceForm form,
             BindingResult result) {
@@ -163,7 +160,7 @@ public class CDLS0105Controller {
             return "cdls/simpleI18nCodeList";
         }
 
-        CodeList codeList = beanMapper.map(form, CodeList.class);
+        CodeList codeList = beanMapper.map(form);
 
         redirectAttrs.addFlashAttribute("i18nDBPriceCodeListValue",
                 (codeListService.getI18nDBPriceCodeListValue(codeList.getId(),

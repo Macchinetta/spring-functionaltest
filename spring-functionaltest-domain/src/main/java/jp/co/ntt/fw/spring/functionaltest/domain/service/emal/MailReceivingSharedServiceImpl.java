@@ -21,25 +21,24 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import javax.mail.Address;
-import javax.mail.BodyPart;
-import javax.mail.Flags;
-import javax.mail.Folder;
-import javax.mail.Message;
-import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Part;
-import javax.mail.Session;
-import javax.mail.Store;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeUtility;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.mail.Address;
+import jakarta.mail.BodyPart;
+import jakarta.mail.Flags;
+import jakarta.mail.Folder;
+import jakarta.mail.Message;
+import jakarta.mail.Message.RecipientType;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.Part;
+import jakarta.mail.Session;
+import jakarta.mail.Store;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeUtility;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
 
 @Service

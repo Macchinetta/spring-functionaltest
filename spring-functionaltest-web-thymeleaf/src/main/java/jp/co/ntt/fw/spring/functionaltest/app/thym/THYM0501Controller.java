@@ -16,8 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class THYM0501Controller {
@@ -27,12 +27,12 @@ public class THYM0501Controller {
         return new UserForm();
     }
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle0501001() {
         return "thym/inputUser";
     }
 
-    @RequestMapping("002")
+    @GetMapping("002")
     public String handle0501002() {
         return "thym/precedence";
     }

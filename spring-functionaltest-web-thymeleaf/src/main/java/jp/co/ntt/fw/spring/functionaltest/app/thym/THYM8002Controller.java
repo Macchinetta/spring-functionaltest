@@ -17,6 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes(value = "foo")
 public class THYM8002Controller {
 
-    @RequestMapping()
+    @GetMapping()
     public String handle8002(Model model) {
         model.addAttribute("foo", "aaa");
 

@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
 import org.springframework.core.annotation.Order;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -27,7 +28,8 @@ public class APLY04CommonControllerAdvice {
 
     // ExceptionHandlingを実施
     @ExceptionHandler(IntentionalException.class)
-    public String handleIntentionalException(IntentionalException e) {
+    public String handleIntentionalException(IntentionalException e,
+            Model model) {
         // 特に設定もせずエラー画面表示（デフォルトメッセージ表示）
         return "common/error/intentionalError";
     }

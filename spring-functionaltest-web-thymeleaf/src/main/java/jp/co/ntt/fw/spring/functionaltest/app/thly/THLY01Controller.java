@@ -16,33 +16,34 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thly;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thly")
 public class THLY01Controller {
 
-    @RequestMapping(value = "0101/001")
+    @GetMapping(value = "0101/001")
     public String handle0101001() {
         return "redirect:/thly/staff/register";
     }
 
-    @RequestMapping(value = "0101/002")
+    @GetMapping(value = "0101/002")
     public String handle0101002() {
         return "redirect:/thly/staff/register";
     }
 
-    @RequestMapping(value = "0101/003")
+    @GetMapping(value = "0101/003")
     public String handle0101003() {
         return "redirect:/thly/staff/update";
     }
 
-    @RequestMapping(value = "0101/004")
+    @GetMapping(value = "0101/004")
     public String handle0101004() {
         return "redirect:/thly/staff/update";
     }
 
-    @RequestMapping(value = "0101/005")
+    @GetMapping(value = "0101/005")
     public String handle0101005() {
         return "redirect:/thly/staff/search";
     }

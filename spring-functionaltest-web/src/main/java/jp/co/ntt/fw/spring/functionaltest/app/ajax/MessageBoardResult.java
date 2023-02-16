@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class MessageBoardResult implements Serializable {

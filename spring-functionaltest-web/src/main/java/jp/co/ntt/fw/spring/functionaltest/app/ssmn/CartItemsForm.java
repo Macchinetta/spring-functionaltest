@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 public class CartItemsForm implements Serializable {
 

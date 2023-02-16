@@ -18,20 +18,19 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 import java.util.Arrays;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MessageBoard;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.ajax.MessageBoardService;
 
@@ -50,7 +49,7 @@ public class AJAX0104001Controller {
         return new MessageBoardForm();
     }
 
-    @RequestMapping(value = "0104/001/write", method = RequestMethod.POST)
+    @PostMapping(value = "0104/001/write")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public MessageBoardResult editForXml(

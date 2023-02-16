@@ -15,8 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
-import javax.mail.Store;
-
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
 
 public interface MailReceivingSharedService {

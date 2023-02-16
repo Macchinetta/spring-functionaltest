@@ -5,7 +5,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.1.SP1.RELEASE</version>
+    <version>1.9.0.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - DB Init</name>
@@ -103,54 +103,6 @@
         <db.groupId>com.oracle.database.jdbc</db.groupId>
         <db.artifactId>ojdbc8</db.artifactId>
         <db.version>${ojdbc.version}</db.version>
-        <db.delimiterType>row</db.delimiterType>
-      </properties>
-    </profile>
-    <profile>
-      <!-- db2jcc4.jar must be pre-installed in local repository. -->
-      <id>db2</id>
-      <properties>
-        <db.encoding>UTF8</db.encoding>
-        <db.basedir>${project.basedir}/src/main/sqls/db2</db.basedir>
-        <db.url>jdbc:db2://localhost:50000/teradb</db.url>
-        <db.username>db2inst1</db.username>
-        <db.password>db2inst1</db.password>
-        <db.driver>com.ibm.db2.jcc.DB2Driver</db.driver>
-        <db.groupId>com.ibm</db.groupId>
-        <db.artifactId>db2jcc4</db.artifactId>
-        <db.version>${db2jcc4.version}</db.version>
-        <db.delimiterType>row</db.delimiterType>
-      </properties>
-    </profile>
-    <profile>
-      <!-- db2jcc4.jar must be pre-installed in local repository. -->
-      <id>db2-open</id>
-      <properties>
-        <db.encoding>UTF8</db.encoding>
-        <db.basedir>${project.basedir}/src/main/sqls/db2/open</db.basedir>
-        <db.url>jdbc:db2://localhost:50000/teradb</db.url>
-        <db.username>db2inst1</db.username>
-        <db.password>db2inst1</db.password>
-        <db.driver>com.ibm.db2.jcc.DB2Driver</db.driver>
-        <db.groupId>com.ibm</db.groupId>
-        <db.artifactId>db2jcc4</db.artifactId>
-        <db.version>${db2jcc4.version}</db.version>
-        <db.delimiterType>row</db.delimiterType>
-      </properties>
-    </profile>
-    <profile>
-      <!-- db2jcc4.jar must be pre-installed in local repository. -->
-      <id>db2-close</id>
-      <properties>
-        <db.encoding>UTF8</db.encoding>
-        <db.basedir>${project.basedir}/src/main/sqls/db2/close</db.basedir>
-        <db.url>jdbc:db2://localhost:50000/teradb</db.url>
-        <db.username>db2inst1</db.username>
-        <db.password>db2inst1</db.password>
-        <db.driver>com.ibm.db2.jcc.DB2Driver</db.driver>
-        <db.groupId>com.ibm</db.groupId>
-        <db.artifactId>db2jcc4</db.artifactId>
-        <db.version>${db2jcc4.version}</db.version>
         <db.delimiterType>row</db.delimiterType>
       </properties>
     </profile>

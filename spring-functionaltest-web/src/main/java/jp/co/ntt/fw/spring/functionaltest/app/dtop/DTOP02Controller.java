@@ -15,16 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
-import javax.inject.Inject;
-
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dtop.DateOperationService;
 
 @RequestMapping("dtop")
@@ -39,39 +39,48 @@ public class DTOP02Controller {
         return new ChangeTypeForm();
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle01001(Model model) {
         return "dtop/changeType";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle01002(Model model) {
         return "dtop/changeType";
     }
 
-    @RequestMapping(value = "0202/001", method = RequestMethod.GET)
+    @GetMapping(value = "0202/001")
     public String handle02001(Model model) {
         return "dtop/changeType";
     }
 
-    @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getDateToDateTimeObject")
+    @GetMapping(value = "getdatetype", params = "getDateToDateTimeObject")
     public String handleGetDateToDateTimeObject(Model model) {
-        model.addAttribute("resultDate", new DateTime(dateOperationService
-                .getNowDate()));
+        DateTime dateTime = new DateTime(dateOperationService.getNowDate());
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd HH:mm:ss.SSS ZZ").print(dateTime));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("SM")
+                .print(dateTime));
+        model.addAttribute("resultDate", dateTime);
         return "dtop/showDateTime";
     }
 
-    @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getDateTimeToDateObject")
+    @GetMapping(value = "getdatetype", params = "getDateTimeToDateObject")
     public String handleGetDateTimeToDateObject(Model model) {
         model.addAttribute("resultDate", dateOperationService.getNowDateTime()
                 .toDate());
         return "dtop/showDate";
     }
 
-    @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getParseDate")
+    @GetMapping(value = "getdatetype", params = "getParseDate")
     public String handleGetParseDateObject(Model model, ChangeTypeForm form) {
-        model.addAttribute("resultDate", DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseLocalDate(form.getTargetDate()));
+        LocalDate localDate = DateTimeFormat.forPattern("yyyy/MM/dd")
+                .parseLocalDate(form.getTargetDate());
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd").print(localDate));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("S-")
+                .print(localDate));
+        model.addAttribute("resultDate", localDate);
         return "dtop/showLocalDate";
     }
 }

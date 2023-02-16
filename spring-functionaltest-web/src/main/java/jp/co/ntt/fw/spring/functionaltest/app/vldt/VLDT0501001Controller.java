@@ -15,14 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping(value = "vldt/0501/001")
@@ -33,12 +34,12 @@ public class VLDT0501001Controller {
         return new ExistInCheckDefaultForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle(ExistInCheckDefaultForm form, Model model) {
         return "vldt/existIncheckDefaultForm";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String handleValidate(@Valid ExistInCheckDefaultForm form,
             BindingResult result, Model model) {
         return "vldt/existIncheckDefaultForm";

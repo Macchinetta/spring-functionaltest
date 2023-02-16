@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 //@Alias("DailyTodo")
 public class TodoCriteria implements Serializable {
@@ -25,7 +25,7 @@ public class TodoCriteria implements Serializable {
 
     private String title;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
     private boolean finished;
 
@@ -37,11 +37,11 @@ public class TodoCriteria implements Serializable {
         this.title = title;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 

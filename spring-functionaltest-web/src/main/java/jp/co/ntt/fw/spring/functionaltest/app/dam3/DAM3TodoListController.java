@@ -17,14 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.app.dam3;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.TodoMB3Service;
 
@@ -40,7 +39,7 @@ public class DAM3TodoListController {
         return new TodoForm();
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @GetMapping(value = "list")
     public String list(Model model) {
 
         String returnView = "";

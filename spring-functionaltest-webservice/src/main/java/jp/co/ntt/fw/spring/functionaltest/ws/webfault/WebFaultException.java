@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.ws.webfault;
 
 import java.util.List;
 
-import javax.xml.ws.WebFault;
+import jakarta.xml.ws.WebFault;
 
 @WebFault(name = "WebFault", targetNamespace = "http://functionaltest.spring.fw.ntt.co.jp/todo")
 public class WebFaultException extends Exception {

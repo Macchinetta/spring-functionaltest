@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
-import javax.mail.Store;
+import jakarta.mail.Store;
 
 public interface ConnectionErrorMailSendingService {
 

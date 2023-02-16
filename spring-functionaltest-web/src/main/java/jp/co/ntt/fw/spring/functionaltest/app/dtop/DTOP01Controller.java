@@ -15,16 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
-import javax.inject.Inject;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dtop.DateOperationService;
 
 @RequestMapping("dtop")
@@ -39,87 +39,111 @@ public class DTOP01Controller {
         return new GetDateAndTimeForm();
     }
 
-    @RequestMapping(value = "0101/001", method = RequestMethod.GET)
+    @GetMapping(value = "0101/001")
     public String handle01001(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0101/002", method = RequestMethod.GET)
+    @GetMapping(value = "0101/002")
     public String handle01002(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0101/003", method = RequestMethod.GET)
+    @GetMapping(value = "0101/003")
     public String handle01003(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0101/004", method = RequestMethod.GET)
+    @GetMapping(value = "0101/004")
     public String handle01004(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0101/005", method = RequestMethod.GET)
+    @GetMapping(value = "0101/005")
     public String handle01005(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0102/001", method = RequestMethod.GET)
+    @GetMapping(value = "0102/001")
     public String handle02001(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "0103/001", method = RequestMethod.GET)
+    @GetMapping(value = "0103/001")
     public String handle03001(Model model) {
         return "dtop/getDateAndTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowDateTime")
+    @GetMapping(value = "getdate", params = "getNowDateTime")
     public String handleGetNowDateTime(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd HH:mm:ss.SSS ZZ").print(dateTime));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("SM")
+                .print(dateTime));
         model.addAttribute("resultDate", dateTime);
         return "dtop/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowLocalDate")
+    @GetMapping(value = "getdate", params = "getNowLocalDate")
     public String handleGetNowLocalDate(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd").print(dateTime));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("S-")
+                .print(dateTime));
         model.addAttribute("resultDate", dateTime.toLocalDate());
         return "dtop/showLocalDate";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowLocalTime")
+    @GetMapping(value = "getdate", params = "getNowLocalTime")
     public String handleGetNowLocalTime(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "HH:mm:ss").print(dateTime));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("-M")
+                .print(dateTime));
         model.addAttribute("resultDate", dateTime.toLocalTime());
         return "dtop/showLocalTime";
     }
 
     @SuppressWarnings("deprecation")
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowDateMidnight")
+    @GetMapping(value = "getdate", params = "getNowDateMidnight")
     public String handleGetNowDateMidnight(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd HH:mm:ss.SSS ZZ").print(dateTime.toDateMidnight()));
         model.addAttribute("resultDate", dateTime.toDateMidnight());
         return "dtop/showDateMidnight";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getWithTimeAtStartOfDay")
+    @GetMapping(value = "getdate", params = "getWithTimeAtStartOfDay")
     public String handleGetNowDateTimeAtStartOfDay(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd HH:mm:ss.SSS ZZ").print(dateTime
+                        .withTimeAtStartOfDay()));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("SM")
+                .print(dateTime.withTimeAtStartOfDay()));
         model.addAttribute("resultDate", dateTime.withTimeAtStartOfDay());
         return "dtop/showDateTimeWithTimeAtStartOfDay";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getDateTimeSpecifiedTimezone")
+    @GetMapping(value = "getdate", params = "getDateTimeSpecifiedTimezone")
     public String handleGetDateTimeSpecifiedTimezone(Model model,
             GetDateAndTimeForm form) {
         DateTime dateTime = dateOperationService.getNowDateTime();
         DateTimeZone timezone = DateTimeZone.forID(form.getTargetTimeZone());
+        model.addAttribute("resultDateWithPtn", DateTimeFormat.forPattern(
+                "yyyy/MM/dd HH:mm:ss.SSS ZZ").print(dateTime.withZone(
+                        timezone)));
+        model.addAttribute("resultDateWithStyl", DateTimeFormat.forStyle("SM")
+                .print(dateTime.withZone(timezone)));
         model.addAttribute("resultDate", dateTime.withZone(timezone));
         return "dtop/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getPartOfDateTime")
+    @GetMapping(value = "getdate", params = "getPartOfDateTime")
     public String handleGetPartOfDateTime(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
         model.addAttribute("resultDate", dateTime);

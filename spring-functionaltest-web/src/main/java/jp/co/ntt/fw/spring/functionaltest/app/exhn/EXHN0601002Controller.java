@@ -17,18 +17,19 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.validation.groups.Default;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Register;
 
@@ -54,11 +55,13 @@ public class EXHN0601002Controller {
         return articleSessionInfo;
     }
 
-    @RequestMapping(value = "0601/002/register", params = "upload")
+    @RequestMapping(value = "0601/002/register", params = "upload", method = {
+            RequestMethod.GET, RequestMethod.POST })
     public String uploadRegister(@Validated({ Register.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
-            RedirectAttributes redirectAttrs) throws IOException {
+            RedirectAttributes redirectAttrs,
+            SessionStatus sessionStatus) throws IOException {
 
         String uploadTemporaryFileId = articleSessionInfo
                 .getUploadTemporaryFileId();
@@ -70,6 +73,8 @@ public class EXHN0601002Controller {
 
         redirectAttrs.addFlashAttribute("title", form.getTitle());
         redirectAttrs.addFlashAttribute("uploadedFileName", form.getFileName());
+
+        sessionStatus.setComplete();
 
         return "redirect:/exhn/0601/002?complete";
     }

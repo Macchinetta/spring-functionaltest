@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HandlerExceptionResolverErrorLevelLoggingInterceptor extends
                                                                   HandlerExceptionResolverLoggingInterceptor {

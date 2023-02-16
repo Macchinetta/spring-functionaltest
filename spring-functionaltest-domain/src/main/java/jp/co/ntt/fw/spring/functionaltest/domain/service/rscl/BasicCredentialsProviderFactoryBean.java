@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -41,7 +41,9 @@ public class BasicCredentialsProviderFactoryBean implements
 
         AuthScope authScope = new AuthScope(this.host, this.port);
 
-        UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(this.userName, this.password);
+        char[] passwordCharArray = this.password == null ? null
+                : this.password.toCharArray();
+        UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(this.userName, passwordCharArray);
 
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(authScope,

@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.fldw;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
+import java.util.Locale;
 import java.util.Map;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -37,13 +37,21 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
+
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class ExcelDownloadView extends AbstractXlsxView {
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("uuuu年MM月dd日").withLocale(Locale.JAPANESE)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     @Override
     public void render(Map<String, ?> model, HttpServletRequest request,
@@ -73,6 +81,10 @@ public class ExcelDownloadView extends AbstractXlsxView {
         // Create merged region and corresponding row for the report header
         sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 8));
         Row headerRow = sheet.createRow(1);
+
+        // Create merged region and corresponding row for the server time
+        sheet.addMergedRegion(new CellRangeAddress(3, 3, 1, 8));
+        Row serverTimeRow = sheet.createRow(3);
 
         // Create merged region and corresponding row for the report title
         sheet.addMergedRegion(new CellRangeAddress(4, 5, 1, 8));
@@ -133,6 +145,14 @@ public class ExcelDownloadView extends AbstractXlsxView {
         headerCellStyle.setWrapText(true);
         headerCellStyle.setFont(setFont);
 
+        // This is for server time Style
+        CellStyle serverTimeCellStyle = (CellStyle) workbook.createCellStyle();
+        Font setServerTimeCellStyleFont = (Font) workbook.createFont();
+        setServerTimeCellStyleFont.setFontHeightInPoints((short) 10);
+        serverTimeCellStyle.setFont(setServerTimeCellStyleFont);
+        serverTimeCellStyle.setAlignment(HorizontalAlignment.CENTER);
+        serverTimeCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
+
         // This is for title Style
         CellStyle titleCellStyle = (CellStyle) workbook.createCellStyle();
         Font setTitleFont = (Font) workbook.createFont();
@@ -167,6 +187,11 @@ public class ExcelDownloadView extends AbstractXlsxView {
         headerCell.setCellValue("銀行");
         headerCell.setCellStyle(headerCellStyle);
 
+        // fill in values in server time row
+        Cell serverTimeCell = serverTimeRow.createCell(1, CellType.BLANK);
+        serverTimeCell.setCellValue(model.get("serverTime").toString());
+        serverTimeCell.setCellStyle(serverTimeCellStyle);
+
         // fill in values in title row
         Cell titleCell = titleRow.createCell(1, CellType.BLANK);
         titleCell.setCellValue("新規口座開設申込書");
@@ -180,8 +205,8 @@ public class ExcelDownloadView extends AbstractXlsxView {
 
         Cell applicationDateValueCell = applicationDateRow.createCell(3,
                 CellType.BLANK);
-        applicationDateValueCell.setCellValue(DateFormatUtils.format(dateFactory
-                .newDate(), "yyyy年MM月dd日"));
+        applicationDateValueCell.setCellValue(LocalDate.now(clockFactory
+                .fixed()).format(DATE_TIME_FORMATTER));
         applicationDateValueCell.setCellStyle(dataCellStyle);
 
         // fill in instructions

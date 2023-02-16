@@ -15,12 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.CustomerRepository;
 
@@ -31,9 +30,9 @@ public class ReservationUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(
             String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findOneByName(username);
+        Customer customer = customerRepository.findByName(username);
         if (customer == null) {
-            throw new UsernameNotFoundException(username + " is not found."); // TODO to property file
+            throw new UsernameNotFoundException(username + " is not found."); // to property file
         }
         return new ReservationUserDetails(customer);
     }

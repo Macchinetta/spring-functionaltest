@@ -16,9 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import org.joda.time.DateTime;
+import java.time.LocalDate;
 
 public class AsClauseTodoMB3 implements Serializable {
 
@@ -32,9 +30,9 @@ public class AsClauseTodoMB3 implements Serializable {
 
     private boolean status;
 
-    private Date originDate;
+    private LocalDate originDate;
 
-    private DateTime completionDate;
+    private LocalDate completionDate;
 
     private long ver;
 
@@ -70,11 +68,11 @@ public class AsClauseTodoMB3 implements Serializable {
         this.status = status;
     }
 
-    public Date getOriginDate() {
+    public LocalDate getOriginDate() {
         return originDate;
     }
 
-    public void setOriginDate(Date originDate) {
+    public void setOriginDate(LocalDate originDate) {
         this.originDate = originDate;
     }
 
@@ -86,11 +84,11 @@ public class AsClauseTodoMB3 implements Serializable {
         this.ver = ver;
     }
 
-    public DateTime getCompletionDate() {
+    public LocalDate getCompletionDate() {
         return completionDate;
     }
 
-    public void setCompletionDate(DateTime completionDate) {
+    public void setCompletionDate(LocalDate completionDate) {
         this.completionDate = completionDate;
     }
 

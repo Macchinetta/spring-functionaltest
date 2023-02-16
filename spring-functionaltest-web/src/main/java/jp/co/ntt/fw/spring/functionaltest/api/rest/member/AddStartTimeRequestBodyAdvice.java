@@ -16,8 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -43,8 +43,7 @@ public class AddStartTimeRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
         MemberResourceWithAdvice resource = (MemberResourceWithAdvice) body;
 
-        resource.setStartDateTime(
-                new LocalDateTime(2015, 12, 16, 13, 10, 4, 5));
+        resource.setStartDateTime(LocalDateTime.of(2015, 12, 16, 13, 10, 4, 5));
 
         return resource;
     }

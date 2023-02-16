@@ -17,9 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class CDLS0401Controller {
@@ -29,12 +28,12 @@ public class CDLS0401Controller {
         return new CodeListForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle01001(Model model) {
         return "cdls/codeListVariation";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle01002(Model model) {
         return "cdls/codeListVariation";
     }

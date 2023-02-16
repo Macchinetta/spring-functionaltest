@@ -15,15 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.cdls;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.time.Clock;
+import java.time.LocalDate;
 
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.codelist.ReloadableCodeList;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.cdls.UpdateCodelistRepository;
 
@@ -34,7 +35,7 @@ public class ReloadCodeListServiceImpl implements ReloadCodeListService {
     UpdateCodelistRepository updateCodeListRepository;
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Inject
     @Named(value = "CL_REFRESH_CODELIST")
@@ -48,13 +49,13 @@ public class ReloadCodeListServiceImpl implements ReloadCodeListService {
     @Override
     @Transactional
     public void updateAuthorityTableValue(CodeList updateCodeList) {
-        updateCodeListRepository.updateAuthorityTableValue(updateCodeList);
+        updateCodeListRepository.updateAuthorityTableValueById(updateCodeList);
     }
 
     @Override
     public String getSystemYear() {
-        DateTime dateTime = dateFactory.newDateTime();
-        return dateTime.toString("Y");
+        Clock clock = clockFactory.fixed();
+        return String.valueOf(LocalDate.now(clock).getYear());
     }
 
     @Override

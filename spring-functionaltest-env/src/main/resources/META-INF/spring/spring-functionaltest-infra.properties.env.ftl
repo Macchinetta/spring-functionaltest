@@ -24,7 +24,7 @@ app.upload.temporaryDirectory=/tmp/spring-functionaltest-web/upload/temporaryDir
 app.upload.directory=/tmp/spring-functionaltest-web/upload/uploadDirectory/
 
 # enabled column value
-enabledValue=1
+enabledValue=true
 
 # Email settings (No-auth)
 mail.noauth.smtp.host=localhost
@@ -56,9 +56,9 @@ connect.port=8080
 ## WebService sleep time
 soap.timeout.sleepMilliseconds=3000
 ## WebService Proxy timeout settings
-soap.request.timeout.key=javax.xml.ws.client.receiveTimeout
+soap.request.timeout.key=jakarta.xml.ws.client.receiveTimeout
 soap.request.timeout.value=1000
-soap.connect.timeout.key=javax.xml.ws.client.connectionTimeout
+soap.connect.timeout.key=jakarta.xml.ws.client.connectionTimeout
 soap.connect.timeout.value=2000
 
 # REST API Capacity (RestClient)

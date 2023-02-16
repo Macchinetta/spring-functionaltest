@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public class DefineMessageUsingValidatedValueByValidationMessagesForm implements
                                                                       Serializable {

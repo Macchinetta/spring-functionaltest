@@ -18,16 +18,14 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dam3mb3;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.ItemMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderMB3;
@@ -39,9 +37,6 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
 
     @Inject
     OrderMB3Repository orderMB3Repository;
-
-    @Inject
-    JodaTimeDateFactory dateFactory;
 
     @Override
     @Transactional(readOnly = true)
@@ -58,20 +53,20 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
     @Override
     @Transactional(readOnly = true)
     public OrderMB3 findOne(int id) {
-        return orderMB3Repository.findOne(id);
+        return orderMB3Repository.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public OrderMB3 findOneCondSts(int id, String statusCode) {
-        return orderMB3Repository.findOneCondSts(id, statusCode);
+        return orderMB3Repository.findByCondSts(id, statusCode);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Page<OrderMB3> findPageMyBatis3(Pageable pageable) {
 
-        long total = orderMB3Repository.countById();
+        long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
             RowBounds rowBounds = new RowBounds((int) pageable
@@ -87,7 +82,7 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
     @Transactional(readOnly = true)
     public Page<OrderMB3> findPageMyBatis3Scroll(Pageable pageable) {
 
-        long total = orderMB3Repository.countById();
+        long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
             RowBounds rowBounds = new RowBounds((int) pageable

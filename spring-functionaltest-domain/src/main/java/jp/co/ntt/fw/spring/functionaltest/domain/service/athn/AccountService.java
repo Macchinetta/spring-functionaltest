@@ -15,13 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.AccountRepository;
 
@@ -44,7 +43,7 @@ public class AccountService {
 
     @Transactional
     public Account findOneByUserName(String username) {
-        Account account = accountRepository.findOneByUsername(username);
+        Account account = accountRepository.findByUsername(username);
         if (account == null) {
             throw new UsernameNotFoundException("user not found.");
         }

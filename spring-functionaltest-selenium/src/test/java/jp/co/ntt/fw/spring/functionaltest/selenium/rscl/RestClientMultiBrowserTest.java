@@ -1,0 +1,260 @@
+/*
+ * Copyright(c) 2014 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package jp.co.ntt.fw.spring.functionaltest.selenium.rscl;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.CountDownLatch;
+
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.springframework.test.annotation.IfProfileValue;
+
+import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
+import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
+
+/**
+ * RSCL 複数画面使用テスト<br>
+ * <p>
+ * </p>
+ */
+@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+public class RestClientMultiBrowserTest extends
+                                        FunctionTestSupportForMultiBrowser {
+
+    /**
+     * <ul>
+     * <li>RSCL0602001 ： setMaxConnPerRouteメソッドの動作確認</li>
+     * <li>MaxConnPerRoute=1</li>
+     * <li>MaxConnTotal=2</li>
+     * </ul>
+     * @throws InterruptedException
+     */
+    @Test
+    public void testRSCL0602001() throws InterruptedException {
+        // ブラウザを2つ起動
+        setUpWebDriver(1, "rscl0601002"); // localhost:8991
+        setUpWebDriver(2, "rscl0601003"); // localhost:8991
+
+        final CountDownLatch startSignal = new CountDownLatch(2);
+
+        Thread thread1 = createThread(1, startSignal);
+        Thread thread2 = createThread(2, startSignal);
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+
+        // ブラウザ1の画面表示確認
+        WebDriverOperations operations1 = getWebDriverOperations(1);
+        operations1.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+
+        WebDriver driver1 = operations1.getWebDriver();
+        ResultUserInfPage resultUserInfPage1 = new ResultUserInfPage(driver1);
+        assertThat(resultUserInfPage1.getUserName(), is("test"));
+        assertThat(resultUserInfPage1.getUserAge(), is("20"));
+
+        LocalDateTime compleatDateTime1 = LocalDateTime.parse(resultUserInfPage1
+                .getCompleatDateTime(), DateTimeFormatter.ofPattern(
+                        "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"));
+        Long executeMillis1 = Long.valueOf(resultUserInfPage1.getExecuteTime());
+
+        // ブラウザ2の画面表示確認
+        WebDriverOperations operations2 = getWebDriverOperations(2);
+        operations2.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+
+        WebDriver driver2 = operations2.getWebDriver();
+        ResultUserInfPage resultUserInfPage2 = new ResultUserInfPage(driver2);
+        assertThat(resultUserInfPage2.getUserName(), is("test"));
+        assertThat(resultUserInfPage2.getUserAge(), is("20"));
+
+        LocalDateTime compleatDateTime2 = LocalDateTime.parse(resultUserInfPage2
+                .getCompleatDateTime(), DateTimeFormatter.ofPattern(
+                        "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"));
+        Long executeMillis2 = Long.valueOf(resultUserInfPage2.getExecuteTime());
+
+        // MaxConnPerRoute = 1 のため、同一宛先に対しては最大1コネクションのみとなる
+        // 先行処理は6秒前後（誤差を考慮し、サーバ処理時間 ± 1秒 とする）
+        // 後続処理は12秒前後（誤差を考慮し、(サーバ処理時間 ± 1秒) × 2 とする）
+        if (compleatDateTime2.isAfter(compleatDateTime1)) {
+            // ブラウザ1が先行
+            assertTrue(5_000L < executeMillis1); // ブラウザ1
+            assertTrue(executeMillis1 < 7_000L); // ブラウザ1
+            assertTrue(10_000L < executeMillis2); // ブラウザ2
+            assertTrue(executeMillis2 < 14_000L); // ブラウザ2
+        } else {
+            // ブラウザ2が先行
+            assertTrue(5_000L < executeMillis2); // ブラウザ2
+            assertTrue(executeMillis2 < 7_000L); // ブラウザ2
+            assertTrue(10_000L < executeMillis1); // ブラウザ1
+            assertTrue(executeMillis1 < 14_000L); // ブラウザ1
+        }
+
+    }
+
+    /**
+     * <ul>
+     * <li>RSCL0603001 ： setMaxConnTotalメソッドの動作確認</li>
+     * <li>MaxConnPerRoute=1</li>
+     * <li>MaxConnTotal=2</li>
+     * </ul>
+     * @throws InterruptedException
+     */
+    @Test
+    public void testRSCL0603001() throws InterruptedException {
+        // ブラウザを3つ起動
+        setUpWebDriver(1, "rscl0601002"); // localhost:8991
+        setUpWebDriver(2, "rscl0601005"); // localhost:8992
+        setUpWebDriver(3, "rscl0601006"); // localhost:8993
+
+        final CountDownLatch startSignal = new CountDownLatch(3);
+
+        Thread thread1 = createThread(1, startSignal);
+        Thread thread2 = createThread(2, startSignal);
+        Thread thread3 = createThread(3, startSignal);
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread1.join();
+        thread2.join();
+        thread3.join();
+
+        // ブラウザ1の画面表示確認
+        WebDriverOperations operations1 = getWebDriverOperations(1);
+        operations1.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+
+        WebDriver driver1 = operations1.getWebDriver();
+        ResultUserInfPage resultUserInfPage1 = new ResultUserInfPage(driver1);
+        assertThat(resultUserInfPage1.getUserName(), is("test"));
+        assertThat(resultUserInfPage1.getUserAge(), is("20"));
+
+        LocalDateTime compleatDateTime1 = LocalDateTime.parse(resultUserInfPage1
+                .getCompleatDateTime(), DateTimeFormatter.ofPattern(
+                        "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"));
+        Long executeMillis1 = Long.valueOf(resultUserInfPage1.getExecuteTime());
+
+        // ブラウザ2の画面表示確認
+        WebDriverOperations operations2 = getWebDriverOperations(2);
+        operations2.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+
+        WebDriver driver2 = operations1.getWebDriver();
+        ResultUserInfPage resultUserInfPage2 = new ResultUserInfPage(driver2);
+        assertThat(resultUserInfPage2.getUserName(), is("test"));
+        assertThat(resultUserInfPage2.getUserAge(), is("20"));
+
+        LocalDateTime compleatDateTime2 = LocalDateTime.parse(resultUserInfPage2
+                .getCompleatDateTime(), DateTimeFormatter.ofPattern(
+                        "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"));
+        Long executeMillis2 = Long.valueOf(resultUserInfPage2.getExecuteTime());
+
+        // ブラウザ3の画面表示確認
+        WebDriverOperations operations3 = getWebDriverOperations(3);
+        operations3.waitForDisplayed(textToBe(By.xpath("//h1"),
+                "RESTクライアント処理結果【ユーザ情報出力】"));
+
+        WebDriver driver3 = operations3.getWebDriver();
+        ResultUserInfPage resultUserInfPage3 = new ResultUserInfPage(driver3);
+        assertThat(resultUserInfPage3.getUserName(), is("test"));
+        assertThat(resultUserInfPage3.getUserAge(), is("20"));
+
+        LocalDateTime compleatDateTime3 = LocalDateTime.parse(resultUserInfPage3
+                .getCompleatDateTime(), DateTimeFormatter.ofPattern(
+                        "uuuu-MM-dd HH:mm:ss.SSSSSSSSS"));
+        Long executeMillis3 = Long.valueOf(resultUserInfPage3.getExecuteTime());
+
+        // MaxConnTotal = 2 のため、MaxConnPerRoute = 1であっても別々の宛先に送ることで2コネクションまで取得できる
+        // 先行処理は6秒前後（誤差を考慮し、サーバ処理時間 ± 1秒 とする）
+        // 後続処理は12秒前後（誤差を考慮し、(サーバ処理時間 ± 1秒) × 2 とする）
+        if (compleatDateTime2.isAfter(compleatDateTime1)) {
+            if (compleatDateTime3.isAfter(compleatDateTime2)) {
+                // ブラウザ1/ブラウザ2が先行
+                assertTrue(5_000L < executeMillis1); // ブラウザ1
+                assertTrue(executeMillis1 < 7_000L); // ブラウザ1
+                assertTrue(5_000L < executeMillis2); // ブラウザ2
+                assertTrue(executeMillis2 < 7_000L); // ブラウザ2
+                assertTrue(10_000L < executeMillis3); // ブラウザ3
+                assertTrue(executeMillis3 < 14_000L); // ブラウザ3
+            } else {
+                // ブラウザ1/ブラウザ3が先行
+                assertTrue(5_000L < executeMillis1); // ブラウザ1
+                assertTrue(executeMillis1 < 7_000L); // ブラウザ1
+                assertTrue(5_000L < executeMillis3); // ブラウザ3
+                assertTrue(executeMillis3 < 7_000L); // ブラウザ3
+                assertTrue(10_000L < executeMillis2); // ブラウザ2
+                assertTrue(executeMillis2 < 14_000L); // ブラウザ2
+            }
+        } else {
+            if (compleatDateTime3.isAfter(compleatDateTime1)) {
+                // ブラウザ1/ブラウザ2が先行
+                assertTrue(5_000L < executeMillis1); // ブラウザ1
+                assertTrue(executeMillis1 < 7_000L); // ブラウザ1
+                assertTrue(5_000L < executeMillis2); // ブラウザ2
+                assertTrue(executeMillis2 < 7_000L); // ブラウザ2
+                assertTrue(10_000L < executeMillis3); // ブラウザ3
+                assertTrue(executeMillis3 < 14_000L); // ブラウザ3
+            } else {
+                // ブラウザ2/ブラウザ3が先行
+                assertTrue(5_000L < executeMillis2); // ブラウザ2
+                assertTrue(executeMillis2 < 7_000L); // ブラウザ2
+                assertTrue(5_000L < executeMillis3); // ブラウザ3
+                assertTrue(executeMillis3 < 7_000L); // ブラウザ3
+                assertTrue(10_000L < executeMillis1); // ブラウザ1
+                assertTrue(executeMillis1 < 14_000L); // ブラウザ1
+            }
+        }
+
+    }
+
+    private Thread createThread(final int webDriverId,
+            final CountDownLatch startSignal) {
+        return new Thread(() -> {
+            WebDriverOperations operations = getWebDriverOperations(
+                    webDriverId);
+            WebDriver driver = operations.getWebDriver();
+            SetSelfSignedCertificatePage setSelfSignedCertificatePage = new SetSelfSignedCertificatePage(driver);
+
+            startSignal.countDown();
+            try {
+                startSignal.await();
+            } catch (InterruptedException e) {
+                throw new IllegalStateException(e);
+            }
+
+            setSelfSignedCertificatePage.clickSetBtn();
+        });
+    }
+
+    /**
+     * @param webDriverId 操作するブラウザを識別するためのID
+     * @param testId テスト画面を表示するためのリンクを識別するためのID
+     */
+    private void setUpWebDriver(int webDriverId, String testId) {
+        WebDriverOperations operations = setUpWebDriverOperations(webDriverId);
+        operations.click(id(testId));
+    }
+
+}

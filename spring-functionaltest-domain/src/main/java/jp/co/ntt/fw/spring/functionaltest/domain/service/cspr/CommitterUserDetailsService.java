@@ -15,12 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.cspr;
 
-import javax.inject.Inject;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterRepository;
 
@@ -33,10 +32,9 @@ public class CommitterUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(
             String username) throws UsernameNotFoundException {
 
-        Committer committer = committerRepository.findOneByName(username);
+        Committer committer = committerRepository.findByName(username);
 
         if (committer == null) {
-            // TODO get property
             throw new UsernameNotFoundException(username + " is not found.");
         }
 

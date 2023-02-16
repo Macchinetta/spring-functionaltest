@@ -15,7 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -43,7 +44,7 @@ public class AddEndTimeMyResponseBodyAdvice implements
             Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request, ServerHttpResponse response) {
 
-        body.setEndDateTime(new LocalDateTime(2015, 12, 16, 14, 10, 4, 5));
+        body.setEndDateTime(LocalDateTime.of(2015, 12, 16, 14, 10, 4, 5));
 
         return body;
     }

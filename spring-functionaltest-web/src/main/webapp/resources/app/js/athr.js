@@ -60,8 +60,8 @@ if (!athr)
         setContentTypeDom(xhr);
         //        var json = xhr.responseJSON;
         //
-        //        
-        //        
+        //
+        //
         //        if (0 < json.errorResults.length) {
         //            setResultMessageError();
         //            var returnMessage = $("#returnMessage");

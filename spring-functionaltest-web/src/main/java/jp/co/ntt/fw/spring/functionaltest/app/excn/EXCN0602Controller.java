@@ -15,8 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -28,16 +26,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockOptimisticLockService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockPessimisticLockService;
@@ -50,7 +48,7 @@ public class EXCN0602Controller {
             EXCN0602Controller.class);
 
     @Inject
-    Mapper beanMapper;
+    EXCNBeanMapper beanMapper;
 
     @Inject
     JPAStockOptimisticLockService stockOptimisticLockService;
@@ -66,24 +64,25 @@ public class EXCN0602Controller {
         return new StockForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001(StockForm form, Model model) {
-        beanMapper.map(stockOptimisticLockService.findOne("EXCN0602001"), form);
+        beanMapper.mapJPA(stockOptimisticLockService.findOne("EXCN0602001"),
+                form);
         return "excn/jpaOptimisticLockViewExcpHandler";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockPessimisticLockService.findOne("EXCN0602002"),
+        beanMapper.mapJPA(stockPessimisticLockService.findOne("EXCN0602002"),
                 form);
         return "excn/jpaPessimisticLockViewExcpHandler";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "buy")
+    @PostMapping(value = "001", params = "buy")
     public String handle001Buy(StockForm form, Model model,
             RedirectAttributes attributes) {
 
-        JPAStock stock = beanMapper.map(form, JPAStock.class);
+        JPAStock stock = beanMapper.mapJPA(form);
 
         stock = stockOptimisticLockService.buy(stock, form
                 .getPurchasingQuantity());
@@ -93,7 +92,7 @@ public class EXCN0602Controller {
         return "excn/updateCompleteView";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST, params = "buy")
+    @PostMapping(value = "002", params = "buy")
     public String handle002Buy(StockForm form, Model model,
             RedirectAttributes attributes) {
 
@@ -101,7 +100,7 @@ public class EXCN0602Controller {
                 (HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
-        JPAStock stock = beanMapper.map(form, JPAStock.class);
+        JPAStock stock = beanMapper.mapJPA(form);
         model.addAttribute("databaseId", dataBaseName);
         stock = stockPessimisticLockService.buyExcp(stock, form
                 .getPurchasingQuantity(), form.getSleepMillis());

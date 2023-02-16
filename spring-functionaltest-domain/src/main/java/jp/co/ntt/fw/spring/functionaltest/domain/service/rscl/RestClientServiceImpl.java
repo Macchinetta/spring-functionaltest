@@ -23,14 +23,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMSource;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,10 +44,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.terasoluna.gfw.common.exception.SystemException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
@@ -337,59 +330,6 @@ public class RestClientServiceImpl implements RestClientService {
     }
 
     @Override
-    public UserResource exchangeWithSourceHttpMessageConverter(
-            UserResource user) {
-
-        URI targetUri = this.getUri(this.uri, "");
-        UserResource resUser = new UserResource();
-
-        // 送信するXMLソース作成
-        Source sendSrc = null;
-        try {
-            DOMImplementation domImpl = DocumentBuilderFactory.newInstance()
-                    .newDocumentBuilder().getDOMImplementation();
-            Document document = domImpl.createDocument("", "user", null);
-            Element userElm = document.getDocumentElement();
-            Element name = document.createElement("name");
-            name.appendChild(document.createTextNode(user.getName()));
-            Element age = document.createElement("age");
-            age.appendChild(document.createTextNode(String.valueOf(user
-                    .getAge())));
-
-            userElm.appendChild(name);
-            userElm.appendChild(age);
-
-            sendSrc = new DOMSource(document);
-        } catch (ParserConfigurationException e1) {
-
-            throw new SystemException("e.sf.rscl.9002", "parse configuration error.", e1);
-        }
-
-        // Sourceデータを送信して、Sourceデータを受信する。
-        RequestEntity<Source> requestEntity = RequestEntity.post(targetUri)
-                .contentType(MediaType.APPLICATION_XML).accept(
-                        MediaType.APPLICATION_XML).body(sendSrc);
-        ResponseEntity<DOMSource> res = this.restTemplate.exchange(
-                requestEntity, DOMSource.class);
-
-        DOMSource rcvSrc = res.getBody();
-        for (String contentType : res.getHeaders().get("Content-Type")) {
-            logger.info("RSCL0204001 : {}", contentType);
-        }
-        logger.info("RSCL0204001 : {}", res.getStatusCode());
-
-        // 受信したXMlソースを解析
-        Document doc = (Document) rcvSrc.getNode();
-
-        resUser.setName(doc.getElementsByTagName("name").item(0).getFirstChild()
-                .getNodeValue());
-        resUser.setAge(Integer.parseInt(doc.getElementsByTagName("age").item(0)
-                .getFirstChild().getNodeValue()));
-
-        return resUser;
-    }
-
-    @Override
     public UserResource exchangeWithAllEncompassingFormHttpMessageConverter(
             UserResource user) {
 
@@ -593,8 +533,10 @@ public class RestClientServiceImpl implements RestClientService {
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        String uriStr = UriComponentsBuilder.fromUriString(uri).buildAndExpand(
+                args).toUriString();
+        // argsが空の場合"/"終わりのURIが作成されてしまうため、最後が"/"の場合は削除してからURIを作成する
+        return URI.create(StringUtils.removeEnd(uriStr, "/"));
     }
 
 }

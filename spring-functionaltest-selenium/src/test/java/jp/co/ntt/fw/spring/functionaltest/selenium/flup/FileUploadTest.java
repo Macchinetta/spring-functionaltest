@@ -44,6 +44,9 @@ public class FileUploadTest extends FunctionTestSupport {
     @Value("${selenium.flup.waitForDeletedByScheduler.offsetSeconds:0}")
     private int offsetSecondsOfWaitForDeletedByScheduler;
 
+    @Value("${test.environment.view}")
+    String testEnvironmentView;
+
     /**
      * <ul>
      * <li>Servlet3.0のアップロード機能とSpringMVCを連携した場合に、ファイルがアップロードできることを確認する。</li>
@@ -156,7 +159,7 @@ public class FileUploadTest extends FunctionTestSupport {
                     "マルチバイト含む63バイトファイル.txt"));
             assertThat(webDriverOperations.getText(id("fileContentText")), is(
                     "マルチバイト含む63バイト以下のファイル1234567"));
-            // TODO 一時ファイルが作成されたか否かの確認については保留中
+            // TODO 一時ファイルの確認処理は次年度以降に実装する
 
         }
         // ログの確認
@@ -196,7 +199,7 @@ public class FileUploadTest extends FunctionTestSupport {
                     "マルチバイト含む65バイトファイル.txt"));
             assertThat(webDriverOperations.getText(id("fileContentText")), is(
                     "マルチバイト含む64バイトより大ファイル123456789"));
-            // TODO 一時ファイルが作成されたか否かの確認については保留中
+            // TODO 一時ファイルの確認処理は次年度以降に実装する
         }
         // ログの確認
         {
@@ -235,7 +238,7 @@ public class FileUploadTest extends FunctionTestSupport {
                     "マルチバイト含む64バイトファイル.txt"));
             assertThat(webDriverOperations.getText(id("fileContentText")), is(
                     "マルチバイト含む64バイト丁度のファイル12345678"));
-            // TODO 一時ファイルが作成されたか否かの確認については保留中
+            // TODO 一時ファイルの確認処理は次年度以降に実装する
         }
         // ログの確認
         {
@@ -312,7 +315,9 @@ public class FileUploadTest extends FunctionTestSupport {
                     "File Upload Error!"));
         }
         // ステータスコードの確認
-        {
+        // Thymeleaf3.1より#responseが使用できなくなった
+        // ステータスコード設定のタイミングの問題で、ControllerでModelに本来設定したい値を格納できないためThymeleafでは目視で確認する
+        if ("jsp".equals(testEnvironmentView)) {
             assertThat(webDriverOperations.getInputFieldValue(id("statusCode")),
                     containsString(String.valueOf(HttpStatus.BAD_REQUEST
                             .value())));
@@ -390,7 +395,9 @@ public class FileUploadTest extends FunctionTestSupport {
                     "File Upload Error!"));
         }
         // ステータスコードの確認
-        {
+        // Thymeleaf3.1より#responseが使用できなくなった
+        // ステータスコード設定のタイミングの問題で、ControllerでModelに本来設定したい値を格納できないためThymeleafでは目視で確認する
+        if ("jsp".equals(testEnvironmentView)) {
             assertThat(webDriverOperations.getInputFieldValue(id("statusCode")),
                     containsString(String.valueOf(HttpStatus.BAD_REQUEST
                             .value())));
@@ -829,7 +836,7 @@ public class FileUploadTest extends FunctionTestSupport {
         }
         // 複数ファイルアップロード画面の操作
         {
-            // TODO multipleの指定方法が不明。1ファイルのみアップロード
+            // multipleの指定方法が不明。1ファイルのみアップロード
             webDriverOperations.referUploadFile(id("multipartFiles"),
                     new ClassPathResource("testdata/flup/日本語ファイル.txt")
                             .getFile());
@@ -873,7 +880,7 @@ public class FileUploadTest extends FunctionTestSupport {
         }
         // 複数ファイルアップロード画面の操作
         {
-            // TODO multipleの指定方法が不明。1ファイルのみアップロード
+            // multipleの指定方法が不明。1ファイルのみアップロード
             webDriverOperations.referUploadFile(id("multipartFiles"),
                     new ClassPathResource("testdata/flup/0バイトファイル.txt")
                             .getFile());

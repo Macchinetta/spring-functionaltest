@@ -17,30 +17,33 @@
     </constructor-arg>
   </bean>
 
-  <sec:http pattern="/spsc/0101/001">
+  <sec:http pattern="/spsc/0101/001" request-matcher="ant">
     <sec:form-login />
     <sec:logout />
     <sec:intercept-url pattern="/login" access="permitAll" />
     <sec:intercept-url pattern="/**" access="isAuthenticated()" />
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/001">
+  <sec:http pattern="/spsc/0201/001" request-matcher="ant">
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/002">
+  <sec:http pattern="/spsc/0201/002" request-matcher="ant">
     <sec:headers disabled="true" />
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/003">
+  <sec:http pattern="/spsc/0201/003" request-matcher="ant">
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/004">
+  <sec:http pattern="/spsc/0201/004" request-matcher="ant">
     <sec:headers defaults-disabled="true">
       <sec:cache-control />
       <sec:content-type-options />
@@ -49,79 +52,89 @@
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/005">
+  <sec:http pattern="/spsc/0201/005" request-matcher="ant">
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0201/006">
+  <sec:http pattern="/spsc/0201/006" request-matcher="ant">
     <sec:headers>
       <sec:frame-options policy="SAMEORIGIN" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0301/001">
+  <sec:http pattern="/spsc/0301/001" request-matcher="ant">
     <sec:headers>
       <sec:header name="X-WebKit-CSP" value="default-src 'self'" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0401/001/**">
+  <sec:http pattern="/spsc/0401/001/**" request-matcher="ant">
     <sec:headers defaults-disabled="true">
       <sec:header ref="secureCacheControlHeadersWriter" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/001">
+  <sec:http pattern="/spsc/0501/001" request-matcher="ant">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/002">
+  <sec:http pattern="/spsc/0501/002" request-matcher="ant">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;"
         report-only="true" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/003">
+  <sec:http pattern="/spsc/0501/003" request-matcher="ant">
     <sec:headers>
       <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/004">
+  <sec:http pattern="/spsc/0501/004" request-matcher="ant">
     <sec:headers>
       <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0501/005">
+  <sec:http pattern="/spsc/0501/005" request-matcher="ant">
     <sec:headers>
       <sec:content-security-policy policy-directives="upgrade-insecure-requests;" />
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/001">
+  <sec:http pattern="/spsc/0601/001" request-matcher="ant">
     <sec:headers>
       <sec:hpkp report-only="false" max-age-seconds="1">
         <sec:pins>
@@ -134,9 +147,10 @@
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/002">
+  <sec:http pattern="/spsc/0601/002" request-matcher="ant">
     <sec:headers>
       <sec:hpkp max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
         <sec:pins>
@@ -149,9 +163,10 @@
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
-  <sec:http pattern="/spsc/0601/003">
+  <sec:http pattern="/spsc/0601/003" request-matcher="ant">
     <sec:headers>
       <sec:hpkp report-only="false" max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
         <sec:pins>
@@ -164,6 +179,7 @@
     </sec:headers>
     <sec:form-login />
     <sec:logout />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
   <sec:authentication-manager />

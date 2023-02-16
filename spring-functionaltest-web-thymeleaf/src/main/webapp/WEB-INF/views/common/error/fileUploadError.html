@@ -9,10 +9,11 @@
 <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}">
 </head>
 <body>
-  <div th:include="~{layout/header :: header}">header</div>
+  <div th:insert="~{layout/header :: header}">header</div>
   <div id="wrapper">
     <h1>File Upload Error!</h1>
-    <input type="hidden" id="statusCode" th:value="${T(org.springframework.http.HttpStatus).valueOf(#response.status)}" />
+    <!-- Tymeleaf3.1より#responseが使用できなくなった。 -->
+    <!-- <input type="hidden" id="statusCode" th:value="${T(org.springframework.http.HttpStatus).valueOf(#response.status)}" /> -->
     <div class="alert alert-danger">
       <ul>
         <li
@@ -23,6 +24,6 @@
     <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
     <br> <br> <br> <br>
   </div>
-  <div th:include="~{layout/footer :: footer}">footer</div>
+  <div th:insert="~{layout/footer :: footer}">footer</div>
 </body>
 </html>

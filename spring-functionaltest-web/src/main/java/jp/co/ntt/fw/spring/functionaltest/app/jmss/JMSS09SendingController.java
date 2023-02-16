@@ -18,16 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqSendingService;
 
 @Controller
@@ -57,7 +57,7 @@ public class JMSS09SendingController {
         return form;
     }
 
-    @RequestMapping(value = "0901/001", method = RequestMethod.GET)
+    @GetMapping(value = "0901/001")
     public String handle0901001(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -65,7 +65,7 @@ public class JMSS09SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=blob")
+    @PostMapping(value = "sendmessage", params = "testCase=blob")
     public String sendMessageJmsMsg(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 

@@ -30,6 +30,7 @@ import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
 
 //Thymeleaf版未実装のためJSPのみ実行
+@Ignore("FY2022 スコープアウト")
 @IfProfileValue(name = "test.environment.view", values = { "jsp" })
 public class SOAPTest extends SOAPTestSupport {
 
@@ -754,6 +755,7 @@ public class SOAPTest extends SOAPTestSupport {
             }
             // 結果の確認
             {
+                webDriverOperations.waitForDisplayed(id("todos"));
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
                 dbLogAssertOperations.waitForAssertion();
@@ -846,7 +848,7 @@ public class SOAPTest extends SOAPTestSupport {
             }
             // 結果の確認
             {
-                dbLogAssertOperations.waitForAssertion();
+                dbLogAssertOperations.waitForAssertion(500);
                 assertHttpStatusCode(500);
                 assertWebFault(WebFaultType.RESOURCE_NOT_FOUND_FAULT,
                         new ErrorBean("e.sf.soap.5001", "Resource not found", null));

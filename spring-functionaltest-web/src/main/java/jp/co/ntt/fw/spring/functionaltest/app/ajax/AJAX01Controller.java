@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
@@ -28,13 +26,15 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MessageBoard;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
@@ -70,12 +70,12 @@ public class AJAX01Controller {
         return new MessageBoardForm();
     }
 
-    @RequestMapping(value = "0101/001")
+    @GetMapping(value = "0101/001")
     public String handle0101001() {
         return "ajax/personalComputerSearch";
     }
 
-    @RequestMapping(value = "0102/001")
+    @GetMapping(value = "0102/001")
     public String handle0102001(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -86,7 +86,7 @@ public class AJAX01Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0103/001")
+    @GetMapping(value = "0103/001")
     public String handle0103001(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -97,7 +97,7 @@ public class AJAX01Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0104/001/001")
+    @GetMapping(value = "0104/001/001")
     public String handle0104001001(Model model) {
 
         List<MessageBoard> messageBoards = messageBoardService
@@ -109,7 +109,7 @@ public class AJAX01Controller {
         return "ajax/messageBoard";
     }
 
-    @RequestMapping(value = "0104/001")
+    @GetMapping(value = "0104/001")
     public String handle0104001(Model model) {
 
         List<MessageBoard> messageBoards = messageBoardService
@@ -121,7 +121,7 @@ public class AJAX01Controller {
         return "ajax/messageBoard";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @GetMapping(value = "search")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerSearchResult search(
@@ -136,7 +136,7 @@ public class AJAX01Controller {
         return computerSearchResult;
     }
 
-    @RequestMapping(value = "0102/001/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0102/001/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult edit(@Validated PersonalComputerForm form,
@@ -146,7 +146,7 @@ public class AJAX01Controller {
                 locale);
     }
 
-    @RequestMapping(value = "0103/001/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0103/001/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult editForJson(

@@ -19,12 +19,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ATHN03Controller {
 
-    @RequestMapping(value = "0301/001", params = "loginSuccess")
+    @GetMapping(value = "0301/001", params = "loginSuccess")
     public String handle0301LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());

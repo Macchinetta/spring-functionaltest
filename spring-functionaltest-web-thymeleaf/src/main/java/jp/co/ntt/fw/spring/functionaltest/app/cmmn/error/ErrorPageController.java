@@ -17,105 +17,110 @@ package jp.co.ntt.fw.spring.functionaltest.app.cmmn.error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 @RequestMapping("common/error")
 public class ErrorPageController {
-    @RequestMapping("accessDeniedError")
+    @GetMapping("accessDeniedError")
     public String accessDeniedError() {
         return "common/error/accessDeniedError";
     }
 
-    @RequestMapping("ajaxError")
+    @GetMapping("ajaxError")
     public String ajaxError() {
         return "common/error/ajaxError";
     }
 
-    @RequestMapping("beanMappingError")
-    public String beanMappingError() {
-        return "common/error/beanMappingError";
-    }
-
-    @RequestMapping("customSystemError")
+    @GetMapping("customSystemError")
     public String customSystemError() {
         return "common/error/customSystemError";
     }
 
-    @RequestMapping("dataAccessError")
+    @GetMapping("dataAccessError")
     public String dataAccessError() {
         return "common/error/dataAccessError";
     }
 
-    @RequestMapping("exclusiveLockError")
+    @GetMapping("exclusiveLockError")
     public String exclusiveLockError() {
         return "common/error/exclusiveLockError";
     }
 
-    @RequestMapping("fileUploadError")
+    @PostMapping("fileUploadError")
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String fileUploadError() {
         return "common/error/fileUploadError";
     }
 
-    @RequestMapping("forbiddenError")
+    @RequestMapping(value = "forbiddenError", method = { RequestMethod.GET,
+            RequestMethod.POST })
     public String forbiddenError() {
         return "common/error/forbiddenError";
     }
 
-    @RequestMapping("intentionalError")
+    @GetMapping("intentionalError")
     public String intentionalError() {
         return "common/error/intentionalError";
     }
 
-    @RequestMapping("invalidCsrfTokenError")
+    @PostMapping("invalidCsrfTokenError")
     public String invalidCsrfTokenError() {
         return "common/error/invalidCsrfTokenError";
     }
 
-    @RequestMapping("methodNotAllowedError")
+    @GetMapping("methodNotAllowedError")
     public String methodNotAllowedError() {
         return "common/error/methodNotAllowedError";
     }
 
-    @RequestMapping("missingCsrfTokenError")
+    @PostMapping("missingCsrfTokenError")
     public String missingCsrfTokenError() {
         return "common/error/missingCsrfTokenError";
     }
 
-    @RequestMapping("notAcceptableError")
+    @GetMapping("notAcceptableError")
     public String notAcceptableError() {
         return "common/error/notAcceptableError";
     }
 
-    @RequestMapping("operationError")
+    @GetMapping("operationError")
     public String operationError() {
         return "common/error/operationError";
     }
 
-    @RequestMapping("requestError")
+    @RequestMapping(value = "requestError", method = { RequestMethod.GET,
+            RequestMethod.POST })
     public String requestError() {
         return "common/error/requestError";
     }
 
-    @RequestMapping("resourceNotFoundError")
+    @GetMapping("resourceNotFoundError")
     public String resourceNotFoundError() {
         return "common/error/resourceNotFoundError";
     }
 
-    @RequestMapping("systemError")
+    @GetMapping("systemError")
     public String systemError() {
         return "common/error/systemError";
     }
 
-    @RequestMapping("transactionTokenError")
+    @GetMapping("transactionTokenError")
     public String transactionTokenError() {
         return "common/error/transactionTokenError";
     }
 
-    @RequestMapping("unsupportedMediaTypeError")
+    @GetMapping("unsupportedMediaTypeError")
     public String unsupportedMediaTypeError() {
         return "common/error/unsupportedMediaTypeError";
+    }
+
+    @GetMapping("serviceUnavailableError")
+    public String serviceUnavailableError() {
+        return "common/error/serviceUnavailableError";
     }
 }

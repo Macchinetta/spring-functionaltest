@@ -20,8 +20,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.id;
 
-import javax.inject.Inject;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -38,6 +36,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class SessionManagementTest extends FunctionTestSupport {

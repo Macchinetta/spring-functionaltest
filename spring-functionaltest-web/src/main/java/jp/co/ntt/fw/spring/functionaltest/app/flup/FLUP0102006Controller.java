@@ -17,15 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import jakarta.inject.Inject;
 
 /**
  * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
@@ -42,12 +43,12 @@ public class FLUP0102006Controller {
         return new SingleUploadForm();
     }
 
-    @RequestMapping(value = "006", method = RequestMethod.GET)
+    @GetMapping(value = "006")
     public String handle006Form() {
         return "flup/singleFileUploadForm";
     }
 
-    @RequestMapping(value = "006", method = RequestMethod.POST)
+    @PostMapping(value = "006")
     public String handle006Upload(@Validated SingleUploadForm form,
             BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
@@ -61,7 +62,7 @@ public class FLUP0102006Controller {
         return "redirect:/flup/0102/006?complate";
     }
 
-    @RequestMapping(value = "006", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "006", params = "complete")
     public String handle006Complate() {
         return "flup/singleFileUploadComplete";
     }

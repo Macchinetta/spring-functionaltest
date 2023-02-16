@@ -15,12 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rest.common.error;
 
-import javax.inject.Inject;
-
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -35,6 +34,8 @@ import org.terasoluna.gfw.common.exception.ExceptionCodeResolver;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
 
+import jakarta.inject.Inject;
+
 @ControllerAdvice
 public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -46,7 +47,7 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-            Object body, HttpHeaders headers, HttpStatus status,
+            Object body, HttpHeaders headers, HttpStatusCode statusCode,
             WebRequest request) {
         final Object apiError;
         if (body == null) {
@@ -56,42 +57,46 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
         } else {
             apiError = body;
         }
-        return ResponseEntity.status(status).headers(headers).body(apiError);
+        return ResponseEntity.status(statusCode).headers(headers).body(
+                apiError);
     }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
-        return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                request);
+            HttpStatusCode statusCode, WebRequest request) {
+        return handleBindingResult(ex, ex.getBindingResult(), headers,
+                statusCode, request);
     }
 
     @Override
     protected ResponseEntity<Object> handleBindException(BindException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                request);
+            HttpHeaders headers, HttpStatusCode statusCode,
+            WebRequest request) {
+        return handleBindingResult(ex, ex.getBindingResult(), headers,
+                statusCode, request);
     }
 
     private ResponseEntity<Object> handleBindingResult(Exception ex,
-            BindingResult bindingResult, HttpHeaders headers, HttpStatus status,
-            WebRequest request) {
+            BindingResult bindingResult, HttpHeaders headers,
+            HttpStatusCode statusCode, WebRequest request) {
         String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
         ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
                 errorCode, bindingResult, ex.getMessage());
-        return handleExceptionInternal(ex, apiError, headers, status, request);
+        return handleExceptionInternal(ex, apiError, headers, statusCode,
+                request);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            HttpStatusCode statusCode, WebRequest request) {
         if (ex.getCause() instanceof Exception) {
             return handleExceptionInternal((Exception) ex.getCause(), null,
-                    headers, status, request);
+                    headers, statusCode, request);
         } else {
-            return handleExceptionInternal(ex, null, headers, status, request);
+            return handleExceptionInternal(ex, null, headers, statusCode,
+                    request);
         }
     }
 

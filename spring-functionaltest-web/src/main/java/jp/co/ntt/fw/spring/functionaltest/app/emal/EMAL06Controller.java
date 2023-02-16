@@ -17,16 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
 
 @Controller
@@ -42,21 +42,21 @@ public class EMAL06Controller {
         return form;
     }
 
-    @RequestMapping(value = "0601/001", method = RequestMethod.GET)
+    @GetMapping(value = "0601/001")
     public String handle01001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("iso2022jpCharMail");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0601/002", method = RequestMethod.GET)
+    @GetMapping(value = "0601/002")
     public String handle01002(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("externalCharMail");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=iso2022jpCharMail")
+    @PostMapping(value = "sendmail", params = "testcase=iso2022jpCharMail")
     public String handleIso2022jpCharMail(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
@@ -69,7 +69,7 @@ public class EMAL06Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=externalCharMail")
+    @PostMapping(value = "sendmail", params = "testcase=externalCharMail")
     public String handleExternalCharMail(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {

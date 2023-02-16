@@ -22,9 +22,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("cspr")
 @Controller
@@ -35,17 +36,17 @@ public class CSPR04Controller {
         return new CustomerBatchRegisterForm();
     }
 
-    @RequestMapping(value = "0401/001")
+    @GetMapping(value = "0401/001")
     public String handle0401001() {
         return "cspr/customerBatchRegister";
     }
 
-    @RequestMapping(value = "0401/002")
+    @GetMapping(value = "0401/002")
     public String handle0401002() {
         return "cspr/customerBatchRegisterUseStandardForm";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @PostMapping(value = "register")
     public String batchRegister(@Validated CustomerBatchRegisterForm form,
             BindingResult result,
             Model model) throws UnsupportedEncodingException, IOException {
@@ -60,7 +61,7 @@ public class CSPR04Controller {
         return "cspr/customerBatchComplete";
     }
 
-    @RequestMapping(value = "registerWithTokenFromQuery", method = RequestMethod.POST)
+    @PostMapping(value = "registerWithTokenFromQuery")
     public String batchRegisterWithTokenFromQuery(
             @Validated CustomerBatchRegisterForm form, BindingResult result,
             Model model) throws UnsupportedEncodingException, IOException {

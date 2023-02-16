@@ -49,7 +49,7 @@ public class authEventHandleAccountUserDetailsService implements
             return null;
         }
 
-        Account account = accountRepository.findOneByUsername(username);
+        Account account = accountRepository.findByUsername(username);
         if (account == null) {
             throw new UsernameNotFoundException("user not found.");
         }

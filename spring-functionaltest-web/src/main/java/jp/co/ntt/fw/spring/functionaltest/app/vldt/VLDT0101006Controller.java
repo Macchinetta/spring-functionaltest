@@ -18,9 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("vldt/0101/006")
@@ -36,12 +37,12 @@ public class VLDT0101006Controller {
         return new VariousSimpleValidationHVForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/variousSimpleValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validateBeanValidation")
+    @PostMapping(params = "validateBeanValidation")
     public String handleBeanValidationValidate(
             @Validated VariousSimpleValidationBVForm form,
             BindingResult result) {
@@ -52,7 +53,7 @@ public class VLDT0101006Controller {
         return "redirect:/vldt/0101/006";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validateHibernateValidator")
+    @PostMapping(params = "validateHibernateValidator")
     public String handleHibernateValidatorValidate(
             @Validated VariousSimpleValidationHVForm form,
             BindingResult result) {

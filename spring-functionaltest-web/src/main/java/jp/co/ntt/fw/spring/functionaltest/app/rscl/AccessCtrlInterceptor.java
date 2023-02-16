@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -90,7 +91,7 @@ public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
 
         ClientHttpResponse res = null;
         int retryCount = 0;
-        HttpStatus statusCode = null;
+        HttpStatusCode statusCode = null;
 
         while (true) {
             List<String> xRetryValue = new ArrayList<String>();
@@ -100,10 +101,8 @@ public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
             statusCode = res.getStatusCode();
 
             // ステータスコードが503はリトライ
-            if (!HttpStatus.SERVICE_UNAVAILABLE.equals(statusCode)) {
-
+            if (statusCode.value() != HttpStatus.SERVICE_UNAVAILABLE.value()) {
                 logger.info("StatusCode({}) ", statusCode);
-
                 break;
             } else {
                 if (retryCount == retryMaxCount) {

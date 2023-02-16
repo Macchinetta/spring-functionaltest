@@ -17,13 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thym/0801")
 public class THYM0801Controller {
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle001(Model model) {
 
         Item item = new Item();
@@ -32,7 +33,7 @@ public class THYM0801Controller {
         return "thym/inliningText";
     }
 
-    @RequestMapping("002")
+    @GetMapping("002")
     public String handle002(Model model) {
 
         model.addAttribute("item", "Apple");

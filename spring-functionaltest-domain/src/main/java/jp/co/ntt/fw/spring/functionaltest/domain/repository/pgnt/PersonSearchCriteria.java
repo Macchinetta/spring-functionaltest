@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Max;
+import jakarta.validation.constraints.Max;
 
 public class PersonSearchCriteria implements Serializable {
 

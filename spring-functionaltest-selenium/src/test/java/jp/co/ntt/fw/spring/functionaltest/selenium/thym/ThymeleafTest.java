@@ -27,8 +27,6 @@ import static org.openqa.selenium.By.id;
 import java.io.IOException;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -41,6 +39,7 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
@@ -71,33 +70,6 @@ public class ThymeleafTest extends FunctionTestSupport {
                         + "/thym"));
         assertThat(webDriverOperations.getInputFieldValue(By.name(
                 "fruitsPrice")), is("85"));
-
-    }
-
-    /**
-     * <ul>
-     * <li>XHTMLの構文バリデーションが実施されないことを確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testTHYM0104001() throws IOException {
-
-        // 検索画面に遷移
-        webDriverOperations.click(id("thym0104001"));
-
-        // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Search No NameSpace Screen"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Search No NameSpace"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.name(
-                "searchForm")).getAttribute("action"), is(applicationContextUrl
-                        + "/thym"));
-        // DIコンテナ生成時にWARNログが出力されていること。
-        dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
-                "[THYMELEAF].* Template Mode 'XHTML' is deprecated. Using Template Mode 'HTML' instead.",
-                "WARN", "org.thymeleaf.templatemode.TemplateMode");
 
     }
 
@@ -865,7 +837,7 @@ public class ThymeleafTest extends FunctionTestSupport {
                 applicationContextUrl + "/thym/0803/javascript/thym0803.js",
                 String.class);
 
-        assertThat(entity.getStatusCodeValue(), is(200));
+        assertThat(entity.getStatusCode().value(), is(200));
         assertThat(entity.getHeaders().getContentType().toString(), is(
                 "application/javascript;charset=UTF-8"));
         assertThat(entity.getBody(), containsString(
@@ -907,7 +879,7 @@ public class ThymeleafTest extends FunctionTestSupport {
                         + "/thym/0803/003/resources/app/js/thym0803003.js",
                 String.class);
 
-        assertThat(entity.getStatusCodeValue(), is(200));
+        assertThat(entity.getStatusCode().value(), is(200));
         assertThat(entity.getHeaders().getContentType().toString(), is(
                 "application/javascript;charset=UTF-8"));
         assertThat(entity.getBody(), is(

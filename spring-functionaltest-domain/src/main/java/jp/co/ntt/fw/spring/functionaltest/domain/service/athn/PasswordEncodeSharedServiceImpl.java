@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Service
 public class PasswordEncodeSharedServiceImpl implements

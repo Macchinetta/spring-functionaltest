@@ -36,11 +36,6 @@
     TO_NUMBER(s_message_board.nextval) FROM DUAL
   </select>
 
-  <select id="getMessageBoardSequence" resultType="long" databaseId="db2">
-    values (NEXT VALUE FOR
-    s_message_board)
-  </select>
-
   <insert id="insert">
     <trim prefix="INSERT INTO t_message_board (" suffix=")" suffixOverrides=",">
       <if test="messageBoardId != null">

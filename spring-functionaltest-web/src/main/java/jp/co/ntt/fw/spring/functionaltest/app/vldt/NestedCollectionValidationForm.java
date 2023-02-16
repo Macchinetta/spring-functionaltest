@@ -18,8 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 public class NestedCollectionValidationForm implements Serializable {
 

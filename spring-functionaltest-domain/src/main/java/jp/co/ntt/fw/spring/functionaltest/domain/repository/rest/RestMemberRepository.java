@@ -23,7 +23,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
 
 public interface RestMemberRepository {
 
-    RestMember findOne(String memberId);
+    RestMember findByMemberId(String memberId);
 
     List<RestMember> findAll();
 
@@ -37,7 +37,7 @@ public interface RestMemberRepository {
 
     boolean updateMember(RestMember updatingMember);
 
-    void deleteMember(String memberId);
+    void deleteMemberByMemberId(String memberId);
 
-    void deleteCredential(String memberId);
+    void deleteCredentialByMemberId(String memberId);
 }

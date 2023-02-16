@@ -16,9 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.app.cspr;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("cspr")
@@ -29,7 +29,7 @@ public class CSPR0101005Controller {
         return new UserForm();
     }
 
-    @RequestMapping(value = "0201/005", method = RequestMethod.GET)
+    @GetMapping(value = "0201/005")
     public String handle0101005() {
         return "cspr/userRegisterUseSpringFormToGet";
     }

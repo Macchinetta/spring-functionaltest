@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.infra.jmss;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Session;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.support.destination.JndiDestinationResolver;
+
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Session;
 
 public class AddPrefixJndiDestinationResolver extends JndiDestinationResolver {
 

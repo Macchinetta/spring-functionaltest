@@ -18,14 +18,13 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleRepository;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;

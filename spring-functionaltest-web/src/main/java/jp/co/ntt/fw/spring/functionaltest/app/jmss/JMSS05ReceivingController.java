@@ -17,15 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Controller
@@ -41,7 +40,7 @@ public class JMSS05ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sync")
+    @PostMapping(value = "receivemessage", params = "testCase=sync")
     public String receiveMessageSync(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 

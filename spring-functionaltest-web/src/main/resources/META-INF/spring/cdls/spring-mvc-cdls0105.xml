@@ -29,6 +29,24 @@
 
   <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
 
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0105Controller" />
+  <!-- MapStructの為 component-scan とする -->
+  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app.cdls">
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS01Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS02Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS03Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0401Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS0402Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS04Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLS05Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.cdls.CDLSController" />
+  </context:component-scan>
 
 </beans>

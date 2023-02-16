@@ -17,14 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
 import java.net.URI;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
+import jakarta.validation.constraints.NotNull;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
@@ -33,18 +33,74 @@ public class HttpsRestClientServiceImpl implements HttpsRestClientService {
     @Inject
     RestTemplate httpsRestTemplate;
 
-    @Value("${rscl.httpsserver.uri}")
-    URI httpsUri;
+    // SoTimeoutを発生させるためのRestTemplate
+    @Inject
+    RestTemplate abnormalHttpsRestTemplate;
+
+    @Value("${rscl.httpsserver1.uri}")
+    String httpsServer1Uri;
+
+    @Value("${rscl.httpsserver2.uri}")
+    String httpsServer2Uri;
+
+    @Value("${rscl.httpsserver3.uri}")
+    String httpsServer3Uri;
+
+    @Value("${rscl.httpsserver4.uri}")
+    String httpsServer4Uri;
+
+    @Value("${rscl.notExistHttpsserver.uri}")
+    String notExistHttpsServerUri;
+
+    @Value("${rscl.destination1}")
+    String destination1;
+
+    @Value("${rscl.destination2}")
+    String destination2;
+
+    @Value("${rscl.destination3}")
+    String destination3;
+
+    @Value("${rscl.destination4}")
+    String destination4;
 
     @Override
-    public UserResource connectHttps() {
+    public UserResource connectHttps(@NotNull SERVERS servers,
+            @NotNull DESTINATION destination, boolean isCausesSoTimeout) {
 
-        RequestEntity<Void> req = RequestEntity.get(this.httpsUri).build();
-        ResponseEntity<UserResource> res = this.httpsRestTemplate.exchange(req,
+        // @formatter:off
+        String serverUri = switch (servers) {
+            case SERVER1 -> this.httpsServer1Uri; // port : 8991
+            case SERVER2 -> this.httpsServer2Uri; // port : 8992
+            case SERVER3 -> this.httpsServer3Uri; // port : 8993
+            case SERVER4 -> this.httpsServer4Uri; // port : 8994
+            case NOTEXISTS -> this.notExistHttpsServerUri; // 存在しないサーバ
+            default -> throw new IllegalStateException();
+        };
+        // @formatter:on
+
+        // @formatter:off
+        String target = switch (destination) {
+            case RSCL1 -> this.destination1; // 0秒待機
+            case RSCL2 -> this.destination2; // 6秒待機
+            case RSCL3 -> this.destination3; // 6秒待機
+            case RSCL4 -> this.destination4; // 20秒待機
+            default -> throw new IllegalStateException();
+        };
+        // @formatter:on
+
+        RestTemplate restTemplate = isCausesSoTimeout ? abnormalHttpsRestTemplate
+                : httpsRestTemplate;
+
+        URI uri = URI.create(serverUri + target);
+        RequestEntity<Void> req = RequestEntity.get(uri).build();
+
+        ResponseEntity<UserResource> res = restTemplate.exchange(req,
                 UserResource.class);
 
         UserResource user = res.getBody();
 
         return user;
     }
+
 }

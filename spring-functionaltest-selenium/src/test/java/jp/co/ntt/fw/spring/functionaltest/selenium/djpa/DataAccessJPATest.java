@@ -23,13 +23,12 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jakarta.xml.bind.DatatypeConverter;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.BookDetailsPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.DeliveryOrderDetailsPage;
@@ -1530,7 +1529,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
                 null,
-                "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
+                "select j1_0.category_id,j1_0.name from m_category_lz j1_0 where j1_0.category_id=?");
         Integer expVal = 1;
         // confirmation of query is for dependent entity(i.e.JPACategoryLz )
         assertThat(list.size(), is(expVal));
@@ -1617,10 +1616,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         DeliveryOrderDetailsPage orderDetailsPage = orderDetailForm
                 .addEntityBySave();
 
-        assertThat(orderDetailsPage.getAcceptDateTime(), is(
-                "Sun Dec 13 00:00:00 JST 2015"));
-        assertThat(orderDetailsPage.getCompletionDateTime(), is(
-                "Mon Dec 14 00:00:00 JST 2015"));
+        assertThat(orderDetailsPage.getAcceptDateTime(), is("2015-12-13"));
+        assertThat(orderDetailsPage.getCompletionDateTime(), is("2015-12-14"));
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is(
                 "Test Receiver Name"));
@@ -1880,17 +1877,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         OrdersPage ordersPage = jpaIndexPage.djpa0804002Click();
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(1);
         orderDetailsPage.updateByQueryErrorScenario();
-        // Assertion for system error occurred due to no @Modifying annotation
-        // is used on update query method.
-        // confirm the IncorrectResultSizeDataAccessException
 
-        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
-                null,
-                "\\\\*org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations*");
-        System.out.println("**=>" + list.size());
-        Integer expVal = 2;
-        // confirmation of error occurrence
-        assertThat(list.size(), is(expVal));
+        // https://www.baeldung.com/spring-data-jpa-modifying-annotation#1-result-of-not-using-the-modifying-annotation
+        dbLogAssertOperations.assertContainsByRegexStackTrace(
+                "org.springframework.dao.InvalidDataAccessApiUsageException*");
     }
 
     /**

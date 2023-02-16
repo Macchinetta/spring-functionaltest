@@ -18,11 +18,11 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
+
+import jakarta.inject.Inject;
 
 @Component
 public class MessageBoardHelper {

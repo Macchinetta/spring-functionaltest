@@ -17,13 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.ajax;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.ajax.PersonalComputerCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.ajax.PersonalComputerRepository;
@@ -38,8 +37,8 @@ public class PersonalComputerServiceImpl implements PersonalComputerService {
     @Override
     public PersonalComputer getPersonalComputer(int personalComputerId) {
 
-        PersonalComputer personalComputer = personalComputerRepository
-                .findOneByID(personalComputerId);
+        PersonalComputer personalComputer = personalComputerRepository.findById(
+                personalComputerId);
 
         return personalComputer;
     }

@@ -51,8 +51,6 @@ public interface RestClientService {
 
     List<String> exchangeWithResourceHttpMessageConverter(String message);
 
-    UserResource exchangeWithSourceHttpMessageConverter(UserResource user);
-
     UserResource exchangeWithAllEncompassingFormHttpMessageConverter(
             UserResource user);
 

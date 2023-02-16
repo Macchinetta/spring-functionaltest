@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -29,15 +27,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.DeliveryOrderCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderService;
@@ -54,20 +52,20 @@ public class DJPADeliveryOrderController {
     JPAOrderService jpaOrderService;
 
     @Inject
-    Mapper beaMapper;
+    DJPADeliveryOrderBeanMapper beaMapper;
 
     @ModelAttribute
     public DeliveryOrderStatusForm setUpForm() {
         return new DeliveryOrderStatusForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String deliveryOrderDetailsForm(Model model) {
 
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "form")
+    @GetMapping(params = "form")
     public String deliveryOrderDetails(
             DeliveryOrderStatusForm deliveryOrderStatusForm, Model model) {
 
@@ -78,7 +76,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "likeSrch")
+    @GetMapping(params = "likeSrch")
     public String likeSearch(DeliveryOrderStatusForm deliveryOrderStatusForm,
             Model model) {
 
@@ -90,7 +88,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(params = "escSrchMod", method = RequestMethod.GET)
+    @GetMapping(params = "escSrchMod")
     public String escapeModSerach(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
@@ -105,7 +103,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(params = "escSrchDash", method = RequestMethod.GET)
+    @GetMapping(params = "escSrchDash")
     public String escapeDashSerach(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
@@ -120,7 +118,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(params = "srchMatchInLogic", method = RequestMethod.GET)
+    @GetMapping(params = "srchMatchInLogic")
     public String escapeModSerachMatchInLogic(
             @RequestParam("escapeSrchVal") String modSearchVal,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
@@ -135,7 +133,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "methodNameConven")
+    @GetMapping(params = "methodNameConven")
     public String fetchUsingMethodNamingConvention(
             @PageableDefault(page = 0, size = 2) Pageable pageable,
             DeliveryOrderStatusForm deliveryOrderStatusForm, Model model) {
@@ -148,7 +146,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "nativeQuery")
+    @GetMapping(params = "nativeQuery")
     public String fetchUsingNativeQuery(
             DeliveryOrderStatusForm deliveryOrderStatusForm, Model model) {
         String statusCode = deliveryOrderStatusForm.getDelOrderStatus();
@@ -159,7 +157,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "qHint")
+    @GetMapping(params = "qHint")
     public String fetchUsingQueryHint(
             DeliveryOrderStatusForm deliveryOrderStatusForm, Model model) {
         String statusCode = deliveryOrderStatusForm.getDelOrderStatus();
@@ -170,7 +168,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(params = "matchCond", method = RequestMethod.GET)
+    @GetMapping(params = "matchCond")
     public String list(@RequestParam("delOrderStatus") String delOrderStatus,
             DeliveryOrderStatusForm deliveryOrderStatusForm,
             @PageableDefault(page = 0, value = 2, sort = {
@@ -185,7 +183,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(params = "addMethodToIndRepo", method = RequestMethod.GET)
+    @GetMapping(params = "addMethodToIndRepo")
     public String searchByMethodAddedtoRepository(
             DeliveryOrderStatusForm deliveryOrderStatusForm,
             @PageableDefault(page = 0, value = 2, sort = {
@@ -207,7 +205,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "dynaCond")
+    @GetMapping(params = "dynaCond")
     public String fetchUsingDynamicParam(
             DeliveryOrderStatusForm deliveryOrderStatusForm, Model model) {
         String statusCode = deliveryOrderStatusForm.getDelOrderStatus();
@@ -233,7 +231,7 @@ public class DJPADeliveryOrderController {
         return "djpa/orderList";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.GET)
+    @GetMapping(value = "{id}/update")
     public String showUpdateForm(@PathVariable("id") Integer id,
             @Validated DeliveryOrderStatusForm form, BindingResult result,
             Model model) {
@@ -251,23 +249,22 @@ public class DJPADeliveryOrderController {
         return "djpa/jpaDeliverOrderUpdateForm";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET)
+    @GetMapping(value = "register")
     public String dispalyDeliveryOrderForm(Model model) {
         model.addAttribute("deliveryOrderStatusForm",
                 new DeliveryOrderStatusForm());
         return "djpa/registerDeliverOrderForm";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "add")
+    @PostMapping(value = "register", params = "add")
     public String registerOrder(DeliveryOrderStatusForm form,
             RedirectAttributes redirectAttrs, Model model) {
 
-        JPADeliveryOrder jpaDeliveryOrder = beaMapper.map(form,
-                JPADeliveryOrder.class);
+        JPADeliveryOrder jpaDeliveryOrder = beaMapper.map(form);
         jpaDeliveryOrder = jpaDeliveryOrderService.save(jpaDeliveryOrder);
 
         DeliveryOrderStatusForm deliveryOrderStatusForm = beaMapper.map(
-                jpaDeliveryOrder, DeliveryOrderStatusForm.class);
+                jpaDeliveryOrder);
 
         redirectAttrs.addFlashAttribute("deliveryOrderStatusForm",
                 deliveryOrderStatusForm);
@@ -277,18 +274,17 @@ public class DJPADeliveryOrderController {
         return "redirect:" + jpaDeliveryOrder.getDeliverNumber() + "/display";
     }
 
-    @RequestMapping(value = "{id}/display", method = RequestMethod.GET)
+    @GetMapping(value = "{id}/display")
     public String dispalyOrderDetail(@PathVariable("id") Integer id,
             DeliveryOrderStatusForm form, Model model) {
         model.addAttribute("deliveryOrderStatusForm", form);
         JPADeliveryOrder delOrder = jpaDeliveryOrderService.findById(id);
-        DeliveryOrderStatusForm jpaDeliveryOrder = beaMapper.map(delOrder,
-                DeliveryOrderStatusForm.class);
+        DeliveryOrderStatusForm jpaDeliveryOrder = beaMapper.map(delOrder);
         model.addAttribute("delOrder", jpaDeliveryOrder);
         return "djpa/jpaDeliverOrderUpdateForm";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "orderDet")
+    @GetMapping(params = "orderDet")
     public String dispalyOrders(DeliveryOrderStatusForm form, Model model) {
         model.addAttribute("deliveryOrderStatusForm", form);
         // Need to get JpaOrder.
@@ -296,14 +292,14 @@ public class DJPADeliveryOrderController {
         return "djpa/jpaDeliverOrderUpdateForm";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "redo")
+    @PostMapping(value = "{id}/update", params = "redo")
     public String updateRedo(DeliveryOrderStatusForm form, Model model) {
         model.addAttribute("deliveryOrderStatusForm", form);
 
         return "djpa/jpaDeliverOrderUpdateForm";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "{id}/update", params = "cancel")
     public String orderList(Model model) {
 
         return "redirect:/djpa/delivery/order";

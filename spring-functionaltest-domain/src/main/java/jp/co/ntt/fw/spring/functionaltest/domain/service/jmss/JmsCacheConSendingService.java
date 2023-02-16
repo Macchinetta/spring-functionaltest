@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
 import java.io.IOException;
 
-import javax.jms.JMSException;
+import jakarta.jms.JMSException;
 
 public interface JmsCacheConSendingService {
 

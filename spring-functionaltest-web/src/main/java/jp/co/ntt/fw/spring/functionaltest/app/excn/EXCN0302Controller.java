@@ -15,21 +15,19 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
-import javax.inject.Inject;
-
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockOptimisticLockService;
 
@@ -38,7 +36,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockOptimisticLoc
 public class EXCN0302Controller {
 
     @Inject
-    Mapper beanMapper;
+    EXCNBeanMapper beanMapper;
 
     @Inject
     StockOptimisticLockService stockOptimisticLockService;
@@ -48,22 +46,22 @@ public class EXCN0302Controller {
         return new StockForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001(StockForm form, Model model) {
         beanMapper.map(stockOptimisticLockService.findOne("EXCN0302001"), form);
         return "excn/optimisticLockView";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002(StockForm form, Model model) {
         beanMapper.map(stockOptimisticLockService.findOne("EXCN0302002"), form);
         return "excn/optimisticLockWithHiddenVersionView";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "buy")
+    @PostMapping(value = "001", params = "buy")
     public String handle001Buy(StockForm form, Model model) {
 
-        Stock stock = beanMapper.map(form, Stock.class);
+        Stock stock = beanMapper.map(form);
 
         stock = stockOptimisticLockService.buy(stock, form
                 .getPurchasingQuantity());
@@ -73,10 +71,10 @@ public class EXCN0302Controller {
         return "excn/updateCompleteView";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST, params = "buy")
+    @PostMapping(value = "002", params = "buy")
     public String handle002Buy(StockForm form, Model model) {
 
-        Stock stock = beanMapper.map(form, Stock.class);
+        Stock stock = beanMapper.map(form);
 
         try {
             stock = stockOptimisticLockService.buyByHiddenVersion(stock, form

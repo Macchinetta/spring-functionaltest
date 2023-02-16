@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thly;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,22 +29,22 @@ public class THLY02Controller {
         return new StaffInfoForm();
     }
 
-    @RequestMapping(value = "0201/001")
+    @GetMapping(value = "0201/001")
     public String handle0201001() {
         return "thly/createForm";
     }
 
-    @RequestMapping(value = "0201/002")
+    @GetMapping(value = "0201/002")
     public String handle0201002() {
         return "thly/createFormNoop";
     }
 
-    @RequestMapping(value = "0201/003")
+    @GetMapping(value = "0201/003")
     public String handle0201003() {
         return "thly/createFormOptParam";
     }
 
-    @RequestMapping(value = "0201/004")
+    @GetMapping(value = "0201/004")
     public String handle0201004() {
         return "thly/createFormOptParam";
     }

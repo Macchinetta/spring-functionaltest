@@ -4,12 +4,14 @@
   xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-
-  <sec:http pattern="/athn/0201/**" authentication-manager-ref="userLoginManagerForAthn">
+        
+  <sec:http pattern="/athn/0201/**" request-matcher="ant" authentication-manager-ref="userLoginManagerForAthn">
     <sec:form-login login-page="/athn/0201/001/login" login-processing-url="/athn/0201/authenticate"
       username-parameter="uid" password-parameter="pwd" />
-    <sec:logout logout-url="/athn/0201/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0201/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0201/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0201/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0201/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 </beans>

@@ -16,22 +16,21 @@
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractLinksSupportedResource;
 
 public class MemberResource extends AbstractLinksSupportedResource implements
@@ -102,10 +101,10 @@ public class MemberResource extends AbstractLinksSupportedResource implements
     private MemberCredentialResource credential;
 
     @Null
-    private DateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Null
-    private DateTime lastModifiedAt;
+    private LocalDateTime lastModifiedAt;
 
     public String getMemberId() {
         return memberId;
@@ -187,19 +186,19 @@ public class MemberResource extends AbstractLinksSupportedResource implements
         this.credential = credential;
     }
 
-    public DateTime getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public DateTime getLastModifiedAt() {
+    public LocalDateTime getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(DateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
 

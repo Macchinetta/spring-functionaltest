@@ -9,19 +9,23 @@
     <property name="defaultTargetUrl" value="/athn/1202/001?loginSuccess" />
   </bean>
 
-  <sec:http pattern="/athn/1201/001/**" authentication-manager-ref="dbUserLoginManager">
+  <sec:http pattern="/athn/1201/001/**" request-matcher="ant" authentication-manager-ref="dbUserLoginManager">
     <sec:form-login login-page="/athn/1201/001/login" login-processing-url="/athn/1201/001/authenticate"
       default-target-url="/athn/1201/001?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/1201/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/1201/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/1201/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1201/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1201/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
-  <sec:http pattern="/athn/1202/001/**" authentication-manager-ref="dbUserLoginManager">
+  <sec:http pattern="/athn/1202/001/**" request-matcher="ant" authentication-manager-ref="dbUserLoginManager">
     <sec:form-login login-page="/athn/1202/001/login" login-processing-url="/athn/1202/001/authenticate"
       authentication-success-handler-ref="authenticationSuccessHandler" />
-    <sec:logout logout-url="/athn/1202/001/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/1202/001/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/1202/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1202/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1202/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 </beans>

@@ -18,14 +18,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails;
 
 @Controller
 public class ATHN04Controller {
 
-    @RequestMapping(value = "0401/001", params = "loginSuccess")
+    @GetMapping(value = "0401/001", params = "loginSuccess")
     public String handle040101LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
@@ -34,7 +34,7 @@ public class ATHN04Controller {
         return "athn/topForDefault";
     }
 
-    @RequestMapping(value = "0402/001", params = "loginSuccess")
+    @GetMapping(value = "0402/001", params = "loginSuccess")
     public String handle040201LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
@@ -43,7 +43,7 @@ public class ATHN04Controller {
         return "athn/topForDefault";
     }
 
-    @RequestMapping(value = "0402/004", params = "loginSuccess")
+    @GetMapping(value = "0402/004", params = "loginSuccess")
     public String handle040204LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {

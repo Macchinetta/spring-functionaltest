@@ -19,11 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.jms.JMSException;
-import javax.validation.Valid;
-
 import org.springframework.messaging.Message;
 
+import jakarta.jms.JMSException;
+import jakarta.validation.Valid;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsAmqReceivingService {
@@ -35,7 +34,7 @@ public interface JmsAmqReceivingService {
     void receiveMessageByCacheCon(JmsTodo jmsTodo) throws IOException;
 
     void receiveMessageByJmsMessage(
-            javax.jms.TextMessage message) throws IOException, JMSException;
+            jakarta.jms.TextMessage message) throws IOException, JMSException;
 
     void receiveMessageAddKey(
             Message<JmsTodo> jmsTodoMessage) throws IOException;
@@ -48,10 +47,10 @@ public interface JmsAmqReceivingService {
             InputStream inputStream) throws IOException, JMSException;
 
     void receiveMessageMany(
-            javax.jms.TextMessage message) throws IOException, JMSException, InterruptedException;
+            jakarta.jms.TextMessage message) throws IOException, JMSException, InterruptedException;
 
     void receiveMessageByCallback(
-            javax.jms.TextMessage message) throws IOException, JMSException;
+            jakarta.jms.TextMessage message) throws IOException, JMSException;
 
     void receiveMessageBySelectorFalse(
             JmsTodo jmsTodo) throws IOException, JMSException;

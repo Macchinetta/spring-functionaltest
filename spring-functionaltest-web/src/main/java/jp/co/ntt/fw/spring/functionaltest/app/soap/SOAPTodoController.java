@@ -21,8 +21,6 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -30,15 +28,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.terasoluna.gfw.common.exception.SystemException;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoProxyService;
 
@@ -47,7 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.TodoProxyService;
 public class SOAPTodoController {
 
     @Inject
-    Mapper beanMapper;
+    SOAPTodoBeanMapper beanMapper;
 
     @Inject
     TodoProxyService todoProxyService;
@@ -72,7 +70,7 @@ public class SOAPTodoController {
                 new StringTrimmerEditor(true));
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @GetMapping(value = "list")
     public String list(Model model, @PathVariable("proxy") String proxy) {
 
         List<Todo> todos = todoProxyService.getTodos(proxy);
@@ -80,36 +78,33 @@ public class SOAPTodoController {
         return "soap/list";
     }
 
-    @RequestMapping(value = "deleteAll", method = RequestMethod.GET)
+    @GetMapping(value = "deleteAll")
     public String deleteAll(Model model, @PathVariable("proxy") String proxy) {
 
         todoProxyService.deleteTodos(proxy);
         return "soap/list";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET, params = {
-            "form" })
+    @GetMapping(value = "create", params = { "form" })
     public String createForm() {
         return "soap/create";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
+    @PostMapping(value = "create")
     public String create(Model model, TodoForm form,
             @PathVariable("proxy") String proxy) {
 
-        Todo todo = todoProxyService.createTodo(proxy, beanMapper.map(form,
-                Todo.class));
+        Todo todo = todoProxyService.createTodo(proxy, beanMapper.map(form));
         model.addAttribute("todo", todo);
         return "soap/todo";
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.GET, params = {
-            "form" })
+    @GetMapping(value = "get", params = { "form" })
     public String getForm() {
         return "soap/get";
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
+    @PostMapping(value = "get")
     public String get(Model model, TodoForm form,
             @PathVariable("proxy") String proxy) {
 
@@ -118,29 +113,26 @@ public class SOAPTodoController {
         return "soap/todo";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET, params = {
-            "form" })
+    @GetMapping(value = "update", params = { "form" })
     public String updateForm() {
         return "soap/update";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @PostMapping(value = "update")
     public String update(Model model, TodoForm form,
             @PathVariable("proxy") String proxy) {
 
-        Todo todo = todoProxyService.updateTodo(proxy, beanMapper.map(form,
-                Todo.class));
+        Todo todo = todoProxyService.updateTodo(proxy, beanMapper.map(form));
         model.addAttribute("todo", todo);
         return "soap/todo";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.GET, params = {
-            "form" })
+    @GetMapping(value = "delete", params = { "form" })
     public String deleteForm() {
         return "soap/delete";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @PostMapping(value = "delete")
     public String delete(Model model, TodoForm form,
             @PathVariable("proxy") String proxy) {
 
@@ -148,7 +140,7 @@ public class SOAPTodoController {
         return "soap/todo";
     }
 
-    @RequestMapping(value = "confirmHandler", method = RequestMethod.GET)
+    @GetMapping(value = "confirmHandler")
     public String confirmHandler(Model model,
             @PathVariable("proxy") String proxy) {
 
@@ -156,7 +148,7 @@ public class SOAPTodoController {
         return "soap/index";
     }
 
-    @RequestMapping(value = "requestTimeout", method = RequestMethod.GET)
+    @GetMapping(value = "requestTimeout")
     public String requestTimeout(Model model,
             @PathVariable("proxy") String proxy) throws InterruptedException {
 
@@ -164,13 +156,12 @@ public class SOAPTodoController {
         return "soap/index";
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.GET, params = {
-            "form" })
+    @GetMapping(value = "upload", params = { "form" })
     public String uploadForm(UploadFileForm form) {
         return "soap/upload";
     }
 
-    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "upload")
     public String upload(Model model, @Validated UploadFileForm form,
             BindingResult result, @PathVariable("proxy") String proxy) {
 

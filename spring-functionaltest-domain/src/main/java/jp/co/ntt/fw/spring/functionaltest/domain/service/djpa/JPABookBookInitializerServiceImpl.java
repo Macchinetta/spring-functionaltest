@@ -20,11 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategory;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookRepository;

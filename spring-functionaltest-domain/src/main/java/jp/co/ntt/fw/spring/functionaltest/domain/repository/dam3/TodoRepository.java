@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -41,26 +41,26 @@ public interface TodoRepository {
 
     int update(TodoMB3 todoMB3);
 
-    TodoMB3 findOneByTodoId(String todoId);
+    TodoMB3 findByTodoId(String todoId);
 
     void deleteAll();
 
-    AutoMapTodoMB3 selectTodoByAutoMap(String todoId);
+    AutoMapTodoMB3 findAutoMapByTodoIdIncludeSelectPhrase(String todoId);
 
-    AsClauseTodoMB3 selectTodoByAsClause(String todoId);
+    AsClauseTodoMB3 findAsClauseByTodoId(String todoId);
 
-    AutoMapTodoMB3 findOne(String todoId);
+    AutoMapTodoMB3 findAutoMapByTodoId(String todoId);
 
-    AutoMapTodoMB3 findOneUsingCompositeKey(@Param("todoId") String todoId,
+    AutoMapTodoMB3 findAutoMapByCompositeKey(@Param("todoId") String todoId,
             @Param("categoryId") String categoryId);
 
-    AutoMapTodoMB3 findOneUsingCompositeKeyNoParamAnnot(String todoId,
+    AutoMapTodoMB3 findAutoMapByCompositeKeyNoParamAnnot(String todoId,
             String categoryId);
 
-    List<AutoMapTodoMB3> findAllByCriteria(TodoCriteria criteria);
+    List<AutoMapTodoMB3> findAllAutoMapByCriteria(TodoCriteria criteria);
 
     @MapKey("todoId")
-    Map<String, AutoMapTodoMB3> findAllByCriteriaRetMap(TodoCriteria criteria);
+    Map<String, AutoMapTodoMB3> findAllAutoMapByCriteriaRetMap(TodoCriteria criteria);
 
     long countByFinished(boolean finished);
 
@@ -90,7 +90,7 @@ public interface TodoRepository {
 
     boolean deleteByTodo(TodoMB3 todo);
 
-    int deleteOlderFinishedTodo(Date date);
+    int deleteOlderFinishedTodo(LocalDate date);
 
     List<TodoMB3> findAllByCriteriaIFEle(TodoCriteria todoCriteria);
 
@@ -101,14 +101,14 @@ public interface TodoRepository {
     void collectAllByCriteria(TodoCriteria todoCriteria,
             ResultHandler<TodoMB3> handler);
 
-    AutoMapTodoMB3 findOneBySP(String todoId);
+    AutoMapTodoMB3 findAutoMapBySP(String todoId);
 
-    List<AutoMapTodoMB3> findByUsingClassTypeAlias(
+    List<AutoMapTodoMB3> findAutoMapByUsingClassTypeAlias(
             TodoSearchCriteria todoSearchCriteria);
 
-    List<AutoMapTodoMB3> findByUsingOverwrittenDefltTypeAliasName(
+    List<AutoMapTodoMB3> findAutoMapByUsingOverwrittenDefltTypeAliasName(
             TodoCriteria2 todoSearchCriteria);
 
-    List<TodoMB3> findUsingChooseEle(TodoCriteria todoCriteria);
+    List<TodoMB3> findAllByUsingChooseEle(TodoCriteria todoCriteria);
 
 }

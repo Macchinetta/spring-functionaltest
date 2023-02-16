@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.soap;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,10 +29,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 
@@ -42,7 +43,7 @@ public class TodoServiceImpl implements TodoService {
     private static final int TODO_MAX_COUNT = 5;
 
     @Autowired
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     private final ConcurrentHashMap<String, Todo> todos = new ConcurrentHashMap<String, Todo>();
 
@@ -64,7 +65,7 @@ public class TodoServiceImpl implements TodoService {
                     "e.sf.soap.8001"));
         }
         todo.setTodoId(UUID.randomUUID().toString());
-        todo.setCreatedAt(dateFactory.newDate());
+        todo.setCreatedAt(Date.from(clockFactory.fixed().instant()));
         todos.put(todo.getTodoId(), todo);
         return todo;
     }

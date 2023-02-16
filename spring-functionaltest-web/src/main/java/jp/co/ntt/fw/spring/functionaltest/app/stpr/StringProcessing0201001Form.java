@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.stpr;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class StringProcessing0201001Form implements Serializable {
 

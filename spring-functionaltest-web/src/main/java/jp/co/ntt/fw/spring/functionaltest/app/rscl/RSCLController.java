@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RSCLController {
 
-    @RequestMapping("/rscl")
+    @GetMapping("/rscl")
     public String handle() {
         return "rscl/index";
     }

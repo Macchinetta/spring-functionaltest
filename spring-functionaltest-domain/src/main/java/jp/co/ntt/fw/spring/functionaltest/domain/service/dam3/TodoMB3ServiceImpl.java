@@ -21,21 +21,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.session.ResultContext;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,8 +45,8 @@ import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.exception.SystemException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.AsClauseTodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
@@ -84,13 +80,13 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     TodoBatchRepository todoBatchRepository;
 
     @Inject
-    Mapper beanMapper;
+    TodoMB3ForJSR310BeanMapper beanMapper;
 
     @Value("${rollback.msg}")
     protected String rollbackMsg;
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat
-            .forPattern("yyyy/MM/dd");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("uuuu/MM/dd");
 
     @Override
     public List<TodoMB3> findAllTodos() {
@@ -128,7 +124,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 findOneByTodoId(String todoId) {
-        TodoMB3 todoMB3 = todoRepository.findOneByTodoId(todoId);
+        TodoMB3 todoMB3 = todoRepository.findByTodoId(todoId);
         try (InputStream inputStream = todoMB3.getDesc1();
                 Reader reader = todoMB3.getDesc2()) {
             todoMB3.setNormDesc1(normalizeDesc1(inputStream));
@@ -140,11 +136,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 addTodo(TodoMB3 todoMB3) {
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -154,11 +149,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 addTodoForRollback(TodoMB3 todoMB3) {
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -178,10 +172,9 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
             cat.setCategoryId("0000000005");
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
-                    .toDate());
+            todoMB3.setCreatedAt(LocalDate.of(2016, 12, 29));
             todoMB3.setFinished(true);
-            todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime("2016/12/30"));
+            todoMB3.setCompleteAt(LocalDate.of(2016, 12, 30));
             todoMB3.setCategory(cat);
             todoMB3.setTodoId(String.format("%010d", i));
             todoMB3.setTodoTitle("TT" + i);
@@ -206,10 +199,9 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
             cat.setCategoryId("0000000005");
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
-                    .toDate());
+            todoMB3.setCreatedAt(LocalDate.of(2016, 12, 29));
             todoMB3.setFinished(true);
-            todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime("2016/12/30"));
+            todoMB3.setCompleteAt(LocalDate.of(2016, 12, 30));
             todoMB3.setCategory(cat);
             todoMB3.setTodoId(String.format("%010d", i));
             todoMB3.setTodoTitle("TT" + i);
@@ -225,12 +217,11 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 addTodoWithNullTitle(TodoMB3 todoMB3) {
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
         todoMB3.setTodoTitle(null);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
 
         todoMB3.setCategory(categoryMB3);
         todoRepository.insert(todoMB3);
@@ -258,20 +249,21 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 selectByAutoMap(String todoId) {
-        AutoMapTodoMB3 todoMB3Auto = todoRepository.selectTodoByAutoMap(todoId);
-        CategoryMB3 categoryMB3 = categoryMB3Repository
-                .selectTodoCategoryIdAutoMap(todoMB3Auto.getCategoryId());
-        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto, TodoMB3.class);
+        AutoMapTodoMB3 todoMB3Auto = todoRepository
+                .findAutoMapByTodoIdIncludeSelectPhrase(todoId);
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByCategoryId(
+                todoMB3Auto.getCategoryId());
+        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto);
         todoMB3.setCategory(categoryMB3);
         return todoMB3;
     }
 
     @Override
     public TodoMB3 selectByAsClause(String todoId) {
-        AsClauseTodoMB3 asClauseTodoMB3 = todoRepository.selectTodoByAsClause(
+        AsClauseTodoMB3 asClauseTodoMB3 = todoRepository.findAsClauseByTodoId(
                 todoId);
-        CategoryMB3 categoryMB3 = categoryMB3Repository
-                .selectTodoCategoryIdAutoMap(asClauseTodoMB3.getCatCode());
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByCategoryId(
+                asClauseTodoMB3.getCatCode());
 
         TodoMB3 todoMB3 = new TodoMB3();
         todoMB3.setCategory(categoryMB3);
@@ -291,14 +283,14 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Transactional(readOnly = true)
     @Override
     public TodoMB3 findOne(String todoId) {
-        AutoMapTodoMB3 todoMB3Auto = todoRepository.findOne(todoId);
+        AutoMapTodoMB3 todoMB3Auto = todoRepository.findAutoMapByTodoId(todoId);
         if (todoMB3Auto == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
         }
-        CategoryMB3 categoryMB3 = categoryMB3Repository
-                .selectTodoCategoryIdAutoMap(todoMB3Auto.getCategoryId());
-        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto, TodoMB3.class);
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByCategoryId(
+                todoMB3Auto.getCategoryId());
+        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto);
         todoMB3.setCategory(categoryMB3);
         return todoMB3;
     }
@@ -306,20 +298,19 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public TodoMB3 findOneUsingCompositeKey(String todoId,
             String categoryName) {
-        CategoryMB3 category = categoryMB3Repository.findOneByName(
-                categoryName);
+        CategoryMB3 category = categoryMB3Repository.findByName(categoryName);
         if (category == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
         }
-        AutoMapTodoMB3 todoMB3Auto = todoRepository.findOneUsingCompositeKey(
+        AutoMapTodoMB3 todoMB3Auto = todoRepository.findAutoMapByCompositeKey(
                 todoId, category.getCategoryId());
         if (todoMB3Auto == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto);
         todoMB3.setCategory(category);
         return todoMB3;
     }
@@ -327,34 +318,32 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public TodoMB3 findOneUsingCompositeKeyNoParamAnnot(String todoId,
             String categoryName) {
-        CategoryMB3 category = categoryMB3Repository.findOneByName(
-                categoryName);
+        CategoryMB3 category = categoryMB3Repository.findByName(categoryName);
         if (category == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
         }
         AutoMapTodoMB3 todoMB3Auto = todoRepository
-                .findOneUsingCompositeKeyNoParamAnnot(todoId, category
+                .findAutoMapByCompositeKeyNoParamAnnot(todoId, category
                         .getCategoryId());
         if (todoMB3Auto == null) {
             throw new ResourceNotFoundException(ResultMessages.error().add(
                     "e.ex.td.5001", todoId));
         }
-        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(todoMB3Auto);
         todoMB3.setCategory(category);
         return todoMB3;
     }
 
     @Override
     public List<TodoMB3> findAllByCriteria(TodoCriteria criteria) {
-        List<AutoMapTodoMB3> todoList = todoRepository.findAllByCriteria(
+        List<AutoMapTodoMB3> todoList = todoRepository.findAllAutoMapByCriteria(
                 criteria);
         List<TodoMB3> todoMB3s = new ArrayList<TodoMB3>();
         for (AutoMapTodoMB3 autoMapTodoMB3 : todoList) {
-            CategoryMB3 categoryMB3 = categoryMB3Repository
-                    .selectTodoCategoryIdAutoMap(autoMapTodoMB3
-                            .getCategoryId());
-            TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3, TodoMB3.class);
+            CategoryMB3 categoryMB3 = categoryMB3Repository.findByCategoryId(
+                    autoMapTodoMB3.getCategoryId());
+            TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3);
             todoMB3.setCategory(categoryMB3);
             todoMB3s.add(todoMB3);
         }
@@ -365,7 +354,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public Map<String, AutoMapTodoMB3> findAllByCriteriaRetMap(
             TodoCriteria criteria) {
-        return todoRepository.findAllByCriteriaRetMap(criteria);
+        return todoRepository.findAllAutoMapByCriteriaRetMap(criteria);
     }
 
     @Override
@@ -405,11 +394,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public boolean createAndReturnBoolean(TodoMB3 todoMB3) {
         boolean result = false;
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
 
         todoMB3.setCategory(categoryMB3);
         try {
@@ -423,11 +411,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public int createAndReturnInt(TodoMB3 todoMB3) {
         int result = 0;
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
 
         todoMB3.setCategory(categoryMB3);
         try {
@@ -440,11 +427,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public TodoMB3 createUsingAutoIncreament(TodoMB3 todoMB3) {
-        CategoryMB3 categoryMB3 = categoryMB3Repository.findOneByName(todoMB3
+        CategoryMB3 categoryMB3 = categoryMB3Repository.findByName(todoMB3
                 .getCategory().getName());
         todoMB3.setFinished(false);
-        todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/28")
-                .toDate());
+        todoMB3.setCreatedAt(LocalDate.of(2016, 12, 28));
         todoMB3.setCategory(categoryMB3);
         todoRepository.createUsingAutoIncreament(todoMB3);
         return todoMB3;
@@ -462,12 +448,10 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
             cat = new CategoryMB3();
 
             todoMB3 = new TodoMB3();
-            todoMB3.setCreatedAt(DATE_FORMATTER.parseDateTime("2016/12/29")
-                    .toDate());
+            todoMB3.setCreatedAt(LocalDate.of(2016, 12, 29));
             if (i % 2 == 0) {
                 cat.setCategoryId("0000000005");
-                todoMB3.setCompleteAt(DATE_FORMATTER.parseDateTime(
-                        "2016/12/30"));
+                todoMB3.setCompleteAt(LocalDate.of(2016, 12, 30));
                 todoMB3.setFinished(true);
             } else {
                 cat.setCategoryId("0000000003");
@@ -485,8 +469,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public TodoMB3 updateTodo(TodoMB3 todoMB3) {
 
-        TodoMB3 currentTodo = todoRepository.findOneByTodoId(todoMB3
-                .getTodoId());
+        TodoMB3 currentTodo = todoRepository.findByTodoId(todoMB3.getTodoId());
         if (currentTodo == null || currentTodo.getVersion() != todoMB3
                 .getVersion()) {
             throw new ObjectOptimisticLockingFailureException(TodoMB3.class, todoMB3
@@ -517,7 +500,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     }
 
     @Override
-    public int deleteOlderFinishedTodo(Date date) {
+    public int deleteOlderFinishedTodo(LocalDate date) {
         return todoRepository.deleteOlderFinishedTodo(date);
     }
 
@@ -553,8 +536,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
                     sb.append(",");
                     sb.append(todo.isFinished());
                     sb.append(",");
-                    sb.append(DATE_FORMATTER.print(todo.getCreatedAt()
-                            .getTime()));
+                    sb.append(todo.getCreatedAt().format(DATE_TIME_FORMATTER));
                     sb.append(",");
                     sb.append(todo.getVersion());
                     downloadWriter.write(sb.toString());
@@ -571,25 +553,26 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
 
     @Override
     public AutoMapTodoMB3 findOneBySP(String todoId) {
-        AutoMapTodoMB3 autoMapTodoMB3 = todoRepository.findOneBySP(todoId);
+        AutoMapTodoMB3 autoMapTodoMB3 = todoRepository.findAutoMapBySP(todoId);
         return autoMapTodoMB3;
     }
 
     @Override
     public CategoryMB3 getCategory(String categoryId) {
-        return categoryMB3Repository.selectTodoCategoryIdAutoMap(categoryId);
+        return categoryMB3Repository.findByCategoryId(categoryId);
     }
 
     @Override
     public List<AutoMapTodoMB3> findByUsingClassTypeAlias(
             TodoSearchCriteria todoSearchCriteria) {
-        return todoRepository.findByUsingClassTypeAlias(todoSearchCriteria);
+        return todoRepository.findAutoMapByUsingClassTypeAlias(
+                todoSearchCriteria);
     }
 
     @Override
     public List<AutoMapTodoMB3> findByUsingOverwrittenDefltTypeAliasName(
             TodoCriteria2 todoSearchCriteria) {
-        return todoRepository.findByUsingOverwrittenDefltTypeAliasName(
+        return todoRepository.findAutoMapByUsingOverwrittenDefltTypeAliasName(
                 todoSearchCriteria);
     }
 
@@ -602,7 +585,7 @@ public class TodoMB3ServiceImpl implements TodoMB3Service {
     @Override
     public List<TodoMB3> findUsingChooseEle(TodoCriteria todoCriteria) {
         List<TodoMB3> todoList = new ArrayList<TodoMB3>();
-        todoList = todoRepository.findUsingChooseEle(todoCriteria);
+        todoList = todoRepository.findAllByUsingChooseEle(todoCriteria);
 
         formatTodoList(todoList);
         return todoList;

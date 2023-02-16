@@ -19,6 +19,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Customer;
 
 public interface CustomerRepository {
 
-    Customer findOneByName(String name);
+    Customer findByName(String name);
 
 }

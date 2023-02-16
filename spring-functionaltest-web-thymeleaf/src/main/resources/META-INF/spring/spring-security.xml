@@ -10,20 +10,11 @@
   <sec:http pattern="/resources/**" security="none" />
   <sec:http pattern="/admin/h2/*" security="none" />
   <!-- テストデータを操作するためのWEB APIは認証・認可の対象外とする -->
-  <sec:http pattern="/**/testdata/*" security="none" />
+  <sec:http request-matcher="ant" pattern="/**/testdata/*" security="none" />
 
+  <!-- NoOpPasswordEncoderは非推奨ではあるが削除予定はない -->
   <bean id="noOpPasswordEncoder"
     class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
-
-  <!-- ATHR0401002 Protection -->
-  <!-- ATHR0401002 Protection -->
-  <!-- なぜか、このHandlerをすべてのSpringSecurityの定義の最上位にbeanの定義をしないと動かなかった。 -->
-  <!-- 本質的ではないが、暫定対処 -->
-  <!-- 参考：http://stackoverflow.com/questions/13132922/spring-security-taglib-secauthorize-with-role-hierarchy-not-working?rq=1 -->
-  <bean id="AuthorizationJspRoleHierarchyHandler"
-    class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
-    <property name="roleHierarchy" ref="AuthorizationJspRoleHierarchy" />
-  </bean>
 
   <!-- ATHR0401 Protection -->
   <!-- <sec:authorize url="">をJSPで使うため。 -->
@@ -102,9 +93,6 @@
   <!-- ATHN23 Protection -->
   <import resource="classpath:META-INF/spring/athn/spring-security-athn23.xml" />
 
-  <!-- ATHN Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
-
   <!-- SPSC Protection -->
   <import resource="classpath:META-INF/spring/spsc/spring-security-spsc.xml" />
 
@@ -135,6 +123,9 @@
   <import resource="classpath:META-INF/spring/intr/spring-security-intr0301001.xml" />
   <import resource="classpath:META-INF/spring/intr/spring-security-intr0301002.xml" />
 
+  <!-- DBSP Protection -->
+  <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
+
   <bean id="sessionAuthenticationStrategy"
     class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
     <constructor-arg index="0">
@@ -149,7 +140,8 @@
   </bean>
 
   <!-- SOAP Protection -->
-  <import resource="classpath:META-INF/spring/soap/spring-security-soap.xml" />
+  <!-- FY2022 スコープアウト -->
+  <!-- <import resource="classpath:META-INF/spring/soap/spring-security-soap.xml" /> -->
 
   <!-- UserID Protection -->
   <bean id="userIdMDCPutFilter"
@@ -157,22 +149,17 @@
     <property name="removeValue" value="true" />
   </bean>
 
-  <!-- ATHR0201002 Protection and ATHR0201002 Protection 等の対応のため最後に定義 -->
-  <sec:http pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**" create-session="stateless">
+  <!-- 0201002 Protection and ATHR0201002 Protection 等の対応のため最後に定義 -->
+  <sec:http request-matcher="ant" pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**"
+    create-session="stateless" auto-config="false">
     <sec:form-login />
     <sec:logout />
     <sec:csrf disabled="true" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <!-- RSCL Protection -->
   <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
-
-  <import resource="classpath:META-INF/spring/oth2/spring-security-oth2.xml" />
-
-  <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
-
-  <!-- DBSP Protection -->
-  <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
 
   <!-- All setting -->
   <sec:http>
@@ -180,9 +167,16 @@
     <sec:logout />
     <sec:access-denied-handler ref="accessDeniedHandler" />
     <sec:csrf />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
-  <sec:authentication-manager></sec:authentication-manager>
+  <sec:authentication-manager />
+
+  <bean id="mvcHandlerMappingIntrospector"
+    class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
+
+  <bean id="webexpressionHandler"
+    class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
   <bean id="accessDeniedHandler"
     class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
@@ -207,4 +201,5 @@
       </bean>
     </constructor-arg>
   </bean>
+
 </beans>

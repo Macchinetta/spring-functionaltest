@@ -17,15 +17,15 @@ package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import java.text.ParseException;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPABookInitializerService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPADeliveryOrderInitializerService;
 
@@ -42,7 +42,7 @@ public class DJPATestDataController {
     @Inject
     JPADeliveryOrderInitializerService jpaDeliveryOrderInitializerService;
 
-    @RequestMapping(value = "books", method = RequestMethod.POST)
+    @PostMapping(value = "books")
     @ResponseBody
     public ResponseEntity<Void> createBooks() {
         bookInitializerService.clear();
@@ -50,14 +50,14 @@ public class DJPATestDataController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "books", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "books")
     @ResponseBody
     public ResponseEntity<Void> deleteBooks() throws ParseException {
         bookInitializerService.clear();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "order", method = RequestMethod.POST)
+    @PostMapping(value = "order")
     @ResponseBody
     public ResponseEntity<Void> createOrders() {
         jpaDeliveryOrderInitializerService.clear();
@@ -65,7 +65,7 @@ public class DJPATestDataController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "order", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "order")
     @ResponseBody
     public ResponseEntity<Void> deleteOrders() throws ParseException {
         jpaDeliveryOrderInitializerService.clear();

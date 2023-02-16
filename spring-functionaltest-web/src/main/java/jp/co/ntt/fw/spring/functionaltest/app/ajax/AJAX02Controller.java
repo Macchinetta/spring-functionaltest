@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -29,13 +27,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
 
 @RequestMapping("ajax")
@@ -50,7 +50,7 @@ public class AJAX02Controller {
         return new PersonalComputerForm();
     }
 
-    @RequestMapping(value = "0201/001")
+    @GetMapping(value = "0201/001")
     public String handle0201001(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -61,7 +61,7 @@ public class AJAX02Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0201/002")
+    @GetMapping(value = "0201/002")
     public String handle0201002(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -72,7 +72,7 @@ public class AJAX02Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0201/003")
+    @GetMapping(value = "0201/003")
     public String handle0201003(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -83,7 +83,7 @@ public class AJAX02Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0202/001")
+    @GetMapping(value = "0202/001")
     public String handle0202001(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -95,7 +95,7 @@ public class AJAX02Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0202/002")
+    @GetMapping(value = "0202/002")
     public String handle0202002(PersonalComputerForm form, Model model) {
 
         personalComputerHelper.setPersonalComputer(1, form);
@@ -107,7 +107,7 @@ public class AJAX02Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0201/001/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult edit(@Validated PersonalComputerForm form,
@@ -117,7 +117,7 @@ public class AJAX02Controller {
                 locale);
     }
 
-    @RequestMapping(value = "0201/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0201/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult editForJson(
@@ -127,7 +127,7 @@ public class AJAX02Controller {
                 locale);
     }
 
-    @RequestMapping(value = "0202/001/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0202/001/edit")
     @ResponseBody
     public PersonalComputerWithErrorResults editForJsonAndUseBindingResult(
             @Validated @RequestBody PersonalComputerForm form,
@@ -142,7 +142,7 @@ public class AJAX02Controller {
                 .updateAndBindPersonalComputerWithErrorResults(form, locale);
     }
 
-    @RequestMapping(value = "0202/002/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0202/002/edit")
     @ResponseBody
     public ResponseEntity<PersonalComputerWithErrorResults> editForJsonAndSetStatusCode(
             @Validated @RequestBody PersonalComputerForm form,
@@ -159,7 +159,7 @@ public class AJAX02Controller {
                         locale), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "0201", params = "retrunToIndex")
+    @GetMapping(value = "0201", params = "retrunToIndex")
     public String retrunToIndex() {
 
         return "ajax/index";

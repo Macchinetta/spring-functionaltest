@@ -8,7 +8,7 @@
       <attr sel="td.itemPrice" th:text="${item.price}" />
     </attr>
   </attr>
-  <attr sel="#back" th:href="@{/thym/}" />
+  <attr sel="#back" th:href="@{/thym}" />
 
   <attr sel="title" th:text="'Search Result Screen(decoupled-viewlogic.xml)'" />
   <attr sel="h1" th:text="'Search Result(decoupled-viewlogic.xml)'" />

@@ -15,9 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
+import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -26,6 +24,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.springframework.context.support.ApplicationObjectSupport;
+
+import jakarta.inject.Inject;
 
 public class WebDriverCreator extends ApplicationObjectSupport {
 
@@ -115,7 +115,7 @@ public class WebDriverCreator extends ApplicationObjectSupport {
         profile.setPreference("network.proxy.type", 0);
         FirefoxOptions options = new FirefoxOptions().setProfile(profile);
         WebDriver webDriver = new FirefoxDriver(options);
-        webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         return webDriver;
     }
 

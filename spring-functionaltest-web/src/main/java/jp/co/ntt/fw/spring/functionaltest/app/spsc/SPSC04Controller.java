@@ -16,17 +16,17 @@
 package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SPSC04Controller {
 
-    @RequestMapping("0401/001/secure/001")
+    @GetMapping("0401/001/secure/001")
     public String handle0401001secure() {
         return "spsc/result";
     }
 
-    @RequestMapping("0401/001/notsecure/001")
+    @GetMapping("0401/001/notsecure/001")
     public String handle0401001notsecure() {
         return "spsc/result";
     }

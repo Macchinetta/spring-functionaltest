@@ -15,13 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Administrator;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.AdministratorRepository;
 
@@ -160,7 +159,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Administrator findOneByUserName(String userName) {
-        Administrator administrator = administratorRepository.findOneByUserName(
+        Administrator administrator = administratorRepository.findByUserName(
                 userName);
         return administrator;
     }

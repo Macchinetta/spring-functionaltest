@@ -15,16 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.ArticleService;
@@ -41,7 +40,7 @@ public class PGNT0102002Controller {
         return criteria;
     }
 
-    @RequestMapping(value = "articleSearchDescArticleId", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchDescArticleId")
     public String search(ArticleSearchCriteria criteria, Pageable pageable,
             Model model) {
 

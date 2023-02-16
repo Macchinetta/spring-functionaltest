@@ -25,13 +25,14 @@ import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thym/0802")
 public class THYM0802Controller {
 
-    @RequestMapping("003")
+    @GetMapping("003")
     public String handle003(Model model) {
 
         Item item = new Item();
@@ -40,7 +41,7 @@ public class THYM0802Controller {
         return "thym/jsNaturalTemplate";
     }
 
-    @RequestMapping("004")
+    @GetMapping("004")
     public String handle004(Model model) {
 
         // Strings
@@ -76,7 +77,7 @@ public class THYM0802Controller {
         return "thym/jsObjectSerialize";
     }
 
-    @RequestMapping("006")
+    @GetMapping("006")
     public String handle006(Model model) {
 
         List<Item> items = new ArrayList<>();

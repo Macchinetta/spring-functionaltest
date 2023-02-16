@@ -23,17 +23,23 @@ import static org.hamcrest.Matchers.in;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
 
-public class SOAPTestSupport extends FunctionTestSupport {
+public abstract class SOAPTestSupport extends FunctionTestSupport {
 
     // FIXME 例外発生時、ステータスコードを取得できないため、暫定でフラグをもたせて切り替える仕組みとしている。
     // 対応方針が決定次第、当該箇所を修正すること。 [#640]
     @Value("${selenium.soap.httpStatusCode.enableToAssert}")
     boolean enableToAssertHttpStatusCode;
+
+//    @Test
+//    public void dummy() {
+//        // TODO SOAPTestを@Ignoreにした関係でテストケースが無いと判断されてしまう
+//    }
 
     /**
      * ログ出力されたHTTPステータスコードを検証する。

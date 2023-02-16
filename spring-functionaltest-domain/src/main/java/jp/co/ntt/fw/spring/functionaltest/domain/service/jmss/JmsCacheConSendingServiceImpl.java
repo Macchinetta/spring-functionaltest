@@ -16,18 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +36,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.terasoluna.gfw.common.exception.BusinessException;
 
+import jakarta.inject.Inject;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Session;
+import jakarta.jms.TextMessage;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
@@ -108,7 +107,7 @@ public class JmsCacheConSendingServiceImpl implements
         jmsSharedService.purgeMessageFrom(destinationNameList, false);
 
         jndiConCacheJmsTemplate.send("TestQueue0301001", new MessageCreator() {
-            public javax.jms.Message createMessage(
+            public jakarta.jms.Message createMessage(
                     Session session) throws JMSException {
 
                 TextMessage message = session.createTextMessage();
@@ -165,7 +164,7 @@ public class JmsCacheConSendingServiceImpl implements
         jmsSharedService.purgeMessageFrom(destinationNameList, false);
 
         MessageCreator mc = new MessageCreator() {
-            public javax.jms.Message createMessage(
+            public jakarta.jms.Message createMessage(
                     Session session) throws JMSException {
 
                 TextMessage message = session.createTextMessage();
@@ -597,7 +596,7 @@ public class JmsCacheConSendingServiceImpl implements
         JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
+        jmsTodo.setDatetime(LocalDateTime.now());
 
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604005",
@@ -618,7 +617,7 @@ public class JmsCacheConSendingServiceImpl implements
         final JmsTodo jmsTodo = new JmsTodo();
         jmsTodo.setJmsTodoId(id);
         jmsTodo.setDescription(id);
-        jmsTodo.setDatetime(DateTime.now());
+        jmsTodo.setDatetime(LocalDateTime.now());
 
         // メッセージ送信
         jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604006",

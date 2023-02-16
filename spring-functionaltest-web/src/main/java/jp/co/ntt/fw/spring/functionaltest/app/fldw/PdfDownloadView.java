@@ -15,12 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.fldw;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
@@ -28,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -47,13 +45,17 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Component
 public class PdfDownloadView extends AbstractPdfView {
     private static final Logger logger = LoggerFactory.getLogger(
             PdfDownloadView.class);
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model,
@@ -77,6 +79,8 @@ public class PdfDownloadView extends AbstractPdfView {
         document.setFooter(footer);
 
         document.open();
+
+        document.add(new Paragraph(model.get("serverTime").toString()));
 
         // title
         Paragraph paragraph = new Paragraph(new Phrase("新規口座開設申込書", titleFont));
@@ -111,22 +115,24 @@ public class PdfDownloadView extends AbstractPdfView {
 
         // 年月日
         PdfPCell applicationYearCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getYear()), normalFont));
+                LocalDateTime.now(clockFactory.fixed())
+                        .getYear()), normalFont));
         applicationYearCell.setColspan(4);
         applicationYearCell.setBorder(0);
         applicationYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationYearCell);
         applicationDateTable.addCell(new Phrase("年", normalFont));
         PdfPCell applicationMonthCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime()
-                        .getMonthOfYear()), normalFont));
+                .toString(LocalDateTime.now(clockFactory.fixed())
+                        .getMonthValue()), normalFont));
         applicationMonthCell.setColspan(2);
         applicationMonthCell.setBorder(0);
         applicationMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationMonthCell);
         applicationDateTable.addCell(new Phrase("月", normalFont));
         PdfPCell applicationDayCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getDayOfMonth()), normalFont));
+                LocalDateTime.now(clockFactory.fixed())
+                        .getDayOfMonth()), normalFont));
         applicationDayCell.setColspan(2);
         applicationDayCell.setBorder(0);
         applicationDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -268,7 +274,7 @@ public class PdfDownloadView extends AbstractPdfView {
         // set fixed CreationDate and ModDate
         PdfDictionary info = writer.getInfo();
         Calendar cal = Calendar.getInstance();
-        cal.setTime(dateFactory.newDate());
+        cal.setTime(Date.from(clockFactory.fixed().instant()));
         info.put(PdfName.CREATIONDATE, new PdfDate(cal));
         info.put(PdfName.MODDATE, new PdfDate(cal));
 

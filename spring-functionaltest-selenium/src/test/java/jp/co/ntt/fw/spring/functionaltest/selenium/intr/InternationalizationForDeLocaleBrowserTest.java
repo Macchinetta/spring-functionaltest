@@ -85,7 +85,7 @@ public class InternationalizationForDeLocaleBrowserTest extends
 
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexStackTrace(
-                    "Caused by: javax\\.servlet\\.jsp\\.JspTagException: No message found under code.*for locale.*\\.");
+                    "Caused by: jakarta\\.servlet\\.jsp\\.JspTagException: No message found under code.*for locale.*\\.");
         } else {
             assertThat(webDriverOperations.getText(By.id("screenTitle")), is(
                     "??title.intr.customerDetails_de??"));

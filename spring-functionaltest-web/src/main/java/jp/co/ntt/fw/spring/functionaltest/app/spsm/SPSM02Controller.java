@@ -19,8 +19,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @SessionAttributes(value = "sessionForm")
@@ -32,12 +32,12 @@ public class SPSM02Controller {
         return new SessionForm();
     }
 
-    @RequestMapping("0201/001/login")
+    @GetMapping("0201/001/login")
     public String handle0102001Login(SessionForm form) {
         return "spsm/loginForDisableUrlRewrite";
     }
 
-    @RequestMapping(value = "0201/001", params = "loginSuccess")
+    @GetMapping(value = "0201/001", params = "loginSuccess")
     public String handle0102001LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
@@ -47,7 +47,7 @@ public class SPSM02Controller {
         return "spsm/topForDefault";
     }
 
-    @RequestMapping("0201/001/send")
+    @GetMapping("0201/001/send")
     public String handle0102001send(@AuthenticationPrincipal User userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
@@ -56,14 +56,14 @@ public class SPSM02Controller {
         return "spsm/topForDefault";
     }
 
-    @RequestMapping("0202/001/login")
+    @GetMapping("0202/001/login")
     public String handle0202001Login(Model model, SessionForm form) {
         model.addAttribute("testNo", "0202/001");
         form.setOeratorName("This is Session");
         return "spsm/loginForMigrateSession";
     }
 
-    @RequestMapping(value = "0202/001", params = "loginSuccess")
+    @GetMapping(value = "0202/001", params = "loginSuccess")
     public String handle002001LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
@@ -73,7 +73,7 @@ public class SPSM02Controller {
         return "spsm/topForDefault";
     }
 
-    @RequestMapping("0201/002/send")
+    @GetMapping("0201/002/send")
     public String handle0102002send(@AuthenticationPrincipal User userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
@@ -82,14 +82,14 @@ public class SPSM02Controller {
         return "spsm/topForDefault";
     }
 
-    @RequestMapping("0202/002/login")
+    @GetMapping("0202/002/login")
     public String handle0202002Login(Model model, SessionForm form) {
         model.addAttribute("testNo", "0202/002");
         form.setOeratorName("This is Session");
         return "spsm/loginForMigrateSession";
     }
 
-    @RequestMapping(value = "0202/002", params = "loginSuccess")
+    @GetMapping(value = "0202/002", params = "loginSuccess")
     public String handle002002LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {

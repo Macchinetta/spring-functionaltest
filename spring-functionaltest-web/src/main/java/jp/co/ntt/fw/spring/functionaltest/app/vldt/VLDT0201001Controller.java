@@ -15,16 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import jakarta.inject.Inject;
 
 @Controller
 @RequestMapping("vldt/0201/001")
@@ -43,12 +44,12 @@ public class VLDT0201001Controller {
         binder.addValidators(passwordEqualsValidator);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/correlationValidationBySpringValidatorView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validate")
+    @PostMapping(params = "validate")
     public String handleValidate(@Validated UserForm form,
             BindingResult result) {
 

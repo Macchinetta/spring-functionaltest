@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.TimeoutRestClientService;
 
 @RequestMapping("rscl")
@@ -31,7 +31,7 @@ public class RSCL05Controller {
     @Inject
     TimeoutRestClientService timeoutRestClientService;
 
-    @RequestMapping(value = "0501/001", method = RequestMethod.GET)
+    @GetMapping(value = "0501/001")
     public String handle0501001First(Model model) {
 
         model.addAttribute("testDescription", "Case [Conection Timeout]");
@@ -40,14 +40,14 @@ public class RSCL05Controller {
         return "rscl/occurTimeout";
     }
 
-    @RequestMapping(value = "0501/001", method = RequestMethod.POST)
+    @PostMapping(value = "0501/001")
     public void handle0501001(Model model) {
 
         this.timeoutRestClientService.confirmTimeout01();
 
     }
 
-    @RequestMapping(value = "0502/001", method = RequestMethod.GET)
+    @GetMapping(value = "0502/001")
     public String handle0502001First(Model model) {
 
         model.addAttribute("testDescription", "Case [Read Timeout]");
@@ -56,7 +56,7 @@ public class RSCL05Controller {
         return "rscl/occurTimeout";
     }
 
-    @RequestMapping(value = "0502/001", method = RequestMethod.POST)
+    @PostMapping(value = "0502/001")
     public void handle0502001(Model model) {
 
         this.timeoutRestClientService.confirmTimeout02();

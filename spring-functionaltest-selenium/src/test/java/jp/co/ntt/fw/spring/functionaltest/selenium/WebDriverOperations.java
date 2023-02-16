@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -103,8 +104,8 @@ public class WebDriverOperations {
         } else {
             adjustWaitTime = timeoutSeconds;
         }
-        webDriver.manage().timeouts().implicitlyWait(adjustWaitTime,
-                TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(
+                adjustWaitTime));
     }
 
     /**
@@ -264,8 +265,9 @@ public class WebDriverOperations {
      * @param expectedCondition 表示条件
      */
     public void waitForDisplayed(ExpectedCondition<?> expectedCondition) {
-        WebDriverWait wait = new WebDriverWait(getWebDriver(), defaultTimeoutSecondsForImplicitlyWait
-                + offsetSecondsOfTimeoutForImplicitlyWait);
+        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration
+                .ofSeconds(defaultTimeoutSecondsForImplicitlyWait
+                        + offsetSecondsOfTimeoutForImplicitlyWait));
         wait.until(expectedCondition);
     }
 

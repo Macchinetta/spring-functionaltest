@@ -15,20 +15,20 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dtac;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingService;
-import jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory;
+import jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.ChangeTimeClockFactory;
 
 @Controller
 @RequestMapping("dtac/user")
@@ -38,14 +38,14 @@ public class DTACUserListController {
     UserListRoutingService userListRoutingService;
 
     @Inject
-    FixedJodaTimeDateFactory dateFactory;
+    ChangeTimeClockFactory dateFactory;
 
     @ModelAttribute
     public UserForm setUpForm() {
         return new UserForm();
     }
 
-    @RequestMapping(value = "list")
+    @GetMapping(value = "list")
     public String handleList(
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
@@ -56,14 +56,14 @@ public class DTACUserListController {
         return "dtac/list";
     }
 
-    @RequestMapping(value = "listOpen")
+    @GetMapping(value = "listOpen")
     public String handleListOpen(
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
         return handleListBoth(10, pageable, model);
     }
 
-    @RequestMapping(value = "listClose")
+    @GetMapping(value = "listClose")
     public String handleListClose(
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
@@ -85,7 +85,7 @@ public class DTACUserListController {
         return "dtac/list";
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "list", params = "back")
     public String handleListBack(Model model) {
         return "redirect:/dtac/login";
     }

@@ -17,18 +17,18 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.AuthMailSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.NoAuthMailSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
@@ -55,14 +55,14 @@ public class EMAL02Controller {
         return form;
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle01001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("simpleMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle01002(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setCc(Arrays.asList(""));
@@ -71,7 +71,7 @@ public class EMAL02Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0201/003", method = RequestMethod.GET)
+    @GetMapping(value = "0201/003")
     public String handle01003(EmailSendingForm form) {
         form.setTo(Arrays.asList("", ""));
         form.setCc(Arrays.asList("", ""));
@@ -86,7 +86,7 @@ public class EMAL02Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=simpleMessage")
+    @PostMapping(value = "sendmail", params = "testcase=simpleMessage")
     public String handleSimpleMessage(Model model, EmailSendingForm form,
             RedirectAttributes attrs) {
 
@@ -100,7 +100,7 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=allProperties")
+    @PostMapping(value = "sendmail", params = "testcase=allProperties")
     public String handleAllProperties(Model model, EmailSendingForm form) {
 
         try (Store store = noAuthMailSendingService.popBeforeSmtp()) {
@@ -114,7 +114,7 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=noAuthPluralRecipients")
+    @PostMapping(value = "sendmail", params = "testcase=noAuthPluralRecipients")
     public String handleNoAuthPluralRecipients(Model model,
             EmailSendingForm form) {
 
@@ -131,7 +131,7 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=authPluralRecipients")
+    @PostMapping(value = "sendmail", params = "testcase=authPluralRecipients")
     public String handleAuthPluralRecipients(Model model,
             EmailSendingForm form) {
 

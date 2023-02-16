@@ -1,3 +1,39 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<c:set var="titleKey" value="title.dam3.todoList" />
+<c:set var="functionId" value="dam3" />
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width" />
+<meta name="contextPath" content="${pageContext.request.contextPath}" />
+<sec:csrfMetaTags />
+<title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message
+    code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css">
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
+<script type="text/javascript"></script>
+</head>
+<body>
+  <jsp:include page="/WEB-INF/views/layout/header.jsp" />
+  <div class="container">
 <div class="row">
   <h1 id="screenTitle">Todo List</h1>
   <div>
@@ -50,8 +86,7 @@
               href="${pageContext.request.contextPath}/dam3/todo/${todoItem.key}/update">
                 ${f:h(todoItem.key)}</a></td>
             <td class="title" id="title">${f:h(todoItem.value.todoTitle)}</td>
-            <td class="releaseDate" id="createdDate"><fmt:formatDate pattern="yyyy/MM/dd"
-                value="${todoItem.value.createdAt}" /></td>
+            <td class="releaseDate" id="createdDate"><javatime:format pattern="yyyy-MM-dd" value="${todoItem.value.createdAt}" /></td>
             <c:choose>
               <c:when test="${todoItem.value.finished == true}">
                 <c:set var="complete" value="${complete + 1}" />
@@ -63,8 +98,7 @@
               </c:otherwise>
             </c:choose>
             <td class="categoryName" id="categoryName">Not Fetched</td>
-            <td class="releaseDate" id="completeAt"><joda:format pattern="yyyy/MM/dd"
-                value="${todoItem.value.completeAt}" /></td>
+            <td class="releaseDate" id="completeAt"><javatime:format pattern="yyyy-MM-dd" value="${todoItem.value.completeAt}" /></td>
           </tr>
         </c:forEach>
       </c:when>
@@ -77,8 +111,7 @@
               href="${pageContext.request.contextPath}/dam3/todo/${todo.todoId}/update">
                 ${f:h(todo.todoId)}</a></td>
             <td class="title" id="title">${f:h(todo.todoTitle)}</td>
-            <td class="releaseDate" id="createdDate"><fmt:formatDate value="${todo.createdAt}"
-                pattern="yyyy/MM/dd" /></td>
+            <td class="releaseDate" id="createdDate"><javatime:format value="${todo.createdAt}" pattern="yyyy-MM-dd" /></td>
             <c:choose>
               <c:when test="${todo.finished == true}">
                 <c:set var="complete" value="${complete + 1}" />
@@ -90,10 +123,8 @@
               </c:otherwise>
             </c:choose>
             <td class="categoryName" id="categoryName"><a id="todoLink_${rowStatus.count}"
-              href="${pageContext.request.contextPath}/dam3/todo/${todo.todoId}/update"> Refer
-                Details Page</a></td>
-            <td class="releaseDate" id="completeAt"><joda:format pattern="yyyy/MM/dd"
-                value="${todo.completeAt}" /></td>
+              href="${pageContext.request.contextPath}/dam3/todo/${todo.todoId}/update"> Refer Details Page</a></td>
+            <td class="releaseDate" id="completeAt"><javatime:format pattern="yyyy-MM-dd" value="${todo.completeAt}" /></td>
           </tr>
         </c:forEach>
       </c:when>
@@ -102,15 +133,10 @@
         <c:forEach var="todo" items="${todos}" varStatus="rowStatus">
           <tr>
             <td class="no" id="no">${rowStatus.count}</td>
-            <td class="bookId"><a id="todoLink_${todo.todoId}"
-              href="${pageContext.request.contextPath}/dam3/todo/${todo.todoId}/update">
-                ${f:h(todo.todoId)}</a></td>
+            <td class="bookId"><a id="todoLink_${todo.todoId}" href="${pageContext.request.contextPath}/dam3/todo/${todo.todoId}/update">${f:h(todo.todoId)}</a></td>
             <td class="title" id="title">${f:h(todo.todoTitle)}</td>
             <td class="releaseDate" id="createdDate">
-              <%-- <joda:format
-                        pattern="yyyy/MM/dd"
-                        value="${todo.createdAt}" /> --%> <fmt:formatDate value="${todo.createdAt}"
-                pattern="yyyy/MM/dd" />
+              <javatime:format value="${todo.createdAt}" pattern="yyyy-MM-dd" />
             </td>
             <c:choose>
               <c:when test="${todo.finished == true}">
@@ -123,8 +149,7 @@
               </c:otherwise>
             </c:choose>
             <td class="categoryName" id="categoryName">${f:h(todo.category.name)}</td>
-            <td class="releaseDate" id="completeAt"><joda:format pattern="yyyy/MM/dd"
-                value="${todo.completeAt}" /></td>
+            <td class="releaseDate" id="completeAt"><javatime:format pattern="yyyy-MM-dd" value="${todo.completeAt}" /></td>
             <td class="title" id="desc1">${f:h(todo.normDesc1)}</td>
             <td class="title" id="desc1">${f:h(todo.normDesc2)}</td>
           </tr>
@@ -142,7 +167,7 @@
         <c:set var="paginationContextName" value="stdPageSearch"></c:set>
       </c:otherwise>
     </c:choose>
-    <fmt:formatDate value="${todoForm.createdAt}" pattern="yyyy/MM/dd" var="createdAt" />
+    <javatime:format value="${todoForm.createdAt}" pattern="yyyy-MM-dd" var="createdAt" />
     <div class="paginationPart" align="center">
       <t:pagination page="${page}" disabledHref="javascript:void(0);" outerElementClass="pagination"
         queryTmpl="page={page}&size={size}&${paginationContextName }=''&todoTitle=${ todoForm.todoTitle}&createdAt=${createdAt }" />
@@ -172,8 +197,7 @@
       <form:form modelAttribute="todoForm"
         action="${pageContext.request.contextPath}/dam3/todo/update" method="post">
         <tr>
-          <th>Enter Todo ID to be marked as Complete(Multiple todo id can be separated by
-            comma)</th>
+          <th>Enter Todo ID to be marked as Complete(Multiple todo id can be separated by comma)</th>
           <td><form:input path="todoIds" class="form-control" value="" /></td>
           <td><form:button name="bulkUpdate" class="btn btn-default">Update in Batch</form:button></td>
           <td><form:button name="batchRepoUpdt" class="btn btn-default">Update Using Batch Mode</form:button></td>
@@ -195,12 +219,11 @@
         <table class="table-striped table-bordered table-condensed">
           <tr>
             <td>Enter Todo ID :<form:input path="todoId" class="form-control" value="" /></td>
-            <td>Enter Category Name :<form:input path="todoCategory" class="form-control"
-                value="" /></td>
+            <td>Enter Category Name :<form:input path="todoCategory" class="form-control" value="" /></td>
             <td>Enter Todo Title :<form:input path="todoTitle" class="form-control" value="" /></td>
-            <td>Enter Todo creation date : <fmt:formatDate value="${todoForm.createdAt}"
-                pattern="yyyy/MM/dd" var="createdAt" /> <form:input path="createdAt"
-                class="form-control" value="${createdAt }" /></td>
+            <td>Enter Todo creation date : <javatime:format value="${todoForm.createdAt}"
+                pattern="yyyy-MM-dd" var="createdAt" /> <form:input path="createdAt"
+                class="form-control" value="${createdAt}" /></td>
           </tr>
         </table>
       </fieldset>
@@ -265,3 +288,7 @@
   </div>
   <br>
 </div>
+  </div>
+  <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
+</body>
+</html>

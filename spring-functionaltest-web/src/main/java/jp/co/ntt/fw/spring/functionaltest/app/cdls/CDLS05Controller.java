@@ -17,15 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.support.RequestContextUtils;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class CDLS05Controller {
@@ -45,22 +44,22 @@ public class CDLS05Controller {
         model.addAttribute("fallBackLocale", fallBackLocale);
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle05001(Model model) {
         return "cdls/codeListDirectReference";
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "002", params = "locale")
     public String handle05002(Model model) {
         return "cdls/codeListDirectReference";
     }
 
-    @RequestMapping(value = "003", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "003", params = "locale")
     public String handle05003(Model model) {
         return "cdls/codeListDirectReference";
     }
 
-    @RequestMapping(value = "004", method = RequestMethod.GET, params = "locale")
+    @GetMapping(value = "004", params = "locale")
     public String handle05004(Model model) {
         return "cdls/codeListDirectReference";
     }

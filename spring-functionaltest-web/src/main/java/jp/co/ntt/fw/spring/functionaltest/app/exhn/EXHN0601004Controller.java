@@ -15,12 +15,12 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 
@@ -40,7 +40,7 @@ public class EXHN0601004Controller {
         return employeeForm;
     }
 
-    @RequestMapping(value = "0601/004/001", params = "update")
+    @PostMapping(value = "0601/004/001", params = "update")
     public String employeeUpdate(EmployeeForm form) {
 
         Employee inputEmployee = employeeHelper.convertToEntity(form);
@@ -49,7 +49,7 @@ public class EXHN0601004Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0601/004/001", params = "backToIndex")
+    @PostMapping(value = "0601/004/001", params = "backToIndex")
     public String backToIndex() {
         return "exhn/index";
     }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-  version="3.0">
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+  version="6.0">
 
   <context-param>
     <param-name>logbackDisableServletContainerInitializer</param-name>
@@ -19,14 +20,14 @@
     <param-name>contextConfigLocation</param-name>
     <!-- Root ApplicationContext -->
     <param-value>
-            classpath*:META-INF/spring/applicationContext.xml
-            classpath*:META-INF/spring/oth2/oauth2-client.xml
-            classpath*:META-INF/spring/spring-security.xml
-            classpath*:META-INF/spring/flup/applicationContext-flup.xml
-            classpath*:META-INF/spring/aply/applicationContext-aply.xml
-            classpath*:META-INF/spring/spring-functionaltest-ws.xml
-            classpath*:META-INF/spring/rscl-app/applicationContext-rscl.xml
-            classpath*:META-INF/spring/jmss/applicationContext-jmss.xml
+      classpath*:META-INF/spring/applicationContext.xml
+      classpath*:META-INF/spring/spring-security.xml
+      classpath*:META-INF/spring/flup/applicationContext-flup.xml
+      classpath*:META-INF/spring/aply/applicationContext-aply.xml
+      <!-- FY2022 SOAP スコープアウト -->
+      <!-- classpath*:META-INF/spring/spring-functionaltest-ws.xml -->
+      classpath*:META-INF/spring/rscl-app/applicationContext-rscl.xml
+      classpath*:META-INF/spring/jmss/applicationContext-jmss.xml
     </param-value>
   </context-param>
   <listener>
@@ -107,14 +108,7 @@
     <filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
     <url-pattern>/djpa/book/filterSrch</url-pattern>
   </filter-mapping>
-  <filter>
-    <filter-name>oauth2ClientContextFilter</filter-name>
-    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>oauth2ClientContextFilter</filter-name>
-    <url-pattern>/oth2/*</url-pattern>
-  </filter-mapping>
+
   <servlet>
     <servlet-name>intr0101AppServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -619,7 +613,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply0401003AppServlet</servlet-name>
-    <url-pattern>/aply/0401/003/*</url-pattern>
+    <url-pattern>/aply/0401/003</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -647,7 +641,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100402AppServlet</servlet-name>
-    <url-pattern>/aply/0401/004/02/*</url-pattern>
+    <url-pattern>/aply/0401/004/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -675,7 +669,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100502AppServlet</servlet-name>
-    <url-pattern>/aply/0401/005/02/*</url-pattern>
+    <url-pattern>/aply/0401/005/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -703,7 +697,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100602AppServlet</servlet-name>
-    <url-pattern>/aply/0401/006/02/*</url-pattern>
+    <url-pattern>/aply/0401/006/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -717,7 +711,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100603AppServlet</servlet-name>
-    <url-pattern>/aply/0401/006/03/*</url-pattern>
+    <url-pattern>/aply/0401/006/03</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -731,7 +725,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100604AppServlet</servlet-name>
-    <url-pattern>/aply/0401/006/04/*</url-pattern>
+    <url-pattern>/aply/0401/006/04</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -759,7 +753,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100702AppServlet</servlet-name>
-    <url-pattern>/aply/0401/007/02/*</url-pattern>
+    <url-pattern>/aply/0401/007/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -773,7 +767,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100703AppServlet</servlet-name>
-    <url-pattern>/aply/0401/007/03/*</url-pattern>
+    <url-pattern>/aply/0401/007/03</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -787,7 +781,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100704AppServlet</servlet-name>
-    <url-pattern>/aply/0401/007/04/*</url-pattern>
+    <url-pattern>/aply/0401/007/04</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -815,7 +809,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100802AppServlet</servlet-name>
-    <url-pattern>/aply/0401/008/02/*</url-pattern>
+    <url-pattern>/aply/0401/008/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -829,7 +823,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100803AppServlet</servlet-name>
-    <url-pattern>/aply/0401/008/03/*</url-pattern>
+    <url-pattern>/aply/0401/008/03</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -843,7 +837,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100804AppServlet</servlet-name>
-    <url-pattern>/aply/0401/008/04/*</url-pattern>
+    <url-pattern>/aply/0401/008/04</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -871,7 +865,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100902AppServlet</servlet-name>
-    <url-pattern>/aply/0401/009/02/*</url-pattern>
+    <url-pattern>/aply/0401/009/02</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -885,7 +879,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100903AppServlet</servlet-name>
-    <url-pattern>/aply/0401/009/03/*</url-pattern>
+    <url-pattern>/aply/0401/009/03</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -899,7 +893,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>aply040100904AppServlet</servlet-name>
-    <url-pattern>/aply/0401/009/04/*</url-pattern>
+    <url-pattern>/aply/0401/009/04</url-pattern>
   </servlet-mapping>
 
   <servlet>
@@ -929,12 +923,13 @@
     <url-pattern>/spsm/invalidSessionError</url-pattern>
   </servlet-mapping>
 
+  <!-- FY2022 SOAP スコープアウト -->
+  <!--
   <servlet>
     <servlet-name>soapServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <!-- ApplicationContext for Spring MVC -->
       <param-value>classpath*:META-INF/spring/soap/spring-mvc-soap.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
@@ -948,6 +943,7 @@
     <servlet-name>soapServlet</servlet-name>
     <url-pattern>/soap/*</url-pattern>
   </servlet-mapping>
+  -->
 
   <servlet>
     <servlet-name>cdls0105AppServlet</servlet-name>

@@ -16,10 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
-import javax.validation.constraints.NotNull;
-
-import org.joda.time.LocalDate;
+import jakarta.validation.constraints.NotNull;
 
 public class UserDetailsForm implements Serializable {
 

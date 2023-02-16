@@ -17,17 +17,18 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
+
+import jakarta.inject.Inject;
 
 /**
  * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
@@ -45,13 +46,13 @@ public class FLUP0202Controller {
         return new SingleUploadForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     @TransactionTokenCheck(type = TransactionTokenType.BEGIN)
     public String handle001Form() {
         return "flup/singleFileUploadForm";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     @TransactionTokenCheck
     public String handle001Upload(@Validated SingleUploadForm form,
             BindingResult result,
@@ -66,7 +67,7 @@ public class FLUP0202Controller {
         return "redirect:/flup/0202?complete";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String handleComplate() {
         return "flup/singleFileUploadComplete";
     }

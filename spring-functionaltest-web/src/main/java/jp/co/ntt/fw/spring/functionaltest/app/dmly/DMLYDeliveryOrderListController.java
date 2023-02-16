@@ -15,17 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dmly.DeliveryOrderInitializerService;
@@ -50,13 +50,13 @@ public class DMLYDeliveryOrderListController {
         return new DeliveryOrderListForm();
     }
 
-    @RequestMapping(value = "initlist")
+    @GetMapping(value = "initlist")
     public String init(Model model) {
         deliveryOrderInitializerService.init();
         return "redirect:/dmly/deliveryorder/list";
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @GetMapping(value = "list")
     public String list(@PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
 
@@ -67,16 +67,16 @@ public class DMLYDeliveryOrderListController {
         return "dmly/list";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "updateCriteria")
+    @PostMapping(value = "update", params = "updateCriteria")
     public String update(
             @PageableDefault(page = 0, size = 10) Pageable pageable,
             DeliveryOrderListForm form, Model model) {
 
         DeliveryOrderCriteria criteria = new DeliveryOrderCriteria();
-        criteria.setFromAcceptDatetime(form.getFromAcceptDatetime().toDate());
-        criteria.setToAcceptDatetime(form.getToAcceptDatetime().toDate());
-        criteria.setUpdateCompletionDatetime(form.getUpdateCompletionDatetime()
-                .toDate());
+        criteria.setFromAcceptDatetime(form.getFromAcceptDatetime());
+        criteria.setToAcceptDatetime(form.getToAcceptDatetime());
+        criteria.setUpdateCompletionDatetime(form
+                .getUpdateCompletionDatetime());
 
         deliveryOrderUpdateBLogic.execute(criteria);
 

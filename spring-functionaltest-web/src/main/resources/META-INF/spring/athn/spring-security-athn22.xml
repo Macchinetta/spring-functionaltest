@@ -5,13 +5,14 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/2201/**" auto-config="false" authentication-manager-ref="loginForRememberMeUserInfoManager">
+  <sec:http pattern="/athn/2201/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginForRememberMeUserInfoManager">
     <sec:form-login login-page="/athn/2201/loginForRememberMe" login-processing-url="/athn/2201/authenticate"
       default-target-url="/athn/2201?loginSuccess" />
     <sec:remember-me key="spring-test-km/ylnHv" user-service-ref="loginForRememberMeUserInfoDetailsService" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    <sec:logout logout-url="/athn/2201/logout" logout-success-url="/athn/"
+    <sec:logout logout-url="/athn/2201/logout" logout-success-url="/athn"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginForRememberMeUserInfoManager">

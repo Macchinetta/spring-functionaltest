@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Min;
-import javax.validation.groups.Default;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.groups.Default;
 
 public class GroupedValidationByDefaultForm implements Serializable {
 

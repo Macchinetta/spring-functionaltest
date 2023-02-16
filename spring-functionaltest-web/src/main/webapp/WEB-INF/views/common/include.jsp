@@ -4,8 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
-<%@ taglib uri="http://www.joda.org/joda/time/tags" prefix="joda"%>
 <%@ taglib uri="http://terasoluna.org/tags" prefix="t"%>
 <%@ taglib uri="http://terasoluna.org/functions" prefix="f"%>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>

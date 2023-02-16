@@ -37,7 +37,7 @@ public interface DeliveryOrderRepository {
 
     void update(DeliveryOrder deliveryOrder);
 
-    void delete(Integer deliveryNo);
+    void deleteByDeliveryNo(Integer deliveryNo);
 
     long countByCriteria(DeliveryOrderCriteria deliveryOrderCriteria);
 

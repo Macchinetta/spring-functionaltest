@@ -25,8 +25,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.springframework.core.io.ClassPathResource;
@@ -40,6 +38,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class CSRFProtectionTest extends FunctionTestSupport {
@@ -79,7 +78,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
+        assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "ユーザ登録確認画面"));
     }
 

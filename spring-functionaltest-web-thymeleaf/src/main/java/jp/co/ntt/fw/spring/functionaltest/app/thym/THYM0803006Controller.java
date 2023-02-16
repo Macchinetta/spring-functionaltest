@@ -17,13 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-// @RequestMapping("thym/0803/006")
+// @GetMapping("thym/0803/006")
 public class THYM0803006Controller {
 
-    @RequestMapping("/")
+    @GetMapping
     public String handleHtml(Model model) {
 
         model.addAttribute("pathFragments", "javascript");

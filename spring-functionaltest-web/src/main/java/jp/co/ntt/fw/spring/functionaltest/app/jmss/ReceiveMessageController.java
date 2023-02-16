@@ -19,9 +19,9 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -34,7 +34,7 @@ public class ReceiveMessageController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.GET)
+    @GetMapping(value = "receivemessage")
     public String initReceive(Model model, JmsSendingForm form,
             JmsReceivingForm jmsReceivingForm,
             RedirectAttributes attrs) throws InterruptedException, IOException {

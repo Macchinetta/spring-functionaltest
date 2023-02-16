@@ -17,16 +17,17 @@ package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.RestClientService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.SourceRestClientService;
 
 @RequestMapping("rscl")
 @Controller
@@ -34,6 +35,9 @@ public class RSCL02Controller {
 
     @Inject
     RestClientService restClientService;
+
+    @Inject
+    SourceRestClientService sourceRestClientService;
 
     @ModelAttribute(value = "convertMessageForm")
     public ConvertMessageForm setUpMessageForm() {
@@ -45,7 +49,7 @@ public class RSCL02Controller {
         return new UserInfForm();
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle0201001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -55,7 +59,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertMessage";
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001")
     public String handle0201001(Model model, ConvertMessageForm form) {
 
         List<String> fileData = this.restClientService
@@ -68,7 +72,7 @@ public class RSCL02Controller {
         return "rscl/resultStrList";
     }
 
-    @RequestMapping(value = "0202/001", method = RequestMethod.GET)
+    @GetMapping(value = "0202/001")
     public String handle0202001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -78,7 +82,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertMessage";
     }
 
-    @RequestMapping(value = "0202/001", method = RequestMethod.POST)
+    @PostMapping(value = "0202/001")
     public String handle0202001After(Model model, ConvertMessageForm form) {
 
         String res = this.restClientService
@@ -91,7 +95,7 @@ public class RSCL02Controller {
         return "rscl/resultString";
     }
 
-    @RequestMapping(value = "0203/001", method = RequestMethod.GET)
+    @GetMapping(value = "0203/001")
     public String handle0203001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -101,7 +105,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertMessage";
     }
 
-    @RequestMapping(value = "0203/001", method = RequestMethod.POST)
+    @PostMapping(value = "0203/001")
     public String handle0203001(Model model, ConvertMessageForm form) {
 
         List<String> retData = this.restClientService
@@ -114,7 +118,7 @@ public class RSCL02Controller {
         return "rscl/resultStrList";
     }
 
-    @RequestMapping(value = "0204/001", method = RequestMethod.GET)
+    @GetMapping(value = "0204/001")
     public String handle0204001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -124,14 +128,14 @@ public class RSCL02Controller {
         return "rscl/sendConvertUserInf";
     }
 
-    @RequestMapping(value = "0204/001", method = RequestMethod.POST)
+    @PostMapping(value = "0204/001")
     public String handle0204001(Model model, UserInfForm form) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService
+        UserResource rcvUser = this.sourceRestClientService
                 .exchangeWithSourceHttpMessageConverter(sendUser);
 
         model.addAttribute("resultDescription",
@@ -141,7 +145,7 @@ public class RSCL02Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0205/001", method = RequestMethod.GET)
+    @GetMapping(value = "0205/001")
     public String handle0205001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -151,7 +155,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertUserInf";
     }
 
-    @RequestMapping(value = "0205/001", method = RequestMethod.POST)
+    @PostMapping(value = "0205/001")
     public String handle0205001(Model model, UserInfForm form) {
 
         UserResource sendUser = new UserResource();
@@ -168,7 +172,7 @@ public class RSCL02Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0209/001", method = RequestMethod.GET)
+    @GetMapping(value = "0209/001")
     public String handle0209001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -178,7 +182,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertUserInf";
     }
 
-    @RequestMapping(value = "0209/001", method = RequestMethod.POST)
+    @PostMapping(value = "0209/001")
     public String handle0209001(Model model, UserInfForm form) {
 
         UserResource sendUser = new UserResource();
@@ -195,7 +199,7 @@ public class RSCL02Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0211/001", method = RequestMethod.GET)
+    @GetMapping(value = "0211/001")
     public String handle0211001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -205,7 +209,7 @@ public class RSCL02Controller {
         return "rscl/sendConvertUserInf";
     }
 
-    @RequestMapping(value = "0211/001", method = RequestMethod.POST)
+    @PostMapping(value = "0211/001")
     public String handle0211001(Model model, UserInfForm form) {
 
         UserResource sendUser = new UserResource();

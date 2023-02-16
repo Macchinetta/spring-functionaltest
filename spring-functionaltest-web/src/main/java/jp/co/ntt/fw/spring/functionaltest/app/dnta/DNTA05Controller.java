@@ -17,14 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
 import java.time.DateTimeException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
 
 @RequestMapping("dnta")
@@ -44,43 +43,43 @@ public class DNTA05Controller {
         return new ChangeTypeForm();
     }
 
-    @RequestMapping(value = "0501/001", method = RequestMethod.GET)
+    @GetMapping(value = "0501/001")
     public String handle01001() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "0501/002", method = RequestMethod.GET)
+    @GetMapping(value = "0501/002")
     public String handle01002() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "0502/001", method = RequestMethod.GET)
+    @GetMapping(value = "0502/001")
     public String handle02001() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "0502/002", method = RequestMethod.GET)
+    @GetMapping(value = "0502/002")
     public String handle02002() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "0503/001", method = RequestMethod.GET)
+    @GetMapping(value = "0503/001")
     public String handle03001() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "0504/001", method = RequestMethod.GET)
+    @GetMapping(value = "0504/001")
     public String handle04001() {
         return "dnta/japaneseDate";
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "getNowDate")
+    @GetMapping(value = "japaneseDate", params = "getNowDate")
     public String handleGetNowDate(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService.getNowDate());
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "getSpecifiedDate")
+    @GetMapping(value = "japaneseDate", params = "getSpecifiedDate")
     public String handleGetSpecifiedDate(DateForm form, Model model) {
         try {
             model.addAttribute("resultDate", dateAndTimeApiService
@@ -93,7 +92,7 @@ public class DNTA05Controller {
         }
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "getSpecifiedJapaneseDate")
+    @GetMapping(value = "japaneseDate", params = "getSpecifiedJapaneseDate")
     public String handleGetSpecifiedJapaneseDate(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
                 .getSpecifiedJapaneseDate(form.getYear(), form.getMonth(), form
@@ -101,7 +100,7 @@ public class DNTA05Controller {
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "format")
+    @GetMapping(value = "japaneseDate", params = "format")
     public String handleFormat(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
                 .createJapaneseDateString(form.getYear(), form.getMonth(), form
@@ -109,14 +108,14 @@ public class DNTA05Controller {
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "parse")
+    @GetMapping(value = "japaneseDate", params = "parse")
     public String handleParse(ChangeTypeForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService.parse(form
                 .getTargetDate()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "japaneseDate", method = RequestMethod.GET, params = "toJapaneseDate")
+    @GetMapping(value = "japaneseDate", params = "toJapaneseDate")
     public String handleToJapaneseDate(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService.toJapaneseDate(
                 form.getYear(), form.getMonth(), form.getDay()));

@@ -21,5 +21,5 @@ public interface AdministratorRepository {
 
     void insert(Administrator administrator);
 
-    Administrator findOneByUserName(String userName);
+    Administrator findByUserName(String userName);
 }

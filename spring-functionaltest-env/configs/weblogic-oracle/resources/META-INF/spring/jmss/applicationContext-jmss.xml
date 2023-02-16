@@ -22,6 +22,7 @@
   <bean id="jmsErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.JmsErrorHandler" />
 
   <!-- JMS Listener Containers -->
+  <!-- 
   <jms:listener-container factory-id="topicContainerFactory" error-handler="jmsErrorHandler"
     destination-resolver="destinationResolver" destination-type="topic"
     transaction-manager="asyncReceiveJmsTransactionManager" cache="consumer" />
@@ -34,8 +35,10 @@
 
   <jms:listener-container factory-id="conCacheNoTranContainerFactory"
     error-handler="jmsErrorHandler" destination-resolver="destinationResolver" />
+  -->
 
   <!-- try-catch用リスナーコンテナ追記 -->
+  <!--
   <jms:listener-container factory-id="conCacheTryCatchContainerFactory"
     connection-factory="dynamicConnectionFactory" destination-resolver="destinationResolver" />
 
@@ -51,5 +54,62 @@
   <jms:listener-container factory-id="topicContainerFactory" error-handler="jmsErrorHandler"
     destination-resolver="destinationResolver" acknowledge="transacted" cache="consumer"
     destination-type="topic" />
+  -->
+
+  <bean id="topicContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+    <property name="transactionManager" ref="asyncReceiveJmsTransactionManager" />
+    <property name="sessionTransacted" value="true" />
+    <property name="cacheLevelName" value="CACHE_CONSUMER" />
+    <property name="pubSubDomain" value="true" />
+    
+  </bean>
+
+  <bean id="conCacheDynamicNoTranContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+  </bean>
+
+  <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+    <property name="sessionTransacted" value="true" />
+  </bean>
+
+  <bean id="conCacheNoTranContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+  </bean>
+
+  <bean id="conCacheTryCatchContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="destinationResolver" ref="destinationResolver" />
+  </bean>
+
+  <bean id="conCacheConcurrentSingleContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="concurrency" value="1" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+  </bean>
+
+  <bean id="conCacheConcurrentMultipleContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="concurrency" value="5-10" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+    <property name="cacheLevelName" value="CACHE_NONE" />
+  </bean>
+
+  <bean id="conCacheChainedTranContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+    <property name="connectionFactory" ref="dynamicConnectionFactory" />
+    <property name="errorHandler" ref="jmsErrorHandler" />
+    <property name="destinationResolver" ref="destinationResolver" />
+    <property name="sessionTransacted" value="true" />
+  </bean>
 
 </beans>

@@ -17,8 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -27,6 +25,7 @@ import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
 

@@ -15,15 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium;
 
-import static com.jayway.restassured.RestAssured.given;
-import static com.jayway.restassured.config.LogConfig.logConfig;
-import static com.jayway.restassured.config.RestAssuredConfig.config;
+import static io.restassured.RestAssured.given;
+import static io.restassured.config.LogConfig.logConfig;
+import static io.restassured.config.RestAssuredConfig.config;
 
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-
-import javax.inject.Inject;
 
 import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.AfterClass;
@@ -31,7 +29,8 @@ import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jayway.restassured.RestAssured;
+import io.restassured.RestAssured;
+import jakarta.inject.Inject;
 
 public abstract class RestTestSupport extends FunctionTestSupport {
 

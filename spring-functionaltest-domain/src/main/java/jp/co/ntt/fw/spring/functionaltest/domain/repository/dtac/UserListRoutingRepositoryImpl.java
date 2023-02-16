@@ -51,10 +51,10 @@ public class UserListRoutingRepositoryImpl extends SqlSessionDaoSupport
     }
 
     @Override
-    public User findOneByUsername(String username) {
+    public User findByUsername(String username) {
         mapping();
         return getSqlSession().getMapper(UserListRepository.class)
-                .findOneByUsername(username);
+                .findByUsername(username);
     }
 
     @Override

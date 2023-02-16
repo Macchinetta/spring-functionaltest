@@ -5,12 +5,13 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/dtac/**" auto-config="false" authentication-manager-ref="userLoginManagerDTAC">
+  <sec:http pattern="/dtac/**" request-matcher="ant" auto-config="false" authentication-manager-ref="userLoginManagerDTAC">
     <sec:form-login login-page="/dtac/login" default-target-url="/dtac/login?loginSuccess"
       login-processing-url="/dtac/authenticate" />
     <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
     <sec:logout logout-url="/dtac/logout" logout-success-url="/dtac/login"
       invalidate-session="true" delete-cookies="JSESSIONID" />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
   </sec:http>
 
   <sec:authentication-manager id="userLoginManagerDTAC">

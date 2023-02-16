@@ -15,6 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages;
 
+import static org.openqa.selenium.By.id;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -267,9 +270,17 @@ public class JPAHomePage implements Page<JPAHomePage> {
             book4Details.click();
             break;
         case 20:
+            // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block: 'center'});", driver
+                            .findElement(id("bookLink_20")));
             book20Details.click();
             break;
         case 21:
+            // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
+            ((JavascriptExecutor) driver).executeScript(
+                    "arguments[0].scrollIntoView({block: 'center'});", driver
+                            .findElement(id("bookLink_21")));
             book21Details.click();
             break;
         default:

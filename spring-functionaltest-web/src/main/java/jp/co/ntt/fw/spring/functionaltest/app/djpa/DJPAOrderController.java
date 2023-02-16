@@ -21,8 +21,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -31,14 +29,15 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAItem;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCmnConditionNoBoolean;
@@ -66,7 +65,7 @@ public class DJPAOrderController {
     JPAOrderItemService jpaOrderItemService;
 
     @Inject
-    Mapper beanMapper;
+    DJPAOrderBeanMapper beanMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(
             DJPAOrderController.class);
@@ -76,7 +75,7 @@ public class DJPAOrderController {
         return new OrderForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String dispalyOrders(OrderForm form, Model model) {
         List<JPAOrder> orderList = jpaOrderService.getAll();
         List<OrderForm> orderFormList = convertEntityToForm(orderList);
@@ -98,12 +97,12 @@ public class DJPAOrderController {
         });
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "fetch")
+    @GetMapping(params = "fetch")
     public String fetchOrderDetails(OrderForm form, Model model) {
         return "redirect:/djpa/order/" + form.getOrderId() + "/detail";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "searchByStatus")
+    @GetMapping(params = "searchByStatus")
     public String searchOrderDetails(OrderForm form, Model model) {
 
         List<JPAOrder> orderList = jpaOrderService.joinFetch(form
@@ -115,7 +114,7 @@ public class DJPAOrderController {
         return "djpa/orders";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "fetchSummary")
+    @GetMapping(params = "fetchSummary")
     public String fetchStoringResultInCustomObject(OrderForm form,
             Model model) {
         List<OrderSummary> orderSummaries = jpaOrderService
@@ -124,7 +123,7 @@ public class DJPAOrderController {
         return "djpa/orders";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "cmnCondFetch")
+    @GetMapping(params = "cmnCondFetch")
     public String fetchUsingCommonCondition(OrderForm form, Model model) {
 
         String dataBaseName = DataBaseInfo.getDataBaseID(
@@ -137,66 +136,65 @@ public class DJPAOrderController {
             JPAOrderForCommonCondition jpaOrder = jpaOrderService
                     .findOrderDeatilUsingCommonConditionOnEntity(form
                             .getOrderId());
-            OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+            OrderForm orderForm = beanMapper.map(jpaOrder);
             model.addAttribute("orderForm", orderForm);
         } else {
             JPAOrderForCmnConditionNoBoolean jpaOrder = jpaOrderService
                     .findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(
                             form.getOrderId());
-            OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+            OrderForm orderForm = beanMapper.map(jpaOrder);
             model.addAttribute("orderForm", orderForm);
         }
         return "djpa/orderDetail";
     }
 
-    @RequestMapping(value = "{orderId}/detail", method = RequestMethod.GET)
+    @GetMapping(value = "{orderId}/detail")
     public String dispalyOrdersDetail(@PathVariable("orderId") Integer orderId,
             Model model) {
         JPAOrder jpaOrder = jpaOrderService.getOrderDetail(orderId);
-        OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+        OrderForm orderForm = beanMapper.map(jpaOrder);
         model.addAttribute("orderForm", orderForm);
         return "djpa/orderDetail";
     }
 
-    @RequestMapping(value = "cmnCondFetch/{orderId}/detail", method = RequestMethod.GET)
+    @GetMapping(value = "cmnCondFetch/{orderId}/detail")
     public String dispalyOrdersDetailUsingCmnCondition(
             @PathVariable("orderId") Integer orderId, Model model) {
         JPAOrderForCommonCondition jpaOrder = jpaOrderService
                 .findOrderDeatilUsingCommonConditionOnEntity(orderId);
-        OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+        OrderForm orderForm = beanMapper.map(jpaOrder);
         model.addAttribute("orderForm", orderForm);
         return "djpa/orderDetail";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "delete")
     public String deleteOrder(OrderForm form, Model model) {
         jpaOrderService.delete(form.getOrderId());
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "{orderId}/item/{itemNum}/detail", method = RequestMethod.GET)
+    @GetMapping(value = "{orderId}/item/{itemNum}/detail")
     public String dispalyOrderItemDetail(
             @PathVariable("orderId") Integer orderId,
             @PathVariable("itemNum") Integer itemNumber, Model model) {
         JPAOrderItem jpaOrderItemOrder = jpaOrderItemService.getOrderItemDetail(
                 orderId, itemNumber);
-        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItemOrder,
-                OrderItemForm.class);
+        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItemOrder);
         model.addAttribute("orderItemForm", orderItemForm);
         return "djpa/item";
     }
 
-    @RequestMapping(value = "item/modify", method = RequestMethod.POST)
+    @PostMapping(value = "item/modify")
     public String updateItemDetail(OrderItemForm orderItemForm, Model model) {
         JPAOrder jpaOrder = jpaOrderService.updateOrderItem(orderItemForm
                 .getOrderId(), orderItemForm.getItemNumber(), orderItemForm
                         .getQuantity());
-        OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+        OrderForm orderForm = beanMapper.map(jpaOrder);
         model.addAttribute("orderForm", orderForm);
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "item/modify", method = RequestMethod.POST, params = "dirRelatedEntityUpdate")
+    @PostMapping(value = "item/modify", params = "dirRelatedEntityUpdate")
     public String updateDirectlyRelatedEntity(OrderItemForm orderItemForm,
             Model model) {
 
@@ -206,7 +204,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "item/modify", method = RequestMethod.POST, params = "dirRelatedEntityDelete")
+    @PostMapping(value = "item/modify", params = "dirRelatedEntityDelete")
     public String deleteDirectlyRelatedEntity(OrderItemForm orderItemForm,
             Model model) {
 
@@ -216,7 +214,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "item/modify", method = RequestMethod.POST, params = "delete")
+    @PostMapping(value = "item/modify", params = "delete")
     public String deleteRelatedEntity(OrderItemForm orderItemForm,
             Model model) {
 
@@ -225,7 +223,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "item/modify", method = RequestMethod.POST, params = "deleteNoSuccess")
+    @PostMapping(value = "item/modify", params = "deleteNoSuccess")
     public String deleteRelatedEntityNoSuccess(OrderItemForm orderItemForm,
             Model model) {
 
@@ -234,7 +232,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "{orderId}/update", method = RequestMethod.POST, params = "deleteEntityByQuery")
+    @PostMapping(value = "{orderId}/update", params = "deleteEntityByQuery")
     public String deleteEntityByQuery(@PathVariable("orderId") Integer orderId,
             Model model) {
 
@@ -243,7 +241,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "{orderId}/addUpdt", method = RequestMethod.GET, params = "add")
+    @GetMapping(value = "{orderId}/addUpdt", params = "add")
     public String addItem(@PathVariable("orderId") Integer orderId,
             Model model) {
         constructCartForm(model);
@@ -258,7 +256,7 @@ public class DJPAOrderController {
         model.addAttribute("cartForm", new CartForm());
     }
 
-    @RequestMapping(value = "{orderId}/addToOrder", method = RequestMethod.POST)
+    @PostMapping(value = "{orderId}/addToOrder")
     public String addItemToOrder(@PathVariable("orderId") Integer orderId,
             CartForm cartForm, Model model) {
 
@@ -269,7 +267,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "{orderId}/update", method = RequestMethod.POST, params = "updateStatus")
+    @PostMapping(value = "{orderId}/update", params = "updateStatus")
     public String updateOrderStatus(@PathVariable("orderId") Integer orderId,
             OrderForm orderForm, Model model) {
 
@@ -279,20 +277,19 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "{orderId}/update", method = RequestMethod.POST, params = "updateByQuery")
+    @PostMapping(value = "{orderId}/update", params = "updateByQuery")
     public String updateOrderByQueryMethod(
             @PathVariable("orderId") Integer orderId, OrderForm orderForm,
             RedirectAttributes redirectAttr) {
 
         JPAOrderItem jpaOrderItem = jpaOrderItemService.updateUsingQueryMethod(
                 orderId);
-        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItem,
-                OrderItemForm.class);
+        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItem);
         redirectAttr.addFlashAttribute("orderItemForm", orderItemForm);
         return "redirect:/djpa/order/item/detail";
     }
 
-    @RequestMapping(value = "{orderId}/update", method = RequestMethod.POST, params = "updateByQueryClear")
+    @PostMapping(value = "{orderId}/update", params = "updateByQueryClear")
     public String updateOrderByQueryMethodAndClear(
             @PathVariable("orderId") Integer orderId, OrderForm orderForm,
             RedirectAttributes redirectAttr) {
@@ -300,13 +297,12 @@ public class DJPAOrderController {
         JPAOrderItem jpaOrderItem = jpaOrderItemService
                 .updateUsingQueryMethodAndClear(orderId);
 
-        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItem,
-                OrderItemForm.class);
+        OrderItemForm orderItemForm = beanMapper.map(jpaOrderItem);
         redirectAttr.addFlashAttribute("orderItemForm", orderItemForm);
         return "redirect:/djpa/order/item/detail";
     }
 
-    @RequestMapping(value = "{orderId}/update", method = RequestMethod.POST, params = "updateByQueryErr")
+    @PostMapping(value = "{orderId}/update", params = "updateByQueryErr")
     public String updateOrderByQueryMethodErr(
             @PathVariable("orderId") Integer orderId, OrderForm orderForm,
             Model model) {
@@ -316,7 +312,7 @@ public class DJPAOrderController {
         return "redirect:/djpa/order";
     }
 
-    @RequestMapping(value = "item/detail", method = RequestMethod.GET)
+    @GetMapping(value = "item/detail")
     public String dispalyGivenOrderDetail(Model model) {
         Map<String, Object> map = model.asMap();
         OrderItemForm orderItemForm = new OrderItemForm();
@@ -328,13 +324,13 @@ public class DJPAOrderController {
         return "djpa/item";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "create")
+    @GetMapping(params = "create")
     public String createOrder(OrderForm form, Model model) {
         constructCartForm(model);
         return "djpa/cart";
     }
 
-    @RequestMapping(value = "place", method = RequestMethod.POST)
+    @PostMapping(value = "place")
     public String placeOrder(CartForm form, Model model) {
         List<ItemForm> items = form.getItems();
         List<JPAItem> itemList = convertItemFormToItemEntity(items);
@@ -349,7 +345,7 @@ public class DJPAOrderController {
     private List<JPAItem> convertItemFormToItemEntity(List<ItemForm> items) {
         List<JPAItem> itemList = new ArrayList<JPAItem>();
         for (ItemForm itemForm : items) {
-            JPAItem jpaItem = beanMapper.map(itemForm, JPAItem.class);
+            JPAItem jpaItem = beanMapper.map(itemForm);
             itemList.add(jpaItem);
         }
         return itemList;
@@ -363,7 +359,7 @@ public class DJPAOrderController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "place", method = RequestMethod.POST, params = "directItem2Order")
+    @PostMapping(value = "place", params = "directItem2Order")
     public String addDirectItemToOrder(CartForm cartForm, Model model) {
 
         List<ItemForm> items = cartForm.getItems();
@@ -381,7 +377,7 @@ public class DJPAOrderController {
     private List<ItemForm> convertItemEntityToItemForm(List<JPAItem> itemList) {
         List<ItemForm> itemFormList = new ArrayList<ItemForm>();
         for (JPAItem jpaItem : itemList) {
-            ItemForm itemForm = beanMapper.map(jpaItem, ItemForm.class);
+            ItemForm itemForm = beanMapper.map(jpaItem);
             itemFormList.add(itemForm);
         }
         return itemFormList;
@@ -394,7 +390,7 @@ public class DJPAOrderController {
     private List<OrderForm> convertEntityToForm(List<JPAOrder> orderList) {
         List<OrderForm> orderFormList = new ArrayList<OrderForm>();
         for (JPAOrder jpaOrder : orderList) {
-            OrderForm orderForm = beanMapper.map(jpaOrder, OrderForm.class);
+            OrderForm orderForm = beanMapper.map(jpaOrder);
             orderFormList.add(orderForm);
         }
         return orderFormList;

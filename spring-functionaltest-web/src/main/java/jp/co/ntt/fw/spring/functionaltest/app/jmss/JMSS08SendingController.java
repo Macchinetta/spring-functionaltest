@@ -18,16 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsCacheConSendingService;
 
 @Controller
@@ -57,7 +57,7 @@ public class JMSS08SendingController {
         return form;
     }
 
-    @RequestMapping(value = "0802/001", method = RequestMethod.GET)
+    @GetMapping(value = "0802/001")
     public String handle0802001(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -65,7 +65,7 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=other_err")
+    @PostMapping(value = "sendmessage", params = "testCase=other_err")
     public String sendMessageOtherErr(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -75,7 +75,7 @@ public class JMSS08SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "0803/001", method = RequestMethod.GET)
+    @GetMapping(value = "0803/001")
     public String handle0803001(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -83,7 +83,7 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=catch_business_err")
+    @PostMapping(value = "sendmessage", params = "testCase=catch_business_err")
     public String sendMessageCatchBusinessErr(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -94,7 +94,7 @@ public class JMSS08SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "0803/002", method = RequestMethod.GET)
+    @GetMapping(value = "0803/002")
     public String handle0803002(JmsSendingForm form) {
 
         form.setJmsTodoId(UUID.randomUUID().toString());
@@ -102,7 +102,7 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=catch_err_set_queue")
+    @PostMapping(value = "sendmessage", params = "testCase=catch_err_set_queue")
     public String sendMessageCatchBusinessErrSetQueue(Model model,
             JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {

@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -31,8 +32,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.servlet.http.HttpServletResponse;
-
+import org.apache.commons.lang3.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,12 +43,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,11 +60,12 @@ import org.terasoluna.gfw.common.exception.SystemException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalException;
 
 @RestController
 public class RSCLController {
-    private static final Logger logger = LoggerFactory.getLogger(
+    private static final Logger LOGGER = LoggerFactory.getLogger(
             RSCLController.class);
 
     @Value("${rscl.timeoutRestTemplate.readTimeout}")
@@ -89,9 +92,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public UserResource getUser() {
-        logger.debug("getUser");
+        LOGGER.debug("getUser");
         UserResource user = new UserResource();
         user.setName("test");
         user.setAge(20);
@@ -107,12 +110,13 @@ public class RSCLController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @GetMapping(value = "{id}")
     public UserResource getUser(@PathVariable("id") String id) {
-        logger.debug("getUser{id:{}}", id);
+        LOGGER.debug("getUser{id:{}}", id);
         UserResource user = new UserResource();
         user.setName("test_" + id);
         user.setAge(20);
+
         return user;
     }
 
@@ -123,9 +127,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public UserResource create(@RequestBody UserResource user) {
-        logger.debug("create");
+        LOGGER.debug("create");
 
         user.setName(user.getName() + "_created");
 
@@ -139,9 +143,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @GetMapping(value = "list")
     public List<UserResource> list() {
-        logger.debug("list");
+        LOGGER.debug("list");
         List<UserResource> retList = new ArrayList<>();
 
         for (int i = 1; i <= 5; i++) {
@@ -163,9 +167,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(value = "str", method = RequestMethod.POST)
+    @PostMapping(value = "str")
     public String str(@RequestBody String str) {
-        logger.debug("str");
+        LOGGER.debug("str");
         return str + "_received";
     }
 
@@ -177,10 +181,10 @@ public class RSCLController {
      * @param rcvMap
      * @return
      */
-    @RequestMapping(value = "map", method = RequestMethod.POST, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "map", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public MultiValueMap<String, String> map(
             @RequestBody MultiValueMap<String, String> rcvMap) {
-        logger.debug("map");
+        LOGGER.debug("map");
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 
@@ -196,9 +200,9 @@ public class RSCLController {
      * PUTメソッド確認用。
      * </ul>
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public UserResource put(@RequestBody UserResource user) {
-        logger.debug("put");
+        LOGGER.debug("put");
 
         user.setName(user.getName() + "_put");
 
@@ -211,10 +215,10 @@ public class RSCLController {
      * DELETEメソッド確認用。
      * </ul>
      */
-    @RequestMapping(value = "{deleteId}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "{deleteId}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("deleteId") String deleteId) {
-        logger.debug("delete:{}", deleteId);
+        LOGGER.debug("delete:{}", deleteId);
     }
 
     /**
@@ -225,9 +229,9 @@ public class RSCLController {
      * BASIC認証確認用
      * </ul>
      */
-    @RequestMapping(value = "basic", method = RequestMethod.GET)
+    @GetMapping(value = "basic")
     public UserResource basic() {
-        logger.debug("basic");
+        LOGGER.debug("basic");
 
         UserResource user = new UserResource();
         user.setName("test");
@@ -245,23 +249,17 @@ public class RSCLController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "exception/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "exception/{id}")
     public UserResource exception(@PathVariable("id") String id) {
-        logger.debug("exception:{}", id);
+        LOGGER.debug("exception:{}", id);
 
-        UserResource user = null;
-
-        if (id.equals("1")) {
-            throw new ResourceNotFoundException(ResultMessages.error().add(
-                    "e.rc.fw.8000"));
-        } else if (id.equals("2")) {
-            throw new IntentionalException(ResultMessages.error().add(
-                    "e.rc.fw.9000"));
-        } else {
-            user = new UserResource();
-        }
-
-        return user;
+        return switch (id) {
+        case "1" -> throw new ResourceNotFoundException(ResultMessages.error()
+                .add("e.rc.fw.8000"));
+        case "2" -> throw new IntentionalException(ResultMessages.error().add(
+                "e.rc.fw.9000"));
+        default -> new UserResource();
+        };
     }
 
     /**
@@ -272,21 +270,21 @@ public class RSCLController {
      * @param retryCount
      * @return
      */
-    @RequestMapping(value = "retry", method = RequestMethod.GET)
+    @GetMapping(value = "retry")
     public UserResource retry(@RequestHeader("x-Retry") String retryCount) {
-        logger.debug("retry:{}", retryCount);
+        LOGGER.debug("retry:{}", retryCount);
 
         UserResource user = null;
 
-        // 2回目のリトライで正常終了させる。
+        // 2回目のリトライ以外の場合は例外をスローする
         if (!"2".equals(retryCount)) {
             throw new MappingException(ResultMessage.fromCode("e.rc.fw.9002")
                     .getText());
-        } else {
-            user = new UserResource();
-            user.setName("test");
-            user.setAge(20);
         }
+
+        user = new UserResource();
+        user.setName("test");
+        user.setAge(20);
 
         return user;
     }
@@ -312,9 +310,9 @@ public class RSCLController {
      * @param res
      * @return
      */
-    @RequestMapping(value = "returnHttpStatus901", method = RequestMethod.GET)
+    @GetMapping(value = "returnHttpStatus901")
     public UserResource returnHttpStatus901(HttpServletResponse res) {
-        logger.debug("exp901");
+        LOGGER.debug("exp901");
 
         res.setStatus(901);
 
@@ -330,9 +328,9 @@ public class RSCLController {
      * @throws TimeoutException
      * @throws BrokenBarrierException
      */
-    @RequestMapping(value = "await", method = RequestMethod.GET)
+    @GetMapping(value = "await")
     public UserResource await() throws InterruptedException, BrokenBarrierException, TimeoutException {
-        barrierForAsyncThreadLimitation.await(30, TimeUnit.SECONDS);
+        this.barrierForAsyncThreadLimitation.await(30, TimeUnit.SECONDS);
         UserResource user = new UserResource();
         user.setName("test");
         user.setAge(20);
@@ -346,25 +344,25 @@ public class RSCLController {
      * </ul>
      * @throws InterruptedException
      */
-    @RequestMapping(value = "awaitForMaxPool", method = RequestMethod.GET)
+    @GetMapping(value = "awaitForMaxPool")
     public UserResource awaitForMaxPool() throws InterruptedException {
         UserResource user = new UserResource();
         user.setName("test");
         user.setAge(20);
 
         long nanos = TimeUnit.SECONDS.toNanos(10L);
-        lock.lock();
+        this.lock.lock();
         try {
-            await = true;
-            while (await) {
+            this.await = true;
+            while (this.await) {
                 if (nanos <= 0L) {
                     return new UserResource();
                 }
-                nanos = startSignal.awaitNanos(nanos);
+                nanos = this.startSignal.awaitNanos(nanos);
             }
             return user;
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
@@ -374,15 +372,15 @@ public class RSCLController {
      * スレッド数制限確認用
      * </ul>
      */
-    @RequestMapping(value = "releaseForMaxPool", method = RequestMethod.GET)
+    @GetMapping(value = "releaseForMaxPool")
     public boolean releaseForMaxPool() {
-        lock.lock();
+        this.lock.lock();
         try {
-            await = false;
-            startSignal.signalAll();
+            this.await = false;
+            this.startSignal.signalAll();
             return true;
         } finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     }
 
@@ -392,7 +390,7 @@ public class RSCLController {
      * スレッド数制限確認用
      * </ul>
      */
-    @RequestMapping(value = "noawait", method = RequestMethod.GET)
+    @GetMapping(value = "noawait")
     public UserResource noAwait() {
         UserResource user = new UserResource();
         user.setName("test");
@@ -406,15 +404,15 @@ public class RSCLController {
      * </ul>
      * @throws InterruptedException
      */
-    @RequestMapping(value = "readTimeout", method = RequestMethod.GET)
+    @GetMapping(value = "readTimeout")
     public UserResource readTimeout() throws InterruptedException {
-        logger.debug("readTimeout");
+        LOGGER.debug("readTimeout");
 
         UserResource user = new UserResource();
         user.setName("test");
         user.setAge(20);
 
-        Thread.sleep(readTimeout + 1000);
+        ThreadUtils.sleep(Duration.ofMillis(this.readTimeout + 1000));
 
         return user;
     }
@@ -426,9 +424,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "upload")
     public UserResource upload(@RequestParam("file") MultipartFile mf) {
-        logger.debug("upload");
+        LOGGER.debug("upload");
 
         UserResource user = new UserResource();
         File rcvFile = null;
@@ -461,9 +459,9 @@ public class RSCLController {
      * </ul>
      * @return
      */
-    @RequestMapping(value = "collection", method = RequestMethod.GET)
+    @GetMapping(value = "collection")
     public UserResourceList collection() {
-        logger.debug("collection");
+        LOGGER.debug("collection");
 
         UserResourceList userList = new UserResourceList();
         List<UserResource> list = new ArrayList<UserResource>();

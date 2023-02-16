@@ -23,6 +23,6 @@ public interface DeliveryTypeRepository {
 
     List<DeliveryType> findAll();
 
-    DeliveryType findOneByTypeName(String typeName);
+    DeliveryType findByTypeName(String typeName);
 
 }

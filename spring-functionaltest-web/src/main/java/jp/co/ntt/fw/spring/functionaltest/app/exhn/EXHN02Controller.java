@@ -17,24 +17,24 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.validation.groups.Default;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Confirm;
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Register;
@@ -64,39 +64,39 @@ public class EXHN02Controller {
         return articleSessionInfo;
     }
 
-    @RequestMapping(value = "0202/001")
+    @GetMapping(value = "0202/001")
     public String handle0202001(Model model) {
         model.addAttribute("count", articleFileService.countAll());
-        model.addAttribute("testNumber", "0200");
+        model.addAttribute("testNumber", "/0200");
         return "exhn/articleBatchRegister";
     }
 
-    @RequestMapping(value = "0203/001")
+    @GetMapping(value = "0203/001")
     public String handle0203001(Model model) {
         model.addAttribute("count", articleFileService.countAll());
-        model.addAttribute("testNumber", "0200");
+        model.addAttribute("testNumber", "/0200");
         return "exhn/articleBatchRegister";
     }
 
-    @RequestMapping(value = "0200/confirm", params = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "0200/confirm", params = "upload")
     public String uploadConfirm(@Validated({ Confirm.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             Model model, RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
-            model.addAttribute("testNumber", "0200");
+            model.addAttribute("testNumber", "/0200");
             return "exhn/articleBatchRegister";
         }
 
         String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
                 form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
-        model.addAttribute("testNumber", "0200");
+        model.addAttribute("testNumber", "/0200");
         return "exhn/articleBatchConfirm";
     }
 
-    @RequestMapping(value = "0200/register", params = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "0200/register", params = "upload")
     public String uploadRegister(@Validated({ Register.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
@@ -116,26 +116,26 @@ public class EXHN02Controller {
         return "redirect:/exhn/0200?complete";
     }
 
-    @RequestMapping(value = "0200", params = "complete")
+    @GetMapping(value = "0200", params = "complete")
     public String articleComplete(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         articleSessionInfo.setUploadTemporaryFileId("");
         return "exhn/articleBatchComplete";
     }
 
-    @RequestMapping(value = "delete/view", method = RequestMethod.GET)
+    @GetMapping(value = "delete/view")
     public String deleteTemporaryFileView() {
         return "exhn/articleTemporaryFileDelete";
     }
 
-    @RequestMapping(value = "delete")
+    @GetMapping(value = "delete")
     public String deleteTemporaryFile(
             @RequestParam("temporaryFileName") String temporaryFileName) throws IOException {
         articleFileHelper.deleteTemporaryFile(temporaryFileName);
         return "exhn/index";
     }
 
-    @RequestMapping(value = "copy/temporaryFile")
+    @GetMapping(value = "copy/temporaryFile")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void copyTemporaryFile(
@@ -143,13 +143,13 @@ public class EXHN02Controller {
         articleFileHelper.copyTemporaryFile(temporaryFileName);
     }
 
-    @RequestMapping(value = "delete/article", method = RequestMethod.GET)
+    @GetMapping(value = "delete/article")
     public String deleteArticleFileBeforeTest() throws IOException {
         deleteArticleFile();
         return "exhn/index";
     }
 
-    @RequestMapping(value = "delete/all")
+    @GetMapping(value = "delete/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void deleteArticleFile() throws IOException {

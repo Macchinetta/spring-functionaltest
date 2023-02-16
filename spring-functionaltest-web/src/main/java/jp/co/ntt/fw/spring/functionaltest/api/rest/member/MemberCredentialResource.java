@@ -16,15 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Size;
-
-import org.joda.time.DateTime;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.Size;
 
 public class MemberCredentialResource implements Serializable {
 
@@ -40,10 +39,10 @@ public class MemberCredentialResource implements Serializable {
     private String password;
 
     @Null
-    private DateTime passwordLastChangedAt;
+    private LocalDateTime passwordLastChangedAt;
 
     @Null
-    private DateTime lastModifiedAt;
+    private LocalDateTime lastModifiedAt;
 
     public String getSignId() {
         return signId;
@@ -61,22 +60,19 @@ public class MemberCredentialResource implements Serializable {
         this.password = password;
     }
 
-    public DateTime getPasswordLastChangedAt() {
+    public LocalDateTime getPasswordLastChangedAt() {
         return passwordLastChangedAt;
     }
 
-    public void setPasswordLastChangedAt(DateTime passwordLastChangedAt) {
+    public void setPasswordLastChangedAt(LocalDateTime passwordLastChangedAt) {
         this.passwordLastChangedAt = passwordLastChangedAt;
     }
 
-    public DateTime getLastModifiedAt() {
+    public LocalDateTime getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(DateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDateTime lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
-
-    // omitted setter and getter
-
 }

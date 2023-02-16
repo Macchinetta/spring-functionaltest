@@ -17,25 +17,26 @@ package jp.co.ntt.fw.spring.functionaltest.app.xspr;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("xspr")
 public class XSPRController {
 
-    @RequestMapping
+    @GetMapping
     public String index() {
         return "xspr/index";
     }
 
-    @RequestMapping(value = "0101", method = RequestMethod.GET)
+    @GetMapping(value = "0101")
     public String output() {
         return "xspr/outputEscaping";
     }
 
-    @RequestMapping(value = "0101/output", method = RequestMethod.POST)
+    @PostMapping(value = "0101/output")
     public String output_InputData(
             @RequestParam("outputData") String outputData, Model model) {
         model.addAttribute("outputData", outputData);
@@ -43,7 +44,7 @@ public class XSPRController {
         return "xspr/outputEscaping";
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String javascriptXSSMeasures_0201_001(Model model) {
 
         model.addAttribute("warnCode", "';alert('XSS Attack!');aaa='message");
@@ -51,7 +52,7 @@ public class XSPRController {
         return "xspr/javascriptOutput";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String javascriptXSSMeasures_0201_002(Model model) {
 
         model.addAttribute("warnCode", "';alert(\"XSS Attack!\");aaa='message");
@@ -59,7 +60,7 @@ public class XSPRController {
         return "xspr/javascriptOutput";
     }
 
-    @RequestMapping(value = "0201/003", method = RequestMethod.GET)
+    @GetMapping(value = "0201/003")
     public String javascriptXSSMeasures_0201_003(Model model) {
 
         model.addAttribute("warnCode", "Spring Framework");
@@ -67,7 +68,7 @@ public class XSPRController {
         return "xspr/javascriptOutput";
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String eventHandlerXSSMeasures_0301_001(Model model) {
 
         model.addAttribute("warnCode", "\"); alert('XSS Attack!'); //");
@@ -75,7 +76,7 @@ public class XSPRController {
         return "xspr/eventHandlerOutput";
     }
 
-    @RequestMapping(value = "0301/002", method = RequestMethod.GET)
+    @GetMapping(value = "0301/002")
     public String eventHandlerXSSMeasures_0301_002(Model model) {
 
         model.addAttribute("warnCode", "\"); alert(\"XSS Attack!\"); //");
@@ -83,7 +84,7 @@ public class XSPRController {
         return "xspr/eventHandlerOutput";
     }
 
-    @RequestMapping(value = "0301/003", method = RequestMethod.GET)
+    @GetMapping(value = "0301/003")
     public String eventHandlerXSSMeasures_0301_003(Model model) {
 
         model.addAttribute("warnCode", "Spring Framework");

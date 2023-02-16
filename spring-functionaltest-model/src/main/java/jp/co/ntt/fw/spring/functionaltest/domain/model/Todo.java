@@ -18,8 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.domain.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 
 public class Todo implements Serializable {
 
@@ -43,7 +43,7 @@ public class Todo implements Serializable {
     private boolean finished;
 
     @Null(groups = Create.class)
-    private Date createdAt;
+    private Date createdAt; // Dateの必要あり
 
     public String getTodoId() {
         return todoId;

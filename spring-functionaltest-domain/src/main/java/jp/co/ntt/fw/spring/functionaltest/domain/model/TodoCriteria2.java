@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.apache.ibatis.type.Alias;
 
@@ -27,7 +27,7 @@ public class TodoCriteria2 implements Serializable {
 
     private String dailyTodoTitle;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
     public String getDailyTodoTitle() {
         return dailyTodoTitle;
@@ -37,11 +37,11 @@ public class TodoCriteria2 implements Serializable {
         this.dailyTodoTitle = dailyTodoTitle;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -16,17 +16,17 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class THYM0603001Controller {
 
-    @RequestMapping("01")
+    @GetMapping("01")
     public String testTHYM060300101() {
         return "thym/cacheablePatterns01";
     }
 
-    @RequestMapping("02")
+    @GetMapping("02")
     public String testTHYM060300102() {
         return "thym/cacheablePatterns02";
     }

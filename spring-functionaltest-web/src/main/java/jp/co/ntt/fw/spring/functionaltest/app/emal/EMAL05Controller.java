@@ -17,16 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
 
@@ -43,14 +43,14 @@ public class EMAL05Controller {
         return form;
     }
 
-    @RequestMapping(value = "0501/001", method = RequestMethod.GET)
+    @GetMapping(value = "0501/001")
     public String handle01001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("templatedMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=templatedMessage")
+    @PostMapping(value = "sendmail", params = "testcase=templatedMessage")
     public String handleTemplatedMessage(Model model, EmailSendingForm form) {
 
         User user = new User();

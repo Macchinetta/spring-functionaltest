@@ -21,7 +21,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsTodoRepository {
 
-    JmsTodo findOneById(String jmsTodoId);
+    JmsTodo findById(String jmsTodoId);
 
     void insert(JmsTodo jmsTodo) throws SystemException;
 

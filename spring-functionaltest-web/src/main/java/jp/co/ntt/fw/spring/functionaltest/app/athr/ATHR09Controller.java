@@ -15,15 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athr.SystemConfigService;
 
@@ -33,39 +33,39 @@ public class ATHR09Controller {
     SystemConfigService systemConfigService;
 
     @Inject
-    Mapper beanMapper;
+    ATHRBeanMapper beanMapper;
 
-    @RequestMapping("0901/001")
+    @GetMapping("0901/001")
     public String handle0901001loginForStaff() {
         return "athr/loginForRoleHierarchy";
     }
 
-    @RequestMapping(value = "0901/001/afterLogin")
+    @GetMapping(value = "0901/001/afterLogin")
     public String handle0901001afterLogin() {
         return "athr/showForRoleHierarchyDsp";
     }
 
-    @RequestMapping("0901/002")
+    @GetMapping("0901/002")
     public String handle0901002loginForStaff() {
         return "athr/loginForJspRoleHierarchy";
     }
 
-    @RequestMapping(value = "0901/002/afterLogin")
+    @GetMapping(value = "0901/002/afterLogin")
     public String handle0901002afterLogin() {
         return "athr/showForJspRoleHierarchyDsp";
     }
 
-    @RequestMapping("0901/003")
+    @GetMapping("0901/003")
     public String handle0901003loginForStaff() {
         return "athr/loginForMethodRoleHierarchy";
     }
 
-    @RequestMapping(value = "0901/003/afterLogin")
+    @GetMapping(value = "0901/003/afterLogin")
     public String handle09010031afterLogin() {
         return "athr/methodHierarchyChoosePage";
     }
 
-    @RequestMapping(value = "0901/003", params = "select")
+    @GetMapping(value = "0901/003", params = "select")
     public String handle09010031select(SystemConfigForm systemConfigForm,
             Model model) {
         model.addAttribute("systemConfig", systemConfigService
@@ -74,23 +74,23 @@ public class ATHR09Controller {
         return "athr/showMethodHierarchyAccessAllowedPage";
     }
 
-    @RequestMapping(value = "0901/003", params = "insert")
+    @PostMapping(value = "0901/003", params = "insert")
     public String handle09010031insert(SystemConfigForm systemConfigForm) {
         return "athr/methodHierarchyAccessAllowedInsertPage";
     }
 
-    @RequestMapping(value = "0901/003", params = "register")
+    @PostMapping(value = "0901/003", params = "register")
     public String handle09010031register(SystemConfigForm systemConfigForm,
             Model model, RedirectAttributes redirectAttributes) {
-        SystemConfig systemConfig = beanMapper.map(systemConfigForm,
-                SystemConfig.class);
+        SystemConfig systemConfig = beanMapper.map(systemConfigForm);
         systemConfigService.insertForStaff(systemConfig);
         redirectAttributes.addFlashAttribute("systemConfigForm",
                 systemConfigForm);
         return "redirect:/athr/0901/003?select";
     }
 
-    @RequestMapping(value = "athr/methodHierarchyAccessDeniedPage")
+    @RequestMapping(value = "athr/methodHierarchyAccessDeniedPage", method = {
+            RequestMethod.GET, RequestMethod.POST })
     public String handle09010031registerError() {
         return "athr/methodHierarchyAccessDeniedPage";
     }

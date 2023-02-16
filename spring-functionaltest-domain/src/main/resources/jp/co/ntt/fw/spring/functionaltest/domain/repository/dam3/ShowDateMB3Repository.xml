@@ -6,7 +6,7 @@
   <resultMap id="dateMap" type="DateMB3">
   </resultMap>
 
-  <select id="selectDate" parameterType="String" resultMap="dateMap">
+  <select id="findByTodoId" parameterType="String" resultMap="dateMap">
     <bind name="todoId" value="_parameter" />
     SELECT
     todo_id AS "id"

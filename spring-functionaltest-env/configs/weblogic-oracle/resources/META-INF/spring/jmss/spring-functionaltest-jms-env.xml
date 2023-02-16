@@ -12,46 +12,49 @@
     <property name="cacheConsumers" value="false" />
   </bean>
 
-  <bean id="dynamicConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+  <bean id="dynamicConnectionFactory" class="org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory">
     <property name="brokerURL"
       value="tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp" />
-    <property name="trustedPackages">
-      <list>
-        <value>jp.co.ntt.fw.spring.functionaltest.domain.model</value>
-        <value>org.joda.time</value>
-      </list>
-    </property>
+    <property name="deserializationWhiteList" value="jp.co.ntt.fw.spring.functionaltest.domain.model,java.time" />
   </bean>
 
+  <bean id="destinationResolver" class="org.springframework.jms.support.destination.DynamicDestinationResolver" />
+
+  <!-- TODO addressに入れるものは何か？ -->
+  <bean id="testQueue0403003B" class="org.apache.activemq.artemis.jms.client.ActiveMQQueue">
+    <constructor-arg name="address" value="TestQueue0403003B" />
+  </bean>
+  
   <beans profile="default, nonMqServer">
-    <bean id="brokerService" class="org.apache.activemq.broker.BrokerService" init-method="start"
-      destroy-method="stop">
-      <property name="brokerName" value="broker" />
-      <property name="useJmx" value="false" />
-      <property name="persistent" value="false" />
-      <property name="transportConnectorURIs">
+    <bean id="activeMQServer" class="org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl" init-method="start" destroy-method="stop">
+      <constructor-arg name="configuration" ref ="config" />
+      <constructor-arg name="securityManager" ref ="activeMQJAASSecurityManager" />
+    </bean>
+    <bean id="config" class="org.apache.activemq.artemis.core.config.impl.ConfigurationImpl" >
+      <property name="acceptorConfigurations" ref ="acceptorConfigurations"/>
+      <property name="securityEnabled" value = "false"/> 
+    </bean>
+
+    <bean id="acceptorConfigurations" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+      <property name="targetClass" value="org.apache.activemq.artemis.core.config.ConfigurationUtils" />
+      <property name="targetMethod" value="parseAcceptorURI" />
+      <property name="arguments">
         <list>
+          <value>tcp</value>
           <value>tcp://${jms.mq.host}:${jms.mq.port}</value>
         </list>
       </property>
     </bean>
+    
+      
+  <bean id="connectionFactory" class="org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory">
+    <property name="brokerURL"
+      value="tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp" />
+    <property name="deserializationWhiteList" value="jp.co.ntt.fw.spring.functionaltest.domain.model,java.time" />
+  </bean>
+    
 
-    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-      <property name="brokerURL"
-        value="tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp" />
-      <property name="trustedPackages">
-        <list>
-          <value>jp.co.ntt.fw.spring.functionaltest.domain.model</value>
-          <value>org.joda.time</value>
-        </list>
-      </property>
-    </bean>
-
-    <bean id="destinationResolver" class="org.springframework.jms.support.destination.DynamicDestinationResolver" />
-
-    <bean id="testQueue0403003B" class="org.apache.activemq.command.ActiveMQQueue">
-      <constructor-arg index="0" value="TestQueue0403003B" />
-    </bean>
+    <bean id="activeMQJAASSecurityManager" class = "org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager"/>
   </beans>
 
   <beans profile="mqServer">

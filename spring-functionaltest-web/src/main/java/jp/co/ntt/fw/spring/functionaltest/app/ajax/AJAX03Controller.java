@@ -17,21 +17,21 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.terasoluna.gfw.common.exception.BusinessException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
 
 @RequestMapping("ajax")
@@ -46,7 +46,7 @@ public class AJAX03Controller {
         return new PersonalComputerForm();
     }
 
-    @RequestMapping(value = "0301/001/001")
+    @GetMapping(value = "0301/001/001")
     public String handle0301001001(PersonalComputerForm form, Model model) {
         personalComputerHelper.setPersonalComputer(1, form);
 
@@ -56,7 +56,7 @@ public class AJAX03Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0301/001/002")
+    @GetMapping(value = "0301/001/002")
     public String handle0301001002(PersonalComputerForm form, Model model) {
         personalComputerHelper.setPersonalComputer(1, form);
 
@@ -66,7 +66,7 @@ public class AJAX03Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0302/001")
+    @GetMapping(value = "0302/001")
     public String handle0302001(PersonalComputerForm form, Model model) {
         personalComputerHelper.setPersonalComputer(1, form);
 
@@ -76,7 +76,7 @@ public class AJAX03Controller {
         return "ajax/personalComputerEdit";
     }
 
-    @RequestMapping(value = "0301/001/001/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0301/001/001/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult editFirst(
@@ -86,7 +86,7 @@ public class AJAX03Controller {
                 locale);
     }
 
-    @RequestMapping(value = "0301/001/002/edit", method = RequestMethod.POST)
+    @PostMapping(value = "0301/001/002/edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public PersonalComputerResult editSecond(
@@ -96,7 +96,7 @@ public class AJAX03Controller {
                 locale);
     }
 
-    @RequestMapping(value = "0301", params = "retrunToIndex")
+    @GetMapping(value = "0301", params = "retrunToIndex")
     public String retrunToIndex() {
 
         return "ajax/index";

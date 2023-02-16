@@ -15,15 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.validation.groups.Default;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Japanese;
 import jp.co.ntt.fw.spring.functionaltest.app.vldt.GroupedValidationByDefaultForm.Singaporean;
 
@@ -36,13 +36,12 @@ public class VLDT0103002Controller {
         return new GroupedValidationByDefaultForm();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/groupedValidationByDefaultView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate",
-            "country=jp" })
+    @PostMapping(params = { "validate", "country=jp" })
     public String handleValidateForJapanese(@Validated({
             Japanese.class }) GroupedValidationByDefaultForm form,
             BindingResult result) {
@@ -53,8 +52,7 @@ public class VLDT0103002Controller {
         return "redirect:/vldt/0103/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate",
-            "country=sg" })
+    @PostMapping(params = { "validate", "country=sg" })
     public String handleValidateForSingaporean(@Validated({
             Singaporean.class }) GroupedValidationByDefaultForm form,
             BindingResult result) {
@@ -65,7 +63,7 @@ public class VLDT0103002Controller {
         return "redirect:/vldt/0103/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate" })
+    @PostMapping(params = { "validate" })
     public String handleValidate(@Validated({
             Default.class }) GroupedValidationByDefaultForm form,
             BindingResult result) {

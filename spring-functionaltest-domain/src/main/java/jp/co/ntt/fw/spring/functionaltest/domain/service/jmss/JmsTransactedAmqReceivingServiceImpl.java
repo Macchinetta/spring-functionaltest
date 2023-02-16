@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Transactional("sendJmsTransactionManager")

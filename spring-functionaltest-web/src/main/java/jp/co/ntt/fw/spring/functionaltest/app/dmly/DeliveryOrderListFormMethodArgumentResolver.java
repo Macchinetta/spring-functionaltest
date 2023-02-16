@@ -15,8 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
+import java.util.Locale;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -25,6 +28,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class DeliveryOrderListFormMethodArgumentResolver implements
                                                          HandlerMethodArgumentResolver {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("uuuu/MM/dd HH:mm:ss").withLocale(Locale.JAPANESE)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -37,14 +44,12 @@ public class DeliveryOrderListFormMethodArgumentResolver implements
             WebDataBinderFactory binderFactory) throws Exception {
         DeliveryOrderListForm params = new DeliveryOrderListForm();
         params.setFromAcceptDatetime(LocalDateTime.parse(webRequest
-                .getParameter("fromAcceptDatetime"), DateTimeFormat.forPattern(
-                        "yyyy/MM/dd HH:mm:ss")));
+                .getParameter("fromAcceptDatetime"), DATE_TIME_FORMATTER));
         params.setToAcceptDatetime(LocalDateTime.parse(webRequest.getParameter(
-                "toAcceptDatetime"), DateTimeFormat.forPattern(
-                        "yyyy/MM/dd HH:mm:ss")));
+                "toAcceptDatetime"), DATE_TIME_FORMATTER));
         params.setUpdateCompletionDatetime(LocalDateTime.parse(webRequest
-                .getParameter("updateCompletionDatetime"), DateTimeFormat
-                        .forPattern("yyyy/MM/dd HH:mm:ss")));
+                .getParameter("updateCompletionDatetime"),
+                DATE_TIME_FORMATTER));
         return params;
     }
 

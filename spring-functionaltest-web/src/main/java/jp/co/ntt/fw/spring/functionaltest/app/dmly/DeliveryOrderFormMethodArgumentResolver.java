@@ -15,8 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
+import java.util.Locale;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -25,6 +28,10 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class DeliveryOrderFormMethodArgumentResolver implements
                                                      HandlerMethodArgumentResolver {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("uuuu/MM/dd HH:mm:ss").withLocale(Locale.JAPANESE)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -46,13 +53,13 @@ public class DeliveryOrderFormMethodArgumentResolver implements
         String acceptDatetime = webRequest.getParameter("acceptDatetime");
         if (!acceptDatetime.isEmpty()) {
             params.setAcceptDatetime(LocalDateTime.parse(acceptDatetime,
-                    DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")));
+                    DATE_TIME_FORMATTER));
         }
         String completionDatetime = webRequest.getParameter(
                 "completionDatetime");
         if (!completionDatetime.isEmpty()) {
             params.setCompletionDatetime(LocalDateTime.parse(completionDatetime,
-                    DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")));
+                    DATE_TIME_FORMATTER));
         }
         params.setDeliveryDriver(webRequest.getParameter("deliveryDriver"));
         params.setDeliveryStatus(webRequest.getParameter("deliveryStatus"));

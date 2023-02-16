@@ -16,28 +16,29 @@
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("djpa")
 public class DJPAController06 {
 
-    @RequestMapping(value = "0601/001")
+    @GetMapping(value = "0601/001")
     public String handle0601001() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0601/003")
+    @GetMapping(value = "0601/003")
     public String handle0601003() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0601/004")
+    @GetMapping(value = "0601/004")
     public String handle0601004() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0602/001")
+    @GetMapping(value = "0602/001")
     public String handle0602001() {
         return "redirect:/djpa/book/pgList";
     }

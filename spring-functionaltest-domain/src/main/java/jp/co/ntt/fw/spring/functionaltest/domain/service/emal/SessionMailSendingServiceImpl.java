@@ -17,10 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
 import java.nio.charset.StandardCharsets;
 
-import javax.inject.Inject;
-import javax.mail.Store;
-import javax.mail.internet.MimeMessage;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,12 +30,15 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import jakarta.inject.Inject;
+import jakarta.mail.Store;
+import jakarta.mail.internet.MimeMessage;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 @Service
 public class SessionMailSendingServiceImpl implements
                                            SessionMailSendingService {
-    private static final Logger logger = LoggerFactory.getLogger(
+    private static final Logger LOGGER = LoggerFactory.getLogger(
             SessionMailSendingServiceImpl.class);
 
     @Inject
@@ -219,8 +218,8 @@ public class SessionMailSendingServiceImpl implements
 
     @Override
     public Store popBeforeSmtp() {
-        if (logger.isDebugEnabled()) {
-            logger.debug(pop3host + ":" + pop3port + "[" + pop3user + ","
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(pop3host + ":" + pop3port + "[" + pop3user + ","
                     + pop3password + "]");
         }
 
@@ -238,39 +237,18 @@ public class SessionMailSendingServiceImpl implements
         char[] ch = targetStr.toCharArray();
 
         for (int i = 0; i < ch.length; i++) {
-            switch (ch[i]) {
-
-            // '―'（全角ハイフン）
-            case '\u2015':
-                ch[i] = '\u2014';
-                break;
-            // '－'（全角マイナス）
-            case '\uff0d':
-                ch[i] = '\u2212';
-                break;
-            // '～'（波ダッシュ）
-            case '\uff5e':
-                ch[i] = '\u301c';
-                break;
-            // '∥'（双柱）
-            case '\u2225':
-                ch[i] = '\u2016';
-                break;
-            // '￠'（セント記号)
-            case '\uffe0':
-                ch[i] = '\u00A2';
-                break;
-            // '￡'（ポンド記号）
-            case '\uffe1':
-                ch[i] = '\u00A3';
-                break;
-            // '￢'（否定記号）
-            case '\uffe2':
-                ch[i] = '\u00AC';
-                break;
-            default:
-                break;
-            }
+            // @formatter:off
+            ch[i] = switch (ch[i]) {
+                case '\u2015' -> '\u2014'; // '―'（全角ハイフン） -> '—'（EM ダッシュ）
+                case '\uff0d' -> '\u2212'; // '－'（ハイフンマイナス） -> '−'（全角マイナス）
+                case '\uff5e' -> '\u301c'; // '～'（全角チルド） -> '〜'（波ダッシュ）
+                case '\u2225' -> '\u2016'; // '∥'（平行記号） -> '‖'（双柱）
+                case '\uffe0' -> '\u00A2'; // '￠'（全角セント記号） -> '¢'（セント記号）
+                case '\uffe1' -> '\u00A3'; // '￡'（全角ポンド記号） -> '£'（ポンド記号）
+                case '\uffe2' -> '\u00AC'; // '￢'（全角否定記号） -> '¬'（否定記号）
+                default -> ch[i];
+            };
+            // @formatter:on
         }
 
         return String.valueOf(ch);

@@ -12,10 +12,6 @@
     FROM DUAL
   </select>
 
-  <select id="getCarSequence" resultType="long" databaseId="db2">
-    values (NEXT VALUE FOR s_car)
-  </select>
-
   <resultMap id="carResultMap" type="Car">
     <result property="carId" column="car_id" />
     <result property="name" column="name" />

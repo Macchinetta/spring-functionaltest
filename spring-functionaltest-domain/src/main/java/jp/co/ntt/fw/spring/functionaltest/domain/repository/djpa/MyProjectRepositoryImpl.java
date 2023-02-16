@@ -19,11 +19,11 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+
+import jakarta.persistence.EntityManager;
 
 public class MyProjectRepositoryImpl<T, ID extends Serializable> extends
                                     SimpleJpaRepository<T, ID> implements

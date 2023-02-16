@@ -17,11 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DeliveryOrder;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
 

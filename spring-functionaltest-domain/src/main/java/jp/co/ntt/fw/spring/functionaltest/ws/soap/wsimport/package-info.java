@@ -13,5 +13,5 @@
  * either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://functionaltest.spring.fw.ntt.co.jp/todo")
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://functionaltest.spring.fw.ntt.co.jp/todo")
 package jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport;

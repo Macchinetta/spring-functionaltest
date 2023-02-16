@@ -17,14 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
 import java.time.format.DateTimeParseException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
 
 @RequestMapping("dnta")
@@ -49,107 +48,107 @@ public class DNTA04Controller {
         return new ChangeTypeForm();
     }
 
-    @RequestMapping(value = "0401/001", method = RequestMethod.GET)
+    @GetMapping(value = "0401/001")
     public String handle01001() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/002", method = RequestMethod.GET)
+    @GetMapping(value = "0401/002")
     public String handle01002() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/003", method = RequestMethod.GET)
+    @GetMapping(value = "0401/003")
     public String handle01003() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/004", method = RequestMethod.GET)
+    @GetMapping(value = "0401/004")
     public String handle01004() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/005", method = RequestMethod.GET)
+    @GetMapping(value = "0401/005")
     public String handle01005() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/006", method = RequestMethod.GET)
+    @GetMapping(value = "0401/006")
     public String handle01006() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/007", method = RequestMethod.GET)
+    @GetMapping(value = "0401/007")
     public String handle01007() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/008", method = RequestMethod.GET)
+    @GetMapping(value = "0401/008")
     public String handle01008() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0401/009", method = RequestMethod.GET)
+    @GetMapping(value = "0401/009")
     public String handle01009() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0402/001", method = RequestMethod.GET)
+    @GetMapping(value = "0402/001")
     public String handle02001() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0402/002", method = RequestMethod.GET)
+    @GetMapping(value = "0402/002")
     public String handle02002() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/001", method = RequestMethod.GET)
+    @GetMapping(value = "0403/001")
     public String handle03001() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/002", method = RequestMethod.GET)
+    @GetMapping(value = "0403/002")
     public String handle03002() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/003", method = RequestMethod.GET)
+    @GetMapping(value = "0403/003")
     public String handle03003() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/004", method = RequestMethod.GET)
+    @GetMapping(value = "0403/004")
     public String handle03004() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/005", method = RequestMethod.GET)
+    @GetMapping(value = "0403/005")
     public String handle03005() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/006", method = RequestMethod.GET)
+    @GetMapping(value = "0403/006")
     public String handle03006() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0403/007", method = RequestMethod.GET)
+    @GetMapping(value = "0403/007")
     public String handle03007() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0404/001", method = RequestMethod.GET)
+    @GetMapping(value = "0404/001")
     public String handle04001() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "0404/002", method = RequestMethod.GET)
+    @GetMapping(value = "0404/002")
     public String handle04002() {
         return "dnta/dateManipulation";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcYear")
+    @GetMapping(value = "dateManipulation", params = "calcYear")
     public String handleCalcYear(CalcDateForm form, Model model) {
         int[] date = dateAndTimeApiService.parseAndGetDateElement(form
                 .getInputDateTime());
@@ -160,7 +159,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcMonth")
+    @GetMapping(value = "dateManipulation", params = "calcMonth")
     public String handleCalcMonth(CalcDateForm form, Model model) {
         int[] date = dateAndTimeApiService.parseAndGetDateElement(form
                 .getInputDateTime());
@@ -171,7 +170,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcDay")
+    @GetMapping(value = "dateManipulation", params = "calcDay")
     public String handleCalcDay(CalcDateForm form, Model model) {
         int[] date = dateAndTimeApiService.parseAndGetDateElement(form
                 .getInputDateTime());
@@ -182,7 +181,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcHour")
+    @GetMapping(value = "dateManipulation", params = "calcHour")
     public String handleCalcHour(CalcDateForm form, Model model) {
         int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
                 .getInputDateTime());
@@ -193,7 +192,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcMinute")
+    @GetMapping(value = "dateManipulation", params = "calcMinute")
     public String handleCalcMinute(CalcDateForm form, Model model) {
         int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
                 .getInputDateTime());
@@ -204,7 +203,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcSecond")
+    @GetMapping(value = "dateManipulation", params = "calcSecond")
     public String handleCalcSecond(CalcDateForm form, Model model) {
         int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
                 .getInputDateTime());
@@ -215,7 +214,7 @@ public class DNTA04Controller {
         return "dnta/showCalcResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "compareDate")
+    @GetMapping(value = "dateManipulation", params = "compareDate")
     public String handleCompareDate(CompareDateTimeForm form, Model model) {
         model.addAttribute("NowIsBeforePast", dateAndTimeApiService
                 .isBeforeDate(form.getYear2(), form.getMonth2(), form.getDay2(),
@@ -247,7 +246,7 @@ public class DNTA04Controller {
         return "dnta/showCompareResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "compareTime")
+    @GetMapping(value = "dateManipulation", params = "compareTime")
     public String handleCompareTime(CompareDateTimeForm form, Model model) {
         model.addAttribute("NowIsBeforePast", dateAndTimeApiService
                 .isBeforeTime(form.getHour2(), form.getMinute2(), form
@@ -282,7 +281,7 @@ public class DNTA04Controller {
         return "dnta/showCompareResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkDateString")
+    @GetMapping(value = "dateManipulation", params = "checkDateString")
     public String handleCheckDateString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
@@ -296,7 +295,7 @@ public class DNTA04Controller {
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkTimeString")
+    @GetMapping(value = "dateManipulation", params = "checkTimeString")
     public String handleCheckTimeString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
@@ -310,7 +309,7 @@ public class DNTA04Controller {
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkLeapYear")
+    @GetMapping(value = "dateManipulation", params = "checkLeapYear")
     public String handleCheckLeapYear(ChangeTypeForm form, Model model) {
 
         int[] date = dateAndTimeApiService.parseAndGetDateElement(form
@@ -320,7 +319,7 @@ public class DNTA04Controller {
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "getEachValueOfDate")
+    @GetMapping(value = "dateManipulation", params = "getEachValueOfDate")
     public String handleGetEachValueOfDate(ChangeTypeForm form, Model model) {
 
         int[] date = dateAndTimeApiService.parseAndGetDateElement(form
@@ -332,7 +331,7 @@ public class DNTA04Controller {
         return "dnta/showEachValue";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "getEachValueOfTime")
+    @GetMapping(value = "dateManipulation", params = "getEachValueOfTime")
     public String handleGetEachValueOfTime(ChangeTypeForm form, Model model) {
         int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
                 .getTargetDate());

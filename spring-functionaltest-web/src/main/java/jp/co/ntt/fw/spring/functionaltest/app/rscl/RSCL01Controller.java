@@ -17,15 +17,15 @@ package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.CollectionRestClientService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.RestClientService;
@@ -45,7 +45,7 @@ public class RSCL01Controller {
     @Inject
     CollectionRestClientService collectionRestClientService;
 
-    @RequestMapping(value = "0101/001", method = RequestMethod.GET)
+    @GetMapping(value = "0101/001")
     public String handle0101001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -55,7 +55,7 @@ public class RSCL01Controller {
         return "rscl/setRequestPass";
     }
 
-    @RequestMapping(value = "0101/001", method = RequestMethod.POST)
+    @PostMapping(value = "0101/001")
     public String handle0101001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.restClientService.getForObject(path);
@@ -66,7 +66,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0102/001", method = RequestMethod.GET)
+    @GetMapping(value = "0102/001")
     public String handle0102001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -76,7 +76,7 @@ public class RSCL01Controller {
         return "rscl/setRequestPass";
     }
 
-    @RequestMapping(value = "0102/001", method = RequestMethod.POST)
+    @PostMapping(value = "0102/001")
     public String handle0102001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.restClientService.getForEntity(path);
@@ -87,7 +87,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0103/001", method = RequestMethod.GET)
+    @GetMapping(value = "0103/001")
     public String handle0103001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -97,7 +97,7 @@ public class RSCL01Controller {
         return "rscl/setRequestPass";
     }
 
-    @RequestMapping(value = "0103/001", method = RequestMethod.POST)
+    @PostMapping(value = "0103/001")
     public String handle0103001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.restClientService.exchange(path);
@@ -108,7 +108,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0104/001", method = RequestMethod.GET)
+    @GetMapping(value = "0104/001")
     public String handle0104001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -118,7 +118,7 @@ public class RSCL01Controller {
         return "rscl/setRequestPass";
     }
 
-    @RequestMapping(value = "0104/001", method = RequestMethod.POST)
+    @PostMapping(value = "0104/001")
     public String handle0104001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.restClientService.exchangeJson(path);
@@ -129,7 +129,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0105/001", method = RequestMethod.GET)
+    @GetMapping(value = "0105/001")
     public String handle0105001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -139,7 +139,7 @@ public class RSCL01Controller {
         return "rscl/setRequestPass";
     }
 
-    @RequestMapping(value = "0105/001", method = RequestMethod.POST)
+    @PostMapping(value = "0105/001")
     public String handle0105001(Model model, @RequestParam String path) {
 
         List<UserResource> rcvLst = this.collectionRestClientService
@@ -151,7 +151,7 @@ public class RSCL01Controller {
         return "rscl/resultUserList";
     }
 
-    @RequestMapping(value = "0106/001", method = RequestMethod.GET)
+    @GetMapping(value = "0106/001")
     public String handle0106001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -161,7 +161,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0106/001", method = RequestMethod.POST)
+    @PostMapping(value = "0106/001")
     public String handle0106001(Model model, UserInfForm form,
             @RequestParam String path) {
 
@@ -178,7 +178,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0107/001", method = RequestMethod.GET)
+    @GetMapping(value = "0107/001")
     public String handle0107001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -188,7 +188,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0107/001", method = RequestMethod.POST)
+    @PostMapping(value = "0107/001")
     public String handle0107001(Model model, UserInfForm form,
             @RequestParam String path) {
 
@@ -205,7 +205,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0108/001", method = RequestMethod.GET)
+    @GetMapping(value = "0108/001")
     public String handle0108001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -215,7 +215,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0108/001", method = RequestMethod.POST)
+    @PostMapping(value = "0108/001")
     public String handle0108001(Model model, UserInfForm form,
             @RequestParam String path) {
 
@@ -232,7 +232,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0109/001", method = RequestMethod.GET)
+    @GetMapping(value = "0109/001")
     public String handle0109001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -242,7 +242,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0109/001", method = RequestMethod.POST)
+    @PostMapping(value = "0109/001")
     public String handle0109001(Model model, UserInfForm form,
             @RequestParam String path) {
 
@@ -259,7 +259,7 @@ public class RSCL01Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0110/001", method = RequestMethod.GET)
+    @GetMapping(value = "0110/001")
     public String handle0110001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -269,7 +269,7 @@ public class RSCL01Controller {
         return "rscl/setDeleteRequestPass";
     }
 
-    @RequestMapping(value = "0110/001", method = RequestMethod.POST)
+    @PostMapping(value = "0110/001")
     public String handle0110001(Model model, @RequestParam String path) {
 
         this.restClientService.delete(path);
@@ -279,7 +279,7 @@ public class RSCL01Controller {
         return "rscl/result";
     }
 
-    @RequestMapping(value = "0111/001", method = RequestMethod.GET)
+    @GetMapping(value = "0111/001")
     public String handle0111001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -289,7 +289,7 @@ public class RSCL01Controller {
         return "rscl/setDeleteRequestPass";
     }
 
-    @RequestMapping(value = "0111/001", method = RequestMethod.POST)
+    @PostMapping(value = "0111/001")
     public String handle0111001(Model model, @RequestParam String path) {
 
         this.restClientService.exchangeByDelete(path);
@@ -299,7 +299,7 @@ public class RSCL01Controller {
         return "rscl/result";
     }
 
-    @RequestMapping(value = "0112/001", method = RequestMethod.GET)
+    @GetMapping(value = "0112/001")
     public String handle0112001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -309,7 +309,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0112/001", method = RequestMethod.POST)
+    @PostMapping(value = "0112/001")
     public String handle0112001(Model model, UserInfForm form,
             @RequestParam String path) {
 
@@ -324,7 +324,7 @@ public class RSCL01Controller {
         return "rscl/result";
     }
 
-    @RequestMapping(value = "0113/001", method = RequestMethod.GET)
+    @GetMapping(value = "0113/001")
     public String handle0113001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -334,7 +334,7 @@ public class RSCL01Controller {
         return "rscl/sendUserInf";
     }
 
-    @RequestMapping(value = "0113/001", method = RequestMethod.POST)
+    @PostMapping(value = "0113/001")
     public String handle0113001(Model model, UserInfForm form,
             @RequestParam String path) {
 

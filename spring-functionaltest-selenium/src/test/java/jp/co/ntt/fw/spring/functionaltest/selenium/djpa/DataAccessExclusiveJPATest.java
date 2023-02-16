@@ -22,13 +22,12 @@ import static org.openqa.selenium.By.id;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jakarta.xml.bind.DatatypeConverter;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.BookDetailsPage;

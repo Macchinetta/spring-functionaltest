@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.ProxyRestClientService;
 
@@ -33,7 +33,7 @@ public class RSCL14Controller {
     @Inject
     ProxyRestClientService proxyRestClientService;
 
-    @RequestMapping(value = "1401/001", method = RequestMethod.GET)
+    @GetMapping(value = "1401/001")
     public String handle1401001First(Model model) {
 
         model.addAttribute("testDescription", "Proxy経由によるREST API呼び出し");
@@ -42,7 +42,7 @@ public class RSCL14Controller {
         return "rscl/callViaProxy";
     }
 
-    @RequestMapping(value = "1401/001", method = RequestMethod.POST)
+    @PostMapping(value = "1401/001")
     public String handle1401001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.proxyRestClientService.confirmProxy01(path);
@@ -54,7 +54,7 @@ public class RSCL14Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "1401/002", method = RequestMethod.GET)
+    @GetMapping(value = "1401/002")
     public String handle1401002First(Model model) {
 
         model.addAttribute("testDescription", "Proxy経由によるREST API呼び出し");
@@ -63,7 +63,7 @@ public class RSCL14Controller {
         return "rscl/callViaProxy";
     }
 
-    @RequestMapping(value = "1401/002", method = RequestMethod.POST)
+    @PostMapping(value = "1401/002")
     public String handle1401002(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.proxyRestClientService.confirmProxy02(path);
@@ -75,7 +75,7 @@ public class RSCL14Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "1402/001", method = RequestMethod.GET)
+    @GetMapping(value = "1402/001")
     public String handle1402001First(Model model) {
 
         model.addAttribute("testDescription", "Proxy経由によるREST API呼び出し");
@@ -84,7 +84,7 @@ public class RSCL14Controller {
         return "rscl/callViaProxy";
     }
 
-    @RequestMapping(value = "1402/001", method = RequestMethod.POST)
+    @PostMapping(value = "1402/001")
     public String handle1402001(Model model, @RequestParam String path) {
 
         UserResource rcvUser = this.proxyRestClientService

@@ -15,11 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookLZ;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookRepositoryLZ;
 

@@ -1,3 +1,39 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<c:set var="titleKey" value="title.rscl.index" />
+<c:set var="functionId" value="rscl" />
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width" />
+<meta name="contextPath" content="${pageContext.request.contextPath}" />
+<sec:csrfMetaTags />
+<title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message
+    code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css">
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
+<script type="text/javascript"
+  src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
+<script type="text/javascript"></script>
+</head>
+<body>
+  <jsp:include page="/WEB-INF/views/layout/header.jsp" />
+  <div class="container">
 <div id="wrapper">
 
   <h1 id="screenTitle">RSCL RESTクライアント処理</h1>
@@ -53,7 +89,15 @@
   <div>[RSCL06] HTTPS接続</div>
   <div>[RSCL07] 自己署名証明書</div>
   <ul>
-    <li><a id="rscl0601001" href="${pageContext.request.contextPath}/rscl/0601/001">rscl0601001</a></li>
+    <li><a id="rscl0601001" href="${pageContext.request.contextPath}/rscl/0601/001">rscl0601001</a> (サーバー1 : 0秒待機)</li>
+    <li><a id="rscl0601002" href="${pageContext.request.contextPath}/rscl/0601/002">rscl0601002</a> (サーバー1 : 6秒待機)</li>
+    <li><a id="rscl0601003" href="${pageContext.request.contextPath}/rscl/0601/003">rscl0601003</a> (サーバー1 : 6秒待機)</li>
+    <li><a id="rscl0601004" href="${pageContext.request.contextPath}/rscl/0601/004">rscl0601004</a> (サーバー1 : 20秒待機)</li>
+    <li><a id="rscl0601005" href="${pageContext.request.contextPath}/rscl/0601/005">rscl0601005</a> (サーバー2 : 6秒待機)</li>
+    <li><a id="rscl0601006" href="${pageContext.request.contextPath}/rscl/0601/006">rscl0601006</a> (サーバー3 : 6秒待機)</li>
+    <li><a id="rscl0601007" href="${pageContext.request.contextPath}/rscl/0601/007">rscl0601007</a> (存在しないサーバ)</li>
+    <li><a id="rscl0601008" href="${pageContext.request.contextPath}/rscl/0601/008">rscl0601008</a> (サーバー4 : 0秒待機)</li>
+    <li><a id="rscl0601009" href="${pageContext.request.contextPath}/rscl/0601/009">rscl0601009</a> (サーバー4 : SoTimeout)</li>
   </ul>
 
   <div>[RSCL09] ファイルアップロード</div>
@@ -68,17 +112,10 @@
     <li><a id="rscl1104001" href="${pageContext.request.contextPath}/rscl/1104/001">rscl1104001</a></li>
     <li><a id="rscl1105001" href="${pageContext.request.contextPath}/rscl/1105/001">rscl1105001</a></li>
   </ul>
-
+  
   <div>[RSCL13] 非同期リクエストの実装</div>
   <ul>
-    <li><a id="rscl1301001" href="${pageContext.request.contextPath}/rscl/1301/001">rscl1301001</a></li>
-    <li><a id="rscl1302001" href="${pageContext.request.contextPath}/rscl/1302/001">rscl1302001</a></li>
-    <li><a id="rscl1302002" href="${pageContext.request.contextPath}/rscl/1302/002">rscl1302002</a></li>
-    <li><a id="rscl1302003" href="${pageContext.request.contextPath}/rscl/1302/003">rscl1302003</a></li>
-    <li><a id="rscl1303001" href="${pageContext.request.contextPath}/rscl/1303/001">rscl1303001</a></li>
-    <li><a id="rscl1303002" href="${pageContext.request.contextPath}/rscl/1303/002">rscl1303002</a></li>
-    <li><a id="rscl1303003" href="${pageContext.request.contextPath}/rscl/1303/003">rscl1303003</a></li>
-    <li><a id="rscl1303004" href="${pageContext.request.contextPath}/rscl/1303/004">rscl1303004</a></li>
+    <li><a id="wbclLink" href="${pageContext.request.contextPath}/wbcl">WebClientで実施</a></li>
   </ul>
 
   <div>[RSCL14] HTTP Proxyの設定</div>
@@ -89,3 +126,8 @@
   </ul>
 
 </div>
+
+  </div>
+  <jsp:include page="/WEB-INF/views/layout/footer.jsp" />
+</body>
+</html>

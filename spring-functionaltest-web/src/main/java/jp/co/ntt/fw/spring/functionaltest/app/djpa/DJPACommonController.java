@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.PessimisticLockingFailureException;
@@ -35,17 +33,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-import com.github.dozermapper.core.MappingException;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABook;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookLZ;
@@ -88,14 +86,14 @@ public class DJPACommonController {
     JpaVendorAdapter jpaVendorAdapter;
 
     @Inject
-    Mapper beaMapper;
+    DJPABeanMapper beaMapper;
 
     @ModelAttribute(value = "jpaBookListForm")
     public JPABookListForm setUpForm() {
         return new JPABookListForm();
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @GetMapping(value = "list")
     public String handle0101001(Model model) {
 
         List<JPABook> bookList = jpaBookService.findAll();
@@ -103,17 +101,17 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @PostMapping(value = "register")
     public String registerBook(Model model, BookForm bookForm,
             RedirectAttributes redirectAttrs) {
-        JPABook jpaBook = beaMapper.map(bookForm, JPABook.class);
+        JPABook jpaBook = beaMapper.map(bookForm);
 
         JPACategory category = jpaCategoryService.getCategoryDetails(bookForm
                 .getCategoryName());
         jpaBook.setCategory(category);
         jpaBook = jpaBookService.addBook(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.map(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("complete", "");
@@ -122,17 +120,17 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerDIV")
+    @PostMapping(value = "register", params = "registerDIV")
     public String registerBookInJPABookLz(Model model, BookForm bookForm,
             RedirectAttributes redirectAttrs) {
-        JPABookLZ jpaBook = beaMapper.map(bookForm, JPABookLZ.class);
+        JPABookLZ jpaBook = beaMapper.mapLZ(bookForm);
 
         JPACategoryLZ category = jpaCategoryLzService.getCategoryDetails(
                 bookForm.getCategoryName());
         jpaBook.setCategory(category);
         jpaBook = jpaBookLZService.addBook(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.mapLZ(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("complete", "");
@@ -141,10 +139,10 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "saveAndFlush")
+    @PostMapping(value = "register", params = "saveAndFlush")
     public String registerBookUsingSaveAndFlush(BookForm bookForm,
             RedirectAttributes redirectAttrs) {
-        JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
+        JPABookEG jpaBook = beaMapper.mapEG(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -153,7 +151,7 @@ public class DJPACommonController {
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
         jpaBook = jpaBookEGService.saveAndFlush(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.mapEG(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("egComplete", "");
@@ -162,10 +160,10 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "flush")
+    @PostMapping(value = "register", params = "flush")
     public String registerBookUsingFlush(BookForm bookForm,
             RedirectAttributes redirectAttrs) throws InterruptedException {
-        JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
+        JPABookEG jpaBook = beaMapper.mapEG(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -174,7 +172,7 @@ public class DJPACommonController {
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
         jpaBook = jpaBookEGService.flush(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.mapEG(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("egComplete", "");
@@ -183,10 +181,10 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "customRepoSave")
+    @PostMapping(value = "register", params = "customRepoSave")
     public String registerBookUsingCustomRepo(BookForm bookForm,
             RedirectAttributes redirectAttrs) {
-        JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
+        JPABookEG jpaBook = beaMapper.mapEG(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -195,7 +193,7 @@ public class DJPACommonController {
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
         jpaBook = jpaBookEGService.saveUsingCustomRepo(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.mapEG(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("egComplete", "");
@@ -203,10 +201,10 @@ public class DJPACommonController {
         return "redirect:register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "noIntfInheriRepoSave")
+    @PostMapping(value = "register", params = "noIntfInheriRepoSave")
     public String registerBookUsingNoIntfInheriRepo(BookForm bookForm,
             RedirectAttributes redirectAttrs) {
-        JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
+        JPABookEG jpaBook = beaMapper.mapEG(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -215,7 +213,7 @@ public class DJPACommonController {
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
         jpaBook = jpaBookEGService.saveUsingNoIntfInheriRepo(jpaBook);
 
-        BookForm form = beaMapper.map(jpaBook, BookForm.class);
+        BookForm form = beaMapper.mapEG(jpaBook);
         form.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("egComplete", "");
@@ -223,7 +221,7 @@ public class DJPACommonController {
         return "redirect:register";
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "customRepoSearch")
+    @GetMapping(value = "existence", params = "customRepoSearch")
     public String searchBookUsingCustomRepo(JPABookListForm jpaBookListForm,
             Model model) {
 
@@ -242,7 +240,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "noPrimaryKeySearch")
+    @GetMapping(value = "existence", params = "noPrimaryKeySearch")
     public String searchBookUsingNonPrimarKey(JPABookListForm jpaBookListForm,
             Model model) {
 
@@ -261,7 +259,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "noIntfInheriRepoSrch")
+    @GetMapping(value = "existence", params = "noIntfInheriRepoSrch")
     public String searchBookUsingNoInterfaceRepo(
             JPABookListForm jpaBookListForm, Model model) {
 
@@ -280,7 +278,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "multiSave")
+    @PostMapping(value = "register", params = "multiSave")
     public String registerBulk(RedirectAttributes redirectAttrs) {
 
         jpaBookEGService.saveMultiple();
@@ -289,7 +287,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "multiSaveFlush")
+    @PostMapping(value = "register", params = "multiSaveFlush")
     public String registerBulkFlush(RedirectAttributes redirectAttrs) {
 
         jpaBookService.saveMultipleFlush();
@@ -298,11 +296,10 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "errorReg")
+    @PostMapping(value = "register", params = "errorReg")
     public String registerBookRollback(Model model, BookForm bookForm,
-            RedirectAttributes redirectAttrs) throws Exception {
-        // SystemExceptionをthrowしているため、SonarQube指摘は未対応としています。
-        JPABook jpaBook = beaMapper.map(bookForm, JPABook.class);
+            RedirectAttributes redirectAttrs) {
+        JPABook jpaBook = beaMapper.map(bookForm);
 
         JPACategory category = jpaCategoryService.getCategoryDetails(bookForm
                 .getCategoryName());
@@ -317,10 +314,10 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "crudReg")
+    @PostMapping(value = "register", params = "crudReg")
     public String registerUsingCrudRepository(Model model, BookForm bookForm,
-            RedirectAttributes redirectAttrs) throws MappingException {
-        JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
+            RedirectAttributes redirectAttrs) {
+        JPABookEG jpaBookEG = beaMapper.mapEG(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -342,7 +339,7 @@ public class DJPACommonController {
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "lazyLoadIntercept")
+    @PostMapping(value = "interceptSrch", params = "lazyLoadIntercept")
     public String searchLazyInterceptDemo(Model model,
             JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -363,7 +360,7 @@ public class DJPACommonController {
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "filterSrch", method = RequestMethod.POST, params = "lazyLoadFilter")
+    @PostMapping(value = "filterSrch", params = "lazyLoadFilter")
     public String searchLazyFilterDemo(Model model,
             JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -385,7 +382,7 @@ public class DJPACommonController {
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "noLazy")
+    @PostMapping(value = "noLazySetting", params = "noLazy")
     public String searchNoLazySetting(Model model, JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -411,7 +408,7 @@ public class DJPACommonController {
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "registerFlashAttribute")
+    @PostMapping(value = "interceptSrch", params = "registerFlashAttribute")
     public String registerFlashAttribute(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -426,7 +423,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "redirectRegisterComplete", method = RequestMethod.GET)
+    @GetMapping(value = "redirectRegisterComplete")
     public String redirectRegisterComplete(
             @ModelAttribute(name = "book", binding = false) JPABookLZ book,
             Model model) {
@@ -447,7 +444,7 @@ public class DJPACommonController {
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringNotForeignKey")
+    @PostMapping(value = "noLazySetting", params = "acquiringNotForeignKey")
     public String searchNoLazySettingAcquiringNotForeignKey(Model model,
             JPABookListForm bookListForm) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -470,7 +467,7 @@ public class DJPACommonController {
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringForeignKey")
+    @PostMapping(value = "noLazySetting", params = "acquiringForeignKey")
     public String searchNoLazySettingAcquiringForeignKey(Model model,
             JPABookListForm bookListForm) {
         Integer bookId = Integer.valueOf(bookListForm
@@ -489,7 +486,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "register", params = "complete")
     public String registerComplete(@RequestParam("id") String id, Model model) {
 
         JPABook book = jpaBookService.findById(id);
@@ -506,7 +503,7 @@ public class DJPACommonController {
         return "djpa/registerComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "egComplete")
+    @GetMapping(value = "register", params = "egComplete")
     public String registerEGComplete(@RequestParam("bookId") String id,
             Model model) {
 
@@ -524,7 +521,7 @@ public class DJPACommonController {
         return "djpa/registerComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "find")
+    @GetMapping(value = "register", params = "find")
     public String displayBookDetail(@RequestParam("bookId") String id,
             Model model) {
 
@@ -542,12 +539,12 @@ public class DJPACommonController {
         return "djpa/registerComplete";
     }
 
-    @RequestMapping(value = "register", params = "form")
+    @PostMapping(value = "register", params = "form")
     public String registerForm(BookForm form, Model model) {
         return "djpa/registerForm";
     }
 
-    @RequestMapping(value = "{id}/update")
+    @GetMapping(value = "{id}/update")
     public String updateForm(@PathVariable("id") String id,
             @Validated BookForm form, BindingResult result, Model model) {
 
@@ -567,7 +564,7 @@ public class DJPACommonController {
         return "djpa/jpaUpdateForm";
     }
 
-    @RequestMapping(value = "{id}/pgUpdate")
+    @GetMapping(value = "{id}/pgUpdate")
     public String paginatedUpdateForm(@PathVariable("id") Integer id,
             @Validated BookForm form, BindingResult result, Model model) {
 
@@ -587,35 +584,35 @@ public class DJPACommonController {
         return "djpa/jpaUpdateForm";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "redo")
+    @PostMapping(value = "{id}/update", params = "redo")
     public String updateRedo(BookForm form, Model model) {
         model.addAttribute("book", form);
 
         return "djpa/jpaUpdateForm";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "{id}/update", params = "cancel")
     public String updatecancel(BookForm form, Model model) {
         // model.addAttribute("book", form);
 
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "register", params = "back")
     public String backToList(BookForm form, Model model) {
         // model.addAttribute("book", form);
 
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "toPageList")
+    @PostMapping(value = "register", params = "toPageList")
     public String backToPageList(Model model) {
         // model.addAttribute("book", form);
 
         return "redirect:/djpa/book/pgList";
     }
 
-    @RequestMapping(value = "0103/001")
+    @GetMapping(value = "0103/001")
     public String handle0103001() {
 
         // List<JPABook> bookList = jpaBookService.getAllBooks();
@@ -628,7 +625,7 @@ public class DJPACommonController {
      * ********************************************
      */
 
-    @RequestMapping(value = "pgList", method = RequestMethod.GET)
+    @GetMapping(value = "pgList")
     public String paginationUsingPageable(
             @PageableDefault(page = 0, size = 4, sort = {
                     "bookId" }, direction = Direction.ASC) Pageable pageable,
@@ -642,7 +639,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deletInBatch")
+    @DeleteMapping(value = "delete", params = "deletInBatch")
     public String defaultDeleteAll(JPABookListForm bookListForm) {
         // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
         String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
@@ -651,7 +648,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteAllById")
+    @DeleteMapping(value = "delete", params = "deleteAllById")
     public String defaultDeleteAllById(JPABookListForm bookListForm) {
         // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
         String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
@@ -660,7 +657,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteAllByIdInBatch")
+    @DeleteMapping(value = "delete", params = "deleteAllByIdInBatch")
     public String defaultDeleteAllByIdInBatch(JPABookListForm bookListForm) {
         // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
         String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
@@ -669,7 +666,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deletAllInBatch")
+    @DeleteMapping(value = "delete", params = "deletAllInBatch")
     public String defaultDeleteSpecifiedEntities() {
 
         jpaBookService.deleteAllInBatch();
@@ -677,7 +674,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deletOne")
+    @DeleteMapping(value = "delete", params = "deletOne")
     public String defaultDeleteOne(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
 
@@ -686,7 +683,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deletIterable")
+    @DeleteMapping(value = "delete", params = "deletIterable")
     public String defaultDeleteIterableList(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
 
@@ -699,7 +696,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteEntity")
+    @DeleteMapping(value = "delete", params = "deleteEntity")
     public String defaultDeleteByEntity(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
 
@@ -711,7 +708,7 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "check")
+    @GetMapping(value = "existence", params = "check")
     public String defaultExistenceCheck(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
         boolean isBookPresent = jpaBookService.isPresent(bookListForm
@@ -720,14 +717,14 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "count")
+    @GetMapping(value = "existence", params = "count")
     public String defaultCount(RedirectAttributes redirectAttrs) {
         long bookCount = jpaBookService.getBookCount();
         redirectAttrs.addFlashAttribute("bookCount", bookCount);
         return "redirect:list";
     }
 
-    @RequestMapping(value = "sort", method = RequestMethod.GET)
+    @GetMapping(value = "sort")
     public String defaultUsingSort(JPABookListForm bookListForm, Model model) {
         String sortFld[] = bookListForm.getSearchOrderBy().split(" ");
         List<JPABook> bookList = jpaBookService.getSortedBookList(sortFld[0],
@@ -754,7 +751,7 @@ public class DJPACommonController {
     /*
      * By Sunil for djpa1202001 Adding the custom methods to all Repository interfaces in batch
      */
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "update")
+    @PostMapping(value = "{id}/update", params = "update")
     public String updateBookUsingProjectRepo(@PathVariable("id") String id,
             @Validated BookUpdateForm bookForm, BindingResult result,
             Model model, RedirectAttributes redirectAttrs) {
@@ -766,7 +763,7 @@ public class DJPACommonController {
         }
 
         bookForm.setBlobCode(null);
-        JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
+        JPABookEG jpaBookEG = beaMapper.map(bookForm);
 
         JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
                 bookForm.getCategoryName());
@@ -776,7 +773,7 @@ public class DJPACommonController {
 
         jpaBookEG = jpaBookEGService.updateUsingMyProjectRepo(jpaBookEG);
 
-        bookForm = beaMapper.map(jpaBookEG, BookUpdateForm.class);
+        bookForm = beaMapper.mapEGToForm(jpaBookEG);
         bookForm.setCategoryName(category.getCategoryName());
 
         redirectAttrs.addAttribute("egComplete", "");
@@ -785,7 +782,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.GET, params = "egComplete")
+    @GetMapping(value = "{id}/update", params = "egComplete")
     public String updateEGComplete(@PathVariable("id") String id, Model model) {
 
         JPABookEG book = jpaBookEGService.findById(Integer.valueOf(id));
@@ -802,13 +799,13 @@ public class DJPACommonController {
         return "djpa/jpaUpdateComplete";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "toPageList")
+    @PostMapping(value = "update", params = "toPageList")
     public String backToPageListfromUpdate(BookForm form, Model model) {
 
         return "redirect:/djpa/book/pgList";
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHint")
+    @GetMapping(value = "existence", params = "lckTmeOutQHint")
     public String lockTimeoutAndPessimisticLocking(
             JPABookListForm jpaBookListForm,
             Model model) throws InterruptedException {
@@ -841,7 +838,7 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHintNoExcp")
+    @GetMapping(value = "existence", params = "lckTmeOutQHintNoExcp")
     public String lockTimeoutAndPessimisticLockingNoExp(
             JPABookListForm jpaBookListForm,
             Model model) throws InterruptedException {

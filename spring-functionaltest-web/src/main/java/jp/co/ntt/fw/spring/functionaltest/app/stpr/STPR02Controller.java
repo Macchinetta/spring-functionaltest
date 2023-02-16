@@ -19,9 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("stpr")
 @Controller
@@ -37,12 +38,12 @@ public class STPR02Controller {
         return new StringProcessing0201002Form();
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle0201001() {
         return "stpr/paddingInput";
     }
 
-    @RequestMapping(value = "0201/001/padding", method = RequestMethod.POST)
+    @PostMapping(value = "0201/001/padding")
     public String handle0201001Padding(Model model,
             @Validated StringProcessing0201001Form form, BindingResult result) {
 
@@ -56,12 +57,12 @@ public class STPR02Controller {
         return "stpr/paddingResult";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle0201002() {
         return "stpr/suppressInput";
     }
 
-    @RequestMapping(value = "0201/002/suppress", method = RequestMethod.POST)
+    @PostMapping(value = "0201/002/suppress")
     public String handle0201002Suppress(Model model,
             StringProcessing0201002Form form) {
 

@@ -19,8 +19,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class THYM0502Controller {
@@ -30,13 +30,13 @@ public class THYM0502Controller {
         return new UserForm();
     }
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle0502001(Model model) {
         model.addAttribute("date", new Date(1510704000000L));
         return "thym/creationDate";
     }
 
-    @RequestMapping("002")
+    @GetMapping("002")
     public String handle0502002(Model model) {
         model.addAttribute("date", new Date());
         return "thym/cacheCheck";

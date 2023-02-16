@@ -44,8 +44,28 @@
 
   <context:annotation-config />
 
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0601004Controller" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.EmployeeHelper" />
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleSessionInfo" />
+  <!-- MapStructの為 component-scan とする -->
+  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app.exhn">
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleFileHelper" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0201001Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN02Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN03Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0601002Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN0601003Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN06Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN7Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN08Controller" />
+    <context:exclude-filter type="assignable"
+      expression="jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHNController" />
+  </context:component-scan>
 
 </beans>

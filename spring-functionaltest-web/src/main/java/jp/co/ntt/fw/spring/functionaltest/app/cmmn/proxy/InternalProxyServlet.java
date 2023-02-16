@@ -19,18 +19,18 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Objects;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.eclipse.jetty.proxy.ProxyServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 /**
  * アプリケーション内部ProxyServer用のサーブレット
- * 
+ *
  * <pre>
  * 認証が必要なURLのパスの場合、プロキシ用の認証ヘッダ("Proxy-Authorization")が必要となる。<br>
  * レスポンスヘッダに"Pass-Internal-Proxy"を追加する。
@@ -43,22 +43,17 @@ public class InternalProxyServlet extends ProxyServlet {
     private static final Logger logger = LoggerFactory.getLogger(
             InternalProxyServlet.class);
 
-    private static String proxyUseAuthPath;
+    private final String proxyUseAuthPath;
 
-    private static String proxyUserName;
+    private final String proxyUserName;
 
-    private static String proxyPassword;
+    private final String proxyPassword;
 
-    public static void setProxyUseAuthPath(String proxyUseAuthPath) {
-        InternalProxyServlet.proxyUseAuthPath = proxyUseAuthPath;
-    }
-
-    public static void setProxyUserName(String proxyUserName) {
-        InternalProxyServlet.proxyUserName = proxyUserName;
-    }
-
-    public static void setProxyPassword(String proxyPassword) {
-        InternalProxyServlet.proxyPassword = proxyPassword;
+    public InternalProxyServlet(String proxyUseAuthPath, String proxyUserName,
+            String proxyPassword) {
+        this.proxyUseAuthPath = proxyUseAuthPath;
+        this.proxyUserName = proxyUserName;
+        this.proxyPassword = proxyPassword;
     }
 
     @Override
@@ -68,8 +63,8 @@ public class InternalProxyServlet extends ProxyServlet {
 
     /*
      * (non-Javadoc)
-     * @see org.eclipse.jetty.proxy.ProxyServlet#service(javax.servlet.http. HttpServletRequest,
-     * javax.servlet.http.HttpServletResponse)
+     * @see org.eclipse.jetty.proxy.ProxyServlet#service(jakarta.servlet.http. HttpServletRequest,
+     * jakarta.servlet.http.HttpServletResponse)
      */
     @Override
     protected void service(final HttpServletRequest request,
@@ -82,7 +77,7 @@ public class InternalProxyServlet extends ProxyServlet {
             return;
         }
 
-        // javax.servlet.Servlet.service
+        // jakarta.servlet.Servlet.service
         super.service(request, response);
 
         // レスポンスヘッダに"Pass-Internal-Proxy"を追加
@@ -102,8 +97,7 @@ public class InternalProxyServlet extends ProxyServlet {
             final HttpServletResponse response) throws IOException {
 
         // URIに認証が必要なURLのパスが含まれない場合、認証不要。
-        if (!request.getPathInfo().contains(
-                InternalProxyServlet.proxyUseAuthPath)) {
+        if (!request.getPathInfo().contains(this.proxyUseAuthPath)) {
             return true;
         }
 
@@ -125,8 +119,8 @@ public class InternalProxyServlet extends ProxyServlet {
 
         // 認証情報の判定
         if (credentials != null && Objects.equals(credentials[0],
-                InternalProxyServlet.proxyUserName) && Objects.equals(
-                        credentials[1], InternalProxyServlet.proxyPassword)) {
+                this.proxyUserName) && Objects.equals(credentials[1],
+                        this.proxyPassword)) {
             // 認証情報が正しい場合、trueを返す。
             return true;
         } else {
@@ -144,7 +138,7 @@ public class InternalProxyServlet extends ProxyServlet {
      * Proxy-Authorizationヘッダーの値は、Basic認証の場合「Baseic 認証情報」形式。<br>
      * また、認証情報の値は、「ユーザ:パスワード」形式の値をBase64で変換されている。
      * </pre>
-     * 
+     *
      * @param header HTTPリクエストヘッダのProxy-Authorizationの値
      * @return 認証情報(1要素目：ユーザ、2要素目：パスワード)、ｎｕｌｌ：認証情報不正
      * @throws IOException

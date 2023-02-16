@@ -19,10 +19,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.AccessDeniedException;
@@ -34,6 +30,9 @@ import org.terasoluna.gfw.common.exception.SystemException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;

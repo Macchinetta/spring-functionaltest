@@ -17,18 +17,19 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UrlPathHelper;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
+
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RequestMapping("shopping/cart")
 @TransactionTokenCheck("shopping/cart")
@@ -43,7 +44,7 @@ public class SSMN04ShoppingCartController {
 
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @TransactionTokenCheck(value = "cart", type = TransactionTokenType.BEGIN)
     public String cart(CartItemsForm form) {
 
@@ -54,7 +55,7 @@ public class SSMN04ShoppingCartController {
         return "ssmn/shoppingCart";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "order")
+    @PostMapping(params = "order")
     @TransactionTokenCheck(value = "cart")
     public String shoppingOrderComfirm(@Validated CartItemsForm form,
             BindingResult bindingResult, Model model,

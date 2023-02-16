@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class VLDT0502Controller {
@@ -32,12 +32,12 @@ public class VLDT0502Controller {
         return new RoleForCollectionForm();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001Form() {
         return form();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     public String handleValidate(@Valid RoleForCollectionForm form,
             BindingResult result, Model model) {
         return form();

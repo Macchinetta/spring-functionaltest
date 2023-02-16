@@ -30,8 +30,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -40,73 +41,73 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 @RequestMapping("exhn")
 public class EXHN07Controller {
 
-    @RequestMapping(value = "0701/001", method = RequestMethod.POST)
+    @PostMapping(value = "0701/001")
     public String handle0701001() {
 
         return "cspr/exhn";
     }
 
-    @RequestMapping(value = "0701/002")
+    @GetMapping(value = "0701/002")
     public String handle0701002() throws HttpMediaTypeNotSupportedException {
 
         throw new HttpMediaTypeNotSupportedException("");
 
     }
 
-    @RequestMapping(value = "0701/003")
+    @GetMapping(value = "0701/003")
     public String handle0701003() throws HttpMediaTypeNotAcceptableException {
 
         throw new HttpMediaTypeNotAcceptableException("");
 
     }
 
-    @RequestMapping(value = "0701/004")
+    @GetMapping(value = "0701/004")
     public String handle0701004() throws MissingPathVariableException {
 
         throw new MissingPathVariableException(null, null);
 
     }
 
-    @RequestMapping(value = "0701/005")
+    @GetMapping(value = "0701/005")
     public String handle0701005() throws MissingServletRequestParameterException {
 
         throw new MissingServletRequestParameterException("", "");
 
     }
 
-    @RequestMapping(value = "0701/006")
+    @GetMapping(value = "0701/006")
     public String handle0701006() throws ServletRequestBindingException {
 
         throw new ServletRequestBindingException("");
 
     }
 
-    @RequestMapping(value = "0701/007")
+    @GetMapping(value = "0701/007")
     public String handle0701007() throws ConversionNotSupportedException {
 
         throw new ConversionNotSupportedException("", String.class, new Throwable());
 
     }
 
-    @RequestMapping(value = "0701/008")
+    @GetMapping(value = "0701/008")
     public String handle0701008(@RequestParam("id") int id) {
 
         return "cspr/exhn";
     }
 
-    @RequestMapping(value = "0701/009")
+    @GetMapping(value = "0701/009")
     public String handle0701009() throws HttpMessageNotReadableException {
 
         throw new HttpMessageNotReadableException("", (HttpInputMessage) null);
     }
 
-    @RequestMapping(value = "0701/010")
+    @GetMapping(value = "0701/010")
     public String handle0701010() throws HttpMessageNotWritableException {
 
         throw new HttpMessageNotWritableException("");
     }
 
-    @RequestMapping(value = "0701/011")
+    @GetMapping(value = "0701/011")
     public String handle0701011(@Validated EmployeeForm form,
             BindingResult result) throws MethodArgumentNotValidException, NoSuchMethodException, SecurityException {
 
@@ -115,27 +116,27 @@ public class EXHN07Controller {
                         BindingResult.class), 0), result);
     }
 
-    @RequestMapping(value = "0701/012")
+    @GetMapping(value = "0701/012")
     public String handle0701012() throws MissingServletRequestPartException {
 
         throw new MissingServletRequestPartException("");
     }
 
-    @RequestMapping(value = "0701/013")
+    @GetMapping(value = "0701/013")
     public String handle0701013(
             @Validated EmployeeForm form) throws BindException {
 
         return "cspr/exhn";
     }
 
-    @RequestMapping(value = "0701/015")
+    @GetMapping(value = "0701/015")
     public String handle0701015() throws AsyncRequestTimeoutException {
 
         throw new AsyncRequestTimeoutException();
 
     }
 
-    @RequestMapping(value = "0701/016")
+    @GetMapping(value = "0701/016")
     public String handle0701016() {
 
         return "exhn/index";

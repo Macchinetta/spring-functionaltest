@@ -71,14 +71,8 @@
   <!-- Settings View Resolver. -->
   <mvc:view-resolvers>
     <mvc:bean-name />
-    <mvc:tiles />
     <mvc:jsp prefix="/WEB-INF/views/" />
   </mvc:view-resolvers>
-
-  <mvc:tiles-configurer>
-    <mvc:definitions location="/WEB-INF/tiles/tiles-definitions-tlly.xml" />
-    <mvc:definitions location="/WEB-INF/tiles/tiles-definitions.xml" />
-  </mvc:tiles-configurer>
 
   <bean id="requestDataValueProcessor" class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
     <constructor-arg>
@@ -112,7 +106,6 @@
         <entry key="InvalidRequestException" value="common/error/operationError" />
         <entry key="MultipartException" value="common/error/fileUploadError" />
         <entry key="HttpSessionRequiredException" value="common/error/operationError" />
-        <entry key="MappingException" value="common/error/beanMappingError" />
         <entry key="IntentionalException" value="common/error/intentionalError" />
         <!-- <entry key="AccessDeniedException" value="common/error/accessDeniedError" /> -->
       </map>
@@ -126,7 +119,6 @@
         <entry key="common/error/dataAccessError" value="500" />
         <entry key="common/error/operationError" value="400" />
         <entry key="common/error/fileUploadError" value="400" />
-        <entry key="common/error/beanMappingError" value="500" />
         <entry key="common/error/intentionalError" value="500" />
         <!-- <entry key="common/error/accessDeniedError" value="403" /> -->
       </map>

@@ -57,7 +57,7 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
                 // 画面遷移
                 webDriverOperations.click(id(buttonNames[i]));
                 // 各画面へ遷移したことをチェック
-                webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
+                assertThat(webDriverOperations.getText(id("screenTitle")), is(
                         screenTitles[i]));
             }
         }
@@ -105,10 +105,10 @@ public class DoubleSubmitProtectionMultipleBrowserTest extends
                     {
                         // エラー画面表示まで待機
                         String expectedTitle = "Transaction Token Error!";
-                        browsers[j].waitForDisplayed(titleIs(expectedTitle));
+                        assertThat(browsers[j].getTitle(), is(expectedTitle));
                     }
                 } else {
-                    browsers[j].waitForDisplayed(textToBe(id("screenTitle"),
+                    assertThat(browsers[j].getText(id("screenTitle")), is(
                             screenTitles[i]));
                 }
             }

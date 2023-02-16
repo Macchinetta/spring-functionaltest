@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class THYM0602Controller {
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String testTHYM0602001() {
         return "thym/cacheTTLMs";
     }

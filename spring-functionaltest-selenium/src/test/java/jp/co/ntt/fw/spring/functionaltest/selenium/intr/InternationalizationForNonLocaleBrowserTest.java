@@ -419,6 +419,9 @@ public class InternationalizationForNonLocaleBrowserTest extends
      * <li>ignoreInvalidLocaleプロパティにfalseを設定する場合、無効なロケールのリクエストでエラーが発生することの確認</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testINTR0201007() {
         {

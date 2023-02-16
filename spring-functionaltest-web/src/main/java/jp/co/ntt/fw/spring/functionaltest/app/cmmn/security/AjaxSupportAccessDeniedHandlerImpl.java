@@ -18,16 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.cmmn.security;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.inject.Inject;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.terasoluna.gfw.web.util.RequestUtils;
+
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class AjaxSupportAccessDeniedHandlerImpl extends
                                                 AccessDeniedHandlerImpl {

@@ -15,14 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dnta;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dnta.DateAndTimeApiService;
 
 @RequestMapping("dnta")
@@ -47,27 +46,27 @@ public class DNTA02Controller {
         return new CompareZonedDateTimeForm();
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle01001() {
         return "dnta/duration";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle01002() {
         return "dnta/duration";
     }
 
-    @RequestMapping(value = "0202/001", method = RequestMethod.GET)
+    @GetMapping(value = "0202/001")
     public String handle02001() {
         return "dnta/duration";
     }
 
-    @RequestMapping(value = "0202/002", method = RequestMethod.GET)
+    @GetMapping(value = "0202/002")
     public String handle02002() {
         return "dnta/duration";
     }
 
-    @RequestMapping(value = "duration", method = RequestMethod.GET, params = "compareDate")
+    @GetMapping(value = "duration", params = "compareDate")
     public String handleCompareDate(CompareDateForm form, Model model) {
 
         int[] result = dateAndTimeApiService.compareDate(form.getYear1(), form
@@ -84,7 +83,7 @@ public class DNTA02Controller {
         return "dnta/showPeriod";
     }
 
-    @RequestMapping(value = "duration", method = RequestMethod.GET, params = "compareTime")
+    @GetMapping(value = "duration", params = "compareTime")
     public String handleCompareTime(CompareTimeForm form, Model model) {
 
         long[] result = dateAndTimeApiService.compareTime(form.getHour1(), form
@@ -101,7 +100,7 @@ public class DNTA02Controller {
         return "dnta/showDuration";
     }
 
-    @RequestMapping(value = "duration", method = RequestMethod.GET, params = "compareTimeWithSummerTime")
+    @GetMapping(value = "duration", params = "compareTimeWithSummerTime")
     public String handleCompareTimeWithSummerTime(CompareZonedDateTimeForm form,
             Model model) {
         long[] result = dateAndTimeApiService.compareTime(form

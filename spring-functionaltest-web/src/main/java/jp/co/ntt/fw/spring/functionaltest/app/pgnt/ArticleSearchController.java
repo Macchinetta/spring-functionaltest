@@ -15,8 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 
-import javax.inject.Inject;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -24,10 +22,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Article;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.pgnt.ArticleService;
@@ -45,7 +43,7 @@ public class ArticleSearchController {
         return criteria;
     }
 
-    @RequestMapping(value = "articleSearch", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearch")
     public String search(ArticleSearchCriteria criteria,
             @PageableDefault(page = 0, size = 6, direction = Direction.DESC, sort = {
                     "article_id" }) Pageable pageable, Model model) {
@@ -56,7 +54,7 @@ public class ArticleSearchController {
         return "pgnt/articleList";
     }
 
-    @RequestMapping(value = "articleSearchDispTen", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchDispTen")
     public String searchDispTen(ArticleSearchCriteria criteria,
             @PageableDefault Pageable pageable, Model model) {
 
@@ -66,7 +64,7 @@ public class ArticleSearchController {
         return "pgnt/articleList";
     }
 
-    @RequestMapping(value = "articleSearchDispEleven", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchDispEleven")
     public String searchDispEleven(ArticleSearchCriteria criteria,
             @PageableDefault(11) Pageable pageable, Model model) {
 
@@ -76,7 +74,7 @@ public class ArticleSearchController {
         return "pgnt/articleList";
     }
 
-    @RequestMapping(value = "articleSearchDispTwelve", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchDispTwelve")
     public String searchDispTwelve(ArticleSearchCriteria criteria,
             @PageableDefault(12) @SortDefault(sort = "article_id", direction = Direction.DESC) Pageable pageable,
             Model model) {
@@ -87,7 +85,7 @@ public class ArticleSearchController {
         return "pgnt/articleList";
     }
 
-    @RequestMapping(value = "articleSearchDispTwenty", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchDispTwenty")
     public String searchDispTwenty(ArticleSearchCriteria criteria,
             Pageable pageable, Model model) {
 
@@ -97,7 +95,7 @@ public class ArticleSearchController {
         return "pgnt/articleList";
     }
 
-    @RequestMapping(value = "articleSearchSortSpecified", method = RequestMethod.GET)
+    @GetMapping(value = "articleSearchSortSpecified")
     public String searchSortSpecified(ArticleSearchCriteria criteria,
             @PageableDefault(sort = "article_id") Pageable pageable,
             Model model) {

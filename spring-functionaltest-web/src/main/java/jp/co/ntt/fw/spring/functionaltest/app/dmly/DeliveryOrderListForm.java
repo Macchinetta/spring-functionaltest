@@ -16,8 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.dmly;
 
 import java.io.Serializable;
-
-import org.joda.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 public class DeliveryOrderListForm implements Serializable {
 

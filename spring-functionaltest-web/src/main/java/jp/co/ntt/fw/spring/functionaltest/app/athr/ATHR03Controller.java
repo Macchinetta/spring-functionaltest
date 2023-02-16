@@ -15,16 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athr;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.SystemConfig;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athr.SystemConfigService;
 
@@ -35,19 +32,19 @@ public class ATHR03Controller {
     SystemConfigService systemConfigService;
 
     @Inject
-    Mapper beanMapper;
+    ATHRBeanMapper beanMapper;
 
-    @RequestMapping("0301/001")
+    @GetMapping("0301/001")
     public String handle0301001loginForStaff() {
         return "athr/loginForMethod";
     }
 
-    @RequestMapping(value = "0301/001/afterLogin")
+    @GetMapping(value = "0301/001/afterLogin")
     public String handle0301001afterLogin() {
         return "athr/methodChoosePage";
     }
 
-    @RequestMapping(value = "0301/001", params = "select")
+    @GetMapping(value = "0301/001", params = "select")
     public String handle0301001select(SystemConfigForm systemConfigForm,
             Model model) {
 
@@ -63,16 +60,15 @@ public class ATHR03Controller {
         return systemConfigForm;
     }
 
-    @RequestMapping(value = "0301/001", params = "insert")
+    @GetMapping(value = "0301/001", params = "insert")
     public String handle0301001insert(SystemConfigForm systemConfigForm) {
         return "athr/methodAccessAllowedInsertPage";
     }
 
-    @RequestMapping(value = "0301/001", params = "register")
+    @GetMapping(value = "0301/001", params = "register")
     public String handle0301001register(SystemConfigForm systemConfigForm,
             Model model, RedirectAttributes redirectAttributes) {
-        SystemConfig systemConfig = beanMapper.map(systemConfigForm,
-                SystemConfig.class);
+        SystemConfig systemConfig = beanMapper.map(systemConfigForm);
         systemConfigService.insertForAdmin(systemConfig);
         redirectAttributes.addFlashAttribute("systemConfigForm",
                 systemConfigForm);

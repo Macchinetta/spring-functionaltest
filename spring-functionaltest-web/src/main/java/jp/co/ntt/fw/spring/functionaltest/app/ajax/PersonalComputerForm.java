@@ -17,8 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.ajax;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class PersonalComputerForm implements Serializable {
 

@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.excn;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import org.springframework.dao.PessimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +25,7 @@ import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.excn.StockRepository;
 
@@ -46,7 +45,7 @@ public class StockPessimisticLockServiceImpl implements
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -60,7 +59,7 @@ public class StockPessimisticLockServiceImpl implements
     public Stock buy(Stock stock, int purchasingQuantity) {
         Stock subject = null;
         try {
-            subject = stockRepository.selectByItemCodeWithPessimisticLock(stock
+            subject = stockRepository.findByItemCodeWithPessimisticLock(stock
                     .getItemCode());
         } catch (PessimisticLockingFailureException e) {
             latchToupdate.countDown();

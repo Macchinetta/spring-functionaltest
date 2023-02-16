@@ -15,12 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.validation.ConstraintViolationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice(basePackages = "jp.co.ntt.fw.spring.functionaltest.app.vldt")
 public class ConstraintViolationExceptionHandler {
@@ -29,7 +30,7 @@ public class ConstraintViolationExceptionHandler {
 
     @ExceptionHandler
     public String handleConstraintViolationException(
-            ConstraintViolationException e) {
+            ConstraintViolationException e, Model model) {
         logger.error("ConstraintViolations[\n{}\n]", e
                 .getConstraintViolations());
         return "common/error/systemError";

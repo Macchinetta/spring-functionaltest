@@ -18,16 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.encr;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.encr.EncryptionDataService;
 
 @Controller
@@ -37,27 +37,27 @@ public class ENCR01Controller {
     @Inject
     EncryptionDataService encryptionDataService;
 
-    @RequestMapping(value = "/0101/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0101/001")
     public String handle0101001(Model model, EncryptionDataForm form) {
         return "encr/encryptDecryptByTextEncryptor";
     }
 
-    @RequestMapping(value = "/0103/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0103/001")
     public String handle0103001(Model model, EncryptionDataForm form) {
         return "encr/encryptDecryptByBytesEncryptor";
     }
 
-    @RequestMapping(value = "/0104/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0104/001")
     public String handle0104001(Model model, EncryptionDataForm form) {
         return "encr/encryptDecryptTextByAesWithGcm";
     }
 
-    @RequestMapping(value = "/0105/001", method = RequestMethod.GET)
+    @GetMapping(value = "/0105/001")
     public String handle0105001(Model model, EncryptionDataForm form) {
         return "encr/encryptDecryptBytesByAesWithGcm";
     }
 
-    @RequestMapping(value = "0101/001/encryptDecryptByTextEncryptor", method = RequestMethod.POST)
+    @PostMapping(value = "0101/001/encryptDecryptByTextEncryptor")
     public String encryptByTextEncryptor(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -73,7 +73,7 @@ public class ENCR01Controller {
         return "encr/encryptCompleteByTextEncryptor";
     }
 
-    @RequestMapping(value = "0103/001/encryptDecryptByBytesEncryptor", method = RequestMethod.POST)
+    @PostMapping(value = "0103/001/encryptDecryptByBytesEncryptor")
     public String encryptByBytesEncryptor(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -90,7 +90,7 @@ public class ENCR01Controller {
         return "encr/encryptCompleteByBytesEncryptor";
     }
 
-    @RequestMapping(value = "0104/001/encryptDecryptTextByAesWithGcm", method = RequestMethod.POST)
+    @PostMapping(value = "0104/001/encryptDecryptTextByAesWithGcm")
     public String encryptTextByAesWithGcm(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -106,7 +106,7 @@ public class ENCR01Controller {
         return "encr/encryptCompleteTextByAesWithGcm";
     }
 
-    @RequestMapping(value = "0105/001/encryptDecryptBytesByAesWithGcm", method = RequestMethod.POST)
+    @PostMapping(value = "0105/001/encryptDecryptBytesByAesWithGcm")
     public String encryptBytesByAesWithGcm(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {

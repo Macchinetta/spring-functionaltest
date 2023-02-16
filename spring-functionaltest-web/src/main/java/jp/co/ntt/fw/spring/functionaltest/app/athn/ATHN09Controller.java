@@ -19,14 +19,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails;
 
 @Controller
 public class ATHN09Controller {
 
-    @RequestMapping(value = "0901/001", params = "loginSuccess")
+    @GetMapping(value = "0901/001", params = "loginSuccess")
     public String handle0901LoginSuccess(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext()

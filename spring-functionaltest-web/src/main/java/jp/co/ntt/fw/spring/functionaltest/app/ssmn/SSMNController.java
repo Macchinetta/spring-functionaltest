@@ -16,13 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping("ssmn")
 @Controller
 public class SSMNController {
 
-    @RequestMapping
+    @GetMapping
     public String handle() {
         return "ssmn/index";
     }

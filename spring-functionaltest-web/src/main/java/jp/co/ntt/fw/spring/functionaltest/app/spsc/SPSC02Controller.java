@@ -16,37 +16,37 @@
 package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SPSC02Controller {
 
-    @RequestMapping("0201/001")
+    @GetMapping("0201/001")
     public String handle0201001() {
         return "spsc/result";
     }
 
-    @RequestMapping("0201/002")
+    @GetMapping("0201/002")
     public String handle0201002() {
         return "spsc/result";
     }
 
-    @RequestMapping("0201/003")
+    @GetMapping("0201/003")
     public String handle0201003() {
         return "spsc/result";
     }
 
-    @RequestMapping("0201/004")
+    @GetMapping("0201/004")
     public String handle0201004() {
         return "spsc/result";
     }
 
-    @RequestMapping("0201/005")
+    @GetMapping("0201/005")
     public String handle0201005() {
         return "spsc/result";
     }
 
-    @RequestMapping("0201/006")
+    @GetMapping("0201/006")
     public String handle0201006() {
         return "spsc/result";
     }

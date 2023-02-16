@@ -16,9 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import org.joda.time.DateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class AutoMapTodoMB3 implements Serializable {
 
@@ -32,9 +31,9 @@ public class AutoMapTodoMB3 implements Serializable {
 
     private boolean finished;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    private DateTime completeAt;
+    private LocalDateTime completeAt;
 
     private long version;
 
@@ -66,11 +65,11 @@ public class AutoMapTodoMB3 implements Serializable {
         return version;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -86,11 +85,11 @@ public class AutoMapTodoMB3 implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public DateTime getCompleteAt() {
+    public LocalDateTime getCompleteAt() {
         return completeAt;
     }
 
-    public void setCompleteAt(DateTime completeAt) {
+    public void setCompleteAt(LocalDateTime completeAt) {
         this.completeAt = completeAt;
     }
 

@@ -16,9 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
-
-import org.joda.time.DateTime;
 
 public class BookForm implements Serializable {
 
@@ -42,11 +41,11 @@ public class BookForm implements Serializable {
 
     private String createdBy;
 
-    private DateTime createdDate;
+    private LocalDate createdDate;
 
     private String lastModifiedBy;
 
-    private DateTime lastModifiedDate;
+    private LocalDate lastModifiedDate;
 
     private String category;
 
@@ -150,11 +149,11 @@ public class BookForm implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public DateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(DateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -166,11 +165,11 @@ public class BookForm implements Serializable {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public DateTime getLastModifiedDate() {
+    public LocalDate getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(DateTime lastModifiedDate) {
+    public void setLastModifiedDate(LocalDate lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

@@ -20,20 +20,18 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.Map;
 
-import javax.activation.DataHandler;
-import javax.activation.FileDataSource;
-import javax.annotation.Resource;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.handler.MessageContext;
-
+import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.remoting.RemoteAccessException;
-import org.springframework.remoting.jaxws.JaxWsSoapFaultException;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.activation.DataHandler;
+import jakarta.activation.FileDataSource;
+import jakarta.annotation.Resource;
+import jakarta.xml.ws.BindingProvider;
+import jakarta.xml.ws.handler.MessageContext;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 import jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
@@ -46,8 +44,8 @@ public class TodoProxyServiceImpl implements TodoProxyService {
     private static final Logger logger = LoggerFactory.getLogger(
             TodoProxyServiceImpl.class);
 
-    @Resource
-    private Map<String, TodoWebService> todoWebServices;
+    // @Resource
+    private Map<String, TodoWebService> todoWebServices = MapUtils.EMPTY_MAP;
 
     @Override
     public List<Todo> getTodos(String webServiceKey) {
@@ -70,8 +68,9 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         } catch (WebFaultException e) {
             loggingWebFault(e);
             throw new SystemException("e.sf.cmmn.9001", e);
-        } catch (RemoteAccessException e) {
-            throw e;
+            // TODO remoting deleted
+            // } catch (RemoteAccessException e) {
+            // throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
         }
@@ -137,8 +136,9 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         } catch (WebFaultException e) {
             loggingWebFault(e);
             throw new SystemException("e.sf.cmmn.9001", e);
-        } catch (JaxWsSoapFaultException e) {
-            throw e;
+            // TODO remoting deleted
+            // } catch (JaxWsSoapFaultException e) {
+            // throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
         }
@@ -154,14 +154,15 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         } catch (WebFaultException e) {
             loggingWebFault(e);
             throw new SystemException("e.sf.cmmn.9001", e);
-        } catch (RemoteAccessException e) {
-            Throwable cause = e;
-            while ((cause = cause.getCause()) != null) {
-                if (cause instanceof SocketTimeoutException) {
-                    throw new SystemException("e.sf.cmmn.9001", cause);
-                }
-            }
-            throw e;
+            // TODO remoting deleted
+            // } catch (RemoteAccessException e) {
+            // Throwable cause = e;
+            // while ((cause = cause.getCause()) != null) {
+            // if (cause instanceof SocketTimeoutException) {
+            // throw new SystemException("e.sf.cmmn.9001", cause);
+            // }
+            // }
+            // throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
         }

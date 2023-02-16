@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
@@ -141,6 +142,7 @@ public class DateOperationTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
+            // DateMidnight#toString()参照
             assertThat(webDriverOperations.getText(id("getDateResult")), is(
                     "2013/12/09 00:00:00.000 +09:00"));
         }
@@ -1432,6 +1434,7 @@ public class DateOperationTest extends FunctionTestSupport {
      * <li>JSPにJodaのformatタグを使用した場合、DateTimeオブジェクトをフォーマットして表示することを確認する。</li>
      * </ul>
      */
+    @Ignore("JODA Tag Library は JakartaEE10 に対応していない")
     @Test
     public void testDTOP0501001() {
 
@@ -1459,6 +1462,7 @@ public class DateOperationTest extends FunctionTestSupport {
      * <li>JSPにJodaのformatタグを使用した場合、LocalDateTimeオブジェクトをフォーマットして表示することを確認する。</li>
      * </ul>
      */
+    @Ignore("JODA Tag Library は JakartaEE10 に対応していない")
     @Test
     public void testDTOP0501002() {
 
@@ -1486,6 +1490,7 @@ public class DateOperationTest extends FunctionTestSupport {
      * <li>JSPにJodaのformatタグを使用した場合、LocalDateオブジェクトをフォーマットして表示することを確認する。</li>
      * </ul>
      */
+    @Ignore("JODA Tag Library は JakartaEE10 に対応していない")
     @Test
     public void testDTOP0501003() {
 
@@ -1513,6 +1518,7 @@ public class DateOperationTest extends FunctionTestSupport {
      * <li>JSPにJodaのformatタグを使用した場合、LocalTimeオブジェクトをフォーマットして表示することを確認する。</li>
      * </ul>
      */
+    @Ignore("JODA Tag Library は JakartaEE10 に対応していない")
     @Test
     public void testDTOP0501004() {
 

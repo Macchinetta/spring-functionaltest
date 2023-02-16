@@ -21,8 +21,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class ATHN17Controller {
@@ -32,32 +33,32 @@ public class ATHN17Controller {
         return new LoginForm();
     }
 
-    @RequestMapping(value = "1701/001")
+    @GetMapping(value = "1701/001")
     public String handle0201001() {
         return "athn/loginCustomer";
     }
 
-    @RequestMapping(value = "1701/001", params = "loginSuccess")
+    @GetMapping(value = "1701/001", params = "loginSuccess")
     public String handle1701001LoginSuccess() {
         return "athn/showCustomerInfo";
     }
 
-    @RequestMapping(value = "1702/001")
+    @GetMapping(value = "1702/001")
     public String handle1702001() {
         return "athn/loginCustomerCompanyId";
     }
 
-    @RequestMapping(value = "1702/001", params = "loginSuccess")
+    @GetMapping(value = "1702/001", params = "loginSuccess")
     public String handle1702001LoginSuccess() {
         return "athn/showCustomerCompanyInfo";
     }
 
-    @RequestMapping(value = "1703/001")
+    @GetMapping(value = "1703/001")
     public String handle0102001(Model model, LoginForm form) {
         return "athn/loginForBeanValidationAuthentication";
     }
 
-    @RequestMapping(value = "1703/001/login")
+    @PostMapping(value = "1703/001/login")
     public String handle1703001login(@Validated LoginForm form,
             BindingResult result) {
         if (result.hasErrors()) {
@@ -66,7 +67,7 @@ public class ATHN17Controller {
         return "forward:authenticate";
     }
 
-    @RequestMapping(value = "1703/001", params = "loginSuccess")
+    @GetMapping(value = "1703/001", params = "loginSuccess")
     public String handle0101LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());

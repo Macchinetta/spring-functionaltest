@@ -15,16 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.MailReceivingSharedService;
 
@@ -41,12 +41,12 @@ public class ReceiveMailController {
         return form;
     }
 
-    @RequestMapping(value = "receivemail", method = RequestMethod.GET)
+    @GetMapping(value = "receivemail")
     public String handle() {
         return "emal/receiveMail";
     }
 
-    @RequestMapping(value = "receivemail", method = RequestMethod.POST)
+    @PostMapping(value = "receivemail")
     public String handleReceiveMail(Model model,
             EmailReceivingForm form) throws InterruptedException {
 

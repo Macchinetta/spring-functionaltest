@@ -36,11 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.inject.Inject;
-import javax.jms.JMSException;
-import javax.jms.QueueBrowser;
-import javax.jms.Session;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +45,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
+import jakarta.jms.JMSException;
+import jakarta.jms.QueueBrowser;
+import jakarta.jms.Session;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoRepository;
 
@@ -230,7 +229,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         return data;
     }
 
-    public List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate,
+    public List<jakarta.jms.Message> getMessages(JmsTemplate jmsTemplate,
             String distinationName) throws JMSException {
 
         // JMSからメッセージ件数取得
@@ -238,21 +237,21 @@ public class JmsSharedServiceImpl implements JmsSharedService {
 
     }
 
-    public List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
-            String distinationName,
+    public List<jakarta.jms.Message> getMessagesSelected(
+            JmsTemplate jmsTemplate, String distinationName,
             String messageSelector) throws JMSException {
 
         // JMSからメッセージ件数取得
         return jmsTemplate.browseSelected(distinationName, messageSelector,
-                new BrowserCallback<List<javax.jms.Message>>() {
+                new BrowserCallback<List<jakarta.jms.Message>>() {
 
                     @Override
-                    public List<javax.jms.Message> doInJms(Session session,
+                    public List<jakarta.jms.Message> doInJms(Session session,
                             QueueBrowser browser) throws JMSException {
-                        List<javax.jms.Message> list = new ArrayList<javax.jms.Message>();
+                        List<jakarta.jms.Message> list = new ArrayList<jakarta.jms.Message>();
                         Enumeration<?> messages = browser.getEnumeration();
                         while (messages.hasMoreElements()) {
-                            list.add((javax.jms.Message) messages
+                            list.add((jakarta.jms.Message) messages
                                     .nextElement());
                         }
                         return list;
@@ -273,7 +272,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
 
     @Override
     public JmsTodo find(String jmsTodoId) {
-        return jmsTodoRepository.findOneById(jmsTodoId);
+        return jmsTodoRepository.findById(jmsTodoId);
     }
 
 }

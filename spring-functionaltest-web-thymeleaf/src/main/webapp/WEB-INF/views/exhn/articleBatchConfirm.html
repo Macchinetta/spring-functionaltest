@@ -9,7 +9,7 @@
 
       <h3 id="screenTitle">記事登録確認画面</h3>
 
-      <form th:action="@{/exhn/{testNumber}/register(testNumber=${testNumber})}"
+      <form th:action="@{/exhn{testNumber}/register(testNumber=${testNumber})}"
         th:object="${articleBatchRegisterForm}" method="POST" class="form-horizontal"
         enctype="multipart/form-data">
         <fieldset>

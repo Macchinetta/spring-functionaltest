@@ -19,8 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service

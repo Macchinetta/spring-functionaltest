@@ -21,14 +21,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,16 +38,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.exception.SystemException;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.AutoMapTodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoCriteria;
@@ -64,24 +64,28 @@ public class DAM3TodoController {
     TodoMB3Service todoMB3Service;
 
     @Inject
-    Mapper beanMapper;
+    DAM3BeanMapper beanMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(
             DAM3TodoController.class);
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("uuuu/MM/dd").withLocale(Locale.JAPANESE)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     @ModelAttribute
     public TodoForm setUpForm() {
         return new TodoForm();
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.GET)
+    @GetMapping(value = "{id}/update")
     public String updateForm(@PathVariable("id") String todoId,
             @Validated TodoForm form, BindingResult result, Model model) {
         String returnView = "";
 
         TodoMB3 todo = todoMB3Service.findOneByTodoId(todoId);
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setDescription1(todo.getNormDesc1());
         todoForm.setDescription2(todo.getNormDesc2());
         if (null == todo.getCompleteAt()) {
@@ -95,11 +99,11 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
+    @PostMapping(value = "{id}/update")
     public String update(@PathVariable("id") String id,
             @Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttrs, Model model) {
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -110,7 +114,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/{id}/update";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "bulkUpdate")
+    @PostMapping(value = "update", params = "bulkUpdate")
     public String updateForGivenID(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttributes,
             Model model) {
@@ -132,7 +136,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "batchRepoUpdt")
+    @PostMapping(value = "update", params = "batchRepoUpdt")
     public String batchRepoUpdate(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttributes,
             Model model) {
@@ -155,11 +159,11 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "updateOptimistic")
+    @PostMapping(value = "{id}/update", params = "updateOptimistic")
     public String updateOpt(@PathVariable("id") String id,
             @Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttrs, Model model) {
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -170,7 +174,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/{id}/update";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "update", params = "complete")
     public String updateComplete(@RequestParam("id") String todoId,
             Model model) {
 
@@ -183,13 +187,13 @@ public class DAM3TodoController {
         return "dam3/todoRegisterComplete";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "{id}/update", params = "cancel")
     public String updateCancel(@PathVariable("id") String id,
             RedirectAttributes redirectAttrs) {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "delete")
+    @PostMapping(value = "{id}/update", params = "delete")
     public String deleteTodoVyId(@PathVariable("id") String id,
             @Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttrs, Model model) {
@@ -197,16 +201,16 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "deleteByTodo")
+    @PostMapping(value = "{id}/update", params = "deleteByTodo")
     public String deleteByTodo(@PathVariable("id") String id,
             @Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttrs, Model model) {
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         todoMB3Service.delete(todoMB3);
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "bulkDelete")
+    @PostMapping(value = "update", params = "bulkDelete")
     public String deleteOldTodo(@Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttributes, Model model) {
 
@@ -219,19 +223,19 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "register", params = "form")
+    @PostMapping(value = "register", params = "form")
     public String registerForm(TodoForm form, Model model) {
         return "dam3/todoRegisterForm";
     }
 
-    @RequestMapping(value = "bulkReg", method = RequestMethod.POST)
+    @PostMapping(value = "bulkReg")
     public String registerBulkTodo(TodoForm form, Model model) {
 
         todoMB3Service.addBulkTodo();
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "bulkReg", method = RequestMethod.POST, params = "batchReg")
+    @PostMapping(value = "bulkReg", params = "batchReg")
     public String registerinBatch(TodoForm form,
             RedirectAttributes redirectAttributes) {
 
@@ -241,21 +245,21 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "addByReUse", method = RequestMethod.POST)
+    @PostMapping(value = "addByReUse")
     public String registerBulkTodoUsingReUse(TodoForm form, Model model) {
 
         todoMB3Service.addTodoReUseMode();
         return "redirect:/dam3/todo/list";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "register")
+    @PostMapping(value = "register", params = "register")
     public String register(@Validated TodoForm form, BindingResult result,
             RedirectAttributes redirectAttrs, Model model) {
         if (result.hasErrors()) {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -267,7 +271,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerAndRetBool")
+    @PostMapping(value = "register", params = "registerAndRetBool")
     public String registerAndRetBoolean(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttrs,
             Model model) {
@@ -275,7 +279,7 @@ public class DAM3TodoController {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -289,7 +293,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerAndRetInt")
+    @PostMapping(value = "register", params = "registerAndRetInt")
     public String registerAndRetInt(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttrs,
             Model model) {
@@ -297,7 +301,7 @@ public class DAM3TodoController {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -311,7 +315,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerForNull")
+    @PostMapping(value = "register", params = "registerForNull")
     public String registerForNullCheck(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttrs,
             Model model) {
@@ -319,7 +323,7 @@ public class DAM3TodoController {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -331,7 +335,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "registerRollback")
+    @PostMapping(value = "register", params = "registerRollback")
     public String registerRollback(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttrs,
             Model model) {
@@ -339,7 +343,7 @@ public class DAM3TodoController {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -351,7 +355,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "register", params = "complete")
     public String registerComplete(@RequestParam("id") String todoId,
             Model model) {
 
@@ -360,7 +364,7 @@ public class DAM3TodoController {
             todo = new TodoMB3();
         }
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         if (null != todo.getCategory()) {
             todoForm.setTodoCategory(todo.getCategory().getName());
         }
@@ -369,7 +373,7 @@ public class DAM3TodoController {
         return "dam3/todoRegisterComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "verifyBooleanPrimitiveRet")
+    @GetMapping(value = "register", params = "verifyBooleanPrimitiveRet")
     public String registerCompleteBoolean(@RequestParam("id") String todoId,
             @RequestParam("verifyBooleanPrimitiveRet") boolean verifyBooleanPrimitiveRet,
             @RequestParam("regResult") String regResult, Model model) {
@@ -379,7 +383,7 @@ public class DAM3TodoController {
             todo = new TodoMB3();
         }
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         if (null != todo.getCategory()) {
             todoForm.setTodoCategory(todo.getCategory().getName());
         }
@@ -391,7 +395,7 @@ public class DAM3TodoController {
         return "dam3/todoRegisterComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET, params = "verifyIntegerPrimitiveRet")
+    @GetMapping(value = "register", params = "verifyIntegerPrimitiveRet")
     public String registerComplete(@RequestParam("id") String todoId,
             @RequestParam("verifyIntegerPrimitiveRet") boolean verifyIntegerPrimitiveRet,
             @RequestParam("regResult") String regResult, Model model) {
@@ -401,7 +405,7 @@ public class DAM3TodoController {
             todo = new TodoMB3();
         }
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         if (null != todo.getCategory()) {
             todoForm.setTodoCategory(todo.getCategory().getName());
         }
@@ -413,7 +417,7 @@ public class DAM3TodoController {
         return "dam3/todoRegisterComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "autoIdGenRegister")
+    @PostMapping(value = "register", params = "autoIdGenRegister")
     public String registerWithAutoIDGen(@Validated TodoForm form,
             BindingResult result, RedirectAttributes redirectAttrs,
             Model model) {
@@ -421,7 +425,7 @@ public class DAM3TodoController {
             return registerRedo(form, model);
         }
 
-        TodoMB3 todoMB3 = beanMapper.map(form, TodoMB3.class);
+        TodoMB3 todoMB3 = beanMapper.map(form);
         CategoryMB3 cat = new CategoryMB3();
         cat.setName(form.getTodoCategory());
         todoMB3.setCategory(cat);
@@ -433,7 +437,7 @@ public class DAM3TodoController {
         return "redirect:/dam3/todo/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "redo")
+    @PostMapping(value = "register", params = "redo")
     public String registerRedo(TodoForm form, Model model) {
 
         model.addAttribute("todo", form);
@@ -441,14 +445,14 @@ public class DAM3TodoController {
         return "dam3/todoRegisterForm";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "autoMapSrch")
+    @GetMapping(value = "/search", params = "autoMapSrch")
     public String search(@Validated TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
 
         TodoMB3 todo = todoMB3Service.selectByAutoMap(form.getTodoId());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setTodoCategory(todo.getCategory().getName());
         model.addAttribute("todo", todoForm);
 
@@ -457,14 +461,14 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "asClauseSrch")
+    @GetMapping(value = "/search", params = "asClauseSrch")
     public String searchUsingAs(@Validated TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
 
         TodoMB3 todo = todoMB3Service.selectByAsClause(form.getTodoId());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setTodoCategory(todo.getCategory().getName());
         model.addAttribute("todo", todoForm);
 
@@ -473,7 +477,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "pkSrch")
+    @GetMapping(value = "/search", params = "pkSrch")
     public String searchUsingPK(@Validated TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -483,7 +487,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "pkSrchNG")
+    @GetMapping(value = "/search", params = "pkSrchNG")
     public String searchUsingPKNA(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -493,7 +497,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "cmpKeySrch")
+    @GetMapping(value = "/search", params = "cmpKeySrch")
     public String searchUsingCmpKey(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -501,7 +505,7 @@ public class DAM3TodoController {
         TodoMB3 todo = todoMB3Service.findOneUsingCompositeKey(form.getTodoId(),
                 form.getTodoCategory());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setTodoCategory(todo.getCategory().getName());
         model.addAttribute("todo", todoForm);
 
@@ -510,7 +514,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "cmpKeySrchNoParamAnnt")
+    @GetMapping(value = "/search", params = "cmpKeySrchNoParamAnnt")
     public String searchUsingCmpKeyNoParamAnnot(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -518,7 +522,7 @@ public class DAM3TodoController {
         TodoMB3 todo = todoMB3Service.findOneUsingCompositeKeyNoParamAnnot(form
                 .getTodoId(), form.getTodoCategory());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setTodoCategory(todo.getCategory().getName());
         model.addAttribute("todo", todoForm);
 
@@ -527,7 +531,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "criteriaSrch")
+    @GetMapping(value = "/search", params = "criteriaSrch")
     public String searchUsingCriteria(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -546,7 +550,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "criteriaSrchMapRes")
+    @GetMapping(value = "/search", params = "criteriaSrchMapRes")
     public String searchUsingCriteriaResMap(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -567,7 +571,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "countByStatus")
+    @GetMapping(value = "/search", params = "countByStatus")
     public String getCountForGivenStatus(@Validated TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -590,7 +594,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "stdPageSearch")
+    @GetMapping(value = "/search", params = "stdPageSearch")
     public String paginationSearchSTD(TodoForm form, BindingResult result,
             Model model, Pageable pageable) {
         String returnView = "";
@@ -612,7 +616,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "sqlRefPageSearch")
+    @GetMapping(value = "/search", params = "sqlRefPageSearch")
     public String paginationSearchSQLRef(TodoForm form, BindingResult result,
             Model model, Pageable pageable) {
         String returnView = "";
@@ -635,7 +639,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "ifSrch")
+    @GetMapping(value = "/search", params = "ifSrch")
     public String ifElementUsage(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -657,7 +661,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "chooseSrch")
+    @GetMapping(value = "/search", params = "chooseSrch")
     public String chooseElementUsage(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -685,7 +689,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "bindSrch")
+    @GetMapping(value = "/search", params = "bindSrch")
     public String bindElementUsage(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -706,7 +710,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "downloadTodo")
+    @GetMapping(value = "/search", params = "downloadTodo")
     public String downloadTodo(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -752,7 +756,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "escpSrch")
+    @GetMapping(value = "/search", params = "escpSrch")
     public String esacpeSrch(TodoForm form, BindingResult result, Model model) {
         String returnView = "";
 
@@ -772,7 +776,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "spSrch")
+    @GetMapping(value = "/search", params = "spSrch")
     public String storedProcedureSearch(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -781,7 +785,7 @@ public class DAM3TodoController {
         CategoryMB3 categoryMB3 = todoMB3Service.getCategory(todo
                 .getCategoryId());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.mapToTodoForm(todo);
         todoForm.setTodoCategory(categoryMB3.getName());
         model.addAttribute("todo", todoForm);
 
@@ -790,7 +794,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "clTypeAliasSrch")
+    @GetMapping(value = "/search", params = "clTypeAliasSrch")
     public String classTypeAliasSearch(TodoForm form, BindingResult result,
             Model model) {
         String returnView = "";
@@ -804,7 +808,7 @@ public class DAM3TodoController {
                 todoSearchCriteria);
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         for (AutoMapTodoMB3 autoMapTodoMB3 : todos) {
-            TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3, TodoMB3.class);
+            TodoMB3 todoMB3 = beanMapper.mapToTodoMB3(autoMapTodoMB3);
             CategoryMB3 categoryMB3 = todoMB3Service.getCategory(autoMapTodoMB3
                     .getCategoryId());
             todoMB3.setCategory(categoryMB3);
@@ -818,7 +822,7 @@ public class DAM3TodoController {
         return returnView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.GET, params = "typeAlOverWrDefName")
+    @GetMapping(value = "/search", params = "typeAlOverWrDefName")
     public String classTypeAliasSearchOverwriteDefName(TodoForm form,
             BindingResult result, Model model) {
         String returnView = "";
@@ -832,7 +836,7 @@ public class DAM3TodoController {
                 .findByUsingOverwrittenDefltTypeAliasName(todoSearchCriteria);
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         for (AutoMapTodoMB3 autoMapTodoMB3 : todos) {
-            TodoMB3 todoMB3 = beanMapper.map(autoMapTodoMB3, TodoMB3.class);
+            TodoMB3 todoMB3 = beanMapper.mapToTodoMB3(autoMapTodoMB3);
             CategoryMB3 categoryMB3 = todoMB3Service.getCategory(autoMapTodoMB3
                     .getCategoryId());
             todoMB3.setCategory(categoryMB3);
@@ -850,7 +854,7 @@ public class DAM3TodoController {
         String returnView = "";
         TodoMB3 todo = todoMB3Service.findOne(form.getTodoId());
 
-        TodoForm todoForm = beanMapper.map(todo, TodoForm.class);
+        TodoForm todoForm = beanMapper.map(todo);
         todoForm.setTodoCategory(todo.getCategory().getName());
         model.addAttribute("todo", todoForm);
 
@@ -861,7 +865,6 @@ public class DAM3TodoController {
     private List<TodoMB3> getTodoListFromCSVFile(File tempFile) {
         List<TodoMB3> todolist = new ArrayList<TodoMB3>();
         File file = new File(tempFile.getAbsoluteFile().getAbsolutePath());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyy/mm/dd");
         try (FileReader fileRdr = new FileReader(file);
                 BufferedReader bufRdr = new BufferedReader(fileRdr)) {
             String line = null;
@@ -872,13 +875,12 @@ public class DAM3TodoController {
                 todoMB3.setTodoId(todoArr[0]);
                 todoMB3.setTodoTitle(todoArr[1]);
                 todoMB3.setFinished(Boolean.valueOf(todoArr[2]));
-                todoMB3.setCreatedAt(sdf.parse(todoArr[3]));
+                todoMB3.setCreatedAt(LocalDate.parse(todoArr[3],
+                        DATE_TIME_FORMATTER));
                 todoMB3.setVersion(Long.valueOf(todoArr[4]));
                 todolist.add(todoMB3);
             }
         } catch (IOException e) {
-            logger.debug(e.getMessage());
-        } catch (ParseException e) {
             logger.debug(e.getMessage());
         }
         return todolist;

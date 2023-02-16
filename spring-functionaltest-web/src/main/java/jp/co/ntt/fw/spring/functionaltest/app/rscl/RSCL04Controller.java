@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.CustomErrorRestClientService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.RestClientService;
@@ -36,7 +36,7 @@ public class RSCL04Controller {
     @Inject
     CustomErrorRestClientService customErrorRestClientService;
 
-    @RequestMapping(value = "0402/001", method = RequestMethod.GET)
+    @GetMapping(value = "0402/001")
     public String handle0402001First(Model model) {
 
         model.addAttribute("testDescription", "Occur 404 Exception");
@@ -45,14 +45,14 @@ public class RSCL04Controller {
         return "rscl/occurException";
     }
 
-    @RequestMapping(value = "0402/001", method = RequestMethod.POST)
+    @PostMapping(value = "0402/001")
     public void handle0402001(Model model) {
 
         this.restClientService.handleException01();
 
     }
 
-    @RequestMapping(value = "0403/001", method = RequestMethod.GET)
+    @GetMapping(value = "0403/001")
     public String handle0403001First(Model model) {
 
         model.addAttribute("testDescription", "Occur 500 Server Exception");
@@ -61,14 +61,14 @@ public class RSCL04Controller {
         return "rscl/occurException";
     }
 
-    @RequestMapping(value = "0403/001", method = RequestMethod.POST)
+    @PostMapping(value = "0403/001")
     public void handle0403001(Model model) {
 
         this.restClientService.handleException02();
 
     }
 
-    @RequestMapping(value = "0404/001", method = RequestMethod.GET)
+    @GetMapping(value = "0404/001")
     public String handle0404001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -78,14 +78,14 @@ public class RSCL04Controller {
         return "rscl/occurException";
     }
 
-    @RequestMapping(value = "0404/001", method = RequestMethod.POST)
+    @PostMapping(value = "0404/001")
     public void handle0404001(Model model) {
 
         this.restClientService.handleException03();
 
     }
 
-    @RequestMapping(value = "0405/001", method = RequestMethod.GET)
+    @GetMapping(value = "0405/001")
     public String handle0405001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -95,7 +95,7 @@ public class RSCL04Controller {
         return "rscl/occurException";
     }
 
-    @RequestMapping(value = "0405/001", method = RequestMethod.POST)
+    @PostMapping(value = "0405/001")
     public String handle0405001(Model model) {
 
         UserResource rcvUser = this.restClientService.handleException04();
@@ -107,7 +107,7 @@ public class RSCL04Controller {
         return "rscl/resultUserInf";
     }
 
-    @RequestMapping(value = "0406/001", method = RequestMethod.GET)
+    @GetMapping(value = "0406/001")
     public String handle0406001First(Model model) {
 
         model.addAttribute("testDescription",
@@ -117,7 +117,7 @@ public class RSCL04Controller {
         return "rscl/occurException";
     }
 
-    @RequestMapping(value = "0406/001", method = RequestMethod.POST)
+    @PostMapping(value = "0406/001")
     public String handle0406001(Model model) {
 
         UserResource rcvUser = this.customErrorRestClientService

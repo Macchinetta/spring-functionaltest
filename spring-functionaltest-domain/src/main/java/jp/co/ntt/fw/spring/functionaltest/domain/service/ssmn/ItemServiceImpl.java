@@ -18,8 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.ssmn.ItemRepository;
 
@@ -52,7 +51,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public Item getItem(String itemId) {
-        Item item = itemRepository.findOne(itemId);
+        Item item = itemRepository.findByItemId(itemId);
         if (item == null) {
             throw new ResourceNotFoundException(String.format(
                     "Specified item is not found. itemId is '%s'.", itemId));

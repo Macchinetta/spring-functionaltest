@@ -59,6 +59,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         }
         // トップ画面での操作
         {
+            webDriverOperations.setDefaultTimeoutForImplicitlyWait(60);
             webDriverOperations.getWebDriver().manage().window().maximize();
         }
     }
@@ -688,7 +689,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(isTodoPresent, is(true));
 
         todoListPage.setTodoTitleContent("Todo 1");
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.searchByCriteriaBean();
 
@@ -736,7 +737,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(isTodoPresent, is(true));
 
         todoListPage.setTodoTitleContent("Todo 1");
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.searchByCriteriaBeanRetMap();
 
@@ -829,7 +830,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
                         "993"));
 
         todoListPage.setTodoTitleContent("TT");
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.fetchUsingStdPaging();
 
@@ -878,7 +879,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
                         "993"));
 
         todoListPage.setTodoTitleContent("TT");
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.fetchUsingSQLRefinePaging();
 
@@ -1335,7 +1336,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // set date : the completed todos having creation date before this date would be deleted in batch
-        todoListPage.setCutOffDate("2016/12/30");
+        todoListPage.setCutOffDate("2016-12-30");
 
         todoListPage = todoListPage.batchDelete();
 
@@ -1451,7 +1452,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage.setTodoTitleContent("Todo 1");
 
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.chooseElementUsageSearch();
 
@@ -1468,7 +1469,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = dam3IndexPage.dam30102002Click();
 
-        todoListPage.setTodoCreationDate("2016/12/30");
+        todoListPage.setTodoCreationDate("2016-12-30");
 
         todoListPage = todoListPage.chooseElementUsageSearch();
 
@@ -2055,6 +2056,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage.setTodoForSearch("0000000001");
 
         TodoDetailsPage todoDetailsPage = todoListPage.searchUsingStoredProc();
+
+        webDriverOperations.waitForDisplayed(id("finished"));
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));

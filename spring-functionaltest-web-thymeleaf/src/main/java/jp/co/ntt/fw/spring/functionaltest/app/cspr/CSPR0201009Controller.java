@@ -18,19 +18,20 @@ package jp.co.ntt.fw.spring.functionaltest.app.cspr;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("cspr/0201/009")
 @Controller
 public class CSPR0201009Controller {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle(NoThActionValueForm form) {
         return "cspr/userRegister0201009";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "confirm")
+    @PostMapping(params = "confirm")
     public String confirm(@Validated NoThActionValueForm form,
             BindingResult result) {
         if (result.hasErrors()) {
@@ -39,7 +40,7 @@ public class CSPR0201009Controller {
         return "cspr/userConfirm0201009";
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String create(@Validated NoThActionValueForm form,
             BindingResult result) {
         if (result.hasErrors()) {
@@ -48,12 +49,12 @@ public class CSPR0201009Controller {
         return "redirect:/cspr/0201/009?complete";
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String complete() {
         return "cspr/userComplete0201009";
     }
 
-    @RequestMapping(params = "return")
+    @GetMapping(params = "return")
     public String backToIndex() {
         return "cspr/index";
     }

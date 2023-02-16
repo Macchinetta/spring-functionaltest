@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.springframework.core.io.ClassPathResource;
@@ -234,6 +235,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * <li>@ExceptionHandlerを使用して、Controllerのメソッド単位で致命的なエラーがサーブレットコンテナに再スローされることを確認する。</li>
      * </ul>
      */
+    // NestedServletExceptionを除外設定しないようになったため試験を行わない。
+    @Ignore
     @Test
     public void testEXHN0302002() throws IOException {
 
@@ -244,7 +247,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
         // NestedServletExceptionをハンドリングした時に出力するログが存在することを確認
         dbLogAssertOperations.assertContainsByMessage(
                 "jp.co.ntt.fw.spring.functionaltest.app.exhn.EXHN03Controller",
-                "NestedServletException Occured");
+                "ServletException Occured");
 
         // web.xmlの<error-page>に定義したエラー画面に遷移することを確認(SystemExceptionResolverのdefaultErrorViewに定義した画面に遷移しないこと)
         assertThat(webDriverOperations.getTitle(), is(
@@ -416,6 +419,8 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
      * <li>例外ハンドリング用クラスであるSystemExceptionResolverで致命的なエラーの除外設定をした場合、web.xmlの<error-page>に定義したシステムエラー画面に遷移することを確認する。</li>
      * </ul>
      */
+    // NestedServletExceptionを除外設定しないようになったため、除外設定の動作確認はOAuth2の項目で担保する。
+    @Ignore
     @Test
     public void testEXHN0601005() throws IOException {
 
@@ -684,7 +689,7 @@ public class ExceptionHandlingTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion(100);
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
                     "org.terasoluna.gfw.common.exception.ExceptionLogger",
-                    "No handler found for .*",
+                    "No endpoint .*",
                     "org\\.springframework\\.web\\.servlet\\.NoHandlerFoundException\\.*");
 
             throw e;

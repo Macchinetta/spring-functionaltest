@@ -20,25 +20,26 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thym/0301")
 public class THYM0301Controller {
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle001(Model model) {
         model.addAttribute(new SearchForm());
         return "thym/commentHtml";
     }
 
-    @RequestMapping("002")
+    @GetMapping("002")
     public String handle002(Model model) {
         model.addAttribute("items", createItems());
         return "thym/commentParserLevel";
     }
 
-    @RequestMapping("003")
+    @GetMapping("003")
     public String handle003(Model model) {
         model.addAttribute("items", createItems());
         return "thym/commentPrototypeOnly";

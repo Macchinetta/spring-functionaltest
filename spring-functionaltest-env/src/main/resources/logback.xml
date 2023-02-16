@@ -75,6 +75,10 @@
   </logger>
 
   <!-- 3rdparty Loggers -->
+  <logger name="org.springframework.core.LocalVariableTableParameterNameDiscoverer">
+    <level value="error" />
+  </logger>
+  
   <logger name="org.springframework">
     <level value="warn" />
   </logger>

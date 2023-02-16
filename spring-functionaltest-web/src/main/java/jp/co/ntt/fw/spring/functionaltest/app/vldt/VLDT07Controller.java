@@ -15,15 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.CmdExecService;
 
 @RequestMapping("vldt")
@@ -38,12 +38,12 @@ public class VLDT07Controller {
         return new OsCommandInjectionForm();
     }
 
-    @RequestMapping(value = "0701/001", method = RequestMethod.GET)
+    @GetMapping(value = "0701/001")
     public String handle() {
         return "vldt/osCommandInjectionForm";
     }
 
-    @RequestMapping(value = "0701/001", method = RequestMethod.POST)
+    @PostMapping(value = "0701/001")
     public String handleValidate(@Validated OsCommandInjectionForm form,
             BindingResult result) {
         if (result.hasErrors()) {

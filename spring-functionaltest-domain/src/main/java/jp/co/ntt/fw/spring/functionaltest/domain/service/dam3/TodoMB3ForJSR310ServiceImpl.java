@@ -23,17 +23,14 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.SystemException;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.DateMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CategoryMB3Repository;
@@ -61,9 +58,6 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
     @Inject
     @Named("todoBatchRepository")
     TodoBatchRepository todoBatchRepository;
-
-    @Inject
-    Mapper beanMapper;
 
     @Value("${rollback.msg}")
     protected String rollbackMsg;
@@ -104,7 +98,7 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
 
     @Override
     public DateMB3 findCreatedAtOne(String todoId) {
-        DateMB3 dateMB3 = showDateMB3Repository.selectDate(todoId);
+        DateMB3 dateMB3 = showDateMB3Repository.findByTodoId(todoId);
         return dateMB3;
 
     }

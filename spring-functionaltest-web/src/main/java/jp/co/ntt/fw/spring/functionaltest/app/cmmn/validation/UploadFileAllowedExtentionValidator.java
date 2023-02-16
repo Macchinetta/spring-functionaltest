@@ -18,12 +18,12 @@ package jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class UploadFileAllowedExtentionValidator implements
                                                  ConstraintValidator<UploadFileAllowedExtention, MultipartFile> {

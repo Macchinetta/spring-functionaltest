@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
@@ -25,7 +26,7 @@ import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalExceptio
 @Controller
 public class APLY0401003Controller {
 
-    @RequestMapping(value = "0401/003")
+    @GetMapping(value = "0401/003")
     public String handle01003() {
         throw new IntentionalException(ResultMessages.error().add(
                 "e.sf.cmmn.8003"));

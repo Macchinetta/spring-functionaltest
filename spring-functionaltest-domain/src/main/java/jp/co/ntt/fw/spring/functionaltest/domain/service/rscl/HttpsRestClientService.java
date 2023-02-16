@@ -15,10 +15,19 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
+import jakarta.validation.constraints.NotNull;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 public interface HttpsRestClientService {
 
-    UserResource connectHttps();
+    UserResource connectHttps(@NotNull SERVERS servers,
+            @NotNull DESTINATION destination, boolean isCausesSoTimeout);
 
+    enum SERVERS {
+        SERVER1, SERVER2, SERVER3, SERVER4, NOTEXISTS
+    }
+
+    enum DESTINATION {
+        RSCL1, RSCL2, RSCL3, RSCL4
+    }
 }

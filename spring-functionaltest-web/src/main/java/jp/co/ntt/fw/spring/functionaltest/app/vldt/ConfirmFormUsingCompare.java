@@ -17,8 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.NotNull;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmUsingCompare;
 
 @ConfirmUsingCompare(field = "password", confirmField = "confirmPassword")

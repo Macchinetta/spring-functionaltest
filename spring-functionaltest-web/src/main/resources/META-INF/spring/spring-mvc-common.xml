@@ -19,7 +19,6 @@
         class="jp.co.ntt.fw.spring.functionaltest.app.dmly.DeliveryOrderListFormMethodArgumentResolver" />
       <bean
         class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
-
     </mvc:argument-resolvers>
     <mvc:message-converters>
       <ref bean="marshallingHttpMessageConverter" />
@@ -57,26 +56,18 @@
       <mvc:mapping path="/aply/0402/**" />
       <bean class="jp.co.ntt.fw.spring.functionaltest.app.aply.SuccessLoggingInterceptor" />
     </mvc:interceptor>
-
     <!-- OpenEntityManagerInViewInterceptor settings for Lazy Fetching of entity in Application Layer -->
     <mvc:interceptor>
       <mvc:mapping path="/djpa/book/interceptSrch/**" />
       <bean class="org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor" />
     </mvc:interceptor>
-
   </mvc:interceptors>
 
   <!-- Settings View Resolver. -->
   <mvc:view-resolvers>
     <mvc:bean-name />
-    <mvc:tiles />
     <mvc:jsp prefix="/WEB-INF/views/" />
   </mvc:view-resolvers>
-
-  <mvc:tiles-configurer>
-    <mvc:definitions location="/WEB-INF/tiles/tiles-definitions-tlly.xml" />
-    <mvc:definitions location="/WEB-INF/tiles/tiles-definitions.xml" />
-  </mvc:tiles-configurer>
 
   <bean id="requestDataValueProcessor" class="org.terasoluna.gfw.web.mvc.support.CompositeRequestDataValueProcessor">
     <constructor-arg>
@@ -103,7 +94,6 @@
         <entry key="InvalidRequestException" value="common/error/operationError" />
         <entry key="MultipartException" value="common/error/fileUploadError" />
         <entry key="HttpSessionRequiredException" value="common/error/operationError" />
-        <entry key="MappingException" value="common/error/beanMappingError" />
         <entry key="IntentionalException" value="common/error/intentionalError" />
         <!-- <entry key="AccessDeniedException" value="common/error/accessDeniedError" /> -->
       </map>
@@ -117,7 +107,6 @@
         <entry key="common/error/dataAccessError" value="500" />
         <entry key="common/error/operationError" value="400" />
         <entry key="common/error/fileUploadError" value="400" />
-        <entry key="common/error/beanMappingError" value="500" />
         <entry key="common/error/intentionalError" value="500" />
         <!-- <entry key="common/error/accessDeniedError" value="403" /> -->
       </map>
@@ -125,12 +114,6 @@
     <property name="excludedExceptions">
       <array>
         <value>org.springframework.security.access.AccessDeniedException
-        </value>
-        <value>org.springframework.security.oauth2.client.resource.UserRedirectRequiredException
-        </value>
-        <value>org.springframework.web.util.NestedServletException
-        </value>
-        <value>org.springframework.security.oauth2.client.ClientAuthorizationRequiredException
         </value>
       </array>
     </property>

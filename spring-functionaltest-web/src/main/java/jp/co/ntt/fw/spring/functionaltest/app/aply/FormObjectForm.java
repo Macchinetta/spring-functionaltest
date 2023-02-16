@@ -18,11 +18,11 @@ package jp.co.ntt.fw.spring.functionaltest.app.aply;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
+
+import jakarta.validation.constraints.NotNull;
 
 public class FormObjectForm {
     private String initConfirmValue1;

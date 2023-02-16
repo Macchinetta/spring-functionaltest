@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMax;
 
 public class SimpleValidationByInclusiveForm implements Serializable {
 

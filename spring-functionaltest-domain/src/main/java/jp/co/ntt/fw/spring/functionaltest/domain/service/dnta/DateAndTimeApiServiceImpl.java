@@ -20,11 +20,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.date.DefaultClassicDateFactory;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.infra.datefactory.dnta.DateAndTimeApiDateFactory;
 
 @Service

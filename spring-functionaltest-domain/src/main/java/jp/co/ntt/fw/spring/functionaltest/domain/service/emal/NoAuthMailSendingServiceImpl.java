@@ -17,13 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
 import java.util.Calendar;
 
-import javax.inject.Inject;
-import javax.mail.Store;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
+import jakarta.inject.Inject;
+import jakarta.mail.Store;
 
 @Service
 public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {

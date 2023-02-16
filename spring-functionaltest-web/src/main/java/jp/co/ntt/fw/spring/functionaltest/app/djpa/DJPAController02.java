@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,92 +31,92 @@ public class DJPAController02 {
         return new BookListForm();
     }
 
-    @RequestMapping(value = "0201/001")
+    @GetMapping(value = "0201/001")
     public String handle0201001() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/002")
+    @GetMapping(value = "0201/002")
     public String handle0201002() {
         return "redirect:/djpa/book/pgList";
     }
 
-    @RequestMapping(value = "0201/003")
+    @GetMapping(value = "0201/003")
     public String handle0201003() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/004")
+    @GetMapping(value = "0201/004")
     public String handle0201004() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/005")
+    @GetMapping(value = "0201/005")
     public String handle0201005() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/006")
+    @GetMapping(value = "0201/006")
     public String handle0201006() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/007")
+    @GetMapping(value = "0201/007")
     public String handle0201007() {
         return "redirect:/djpa/book/pgList";
     }
 
-    @RequestMapping(value = "0201/008")
+    @GetMapping(value = "0201/008")
     public String handle0201008() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/009")
+    @GetMapping(value = "0201/009")
     public String handle0201009() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/010")
+    @GetMapping(value = "0201/010")
     public String handle0201010() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/011")
+    @GetMapping(value = "0201/011")
     public String handle0201011() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/012")
+    @GetMapping(value = "0201/012")
     public String handle0201012() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/013")
+    @GetMapping(value = "0201/013")
     public String handle0201013() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/014")
+    @GetMapping(value = "0201/014")
     public String handle0201014() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/015")
+    @GetMapping(value = "0201/015")
     public String handle0201015() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0201/016")
+    @GetMapping(value = "0201/016")
     public String handle0201016() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0202/001")
+    @GetMapping(value = "0202/001")
     public String handle0202001() {
         return "redirect:/djpa/book/pgList";
     }
 
-    @RequestMapping(value = "0202/002")
+    @GetMapping(value = "0202/002")
     public String handle0202002() {
         return "redirect:/djpa/book/pgList";
     }

@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PGNTController {
 
-    @RequestMapping("/")
+    @GetMapping
     public String handle() {
         return "pgnt/index";
     }

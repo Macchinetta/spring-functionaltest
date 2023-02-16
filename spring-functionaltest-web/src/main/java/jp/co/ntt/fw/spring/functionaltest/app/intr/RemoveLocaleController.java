@@ -15,17 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("intr")
 public class RemoveLocaleController {
 
-    @RequestMapping(value = "removeLocale", method = RequestMethod.GET)
+    @GetMapping(value = "removeLocale")
     public String removeLocale(HttpSession session) {
 
         session.removeAttribute(

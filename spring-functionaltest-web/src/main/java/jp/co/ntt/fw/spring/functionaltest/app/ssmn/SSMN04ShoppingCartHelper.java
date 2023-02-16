@@ -18,12 +18,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.ssmn;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Component;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Item;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Order;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderItem;
@@ -33,7 +30,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.ItemService;
 public class SSMN04ShoppingCartHelper {
 
     @Inject
-    Mapper beanMapper;
+    ShoppingCartBeanMapper beanMapper;
 
     @Inject
     ItemService itemService;
@@ -44,7 +41,7 @@ public class SSMN04ShoppingCartHelper {
             return cartItems;
         }
         for (CartItemForm form : forms) {
-            cartItems.add(beanMapper.map(form, CartItem.class));
+            cartItems.add(beanMapper.map(form));
         }
         return cartItems;
     }
@@ -55,7 +52,7 @@ public class SSMN04ShoppingCartHelper {
             return cartItemForms;
         }
         for (CartItem cartItem : cartItems) {
-            cartItemForms.add(beanMapper.map(cartItem, CartItemForm.class));
+            cartItemForms.add(beanMapper.map(cartItem));
         }
         return cartItemForms;
     }
@@ -64,7 +61,7 @@ public class SSMN04ShoppingCartHelper {
         Order order = new Order();
         order.setOrderItems(new ArrayList<OrderItem>());
         for (CartItem cartItem : cart.getCartItems()) {
-            OrderItem orderItem = beanMapper.map(cartItem, OrderItem.class);
+            OrderItem orderItem = beanMapper.mapToOrderItem(cartItem);
             order.getOrderItems().add(orderItem);
         }
         return order;

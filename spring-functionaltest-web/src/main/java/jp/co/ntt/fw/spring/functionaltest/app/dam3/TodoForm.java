@@ -16,9 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.dam3;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import org.joda.time.DateTime;
+import java.time.LocalDate;
 
 public class TodoForm implements Serializable {
 
@@ -32,15 +30,15 @@ public class TodoForm implements Serializable {
 
     private boolean finished;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
     private long version;
 
     private String todoIds;
 
-    private Date deleteDate;
+    private LocalDate deleteDate;
 
-    private DateTime completeAt;
+    private LocalDate completeAt;
 
     private String description1;
 
@@ -94,11 +92,11 @@ public class TodoForm implements Serializable {
         this.finished = finished;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -118,19 +116,19 @@ public class TodoForm implements Serializable {
         this.todoIds = todoIds;
     }
 
-    public Date getDeleteDate() {
+    public LocalDate getDeleteDate() {
         return deleteDate;
     }
 
-    public void setDeleteDate(Date deleteDate) {
+    public void setDeleteDate(LocalDate deleteDate) {
         this.deleteDate = deleteDate;
     }
 
-    public DateTime getCompleteAt() {
+    public LocalDate getCompleteAt() {
         return completeAt;
     }
 
-    public void setCompleteAt(DateTime completeAt) {
+    public void setCompleteAt(LocalDate completeAt) {
         this.completeAt = completeAt;
     }
 

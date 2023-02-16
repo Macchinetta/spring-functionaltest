@@ -19,10 +19,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,6 +32,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class AuthenticationTest extends FunctionTestSupport {
+
+    @After
+    public void afterTest() {
+        // ログアウトしていない場合次のテストに影響が出るので、セッションを削除する
+        webDriverOperations.deleteCookie("JSESSIONID");
+    }
 
     /**
      * <ul>
@@ -93,9 +101,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 認証後のユーザ情報の確認
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
+        // HttpSessionRequestCache の matchingRequestParameterName が初期値"continue"で登録されるようになった
+        // https://github.com/spring-projects/spring-security/commit/f84f08c4b9da4f326de1fed2772ae5e582d7cdf7
+        // フレームワークとしては影響ないが、ユーザによっては影響を受ける可能性がある
+
         // パスの確認
         assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0201/001?loginSuccess"));
+                + "/athn/0201/001?loginSuccess&continue"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -135,10 +147,6 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 機能テストTOPの確認
         assertThat(webDriverOperations.getText(id("screenTitle")), is(
                 "Spring Functional Test Top Page"));
-
-        // sessionのクッキーを削除することにより、別セッションで実行する。
-        webDriverOperations.deleteCookie("JSESSIONID");
-
     }
 
     /**
@@ -578,7 +586,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
                 "Pola"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -615,7 +623,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         encodePassword = webDriverOperations.getText(id(
                 "getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -636,7 +644,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Pole"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
         assertThat(webDriverOperations.getText(id("password")), is(
@@ -685,7 +693,7 @@ public class AuthenticationTest extends FunctionTestSupport {
                 "Susan"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
                 .matcher(webDriverOperations.getText(id(
                         "getAfterEncodePassword"))).matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -723,7 +731,7 @@ public class AuthenticationTest extends FunctionTestSupport {
                 "getAfterEncodePassword"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
                 .matcher(webDriverOperations.getText(id(
                         "getAfterEncodePassword"))).matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -745,7 +753,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Steven"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
                 .matcher(webDriverOperations.getText(id("password")))
                 .matches());
         // 表示されていたパスワードと一致すること
@@ -795,7 +803,7 @@ public class AuthenticationTest extends FunctionTestSupport {
                 "Smith"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
                 .matcher(webDriverOperations.getText(id(
                         "getAfterEncodePassword"))).matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -833,7 +841,7 @@ public class AuthenticationTest extends FunctionTestSupport {
                 "getAfterEncodePassword"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
                 .matcher(webDriverOperations.getText(id(
                         "getAfterEncodePassword"))).matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -855,7 +863,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Wesson"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
                 .matcher(webDriverOperations.getText(id("password")))
                 .matches());
         // 表示されていたパスワードと一致すること
@@ -904,7 +912,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
                 "Jack"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -941,7 +949,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         encodePassword = webDriverOperations.getText(id(
                 "getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -962,7 +970,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Ann"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
         assertThat(webDriverOperations.getText(id("password")), is(
@@ -1038,7 +1046,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Dave"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\{scrypt\\}\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                "\\{scrypt\\}\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
                 .matcher(webDriverOperations.getText(id("password")))
                 .matches());
 
@@ -1068,7 +1076,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Beretta"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
-                "\\{argon2\\}\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
+                "\\{argon2\\}\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
                 .matcher(webDriverOperations.getText(id("password")))
                 .matches());
 
@@ -1289,15 +1297,21 @@ public class AuthenticationTest extends FunctionTestSupport {
                 + "/athn/0701/001?loginSuccess"));
 
         // ログアウトボタン押下
-        webDriverOperations.click(id("logout"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("logout"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // パスの確認（ログアウト成功）
         assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
                 + "/login?logout"));
 
         // 機能トップへ
-        webDriverOperations.getWebDriver().get(applicationContextUrl
-                + "/athn/");
+        webDriverOperations.getWebDriver().get(applicationContextUrl + "/athn");
 
         // ログインしていないことの確認
         assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
@@ -1335,20 +1349,21 @@ public class AuthenticationTest extends FunctionTestSupport {
                 + "/athn/0702/001?loginSuccess"));
 
         // ログアウトボタン押下
-        webDriverOperations.click(id("logout"));
+        // TODO:
+        // GitLabの環境でclickを使用してSpringSecurityのデフォルトのログイン画面を表示しようとするとTimeOutExceptionが発生する
+        // 暫定的にforceClickを使用して回避している。
+        // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
+        webDriverOperations.forceClick(id("logout"));
+
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
+                "Please sign in"));
 
         // パスの確認（ログアウト成功）
         assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
                 + "/login?logout"));
 
-        // cookie確認 TODO：後でやる
-        // assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(),is(""));
-        // assertThat(webDriverOperations.getCookie("JSESSIONID").getPath(),is("/"
-        // + applicationContextUrl));
-
         // 機能トップへ
-        webDriverOperations.getWebDriver().get(applicationContextUrl
-                + "/athn/");
+        webDriverOperations.getWebDriver().get(applicationContextUrl + "/athn");
 
         // ログインしていないことの確認
         assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
@@ -1781,7 +1796,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
                 "Carl"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -1818,7 +1833,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         encodePassword = webDriverOperations.getText(id(
                 "getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncoderでエンコードされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("getAfterEncodePassword")))
                 .matches());
         assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
@@ -1844,7 +1859,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Samson"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
                 webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
         assertThat(webDriverOperations.getText(id("password")), is(

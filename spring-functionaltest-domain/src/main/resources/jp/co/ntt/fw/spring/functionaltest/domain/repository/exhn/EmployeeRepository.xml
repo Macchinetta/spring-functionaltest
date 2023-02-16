@@ -10,7 +10,7 @@
     <result property="address" column="address" />
   </resultMap>
 
-  <select id="findOneById" parameterType="int" resultMap="employeeResultMap">
+  <select id="findById" parameterType="int" resultMap="employeeResultMap">
     <bind name="employeeId" value="_parameter" />
     SELECT
     employee_id

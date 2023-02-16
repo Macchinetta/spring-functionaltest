@@ -17,13 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("thym/0103")
 public class THYM0103Controller {
 
-    @RequestMapping("001")
+    @GetMapping("001")
     public String handle001(Model model) {
 
         SearchForm form = new SearchForm();

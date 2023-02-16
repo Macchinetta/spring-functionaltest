@@ -6,12 +6,14 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- BCrypPasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/002/**" auto-config="false" authentication-manager-ref="loginWithBCryptPassword">
+  <sec:http pattern="/athn/0501/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithBCryptPassword">
     <sec:form-login login-page="/athn/0501/002/login" login-processing-url="/athn/0501/002/authenticate"
       default-target-url="/athn/0501/002/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/002/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0501/002/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0501/002/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0501/002/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0501/002/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithBCryptPassword">
@@ -25,12 +27,14 @@
   </bean>
 
   <!-- Pbkdf2PasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/004/**" auto-config="false" authentication-manager-ref="loginWithPbkdf2Password">
+  <sec:http pattern="/athn/0501/004/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithPbkdf2Password">
     <sec:form-login login-page="/athn/0501/004/login" login-processing-url="/athn/0501/004/authenticate"
       default-target-url="/athn/0501/004/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/004/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0501/004/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0501/004/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0501/004/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0501/004/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithPbkdf2Password">
@@ -39,15 +43,17 @@
     </sec:authentication-provider>
   </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderPbkdf2" class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" />
+  <bean id="athnPasswordEncoderPbkdf2" class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" factory-method="defaultsForSpringSecurity_v5_8"/>
 
   <!-- SCryptPasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/006/**" auto-config="false" authentication-manager-ref="loginWithSCryptPassword">
+  <sec:http pattern="/athn/0501/006/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithSCryptPassword">
     <sec:form-login login-page="/athn/0501/006/login" login-processing-url="/athn/0501/006/authenticate"
       default-target-url="/athn/0501/006/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/006/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0501/006/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0501/006/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0501/006/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0501/006/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithSCryptPassword">
@@ -56,15 +62,17 @@
     </sec:authentication-provider>
   </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderSCrypt" class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
+  <bean id="athnPasswordEncoderSCrypt" class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" factory-method="defaultsForSpringSecurity_v5_8"/>
 
   <!-- Argon2PasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/008/**" auto-config="false" authentication-manager-ref="loginWithArgon2Password">
+  <sec:http pattern="/athn/0501/008/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithArgon2Password">
     <sec:form-login login-page="/athn/0501/008/login" login-processing-url="/athn/0501/008/authenticate"
       default-target-url="/athn/0501/008/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/008/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0501/008/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0501/008/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0501/008/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0501/008/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithArgon2Password">
@@ -73,15 +81,17 @@
     </sec:authentication-provider>
   </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderArgon2" class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
+  <bean id="athnPasswordEncoderArgon2" class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" factory-method="defaultsForSpringSecurity_v5_8"/>
 
   <!-- DelegatingPasswordEncoder（applicationContextで定義）を利用した認証処理 -->
-  <sec:http pattern="/athn/0502/002/**" auto-config="false" authentication-manager-ref="loginWithDelegatingPassword">
+  <sec:http pattern="/athn/0502/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithDelegatingPassword">
     <sec:form-login login-page="/athn/0502/002/login" login-processing-url="/athn/0502/002/authenticate"
       default-target-url="/athn/0502/002/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0502/002/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/0502/002/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/0502/002/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/0502/002/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/0502/002/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithDelegatingPassword">

@@ -64,7 +64,7 @@ public class SimpleValidationTest extends FunctionTestSupport {
     public SimpleValidationTest() {
         localeDateFormat = new HashMap<String, String>();
         localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yyyy");
+        localeDateFormat.put("en", "MM/dd/yy");
 
         super.disableDefaultWebDriver();
     }

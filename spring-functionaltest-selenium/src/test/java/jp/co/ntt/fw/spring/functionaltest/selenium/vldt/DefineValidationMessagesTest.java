@@ -19,10 +19,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -195,8 +196,8 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
         String testId = "vldt0303001";
         String[] targets = { "shortValue", "intValue", "longValue",
                 "floatValue", "doubleValue", "shortObject", "integerObject",
-                "longObject", "floatObject", "doubleObject", "date", "datetime",
-                "localdate", "booleanValue" };
+                "longObject", "floatObject", "doubleObject", "date",
+                "localdatetime", "localdate", "booleanValue" };
         String[] errorMessages = { "\"{0}\" はshort型を入力してください。",
                 "\"{0}\" はint型を入力してください。", "\"{0}\" はlong型を入力してください。",
                 "\"{0}\" はfloat型を入力してください。", "\"{0}\" はdouble型を入力してください。",
@@ -211,11 +212,20 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
             webDriverOperations.click(id(testId));
         }
 
+        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern(
+                localeDateFormat.get(currentLocale));
+
+        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern(
+                "yy/MM/dd HH:mm");
+
+        DateTimeFormatter dateTimeFormatter3 = DateTimeFormatter.ofPattern(
+                "yy/MM/dd");
+
         // 実施条件1
         {
             // テスト実行
             {
-                DateTime dt = new DateTime();
+                LocalDateTime dt = LocalDateTime.now();
 
                 webDriverOperations.overrideText(id(targets[0]), "32767");
                 webDriverOperations.overrideText(id(targets[1]), "2147483647");
@@ -233,12 +243,12 @@ public class DefineValidationMessagesTest extends FunctionTestSupport {
                         "3.4028235E38");
                 webDriverOperations.overrideText(id(targets[9]),
                         "1.7976931348623157E308");
-                webDriverOperations.overrideText(id(targets[10]), dt.toString(
-                        localeDateFormat.get(currentLocale)));
-                webDriverOperations.overrideText(id(targets[11]), dt.toString(
-                        localeDateFormat.get(currentLocale) + " HH:mm"));
-                webDriverOperations.overrideText(id(targets[12]), dt.toString(
-                        localeDateFormat.get(currentLocale)));
+                webDriverOperations.overrideText(id(targets[10]), dt.format(
+                        dateTimeFormatter1));
+                webDriverOperations.overrideText(id(targets[11]), dt.format(
+                        dateTimeFormatter2));
+                webDriverOperations.overrideText(id(targets[12]), dt.format(
+                        dateTimeFormatter3));
                 webDriverOperations.overrideText(id(targets[13]), "true");
                 webDriverOperations.click(id(validate));
             }

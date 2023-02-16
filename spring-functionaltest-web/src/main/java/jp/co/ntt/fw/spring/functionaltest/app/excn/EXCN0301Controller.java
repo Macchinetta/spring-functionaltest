@@ -15,17 +15,15 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.excn;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockDBLockService;
 
@@ -34,7 +32,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.excn.StockDBLockService
 public class EXCN0301Controller {
 
     @Inject
-    Mapper beanMapper;
+    EXCNBeanMapper beanMapper;
 
     @Inject
     StockDBLockService stockDBLockService;
@@ -42,18 +40,18 @@ public class EXCN0301Controller {
     @ModelAttribute
     public StockForm setUpForm() {
         Stock stock = stockDBLockService.findOne("EXCN0301001");
-        return beanMapper.map(stock, StockForm.class);
+        return beanMapper.map(stock);
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001(Model model) {
         return "excn/RDBMSLockView";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "buy")
+    @PostMapping(value = "001", params = "buy")
     public String handle001Buy(StockForm form, Model model) {
 
-        Stock stock = beanMapper.map(form, Stock.class);
+        Stock stock = beanMapper.map(form);
 
         stock = stockDBLockService.buy(stock, form.getPurchasingQuantity(), form
                 .getSleepMillis());

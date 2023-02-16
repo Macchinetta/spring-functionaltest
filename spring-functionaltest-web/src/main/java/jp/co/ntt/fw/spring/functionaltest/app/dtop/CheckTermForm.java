@@ -17,30 +17,21 @@ package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
 import java.io.Serializable;
 
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class CheckTermForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetTermFrom;
+    private String targetTermFrom;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetTermTo;
+    private String targetTermTo;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetCheckTermFrom;
+    private String targetCheckTermFrom;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetCheckTermTo;
+    private String targetCheckTermTo;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetCheckDate;
+    private String targetCheckDate;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetIncDecDate;
+    private String targetIncDecDate;
 
     private Integer targetIncreaseMonthNum;
 
@@ -50,54 +41,53 @@ public class CheckTermForm implements Serializable {
 
     private Integer targetDecreaseDayNum;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private DateTime targetStartEndDate;
+    private String targetStartEndDate;
 
-    public DateTime getTargetTermFrom() {
+    public String getTargetTermFrom() {
         return targetTermFrom;
     }
 
-    public void setTargetTermFrom(DateTime targetTermFrom) {
+    public void setTargetTermFrom(String targetTermFrom) {
         this.targetTermFrom = targetTermFrom;
     }
 
-    public DateTime getTargetTermTo() {
+    public String getTargetTermTo() {
         return targetTermTo;
     }
 
-    public void setTargetTermTo(DateTime targetTermTo) {
+    public void setTargetTermTo(String targetTermTo) {
         this.targetTermTo = targetTermTo;
     }
 
-    public DateTime getTargetCheckTermFrom() {
+    public String getTargetCheckTermFrom() {
         return targetCheckTermFrom;
     }
 
-    public void setTargetCheckTermFrom(DateTime targetCheckTermFrom) {
+    public void setTargetCheckTermFrom(String targetCheckTermFrom) {
         this.targetCheckTermFrom = targetCheckTermFrom;
     }
 
-    public DateTime getTargetCheckTermTo() {
+    public String getTargetCheckTermTo() {
         return targetCheckTermTo;
     }
 
-    public void setTargetCheckTermTo(DateTime targetCheckTermTo) {
+    public void setTargetCheckTermTo(String targetCheckTermTo) {
         this.targetCheckTermTo = targetCheckTermTo;
     }
 
-    public DateTime getTargetCheckDate() {
+    public String getTargetCheckDate() {
         return targetCheckDate;
     }
 
-    public void setTargetCheckDate(DateTime targetCheckDate) {
+    public void setTargetCheckDate(String targetCheckDate) {
         this.targetCheckDate = targetCheckDate;
     }
 
-    public DateTime getTargetIncDecDate() {
+    public String getTargetIncDecDate() {
         return targetIncDecDate;
     }
 
-    public void setTargetIncDecDate(DateTime targetIncDecDate) {
+    public void setTargetIncDecDate(String targetIncDecDate) {
         this.targetIncDecDate = targetIncDecDate;
     }
 
@@ -133,11 +123,11 @@ public class CheckTermForm implements Serializable {
         this.targetDecreaseDayNum = targetDecreaseDayNum;
     }
 
-    public DateTime getTargetStartEndDate() {
+    public String getTargetStartEndDate() {
         return targetStartEndDate;
     }
 
-    public void setTargetStartEndDate(DateTime targetStartEndDate) {
+    public void setTargetStartEndDate(String targetStartEndDate) {
         this.targetStartEndDate = targetStartEndDate;
     }
 }

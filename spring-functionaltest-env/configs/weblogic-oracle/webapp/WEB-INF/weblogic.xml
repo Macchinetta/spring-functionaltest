@@ -15,7 +15,7 @@
     <prefer-web-inf-classes>false</prefer-web-inf-classes>
     <prefer-application-packages>
       <package-name>org.hibernate.validator.*</package-name>
-      <package-name>javax.validation.*</package-name>
+      <package-name>jakarta.validation.*</package-name>
       <package-name>com.fasterxml.jackson.*</package-name>
       <package-name>org.apache.xmlbeans.*</package-name>
       <package-name>org.joda.*</package-name>

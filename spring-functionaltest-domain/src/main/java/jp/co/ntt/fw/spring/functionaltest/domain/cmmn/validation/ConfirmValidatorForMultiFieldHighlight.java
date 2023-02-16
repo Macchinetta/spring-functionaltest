@@ -17,11 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 
 import java.util.Objects;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ConfirmValidatorForMultiFieldHighlight implements
                                                     ConstraintValidator<ConfirmForMultiFieldHighlight, Object> {

@@ -19,8 +19,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.CategoryMB3;
 
 public interface CategoryMB3Repository {
 
-    CategoryMB3 findOneByName(String name);
+    CategoryMB3 findByName(String name);
 
-    CategoryMB3 selectTodoCategoryIdAutoMap(String categoryId);
+    CategoryMB3 findByCategoryId(String categoryId);
 
 }

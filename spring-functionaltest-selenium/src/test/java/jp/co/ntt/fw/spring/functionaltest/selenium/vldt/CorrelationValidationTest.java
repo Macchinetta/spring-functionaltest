@@ -20,10 +20,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.openqa.selenium.By.id;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
@@ -51,7 +52,7 @@ public class CorrelationValidationTest extends FunctionTestSupport {
     public CorrelationValidationTest() {
         localeDateFormat = new HashMap<String, String>();
         localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yyyy");
+        localeDateFormat.put("en", "MM/dd/yy");
 
         super.disableDefaultWebDriver();
     }
@@ -137,6 +138,9 @@ public class CorrelationValidationTest extends FunctionTestSupport {
             webDriverOperations.click(id(testId));
         }
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+                localeDateFormat.get(currentLocale));
+
         // 実施条件1
         {
             int param = 0;
@@ -180,14 +184,13 @@ public class CorrelationValidationTest extends FunctionTestSupport {
         // 実施条件3
         {
             int param = 1;
-            LocalDate dt = new LocalDate();
+            LocalDate dt = LocalDate.now();
 
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
                 webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(20).toString(localeDateFormat.get(
-                                currentLocale)));
+                        .minusYears(20).format(dateTimeFormatter));
                 webDriverOperations.click(id(validates[param]));
             }
 
@@ -201,14 +204,13 @@ public class CorrelationValidationTest extends FunctionTestSupport {
         // 実施条件4
         {
             int param = 1;
-            LocalDate dt = new LocalDate();
+            LocalDate dt = LocalDate.now();
 
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
                 webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(19).toString(localeDateFormat.get(
-                                currentLocale)));
+                        .minusYears(19).format(dateTimeFormatter));
                 webDriverOperations.click(id(validates[param]));
             }
 

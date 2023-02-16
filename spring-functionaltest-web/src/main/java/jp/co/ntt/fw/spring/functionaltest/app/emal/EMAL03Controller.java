@@ -18,17 +18,17 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 import java.io.IOException;
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.SessionMailSendingService;
 
 @Controller
@@ -44,35 +44,35 @@ public class EMAL03Controller {
         return form;
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String handle01001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("textMimeMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0302/001", method = RequestMethod.GET)
+    @GetMapping(value = "0302/001")
     public String handle02001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("htmlMimeMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0303/001", method = RequestMethod.GET)
+    @GetMapping(value = "0303/001")
     public String handle03001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("attachmentMimeMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0304/001", method = RequestMethod.GET)
+    @GetMapping(value = "0304/001")
     public String handle04001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("inlineMimeMessage");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=textMimeMessage")
+    @PostMapping(value = "sendmail", params = "testcase=textMimeMessage")
     public String handleTextMimeMessage(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
@@ -85,7 +85,7 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=htmlMimeMessage")
+    @PostMapping(value = "sendmail", params = "testcase=htmlMimeMessage")
     public String handleHtmlMimeMessage(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
@@ -98,7 +98,7 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=attachmentMimeMessage")
+    @PostMapping(value = "sendmail", params = "testcase=attachmentMimeMessage")
     public String handleAttachmentMimeMessage(Model model,
             EmailSendingForm form) throws IOException {
 
@@ -114,7 +114,7 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=inlineMimeMessage")
+    @PostMapping(value = "sendmail", params = "testcase=inlineMimeMessage")
     public String handleInlineMimeMessage(Model model,
             EmailSendingForm form) throws IOException {
 

@@ -15,18 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.listener.jmss;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.constraints.Null;
-
-import org.apache.activemq.BlobMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -43,6 +36,13 @@ import org.springframework.validation.SmartValidator;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
+import jakarta.jms.BytesMessage;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Null;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsDbTransactedAmqReceivingService;
@@ -91,7 +91,7 @@ public class JmsMessageListener {
 
     @JmsListener(containerFactory = "conCacheNoTranContainerFactory", destination = "TestQueue0301001")
     public void receiveMessageByJmsMessage(
-            javax.jms.TextMessage message) throws IOException, JMSException {
+            jakarta.jms.TextMessage message) throws IOException, JMSException {
         jmsAmqReceivingService.receiveMessageByJmsMessage(message);
     }
 
@@ -113,15 +113,18 @@ public class JmsMessageListener {
 
     @JmsListener(containerFactory = "conCacheDynamicNoTranContainerFactory", destination = "TestQueue0901001")
     public void receiveMessageBlobMessage(
-            BlobMessage message) throws IOException, JMSException {
-        try (InputStream inputStream = message.getInputStream()) {
-            jmsAmqReceivingService.receiveMessageStream(inputStream);
-        }
+            BytesMessage message) throws IOException, JMSException, InterruptedException {
+
+        byte[] byteData = new byte[(int) message.getBodyLength()];
+        message.readBytes(byteData);
+        InputStream inputStream = new ByteArrayInputStream(byteData);
+        jmsAmqReceivingService.receiveMessageStream(inputStream);
+
     }
 
     @JmsListener(containerFactory = "conCacheNoTranContainerFactory", destination = "TestQueue0302001")
     public void receiveMessageMany(
-            javax.jms.TextMessage message) throws IOException, JMSException, InterruptedException {
+            jakarta.jms.TextMessage message) throws IOException, JMSException, InterruptedException {
         jmsAmqReceivingService.receiveMessageMany(message);
     }
 

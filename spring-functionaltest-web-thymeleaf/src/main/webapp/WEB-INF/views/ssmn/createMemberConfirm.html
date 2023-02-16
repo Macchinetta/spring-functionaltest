@@ -75,7 +75,7 @@
       </form>
       <!-- セッション内Form確認 -->
       <div id="checkFormInSession" style="visibility: hidden"
-        th:text="${#session.getAttribute('memberForm')} != null ? ${#session.getAttribute('memberForm').getClass().getName()}"></div>
+        th:text="${session.memberForm} != null ? ${session.memberForm.getClass().getName()}"></div>
     </div>
   </div>
 </body>

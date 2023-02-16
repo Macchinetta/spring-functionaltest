@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,42 +31,42 @@ public class DJPAController01 {
         return new BookListForm();
     }
 
-    @RequestMapping(value = "0101/001")
+    @GetMapping(value = "0101/001")
     public String handle0101001() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0102/001")
+    @GetMapping(value = "0102/001")
     public String handle0102001() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0102/002")
+    @GetMapping(value = "0102/002")
     public String handle0102002() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0103/001")
+    @GetMapping(value = "0103/001")
     public String handle0103001() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0103/002")
+    @GetMapping(value = "0103/002")
     public String handle0103002() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0103/003")
+    @GetMapping(value = "0103/003")
     public String handle0103003() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0103/004")
+    @GetMapping(value = "0103/004")
     public String handle0103004() {
         return "redirect:/djpa/book/list";
     }
 
-    @RequestMapping(value = "0103/005")
+    @GetMapping(value = "0103/005")
     public String handle0103005() {
         return "redirect:/djpa/book/list";
     }

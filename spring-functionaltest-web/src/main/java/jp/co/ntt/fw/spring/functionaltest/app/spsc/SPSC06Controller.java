@@ -16,22 +16,22 @@
 package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SPSC06Controller {
 
-    @RequestMapping("0601/001")
+    @GetMapping("0601/001")
     public String handle0601001() {
         return "spsc/result";
     }
 
-    @RequestMapping("0601/002")
+    @GetMapping("0601/002")
     public String handle0601002() {
         return "spsc/result";
     }
 
-    @RequestMapping("0601/003")
+    @GetMapping("0601/003")
     public String handle0601003() {
         return "spsc/result";
     }

@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserIdUseService;
 
 @RequestMapping("vldt")
@@ -37,13 +37,12 @@ public class VLDT0601Controller {
         return new UserIdForm();
     }
 
-    @RequestMapping(value = { "0601/001", "0601/002", "0601/003",
-            "0601/004", }, method = RequestMethod.GET)
+    @GetMapping(value = { "0601/001", "0601/002", "0601/003", "0601/004", })
     public String handle0101Init() {
         return "vldt/userIdUseRequestForm";
     }
 
-    @RequestMapping(value = "0601/regist", method = RequestMethod.POST)
+    @PostMapping(value = "0601/regist")
     public String handle0101001Regist(UserIdForm form, Model model) {
 
         String userId = "beforeNull".equals(form.getUserId()) ? null

@@ -15,14 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.pgnt;
 
-import javax.validation.ConstraintViolationException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice(basePackages = "jp.co.ntt.fw.spring.functionaltest.app.pgnt")
 public class PGNTControllerAdvice {
@@ -39,5 +41,10 @@ public class PGNTControllerAdvice {
                     .getConstraintViolations());
         }
         return "common/error/requestError";
+    }
+
+    @ModelAttribute("requestURI")
+    public String requestURI(HttpServletRequest request) {
+        return request.getRequestURI();
     }
 }

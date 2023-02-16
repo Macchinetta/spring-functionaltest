@@ -18,18 +18,18 @@ package jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * <p>
  * webFaultBean complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="webFaultBean">
  *   &lt;complexContent>
@@ -61,7 +61,7 @@ public class WebFaultBean {
      * property.
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getErrors().add(newItem);
      * </pre>

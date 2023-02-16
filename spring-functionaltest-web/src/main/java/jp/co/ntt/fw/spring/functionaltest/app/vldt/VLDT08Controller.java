@@ -18,9 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("vldt")
@@ -31,12 +32,12 @@ public class VLDT08Controller {
         return new ConfirmFormUsingCompare();
     }
 
-    @RequestMapping(value = "0801/001", method = RequestMethod.GET)
+    @GetMapping(value = "0801/001")
     public String handle01001() {
         return "vldt/correlationValidationByUsingCompareView";
     }
 
-    @RequestMapping(value = "0801/001", method = RequestMethod.POST, params = "validate")
+    @PostMapping(value = "0801/001", params = "validate")
     public String handleValidate01001(@Validated ConfirmFormUsingCompare form,
             BindingResult result) {
 

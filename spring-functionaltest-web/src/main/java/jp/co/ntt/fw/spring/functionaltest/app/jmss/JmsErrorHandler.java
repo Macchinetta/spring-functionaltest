@@ -15,8 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,6 +22,7 @@ import org.springframework.messaging.handler.annotation.support.MethodArgumentNo
 import org.springframework.util.ErrorHandler;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.ReceivedEvent;
 
 public class JmsErrorHandler implements ErrorHandler {

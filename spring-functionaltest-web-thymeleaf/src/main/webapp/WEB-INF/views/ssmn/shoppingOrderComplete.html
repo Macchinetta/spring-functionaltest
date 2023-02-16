@@ -52,7 +52,7 @@
       </table>
       <!-- セッション内Form確認 -->
       <div id="checkFormInSession" style="visibility: hidden"
-        th:text="${#session.getAttribute('scopedTarget.cart')} != null ? ${#session.getAttribute('scopedTarget.cart').getCartItems().size()}"></div>
+        th:text="${session['scopedTarget.cart']} != null ? ${session['scopedTarget.cart'].getCartItems().size()}"></div>
     </div>
   </div>
 </body>

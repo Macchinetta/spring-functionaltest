@@ -8,6 +8,12 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
+  <!-- Joda-Time will be removed in due course as JSR-310 is transitioned. -->  
+  <import resource="classpath:META-INF/spring/spring-functionaltest-joda.xml" />
+  
+  <!-- JSR-310 -->
+  <import resource="classpath:META-INF/spring/spring-functionaltest-jsr310.xml" />
+
   <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="${database.driverClassName}" />
     <property name="url" value="${database.url}" />
@@ -86,14 +92,7 @@
       </map>
     </property>
     <property name="defaultTargetDataSource" ref="dataSourceDefault" />
-    <property name="dateFactory" ref="dateFactoryDtac" />
-  </bean>
-
-  <bean id="dateFactoryDtac" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.FixedJodaTimeDateFactory" />
-
-  <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.JdbcFixedJodaTimeDateFactory">
-    <property name="dataSource" ref="dataSource" />
-    <property name="currentTimestampQuery" value="SELECT now FROM system_date" />
+    <property name="clockFactory" ref="clockFactoryDtac" />
   </bean>
 
   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -126,11 +125,11 @@
     <task:scheduled ref="dbLogCleaner" method="cleanup" cron="0 0 6 * * ?" />
   </task:scheduled-tasks>
 
+
   <bean id="mailSenderSession" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="${mail.noauth.smtp.host}" />
     <property name="port" value="${mail.noauth.smtp.port}" />
   </bean>
-
   <bean id="mailSenderNoAuth" class="org.springframework.mail.javamail.JavaMailSenderImpl">
     <property name="host" value="${mail.noauth.smtp.host}" />
     <property name="port" value="${mail.noauth.smtp.port}" />
@@ -181,6 +180,8 @@
     </property>
   </bean>
 
+  <!-- FY2022 SOAP スコープアウト -->
+  <!-- 
   <bean id="timeoutTodoWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
     <property name="serviceInterface" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
     <property name="serviceName" value="TodoWebService" />
@@ -194,6 +195,7 @@
     </property>
     <property name="lookupServiceOnStartup" value="false" />
   </bean>
+  -->
 
   <beans profile="default, nonMailServer">
     <bean id="greenMailBean" class="com.icegreen.greenmail.spring.GreenMailBean">

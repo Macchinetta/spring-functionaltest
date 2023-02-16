@@ -18,8 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.spsm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -32,7 +31,7 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 public class SPSM03Controller {
 
-    @RequestMapping(value = "0301/001", params = "afterLogin", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001", params = "afterLogin")
     @ResponseBody
     public ResponseEntity<Void> handleDeleteSession(
             SessionStatus sessionStatus) {

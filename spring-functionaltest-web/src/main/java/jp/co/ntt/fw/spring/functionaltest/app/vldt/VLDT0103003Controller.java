@@ -15,10 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.validation.groups.Default;
-
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,11 +22,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.vldt.AuthorizedValidationForm.Anonymous;
 
 @Controller
@@ -52,17 +52,17 @@ public class VLDT0103003Controller {
                 new StringTrimmerEditor(true));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/authorizedValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "LoginSuccess")
+    @PostMapping(params = "LoginSuccess")
     public String handleLoginSuccess() {
         return "vldt/authorizedValidationView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validate")
+    @PostMapping(params = "validate")
     public String handleValidate(AuthorizedValidationForm form,
             BindingResult result, Authentication authentication) {
 

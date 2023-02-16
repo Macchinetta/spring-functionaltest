@@ -17,17 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.jms.JMSException;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.jms.JMSException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsAmqReceivingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsSharedService;
@@ -54,7 +53,7 @@ public class JMSS07ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=validation_ok")
+    @PostMapping(value = "receivemessage", params = "testCase=validation_ok")
     public String receiveMessageValidationOK(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -68,7 +67,7 @@ public class JMSS07ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=validation_ng")
+    @PostMapping(value = "receivemessage", params = "testCase=validation_ng")
     public String receiveMessageValidationNG(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
@@ -82,35 +81,35 @@ public class JMSS07ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ok")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_ok")
     public String receiveMessageInputValidationOK(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ng")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_ng")
     public String receiveMessageInputValidationNg(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ng_with_err_msg")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_ng_with_err_msg")
     public String receiveMessageInputValidationWithViolationErrMsg(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_jms_transaction")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_jms_transaction")
     public String receiveMessageInputValidationJmsTransaction(Model model,
             JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_c_db_r")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_isolated_transaction_jms_c_db_r")
     public String receiveInputValidationIsolatedTransactionJmsCommitDbRollback(
             Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
@@ -140,7 +139,7 @@ public class JMSS07ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_db_c")
+    @PostMapping(value = "receivemessage", params = "testCase=input_validation_isolated_transaction_jms_db_c")
     public String receiveInputValidationIsolatedTransactionJmsAndDbCommit(
             Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {

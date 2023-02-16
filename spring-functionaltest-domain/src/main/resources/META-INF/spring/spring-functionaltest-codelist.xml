@@ -242,7 +242,7 @@
   </bean>
 
   <bean id="CL_YEAR_CODELIST" class="jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.DepYearCodeList">
-    <property name="dateFactory" ref="dateFactory" />
+    <property name="clockFactory" ref="clockFactory" />
   </bean>
 
 </beans>

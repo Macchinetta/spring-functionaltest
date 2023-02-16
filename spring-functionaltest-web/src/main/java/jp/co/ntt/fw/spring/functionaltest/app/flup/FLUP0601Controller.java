@@ -17,20 +17,20 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.validation.groups.Default;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.ScreenFlowUploadForm.Confirm;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.ScreenFlowUploadForm.Upload;
@@ -61,12 +61,12 @@ public class FLUP0601Controller {
         return screenFlowUploadSessionInfo;
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET)
+    @GetMapping(value = "001")
     public String handle001Form() {
         return form();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "confirm")
+    @PostMapping(value = "001", params = "confirm")
     public String handle001Confirm(@Validated({ Confirm.class,
             Default.class }) ScreenFlowUploadForm form, BindingResult result,
             ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
@@ -78,12 +78,12 @@ public class FLUP0601Controller {
         return confirmView;
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST, params = "redo")
+    @PostMapping(value = "001", params = "redo")
     public String handle001Redo(ScreenFlowUploadForm form) {
         return form();
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     public String handle001Upload(@Validated({ Upload.class,
             Default.class }) ScreenFlowUploadForm form, BindingResult result,
             ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
@@ -92,12 +92,12 @@ public class FLUP0601Controller {
                 redirectAttributes);
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.GET)
+    @GetMapping(value = "002")
     public String handle002Form() {
         return form();
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST, params = "confirm")
+    @PostMapping(value = "002", params = "confirm")
     public String handle002Confirm(@Validated({ Confirm.class,
             Default.class }) ScreenFlowUploadForm form, BindingResult result,
             ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
@@ -105,12 +105,12 @@ public class FLUP0601Controller {
         return confirm(form, result, screenFlowUploadSessionInfo, model);
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST, params = "redo")
+    @PostMapping(value = "002", params = "redo")
     public String handle002Redo(ScreenFlowUploadForm form) {
         return form();
     }
 
-    @RequestMapping(value = "002", method = RequestMethod.POST)
+    @PostMapping(value = "002")
     public String handle002Upload(@Validated({ Upload.class,
             Default.class }) ScreenFlowUploadForm form, BindingResult result,
             ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
@@ -119,7 +119,7 @@ public class FLUP0601Controller {
                 redirectAttributes);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = "complete")
+    @GetMapping(params = "complete")
     public String handleComplete(SessionStatus sessionStatus,
             ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo) {
         sessionStatus.setComplete();
@@ -127,7 +127,7 @@ public class FLUP0601Controller {
         return "flup/screenFlowFileUploadComplete";
     }
 
-    @RequestMapping(value = "001", params = "enableScheduler")
+    @GetMapping(value = "001", params = "enableScheduler")
     public String enableScheduler() throws IOException {
 
         // スケジューラを有効に。

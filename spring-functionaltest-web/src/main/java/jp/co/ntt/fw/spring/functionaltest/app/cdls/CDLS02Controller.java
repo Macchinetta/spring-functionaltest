@@ -15,18 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.ReloadCodeListService;
 
@@ -35,7 +33,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.cdls.ReloadCodeListServ
 public class CDLS02Controller {
 
     @Inject
-    Mapper beanMapper;
+    CDLSBeanMapper beanMapper;
 
     @Inject
     ReloadCodeListService orderStatusService;
@@ -45,45 +43,43 @@ public class CDLS02Controller {
         return new UpdateCodeListForm();
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.GET)
+    @GetMapping(value = "0201/001")
     public String handle01001(Model model, UpdateCodeListForm form) {
         return "cdls/codeListReload";
     }
 
-    @RequestMapping(value = "0201/001", method = RequestMethod.POST, params = "update")
+    @PostMapping(value = "0201/001", params = "update")
     public String handle01001Update(
             @Validated UpdateCodeListForm updateCodeListForm,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "cdls/codeListReload";
         }
-        CodeList updateCodeList = beanMapper.map(updateCodeListForm,
-                CodeList.class);
+        CodeList updateCodeList = beanMapper.map(updateCodeListForm);
         orderStatusService.updateAuthorityTableValue(updateCodeList);
 
         return "redirect:001";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET)
+    @GetMapping(value = "0201/002")
     public String handle01002(Model model, UpdateCodeListForm form) {
         return "cdls/codeListReload";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.POST, params = "update")
+    @PostMapping(value = "0201/002", params = "update")
     public String handle01002Update(
             @Validated UpdateCodeListForm updateCodeListForm,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "cdls/codeListReload";
         }
-        CodeList updateCodeList = beanMapper.map(updateCodeListForm,
-                CodeList.class);
+        CodeList updateCodeList = beanMapper.map(updateCodeListForm);
         orderStatusService.updateAuthorityTableValue(updateCodeList);
 
         return "redirect:002";
     }
 
-    @RequestMapping(value = "0201/002", method = RequestMethod.GET, params = "refresh")
+    @GetMapping(value = "0201/002", params = "refresh")
     public String handle01002Refresh(Model model, UpdateCodeListForm form) {
         orderStatusService.refresh();
         return "cdls/codeListReload";

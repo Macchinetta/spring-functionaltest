@@ -27,8 +27,10 @@ public class DateOperationHelper {
 
         // 期間が存在する場合、それぞれ表示用の期間（開始日、終了日）を設定
         if (interval != null) {
-            model.addAttribute("resultStartDate", interval.getStart());
-            model.addAttribute("resultEndDate", interval.getEnd());
+            model.addAttribute("resultStartDate", interval.getStart().toString(
+                    "yyyy/MM/dd"));
+            model.addAttribute("resultEndDate", interval.getEnd().toString(
+                    "yyyy/MM/dd"));
         }
     }
 

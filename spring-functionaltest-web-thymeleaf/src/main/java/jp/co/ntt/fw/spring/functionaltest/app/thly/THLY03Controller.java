@@ -17,6 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.thly;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
@@ -24,7 +25,7 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @RequestMapping("thly")
 public class THLY03Controller {
 
-    @RequestMapping(value = "0301/001")
+    @GetMapping(value = "0301/001")
     public String handle0301001(Model model) {
         model.addAttribute(ResultMessages.error().add("e.ex.thly.9001"));
         model.addAttribute("exceptionCode", "e.xx.fw.8001");

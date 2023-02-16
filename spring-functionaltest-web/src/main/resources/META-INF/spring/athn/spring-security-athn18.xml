@@ -6,12 +6,14 @@
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
   <!-- DelegatingPasswordEncoder（カスタマイズ）を利用した認証処理 -->
-  <sec:http pattern="/athn/1801/002/**" auto-config="false" authentication-manager-ref="loginWithCustomPbkdf2Password">
+  <sec:http pattern="/athn/1801/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithCustomPbkdf2Password">
     <sec:form-login login-page="/athn/1801/002/login" login-processing-url="/athn/1801/002/authenticate"
       default-target-url="/athn/1801/002/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/1801/002/logout" logout-success-url="/athn/" />
+    <sec:logout logout-url="/athn/1801/002/logout" logout-success-url="/athn" />
     <sec:intercept-url pattern="/athn/1801/002/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1801/002/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1801/002/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 
   <sec:authentication-manager id="loginWithCustomPbkdf2Password">
@@ -27,6 +29,7 @@
         <entry key="pbkdf2">
           <bean class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder">
             <constructor-arg name="secret" value="" />
+            <constructor-arg name="saltLength" value="16" />
             <constructor-arg name="iterations" value="${password.pbkdf2.iteration}" />
             <constructor-arg name="hashWidth" value="${password.pbkdf2.hashWidth}" />
           </bean>

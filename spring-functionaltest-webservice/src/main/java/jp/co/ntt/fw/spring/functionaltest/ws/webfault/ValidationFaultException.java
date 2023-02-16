@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.ws.webfault;
 
-import javax.xml.ws.WebFault;
+import jakarta.xml.ws.WebFault;
 
 @WebFault(name = "ValidationFault", targetNamespace = "http://functionaltest.spring.fw.ntt.co.jp/todo")
 public class ValidationFaultException extends WebFaultException {

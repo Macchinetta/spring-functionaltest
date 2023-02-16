@@ -20,14 +20,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.SystemException;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.ArticleFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.exhn.ArticleFileRepository;
 

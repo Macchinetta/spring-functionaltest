@@ -15,20 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dbsp;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
-import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
+import org.terasoluna.gfw.common.time.ClockFactory;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.Document;
@@ -47,13 +44,17 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Component
 public class FileDownloadView extends AbstractPdfView {
     private static final Logger logger = LoggerFactory.getLogger(
             FileDownloadView.class);
 
     @Inject
-    JodaTimeDateFactory dateFactory;
+    ClockFactory clockFactory;
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model,
@@ -109,24 +110,25 @@ public class FileDownloadView extends AbstractPdfView {
         applicationDateTable.setHorizontalAlignment(Element.ALIGN_LEFT);
         applicationDateTable.addCell(new Phrase("お申込日", normalFont));
 
+        LocalDate localDate = LocalDate.now(clockFactory.fixed());
+
         // 年月日
         PdfPCell applicationYearCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getYear()), normalFont));
+                localDate.getYear()), normalFont));
         applicationYearCell.setColspan(4);
         applicationYearCell.setBorder(0);
         applicationYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationYearCell);
         applicationDateTable.addCell(new Phrase("年", normalFont));
         PdfPCell applicationMonthCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime()
-                        .getMonthOfYear()), normalFont));
+                .toString(localDate.getMonthValue()), normalFont));
         applicationMonthCell.setColspan(2);
         applicationMonthCell.setBorder(0);
         applicationMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationMonthCell);
         applicationDateTable.addCell(new Phrase("月", normalFont));
         PdfPCell applicationDayCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getDayOfMonth()), normalFont));
+                localDate.getDayOfMonth()), normalFont));
         applicationDayCell.setColspan(2);
         applicationDayCell.setBorder(0);
         applicationDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -199,29 +201,33 @@ public class FileDownloadView extends AbstractPdfView {
                 Element.ALIGN_MIDDLE);
         birthDateTable.getDefaultCell().setBorder(0000);
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+                "yyyyMMdd");
+
+        int birthdateYear = LocalDate.parse((String) model.get("birthdate"),
+                dateTimeFormatter).getYear();
         PdfPCell birthdateYearCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd")).getYear()), normalFont));
+                birthdateYear), normalFont));
         birthdateYearCell.setColspan(4);
         birthdateYearCell.setBorder(0);
         birthdateYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         birthDateTable.addCell(birthdateYearCell);
         birthDateTable.addCell(new Phrase("年", normalFont));
 
+        int birthdateMonth = LocalDate.parse((String) model.get("birthdate"),
+                dateTimeFormatter).getMonthValue();
         PdfPCell birthdateMonthCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd"))
-                                .getMonthOfYear()), normalFont));
+                birthdateMonth), normalFont));
         birthdateMonthCell.setColspan(2);
         birthdateMonthCell.setBorder(0);
         birthdateMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         birthDateTable.addCell(birthdateMonthCell);
         birthDateTable.addCell(new Phrase("月", normalFont));
 
+        int birthdateDay = LocalDate.parse((String) model.get("birthdate"),
+                dateTimeFormatter).getDayOfMonth();
         PdfPCell birthdateDayCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd"))
-                                .getDayOfMonth()), normalFont));
+                birthdateDay), normalFont));
         birthdateDayCell.setColspan(2);
         birthdateDayCell.setBorder(0);
         birthdateDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -268,7 +274,7 @@ public class FileDownloadView extends AbstractPdfView {
         // set fixed CreationDate and ModDate
         PdfDictionary info = writer.getInfo();
         Calendar cal = Calendar.getInstance();
-        cal.setTime(dateFactory.newDate());
+        cal.setTime(Date.from(clockFactory.fixed().instant()));
         info.put(PdfName.CREATIONDATE, new PdfDate(cal));
         info.put(PdfName.MODDATE, new PdfDate(cal));
 

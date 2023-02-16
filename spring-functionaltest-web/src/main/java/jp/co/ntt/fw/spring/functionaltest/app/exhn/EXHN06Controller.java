@@ -17,22 +17,22 @@ package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-import javax.validation.groups.Default;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
+import jakarta.validation.groups.Default;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.InvalidRequestException;
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Confirm;
 import jp.co.ntt.fw.spring.functionaltest.app.exhn.ArticleBatchRegisterForm.Register;
@@ -76,29 +76,29 @@ public class EXHN06Controller {
         return articleSessionInfo;
     }
 
-    @RequestMapping(value = "0601/001")
+    @GetMapping(value = "0601/001")
     public String handle0601001(Model model) {
         model.addAttribute("count", articleFileService.countAll());
-        model.addAttribute("testNumber", "0601");
+        model.addAttribute("testNumber", "/0601");
         return "exhn/articleBatchRegister";
     }
 
-    @RequestMapping(value = "0601/002")
+    @GetMapping(value = "0601/002")
     public String handle0601002(Model model) {
         model.addAttribute("count", articleFileService.countAll());
-        model.addAttribute("testNumber", "0601/002");
+        model.addAttribute("testNumber", "/0601/002");
         return "exhn/articleBatchRegister";
     }
 
-    @RequestMapping(value = "0601/004")
+    @GetMapping(value = "0601/004")
     public String handle0601004(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0601/004/001");
+        model.addAttribute("testNumber", "/0601/004/001");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.GET)
+    @GetMapping(value = "0601/register", params = "upload")
     public String uploadRegisterGet(@Validated({ Register.class,
             Default.class }) ArticleBatchRegisterForm form,
             @RequestParam("uploadTemporaryFileId") String uploadTemporaryFileId,
@@ -116,25 +116,25 @@ public class EXHN06Controller {
         return "redirect:/exhn/0601?complete";
     }
 
-    @RequestMapping(value = "0601/confirm", params = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "0601/confirm", params = "upload")
     public String uploadConfirm(@Validated({ Confirm.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             Model model, RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
-            model.addAttribute("testNumber", "0601");
+            model.addAttribute("testNumber", "/0601");
             return "exhn/articleBatchRegister";
         }
 
         String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
                 form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
-        model.addAttribute("testNumber", "0601");
+        model.addAttribute("testNumber", "/0601");
         return "exhn/articleBatchConfirm";
     }
 
-    @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "0601/register", params = "upload")
     public String uploadRegisterPost(@Validated({ Register.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
@@ -153,30 +153,30 @@ public class EXHN06Controller {
         return "redirect:/exhn/0601?complete";
     }
 
-    @RequestMapping(value = "0601", params = "complete")
+    @GetMapping(value = "0601", params = "complete")
     public String articleComplete() {
         return "exhn/articleBatchComplete";
     }
 
-    @RequestMapping(value = "0601/002/confirm", params = "upload", method = RequestMethod.POST)
+    @PostMapping(value = "0601/002/confirm", params = "upload")
     public String uploadConfirmChangeproperty(@Validated({ Confirm.class,
             Default.class }) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             Model model, RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
-            model.addAttribute("testNumber", "0601/002");
+            model.addAttribute("testNumber", "/0601/002");
             return "exhn/articleBatchRegister";
         }
 
         String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
                 form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
-        model.addAttribute("testNumber", "0601/002");
+        model.addAttribute("testNumber", "/0601/002");
         return "exhn/articleBatchConfirm";
     }
 
-    @RequestMapping(value = "0601/002", params = "complete")
+    @GetMapping(value = "0601/002", params = "complete")
     public String articleCompleteChangeproperty(
             ArticleSessionInfo articleSessionInfo,
             SessionStatus sessionStatus) {
@@ -185,7 +185,7 @@ public class EXHN06Controller {
         return "exhn/articleBatchComplete";
     }
 
-    @RequestMapping(value = "0601/005")
+    @GetMapping(value = "0601/005")
     public String handle0601005() {
 
         throwErrorService.throwAssertionError();

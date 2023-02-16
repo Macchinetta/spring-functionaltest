@@ -17,9 +17,10 @@ package jp.co.ntt.fw.spring.functionaltest.app.thly;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("thly/staff")
@@ -30,86 +31,86 @@ public class THLYStaffController {
         return new StaffForm();
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.GET)
+    @GetMapping(value = "register")
     public String create() {
         return "thly/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "register")
+    @PostMapping(value = "register", params = "register")
     public String registerRegister(StaffForm form, Model model) {
         model.addAttribute("staff", form);
         return "thly/registerComplete";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "register", params = "cancel")
     public String registerCancel() {
         return "thly/register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "register", params = "back")
     public String registerBack() {
         return "thly/register";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.GET)
+    @GetMapping(value = "delete")
     public String delete() {
         return "thly/notthly/delete";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST, params = "delete")
+    @PostMapping(value = "delete", params = "delete")
     public String deleteDelete(StaffForm form, Model model) {
         model.addAttribute("staff", form);
         return "thly/notthly/deleteComplete";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "delete", params = "cancel")
     public String deleteCancel() {
         return "thly/notthly/delete";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "delete", params = "back")
     public String deleteBack() {
         return "thly/notthly/delete";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.GET)
+    @GetMapping(value = "update")
     public String update() {
         return "thly/update";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "update")
+    @PostMapping(value = "update", params = "update")
     public String updateUpdate(StaffForm form, Model model) {
         model.addAttribute("staff", form);
         return "thly/updateComplete";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "update", params = "cancel")
     public String updateCancel() {
         return "thly/update";
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "update", params = "back")
     public String updateBack() {
         return "thly/update";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @GetMapping(value = "search")
     public String search() {
         return "thly/search";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.POST, params = "search")
+    @PostMapping(value = "search", params = "search")
     public String searchUpdate(StaffForm form, Model model) {
         model.addAttribute("staff", form);
         return "thly/searchComplete";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.POST, params = "cancel")
+    @PostMapping(value = "search", params = "cancel")
     public String searchCancel() {
         return "thly/search";
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.POST, params = "back")
+    @PostMapping(value = "search", params = "back")
     public String searchBack() {
         return "thly/search";
     }

@@ -27,7 +27,7 @@ public interface UserListRepository {
 
     List<User> findPage(RowBounds rowBounds);
 
-    User findOneByUsername(String username);
+    User findByUsername(String username);
 
     void insert(User user);
 

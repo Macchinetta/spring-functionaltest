@@ -16,9 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.api.rest.member;
 
 import java.io.Serializable;
-
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import java.time.LocalDate;
 
 import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractTimeSupportedResource;
 
@@ -47,9 +45,9 @@ public class MemberResourceWithAdvice extends AbstractTimeSupportedResource
 
     private MemberCredentialResource credential;
 
-    private DateTime createdAt;
+    private LocalDate createdAt;
 
-    private DateTime lastModifiedAt;
+    private LocalDate lastModifiedAt;
 
     public String getMemberId() {
         return memberId;
@@ -131,22 +129,19 @@ public class MemberResourceWithAdvice extends AbstractTimeSupportedResource
         this.credential = credential;
     }
 
-    public DateTime getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(DateTime createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
-    public DateTime getLastModifiedAt() {
+    public LocalDate getLastModifiedAt() {
         return lastModifiedAt;
     }
 
-    public void setLastModifiedAt(DateTime lastModifiedAt) {
+    public void setLastModifiedAt(LocalDate lastModifiedAt) {
         this.lastModifiedAt = lastModifiedAt;
     }
-
-    // omitted setter and getter
-
 }

@@ -15,14 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
 
@@ -36,12 +35,12 @@ public class FLUPFilesController {
     @Inject
     FileUploadService fileUploadService;
 
-    @RequestMapping(method = RequestMethod.GET, params = "download")
+    @GetMapping(params = "download")
     public String download(@RequestParam(value = "fileId") String fileId,
             Model model) {
         UploadFile uploadFile = fileUploadService.getUploadFile(fileId);
         model.addAttribute(uploadFile);
-        return "flup/uploadFileDownload";
+        return "uploadFileDownload";
     }
 
 }

@@ -18,16 +18,17 @@ package jp.co.ntt.fw.spring.functionaltest.api.rest.common.error;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
+
+import jakarta.inject.Inject;
+import jakarta.servlet.RequestDispatcher;
 
 // エラー応答を行うためのControllerクラス
 @RequestMapping("error")
@@ -45,7 +46,7 @@ public class ApiErrorPageController {
     }
 
     // エラー応答を行う処理メソッド
-    @RequestMapping
+    @GetMapping
     public ResponseEntity<ApiError> handleErrorPage(WebRequest request) {
         // リクエストスコープに格納されているステータスコードを取得
         HttpStatus httpStatus = HttpStatus.valueOf((Integer) request

@@ -17,16 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.emal;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.mail.MessagingException;
-import javax.mail.Store;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Store;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.AuthErrorMailSendingService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.emal.ConnectionErrorMailSendingService;
@@ -51,35 +51,35 @@ public class EMAL04Controller {
         return form;
     }
 
-    @RequestMapping(value = "0401/001", method = RequestMethod.GET)
+    @GetMapping(value = "0401/001")
     public String handle01001(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("authenticationException");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0401/002", method = RequestMethod.GET)
+    @GetMapping(value = "0401/002")
     public String handle01002(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("parseException");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0401/003", method = RequestMethod.GET)
+    @GetMapping(value = "0401/003")
     public String handle01003(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("preparationException");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "0401/004", method = RequestMethod.GET)
+    @GetMapping(value = "0401/004")
     public String handle01004(EmailSendingForm form) {
         form.setTo(Arrays.asList(""));
         form.setTestcase("sendException");
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=authenticationException")
+    @PostMapping(value = "sendmail", params = "testcase=authenticationException")
     public String handleAuthenticationException(Model model,
             EmailSendingForm form) {
 
@@ -93,7 +93,7 @@ public class EMAL04Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=parseException")
+    @PostMapping(value = "sendmail", params = "testcase=parseException")
     public String handleParseException(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
@@ -106,7 +106,7 @@ public class EMAL04Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=preparationException")
+    @PostMapping(value = "sendmail", params = "testcase=preparationException")
     public String handlePreparationException(Model model,
             EmailSendingForm form) {
         User user = new User();
@@ -122,7 +122,7 @@ public class EMAL04Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=sendException")
+    @PostMapping(value = "sendmail", params = "testcase=sendException")
     public String handleSendException(Model model, EmailSendingForm form) {
 
         try (Store store = connectionErrorMailSendingService.popBeforeSmtp()) {

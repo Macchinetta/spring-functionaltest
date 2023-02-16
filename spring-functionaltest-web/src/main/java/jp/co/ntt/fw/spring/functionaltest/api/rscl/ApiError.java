@@ -31,7 +31,7 @@ public class ApiError implements Serializable {
     }
 
     public String getMessage() {
-        return message;
+        return this.message;
     }
 
 }

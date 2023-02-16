@@ -18,11 +18,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class AllowedSortPropertyValidator implements
                                           ConstraintValidator<AllowedSortProperty, Pageable> {

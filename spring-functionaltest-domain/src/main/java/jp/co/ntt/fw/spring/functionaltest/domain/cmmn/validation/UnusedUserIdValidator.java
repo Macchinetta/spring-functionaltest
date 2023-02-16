@@ -15,12 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation;
 
-import javax.inject.Inject;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
 import org.springframework.stereotype.Component;
 
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserService;
 
 @Component
@@ -32,6 +31,7 @@ public class UnusedUserIdValidator implements
 
     @Override
     public void initialize(UnusedUserId constraintAnnotation) {
+        // The default implementation
     }
 
     @Override

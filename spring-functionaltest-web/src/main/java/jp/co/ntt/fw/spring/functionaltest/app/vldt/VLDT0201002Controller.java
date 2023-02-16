@@ -15,16 +15,17 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import jakarta.inject.Inject;
 
 @Controller
 @RequestMapping("vldt/0201/002")
@@ -56,12 +57,12 @@ public class VLDT0201002Controller {
         binder.addValidators(dateOfBirthValidator);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle() {
         return "vldt/correlationValidationForMultiFormView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validateUser")
+    @PostMapping(params = "validateUser")
     public String handleValidateUser(@Validated UserForm userForm,
             BindingResult result) {
 
@@ -71,7 +72,7 @@ public class VLDT0201002Controller {
         return "redirect:/vldt/0201/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = "validateUserDetails")
+    @PostMapping(params = "validateUserDetails")
     public String handleValidateUserDetails(
             @Validated UserDetailsForm userDetailsForm, BindingResult result) {
 

@@ -14,13 +14,13 @@
  * governing permissions and limitations under the License.
  */
 /**
- * 
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElement;
 
 /**
  * <ul>

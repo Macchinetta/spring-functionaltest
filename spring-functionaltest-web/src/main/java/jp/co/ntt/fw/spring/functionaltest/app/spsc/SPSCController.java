@@ -16,12 +16,12 @@
 package jp.co.ntt.fw.spring.functionaltest.app.spsc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SPSCController {
 
-    @RequestMapping("/")
+    @GetMapping
     public String handle() {
         return "spsc/index";
     }

@@ -32,8 +32,15 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 @Service
 @Transactional
 public class AccountUserDetailsService implements UserDetailsService {
+
     @Autowired
     AccountSharedService accountSharedService;
+
+    @Autowired
+    public void setAccountSharedService(
+            AccountSharedService accountSharedService) {
+        this.accountSharedService = accountSharedService;
+    }
 
     public UserDetails loadUserByUsername(
             String username) throws UsernameNotFoundException {

@@ -80,13 +80,13 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.click(id("aply0101001"));
-            webDriverOperations.click(id("aply0101001hello"));
+            webDriverOperations.click(id("aply0101001_1"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/001/hello\")」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/001_1\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -99,13 +99,31 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.back();
-            webDriverOperations.click(id("aply0101001nihao"));
+            webDriverOperations.click(id("aply0101001_2"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
+                    "「@PostMapping(value = \"0101/001_2\")」のメソッドが実行されました。"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(
+                    webDriverOperations.getXTrack());
+        }
+        // Controllerの実装方法画面の操作
+        {
+            webDriverOperations.back();
+            webDriverOperations.click(id("aply0101001_3get"));
+        }
+
+        // Controllerの実装方法画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("messages")), is(
+                    "「@RequestMapping(value = \"0101/001_3\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -118,14 +136,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.back();
-            webDriverOperations.click(id("aply0101001bonjour"));
+            webDriverOperations.click(id("aply0101001_3post"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})」のメソッドが実行されました。"));
+                    "「@RequestMapping(value = \"0101/001_3\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
         }
+
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
@@ -150,13 +169,13 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.click(id("aply0101002"));
-            webDriverOperations.click(id("aply0101002_1"));
+            webDriverOperations.click(id("aply0101002hello"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/002_1\", method = RequestMethod.POST)」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/002/hello\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -169,13 +188,13 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.back();
-            webDriverOperations.click(id("aply0101002_2post"));
+            webDriverOperations.click(id("aply0101002nihao"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
+                    "「@GetMapping(value = {\"0101/002/nihao\", \"0101/002/bonjour\"})」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -188,14 +207,15 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の操作
         {
             webDriverOperations.back();
-            webDriverOperations.click(id("aply0101002_2get"));
+            webDriverOperations.click(id("aply0101002bonjour"));
         }
 
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})」のメソッドが実行されました。"));
+                    "「@GetMapping(value = {\"0101/002/nihao\", \"0101/002/bonjour\"})」のメソッドが実行されました。"));
         }
+
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
@@ -226,7 +246,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -245,7 +265,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
@@ -276,7 +296,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
@@ -295,7 +315,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})」のメソッドが実行されました。"));
         }
         // ログの確認
         {
@@ -325,7 +345,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/001/{id}/{version}\")」のメソッドが実行されました。(id=id1,version=1)"));
+                    "「@GetMapping(value = \"0102/001/{id}/{version}\")」のメソッドが実行されました。(id=id1,version=1)"));
         }
         // ログの確認
         {
@@ -355,7 +375,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/002/{id}/{version}\")」のメソッドが実行されました。(id=id2,version=2)"));
+                    "「@GetMapping(value = \"0102/002/{id}/{version}\")」のメソッドが実行されました。(id=id2,version=2)"));
         }
         // ログの確認
         {
@@ -385,7 +405,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/003\")」のメソッドが実行されました。(id=12,name=taro,age=null,genderCode=unknown)"));
+                    "「@GetMapping(value = \"0102/003\")」のメソッドが実行されました。(id=12,name=taro,age=null,genderCode=unknown)"));
         }
         // ログの確認
         {
@@ -450,7 +470,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
             assertTrue(webDriverOperations.getCurrentUrl().endsWith(
                     "aply/0102/005?complete"));
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
+                    "「@GetMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
         }
         // ログの確認
         {
@@ -483,7 +503,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
             assertTrue(webDriverOperations.getCurrentUrl().endsWith(
                     "aply/0102/006?complete&id=redirect_id"));
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));
+                    "「@GetMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));
         }
         // ログの確認
         {
@@ -513,7 +533,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertTrue(webDriverOperations.getText(id("messages")).startsWith(
-                    "「@RequestMapping(value = \"0102/007\")」のメソッドが実行されました。(cookies[JSESSIONID]="));
+                    "「@GetMapping(value = \"0102/007\")」のメソッドが実行されました。(cookies[JSESSIONID]="));
         }
         // ログの確認
         {
@@ -549,7 +569,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/008\")」のメソッドが実行されました。(cookies[hello]=helloworld!)"));
+                    "「@GetMapping(value = \"0102/008\")」のメソッドが実行されました。(cookies[hello]=helloworld!)"));
         }
         // ログの確認
         {
@@ -579,7 +599,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertTrue(webDriverOperations.getText(id("messages")).startsWith(
-                    "「@RequestMapping(value = \"0102/009\")」のメソッドが実行されました。(commonParam1=111, commonParam2=222)"));
+                    "「@GetMapping(value = \"0102/009\")」のメソッドが実行されました。(commonParam1=111, commonParam2=222)"));
         }
         // ログの確認
         {
@@ -609,7 +629,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@RequestMapping(value = \"0102/010\")」のメソッドが実行されました。(commonParam1=123, commonParam2=456)"));
+                    "「@GetMapping(value = \"0102/010\")」のメソッドが実行されました。(commonParam1=123, commonParam2=456)"));
         }
         // ログの確認
         {
@@ -1848,6 +1868,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(annotations の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401004() throws IOException {
 
@@ -1916,6 +1939,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(assignableTypes の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401005() throws IOException {
 
@@ -1984,6 +2010,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(basePackageClasses の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401006() throws IOException {
 
@@ -2103,6 +2132,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(basePackageClasses の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401007() throws IOException {
 
@@ -2222,6 +2254,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(basePackages の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401008() throws IOException {
 
@@ -2342,6 +2377,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * (@ControllerAdvice(value の確認)</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0401009() throws IOException {
 
@@ -2501,6 +2539,9 @@ public class ApplicationLayerTest extends FunctionTestSupport {
      * <li>リクエスト処理メソッドの共通処理をハンドラインタセプタで設定できること。（正常処理）</li>
      * </ul>
      */
+    // Thymeleaf3.1より、#requestが使えなくなりX-Trackを画面上で取得できなくなった
+    // このテストではControllerを介さずにエラー画面へ遷移するのでModelにX-Trackを格納できないためjspのみ実施する
+    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
     @Test
     public void testAPLY0402002() {
 

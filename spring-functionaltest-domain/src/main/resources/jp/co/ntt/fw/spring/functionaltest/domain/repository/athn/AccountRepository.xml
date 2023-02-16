@@ -13,7 +13,7 @@
     <result property="admin" column="admin" />
   </resultMap>
 
-  <select id="findOneByUsername" parameterType="String" resultMap="accountResultMap">
+  <select id="findByUsername" parameterType="String" resultMap="accountResultMap">
     SELECT
     username,
     password,

@@ -16,22 +16,22 @@
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class THYM0605001Controller {
 
-    @RequestMapping("01")
+    @GetMapping("01")
     public String testTHYM060500101() {
         return "thym/cacheMaxSize01";
     }
 
-    @RequestMapping("02")
+    @GetMapping("02")
     public String testTHYM060500102() {
         return "thym/cacheMaxSize02";
     }
 
-    @RequestMapping("03")
+    @GetMapping("03")
     public String testTHYM060500103() {
         return "thym/cacheMaxSize03";
     }

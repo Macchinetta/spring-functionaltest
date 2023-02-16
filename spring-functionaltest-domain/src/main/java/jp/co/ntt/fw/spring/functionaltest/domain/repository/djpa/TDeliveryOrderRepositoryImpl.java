@@ -22,14 +22,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public class TDeliveryOrderRepositoryImpl implements

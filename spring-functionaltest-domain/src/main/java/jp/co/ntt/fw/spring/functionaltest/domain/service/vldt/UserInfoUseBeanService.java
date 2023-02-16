@@ -15,10 +15,10 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.validation.annotation.Validated;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 @Validated
 public interface UserInfoUseBeanService {

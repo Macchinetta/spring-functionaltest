@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.inject.Inject;
-
+import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,6 +34,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.ApServerName;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -42,6 +42,12 @@ public class AuthorizationTest extends FunctionTestSupport {
 
     @Inject
     protected RestTemplate restTemplate;
+
+    @After
+    public void afterTest() {
+        // ログアウトしていない場合次のテストに影響が出るので、セッションを削除する
+        webDriverOperations.deleteCookie("JSESSIONID");
+    }
 
     /**
      * <ul>
@@ -134,7 +140,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrict.do");
+                    + "/0201/002/restrict.do");
             // ログイン画面の確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
                     "Staff Login Page"));
@@ -145,7 +151,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrict");
+                    + "/0201/002/restrict");
             // ログイン画面の確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
                     "Staff Login Page"));
@@ -156,7 +162,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrict/");
+                    + "/0201/002/restrict/");
             // ログイン画面の確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
                     "Staff Login Page"));
@@ -167,7 +173,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrict.do/");
+                    + "/0201/002/restrict.do/");
             // タイトルの確認
             assertThat(webDriverOperations.getTitle(), is(
                     "Resource Not Found Error!"));
@@ -178,7 +184,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrict%20");
+                    + "/0201/002/restrict%20");
 
             ApServerName apServerName = webDriverOperations.getApServerName();
             // WebSphere Liberty/Traditionalでは末尾の%20をトリムしてしまうので
@@ -197,7 +203,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/002/restrictA");
+                    + "/0201/002/restrictA");
             // タイトルの確認
             assertThat(webDriverOperations.getTitle(), is(
                     "Resource Not Found Error!"));
@@ -255,7 +261,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/004/showForAccessSuccessfully");
+                    + "/0201/004/showForAccessSuccessfully");
             // ログイン画面の確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
                     "Staff Login Page"));
@@ -266,7 +272,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         {
             // メニュー画面の操作
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0201/004/showforaccesssuccessfully");
+                    + "/0201/004/showforaccesssuccessfully");
             // タイトルの確認
             assertThat(webDriverOperations.getTitle(), is(
                     "Resource Not Found Error!"));
@@ -948,7 +954,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン１：Kosh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Kosh.html");
+                    + "/0601/019/account/Kosh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -957,7 +963,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン２：Kosh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Kosh/a");
+                    + "/0601/019/account/Kosh/a");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -966,7 +972,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン３：Kosh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Kosh/");
+                    + "/0601/019/account/Kosh/");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -975,7 +981,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン４：Kosh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Kosh");
+                    + "/0601/019/account/Kosh");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -984,7 +990,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン５：Josh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Josh.html");
+                    + "/0601/019/account/Josh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -993,7 +999,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン６：Josh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Josh/a");
+                    + "/0601/019/account/Josh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1002,19 +1008,16 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン７：Josh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Josh/");
+                    + "/0601/019/account/Josh/");
 
-            // 認可を受け、ユーザ情報画面が表示されていることを確認
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "ユーザ情報詳細"));
-
-            // ユーザ情報が見えるページに遷移できることの確認
-            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
         }
         // パターン８：Josh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/019/account/Josh");
+                    + "/0601/019/account/Josh");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1052,7 +1055,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン１：Kosh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Kosh.html");
+                    + "/0601/020/account/Kosh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1061,7 +1064,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン２：Kosh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Kosh/a");
+                    + "/0601/020/account/Kosh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1070,7 +1073,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン３：Kosh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Kosh/");
+                    + "/0601/020/account/Kosh/");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1079,7 +1082,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン４：Kosh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Kosh");
+                    + "/0601/020/account/Kosh");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1088,7 +1091,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン５：Josh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Josh.html");
+                    + "/0601/020/account/Josh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1097,7 +1100,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン６：Josh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Josh/a");
+                    + "/0601/020/account/Josh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1106,18 +1109,16 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン７：Josh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Josh/");
+                    + "/0601/020/account/Josh/");
 
-            // 認可を受け、ユーザ情報画面が表示されていることを確認
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "ユーザ情報詳細"));
-            // ユーザ情報が見えるページに遷移できることの確認
-            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
         }
         // パターン８：Josh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/020/account/Josh");
+                    + "/0601/020/account/Josh");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1155,7 +1156,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン１：Kosh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Kosh.html");
+                    + "/0601/021/account/Kosh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1164,7 +1165,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン２：Kosh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Kosh/a");
+                    + "/0601/021/account/Kosh/a");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1173,7 +1174,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン３：Kosh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Kosh/");
+                    + "/0601/021/account/Kosh/");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1182,7 +1183,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン４：Kosh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Kosh");
+                    + "/0601/021/account/Kosh");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1191,7 +1192,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン５：Josh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Josh.html");
+                    + "/0601/021/account/Josh.html");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1203,7 +1204,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン６：Josh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Josh/a");
+                    + "/0601/021/account/Josh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1212,19 +1213,16 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン７：Josh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Josh/");
+                    + "/0601/021/account/Josh/");
 
-            // 認可を受け、ユーザ情報画面が表示されていることを確認
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "ユーザ情報詳細"));
-
-            // ユーザ情報が見えるページに遷移できることの確認
-            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
         }
         // パターン８：Josh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/021/account/Josh");
+                    + "/0601/021/account/Josh");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1262,7 +1260,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン１：Kosh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Kosh.html");
+                    + "/0601/022/account/Kosh.html");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1271,7 +1269,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン２：Kosh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Kosh/a");
+                    + "/0601/022/account/Kosh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1280,7 +1278,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン３：Kosh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Kosh/");
+                    + "/0601/022/account/Kosh/");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1289,7 +1287,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン４：Kosh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Kosh");
+                    + "/0601/022/account/Kosh");
 
             // 否認可を受け、アクセス拒否画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1298,7 +1296,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン５：Josh.html
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Josh.html");
+                    + "/0601/022/account/Josh.html");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(
@@ -1310,7 +1308,7 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン６：Josh/a
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Josh/a");
+                    + "/0601/022/account/Josh/a");
 
             // 認可を受け、リソースなしエラー画面が表示されていることを確認
             assertThat(webDriverOperations.getTitle(), is(
@@ -1319,19 +1317,16 @@ public class AuthorizationTest extends FunctionTestSupport {
         // パターン７：Josh/
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Josh/");
+                    + "/0601/022/account/Josh/");
 
-            // 認可を受け、ユーザ情報画面が表示されていることを確認
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "ユーザ情報詳細"));
-
-            // ユーザ情報が見えるページに遷移できることの確認
-            assertThat(webDriverOperations.getText(id("username")), is("Josh"));
+            // 認可を受け、リソースなしエラー画面が表示されていることを確認
+            assertThat(webDriverOperations.getTitle(), is(
+                    "Resource Not Found Error!"));
         }
         // パターン８：Josh
         {
             webDriverOperations.displayPage(getPackageRootUrl()
-                    + "0601/022/account/Josh");
+                    + "/0601/022/account/Josh");
 
             // 認可を受け、ユーザ情報画面が表示されていることを確認
             assertThat(webDriverOperations.getText(id("screenTitle")), is(

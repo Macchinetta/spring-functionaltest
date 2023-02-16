@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 
@@ -42,15 +42,15 @@ public class EXHN0601003Controller {
         return employeeForm;
     }
 
-    @RequestMapping(value = "0601/003", method = RequestMethod.GET)
+    @GetMapping(value = "0601/003")
     public String handle0601003(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0601/003");
+        model.addAttribute("testNumber", "/0601/003");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0601/003", params = "update")
+    @PostMapping(value = "0601/003", params = "update")
     public String employeeUpdateCustomSystemExceptionResolver(
             EmployeeForm form) {
 
@@ -60,7 +60,7 @@ public class EXHN0601003Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0601/003", params = "backToIndex", method = RequestMethod.POST)
+    @PostMapping(value = "0601/003", params = "backToIndex")
     public String backToIndex() {
         return "exhn/index";
     }

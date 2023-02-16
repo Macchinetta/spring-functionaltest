@@ -20,8 +20,6 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.BusinessException;
@@ -29,6 +27,7 @@ import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Stock;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.excn.StockRepository;
 
@@ -47,7 +46,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
 
     @Override
     public Stock findOne(String itemCode) {
-        Stock stock = stockRepository.selectByItemCode(itemCode);
+        Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
             ResultMessages messages = ResultMessages.danger().add(
                     "excn.result.datanotfound");
@@ -58,7 +57,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
 
     @Override
     public Stock buy(Stock stock, int purchasingQuantity, long sleepMillis) {
-        Stock subject = stockRepository.selectByItemCode(stock.getItemCode());
+        Stock subject = stockRepository.findByItemCode(stock.getItemCode());
 
         subject.setQuantity(purchasingQuantity);
         // できるだけ同時にDBアクセスするように同期する
@@ -70,7 +69,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
         }
         // RDBMSによる行ロック中に、別スレッドの更新処理が実行されるようにするために、ロックを取得したスレッドを一定時間停止する。
         sleep(sleepMillis);
-        return stockRepository.selectByItemCode(stock.getItemCode());
+        return stockRepository.findByItemCode(stock.getItemCode());
     }
 
     private void await() {

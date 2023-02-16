@@ -21,16 +21,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ATHR08Controller {
-    @RequestMapping("0802/001")
+    @GetMapping("0802/001")
     public String handle0801001() {
         return "athr/loginForCustomizedAuthorizeErrorForUnAuthenticated";
     }
 
-    @RequestMapping(value = { "0802/001/afterLogin", "0802/001/api" })
+    @GetMapping(value = { "0802/001/afterLogin", "0802/001/api" })
     public String handle0801001afterLogin(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

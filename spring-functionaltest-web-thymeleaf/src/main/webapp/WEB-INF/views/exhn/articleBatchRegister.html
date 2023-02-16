@@ -11,7 +11,7 @@
 
       <div id="count" th:text="|登録件数:${count}|">登録件数:登録件数</div>
       <br>
-      <form th:action="@{/exhn/{testNumber}/confirm(testNumber=${testNumber})}"
+      <form th:action="@{/exhn{testNumber}/confirm(testNumber=${testNumber})}"
         th:object="${articleBatchRegisterForm}" method="POST" class="form-horizontal"
         enctype="multipart/form-data">
         <fieldset>

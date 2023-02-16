@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class INTR0301Controller {
@@ -25,17 +25,17 @@ public class INTR0301Controller {
         return "intr/login";
     }
 
-    @RequestMapping(value = "001/login")
+    @GetMapping(value = "001/login")
     public String login001() {
         return login();
     }
 
-    @RequestMapping(value = "001")
+    @GetMapping(value = "001")
     public String handle001() {
         return "intr/userDetails";
     }
 
-    @RequestMapping(value = "error")
+    @GetMapping(value = "error")
     public String handleError() {
         return "intr/accessDeniedPage";
     }

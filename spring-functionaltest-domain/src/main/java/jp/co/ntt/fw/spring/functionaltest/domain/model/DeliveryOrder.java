@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class DeliveryOrder implements Serializable {
 
@@ -34,9 +34,9 @@ public class DeliveryOrder implements Serializable {
 
     private String recieverAddress;
 
-    private Date acceptDatetime;
+    private LocalDateTime acceptDatetime;
 
-    private Date completionDatetime;
+    private LocalDateTime completionDatetime;
 
     private String deliveryDriver;
 
@@ -90,19 +90,19 @@ public class DeliveryOrder implements Serializable {
         this.recieverAddress = recieverAddress;
     }
 
-    public Date getAcceptDatetime() {
+    public LocalDateTime getAcceptDatetime() {
         return acceptDatetime;
     }
 
-    public void setAcceptDatetime(Date acceptDatetime) {
+    public void setAcceptDatetime(LocalDateTime acceptDatetime) {
         this.acceptDatetime = acceptDatetime;
     }
 
-    public Date getCompletionDatetime() {
+    public LocalDateTime getCompletionDatetime() {
         return completionDatetime;
     }
 
-    public void setCompletionDatetime(Date completionDatetime) {
+    public void setCompletionDatetime(LocalDateTime completionDatetime) {
         this.completionDatetime = completionDatetime;
     }
 

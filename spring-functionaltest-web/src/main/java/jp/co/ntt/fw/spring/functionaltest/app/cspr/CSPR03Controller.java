@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -29,14 +27,14 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Committer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.cspr.CommitterCriteria;
@@ -53,7 +51,7 @@ public class CSPR03Controller {
     CommitterService committerService;
 
     @Inject
-    Mapper beanMapper;
+    CSPRBeanMapper beanMapper;
 
     @ModelAttribute
     public CommitterCriteria setUpCriteria() {
@@ -65,34 +63,33 @@ public class CSPR03Controller {
         return new CommitterForm();
     }
 
-    @RequestMapping(value = "0301/001")
+    @GetMapping(value = "0301/001")
     public String handle0301001() {
         return "cspr/committerEdit";
     }
 
-    @RequestMapping(value = "0301/002")
+    @GetMapping(value = "0301/002")
     public String handle0301002() {
         return "cspr/committerList";
     }
 
-    @RequestMapping(value = "0301/003")
+    @GetMapping(value = "0301/003")
     public String handle0301003() {
         return "cspr/committerEdit";
     }
 
-    @RequestMapping(value = "0301/004")
+    @GetMapping(value = "0301/004")
     public String handle0301004() {
         return "cspr/committerList";
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    @PostMapping(value = "edit")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ProfileResult edit(@Validated CommitterForm form,
             Principal principal, Locale locale) {
 
-        Committer committer = new Committer();
-        beanMapper.map(form, committer);
+        Committer committer = beanMapper.map(form);
         committer.setUsername(principal.getName());
 
         committerService.update(committer);
@@ -105,7 +102,7 @@ public class CSPR03Controller {
         return result;
     }
 
-    @RequestMapping(value = "search", method = RequestMethod.GET)
+    @GetMapping(value = "search")
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommittersResult search(CommitterCriteria criteria) {
@@ -132,7 +129,7 @@ public class CSPR03Controller {
         return result;
     }
 
-    @RequestMapping(value = "0301", params = "retrunToIndex")
+    @GetMapping(value = "0301", params = "retrunToIndex")
     public String retrunToIndex() {
 
         return "cspr/index";

@@ -17,11 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.app.stpr;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import org.terasoluna.gfw.common.validator.constraints.Compare;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Compare(left = "startIndex", right = "endIndex", operator = Compare.Operator.LESS_THAN_OR_EQUAL)
 public class StringProcessing03Form implements Serializable {

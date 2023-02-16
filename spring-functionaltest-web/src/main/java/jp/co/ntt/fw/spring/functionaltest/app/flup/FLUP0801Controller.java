@@ -17,18 +17,18 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.SingleUploadForm.UploadFileAllowJsp;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
@@ -48,12 +48,12 @@ public class FLUP0801Controller {
         return new SingleUploadForm();
     }
 
-    @RequestMapping(value = "001")
+    @GetMapping(value = "001")
     public String handle001Form() {
         return "flup/directFileUploadForm";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.POST)
+    @PostMapping(value = "001")
     public String handle001Upload(@Validated({
             UploadFileAllowJsp.class }) SingleUploadForm form,
             BindingResult result,
@@ -82,7 +82,7 @@ public class FLUP0801Controller {
         return "redirect:/flup/0801/001?complete";
     }
 
-    @RequestMapping(value = "001", method = RequestMethod.GET, params = "complete")
+    @GetMapping(value = "001", params = "complete")
     public String handleComplete() {
         return "flup/directFileUploadComplete";
     }

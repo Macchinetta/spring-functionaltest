@@ -16,19 +16,19 @@
 package jp.co.ntt.fw.spring.functionaltest.app.intr;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping
 public class INTR0201008Controller {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public String handle008() {
         return "intr/changeLocaleInvalid";
     }
 
-    @RequestMapping(value = "check", method = RequestMethod.GET)
+    @GetMapping(value = "check")
     public String handle008_check() {
         return "intr/checkLocale";
     }

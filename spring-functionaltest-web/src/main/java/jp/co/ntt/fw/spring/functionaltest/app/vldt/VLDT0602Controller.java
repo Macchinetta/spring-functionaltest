@@ -15,16 +15,16 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanInput;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanOutput;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserInfoUseBeanService;
@@ -44,14 +44,13 @@ public class VLDT0602Controller {
         return new UserInfoForm();
     }
 
-    @RequestMapping(value = { "0602/001", "0602/002", "0602/003", "0602/004",
-            "0602/005", "0602/006", "0602/007", "0602/008",
-            "0602/009" }, method = RequestMethod.GET)
+    @GetMapping(value = { "0602/001", "0602/002", "0602/003", "0602/004",
+            "0602/005", "0602/006", "0602/007", "0602/008", "0602/009" })
     public String handle0201001Init() {
         return "vldt/userInfoUseBeanRequestForm";
     }
 
-    @RequestMapping(value = "0602/regist", method = RequestMethod.POST)
+    @PostMapping(value = "0602/regist")
     public String handle0201001Regist(@Validated UserInfoForm form,
             BindingResult result, Model model) {
 

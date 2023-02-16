@@ -17,8 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotEmpty;
-
+import jakarta.validation.constraints.NotEmpty;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmForMultiFieldHighlight;
 
 @ConfirmForMultiFieldHighlight(field = "password", confirmField = "confirmPassword")

@@ -22,8 +22,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.inject.Inject;
-
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -31,7 +29,10 @@ import org.joda.time.Period;
 import org.springframework.stereotype.Service;
 import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateFactory;
 
+import jakarta.inject.Inject;
+
 @Service
+@SuppressWarnings("deprecation")
 public class DateOperationServiceImpl implements DateOperationService {
     @Inject
     JodaTimeDateFactory dateFactory;

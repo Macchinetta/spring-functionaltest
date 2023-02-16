@@ -15,8 +15,6 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
-import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -26,17 +24,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.NestedServletException;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-import com.github.dozermapper.core.Mapper;
-
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Employee;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.EmployeeService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.ThrowErrorService;
@@ -49,7 +47,7 @@ public class EXHN03Controller {
             EXHN03Controller.class);
 
     @Inject
-    Mapper beanMapper;
+    EmployeeBeanMapper beanMapper;
 
     @Inject
     EmployeeService employeeService;
@@ -66,34 +64,34 @@ public class EXHN03Controller {
         return employeeForm;
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String handle0301001(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0301/001");
+        model.addAttribute("testNumber", "/0301/001");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0302/001/001")
+    @GetMapping(value = "0302/001/001")
     public String handle0301002001(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0302/001/001");
+        model.addAttribute("testNumber", "/0302/001/001");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0302/001/002")
+    @GetMapping(value = "0302/001/002")
     public String handle0301002002(EmployeeForm form, Model model) {
         employeeHelper.convertToForm(form);
-        model.addAttribute("testNumber", "0302/001/002");
+        model.addAttribute("testNumber", "/0302/001/002");
 
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0301/001", params = "update", method = RequestMethod.POST)
+    @PostMapping(value = "0301/001", params = "update")
     public String employeeUpdate(@Validated EmployeeForm form,
             BindingResult result, Model model) {
-        model.addAttribute("testNumber", "0301/001");
+        model.addAttribute("testNumber", "/0301/001");
 
         if (result.hasErrors()) {
             return "exhn/employeeEdit";
@@ -112,10 +110,10 @@ public class EXHN03Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0302/001/001", params = "update", method = RequestMethod.POST)
+    @PostMapping(value = "0302/001/001", params = "update")
     public String employeeUpdateFirst(@Validated EmployeeForm form,
             BindingResult result, Model model) {
-        model.addAttribute("testNumber", "0302/001/001");
+        model.addAttribute("testNumber", "/0302/001/001");
 
         if (result.hasErrors()) {
             return "exhn/employeeEdit";
@@ -129,10 +127,10 @@ public class EXHN03Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0302/001/002", params = "update", method = RequestMethod.POST)
+    @PostMapping(value = "0302/001/002", params = "update")
     public String employeeUpdateSecond(@Validated EmployeeForm form,
             BindingResult result, Model model) {
-        model.addAttribute("testNumber", "0302/001/002");
+        model.addAttribute("testNumber", "/0302/001/002");
 
         if (result.hasErrors()) {
             return "exhn/employeeEdit";
@@ -146,7 +144,7 @@ public class EXHN03Controller {
         return "exhn/employeeEdit";
     }
 
-    @RequestMapping(value = "0302/002")
+    @GetMapping(value = "0302/002")
     public String handle0302002() {
 
         throwErrorService.throwAssertionError();
@@ -160,10 +158,10 @@ public class EXHN03Controller {
         return "common/error/systemError";
     }
 
-    @ExceptionHandler(NestedServletException.class)
-    public void handleNestedServletException(
-            NestedServletException e) throws NestedServletException {
-        logger.warn("NestedServletException Occured");
+    @ExceptionHandler(ServletException.class)
+    public void handleServletException(
+            ServletException e) throws ServletException {
+        logger.warn("ServletException Occured");
         throw e;
     }
 
@@ -174,15 +172,15 @@ public class EXHN03Controller {
 
         Employee employee = employeeService.findEmployee(1);
 
-        EmployeeForm form = beanMapper.map(employee, EmployeeForm.class);
+        EmployeeForm form = beanMapper.map(employee);
         modelMap.addAttribute(form);
 
         modelMap.addAttribute(ResultMessages.danger().add("e.sf.exhn.8020"));
         return new ModelAndView("exhn/employeeEdit", modelMap);
     }
 
-    @RequestMapping(value = { "301/001", "302/001/001",
-            "302/001/002" }, params = "backToIndex", method = RequestMethod.POST)
+    @PostMapping(value = { "0301/001", "0302/001/001",
+            "0302/001/002" }, params = "backToIndex")
     public String backToIndex() {
         return "exhn/index";
     }

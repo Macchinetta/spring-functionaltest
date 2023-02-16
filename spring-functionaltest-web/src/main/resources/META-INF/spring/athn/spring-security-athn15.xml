@@ -9,11 +9,13 @@
     <property name="defaultTargetUrl" value="/athn/1501/logoutComplete" />
   </bean>
 
-  <sec:http pattern="/athn/1501/**" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
+  <sec:http pattern="/athn/1501/**" request-matcher="ant" auto-config="false" authentication-manager-ref="userLoginManagerForAthn">
     <sec:form-login login-page="/athn/1501/001/login" default-target-url="/athn/1501/001?loginSuccess"
       always-use-default-target="true" login-processing-url="/athn/1501/001/authenticate" />
     <sec:logout logout-url="/athn/1501/001/logout" success-handler-ref="logoutSuccessHandler" />
     <sec:intercept-url pattern="/athn/1501/001/login/**" access="permitAll" />
+    <sec:intercept-url pattern="/athn/1501/001/logout/**" access="permitAll" />
     <sec:intercept-url pattern="/athn/1501/**" access="isAuthenticated()" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
   </sec:http>
 </beans>

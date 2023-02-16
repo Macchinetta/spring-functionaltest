@@ -17,15 +17,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Controller
@@ -41,7 +40,7 @@ public class JMSS01ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=activeMqCon")
+    @PostMapping(value = "receivemessage", params = "testCase=activeMqCon")
     public String receiveMessageActiveMqCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -55,7 +54,7 @@ public class JMSS01ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=jndiCon")
+    @PostMapping(value = "receivemessage", params = "testCase=jndiCon")
     public String receiveMessageJndiCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
@@ -69,7 +68,7 @@ public class JMSS01ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=cacheCon")
+    @PostMapping(value = "receivemessage", params = "testCase=cacheCon")
     public String receiveMessageCacheCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 

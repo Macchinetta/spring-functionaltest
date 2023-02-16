@@ -19,17 +19,17 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ATHN22Controller {
 
-    @RequestMapping("2201/001")
+    @GetMapping("2201/001")
     public String handle2201001() {
         return "athn/loginForRememberMe";
     }
 
-    @RequestMapping(value = "2201", params = "loginSuccess")
+    @GetMapping(value = "2201", params = "loginSuccess")
     public String handle2201LoginSuccess(
             @AuthenticationPrincipal User userDetails, Model model) {
         // RememberMe機能を使用しない場合、認証済み情報は取得できないため、

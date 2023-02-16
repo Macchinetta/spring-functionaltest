@@ -15,9 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.validation.constraints.NotNull;
-
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
+
+import jakarta.validation.constraints.NotNull;
 
 public class ClMonthAscForm {
 

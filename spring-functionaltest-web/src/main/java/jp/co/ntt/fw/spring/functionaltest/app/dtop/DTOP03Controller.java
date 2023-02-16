@@ -15,19 +15,24 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.dtop;
 
-import javax.inject.Inject;
-
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.dtop.DateOperationService;
 
 @RequestMapping("dtop")
 @Controller
 public class DTOP03Controller {
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat
+            .forPattern("yyyy/MM/dd");
 
     @Inject
     public DateOperationService dateOperationService;
@@ -37,109 +42,149 @@ public class DTOP03Controller {
         return new DateManipulationForm();
     }
 
-    @RequestMapping(value = "0301/001", method = RequestMethod.GET)
+    @GetMapping(value = "0301/001")
     public String handle01001(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0301/002", method = RequestMethod.GET)
+    @GetMapping(value = "0301/002")
     public String handle01002(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0301/003", method = RequestMethod.GET)
+    @GetMapping(value = "0301/003")
     public String handle01003(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0301/004", method = RequestMethod.GET)
+    @GetMapping(value = "0301/004")
     public String handle01004(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0301/005", method = RequestMethod.GET)
+    @GetMapping(value = "0301/005")
     public String handle01005(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0301/006", method = RequestMethod.GET)
+    @GetMapping(value = "0301/006")
     public String handle01006(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0302/001", method = RequestMethod.GET)
+    @GetMapping(value = "0302/001")
     public String handle02001(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0302/002", method = RequestMethod.GET)
+    @GetMapping(value = "0302/002")
     public String handle02002(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0303/001", method = RequestMethod.GET)
+    @GetMapping(value = "0303/001")
     public String handle03001(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "0303/002", method = RequestMethod.GET)
+    @GetMapping(value = "0303/002")
     public String handle03002(Model model) {
         return "dtop/dateManipulation";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcDayDate")
+    @GetMapping(value = "calcdate", params = "calcDayDate")
     public String handleCalculateDayDate(Model model,
             DateManipulationForm form) {
-        model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfDay(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
-        model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfDay(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+
+        LocalDate targetIncDecDate = DATE_TIME_FORMATTER.parseLocalDate(form
+                .getTargetIncDecDate());
+
+        LocalDate localDateInc = dateOperationService.calcIncreaseNumOfDay(
+                targetIncDecDate, form.getTargetIncreaseNum());
+        LocalDate localDateDec = dateOperationService.calcDecreaseNumOfDay(
+                targetIncDecDate, form.getTargetDecreaseNum());
+
+        model.addAttribute("resultStartDate", localDateInc.toString(
+                "yyyy/MM/dd"));
+        model.addAttribute("resultEndDate", localDateDec.toString(
+                "yyyy/MM/dd"));
+
         return "dtop/showIncDecDate";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcMonthDate")
+    @GetMapping(value = "calcdate", params = "calcMonthDate")
     public String handleCalculateMonthDate(Model model,
             DateManipulationForm form) {
-        model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfMonth(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
-        model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfMonth(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+
+        LocalDate targetIncDecDate = DATE_TIME_FORMATTER.parseLocalDate(form
+                .getTargetIncDecDate());
+
+        LocalDate localDateInc = dateOperationService.calcIncreaseNumOfMonth(
+                targetIncDecDate, form.getTargetIncreaseNum());
+        LocalDate localDateDec = dateOperationService.calcDecreaseNumOfMonth(
+                targetIncDecDate, form.getTargetDecreaseNum());
+
+        model.addAttribute("resultStartDate", localDateInc.toString(
+                "yyyy/MM/dd"));
+        model.addAttribute("resultEndDate", localDateDec.toString(
+                "yyyy/MM/dd"));
         return "dtop/showIncDecDate";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcYearDate")
+    @GetMapping(value = "calcdate", params = "calcYearDate")
     public String handleCalculateYearDate(Model model,
             DateManipulationForm form) {
-        model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfYear(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
-        model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfYear(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+
+        LocalDate targetIncDecDate = DATE_TIME_FORMATTER.parseLocalDate(form
+                .getTargetIncDecDate());
+
+        LocalDate localDateInc = dateOperationService.calcIncreaseNumOfYear(
+                targetIncDecDate, form.getTargetIncreaseNum());
+        LocalDate localDateDec = dateOperationService.calcDecreaseNumOfYear(
+                targetIncDecDate, form.getTargetDecreaseNum());
+
+        model.addAttribute("resultStartDate", localDateInc.toString(
+                "yyyy/MM/dd"));
+        model.addAttribute("resultEndDate", localDateDec.toString(
+                "yyyy/MM/dd"));
         return "dtop/showIncDecDate";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcMonthStartEndDate")
+    @GetMapping(value = "calcdate", params = "calcMonthStartEndDate")
     public String handleCalcMonthStartEndDate(Model model,
             DateManipulationForm form) {
-        model.addAttribute("resultStartDate", form.getTargetStartEndDate()
-                .dayOfMonth().withMinimumValue());
-        model.addAttribute("resultEndDate", form.getTargetStartEndDate()
-                .dayOfMonth().withMaximumValue());
+
+        LocalDate targetStartEndDate = DATE_TIME_FORMATTER.parseLocalDate(form
+                .getTargetStartEndDate());
+
+        LocalDate localDateMin = targetStartEndDate.dayOfMonth()
+                .withMinimumValue();
+        LocalDate localDateMax = targetStartEndDate.dayOfMonth()
+                .withMaximumValue();
+
+        model.addAttribute("resultStartDate", localDateMin.toString(
+                "yyyy/MM/dd"));
+        model.addAttribute("resultEndDate", localDateMax.toString(
+                "yyyy/MM/dd"));
         return "dtop/showStartEndDate";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcWeekStartEndDate")
+    @GetMapping(value = "calcdate", params = "calcWeekStartEndDate")
     public String handleCalcWeekStartEndDate(Model model,
             DateManipulationForm form) {
-        model.addAttribute("resultStartDate", form.getTargetStartEndDate()
-                .dayOfWeek().withMinimumValue());
-        model.addAttribute("resultEndDate", form.getTargetStartEndDate()
-                .dayOfWeek().withMaximumValue());
+
+        LocalDate targetStartEndDate = DATE_TIME_FORMATTER.parseLocalDate(form
+                .getTargetStartEndDate());
+
+        LocalDate localDateMin = targetStartEndDate.dayOfWeek()
+                .withMinimumValue();
+        LocalDate localDateMax = targetStartEndDate.dayOfWeek()
+                .withMaximumValue();
+
+        model.addAttribute("resultStartDate", localDateMin.toString(
+                "yyyy/MM/dd"));
+        model.addAttribute("resultEndDate", localDateMax.toString(
+                "yyyy/MM/dd"));
         return "dtop/showStartEndDate";
     }
 }

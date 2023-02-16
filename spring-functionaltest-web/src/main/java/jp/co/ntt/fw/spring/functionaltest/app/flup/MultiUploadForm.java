@@ -18,7 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.flup;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 public class MultiUploadForm implements Serializable {
 

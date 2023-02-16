@@ -31,8 +31,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,6 +44,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class DoubleSubmitProtectionTest extends FunctionTestSupport {
