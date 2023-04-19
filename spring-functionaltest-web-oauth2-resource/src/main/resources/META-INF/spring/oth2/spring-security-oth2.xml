@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <sec:http pattern="/auth/**">
+  <sec:http pattern="/auth/**" request-matcher="ant">
     <sec:intercept-url pattern="/auth/intercepturl/**" method="GET" access="hasAuthority('SCOPE_READ')" />
     <sec:intercept-url pattern="/auth/intercepturl/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />
     <sec:intercept-url pattern="/auth/intercepturl/**" method="PUT" access="hasAuthority('SCOPE_UPDATE')" />
@@ -17,7 +17,7 @@
     </sec:oauth2-resource-server>
   </sec:http>
   
-  <sec:http pattern="/wrong/**">
+  <sec:http pattern="/wrong/**" request-matcher="ant">
     <sec:intercept-url pattern="/wrong/**" method="GET" access="hasAuthority('SCOPE_READ')" />
     <sec:intercept-url pattern="/wrong/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />
     <sec:intercept-url pattern="/wrong/**" method="PUT" access="hasAuthority('SCOPE_UPDATE')" />

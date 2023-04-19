@@ -9,8 +9,8 @@
 
   <import resource="classpath:META-INF/spring/oth2/spring-security-oth2.xml" />
 
-  <sec:http pattern="/resources/**" security="none" />
-  <sec:http>
+  <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
+  <sec:http request-matcher="ant">
     <sec:form-login />
     <sec:logout />
     <sec:csrf disabled="true" />
@@ -18,8 +18,6 @@
   </sec:http>
 
   <sec:authentication-manager />
-  
-  <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
 
   <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 

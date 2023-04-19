@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/spsm/0301/001/**" authentication-manager-ref="userLoginManagerForAthn"
+  <sec:http pattern="/spsm/0301/001/**" request-matcher="ant" authentication-manager-ref="userLoginManagerForAthn"
     disable-url-rewriting="false" create-session="stateless">
     <sec:http-basic />
     <sec:intercept-url pattern="/spsm/0301/**" access="isAuthenticated()" />

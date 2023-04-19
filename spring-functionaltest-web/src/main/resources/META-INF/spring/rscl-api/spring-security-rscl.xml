@@ -5,7 +5,7 @@
         http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http request-matcher="ant" pattern="/api/v1/rscl/**" create-session="stateless"
+  <sec:http pattern="/api/v1/rscl/**" request-matcher="ant" create-session="stateless"
     authentication-manager-ref="rsclAuthenticationManager">
     <sec:http-basic />
     <sec:csrf disabled="true" />
