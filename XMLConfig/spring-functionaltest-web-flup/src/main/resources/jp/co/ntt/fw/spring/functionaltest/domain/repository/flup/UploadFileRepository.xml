@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.flup.UploadFileRepository">
+
+  <resultMap id="uploadFile-resultMap" type="UploadFile">
+    <result property="fileId" column="file_id" />
+    <result property="fileName" column="file_name" />
+    <result property="contentType" column="contentType" />
+    <result property="content" column="content" />
+    <result property="description" column="description" />
+    <result property="uploadedAt" column="uploaded_at" />
+  </resultMap>
+
+  <select id="findByFileId" parameterType="String" resultMap="uploadFile-resultMap">
+    SELECT
+    file_id
+    ,file_name
+    ,content_type
+    ,content
+    ,description
+    ,uploaded_at
+    FROM
+    t_upload_file
+    WHERE
+    file_id = #{fileId}
+  </select>
+
+  <insert id="insert" parameterType="UploadFile">
+    INSERT INTO t_upload_file
+    (
+    file_id
+    ,file_name
+    ,content_type
+    ,content
+    ,description
+    ,uploaded_at
+    )
+    VALUES
+    (
+    #{fileId}
+    ,#{fileName}
+    ,#{contentType}
+    ,#{content}
+    ,#{description}
+    ,#{uploadedAt}
+    )
+  </insert>
+
+</mapper>

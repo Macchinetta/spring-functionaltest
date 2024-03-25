@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">disabled</h1>
+
+      <form th:action="@{/thymeleaf/1302}" method="post">
+        <input type="submit" id="back" class="btn btn-default" value="back">
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

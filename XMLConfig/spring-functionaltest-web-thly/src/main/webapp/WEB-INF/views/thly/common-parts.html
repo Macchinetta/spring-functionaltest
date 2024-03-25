@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>common-parts</title>
+</head>
+<body>
+  <div th:fragment="messagesPanel" th:if="${resultMessages} != null"
+    th:class="|alert alert-${resultMessages.type}|">
+    <ul>
+      <li th:each="message : ${resultMessages}"
+        th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">blank
+        messages</li>
+    </ul>
+  </div>
+</body>
+</html>

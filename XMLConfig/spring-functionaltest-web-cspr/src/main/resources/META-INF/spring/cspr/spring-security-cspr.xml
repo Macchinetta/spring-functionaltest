@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+  <!-- CSPR設定(deniedHandlerを使用しない/JSP) -->
+  <sec:http pattern="/jsp/notUseDeniedHandler/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/jsp/authenticate" default-target-url="/"
+      login-page="/jsp/cspr/login" />
+    <sec:logout logout-url="/jsp/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/jsp/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/jsp/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
+  </sec:http>
+
+  <!-- CSPR基本設定(deniedHandlerを使用する/JSP) -->
+  <sec:http pattern="/jsp/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:csrf request-handler-ref="csrfTokenRequestAttributeHandler"/>
+    <sec:access-denied-handler ref="accessDeniedHandler" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/jsp/authenticate" default-target-url="/"
+      login-page="/jsp/cspr/login" />
+    <sec:logout logout-url="/jsp/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/jsp/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/jsp/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
+  </sec:http>
+
+  <!-- CSPR設定(deniedHandlerを使用しない/Thymeleaf) -->
+  <sec:http pattern="/thymeleaf/notUseDeniedHandler/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/thymeleaf/authenticate" default-target-url="/"
+      login-page="/thymeleaf/cspr/login" />
+    <sec:logout logout-url="/thymeleaf/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/thymeleaf/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/thymeleaf/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
+  </sec:http>
+
+  <!-- CSPR基本設定(deniedHandlerを使用する/Thymeleaf) -->
+  <sec:http pattern="/thymeleaf/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:csrf request-handler-ref="csrfTokenRequestAttributeHandler"/>
+    <sec:access-denied-handler ref="accessDeniedHandler" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/thymeleaf/authenticate" default-target-url="/"
+      login-page="/thymeleaf/cspr/login" />
+    <sec:logout logout-url="/thymeleaf/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/thymeleaf/0301/001" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/thymeleaf/0301/003" access="hasRole('ROLE_USER')" />
+    <sec:intercept-url pattern="/**" access="permitAll" />
+  </sec:http>
+
+  <bean id="csrfTokenRequestAttributeHandler"
+	class="org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler"
+	p:csrfRequestAttributeName="_csrf"/>
+
+  <!-- CSPR基本設定(CSRFを使用しない/JSP) -->
+  <sec:http pattern="/jspDisabledcspr/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:csrf disabled="true" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/jspDisabledcspr/authenticate"
+      default-target-url="/" login-page="/jspDisabledcspr/login" />
+    <sec:logout logout-url="/jspDisabledcspr/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
+  </sec:http>
+
+  <!-- CSPR基本設定(CSRFを使用しない/Thymeleaf) -->
+  <sec:http pattern="/thymeleafDisabledcspr/**" request-matcher="ant" auto-config="false"
+    authentication-manager-ref="committerAuthenticationManager">
+    <sec:csrf disabled="true" />
+    <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
+    <sec:form-login login-processing-url="/thymeleafDisabledcspr/authenticate"
+      default-target-url="/" login-page="/thymeleafDisabledcspr/login" />
+    <sec:logout logout-url="/thymeleafDisabledcspr/logout" delete-cookies="JSESSIONID" />
+    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+    <sec:intercept-url pattern="/**" access="permitAll"/>
+  </sec:http>
+
+  <sec:authentication-manager id="committerAuthenticationManager">
+    <sec:authentication-provider ref="committerPasswordAuthenticationProvider" />
+  </sec:authentication-manager>
+
+  <bean id="committerPasswordAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+    <property name="hideUserNotFoundExceptions" value="true" />
+    <property name="passwordEncoder" ref="passwordEncoder" />
+    <property name="userDetailsService" ref="committerService" />
+  </bean>
+
+  <bean id="committerService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterUserDetailsService" />
+
+</beans>

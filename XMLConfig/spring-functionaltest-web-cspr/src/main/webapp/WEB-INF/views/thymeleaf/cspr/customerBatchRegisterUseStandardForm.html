@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <h3 id="screenTitle">顧客一括登録画面</h3>
+
+      <form id="customerBatchRegisterForm" class="form-horizontal"
+        th:action="@{/thymeleaf/registerWithTokenFromQuery?{csrfp}={csrft}(csrfp=${_csrf.parameterName} , csrft=${_csrf.token})}"
+        method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label for="multipartFile" class="col col-md-2 control-label">一括登録ファイル</label>
+          <div class="col col-md-10">
+            <input id="multipartFile" name="multipartFile" type="file" value="" /> <span
+              id="multipartFile.errors" th:errors="${customerBatchRegisterForm.multipartFile}"
+              class="errorMessage"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col col-md-10 col-md-offset-2">
+            <button id="uploadButton" name="upload" class="btn btn-default" type="submit"
+              value="Submit">アップロード</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+
+

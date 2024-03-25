@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:input=""
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">リクエストパラメータの存在チェックについて(application)</h1>
+
+      <div>
+        <h3>アプリケーションコンテキスト取得結果</h3>
+        <label>${application.containsKey('foo')} :</label>
+        <span id="containsKeyFoo" th:text="${application.containsKey('foo')}"></span>
+        <br>
+
+        <label>${application.containsKey('bar')} :</label>
+        <span id="containsKeyBar" th:text="${application.containsKey('bar')}"></span>
+        <br>
+
+        <label>${application.keySet().contains('foo')} :</label>
+        <span id="keySetFoo" th:text="${application.keySet().contains('foo')}"></span>
+        <br>
+
+        <label>${application.keySet().contains('bar')} :</label>
+        <span id="keySetBar" th:text="${application.keySet().contains('bar')}"></span>
+        <br>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

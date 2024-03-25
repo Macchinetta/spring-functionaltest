@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Exclusive Lock Error!</title>
+<link rel="stylesheet" th:href="@{/resources/app/css/styles.css}">
+<link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}">
+<link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}">
+</head>
+<body>
+  <div th:insert="~{thymeleaf/layout/header :: header}">header</div>
+  <div id="wrapper">
+    <h1>Exclusive Lock Error!</h1>
+    <!--/* <t:messagesPanel /> start */-->
+    <div th:replace="~{thymeleaf/common/fragments :: messagesPanel}"></div>
+    <!--/* <t:messagesPanel /> end */-->
+    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
+    <br> <br> <br> <br>
+  </div>
+  <div th:insert="~{thymeleaf/layout/footer :: footer}">footer</div>
+</body>
+</html>

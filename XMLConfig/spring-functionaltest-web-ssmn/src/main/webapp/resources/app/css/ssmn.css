@@ -1,0 +1,73 @@
+th {
+    text-align: center !important;
+}
+
+label {
+    width: 150px;
+}
+
+.paginationPart {
+    text-align: center;
+}
+
+.no {
+    width: 30px;
+}
+
+td+.no {
+    text-align: right;
+}
+
+.itemId {
+    width: 100px;
+}
+
+.itemName {
+    
+}
+
+.overviewDescription {
+    
+}
+
+.price {
+    width: 100px;
+}
+
+.quantity {
+    width: 50px;
+}
+
+td+.price {
+    text-align: right;
+}
+
+.totalPrice {
+    text-align: right;
+}
+
+td+.quantity {
+    text-align: right;
+}
+
+input[class="quantity"] {
+    text-align: right;
+    width: 50px;
+}
+
+.errorMessage {
+    color: red;
+}
+
+#cartLink,#itemListLink {
+    text-align: right;
+    padding-bottom: 10px;
+}
+
+.buttonArea {
+    text-align: right;
+}
+
+.orderIdLabel {
+    width: 130px;
+}

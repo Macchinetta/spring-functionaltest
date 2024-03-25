@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.rest.RestMemberRepository">
+
+  <resultMap id="RestMemberResultMap" type="RestMember">
+    <id property="memberId" column="member_id" />
+    <result property="firstName" column="first_name" />
+    <result property="lastName" column="last_name" />
+    <result property="gender" column="gender" />
+    <result property="dateOfBirth" column="date_of_birth" />
+    <result property="emailAddress" column="email_address" />
+    <result property="telephoneNumber" column="telephone_number" />
+    <result property="zipCode" column="zip_code" />
+    <result property="address" column="address" />
+    <result property="createdAt" column="created_at" />
+    <result property="lastModifiedAt" column="last_modified_at" />
+    <result property="version" column="version" />
+    <result property="credential.memberId" column="member_id" />
+    <result property="credential.signId" column="sign_id" />
+    <result property="credential.password" column="password" />
+    <result property="credential.previousPassword" column="previous_password" />
+    <result property="credential.passwordLastChangedAt" column="password_last_changed_at" />
+    <result property="credential.lastModifiedAt" column="credential_last_modified_at" />
+    <result property="credential.version" column="credential_version" />
+  </resultMap>
+
+  <sql id="selectRestMember">
+    SELECT
+    member.member_id as member_id
+    ,member.first_name as first_name
+    ,member.last_name
+    as last_name
+    ,member.gender as gender
+    ,member.date_of_birth as date_of_birth
+    ,member.email_address
+    as email_address
+    ,member.telephone_number as telephone_number
+    ,member.zip_code as zip_code
+    ,member.address as address
+    ,member.created_at as created_at
+    ,member.last_modified_at as
+    last_modified_at
+    ,member.version as version
+    ,credential.sign_id as sign_id
+    ,credential.password as
+    password
+    ,credential.previous_password as previous_password
+    ,credential.password_last_changed_at
+    as password_last_changed_at
+    ,credential.last_modified_at as credential_last_modified_at
+    ,credential.version as credential_version
+    FROM
+    t_rest_member member
+    INNER JOIN
+    t_rest_member_credential credential ON credential.member_id =
+    member.member_id
+  </sql>
+
+  <sql id="whereRestMember">
+    WHERE
+    member.first_name LIKE #{nameContainingCondition} ESCAPE '~'
+    OR member.last_name
+    LIKE #{nameContainingCondition} ESCAPE '~'
+  </sql>
+
+  <select id="findAll" resultMap="RestMemberResultMap">
+    <include refid="selectRestMember" />
+    ORDER BY member_id ASC
+  </select>
+
+  <select id="findByMemberId" parameterType="string" resultMap="RestMemberResultMap">
+    <include refid="selectRestMember" />
+    WHERE
+    member.member_id = #{memberId}
+  </select>
+
+  <select id="countByContainsName" parameterType="string" resultType="_long">
+    <bind name="nameContainingCondition"
+      value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toStartingWithCondition(_parameter)" />
+    SELECT
+    COUNT(*)
+    FROM
+    t_rest_member member
+    <include refid="whereRestMember" />
+  </select>
+
+  <select id="findPageByContainsName" parameterType="string" resultMap="RestMemberResultMap">
+    <bind name="nameContainingCondition"
+      value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toStartingWithCondition(_parameter)" />
+    <include refid="selectRestMember" />
+    <include refid="whereRestMember" />
+    ORDER BY member_id ASC
+  </select>
+
+  <insert id="createMember" parameterType="RestMember">
+    <selectKey keyProperty="memberId" resultType="string" order="BEFORE" databaseId="h2">
+      SELECT 'M'||TO_CHAR(NEXTVAL('s_rest_member'),'FM000000000')
+    </selectKey>
+
+    <selectKey keyProperty="memberId" resultType="string" order="BEFORE" databaseId="postgres">
+      SELECT 'M'||TO_CHAR(NEXTVAL('s_rest_member'),'FM000000000')
+    </selectKey>
+
+    <selectKey keyProperty="memberId" resultType="string" order="BEFORE" databaseId="oracle">
+      SELECT 'M'||TO_CHAR(s_rest_member.nextval,'FM000000000') FROM DUAL
+    </selectKey>
+
+    INSERT INTO
+    t_rest_member
+    (
+    member_id
+    ,first_name
+    ,last_name
+    ,gender
+    ,date_of_birth
+    ,email_address
+    ,telephone_number
+    ,zip_code
+    ,address
+    ,created_at
+    ,last_modified_at
+    ,version
+    )
+    VALUES
+    (
+    #{memberId}
+    ,#{firstName}
+    ,#{lastName}
+    ,#{gender}
+    ,#{dateOfBirth}
+    ,#{emailAddress}
+    ,#{telephoneNumber}
+    ,#{zipCode}
+    ,#{address}
+    ,#{createdAt}
+    ,#{lastModifiedAt}
+    ,1
+    )
+  </insert>
+
+  <insert id="createCredential" parameterType="RestMember">
+    INSERT INTO
+    t_rest_member_credential
+    (
+    member_id
+    ,sign_id
+    ,password
+    ,previous_password
+    ,password_last_changed_at
+    ,last_modified_at
+    ,version
+    )
+    VALUES
+    (
+    #{memberId}
+    ,#{credential.signId}
+    ,#{credential.password}
+    ,#{credential.previousPassword}
+    ,#{credential.passwordLastChangedAt}
+    ,#{credential.lastModifiedAt}
+    ,1
+    )
+  </insert>
+
+  <update id="updateMember" parameterType="RestMember">
+    UPDATE
+    t_rest_member
+    SET
+    first_name = #{firstName}
+    ,last_name = #{lastName}
+    ,gender = #{gender}
+    ,date_of_birth = #{dateOfBirth}
+    ,email_address =
+    #{emailAddress}
+    ,telephone_number = #{telephoneNumber}
+    ,zip_code = #{zipCode}
+    ,address = #{address}
+    ,created_at = #{createdAt}
+    ,last_modified_at = #{lastModifiedAt}
+    ,version = version + 1
+    WHERE
+    member_id = #{memberId}
+    AND version = #{version}
+  </update>
+
+  <delete id="deleteCredentialByMemberId" parameterType="string">
+    DELETE FROM t_rest_member_credential
+    WHERE
+    member_id = #{memberId}
+  </delete>
+
+  <delete id="deleteMemberByMemberId" parameterType="string">
+    DELETE FROM t_rest_member
+    WHERE
+    member_id =
+    #{memberId}
+  </delete>
+
+</mapper>

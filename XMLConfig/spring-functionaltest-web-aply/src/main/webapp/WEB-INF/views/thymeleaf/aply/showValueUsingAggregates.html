@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">モデルに格納された値を演算し表示した画面（#aggregates）</h1>
+
+      <ul th:if="${testcaseId} == 'APLY1009001'">
+        <li id="message1">Thymeleafが提供している#aggregates.sumを利用して数値を以下に表示します。</li>
+        <li id="message2"
+          th:text="${#aggregates.sum(aggregatesValue)}"></li>
+      </ul>
+      <ul th:if="${testcaseId} == 'APLY1009002'">
+        <li id="message1">Thymeleafが提供している#aggregates.avgを利用して数値を以下に表示します。</li>
+        <li id="message2" th:text="${#aggregates.avg(aggregatesValue)}"></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

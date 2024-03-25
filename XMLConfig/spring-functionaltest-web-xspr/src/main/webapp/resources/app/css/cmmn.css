@@ -1,0 +1,12 @@
+body {
+    padding-top: 70px;
+}
+
+#copyright {
+  text-align: center;
+  background: #e5eCf9;
+}
+
+.glyphicon {
+    margin-right: 5px;
+}

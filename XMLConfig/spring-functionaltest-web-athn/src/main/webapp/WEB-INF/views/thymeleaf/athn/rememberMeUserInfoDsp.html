@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">rememberMeのユーザ情報からユーザ名と作成したEmailを表示することを確認する。</h1>
+
+      <table class="table table-bordered table-condensed">
+        <tr>
+          <th>User Name</th>
+          <td><span id="username"> <span
+              th:if="${#authorization.expr('isAuthenticated()') && !#strings.isEmpty(username)}"
+              th:text="${#authentication.principal.username}"></span>
+          </span></td>
+        </tr>
+        <tr>
+          <th>User Email</th>
+          <td><span id="userEmail"> <span th:if="${!#strings.isEmpty(userEmail)}"
+              th:text="${userEmail}"></span>
+          </span></td>
+        </tr>
+      </table>
+      <form th:action="@{/thymeleaf/2201/logout}" method="post">
+        <input type="submit" id="logout" class="btn btn-default" value="Logout">
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

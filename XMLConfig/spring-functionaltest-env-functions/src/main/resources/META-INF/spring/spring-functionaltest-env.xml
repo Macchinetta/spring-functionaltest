@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+  xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+
+  <!-- JSR-310 -->
+  <import resource="classpath:META-INF/spring/spring-functionaltest-jsr310.xml" />
+
+  <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${database.driverClassName}" />
+    <property name="url" value="${database.url}" />
+    <property name="username" value="${database.username}" />
+    <property name="password" value="${database.password}" />
+    <property name="defaultAutoCommit" value="false" />
+    <property name="maxTotal" value="${cp.maxActive}" />
+    <property name="maxIdle" value="${cp.maxIdle}" />
+    <property name="minIdle" value="${cp.minIdle}" />
+    <property name="maxWait" >
+      <bean class="java.time.Duration" factory-method="ofMillis">
+        <constructor-arg value="${cp.maxWait}" />
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="dataSourceDefault" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${database.driverClassName}" />
+    <property name="url" value="${database.url}" />
+    <property name="username" value="${database.username}" />
+    <property name="password" value="${database.password}" />
+    <property name="defaultAutoCommit" value="false" />
+    <property name="maxTotal" value="${cp.maxActive}" />
+    <property name="maxIdle" value="${cp.maxIdle}" />
+    <property name="minIdle" value="${cp.minIdle}" />
+    <property name="maxWait" >
+      <bean class="java.time.Duration" factory-method="ofMillis">
+        <constructor-arg value="${cp.maxWait}" />
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="dataSourceOpen" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${database.driverClassName}" />
+    <property name="url" value="${database.url.open}" />
+    <property name="username" value="${database.username}" />
+    <property name="password" value="${database.password}" />
+    <property name="defaultAutoCommit" value="false" />
+    <property name="maxTotal" value="${cp.maxActive}" />
+    <property name="maxIdle" value="${cp.maxIdle}" />
+    <property name="minIdle" value="${cp.minIdle}" />
+    <property name="maxWait" >
+      <bean class="java.time.Duration" factory-method="ofMillis">
+        <constructor-arg value="${cp.maxWait}" />
+      </bean>
+    </property>
+  </bean>
+
+  <bean id="dataSourceClose" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="${database.driverClassName}" />
+    <property name="url" value="${database.url.close}" />
+    <property name="username" value="${database.username}" />
+    <property name="password" value="${database.password}" />
+    <property name="defaultAutoCommit" value="false" />
+    <property name="maxTotal" value="${cp.maxActive}" />
+    <property name="maxIdle" value="${cp.maxIdle}" />
+    <property name="minIdle" value="${cp.minIdle}" />
+    <property name="maxWait" >
+      <bean class="java.time.Duration" factory-method="ofMillis">
+        <constructor-arg value="${cp.maxWait}" />
+      </bean>
+    </property>
+  </bean>
+
+  <!-- これはenvではなくDTACプロジェクトに配置するべきもの -->
+  <!-- 
+  <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
+    <property name="targetDataSources">
+      <map>
+        <entry key="OPEN" value-ref="dataSourceOpen" />
+        <entry key="CLOSE" value-ref="dataSourceClose" />
+      </map>
+    </property>
+    <property name="defaultTargetDataSource" ref="dataSourceDefault" />
+    <property name="clockFactory" ref="clockFactoryDtac" />
+  </bean>
+   -->
+
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+    <property name="rollbackOnCommitFailure" value="true" />
+  </bean>
+
+  <!-- JPA transaction Manager -->
+  <!-- 
+  <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+    <property name="entityManagerFactory" ref="entityManagerFactory" />
+  </bean>
+   -->
+
+  <!-- LocalValidatorFactoryBean setting move from spring-functionaltest-domain.xml -->
+  <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+  <bean id="notAsciiValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    <property name="validationMessageSource">
+      <bean class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+          <list>
+            <value>ValidationMessagesNotAscii</value>
+          </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8" />
+      </bean>
+    </property>
+  </bean>
+
+</beans>

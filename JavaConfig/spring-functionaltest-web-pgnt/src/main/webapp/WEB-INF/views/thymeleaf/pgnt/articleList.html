@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()}, ~{::body/content()})}">
+<head>
+</head>
+<body>
+
+  <div class="container">
+    <h3 id="screenTitle">Article List Screen</h3>
+    <div class="text-center">
+      <form id="articleSearchCriteria" th:action="@{/thymeleaf/{path}(path=${path})}" method="get"
+        th:object="${articleSearchCriteria}">
+        <fieldset>
+          <legend>Article List</legend>
+          <label for="title" class="space">Title</label> <input id="title" name="title"
+            class="space title-text-field form-control inline" type="text" th:field="*{title}" /> <input
+            id="searchBtn" type="submit" name="Search" class="btn btn-default" value="Search" />
+        </fieldset>
+      </form>
+    </div>
+
+    <div th:if="${page} != null"
+      th:with="query = 'title=${articleSearchCriteria.title}',
+        pagination = ~{thymeleaf/pgnt/fragment :: paginationWithQuery (${page}, ${query})}"
+      th:remove="tag">
+
+      <div class="text-center">
+        <div th:replace="${pagination}"></div>
+      </div>
+
+      <table class="maintable">
+
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Overview</th>
+            <th>Publish Date</th>
+          </tr>
+        </thead>
+
+        <tr th:each="article, status : ${page.content}" th:object="${article}">
+          <td th:text="*{articleId}"></td>
+          <td th:text="*{category}"></td>
+          <td><a href="" th:text="*{title}"></a></td>
+          <td th:text="*{overview}"></td>
+          <td th:text="*{#dates.format(publishDate, 'yyyy/MM/dd HH:mm:ss')}"></td>
+        </tr>
+
+      </table>
+
+      <div class="text-center">
+        <div th:replace="${pagination}"></div>
+      </div>
+
+      <div th:replace="~{thymeleaf/pgnt/fragment :: paginationInfo (${page})}"></div>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">モデルに格納された値の有無により条件分岐して表示切替ができることの確認（デフォルト式）</h1>
+
+      <ul>
+        <li id="message1">入力された年齢を以下に表示します。</li>
+        <li id="message2" th:text="${thymeleafForm.age} ?: 'no age specified'"></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

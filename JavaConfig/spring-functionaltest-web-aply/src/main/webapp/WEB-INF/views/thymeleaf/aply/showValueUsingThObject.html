@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">オブジェクトのプロパティを省略して指定できることの確認</h1>
+
+      <ul th:object="${thymeleafForm}">
+        <li id="mnessage1">入力された名前を表示します。</li>
+        <li id="message2" th:text="*{userName}"></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

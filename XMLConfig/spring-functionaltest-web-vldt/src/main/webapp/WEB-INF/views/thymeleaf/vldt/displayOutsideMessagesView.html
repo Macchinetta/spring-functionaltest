@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">単項目チェック</h1>
+
+      <div class="form-group">
+        <span th:errors="${displayOutsideMessagesForm.*}" id="null.errors" class="text-danger"></span>
+      </div>
+
+      <form method="post" th:action="@{/thymeleaf/0101/004}" th:object="${displayOutsideMessagesForm}"
+        class="form-horizontal">
+
+        <div class="form-group">
+          <label th:for="userName" class="col-sm-2 control-label">UserName</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{userName}" class="form-control" placeholder="UserName" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{email}" class="form-control" placeholder="Email" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="age" class="col-sm-2 control-label">Age</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{age}" class="form-control" placeholder="Age" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="validate" name="validate" class="btn btn-default" type="submit"
+              value="Submit">validate</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>

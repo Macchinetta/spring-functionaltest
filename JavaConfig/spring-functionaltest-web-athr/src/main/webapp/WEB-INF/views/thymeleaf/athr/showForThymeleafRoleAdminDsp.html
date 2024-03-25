@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">Staff Login Page(For ROLE_ADMIN JSP Tag Display)</h1>
+
+      <fieldset>
+        <table class="table table-bordered table-condensed">
+          <tr>
+            <th>Only Role_Admin User link</th>
+            <td><span id="staffRole"> <a
+                sec:authorize-url="/thymeleaf/0201/002/afterLogin/admin/menu" th:href="@{/}">Go
+                  To ATHR Top Page</a>
+            </span></td>
+          </tr>
+        </table>
+      </fieldset>
+      <br>
+      <form th:action="@{/thymeleaf/0201/002/logout}" method="post">
+        <input type="submit" id="logout" class="btn btn-default" value="Logout">
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

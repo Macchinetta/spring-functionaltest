@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">フォームオブジェクトからHTMLフォームへバインドできることの確認</h1>
+
+      <table class="table table-striped table-bordered table-condensed">
+        <tr>
+          <th class="inputColumn">Username</th>
+          <td><span id="getUserName" th:text="${thymeleafForm.userName}"></span></td>
+        </tr>
+        <tr>
+          <th class="inputColumn">age</th>
+          <td><span id="getAge" th:text="${thymeleafForm.age}"></span></td>
+        </tr>
+        <tr>
+          <th class="inputColumn">conditions</th>
+          <td><span id="getConditions" th:text="${thymeleafForm.conditions}"></span></td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</body>
+</html>

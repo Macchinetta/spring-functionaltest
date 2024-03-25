@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">ファイルアップロード(ファイルとして直接保存)</h1>
+
+      <div th:if="${resultMessages} != null" class="alert alert-error"
+        th:class="|alert alert-${resultMessages.type}|">
+        <ul>
+          <li th:each="message : ${resultMessages}"
+            th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">error
+            detail message</li>
+        </ul>
+      </div>
+
+      <div class="form-horizontal">
+
+        <div th:if="${uploadedContent} != null" th:object="${uploadedContent}">
+
+          <div class="form-group">
+            <label for="fileIdText" class="col col-md-2 control-label">ファイルID</label>
+            <div class="col col-md-10">
+              <span id="fileIdText" class="display-item form-control"
+                th:text="*{fileId}"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fileNameText" class="col col-md-2 control-label">ファイル名</label>
+            <div class="col col-md-10">
+              <span id="fileNameText" class="display-item form-control"
+                th:text="*{fileName}"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col col-md-10 col-md-offset-2">
+              <form th:action="@{/flup/files}" method="get">
+                <input type="hidden" th:field="*{fileId}" />
+                <button id="downloadButton" name="download" class="btn btn-default">
+                  <span class="glyphicon glyphicon-download"></span>ダウンロード
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="text-center">
+        <a th:href="@{/}" class="btn btn-default"><span
+          class="glyphicon glyphicon-arrow-left"></span>ファイルアップロードのトップへ</a>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

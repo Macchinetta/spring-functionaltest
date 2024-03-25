@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">${#fields.errors('*')}によるエラーメッセージ一括表示</h1>
+
+      <form th:action="@{/vldt/0101/012}" method="post" th:object="${displayErrMessageForm}">
+        <ul id="displayErrMessageForm.errors" th:if="${#fields.hasErrors('*')}">
+          <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+        </ul>
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" th:errorclass="error-input" />
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" th:field="*{email}" th:errorclass="error-input" />
+        <br>
+        <label for="age">Age:</label>
+        <input type="text" th:field="*{age}" th:errorclass="error-input" />
+        <br>
+        <button id="validate" name="validate" type="submit" value="validate">validate</button>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div id="wrapper">
+
+    <h1 id="screenTitle">CSVファイルのダウンロード</h1>
+
+    <form method="post" th:action="@{/thymeleaf/0301/001}"
+      th:object="${contentDownloadForm}" class="form-horizontal">
+      <fieldset>
+        <legend>新規口座開設用情報入力</legend>
+        <div class="form-group">
+          <div class="col col-md-2">名前</div>
+          <div class="col col-md-3">
+            <input th:field="*{name}" class="quantity form-control input-sm" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col col-md-2">住所</div>
+          <div class="col col-md-3">
+            <input th:field="*{address}" class="quantity form-control input-sm" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col col-md-2">生年月日(yyyyMMdd)</div>
+          <div class="col col-md-3">
+            <input th:field="*{birthdate}" class="quantity form-control input-sm" />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col col-md-10 col-md-offset-2">
+            <input type="submit" id="downloadButton" name="csv" value="ダウンロード"
+              class="btn btn-default" />
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>

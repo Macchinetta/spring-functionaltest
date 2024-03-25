@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:input=""
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">THYM テンプレートエンジン(Thymeleaf)</h1>
+
+      <form th:object="${userForm}">
+        <div input:form-input="*{userName}"></div>
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">Controllerの実装方法(リクエストパス)</h1>
+      <ul>
+        <li><a id="aply0101002hello" th:href="@{/thymeleaf/0101/002/hello}">リクエストパスに"hello"を付与</a></li>
+        <li><a id="aply0101002nihao" th:href="@{/thymeleaf/0101/002/nihao}">リクエストパスに"nihao"を付与</a></li>
+        <li><a id="aply0101002bonjour" th:href="@{/thymeleaf/0101/002/bonjour}">リクエストパスに"bonjour"を付与</a></li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

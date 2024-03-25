@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">ログイン情報に紐付く付属情報を取得</h1>
+
+      <table class="table table-bordered table-condensed"
+        th:with="customer=${#authentication.principal}">
+        <tr>
+          <th>Customer Name</th>
+          <td><span id="customerName" th:text=${customer.customerName}></span></td>
+        </tr>
+        <tr>
+          <th>Customer Address</th>
+          <td><span id="customerAddress" th:text=${customer.customerAddress}></span></td>
+        </tr>
+      </table>
+      <form th:action="@{/thymeleaf/1701/logout}" method="post">
+        <input type="submit" id="logout" class="btn btn-default" value="Logout">
+      </form>
+
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">フォームオブジェクトの初期化 確認画面</h1>
+
+      <table class="table table-striped table-bordered table-condensed">
+        <tr>
+          <th class="inputColumn">formObjectForm.initConfirmValue</th>
+          <td><span id="formObjectForm.initConfirmValue"
+            th:text="${formObjectForm.initConfirmValue1}"></span></td>
+        </tr>
+        <tr>
+          <th class="inputColumn">formObjectForm2.initConfirmValue</th>
+          <td><span id="formObjectForm2.initConfirmValue"
+            th:text="${formObjectForm2.initConfirmValue1}"></span></td>
+        </tr>
+        <tr>
+          <th class="inputColumn">formObjectForm2.initConfirmValue</th>
+          <td><span id="formObjectForm3.initConfirmValue"
+            th:text="${formObjectForm3.initConfirmValue1}"></span></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

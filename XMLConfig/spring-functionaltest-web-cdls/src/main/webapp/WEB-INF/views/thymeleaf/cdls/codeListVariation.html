@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">コードリストの記述方法のバリエーション</h1>
+
+      <div>CDLS0401001</div>
+      <div>
+        <select id="cdls0401001_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="price : ${CL_I18N_PRICE_MAP_LOCALE}" th:value="${price.key}"
+            th:text="${price.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0401002</div>
+      <div>
+        <select id="cdls0401002_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="price : ${CL_I18N_PRICE_MAP_LOCALE}" th:value="${price.key}"
+            th:text="${price.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0402001</div>
+      <div>
+        <select id="cdls0402001_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="price : ${CL_I18N_PRICE_MAP_CODE}" th:value="${price.key}"
+            th:text="${price.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0402002</div>
+      <div>
+        <select id="cdls0402002_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="price : ${CL_I18N_PRICE_MAP_CODE}" th:value="${price.key}"
+            th:text="${price.value}"></option>
+        </select>
+      </div>
+
+      <div>CDLS0403001</div>
+      <div>
+        <select id="cdls0403001_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="month : ${CL_MONTH_DES}" th:value="${month.key}" th:text="${month.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0403002</div>
+      <div>
+        <select id="cdls0403002_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="number : ${CL_NUMBER_WITHIN_RANGE_INTERVAL}" th:value="${number.key}"
+            th:text="${number.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0403003</div>
+      <div>
+        <select id="cdls0403003_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="number : ${CL_NUMBER_WITHOUT_RANGE_INTERVAL}" th:value="${number.key}"
+            th:text="${number.value}"></option>
+        </select>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

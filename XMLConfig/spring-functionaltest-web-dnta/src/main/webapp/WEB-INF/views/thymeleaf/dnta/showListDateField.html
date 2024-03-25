@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+      <ul>
+        <li th:each="listDay : ${#temporals.listDay(resultDate)}">
+          Day:<span th:id="${#ids.seq('getDay')}" th:text="${listDay}"></span>
+        </li>
+        <li th:each="listMonth : ${#temporals.listMonth(resultDate)}">
+          Month:<span th:id="${#ids.seq('getMonth')}" th:text="${listMonth}"></span>
+        </li>
+        <li th:each="listMonthName : ${#temporals.listMonthName(resultDate)}">
+          MonthName:<span th:id="${#ids.seq('getMonthName')}" th:text="${listMonthName}"></span>
+        </li>
+        <li th:each="listMonthNameShort : ${#temporals.listMonthNameShort(resultDate)}">
+          MonthNameShort:<span th:id="${#ids.seq('getMonthNameShort')}" th:text="${listMonthNameShort}"></span>
+        </li>
+        <li th:each="listYear : ${#temporals.listYear(resultDate)}">
+          Year:<span th:id="${#ids.seq('getYear')}" th:text="${listYear}"></span>
+        </li>
+        <li th:each="listDayOfWeek : ${#temporals.listDayOfWeek(resultDate)}">
+          DayOfWeek:<span th:id="${#ids.seq('getDayOfWeek')}" th:text="${listDayOfWeek}"></span>
+        </li>
+        <li th:each="listDayOfWeekName : ${#temporals.listDayOfWeekName(resultDate)}">
+          DayOfWeekName:<span th:id="${#ids.seq('getDayOfWeekName')}" th:text="${listDayOfWeekName}"></span>
+        </li>
+        <li th:each="listDayOfWeekNameShort : ${#temporals.listDayOfWeekNameShort(resultDate)}">
+          DayOfWeekNameShort:<span th:id="${#ids.seq('getDayOfWeekNameShort')}" th:text="${listDayOfWeekNameShort}"></span>
+        </li>
+        <li th:each="listHour : ${#temporals.listHour(resultDate)}">
+          Hour:<span th:id="${#ids.seq('getHour')}" th:text="${listHour}"></span>
+        </li>
+        <li th:each="listMinute : ${#temporals.listMinute(resultDate)}">
+          Minute:<span th:id="${#ids.seq('getMinute')}" th:text="${listMinute}"></span>
+        </li>
+        <li th:each="listSecond : ${#temporals.listSecond(resultDate)}">
+          Second:<span th:id="${#ids.seq('getSecond')}" th:text="${listSecond}"></span>
+        </li>
+        <li th:each="listNanosecond : ${#temporals.listNanosecond(resultDate)}">
+          Nanosecond:<span th:id="${#ids.seq('getNanosecond')}" th:text="${listNanosecond}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

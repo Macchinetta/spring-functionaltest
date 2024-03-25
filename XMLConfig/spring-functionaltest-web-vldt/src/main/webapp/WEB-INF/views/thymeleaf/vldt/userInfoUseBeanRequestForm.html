@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <form th:object="${userInfoForm}" th:action="@{/thymeleaf/0602/regist}" method="post">
+        <fieldset>
+          <legend>Method Validation確認 JavaBean 入力画面</legend>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <label>userId</label>
+              </div>
+              <div class="col-md-4">
+                <input type="text" th:field="*{userId}" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label>visitMessage</label>
+              </div>
+              <div class="col-md-4">
+                <input type="text" th:field="*{visitMessage}" class="form-control" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label>visitDate</label>
+              </div>
+              <div class="col-md-4">
+                <input type="text" th:field="*{visitDate}" class="form-control" /> <span
+                  id="visitDate.errors" th:errors="*{visitDate}"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <button id="register" name="register" class="btn btn-default" type="submit"
+                  value="Submit">登録</button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

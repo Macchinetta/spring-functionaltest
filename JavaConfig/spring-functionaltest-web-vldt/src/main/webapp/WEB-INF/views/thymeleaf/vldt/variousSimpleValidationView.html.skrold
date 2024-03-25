@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">単項目チェック</h1>
+
+      <form method="post" th:action="@{/vldt/0101/006}" th:object="${variousSimpleValidationBVForm}"
+        class="form-horizontal">
+
+        <div class="form-group">
+          <label th:for="notnull" class="col-sm-2 control-label">NotNull</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{notnull}" class="form-control" placeholder="NotNull" />
+            <span id="notnull.errors" th:errors="*{notnull}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="notempty" class="col-sm-2 control-label">NotEmpty</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{notempty}" class="form-control" placeholder="NotEmpty" />
+            <span id="notempty.errors" th:errors="*{notempty}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="notblank" class="col-sm-2 control-label">NotBlank</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{notblank}" class="form-control" placeholder="NotBlank" />
+            <span id="notblank.errors" th:errors="*{notblank}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="nullvalue" class="col-sm-2 control-label">NullValue</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{nullvalue}" class="form-control" placeholder="NullValue" />
+            <span id="nullvalue.errors" th:errors="*{nullvalue}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="pattern" class="col-sm-2 control-label">Pattern</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{pattern}" class="form-control" placeholder="Pattern" />
+            <span id="pattern.errors" th:errors="*{pattern}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="min" class="col-sm-2 control-label">Min</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{min}" class="form-control" placeholder="Min" /> <span
+              id="min.errors" th:errors="*{min}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="max" class="col-sm-2 control-label">Max</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{max}" class="form-control" placeholder="Max" /> <span
+              id="max.errors" th:errors="*{max}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="decimalmin" class="col-sm-2 control-label">DecimalMin</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{decimalmin}" class="form-control"
+              placeholder="DecimalMin" /> <span id="decimalmin.errors" th:errors="*{decimalmin}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="decimalmax" class="col-sm-2 control-label">DecimalMax</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{decimalmax}" class="form-control"
+              placeholder="DecimalMax" /> <span id="decimalmax.errors" th:errors="*{decimalmax}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="positive" class="col-sm-2 control-label">Positive</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{positive}" class="form-control"
+              placeholder="Positive" /> <span id="positive.errors" th:errors="*{positive}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="positiveorzero" class="col-sm-2 control-label">PositiveOrZero</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{positiveorzero}" class="form-control"
+              placeholder="PositiveOrZero" /> <span id="positiveorzero.errors" th:errors="*{positiveorzero}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="negative" class="col-sm-2 control-label">Negative</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{negative}" class="form-control"
+              placeholder="Negative" /> <span id="negative.errors" th:errors="*{negative}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="negativeorzero" class="col-sm-2 control-label">NegativeOrZero</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{negativeorzero}" class="form-control"
+              placeholder="NegativeOrZero" /> <span id="negativeorzero.errors" th:errors="*{negativeorzero}"
+              class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="size" class="col-sm-2 control-label">Size</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{size}" class="form-control" placeholder="Size" /> <span
+              id="size.errors" th:errors="*{size}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="digits" class="col-sm-2 control-label">Digits</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{digits}" class="form-control" placeholder="Digits" /> <span
+              id="digits.errors" th:errors="*{digits}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="truevalue" class="col-sm-2 control-label">TrueValue</label>
+          <div class="col-sm-10">
+            <select th:field="*{truevalue}" class="form-control">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select> <span id="truevalue.errors" th:errors="*{truevalue}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="falsevalue" class="col-sm-2 control-label">FalseValue</label>
+          <div class="col-sm-10">
+            <select th:field="*{falsevalue}" class="form-control">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select> <span id="falsevalue.errors" th:errors="*{falsevalue}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="future" class="col-sm-2 control-label">Future</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{future}" class="form-control" placeholder="Future" /> <span
+              id="future.errors" th:errors="*{future}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="futureorpresent" class="col-sm-2 control-label">FutureOrPresent</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{futureorpresent}" class="form-control" placeholder="FutureOrPresent" /> <span
+              id="futureorpresent.errors" th:errors="*{futureorpresent}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="past" class="col-sm-2 control-label">Past</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{past}" class="form-control" placeholder="Past" /> <span
+              id="past.errors" th:errors="*{past}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="pastorpresent" class="col-sm-2 control-label">PastOrPresent</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{pastorpresent}" class="form-control" placeholder="PastOrPresent" /> <span
+              id="pastorpresent.errors" th:errors="*{pastorpresent}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="email" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{email}" class="form-control" placeholder="Email" /> <span
+              id="email.errors" th:errors="*{email}" class="text-danger">></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="validateBeanValidation" name="validateBeanValidation" class="btn btn-default" type="submit"
+              value="Submit">validate(Bean Validation)</button>
+          </div>
+        </div>
+
+      </form>
+
+      <form method="post" th:action="@{/vldt/0101/006}" th:object="${variousSimpleValidationHVForm}"
+        class="form-horizontal">
+
+        <div class="form-group">
+          <label th:for="creditcardnumber" class="col-sm-2 control-label">CreditCardNumber</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{creditcardnumber}" class="form-control"
+              placeholder="CreditCardNumber" /> <span id="creditcardnumber.errors"
+              th:errors="*{creditcardnumber}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="isbn" class="col-sm-2 control-label">ISBN</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{isbn}" class="form-control" placeholder="ISBN" /> <span
+              id="isbn.errors" th:errors="*{isbn}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="url" class="col-sm-2 control-label">Url</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{url}" class="form-control" placeholder="Url" /> <span
+              id="url.errors" th:errors="*{url}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="notemptyHV" class="col-sm-2 control-label">NotEmpty</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{notemptyHV}" class="form-control" placeholder="NotEmpty (Hibernate Validator)" />
+            <span id="notemptyHV.errors" th:errors="*{notemptyHV}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="notblankHV" class="col-sm-2 control-label">NotBlank</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{notblankHV}" class="form-control" placeholder="NotBlank (Hibernate Validator)" />
+            <span id="notblankHV.errors" th:errors="*{notblankHV}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label th:for="emailHV" class="col-sm-2 control-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" th:field="*{emailHV}" class="form-control" placeholder="Email (Hibernate Validator)" /> <span
+              id="emailHV.errors" th:errors="*{emailHV}" class="text-danger">></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button id="validateHibernateValidator" name="validateHibernateValidator" class="btn btn-default" type="submit"
+              value="Submit">validate(Hibernate Validator)</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>

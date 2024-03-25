@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">モデルに格納された値と文字列を結合して表示した画面（変数値がnull評価）</h1>
+
+      <ul>
+        <li id="message1">+演算子を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。</li>
+        <li id="message2" th:text="'Message : ' + ${textCombiningCaseNull}"></li>
+        <li id="message3">パイプ(|)を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。</li>
+        <li id="message4" th:text="|Message : ${textCombiningCaseNull}|"></li>
+      </ul>
+
+    </div>
+  </div>
+</body>
+</html>

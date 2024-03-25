@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+</head>
+<body>
+  <div class="container">
+    <div id="wrapper">
+
+      <h1 id="screenTitle">EnumCodeListの読み込み</h1>
+
+      <div>CDLS0104001</div>
+      <div>
+        <select id="cdls0104001_thymeleaf" th:field="${codeListForm.code}">
+          <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}"
+            th:text="${order.value}"></option>
+        </select>
+      </div>
+      <div>CDLS0104002</div>
+      <div>
+        <form th:action="@{/thymeleaf/0104/002}" th:object="${clEnumOrderStatusForm}" method="post">
+          <select id="cdls0104002_thymeleaf" th:field="*{id}">
+            <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}"
+              th:text="${order.value}"></option>
+          </select> <span th:errors="*{id}"></span>
+          <button id="cdls0104002_thymeleafSubmit" type="submit" name="post">Submit</button>
+        </form>
+        <div id="cdls0104002_thymeleafResult" th:text="${enumOrderStatusCodeListValue}"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

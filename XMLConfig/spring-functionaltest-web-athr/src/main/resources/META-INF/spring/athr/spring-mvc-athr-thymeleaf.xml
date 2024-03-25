@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
+
+  <context:annotation-config />
+
+  <mvc:view-controller path="/thymeleaf/loginForStaff" view-name="thymeleaf/athr/loginForStaff" />
+  <mvc:view-controller path="/thymeleaf/loginForRoleAdmin" view-name="thymeleaf/athr/loginForRoleAdmin" />
+  <mvc:view-controller path="/thymeleaf/loginForMethod" view-name="thymeleaf/athr/loginForMethod" />
+  <mvc:view-controller path="/thymeleaf/loginForRoleHierarchy" view-name="thymeleaf/athr/loginForRoleHierarchy" />
+  <mvc:view-controller path="/thymeleaf/loginForJspTagRoleAdmin" view-name="thymeleaf/athr/loginForJspTagRoleAdmin" />
+  <mvc:view-controller path="/thymeleaf/methodAccessAllowedPage" view-name="thymeleaf/athr/methodAccessAllowedPage" />
+  <mvc:view-controller path="/thymeleaf/methodAccessDeniedPage" view-name="thymeleaf/athr/methodAccessDeniedPage" />
+  <mvc:view-controller path="/thymeleaf/hierarchyAccessDeniedPage" view-name="thymeleaf/athr/hierarchyAccessDeniedPage" />
+  <mvc:view-controller path="/thymeleaf/accessDeniedPage" view-name="thymeleaf/athr/accessDeniedPage" />
+
+  <!-- MapStructの為component-scanに変更 -->
+  <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app.athr">
+      <context:exclude-filter type="regex" expression="jp.co.ntt.fw.spring.functionaltest.app.athr.ATHR_JSP_..*" />
+  </context:component-scan>
+
+</beans>

@@ -1,0 +1,10 @@
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+<head>
+<script th:src="@{/0803/{pathFragments}/thym0803.js(pathFragments=${pathFragments})}"></script>
+</head>
+<body>
+  <h1 th:text="|JavaScript And HTML Template By ${className}|"></h1>
+  <p id="itemName"></p>
+</body>
+</html>
