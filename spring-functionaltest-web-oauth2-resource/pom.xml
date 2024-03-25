@@ -7,104 +7,82 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.2.RELEASE</version>
+    <version>1.8.3.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer OAuth2 Resource server</name>
   <description>Resource server of Spring Functional Test</description>
     
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>spring-functionaltest-env-oauth2</artifactId>
-            <scope>provided</scope>
-        </dependency>
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>spring-functionaltest-env-oauth2</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- == Begin TERASOLUNA == -->
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-security-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.terasoluna.gfw</groupId>
+      <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
+      <type>pom</type>
+    </dependency>
+    <!-- == End TERASOLUNA == -->
     
-        <!-- == Begin TERASOLUNA == -->
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-common-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-web-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-web-jsp-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-security-web-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.terasoluna.gfw</groupId>
-            <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
-            <type>pom</type>
-        </dependency>
-        <!-- == End TERASOLUNA == -->
+    <!-- == Begin Servlet == -->
+    <!-- Servlet API 6.0 -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+    </dependency>
+    <!-- == End Servlet == -->
 
-        <!-- == Begin Tomcat == -->
-        <!-- Servlet API 4.0 & JSP API 2.3 -->
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-jsp-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+    <!-- == Begin Spring Security OAuth2 == -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-resource-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-jose</artifactId>
+    </dependency>
+    <!-- == End Spring Security OAuth2 == -->
+  </dependencies>
 
-        <!-- Required only for Tomcat. If run on other J2EE server,
-            remove this dependency and use provided tag libraries. -->
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-jstlel</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- == End Tomcat == -->
-
-        <!-- == Begin Spring Security OAuth2 == -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-resource-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-jose</artifactId>
-        </dependency>
-        <!-- == End Spring Security OAuth2 == -->
-
-	    <!-- == Begin logback-db == -->
-	    <dependency>
-	        <groupId>ch.qos.logback.db</groupId>
-	        <artifactId>logback-classic-db</artifactId>
-	    </dependency>
-	    <!-- == End logback-db == -->
-
-    </dependencies>
-
-    <properties>
-        <project.env.target.name>spring-functionaltest-env-oauth2</project.env.target.name>
-        <project.root.basedir>${project.parent.basedir}</project.root.basedir>
-        <cargo.deployable.artifactId>${project.artifactId}</cargo.deployable.artifactId>
-        <cargo.deployable.warName>spring-functionaltest-web-oauth2-resource</cargo.deployable.warName>
-    </properties>
+  <properties>
+      <project.env.target.name>spring-functionaltest-env-oauth2</project.env.target.name>
+      <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+      <cargo.deployable.artifactId>${project.artifactId}</cargo.deployable.artifactId>
+      <cargo.deployable.warName>spring-functionaltest-web-oauth2-resource</cargo.deployable.warName>
+  </properties>
 
 </project>

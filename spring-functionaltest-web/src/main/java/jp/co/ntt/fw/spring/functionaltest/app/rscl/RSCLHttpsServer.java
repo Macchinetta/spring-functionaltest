@@ -49,7 +49,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
  * rsclContext.xml にて Bean定義して起動している。
  * </ul>
  */
-@SuppressWarnings("restriction")
+
 public class RSCLHttpsServer {
     private static final Logger logger = LoggerFactory.getLogger(
             RSCLHttpsServer.class);

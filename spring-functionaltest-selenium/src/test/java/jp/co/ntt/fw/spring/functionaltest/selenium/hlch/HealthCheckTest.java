@@ -27,7 +27,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -58,10 +57,8 @@ public class HealthCheckTest extends FunctionTestSupport {
      * <ul>
      * <li>ヘルスチェック成功時、スタータスコード200とOK.の3文字が返ってくることを確認する。</li>
      * <li>JSP版はpageディレクティブにtrimDirectiveWhitespacesを設定したJSPを成功画面として出力する。</li>
-     * <li>Weblogic環境ではスキップする。詳細は#798を参照。</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment.weblogic", value = "false")
     @Test
     public void testHLCH0101002() throws IOException {
         String url = applicationContextUrl + "/hlch/0101/002";

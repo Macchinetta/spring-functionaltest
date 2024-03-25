@@ -17,12 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.app.soap;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -183,8 +183,7 @@ public class SOAPTodoController {
                 .toString());
 
         try {
-            Files.copy(form.getMultipartFile().getInputStream(), temporaryFile
-                    .toPath());
+            FileUtils.copyInputStreamToFile(form.getMultipartFile().getInputStream(),temporaryFile);
             todoProxyService.uploadFile(proxy, temporaryFile);
         } catch (IOException e) {
             throw new SystemException("e.sf.cmmn.9001", e);

@@ -19,6 +19,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.config.LogConfig.logConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 
+import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -56,7 +57,7 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     }
 
     @Before
-    public final void setUpConfig() {
+    public final void setUpConfig() throws IOException {
 
         // Initialization of applicationContextUrl
         RestAssured.baseURI = applicationContextUrl
@@ -64,7 +65,9 @@ public abstract class RestTestSupport extends FunctionTestSupport {
         RestAssured.config = config().logConfig(logConfig()
                 .enablePrettyPrinting(false));
         writer = new StringWriter();
-        captor = new PrintStream(new WriterOutputStream(writer, StandardCharsets.UTF_8), true);
+        WriterOutputStream writerOutputStream = WriterOutputStream.builder()
+                .setWriter(writer).setCharset(StandardCharsets.UTF_8).get();
+        captor = new PrintStream(writerOutputStream, true);
     }
 
     @Override
@@ -95,7 +98,7 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     }
 
     protected ApServerName getApServerName() {
-        return ApServerName.valueOf(given().when().get(
+        return ApServerName.getByCode(given().when().get(
                 "/serverinfo/getServerInfo").then().extract().jsonPath()
                 .getString("apServerName").toUpperCase());
     }

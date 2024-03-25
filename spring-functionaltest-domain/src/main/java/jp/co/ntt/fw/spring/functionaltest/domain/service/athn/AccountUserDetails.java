@@ -17,12 +17,13 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.athn;
 
 import java.util.Collection;
 
+import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 
-public class AccountUserDetails implements UserDetails {
+public class AccountUserDetails implements UserDetails, CredentialsContainer {
 
     private static final long serialVersionUID = 4320378909988097259L;
 
@@ -66,6 +67,11 @@ public class AccountUserDetails implements UserDetails {
 
     public Account getAccount() {
         return account;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        account.setPassword(null);
     }
 
 }

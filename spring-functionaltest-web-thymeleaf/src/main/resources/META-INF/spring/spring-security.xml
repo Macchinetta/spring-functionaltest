@@ -168,8 +168,6 @@
   <!-- RSCL Protection -->
   <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
 
-  <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
-
   <!-- DBSP Protection -->
   <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
 

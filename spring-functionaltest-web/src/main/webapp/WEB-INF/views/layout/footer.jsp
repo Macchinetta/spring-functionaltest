@@ -4,10 +4,7 @@
     JVM version : <span id="jvmVersion"><%=System.getProperty("java.version")%></span>
   </p>
   <p align="right">
-    AP Server : <span id="apServerName"><spring:eval
-        expression="@environment.getProperty('application.server.name')" /></span> <span
-      id="apServerVersion"><spring:eval
-        expression="@environment.getProperty('application.server.version')" /></span>
+    AP Server : <span id="apServerName"><%=application.getServerInfo()%></span>
   </p>
   <p align="right">
     Template Engine : <span id="templateEngineName">JSP</span>

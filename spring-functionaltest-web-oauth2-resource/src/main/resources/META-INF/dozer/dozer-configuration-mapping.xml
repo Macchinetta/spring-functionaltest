@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd">
+  <configuration>
+    <custom-converters>
+      <converter type="jp.co.ntt.fw.spring.functionaltest.api.oth2.todo.DateToLocalDateConverter">
+        <class-a>java.util.Date</class-a>
+        <class-b>java.time.LocalDate</class-b>
+      </converter>
+
+    </custom-converters>
+  </configuration>
+</mappings>

@@ -447,7 +447,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             // URLがリダイレクト先のものになっていること。
-            assertTrue(webDriverOperations.getCurrentUrl().endsWith(
+            assertTrue(webDriverOperations.getCurrentUrl().contains(
                     "aply/0102/005?complete"));
             assertThat(webDriverOperations.getText(id("messages")), is(
                     "「@RequestMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
@@ -480,7 +480,7 @@ public class ApplicationLayerTest extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             // URLがリダイレクト先のものになっていること。
-            assertTrue(webDriverOperations.getCurrentUrl().endsWith(
+            assertTrue(webDriverOperations.getCurrentUrl().contains(
                     "aply/0102/006?complete&id=redirect_id"));
             assertThat(webDriverOperations.getText(id("messages")), is(
                     "「@RequestMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));

@@ -1127,6 +1127,14 @@ public class AuthenticationTest extends FunctionTestSupport {
                     "Autnenticate completed. username : Josh");
         }
 
+        // イベントハンドラが実行されることを確認(ログ)
+        {
+            dbLogAssertOperations.waitForAssertion(1000);
+            dbLogAssertOperations.assertContainsByRegexMessage(
+                    "jp\\.co\\.ntt\\.fw\\.spring\\.functionaltest\\.app\\.athn\\.ATHN06Controller",
+                    "AccountUserDetails password\\:\\[null\\]");
+        }
+
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 

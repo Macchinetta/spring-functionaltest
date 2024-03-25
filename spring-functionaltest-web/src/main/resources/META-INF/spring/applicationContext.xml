@@ -57,8 +57,6 @@
         <value>i18n/application-messages-rest</value>
         <value>i18n/application-messages_rscl</value>
         <value>i18n/application-messages-soap</value>
-        <value>i18n/application-messages-oth2</value>
-        <value>i18n/application-messages-o2sp</value>
       </list>
     </property>
   </bean>
@@ -107,5 +105,7 @@
   <!-- JMS Setting -->
   <jms:annotation-driven />
   <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.listener" />
+
+  <aop:aspectj-autoproxy />
 
 </beans>

@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,8 +64,9 @@ public class ArticleFileHelper {
         Path uploadTemporaryFile = uploadTemporaryDirectoryPath.resolve(
                 uploadTemporaryFileId);
 
-        Files.copy(form.getMultipartFile().getInputStream(),
-                uploadTemporaryFile, StandardCopyOption.REPLACE_EXISTING);
+        try(InputStream stream = form.getMultipartFile().getInputStream()){
+            Files.copy(stream,uploadTemporaryFile, StandardCopyOption.REPLACE_EXISTING);
+        }
 
         form.setFileName(form.getMultipartFile().getOriginalFilename());
 

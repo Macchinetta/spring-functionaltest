@@ -22,6 +22,9 @@
     <context:property-placeholder
         location="classpath*:/META-INF/spring/*.properties" />
 
+    <!-- Scan & register components of RESTful Web Service. -->
+    <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.api" />
+
     <bean id="jsonMessageConverter"
         class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="objectMapper" ref="objectMapper" />
@@ -51,14 +54,12 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/**" />
-            <bean class="jp.co.ntt.fw.spring.functionaltest.api.o2sp.interceptor.RequestInterceptor" />
+            <bean class="jp.co.ntt.fw.spring.functionaltest.api.oth2.interceptor.RequestInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
 
-    <!-- Scan & register components of RESTful Web Service. -->
-    <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.api.o2sp.resource" />
-
     <!-- Register components of AOP. -->
+    <aop:aspectj-autoproxy />
     <bean id="handlerExceptionResolverLoggingInterceptor"
         class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
         <property name="exceptionLogger" ref="exceptionLogger" />

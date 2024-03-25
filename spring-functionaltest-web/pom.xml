@@ -7,7 +7,7 @@
   <parent>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.8.2.RELEASE</version>
+    <version>1.8.3.RELEASE</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
   <name>Spring Functional Test - Web Layer</name>
@@ -177,16 +177,6 @@
         </dependency>
       </dependencies>
     </profile>
-    <!-- Add profile for packaging Commons FileUpload jars -->
-    <profile>
-      <id>warpack-fileupload</id>
-      <dependencies>
-        <dependency>
-          <groupId>commons-fileupload</groupId>
-          <artifactId>commons-fileupload</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
     <profile>
       <id>jdk11</id>
       <activation>
@@ -209,6 +199,24 @@
       <id>jdk17</id>
       <activation>
         <jdk>17</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>jakarta.activation</artifactId>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>jakarta.activation</groupId>
+          <artifactId>jakarta.activation-api</artifactId>
+          <scope>provided</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>jdk21</id>
+      <activation>
+        <jdk>21</jdk>
       </activation>
       <dependencies>
         <dependency>

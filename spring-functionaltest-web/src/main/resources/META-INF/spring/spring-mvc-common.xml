@@ -128,14 +128,13 @@
         </value>
         <value>org.springframework.web.util.NestedServletException
         </value>
-        <value>org.springframework.security.oauth2.client.ClientAuthorizationRequiredException
-        </value>
       </array>
     </property>
     <property name="defaultErrorView" value="common/error/systemError" />
     <property name="defaultStatusCode" value="500" />
   </bean>
   <!-- Setting AOP. -->
+  <aop:aspectj-autoproxy />
   <bean id="handlerExceptionResolverLoggingInterceptor" class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
     <property name="exceptionLogger" ref="exceptionLogger" />
   </bean>

@@ -25,6 +25,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,7 +68,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
 
         Path uploadFile = Paths.get(uploadDirectory, fileId);
-        Files.copy(content, uploadFile);
+        FileUtils.copyInputStreamToFile(content, uploadFile.toFile());
 
         // ディスクへ保存した中身を設定
         newUploadFile.setContent(Files.readAllBytes(uploadFile));

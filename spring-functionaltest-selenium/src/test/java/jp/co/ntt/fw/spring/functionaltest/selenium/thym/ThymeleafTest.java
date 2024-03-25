@@ -909,7 +909,7 @@ public class ThymeleafTest extends FunctionTestSupport {
 
         assertThat(entity.getStatusCodeValue(), is(200));
         assertThat(entity.getHeaders().getContentType().toString(), is(
-                "application/javascript;charset=UTF-8"));
+                "text/javascript;charset=UTF-8"));
         assertThat(entity.getBody(), is(
                 "var itemName = /*[[${item.name}]]*/'Apple';"));
     }

@@ -171,8 +171,6 @@
   <!-- RSCL Protection -->
   <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
 
-  <import resource="classpath:META-INF/spring/o2sp/spring-security-o2sp.xml" />
-
   <!-- All setting -->
   <sec:http once-per-request="false">
     <sec:form-login />

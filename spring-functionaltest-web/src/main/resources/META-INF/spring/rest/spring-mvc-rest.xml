@@ -54,6 +54,7 @@
   <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.api.rest" />
 
   <!-- Register components of AOP. -->
+  <aop:aspectj-autoproxy />
   <bean id="handlerExceptionResolverLoggingInterceptor" class="org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor">
     <property name="exceptionLogger" ref="exceptionLogger" />
   </bean>

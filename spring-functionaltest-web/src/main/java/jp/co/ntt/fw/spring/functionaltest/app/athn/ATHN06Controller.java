@@ -15,6 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.athn;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +27,18 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails
 @Controller
 public class ATHN06Controller {
 
+    private static final Logger logger = LoggerFactory.getLogger(
+            ATHN06Controller.class);
+
+
     @RequestMapping(value = "0601/001", params = "loginSuccess")
     public String handle0601LoginSuccess(
             @AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0601/001");
+        logger.debug("AccountUserDetails password:[" + userDetails.getPassword()
+                + "]");
         return "athn/topForDefault";
     }
 

@@ -15,27 +15,30 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.api.rest.serverinfo;
 
-import org.springframework.beans.factory.annotation.Value;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+import javax.servlet.ServletContext;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.terasoluna.gfw.common.exception.BusinessException;
 
 @RequestMapping("serverinfo")
 @RestController
 public class ServerInfoRestController {
 
-    @Value("${application.server.name}")
-    private String apServerName;
-
-    @Value("${application.server.version}")
-    private String apServerVersion;
+    @Inject
+    ServletContext context;
 
     /**
      * サーバ情報を返却する。
      * <ul>
-     * <li>Java versionをシステムプロパティから, APサーバの名前とバージョン情報をプロパティファイルから取得してサーバ情報リソースに格納。</li>
+     * <li>Java versionをシステムプロパティから, APサーバの名前とバージョン情報をServletContextから取得してサーバ情報リソースに格納。</li>
      * </ul>
      * @return
      */
@@ -43,6 +46,22 @@ public class ServerInfoRestController {
     @ResponseStatus(HttpStatus.OK)
     public ServerInfoResource getServerInfo() {
         String[] version = System.getProperty("java.version").split("\\.");
+        String info = context.getServerInfo();
+        String apServerName = "UNKNOWN";
+        String apServerVersion = "UNKNOWN";
+
+        // ServletContextのgetServerInfoでAPサーバの情報を取得した場合、APサーバによって出力される内容が異なるので、各サーバ毎に必要な部分のみを抽出する。
+        if (info.contains("Apache Tomcat")) {
+            apServerName = "Apache Tomcat";
+            Matcher matcher = Pattern.compile("\\d{1,2}.\\d.\\d{1,2}").matcher(
+                    info);
+            if (matcher.find()) {
+                apServerVersion = matcher.group();
+            }
+
+        } else {
+            throw new BusinessException("If you are using a new application server, add the setting to ServerInfoRestController.");
+        }
 
         ServerInfoResource rsc = new ServerInfoResource();
         rsc.setJavaVersion(Integer.parseInt(version[1]));

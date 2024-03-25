@@ -16,6 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.flup;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +31,13 @@ public class FileUploadHelper {
     public void bindToModel(MultipartFile multipartFile,
             RedirectAttributes redirectAttributes) throws IOException {
         UploadedContent uploadedContent = new UploadedContent();
-        uploadedContent.setFileContent(multipartFile.getInputStream());
-        uploadedContent.setFileName(multipartFile.getOriginalFilename());
-        redirectAttributes.addFlashAttribute(uploadedContent);
-        redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.sf.flup.0002"));
+        try (InputStream in = multipartFile.getInputStream()) {
+            uploadedContent.setFileContent(in);
+            uploadedContent.setFileName(multipartFile.getOriginalFilename());
+            redirectAttributes.addFlashAttribute(uploadedContent);
+            redirectAttributes.addFlashAttribute(ResultMessages.success().add(
+                    "i.sf.flup.0002"));
+        }
     }
 
     public void bindToModel(List<MultipartFile> multipartFiles,
@@ -42,9 +45,11 @@ public class FileUploadHelper {
         List<UploadedContent> uploadedContents = new ArrayList<UploadedContent>();
         for (MultipartFile multipartFile : multipartFiles) {
             UploadedContent uploadedContent = new UploadedContent();
-            uploadedContent.setFileContent(multipartFile.getInputStream());
-            uploadedContent.setFileName(multipartFile.getOriginalFilename());
-            uploadedContents.add(uploadedContent);
+            try (InputStream in = multipartFile.getInputStream()) {
+                uploadedContent.setFileContent(in);
+                uploadedContent.setFileName(multipartFile.getOriginalFilename());
+                uploadedContents.add(uploadedContent);
+            }
         }
         redirectAttributes.addFlashAttribute("uploadedContents",
                 uploadedContents);

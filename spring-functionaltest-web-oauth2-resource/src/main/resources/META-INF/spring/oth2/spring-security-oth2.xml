@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:sec="http://www.springframework.org/schema/security"
+  xsi:schemaLocation="
+        http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <sec:http pattern="/auth/**" request-matcher="ant">
+    <sec:intercept-url pattern="/auth/intercepturl/**" method="GET" access="hasAuthority('SCOPE_READ')" />
+    <sec:intercept-url pattern="/auth/intercepturl/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />
+    <sec:intercept-url pattern="/auth/intercepturl/**" method="PUT" access="hasAuthority('SCOPE_UPDATE')" />
+    <sec:intercept-url pattern="/auth/intercepturl/**" method="DELETE" access="hasAuthority('SCOPE_DELETE')" />
+    <sec:intercept-url pattern="/auth/**" access="authenticated" />
+    <sec:oauth2-resource-server>
+      <sec:jwt jwk-set-uri="https://idp.example.com/.well-known/jwks.json" />
+    </sec:oauth2-resource-server>
+  </sec:http>
+  
+  <sec:http pattern="/wrong/**" request-matcher="ant">
+    <sec:intercept-url pattern="/wrong/**" method="GET" access="hasAuthority('SCOPE_READ')" />
+    <sec:intercept-url pattern="/wrong/**" method="POST" access="hasAuthority('SCOPE_CREATE')" />
+    <sec:intercept-url pattern="/wrong/**" method="PUT" access="hasAuthority('SCOPE_UPDATE')" />
+    <sec:intercept-url pattern="/wrong/**" method="DELETE" access="hasAuthority('SCOPE_DELETE')" />
+    <sec:intercept-url pattern="/wrong/**" access="authenticated" />
+    <sec:oauth2-resource-server>
+      <sec:jwt jwk-set-uri="https://idp.example.com/.well-known/wrong" />
+    </sec:oauth2-resource-server>
+  </sec:http>
+
+  <sec:global-method-security pre-post-annotations="enabled" />
+
+</beans>

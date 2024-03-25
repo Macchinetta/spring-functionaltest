@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +53,7 @@ public class TemporaryFilesHelper {
         String temporaryFileId = UUID.randomUUID().toString();
         File temporaryFile = new File(temporaryDirectory, temporaryFileId);
 
-        Files.copy(multipartFile.getInputStream(), temporaryFile.toPath());
+        FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),temporaryFile);
 
         return temporaryFile;
     }

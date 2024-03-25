@@ -90,4 +90,3 @@ oth2.server.port=${OAUTH2_PORT!'8080'}
 test.environment=${MAIL_SERVER_PROFILE!'nonMailServer'}
 jms.test.environment=${MQ_SERVER_PROFILE!'nonMQServer'}
 test.environment.view=${TEST_ENV_VIEW!'jsp'}
-test.environment.weblogic=${TEST_ENV_WEBLOGIC!'false'}
