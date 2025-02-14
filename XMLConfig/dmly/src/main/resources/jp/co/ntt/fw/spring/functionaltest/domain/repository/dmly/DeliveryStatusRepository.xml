@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryStatusRepository">
+
+    <resultMap id="deliveryStatusResultMap" type="DeliveryStatus">
+        <result property="deliveryStatus" column="delivery_status" />
+    </resultMap>
+
+    <sql id="selectPhrase">
+        SELECT
+            delivery_status
+        FROM
+            t_delivery_status
+    </sql>
+
+    <select id="findAll" resultMap="deliveryStatusResultMap">
+        <include refid="selectPhrase" />
+    </select>
+
+</mapper>

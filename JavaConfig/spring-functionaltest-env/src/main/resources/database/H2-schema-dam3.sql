@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS t_book;
 DROP TABLE IF EXISTS m_category;
 DROP TABLE IF EXISTS t_todo;
 DROP TABLE IF EXISTS m_todo_cat;
+DROP TABLE IF EXISTS t_custom_type_handler;
 DROP SEQUENCE IF EXISTS s_book;
 
 CREATE SEQUENCE s_book;
@@ -44,7 +45,11 @@ CREATE TABLE t_todo (
     ,CONSTRAINT fk_todo FOREIGN KEY (category_id) REFERENCES m_todo_cat(category_id)
 );
 
+CREATE TABLE t_custom_type_handler (
+    id CHAR(10)
+    ,handler_obj VARCHAR(100)
+    ,CONSTRAINT pk_custom_type_handler PRIMARY KEY (id)
+);
 
-
-CREATE ALIAS findTodo FOR "jp.co.ntt.fw.spring.functionaltest.domain.service.dam3.H2Function.findTodo";
+CREATE ALIAS findTodo FOR "jp.co.ntt.fw.spring.functionaltest.database.dam3.H2Function.findTodo";
 

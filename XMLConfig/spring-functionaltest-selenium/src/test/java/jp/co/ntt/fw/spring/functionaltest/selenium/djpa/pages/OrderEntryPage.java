@@ -20,7 +20,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
 
@@ -70,17 +69,17 @@ public class OrderEntryPage implements Page<OrderEntryPage> {
 
     public void setQuantity(Integer itemNumber, String qauantity) {
         switch (itemNumber) {
-        case 1:
-            WebElementOperations.setValue(item1Qty, qauantity);
-            break;
-        case 2:
-            WebElementOperations.setValue(item2Qty, qauantity);
-            break;
-        case 3:
-            WebElementOperations.setValue(item3Qty, qauantity);
-            break;
-        default:
-            break;
+            case 1:
+                WebElementOperations.setValue(item1Qty, qauantity);
+                break;
+            case 2:
+                WebElementOperations.setValue(item2Qty, qauantity);
+                break;
+            case 3:
+                WebElementOperations.setValue(item3Qty, qauantity);
+                break;
+            default:
+                break;
         }
     }
 

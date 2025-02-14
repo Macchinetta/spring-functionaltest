@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.CustomTypeHandlerRepository">
+    <resultMap id="SampleObjResultMap" type="jp.co.ntt.fw.spring.functionaltest.domain.model.SampleObj">
+        <id property="id" column="id"/>
+        <result property="handlerObj" column="handler_obj" typeHandler="CustomTypeHandler"/>
+    </resultMap>
+
+    <select id="findAllHandlerObj" resultMap="SampleObjResultMap">
+        SELECT id, handler_obj
+        FROM t_custom_type_handler
+    </select>
+
+    <select id="findOneById" parameterType="string" resultMap="SampleObjResultMap">
+        SELECT id, handler_obj
+        FROM t_custom_type_handler
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="jp.co.ntt.fw.spring.functionaltest.domain.model.SampleObj">
+        INSERT INTO t_custom_type_handler (id, handler_obj)
+        VALUES (#{id}, #{handlerObj, typeHandler=CustomTypeHandler})
+    </insert>
+
+    <update id="update" parameterType="jp.co.ntt.fw.spring.functionaltest.domain.model.SampleObj">
+        UPDATE t_custom_type_handler
+        SET handler_obj = #{handlerObj, typeHandler=CustomTypeHandler}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        DELETE FROM t_custom_type_handler
+        WHERE id = #{id}
+    </delete>
+    
+</mapper>

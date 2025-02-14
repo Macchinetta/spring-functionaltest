@@ -19,17 +19,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.By.id;
-
 import java.util.Base64;
-
 import org.junit.Test;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
 public class Encryption_JSP_Test extends FunctionTestSupport {
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     /**
      * <ul>
@@ -52,8 +49,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -79,8 +75,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -106,8 +101,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -133,8 +127,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -160,8 +153,10 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 疑似乱数(鍵)生成結果確認
         {
-            assertThat(Base64.getDecoder().decode(webDriverOperations.getText(
-                    id("generatedKey")).getBytes()).length, is(16));
+            assertThat(
+                    Base64.getDecoder().decode(
+                            webDriverOperations.getText(id("generatedKey")).getBytes()).length,
+                    is(16));
         }
 
     }
@@ -187,8 +182,10 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 疑似乱数(鍵)生成結果確認
         {
-            assertThat(Base64.getDecoder().decode(webDriverOperations.getText(
-                    id("generatedKey")).getBytes()).length, is(16));
+            assertThat(
+                    Base64.getDecoder().decode(
+                            webDriverOperations.getText(id("generatedKey")).getBytes()).length,
+                    is(16));
             assertEquals(webDriverOperations.getText(id("generatedKey")),
                     webDriverOperations.getText(id("generatedKey2")));
         }
@@ -214,8 +211,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 疑似乱数(鍵)生成結果確認
         {
-            assertThat(webDriverOperations.getText(id("generatedKey")).length(),
-                    is(8 * 2));
+            assertThat(webDriverOperations.getText(id("generatedKey")).length(), is(8 * 2));
         }
 
     }
@@ -241,8 +237,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -268,8 +263,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -295,8 +289,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }
@@ -322,8 +315,7 @@ public class Encryption_JSP_Test extends FunctionTestSupport {
 
         // 暗復号結果確認
         {
-            assertThat(webDriverOperations.getText(id("decryptedText")), is(
-                    "John"));
+            assertThat(webDriverOperations.getText(id("decryptedText")), is("John"));
         }
 
     }

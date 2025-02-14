@@ -20,18 +20,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -39,37 +34,26 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT01 単項目チェックのテストケース
  * </p>
  */
-public class SimpleValidation_JSP_Test extends FunctionTestSupport {
+public class SimpleValidation_JSP_Test extends ValidationTestSupport {
 
     private static WebDriver driver;
-
-    private String validate = "validate";
-
-    private String errors = ".errors";
 
     private String dot = ".";
 
     private String br = "\n";
 
-    private String currentLocale = "en";
+    private BrowserLocale currentLocale = BrowserLocale.ENGLISH_US;
 
-    private static Map<String, String> localeDateFormat = new HashMap<String, String>();
-
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     public SimpleValidation_JSP_Test() {
-        localeDateFormat = new HashMap<String, String>();
-        localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yy");
-
         super.disableDefaultWebDriver();
     }
 
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -95,15 +79,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target),
-                        "SpringTestSpringTest");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(target), "SpringTestSpringTest");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -111,15 +93,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target),
-                        "SpringTestSpringTestS");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(target), "SpringTestSpringTestS");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -128,13 +108,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.clearText(id(target));
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
@@ -161,13 +140,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "J");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -175,13 +153,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
@@ -210,13 +187,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                String[] messages = webDriverOperations.getText(id(target
-                        + errors)).split(br);
+                String[] messages = webDriverOperations.getText(id(target + ID_ERRORS)).split(br);
                 assertThat(messages.length, is(errorMessages.size()));
                 for (String error : messages) {
                     assertTrue(errorMessages.indexOf(error) > -1);
@@ -228,7 +204,8 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
     /**
      * VLDT0101004
      * <ul>
-     * <li>Springのformタグ外にまとめてエラーメッセージを出す場合、バインドされたオブジェクトにアクセスできるタグを 使用することでエラーメッセージを任意の場所にまとめて出力することができることを確認する。</li>
+     * <li>Springのformタグ外にまとめてエラーメッセージを出す場合、バインドされたオブジェクトにアクセスできるタグを
+     * 使用することでエラーメッセージを任意の場所にまとめて出力することができることを確認する。</li>
      * </ul>
      */
     @Test
@@ -249,13 +226,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                String[] messages = webDriverOperations.getText(id(target
-                        + errors)).split(br);
+                String[] messages = webDriverOperations.getText(id(target + ID_ERRORS)).split(br);
                 assertThat(messages.length, is(errorMessages.size()));
                 for (String error : messages) {
                     assertTrue(errorMessages.indexOf(error) > -1);
@@ -267,15 +243,16 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
     /**
      * VLDT0101005
      * <ul>
-     * <li>Springのformタグ外に指定した項目だけエラーメッセージを出す場合、バインドされたオブジェクトにアクセスできるタグを 使用することでエラーメッセージを任意の場所にまとめて出力することができることを確認する。</li>
+     * <li>Springのformタグ外に指定した項目だけエラーメッセージを出す場合、バインドされたオブジェクトにアクセスできるタグを
+     * 使用することでエラーメッセージを任意の場所にまとめて出力することができることを確認する。</li>
      * </ul>
      */
     @Test
     public void testVLDT0101005() {
         String testId = "vldt0101005";
-        String[] targets = { "userName", "email", "age" };
-        String[] errorMessages = { "size must be between 1 and 20",
-                "size must be between 1 and 50", "must not be null" };
+        String[] targets = {"userName", "email", "age"};
+        String[] errorMessages = {"size must be between 1 and 20", "size must be between 1 and 50",
+                "must not be null"};
 
         // テスト画面表示
         {
@@ -286,14 +263,14 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i]));
+                    assertThat(webDriverOperations.getText(id(targets[i] + ID_ERRORS)),
+                            is(errorMessages[i]));
                 }
             }
         }
@@ -316,80 +293,53 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
 
         // Bean Validation
         {
-            String[] beanValidationTargets = { "notnull", "notempty",
-                    "notblank", "nullvalue", "pattern", "min", "max",
-                    "decimalmin", "decimalmax", "positive", "positiveorzero",
-                    "negative", "negativeorzero", "size", "digits", "truevalue",
-                    "falsevalue", "future", "futureorpresent", "past",
-                    "pastorpresent", "email" };
-            String[] beanValidationErrorMessages = { "must not be null",
-                    "must not be empty", "must not be blank", "must be null",
-                    "must match \"\\d{6}\"",
-                    "must be greater than or equal to 100",
-                    "must be less than or equal to 100",
+            String[] beanValidationTargets = {"notnull", "notempty", "notblank", "nullvalue",
+                    "pattern", "min", "max", "decimalmin", "decimalmax", "positive",
+                    "positiveorzero", "negative", "negativeorzero", "size", "digits", "truevalue",
+                    "falsevalue", "future", "futureorpresent", "past", "pastorpresent", "email"};
+            String[] beanValidationErrorMessages = {"must not be null", "must not be empty",
+                    "must not be blank", "must be null", "must match \"\\d{6}\"",
+                    "must be greater than or equal to 100", "must be less than or equal to 100",
                     "must be greater than or equal to 0.0",
-                    "must be less than or equal to 99999.99",
-                    "must be greater than 0",
+                    "must be less than or equal to 99999.99", "must be greater than 0",
                     "must be greater than or equal to 0", "must be less than 0",
-                    "must be less than or equal to 0",
-                    "size must be between 2 and 3",
-                    "numeric value out of bounds (<6 digits>.<2 digits> expected)",
-                    "must be true", "must be false", "must be a future date",
-                    "must be a date in the present or in the future",
-                    "must be a past date",
+                    "must be less than or equal to 0", "size must be between 2 and 3",
+                    "numeric value out of bounds (<6 digits>.<2 digits> expected)", "must be true",
+                    "must be false", "must be a future date",
+                    "must be a date in the present or in the future", "must be a past date",
                     "must be a date in the past or in the present",
-                    "must be a well-formed email address" };
+                    "must be a well-formed email address"};
 
             // テスト実行(Bean Validation)
             {
-                LocalDate ld = new LocalDate();
+                LocalDate ld = LocalDate.now();
 
                 webDriverOperations.clearText(id(beanValidationTargets[0]));
                 webDriverOperations.clearText(id(beanValidationTargets[1]));
-                webDriverOperations.overrideText(id(beanValidationTargets[2]),
-                        " ");
-                webDriverOperations.overrideText(id(beanValidationTargets[3]),
-                        "a");
-                webDriverOperations.overrideText(id(beanValidationTargets[4]),
-                        "1234567");
-                webDriverOperations.overrideText(id(beanValidationTargets[5]),
-                        "99");
-                webDriverOperations.overrideText(id(beanValidationTargets[6]),
-                        "101");
-                webDriverOperations.overrideText(id(beanValidationTargets[7]),
-                        "-0.1");
-                webDriverOperations.overrideText(id(beanValidationTargets[8]),
-                        "100000.00");
-                webDriverOperations.overrideText(id(beanValidationTargets[9]),
-                        "-1");
-                webDriverOperations.overrideText(id(beanValidationTargets[10]),
-                        "-1");
-                webDriverOperations.overrideText(id(beanValidationTargets[11]),
-                        "1");
-                webDriverOperations.overrideText(id(beanValidationTargets[12]),
-                        "1");
-                webDriverOperations.overrideText(id(beanValidationTargets[13]),
-                        "1234");
-                webDriverOperations.overrideText(id(beanValidationTargets[14]),
-                        "123456.125");
-                webDriverOperations.select(id(beanValidationTargets[15]),
-                        "False");
-                webDriverOperations.select(id(beanValidationTargets[16]),
-                        "True");
+                webDriverOperations.overrideText(id(beanValidationTargets[2]), " ");
+                webDriverOperations.overrideText(id(beanValidationTargets[3]), "a");
+                webDriverOperations.overrideText(id(beanValidationTargets[4]), "1234567");
+                webDriverOperations.overrideText(id(beanValidationTargets[5]), "99");
+                webDriverOperations.overrideText(id(beanValidationTargets[6]), "101");
+                webDriverOperations.overrideText(id(beanValidationTargets[7]), "-0.1");
+                webDriverOperations.overrideText(id(beanValidationTargets[8]), "100000.00");
+                webDriverOperations.overrideText(id(beanValidationTargets[9]), "-1");
+                webDriverOperations.overrideText(id(beanValidationTargets[10]), "-1");
+                webDriverOperations.overrideText(id(beanValidationTargets[11]), "1");
+                webDriverOperations.overrideText(id(beanValidationTargets[12]), "1");
+                webDriverOperations.overrideText(id(beanValidationTargets[13]), "1234");
+                webDriverOperations.overrideText(id(beanValidationTargets[14]), "123456.125");
+                webDriverOperations.select(id(beanValidationTargets[15]), "False");
+                webDriverOperations.select(id(beanValidationTargets[16]), "True");
                 webDriverOperations.overrideText(id(beanValidationTargets[17]),
-                        ld.minusDays(1).toString(localeDateFormat.get(
-                                currentLocale)));
+                        ld.minusDays(1).toString());
                 webDriverOperations.overrideText(id(beanValidationTargets[18]),
-                        ld.minusDays(1).toString(localeDateFormat.get(
-                                currentLocale)));
+                        ld.minusDays(1).toString());
                 webDriverOperations.overrideText(id(beanValidationTargets[19]),
-                        ld.plusDays(1).toString(localeDateFormat.get(
-                                currentLocale)));
+                        ld.plusDays(1).toString());
                 webDriverOperations.overrideText(id(beanValidationTargets[20]),
-                        ld.plusDays(1).toString(localeDateFormat.get(
-                                currentLocale)));
-                webDriverOperations.overrideText(id(beanValidationTargets[21]),
-                        "aaa@aaa.");
+                        ld.plusDays(1).toString());
+                webDriverOperations.overrideText(id(beanValidationTargets[21]), "aaa@aaa.");
 
                 webDriverOperations.click(id("validateBeanValidation"));
             }
@@ -397,9 +347,9 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // 結果確認(Bean Validation)
             {
                 for (int i = 0; i < beanValidationTargets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(
-                            beanValidationTargets[i] + errors)), is(
-                                    beanValidationErrorMessages[i]));
+                    assertThat(
+                            webDriverOperations.getText(id(beanValidationTargets[i] + ID_ERRORS)),
+                            is(beanValidationErrorMessages[i]));
                 }
             }
 
@@ -407,38 +357,28 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 // @Positive, @PositiveOrZero等に"0"を入力する
                 String zeroString = "0";
-                webDriverOperations.overrideText(id(beanValidationTargets[9]),
-                        zeroString);
-                webDriverOperations.overrideText(id(beanValidationTargets[10]),
-                        zeroString);
-                webDriverOperations.overrideText(id(beanValidationTargets[11]),
-                        zeroString);
-                webDriverOperations.overrideText(id(beanValidationTargets[12]),
-                        zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[9]), zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[10]), zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[11]), zeroString);
+                webDriverOperations.overrideText(id(beanValidationTargets[12]), zeroString);
 
                 // @Future, @FutureOrPresent等に現在日付を入力する
-                String todayString = new LocalDate().toString(localeDateFormat
-                        .get(currentLocale));
-                webDriverOperations.overrideText(id(beanValidationTargets[17]),
-                        todayString);
-                webDriverOperations.overrideText(id(beanValidationTargets[18]),
-                        todayString);
-                webDriverOperations.overrideText(id(beanValidationTargets[19]),
-                        todayString);
-                webDriverOperations.overrideText(id(beanValidationTargets[20]),
-                        todayString);
+                String todayString = LocalDate.now().toString();
+                webDriverOperations.overrideText(id(beanValidationTargets[17]), todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[18]), todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[19]), todayString);
+                webDriverOperations.overrideText(id(beanValidationTargets[20]), todayString);
 
                 webDriverOperations.click(id("validateBeanValidation"));
             }
 
             // 結果確認
             {
-                int[] targetIndexes = { 9, 10, 11, 12, 17, 18, 19, 20 };
+                int[] targetIndexes = {9, 10, 11, 12, 17, 18, 19, 20};
                 for (int i : targetIndexes) {
                     // "or"が含まれないルールはゼロ、現在日付が入力チェックエラーとなる
-                    assertThat(webDriverOperations.exists(id(
-                            beanValidationTargets[i] + errors)), not(
-                                    beanValidationTargets[i].contains("or")));
+                    assertThat(webDriverOperations.exists(id(beanValidationTargets[i] + ID_ERRORS)),
+                            not(beanValidationTargets[i].contains("or")));
                 }
             }
 
@@ -446,26 +386,22 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
 
         // Hibernate Validator
         {
-            String[] hibernateValidatorTargets = { "creditcardnumber", "isbn",
-                    "url", "notemptyHV", "notblankHV", "emailHV" };
-            String[] hibernateValidatorErrorMessages = {
-                    "invalid credit card number", "invalid ISBN",
-                    "must be a valid URL", "may not be empty",
-                    "may not be empty", "not a well-formed email address" };
+            String[] hibernateValidatorTargets =
+                    {"creditcardnumber", "isbn", "url", "notemptyHV", "notblankHV", "emailHV"};
+            String[] hibernateValidatorErrorMessages = {"invalid credit card number",
+                    "invalid ISBN", "must be a valid URL", "may not be empty", "may not be empty",
+                    "not a well-formed email address"};
 
             // テスト実行(Hibernate Validator)
             {
-                webDriverOperations.overrideText(id(
-                        hibernateValidatorTargets[0]), "1234567890123456");
-                webDriverOperations.overrideText(id(
-                        hibernateValidatorTargets[1]), "97847775a7992");
-                webDriverOperations.overrideText(id(
-                        hibernateValidatorTargets[2]), "htt://aaa.com/");
+                webDriverOperations.overrideText(id(hibernateValidatorTargets[0]),
+                        "1234567890123456");
+                webDriverOperations.overrideText(id(hibernateValidatorTargets[1]), "97847775a7992");
+                webDriverOperations.overrideText(id(hibernateValidatorTargets[2]),
+                        "htt://aaa.com/");
                 webDriverOperations.clearText(id(hibernateValidatorTargets[3]));
-                webDriverOperations.overrideText(id(
-                        hibernateValidatorTargets[4]), " ");
-                webDriverOperations.overrideText(id(
-                        hibernateValidatorTargets[5]), "aaa@aaa.");
+                webDriverOperations.overrideText(id(hibernateValidatorTargets[4]), " ");
+                webDriverOperations.overrideText(id(hibernateValidatorTargets[5]), "aaa@aaa.");
 
                 webDriverOperations.click(id("validateHibernateValidator"));
             }
@@ -473,9 +409,10 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // 結果確認(Hibernate Validator)
             {
                 for (int i = 0; i < hibernateValidatorTargets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(
-                            hibernateValidatorTargets[i] + errors)), is(
-                                    hibernateValidatorErrorMessages[i]));
+                    assertThat(
+                            webDriverOperations
+                                    .getText(id(hibernateValidatorTargets[i] + ID_ERRORS)),
+                            is(hibernateValidatorErrorMessages[i]));
                 }
             }
         }
@@ -502,18 +439,15 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id("priceDefault"),
-                        priceInput);
+                webDriverOperations.overrideText(id("priceDefault"), priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id("priceDefault"
-                        + errors)), is(false));
-                assertThat(webDriverOperations.exists(id("priceFalse"
-                        + errors)), is(false));
+                assertThat(webDriverOperations.exists(id("priceDefault" + ID_ERRORS)), is(false));
+                assertThat(webDriverOperations.exists(id("priceFalse" + ID_ERRORS)), is(false));
             }
         }
     }
@@ -540,18 +474,16 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id("priceDefault"),
-                        priceInput);
+                webDriverOperations.overrideText(id("priceDefault"), priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id("priceDefault"
-                        + errors)), is(false));
-                assertThat(webDriverOperations.getText(id("priceFalse"
-                        + errors)), is(errorMessage));
+                assertThat(webDriverOperations.exists(id("priceDefault" + ID_ERRORS)), is(false));
+                assertThat(webDriverOperations.getText(id("priceFalse" + ID_ERRORS)),
+                        is(errorMessage));
             }
         }
     }
@@ -579,18 +511,17 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id("priceDefault"),
-                        priceInput);
+                webDriverOperations.overrideText(id("priceDefault"), priceInput);
                 webDriverOperations.overrideText(id("priceFalse"), priceInput);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id("priceDefault"
-                        + errors)), is(errorPriceDefaultMessage));
-                assertThat(webDriverOperations.getText(id("priceFalse"
-                        + errors)), is(errorPriceFalseMessage));
+                assertThat(webDriverOperations.getText(id("priceDefault" + ID_ERRORS)),
+                        is(errorPriceDefaultMessage));
+                assertThat(webDriverOperations.getText(id("priceFalse" + ID_ERRORS)),
+                        is(errorPriceFalseMessage));
             }
         }
     }
@@ -605,10 +536,9 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
     public void testVLDT0102001() {
         String testId = "vldt0102001";
         String nestedFormName = "reciverAddress";
-        String[] targets = { "userName", "postCode", "address" };
-        String[] errorMessages = { "size must be between 1 and 50",
-                "size must be between 1 and 10",
-                "size must be between 1 and 100" };
+        String[] targets = {"userName", "postCode", "address"};
+        String[] errorMessages = {"size must be between 1 and 50", "size must be between 1 and 10",
+                "size must be between 1 and 100"};
 
         // テスト画面表示
         {
@@ -620,17 +550,17 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 for (int i = 0; i < targets.length; i++) {
-                    webDriverOperations.overrideText(id(nestedFormName + dot
-                            + targets[i]), "SpringTest");
+                    webDriverOperations.overrideText(id(nestedFormName + dot + targets[i]),
+                            "SpringTest");
                 }
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.exists(id(nestedFormName
-                            + dot + targets[i] + errors)), is(false));
+                    assertThat(webDriverOperations
+                            .exists(id(nestedFormName + dot + targets[i] + ID_ERRORS)), is(false));
                 }
             }
         }
@@ -640,18 +570,18 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 for (int i = 0; i < targets.length; i++) {
-                    webDriverOperations.clearText(id(nestedFormName + dot
-                            + targets[i]));
+                    webDriverOperations.clearText(id(nestedFormName + dot + targets[i]));
                 }
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(nestedFormName
-                            + dot + targets[i] + errors)), is(
-                                    errorMessages[i]));
+                    assertThat(
+                            webDriverOperations
+                                    .getText(id(nestedFormName + dot + targets[i] + ID_ERRORS)),
+                            is(errorMessages[i]));
                 }
             }
         }
@@ -668,10 +598,9 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         String testId = "vldt0102002";
         String nestedFormName = "addresses";
         int nestedFormCount = 3;
-        String[] targets = { "userName", "postCode", "address" };
-        String[] errorMessages = { "size must be between 1 and 50",
-                "size must be between 1 and 10",
-                "size must be between 1 and 100" };
+        String[] targets = {"userName", "postCode", "address"};
+        String[] errorMessages = {"size must be between 1 and 50", "size must be between 1 and 10",
+                "size must be between 1 and 100"};
 
         // テスト画面表示
         {
@@ -691,19 +620,21 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 for (int i = 0; i < nestedFormCount; i++) {
                     for (int j = 0; j < targets.length; j++) {
-                        webDriverOperations.overrideText(id(nestedFormName + i
-                                + dot + targets[j]), "SpringTest");
+                        webDriverOperations.overrideText(id(nestedFormName + i + dot + targets[j]),
+                                "SpringTest");
                     }
                 }
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < nestedFormCount; i++) {
                     for (int j = 0; j < targets.length; j++) {
-                        assertThat(webDriverOperations.exists(id(nestedFormName
-                                + i + dot + targets[j] + errors)), is(false));
+                        assertThat(
+                                webDriverOperations.exists(
+                                        id(nestedFormName + i + dot + targets[j] + ID_ERRORS)),
+                                is(false));
                     }
                 }
             }
@@ -720,16 +651,17 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
 
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < nestedFormCount; i++) {
                     for (int j = 0; j < targets.length; j++) {
-                        assertThat(webDriverOperations.getText(id(nestedFormName
-                                + i + dot + targets[j] + errors)), is(
-                                        errorMessages[j]));
+                        assertThat(
+                                webDriverOperations.getText(
+                                        id(nestedFormName + i + dot + targets[j] + ID_ERRORS)),
+                                is(errorMessages[j]));
                     }
                 }
             }
@@ -747,9 +679,9 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         String testId = "vldt0103001";
         String target = "age";
         String groupKey = "country";
-        String[] groups = { "Japan", "Singapore" };
-        String[] errorMessages = { "must be greater than or equal to 20",
-                "must be greater than or equal to 21" };
+        String[] groups = {"Japan", "Singapore"};
+        String[] errorMessages =
+                {"must be greater than or equal to 20", "must be greater than or equal to 21"};
 
         // テスト画面表示
         {
@@ -764,13 +696,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "20");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -782,13 +713,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "19");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)),
+                        is(errorMessages[groupValue]));
             }
         }
 
@@ -800,13 +731,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "21");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -818,13 +748,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "20");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)),
+                        is(errorMessages[groupValue]));
             }
         }
     }
@@ -840,10 +770,9 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         String testId = "vldt0103002";
         String target = "age";
         String groupKey = "country";
-        String[] groups = { "Japan", "Singapore", "France" };
-        String[] errorMessages = { "must be greater than or equal to 20",
-                "must be greater than or equal to 21",
-                "must be greater than or equal to 18" };
+        String[] groups = {"Japan", "Singapore", "France"};
+        String[] errorMessages = {"must be greater than or equal to 20",
+                "must be greater than or equal to 21", "must be greater than or equal to 18"};
 
         // テスト画面表示
         {
@@ -858,13 +787,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "20");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -876,13 +804,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "19");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)),
+                        is(errorMessages[groupValue]));
             }
         }
 
@@ -894,13 +822,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "21");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -912,13 +839,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "20");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)),
+                        is(errorMessages[groupValue]));
             }
         }
 
@@ -930,13 +857,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "18");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -948,13 +874,13 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target), "17");
                 webDriverOperations.select(id(groupKey), groups[groupValue]);
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessages[groupValue]));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)),
+                        is(errorMessages[groupValue]));
             }
         }
     }
@@ -969,7 +895,7 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
     public void testVLDT0103003() {
         String testId = "vldt0103003";
         String target = "deliveryAddress";
-        String errorMessage = "must not be null";
+        String errorMessage = "must not be empty";
 
         // テスト画面表示
         {
@@ -981,13 +907,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "tokyo");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -995,13 +920,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -1012,13 +936,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
                 webDriverOperations.overrideText(id("username"), "Josh");
                 webDriverOperations.overrideText(id("password"), "spring1234");
                 webDriverOperations.click(id("login"));
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
     }
@@ -1033,7 +956,7 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
     public void testVLDT0104001() {
         String testId = "vldt0104001";
         String target = "userName";
-        String errorMessage = "must not be null";
+        String errorMessage = "must not be empty";
 
         // テスト画面表示
         {
@@ -1045,13 +968,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "S");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -1059,13 +981,12 @@ public class SimpleValidation_JSP_Test extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }

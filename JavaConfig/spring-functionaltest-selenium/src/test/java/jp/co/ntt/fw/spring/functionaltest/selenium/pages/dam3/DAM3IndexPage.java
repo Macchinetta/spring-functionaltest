@@ -20,7 +20,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 
 public class DAM3IndexPage implements Page<DAM3IndexPage> {
@@ -54,6 +53,10 @@ public class DAM3IndexPage implements Page<DAM3IndexPage> {
     @CacheLookup
     @FindBy(id = "dam30205001")
     private WebElement dam30205001;
+
+    @CacheLookup
+    @FindBy(id = "dam30206001")
+    private WebElement dam30206001;
 
     @CacheLookup
     @FindBy(id = "dam30301001")
@@ -243,6 +246,11 @@ public class DAM3IndexPage implements Page<DAM3IndexPage> {
 
     public TodoListPage dam30205001Click() {
         dam30205001.click();
+        return showTodoListPage();
+    }
+
+    public TodoListPage dam30206001Click() {
+        dam30206001.click();
         return showTodoListPage();
     }
 

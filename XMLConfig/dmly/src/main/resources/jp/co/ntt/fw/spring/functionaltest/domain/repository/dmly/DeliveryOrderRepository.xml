@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository">
+
+    <resultMap id="deliveryTypeResultMap" type="DeliveryType">
+        <result property="deliveryTypeId" column="delivery_type_id" />
+        <result property="deliveryTypeName" column="delivery_type_name" />
+    </resultMap>
+
+    <resultMap id="deliveryOrderResultMap" type="DeliveryOrder">
+        <result property="deliveryNo" column="delivery_no" />
+        <result property="senderName" column="sender_name" />
+        <result property="senderAddress" column="sender_address" />
+        <result property="recieverName" column="reciever_name" />
+        <result property="recieverAddress" column="reciever_address" />
+        <result property="acceptDatetime" column="accept_datetime" />
+        <result property="completionDatetime" column="completion_datetime" />
+        <result property="deliveryDriver" column="delivery_driver" />
+        <result property="deliveryStatus" column="delivery_status" />
+        <association property="deliveryType" column="delivery_type_id" javaType="DeliveryType" select="findOneByDeliveryTypeId" />
+    </resultMap>
+
+    <select id="findOneByDeliveryTypeId" parameterType="Integer" resultMap="deliveryTypeResultMap">
+        <bind name="deliveryTypeId" value="_parameter" />
+        SELECT
+            delivery_type_id,
+            delivery_type_name
+        FROM
+            m_delivery_type
+        WHERE
+            delivery_type_id = #{deliveryTypeId}
+    </select>
+
+    <sql id="selectPhrase">
+        SELECT
+            delivery_no,
+            delivery_type_id,
+            sender_name,
+            sender_address,
+            reciever_name,
+            reciever_address,
+            accept_datetime,
+            completion_datetime,
+            delivery_driver,
+            delivery_status
+        FROM
+            t_delivery_order
+    </sql>
+
+    <sql id="wherePhrase">
+        <where>
+            <if test="deliveryNo != null"> AND delivery_no = #{deliveryNo} </if>
+            <if test="deliveryOrder.deliveryTypeId != null"> AND delivery_type_id = #{deliveryOrder.deliveryTypeId} </if>
+            <if test="senderName != null"> AND sender_name = #{senderName} </if>
+            <if test="senderAddress != null"> AND sender_address = #{senderAddress} </if>
+            <if test="recieverName != null"> AND reciever_name = #{recieverName} </if>
+            <if test="recieverAddress != null"> AND reciever_address = #{recieverAddress} </if>
+            <if test="acceptDatetime != null"> AND accept_datetime = #{acceptDatetime} </if>
+            <if test="completionDatetime != null"> AND completion_datetime = #{completionDatetime} </if>
+        </where>
+    </sql>
+
+    <sql id="setPhrase">
+        <set>
+            <if test="deliveryNo != null"> delivery_no = #{deliveryNo}, </if>
+            <if test="deliveryType.deliveryTypeId != null"> delivery_type_id = #{deliveryType.deliveryTypeId}, </if>
+            <if test="senderName != null"> sender_name = #{senderName}, </if>
+            <if test="senderAddress != null"> sender_address = #{senderAddress}, </if>
+            <if test="recieverName != null"> reciever_name = #{recieverName}, </if>
+            <if test="recieverAddress != null"> reciever_address = #{recieverAddress}, </if>
+            <if test="acceptDatetime != null"> accept_datetime = #{acceptDatetime}, </if>
+            <if test="completionDatetime != null"> completion_datetime = #{completionDatetime}, </if>
+            <if test="deliveryDriver != null"> delivery_driver = #{deliveryDriver}, </if>
+            <if test="deliveryStatus != null"> delivery_status = #{deliveryStatus}, </if>
+        </set>
+    </sql>
+
+    <select id="findOneByDeliveryNo" parameterType="Integer" resultMap="deliveryOrderResultMap">
+        <bind name="deliveryNo" value="_parameter" />
+        <include refid="selectPhrase" />
+        WHERE delivery_no = #{deliveryNo}
+    </select>
+
+    <select id="findAll" resultMap="deliveryOrderResultMap">
+        <include refid="selectPhrase" />
+    </select>
+
+    <select id="findPage" resultMap="deliveryOrderResultMap">
+        <include refid="selectPhrase" />
+        ORDER BY delivery_no ASC
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            t_delivery_order
+    </select>
+
+    <select id="existsByDeliveryNo" parameterType="Integer" resultType="Boolean">
+        <bind name="deliveryNo" value="_parameter" />
+        SELECT
+            count(*)
+        FROM
+            t_delivery_order
+        WHERE
+            delivery_no = #{deliveryNo}
+    </select>
+
+    <insert id="insert">
+        <trim prefix="INSERT INTO t_delivery_order (" suffix=")" suffixOverrides=",">
+            <if test="deliveryNo != null"> delivery_no, </if>
+            <if test="deliveryType.deliveryTypeId != null"> delivery_type_id, </if>
+            <if test="senderName != null"> sender_name, </if>
+            <if test="senderAddress != null"> sender_address, </if>
+            <if test="recieverName != null"> reciever_name, </if>
+            <if test="recieverAddress != null"> reciever_address, </if>
+            <if test="acceptDatetime != null"> accept_datetime, </if>
+            <if test="completionDatetime != null"> completion_datetime, </if>
+            <if test="deliveryDriver != null"> delivery_driver, </if>
+            <if test="deliveryStatus != null"> delivery_status, </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="deliveryNo != null"> #{deliveryNo}, </if>
+            <if test="deliveryType.deliveryTypeId != null"> #{deliveryType.deliveryTypeId}, </if>
+            <if test="senderName != null"> #{senderName}, </if>
+            <if test="senderAddress != null"> #{senderAddress}, </if>
+            <if test="recieverName != null"> #{recieverName}, </if>
+            <if test="recieverAddress != null"> #{recieverAddress}, </if>
+            <if test="acceptDatetime != null"> #{acceptDatetime}, </if>
+            <if test="completionDatetime != null"> #{completionDatetime}, </if>
+            <if test="deliveryDriver != null"> #{deliveryDriver}, </if>
+            <if test="deliveryStatus != null"> #{deliveryStatus}, </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="DeliveryOrder">
+        UPDATE
+            t_delivery_order
+        <include refid="setPhrase" />
+        WHERE
+            delivery_no = #{deliveryNo}
+    </update>
+
+    <delete id="deleteByDeliveryNo" parameterType="Integer">
+        <bind name="deliveryNo" value="_parameter" />
+        DELETE FROM
+            t_delivery_order
+        WHERE
+            delivery_no = #{deliveryNo}
+    </delete>
+
+    <select id="countByCriteria" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            t_delivery_order
+        WHERE
+            completion_datetime IS NULL
+        <trim prefix="AND (" suffix=")" prefixOverrides="AND | OR ">
+            <if test="fromAcceptDatetime != null">
+                AND accept_datetime &gt;= #{fromAcceptDatetime}
+            </if>
+            <if test="toAcceptDatetime != null">
+                AND accept_datetime &lt;= #{toAcceptDatetime}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateByCriteria">
+        UPDATE
+            t_delivery_order
+        SET
+            completion_datetime = #{updateCompletionDatetime}
+        WHERE
+            completion_datetime IS NULL
+        <trim prefix="AND (" suffix=")" prefixOverrides="AND | OR ">
+            <if test="fromAcceptDatetime != null">
+                AND accept_datetime &gt;= #{fromAcceptDatetime}
+            </if>
+            <if test="toAcceptDatetime != null">
+                AND accept_datetime &lt;= #{toAcceptDatetime}
+            </if>
+        </trim>
+    </update>
+
+    <update id="clear">
+        TRUNCATE TABLE t_delivery_order
+    </update>
+
+</mapper>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head},~{::body})}">
+    <head></head>
+    <body>
+        <h1 id="screenTitle">ResultMessageの表示</h1>
+        <div class="container">
+            <h1>Result Message</h1>
+            <div th:if="${resultMessages} != null" class="alert" th:classappend="|alert-${resultMessages.type}|">
+                <ul>
+                    <li th:each="message : ${resultMessages}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

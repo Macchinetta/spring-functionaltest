@@ -24,16 +24,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assume.assumeTrue;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -45,17 +42,15 @@ public class RestAPITest extends RestTestSupport {
 
     @Override
     protected String baseURI(boolean enabled) {
-        // @formatter:off
-        return enabled
-                ? applicationContextUrl + "-rest/api/v1/DEFAULT_VIEW_INCLUSION-enable"
-                : applicationContextUrl + "-rest/api/v1/DEFAULT_VIEW_INCLUSION-disable";
-        // @formatter:on
+        return enabled ? getPackageRootUrl() + "/api/v1/DEFAULT_VIEW_INCLUSION-enable"
+                : getPackageRootUrl() + "/api/v1/DEFAULT_VIEW_INCLUSION-disable";
     }
 
     /**
      * setUp
      * <ul>
-     * <li>Remove all old member resources if any, and insert three new member resources every time</li>
+     * <li>Remove all old member resources if any, and insert three new member resources every
+     * time</li>
      * </ul>
      */
     @Before
@@ -462,7 +457,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members")
                .then().statusCode(405)
                .body(
-                     "code", is("e.sf.cmmn.6001"),
+                     "code", is("e.sf.fw.6001"),
                      "message", is("Request method not supported.")
                     );
         // @formatter:on
@@ -492,7 +487,7 @@ public class RestAPITest extends RestTestSupport {
                .post("/members")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7002"),
+                     "code", is("e.sf.fw.7002"),
                      "message", is("Validation error occurred on item in the request."),
                      "details.code", hasItems("NotEmpty"),
                      "details.message", hasItems("空要素は許可されていません"),
@@ -520,7 +515,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members?name=")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7002"),
+                     "code", is("e.sf.fw.7002"),
                      "message", is("Validation error occurred on item in the request."),
                      "details.code", hasItems("NotEmpty"),
                      "details.message", hasItems("空要素は許可されていません"),
@@ -553,7 +548,7 @@ public class RestAPITest extends RestTestSupport {
                .post("/members")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7004"),
+                     "code", is("e.sf.fw.7004"),
                      "message", is("Unknown field exists in JSON.")
                     );
         // @formatter:on
@@ -577,7 +572,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members/non-existent-memberId")
                .then().statusCode(404)
                .body(
-                     "code", is("e.sf.mm.5001"),
+                     "code", is("e.sf.rs.5001"),
                      "message", is("Specified member not found. member id : non-existent-memberId")
                     );
         // @formatter:on
@@ -604,7 +599,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/businessExp/{memberId}", memberId)
                .then().statusCode(409)
                .body(
-                     "code", is("e.sf.mm.8001"),
+                     "code", is("e.sf.rs.8001"),
                      "message", is("Cannot use specified member id. member id : dummyID")
                     );
         // @formatter:on
@@ -629,7 +624,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/optimisticExp")
                .then().statusCode(409)
                .body(
-                     "code", is("e.sf.cmmn.8006"),
+                     "code", is("e.sf.fw.8006"),
                      "message", is("Conflict with other processing occurred.")
                     );
         // @formatter:on
@@ -654,7 +649,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/exp")
                .then().statusCode(500)
                .body(
-                     "code", is("e.sf.cmmn.9001"),
+                     "code", is("e.sf.fw.9001"),
                      "message", is("System error occurred!")
                     );
         // @formatter:on
@@ -686,7 +681,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members/httpVersionNotSupport")
                .then().statusCode(505)
                .body(
-                     "code", is("e.sf.cmmn.9505"),
+                     "code", is("e.sf.fw.9505"),
                      "message", is("HTTP Version not supported.")
                     );
         // @formatter:on
@@ -744,7 +739,7 @@ public class RestAPITest extends RestTestSupport {
                .then().statusCode(508)
                .contentType(containsString(MediaType.APPLICATION_JSON_VALUE))
                .body(
-                     "code", is("e.sf.cmmn.0508"),
+                     "code", is("e.sf.fw.0508"),
                      "message", is("サービス利用できないエラーが発生しました。")
                     );
         // @formatter:on
@@ -760,8 +755,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0501001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -788,7 +783,8 @@ public class RestAPITest extends RestTestSupport {
      * testREST0601001
      * <ul>
      * <li>POST時のLocationヘッダの実装</li>
-     * <li>Add one member resource and check if hyper media link is added in the Location of the Header part</li>
+     * <li>Add one member resource and check if hyper media link is added in the Location of the
+     * Header part</li>
      * </ul>
      */
     @Test
@@ -850,8 +846,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0603001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -880,8 +876,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0604001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Fetch content length of GET request
         // Response response = given().when().get("/members/{memberId}", memberIds
@@ -914,8 +910,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -952,8 +948,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701002() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -989,8 +985,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701003() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Set MapperFeature.DEFAULT_VIEW_INCLUSION to disable
         RestAssured.baseURI = baseURI(false);
@@ -1023,14 +1019,15 @@ public class RestAPITest extends RestTestSupport {
      * testREST0801001
      * <ul>
      * <li>リクエストとレスポンスへの共通的な処理</li>
-     * <li>Get specified member resource and check if RequestBodyAdvice and ResponseBodyAdvice is processed</li>
+     * <li>Get specified member resource and check if RequestBodyAdvice and ResponseBodyAdvice is
+     * processed</li>
      * </ul>
      */
     @Test
     public void testREST0801001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Creating Hash map for jsonBody
         Map<String, Object> jsonBody = new HashMap<String, Object>();

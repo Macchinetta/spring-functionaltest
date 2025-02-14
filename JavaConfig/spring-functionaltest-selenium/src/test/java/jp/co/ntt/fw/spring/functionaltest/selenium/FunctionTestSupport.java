@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,22 +36,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestOperations;
-
 import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.config.SeleniumContextConfig;
-import jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner;
+import jp.co.ntt.fw.spring.functionaltest.selenium.webdrivers.WebDriverCreator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { SeleniumContextConfig.class })
+@ContextConfiguration(classes = {SeleniumContextConfig.class})
 @ProfileValueSourceConfiguration(InfraPropertiesSystemProfileValueSource.class)
 public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            FunctionTestSupport.class);
+    private static final Logger logger = LoggerFactory.getLogger(FunctionTestSupport.class);
 
     private static WebDriver webDriver;
 
-    private static final Set<WebDriver> webDrivers = new HashSet<WebDriver>();
+    private static final Set<WebDriver> webDrivers = new HashSet<>();
 
     @Rule
     public final TestName testName = new TestName();
@@ -118,21 +115,20 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
     protected File evidenceSavingDirectory;
 
-    private WebDriverInputFieldAccessor webDriverInputFieldAccessor = WebDriverInputFieldAccessor.JAVASCRIPT;
+    private WebDriverInputFieldAccessor webDriverInputFieldAccessor =
+            WebDriverInputFieldAccessor.JAVASCRIPT;
 
     @Value("${selenium.timeoutForImplicitlyWait.offsetSeconds:0}")
     private int offsetSecondsOfTimeoutForImplicitlyWait;
 
     protected FunctionTestSupport() {
-        this.simplePackageName = this.getClass().getPackage().getName()
-                .replaceAll(".*\\.", "");
+        this.simplePackageName = this.getClass().getPackage().getName().replaceAll(".*\\.", "");
     }
 
     @Value("${selenium.webDriverInputFieldAccessor:JAVASCRIPT}")
-    public void setWebDriverInputFieldAccessor(
-            String webDriverInputFieldAccessor) {
-        this.webDriverInputFieldAccessor = WebDriverInputFieldAccessor.valueOf(
-                webDriverInputFieldAccessor.toUpperCase());
+    public void setWebDriverInputFieldAccessor(String webDriverInputFieldAccessor) {
+        this.webDriverInputFieldAccessor =
+                WebDriverInputFieldAccessor.valueOf(webDriverInputFieldAccessor.toUpperCase());
     }
 
     @Before
@@ -145,11 +141,10 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
 
         String testCaseName = testName.getMethodName().replaceAll("^test", "");
 
-        evidenceSavingDirectory = new File(String.format("%s/%s/%s",
-                evidenceBaseDirectory, simplePackageName, testCaseName));
+        evidenceSavingDirectory = new File(
+                String.format("%s/%s/%s", evidenceBaseDirectory, simplePackageName, testCaseName));
 
-        logger.debug("evidenceSavingDirectory is " + evidenceSavingDirectory
-                .getAbsolutePath());
+        logger.debug("evidenceSavingDirectory is " + evidenceSavingDirectory.getAbsolutePath());
 
         screenCapture.setUp(evidenceSavingDirectory);
         pageSource.setUp(evidenceSavingDirectory);
@@ -165,7 +160,8 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
         if (webDriver == null) {
             webDriver = newDefaultWebDriver();
         }
-        this.webDriverOperations = new WebDriverOperations(webDriver, webDriverInputFieldAccessor, screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
+        this.webDriverOperations = new WebDriverOperations(webDriver, webDriverInputFieldAccessor,
+                screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
 
         webDriverOperations.displayPage(getPackageRootUrl());
     }
@@ -213,13 +209,17 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * このメソッドを呼び出すことで、ブラウザが新たに起動し、起動したブラウザを操作するためのWebDriverOperationsインスタンスが返却される。
      * </p>
      * <p>
-     * このメソッドを使って取得したWebDriverを明示的にquitする場合は、 {@link #quitWebDriver(WebDriverOperations)}を使用すること。 <br>
+     * このメソッドを使って取得したWebDriverを明示的にquitする場合は、 {@link #quitWebDriver(WebDriverOperations)}を使用すること。
+     * <br>
      * 明示的にquitしない場合は、該当クラスのテストケースが全て終了した際に、quitされる。
      * </p>
+     * 
      * @return
      */
     protected final WebDriverOperations newWebDriverOperations() {
-        WebDriverOperations webDriverOperations = new WebDriverOperations(newDefaultWebDriver(), webDriverInputFieldAccessor, screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
+        WebDriverOperations webDriverOperations =
+                new WebDriverOperations(newDefaultWebDriver(), webDriverInputFieldAccessor,
+                        screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
         webDriverOperations.displayPage(getPackageRootUrl());
         return webDriverOperations;
     }
@@ -229,15 +229,16 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * <p>
      * {@link #newWebDriverOperations()}を使って起動したブラウザ(WebDriverOperationsに関連付られているWebDirver)をquitする場合は、このメソッドを呼び出すこと。
      * </p>
+     * 
      * @param webDriverOperations quitするWebDriverと関連付られているWebDriverOperationsインスタンス
      */
-    protected final void quitWebDriver(
-            WebDriverOperations webDriverOperations) {
+    protected final void quitWebDriver(WebDriverOperations webDriverOperations) {
         quitWebDriver(webDriverOperations.getWebDriver());
     }
 
     /**
      * 指定したWebDriverをデフォルトで使用するWebDriverに設定する。
+     * 
      * @param webDriver デフォルトで使用するWebDriver
      */
     protected final void setCurrentWebDriver(WebDriver newWebDriver) {
@@ -248,7 +249,8 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
             webDrivers.add(webDriver);
 
         }
-        this.webDriverOperations = new WebDriverOperations(webDriver, webDriverInputFieldAccessor, screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
+        this.webDriverOperations = new WebDriverOperations(webDriver, webDriverInputFieldAccessor,
+                screenCapture, pageSource, offsetSecondsOfTimeoutForImplicitlyWait);
 
         webDriverOperations.displayPage(getPackageRootUrl());
     }
@@ -259,18 +261,17 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * 必要に応じてオーバーライドしてください。
      * </p>
      */
-    protected void onSucceeded() {
-    }
+    protected void onSucceeded() {}
 
     /**
      * テストが失敗した時の処理を行うためのメソッド。
      * <p>
      * 必要に応じてオーバーライドしてください。
      * </p>
+     * 
      * @param e テストが失敗した時に発生した例外
      */
-    protected void onFailed(Throwable e) {
-    }
+    protected void onFailed(Throwable e) {}
 
     /**
      * テストが終了した時の処理を行うためのメソッド。
@@ -278,21 +279,20 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * 必要に応じてオーバーライドしてください。
      * </p>
      */
-    protected void onFinished() {
-    }
+    protected void onFinished() {}
 
     /**
      * Web上のリソースとして存在するかチェックを行う。
      * <p>
      * REST API(HEADメソッド)を呼び出し、サーバ側に指定したリソース(ファイル)が存在するかチェックを行っている。
      * </p>
+     * 
      * @param templateOfUri URIのテンプレート(パス変数指定可)
      * @param uriVariables パス変数にバインドする値
-     * @return 指定したファイルがサーバ上に存在する場合は<code>true</code>を返却する。404(Not Found)がサーバから返却された場合は<code>false</code>
-     *         を返却するが、それ以外のHTTPステータスの場合は例外を再スローする。
+     * @return 指定したファイルがサーバ上に存在する場合は<code>true</code>を返却する。404(Not
+     *         Found)がサーバから返却された場合は<code>false</code> を返却するが、それ以外のHTTPステータスの場合は例外を再スローする。
      */
-    protected boolean existsWebResource(String templateOfUri,
-            Object... uriVariables) {
+    protected boolean existsWebResource(String templateOfUri, Object... uriVariables) {
         boolean exists = false;
         try {
             restOperations.headForHeaders(templateOfUri, uriVariables);
@@ -310,10 +310,11 @@ public abstract class FunctionTestSupport extends ApplicationObjectSupport {
      * <p>
      * 機能毎のトップページを表示するためのURLが返却される。
      * </p>
+     * 
      * @return パッケージに割り振られているルートのURL
      */
     protected String getPackageRootUrl() {
-        return applicationContextUrl + "-" + simplePackageName;
+        return applicationContextUrl + simplePackageName;
     }
 
     private WebDriver newDefaultWebDriver() {

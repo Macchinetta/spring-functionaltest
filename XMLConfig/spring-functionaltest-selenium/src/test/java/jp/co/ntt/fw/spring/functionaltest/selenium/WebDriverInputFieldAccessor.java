@@ -82,27 +82,28 @@ public enum WebDriverInputFieldAccessor {
 
         private void setValue(By by, String value, WebDriver webDriver) {
             String scriptCode = "arguments[0].value = '" + js(value) + "';";
-            ((JavascriptExecutor) webDriver).executeScript(scriptCode, webDriver
-                    .findElement(by));
+            ((JavascriptExecutor) webDriver).executeScript(scriptCode, webDriver.findElement(by));
         }
 
     };
 
     /**
      * 指定した要素(テキスト項目)に値を追加する。
+     * 
      * @param by 要素(テキスト項目)を探すための識別子
      */
     public abstract void appendValue(By by, String value, WebDriver webDriver);
 
     /**
      * 指定した要素(テキスト項目)の値を上書きする。
+     * 
      * @param by 要素(テキスト項目)を探すための識別子
      */
-    public abstract void overrideValue(By by, String value,
-            WebDriver webDriver);
+    public abstract void overrideValue(By by, String value, WebDriver webDriver);
 
     /**
      * 指定した入力フィールドに設定されている値を取得する。
+     * 
      * @param by 要素を探すための識別子
      */
     public String getValue(By by, WebDriver webDriver) {
@@ -118,33 +119,33 @@ public enum WebDriverInputFieldAccessor {
         for (int i = 0; i < value.length(); i++) {
             char ch = value.charAt(i);
             switch (ch) {
-            case '\'':
-                result.append("\\'");
-                break;
-            case '"':
-                result.append("\\\"");
-                break;
-            case '\\':
-                result.append("\\\\");
-                break;
-            case '/':
-                result.append("\\/");
-                break;
-            case '<':
-                result.append("\\x3c");
-                break;
-            case '>':
-                result.append("\\x3e");
-                break;
-            case '\r':
-                result.append("\\r");
-                break;
-            case '\n':
-                result.append("\\n");
-                break;
-            default:
-                result.append(ch);
-                break;
+                case '\'':
+                    result.append("\\'");
+                    break;
+                case '"':
+                    result.append("\\\"");
+                    break;
+                case '\\':
+                    result.append("\\\\");
+                    break;
+                case '/':
+                    result.append("\\/");
+                    break;
+                case '<':
+                    result.append("\\x3c");
+                    break;
+                case '>':
+                    result.append("\\x3e");
+                    break;
+                case '\r':
+                    result.append("\\r");
+                    break;
+                case '\n':
+                    result.append("\\n");
+                    break;
+                default:
+                    result.append(ch);
+                    break;
             }
         }
         return result.toString();

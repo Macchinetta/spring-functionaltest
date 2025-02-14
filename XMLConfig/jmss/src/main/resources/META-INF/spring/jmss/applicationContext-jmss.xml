@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:task="http://www.springframework.org/schema/task" xmlns:jms="http://www.springframework.org/schema/jms"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/jms https://www.springframework.org/schema/jms/spring-jms.xsd
+                        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- ガイドラインではcache="consumer"を推奨しているが、IBM MQではアプリケーションサーバ内でConnectionPool/SessionPoolを管理する仕様であるため、cache="none"に変更する必要がある。
+    ただし、jms:listener-containerのcache属性をプロパティプレースホルダ(${jms.listener.chace.level})で置き換えることができないため、IBM MQを使用する場合は当ファイルを修正する必要がある点に注意すること。
+  -->
+
+    <import resource="classpath:/META-INF/spring/jmss/spring-functionaltest-jms-infra.xml" />
+
+    <bean id="jmsErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.JmsErrorHandler" />
+
+    <!-- JMS Listener Containers -->
+
+    <jms:listener-container factory-id="topicContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+        transaction-manager="asyncReceiveJmsTransactionManager"
+        destination-type="topic"
+        acknowledge="transacted"
+        cache="consumer"
+    />
+
+    <jms:listener-container factory-id="conCacheDynamicNoTranContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler"
+    />
+
+    <jms:listener-container factory-id="jmsListenerContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+        acknowledge="transacted"
+    />
+
+    <jms:listener-container factory-id="conCacheNoTranContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+    />
+
+    <!-- try-catch用リスナーコンテナ追記 -->
+    <jms:listener-container factory-id="conCacheTryCatchContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        destination-resolver="destinationResolver"
+    />
+
+    <jms:listener-container factory-id="conCacheConcurrentSingleContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        concurrency="1"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+    />
+
+    <jms:listener-container factory-id="conCacheConcurrentMultipleContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        concurrency="5-10"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+        cache="none"
+    />
+
+    <jms:listener-container factory-id="conCacheChainedTranContainerFactory"
+        connection-factory="dynamicConnectionFactory"
+        error-handler="jmsErrorHandler"
+        destination-resolver="destinationResolver"
+        acknowledge="transacted"
+    />
+
+</beans>

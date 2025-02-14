@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="noOpPasswordEncoder"
+        class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+
+    <sec:http pattern="/ws/**" request-matcher="ant" create-session="stateless"
+        authentication-manager-ref="soapAuthenticationManager">
+        <sec:csrf disabled="true" />
+        <sec:http-basic />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:authentication-manager id="soapAuthenticationManager">
+        <sec:authentication-provider user-service-ref="soapUserDetailsService">
+            <sec:password-encoder ref="noOpPasswordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <sec:user-service id="soapUserDetailsService">
+        <sec:user name="testuser" password="password" authorities="ROLE_USER" />
+        <sec:user name="testadmin" password="password" authorities="ROLE_ADMIN" />
+    </sec:user-service>
+
+    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+
+    <sec:method-security />
+
+</beans>

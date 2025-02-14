@@ -18,21 +18,19 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.intr;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.TemplateEngineName;
 
-public class InternationalizationForDeLocaleBrowser_JSP_Test extends
-                                                        FunctionTestSupport {
+public class InternationalizationForDeLocaleBrowser_JSP_Test extends FunctionTestSupport {
 
-    private static WebDriver deDriver;
+    private static WebDriver driver;
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     public InternationalizationForDeLocaleBrowser_JSP_Test() {
         disableDefaultWebDriver();
@@ -40,10 +38,10 @@ public class InternationalizationForDeLocaleBrowser_JSP_Test extends
 
     @Before
     public void setUpWebDriver() {
-        if (deDriver == null) {
-            deDriver = webDriverCreator.createLocaleSpecifiedDriver("de, DE");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.GERMANY);
         }
-        setCurrentWebDriver(deDriver);
+        setCurrentWebDriver(driver);
     }
 
     /**
@@ -82,15 +80,14 @@ public class InternationalizationForDeLocaleBrowser_JSP_Test extends
 
         if (name == TemplateEngineName.JSP) {
             // 出力メッセージの確認
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Unhandled System Error!"));
+            assertThat(webDriverOperations.getTitle(), is("Unhandled System Error!"));
 
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexStackTrace(
                     "Caused by: jakarta\\.servlet\\.jsp\\.JspTagException: No message found under code.*for locale.*\\.");
         } else {
-            assertThat(webDriverOperations.getText(By.id("screenTitle")), is(
-                    "??title.intr.customerDetails_de??"));
+            assertThat(webDriverOperations.getText(By.id("screenTitle")),
+                    is("??title.intr.customerDetails_de??"));
         }
 
     }

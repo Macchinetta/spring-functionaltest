@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ログインしました(topForDispAuthentication)</h1>
+
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>User Name</th>
+                        <td><span id="username" sec:authentication="principal.account.username"> </span></td>
+                    </tr>
+                    <tr>
+                        <th>Last Name</th>
+                        <td><span id="lastname" sec:authentication="principal.account.lastName"> </span></td>
+                    </tr>
+                    <tr>
+                        <th>User Uuid</th>
+                        <td><span id="useruuid" th:text="${userUuid}"></span></td>
+                    </tr>
+                </table>
+                <form th:action="@{/thymeleaf/{testNo}/logout(testNo=${testNo})}" method="post">
+                    <input type="submit" id="logout" class="btn btn-default" value="Logout" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

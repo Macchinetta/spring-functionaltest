@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <!--/* JSPとThymeleafを同時に定義している関係で sec:authorize-url="/jsp/0401/001/afterLogin/admin/menu" は認識されない */-->
+                <!--/* そのため、ここではjspに向けておく。定義内容自体は同じで、hasRole('ADMIN')となっている */-->
+                <h1 sec:authorize-url="/jsp/0401/001/afterLogin/admin/menu" id="screenTitle">カスタムJSPでROLE_ADMINを保持していたら文言が表示することを確認する。</h1>
+
+                <fieldset>
+                    <table class="table table-bordered table-condensed">
+                        <tr>
+                            <th>Message</th>
+                            <td>
+                                <span id="staffRole"> <span sec:authorize="hasRole('ADMIN')"> This screen is for ROLE_ADMIN </span> </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Only Role_Admin User link</th>
+                            <td>
+                                <span id="staffRoleLink"> <a sec:authorize-url="/jsp/0401/001/afterLogin/admin/menu" th:href="@{/}">Go To ATHR Top Page</a> </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Only Role_Admin User link(variable)</th>
+                            <td>
+                                <span id="staffRoleVarLink"> <a sec:authorize="hasRole('ADMIN')" th:href="@{/}">Go To ATHR Top Page(variable)</a> </span>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <form th:action="@{/thymeleaf/0201/logout}" method="post">
+                    <input type="submit" id="logout" class="btn btn-default" value="Logout" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

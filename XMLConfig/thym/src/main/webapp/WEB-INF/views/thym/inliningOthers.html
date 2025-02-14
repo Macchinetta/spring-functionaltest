@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <h1>Other Inlining</h1>
+        <script id="js-template" th:inline="javascript">
+            // [#th:block ]
+            [#th:block th:if="${item} != null"]
+              [[${item}]]を購入しました。
+            [/th:block]
+
+            // [# ]
+            [# th:if="${item} != null"]
+              [[${item}]]が売れました。
+            [/]
+        </script>
+    </body>
+</html>

@@ -16,10 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.config;
 
 import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,16 +30,16 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
-
-import jp.co.ntt.fw.spring.functionaltest.domain.DBLogCleaner;
 import jp.co.ntt.fw.spring.functionaltest.selenium.DBLog;
 import jp.co.ntt.fw.spring.functionaltest.selenium.DBLogAssertOperations;
-import jp.co.ntt.fw.spring.functionaltest.selenium.FirefoxDriverFactoryBean;
+import jp.co.ntt.fw.spring.functionaltest.selenium.DBLogCleaner;
 import jp.co.ntt.fw.spring.functionaltest.selenium.PageSource;
 import jp.co.ntt.fw.spring.functionaltest.selenium.RestLog;
 import jp.co.ntt.fw.spring.functionaltest.selenium.ScreenCapture;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverCreator;
-import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverManagerConfigurer;
+import jp.co.ntt.fw.spring.functionaltest.selenium.webdrivers.ChromeDriverFactoryBean;
+import jp.co.ntt.fw.spring.functionaltest.selenium.webdrivers.EdgeDriverFactoryBean;
+import jp.co.ntt.fw.spring.functionaltest.selenium.webdrivers.FirefoxDriverFactoryBean;
+import jp.co.ntt.fw.spring.functionaltest.selenium.webdrivers.WebDriverCreator;
 
 /**
  * Bean definition to SeleniumContext configure.
@@ -76,7 +73,14 @@ public class SeleniumContextConfig {
     private int readTimeout;
 
     /**
+     * selenium.headless property.
+     */
+    @Value("${selenium.headless}")
+    private boolean headless;
+
+    /**
      * Configure {@link PropertySourcesPlaceholderConfigurer} bean.
+     * 
      * @param properties Path where the property file is located
      * @return Bean of configured {@link PropertySourcesPlaceholderConfigurer}
      */
@@ -90,14 +94,14 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link DataSource} bean.
+     * 
      * @return Bean of configured {@link BasicDataSource}
      */
     @Bean(name = "dataSourceForLogging", destroyMethod = "close")
     public DataSource dataSource() {
         BasicDataSource bean = new BasicDataSource();
         bean.setDriverClassName("org.h2.Driver");
-        bean.setUrl("jdbc:h2:tcp://" + dbHost + ":" + dbPort
-                + "/mem:spring-functionaltest");
+        bean.setUrl("jdbc:h2:tcp://" + dbHost + ":" + dbPort + "/mem:spring-functionaltest");
         bean.setUsername("sa");
         bean.setPassword("");
         bean.setDefaultAutoCommit(false);
@@ -106,6 +110,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link TransactionManager} bean.
+     * 
      * @return Bean of configured {@link DataSourceTransactionManager}
      */
     @Bean("transactionManager")
@@ -118,6 +123,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link RestTemplate} bean.
+     * 
      * @return Bean of configured {@link RestTemplate}
      */
     @Bean("restOperations")
@@ -129,6 +135,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link SimpleClientHttpRequestFactory} bean.
+     * 
      * @return Bean of configured {@link SimpleClientHttpRequestFactory}
      */
     @Bean
@@ -141,6 +148,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link DBLogAssertOperations} bean.
+     * 
      * @return Bean of configured {@link DBLogAssertOperations}
      */
     @Bean("dbLogAssertOperations")
@@ -150,6 +158,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link JdbcTemplate} bean.
+     * 
      * @return Bean of configured {@link JdbcTemplate}
      */
     @Bean("jdbcTemplate")
@@ -162,6 +171,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link ScreenCapture}.
+     * 
      * @return Bean of configured {@link ScreenCapture}
      */
     @Bean("screenCapture")
@@ -171,6 +181,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link DBLog} bean.
+     * 
      * @return Bean of configured {@link DBLog}
      */
     @Bean("dbLog")
@@ -182,6 +193,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link PageSource}.
+     * 
      * @return Bean of configured {@link PageSource}
      */
     @Bean("pageSource")
@@ -191,6 +203,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link RestLog}.
+     * 
      * @return Bean of configured {@link RestLog}
      */
     @Bean("restLog")
@@ -200,6 +213,7 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link DBLogCleaner} bean.
+     * 
      * @return Bean of configured {@link DBLogCleaner}
      */
     @Bean("dbLogCleaner")
@@ -211,56 +225,60 @@ public class SeleniumContextConfig {
 
     /**
      * Configure the {@link WebDriverCreator} bean.
+     * 
      * @return Bean of configured {@link WebDriverCreator}
      */
     @Bean
     public WebDriverCreator webDriverCreator() {
-        return new WebDriverCreator();
-    }
-
-    /**
-     * Configure the {@link FirefoxDriverFactoryBean} bean.
-     * @return Bean of configured {@link FirefoxDriverFactoryBean}
-     */
-    @Bean
-    public WebDriverManagerConfigurer webDriverManagerConfigurer() {
-        WebDriverManagerConfigurer bean = new WebDriverManagerConfigurer();
+        WebDriverCreator bean = new WebDriverCreator();
         bean.setPropertyFileLocation("wdm.properties");
+        bean.setHeadless(this.headless);
         return bean;
     }
 
     /**
      * Configure the {@link FirefoxDriverFactoryBean} bean.
+     * 
      * @return Bean of configured {@link FirefoxDriverFactoryBean}
      */
     @Bean("webDriver")
-    @Profile({ "firefox", "default" })
+    @Profile({"firefox", "default"})
     @Scope("prototype")
     public FirefoxDriverFactoryBean firefoxDriverFactoryBean() {
         FirefoxDriverFactoryBean bean = new FirefoxDriverFactoryBean();
         bean.setPropertyFileLocation("wdm.properties");
+        bean.setHeadless(this.headless);
         return bean;
     }
 
     /**
-     * Configure the {@link ChromeDriver} bean.
-     * @return Bean of configured {@link ChromeDriver}
+     * Configure the {@link EdgeDriverFactoryBean} bean.
+     * 
+     * @return Bean of configured {@link EdgeDriverFactoryBean}
      */
     @Bean("webDriver")
-    @Profile({ "chrome" })
+    @Profile({"edge"})
     @Scope("prototype")
-    public ChromeDriver chromeDriver() {
-        return new ChromeDriver();
+    public EdgeDriverFactoryBean edgeDriverFactoryBean() {
+        EdgeDriverFactoryBean bean = new EdgeDriverFactoryBean();
+        bean.setPropertyFileLocation("wdm.properties");
+        bean.setHeadless(this.headless);
+        return bean;
     }
 
     /**
-     * Configure the {@link InternetExplorerDriver} bean.
-     * @return Bean of configured {@link InternetExplorerDriver}
+     * Configure the {@link ChromeDriverFactoryBean} bean.
+     * 
+     * @return Bean of configured {@link ChromeDriverFactoryBean}
      */
     @Bean("webDriver")
-    @Profile({ "ie" })
+    @Profile({"chrome"})
     @Scope("prototype")
-    public InternetExplorerDriver internetExplorerDriver() {
-        return new InternetExplorerDriver();
+    public ChromeDriverFactoryBean chromeDriverFactoryBean() {
+        ChromeDriverFactoryBean bean = new ChromeDriverFactoryBean();
+        bean.setPropertyFileLocation("wdm.properties");
+        bean.setHeadless(this.headless);
+        return bean;
     }
+
 }

@@ -1,98 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-  xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <bean id="dateFactory" class="org.terasoluna.gfw.common.time.DefaultClockFactory" />
+    <!-- JSR-310 -->
+    <import resource="classpath:META-INF/spring/spring-functionaltest-jsr310.xml" />
 
-  <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="${database.driverClassName}" />
-    <property name="url" value="${database.url}" />
-    <property name="username" value="${database.username}" />
-    <property name="password" value="${database.password}" />
-    <property name="defaultAutoCommit" value="false" />
-    <property name="maxTotal" value="${cp.maxActive}" />
-    <property name="maxIdle" value="${cp.maxIdle}" />
-    <property name="minIdle" value="${cp.minIdle}" />
-    <property name="maxWait" >
-      <bean class="java.time.Duration" factory-method="ofMillis">
-        <constructor-arg value="${cp.maxWait}" />
-      </bean>
-    </property>
-  </bean>
+    <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.config.h2" />
 
-  <bean id="dataSourceOpen" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="${database.driverClassName}" />
-    <property name="url" value="${database.url.open}" />
-    <property name="username" value="${database.username}" />
-    <property name="password" value="${database.password}" />
-    <property name="defaultAutoCommit" value="false" />
-    <property name="maxTotal" value="${cp.maxActive}" />
-    <property name="maxIdle" value="${cp.maxIdle}" />
-    <property name="minIdle" value="${cp.minIdle}" />
-    <property name="maxWait" >
-      <bean class="java.time.Duration" factory-method="ofMillis">
-        <constructor-arg value="${cp.maxWait}" />
-      </bean>
-    </property>
-  </bean>
+    <!-- DBInitializerはjdbc:initialize-databaseを使用し以下のように記述することが可能。 -->
+    <!-- ただしここでは動的にサーバーモードへ切りかえたいため、Javaで簡潔に実装している。 -->
+    <!--
+    <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+        <jdbc:script location="classpath:/database/${database}-schema*.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-procedure*.sql" separator="~"
+            encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload*.sql" encoding="UTF-8" />
+    </jdbc:initialize-database>
+    -->
 
-  <bean id="dataSourceClose" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-    <property name="driverClassName" value="${database.driverClassName}" />
-    <property name="url" value="${database.url.close}" />
-    <property name="username" value="${database.username}" />
-    <property name="password" value="${database.password}" />
-    <property name="defaultAutoCommit" value="false" />
-    <property name="maxTotal" value="${cp.maxActive}" />
-    <property name="maxIdle" value="${cp.maxIdle}" />
-    <property name="minIdle" value="${cp.minIdle}" />
-    <property name="maxWait" >
-      <bean class="java.time.Duration" factory-method="ofMillis">
-        <constructor-arg value="${cp.maxWait}" />
-      </bean>
-    </property>
-  </bean>
+    <!-- これはenvではなくDTACプロジェクトに配置するべきもの -->
+    <!-- 
+    <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
+        <property name="targetDataSources">
+        <map>
+            <entry key="OPEN" value-ref="dataSourceOpen" />
+            <entry key="CLOSE" value-ref="dataSourceClose" />
+        </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceDefault" />
+        <property name="clockFactory" ref="clockFactoryDtac" />
+    </bean>
+    -->
 
-  <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-    <jdbc:script location="classpath:/database/${database}-schema*.sql" encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/${database}-procedure*.sql" separator="~"
-      encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/${database}-dataload*.sql" encoding="UTF-8" />
-  </jdbc:initialize-database>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+        <property name="rollbackOnCommitFailure" value="true" />
+    </bean>
 
-  <jdbc:initialize-database data-source="dataSourceOpen" ignore-failures="ALL">
-    <jdbc:script location="classpath:/database/open/${database}-schema*.sql" encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/open/${database}-procedure*.sql"
-      separator="~" encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/open/${database}-dataload*.sql" encoding="UTF-8" />
-  </jdbc:initialize-database>
-
-  <jdbc:initialize-database data-source="dataSourceClose" ignore-failures="ALL">
-    <jdbc:script location="classpath:/database/close/${database}-schema*.sql" encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/close/${database}-procedure*.sql"
-      separator="~" encoding="UTF-8" />
-    <jdbc:script location="classpath:/database/close/${database}-dataload*.sql"
-      encoding="UTF-8" />
-  </jdbc:initialize-database>
-
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource" />
-    <property name="rollbackOnCommitFailure" value="true" />
-  </bean>
-
-  <!-- Settings for DbAppender of logback. -->
-  <bean id="dataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
-    destroy-method="close">
-    <property name="driverClassName" value="org.h2.Driver" />
-    <property name="url" value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
-    <property name="username" value="sa" />
-    <property name="password" value="" />
-    <property name="defaultAutoCommit" value="false" />
-  </bean>
+    <!-- JPA transaction Manager -->
+    <!-- 
+    <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    -->
 
 </beans>

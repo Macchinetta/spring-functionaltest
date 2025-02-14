@@ -45,7 +45,7 @@ CREATE TABLE t_order_item_mb3 (
 );
 
 CREATE TABLE t_order_history_mb3 (
-    id INTEGER IDENTITY (1, 1) ,
+    id IDENTITY (1, 1) ,
     order_id INTEGER,
     biko VARCHAR(100),
     upd_time timestamp,

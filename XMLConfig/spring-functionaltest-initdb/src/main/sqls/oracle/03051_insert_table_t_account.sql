@@ -1,0 +1,10 @@
+INSERT ALL
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Josh','000000000000000000000000000000000001','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Josh First','Josh Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Claire','000000000000000000000000000000000002','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Claire First','Claire Last',0,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Edword','000000000000000000000000000000000003','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Edword First','Edword Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Jenkins','000000000000000000000000000000000004','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Jenkins First','Jenkins Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Rock','000000000000000000000000000000000005','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Rock First','Rock Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Bob','000000000000000000000000000000000006','{bcrypt}$2a$10$tlaAnDOg/sdKE7H6vBQDlO7FBy2LdaAPgatWsIgm1J.JGgDPVNlPu','Bob First','Bob Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Smith','000000000000000000000000000000000007','$2a$10$tlaAnDOg/sdKE7H6vBQDlO7FBy2LdaAPgatWsIgm1J.JGgDPVNlPu','Smith First','Smith Last',1,1)
+INTO t_account (username,user_uuid,password,first_name,last_name,enabled,admin) VALUES('Emily','000000000000000000000000000000000008','{pbkdf2}71f4e90a11d47feb98f8a458033e01cee5a3a38dd47255a5a2db45f26d60193aeccb9906410542660f12ef7f7fb0dd88','Emily First','Emily Last',1,1)
+SELECT * FROM DUAL

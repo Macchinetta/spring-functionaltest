@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <ul>
+                    <li th:each="setDate : ${#temporals.setFormat(resultDate)}">setFormat:<span th:id="${#ids.seq('getDate')}" th:text="${setDate}"></span></li>
+                    <li th:each="setDateLocale : ${#temporals.setFormat(resultDate, 'G uuuu/MM/dd E')}">
+                        setFormatWithFormatter:<span th:id="${#ids.seq('getDateFormat')}" th:text="${setDateLocale}"></span>
+                    </li>
+                    <li th:each="setDate : ${#temporals.setFormat(resultDate, locale)}">setFormatWithLocale:<span th:id="${#ids.seq('getDateLocale')}" th:text="${setDate}"></span></li>
+                    <li th:each="setDateLocale : ${#temporals.setFormat(resultDate, 'G uuuu/MM/dd E', locale)}">
+                        setFormatWithFormatterAndLocale:<span th:id="${#ids.seq('getDateFormatLocale')}" th:text="${setDateLocale}"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

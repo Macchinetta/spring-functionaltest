@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ファイルアップロード(複数ファイル)</h1>
+
+                <div th:if="${resultMessages} != null" class="alert alert-error" th:class="|alert alert-${resultMessages.type}|">
+                    <ul>
+                        <li th:each="message : ${resultMessages}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">error detail message</li>
+                    </ul>
+                </div>
+
+                <div class="form-horizontal">
+                    <span th:each="uploadedContent, iterStat : ${uploadedContents}" th:object="${uploadedContent}">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span th:text="|${iterStat.count}件目のアップロードファイル|"></span>
+                            </div>
+
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label th:for="|fileNameText${iterStat.index}|" class="col col-md-2 control-label">ファイル名</label>
+                                    <div class="col col-md-10">
+                                        <span th:id="|fileNameText${iterStat.index}|" class="display-item form-control" th:text="*{fileName}"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label th:for="|fileContentText${iterStat.index}|" class="col col-md-2 control-label">データ</label>
+                                    <div class="col col-md-10">
+                                        <span th:id="|fileContentText${iterStat.index}|" class="display-item form-control" th:text="*{fileContent}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+
+                <div class="text-center">
+                    <a th:href="@{/}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span>ファイルアップロードのトップへ</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

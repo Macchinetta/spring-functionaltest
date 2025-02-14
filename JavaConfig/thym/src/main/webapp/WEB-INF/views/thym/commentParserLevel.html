@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}" />
+        <title>Parser Level Comment Screen</title>
+    </head>
+    <body>
+        <h1>Parser Level Comment</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.name}">Apple</td>
+                    <td th:text="${item.price}">300</td>
+                </tr>
+                <!--/* -->
+                <tr>
+                    <td>Banana</td>
+                    <td>300</td>
+                </tr>
+                <tr>
+                    <td>Strawberry</td>
+                    <td>300</td>
+                </tr>
+                <!-- */-->
+            </tbody>
+        </table>
+    </body>
+</html>

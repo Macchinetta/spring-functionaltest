@@ -18,12 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -31,17 +29,13 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT08 共通ライブラリが用意する入力チェックルール
  * </p>
  */
-public class ExtendConstraintOfCommonLibrary_Thymeleaf_Test extends FunctionTestSupport {
+public class ExtendConstraintOfCommonLibrary_Thymeleaf_Test extends ValidationTestSupport {
 
     private static WebDriver driver;
 
-    private String validate = "validate";
+    private BrowserLocale currentLocale = BrowserLocale.ENGLISH_US;
 
-    private String errors = ".errors";
-
-    private String currentLocale = "en";
-
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     public ExtendConstraintOfCommonLibrary_Thymeleaf_Test() {
         super.disableDefaultWebDriver();
@@ -50,8 +44,7 @@ public class ExtendConstraintOfCommonLibrary_Thymeleaf_Test extends FunctionTest
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -73,19 +66,16 @@ public class ExtendConstraintOfCommonLibrary_Thymeleaf_Test extends FunctionTest
         // 同じ文字列を入力した場合はエラーが出ない
         webDriverOperations.overrideText(id(target), "password");
         webDriverOperations.overrideText(id(confirmedTarget), "password");
-        webDriverOperations.click(id(validate));
+        webDriverOperations.click(id(ID_VALIDATE));
 
-        assertThat(webDriverOperations.exists(id(confirmedTarget + errors)), is(
-                false));
+        assertThat(webDriverOperations.exists(id(confirmedTarget + ID_ERRORS)), is(false));
 
         // 異なる文字列を入力した場合はエラーが出る
         webDriverOperations.overrideText(id(target), "password");
-        webDriverOperations.overrideText(id(confirmedTarget),
-                "confirmPassword");
-        webDriverOperations.click(id(validate));
+        webDriverOperations.overrideText(id(confirmedTarget), "confirmPassword");
+        webDriverOperations.click(id(ID_VALIDATE));
 
-        assertThat(webDriverOperations.getText(id(confirmedTarget + errors)),
-                is(errorMessage.replace("{right}", target).replace("{left}",
-                        confirmedTarget)));
+        assertThat(webDriverOperations.getText(id(confirmedTarget + ID_ERRORS)),
+                is(errorMessage.replace("{right}", target).replace("{left}", confirmedTarget)));
     }
 }

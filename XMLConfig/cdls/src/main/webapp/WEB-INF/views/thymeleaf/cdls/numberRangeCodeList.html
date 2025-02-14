@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">NumberRangeCodeListの読み込み</h1>
+
+                <div>CDLS0102001</div>
+                <div>
+                    <select id="cdls0102001_thymeleaf" th:field="${codeListForm.code}">
+                        <option th:each="month : ${CL_MONTH_ASC}" th:value="${month.key}" th:text="${month.value}"></option>
+                    </select>
+                </div>
+                <div>CDLS0102002</div>
+                <div>
+                    <form th:action="@{/thymeleaf/0102/002}" th:object="${clMonthAscForm}" method="post">
+                        <select id="cdls0102002_thymeleaf" th:field="*{id}">
+                            <option th:each="month : ${CL_MONTH_ASC}" th:value="${month.key}" th:text="${month.value}"></option>
+                        </select>
+                        <span th:errors="*{id}"></span>
+                        <button id="cdls0102002_thymeleafSubmit" type="submit" name="post">Submit</button>
+                    </form>
+                    <div id="cdls0102002_thymeleafResult" th:text="${monthAscCodeListValue}"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

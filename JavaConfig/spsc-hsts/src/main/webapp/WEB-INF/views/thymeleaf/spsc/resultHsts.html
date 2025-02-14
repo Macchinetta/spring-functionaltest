@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">結果画面</h3>
+                <p><a id="httpReload" th:href="@{|http://${connectIp}/spsc-hsts/thymeleaf/${testNo}|}">Http Reload</a></p>
+                <p><a id="httpsReload" th:href="@{|https://${connectIp}/spsc-hsts/thymeleaf/${testNo}|}">Https Reload</a></p>
+                <br />
+                <a id="spsc0101001" th:href="@{/}">go to SPSC index</a>
+            </div>
+        </div>
+    </body>
+</html>

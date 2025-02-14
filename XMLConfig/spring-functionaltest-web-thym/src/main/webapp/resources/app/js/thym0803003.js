@@ -1,1 +1,0 @@
-var itemName = /*[[${item.name}]]*/'Apple';

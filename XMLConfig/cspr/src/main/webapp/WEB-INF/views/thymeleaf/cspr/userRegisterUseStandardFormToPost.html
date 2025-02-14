@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">ユーザ登録画面(html標準のformタグを使用/POST)</h3>
+
+                <form th:action="@{/thymeleaf}" class="form-horizontal" method="post" th:object="${userForm}">
+                    <fieldset>
+                        <legend>ユーザ情報</legend>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="userName">ユーザ名</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="text" th:field="*{userName}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-5">
+                                <span th:errors="*{userName}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="text" th:field="*{email}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-5">
+                                <span th:errors="*{email}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="password">パスワード</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="password" th:field="*{password}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-5">
+                                <span th:errors="*{password}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="confirmPassword">確認パスワード</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input type="password" th:field="*{confirmPassword}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-5">
+                                <span th:errors="*{confirmPassword}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group col col-md-5"><input id="confirm" type="submit" name="confirmUseStandardFormToPost" class="btn btn-default" value="確認" /></div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

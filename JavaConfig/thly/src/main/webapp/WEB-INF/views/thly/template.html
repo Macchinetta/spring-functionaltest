@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" th:fragment="layout (title,body,functionId)">
+    <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="contextPath" th:content="@{/}" />
+        <meta name="_csrf_parameter" th:content="${_csrf.parameterName}" />
+        <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+        <meta name="_csrf" th:content="${_csrf.token}" />
+        <title th:replace="${title}">Spring Functional Test</title>
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
+        <link rel="stylesheet" th:href="@{/resources/app/css/{functionId}.css(functionId=${functionId})}" />
+    </head>
+    <body>
+        <div id="header" th:replace="~{thly/header :: header}"></div>
+        <div class="container">
+            <div id="body" th:replace="${body}"></div>
+        </div>
+        <div id="footer" th:replace="~{thly/footer :: footer}"></div>
+    </body>
+    <script type="text/javascript" th:src="@{/resources/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/resources/vendor/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/app/js/cmmn.js}"></script>
+    <script type="text/javascript" th:src="@{/resources/app/js/{functionId}.js(functionId=${functionId})}"></script>
+    <script type="text/javascript"></script>
+</html>

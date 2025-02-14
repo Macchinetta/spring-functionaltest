@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- SOAP Web Service Proxies -->
+    <bean id="todoWebServices" class="org.springframework.beans.factory.config.MapFactoryBean">
+        <property name="sourceMap">
+            <map key-type="java.lang.String" value-type="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService">
+                <entry key="todo" value-ref="todoWebService" />
+                <entry key="wsdl" value-ref="wsdlFileTodoWebService" />
+                <entry key="user" value-ref="userTodoWebService" />
+                <entry key="anonymous" value-ref="anonymousTodoWebService" />
+                <entry key="admin" value-ref="adminTodoWebService" />
+                <entry key="timeout" value-ref="timeoutTodoWebService" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- Simple WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="wsService" class="jakarta.xml.ws.Service" factory-method="create">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <constructor-arg type="java.net.URL" value="${soap.wsdlDocumentResource.file}" />
+        <constructor-arg>
+            <bean class="javax.xml.namespace.QName">
+                <constructor-arg type="java.lang.String" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+                <constructor-arg type="java.lang.String" value="TodoWebService" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="todoWebService" class="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" factory-bean="wsService" factory-method="getPort">
+        <constructor-arg>
+            <bean class="javax.xml.namespace.QName">
+                <constructor-arg type="java.lang.String" value="http://functionaltest.spring.fw.ntt.co.jp/todo" />
+                <constructor-arg type="java.lang.String" value="TodoWebPort" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg type="java.lang.Class" value="jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService" />
+    </bean>
+
+    <!-- Endpoint WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="wsdlFileTodoWebService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.soap.factory.WsdlFileTodoWebServiceFactoryBean">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+        <property name="endpointAddress" value="${soap.endpointAddress}" />
+    </bean>
+    <!-- User authority WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="userTodoWebService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.soap.factory.AuthTodoWebServiceFactoryBean">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+        <property name="userName" value="${soap.user.username}" />
+        <property name="password" value="${soap.user.password}" />
+    </bean>
+    <!-- Anonymous authority WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="anonymousTodoWebService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.soap.factory.AuthTodoWebServiceFactoryBean">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+        <property name="userName" value="${soap.anonymous.username}" />
+        <property name="password" value="${soap.anonymous.password}" />
+    </bean>
+    <!-- Admin authority WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="adminTodoWebService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.soap.factory.AuthTodoWebServiceFactoryBean">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+        <property name="userName" value="${soap.admin.username}" />
+        <property name="password" value="${soap.admin.password}" />
+    </bean>
+    <!-- Timeout WebService Client (Changed from Spring to JAX-WS) -->
+    <bean id="timeoutTodoWebService" class="jp.co.ntt.fw.spring.functionaltest.domain.service.soap.factory.TimeoutTodoWebServiceFactoryBean">
+        <!-- Since JAX-WS does not have a function equivalent to lookupServiceOnStartup, specify a local file. -->
+        <!-- If you want to use the same functionality as lookupServiceOnStartup(true), please specify soap.wsdlDocumentResource.url. -->
+        <property name="wsdlDocumentResource" value="${soap.wsdlDocumentResource.file}" />
+        <property name="timeoutKey" value="${soap.request.timeout.key}" />
+        <property name="timeoutValue" value="${soap.request.timeout.value}" />
+    </bean>
+
+</beans>

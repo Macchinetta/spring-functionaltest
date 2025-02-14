@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:input="" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">リクエストパラメータの存在チェックについて(session)</h1>
+
+                <div>
+                    <h3>セッション属性取得結果</h3>
+                    <label>${session.containsKey('foo')} :</label>
+                    <span id="containsKeyFoo" th:text="${session.containsKey('foo')}"></span>
+                    <br />
+
+                    <label>${session.containsKey('bar')} :</label>
+                    <span id="containsKeyBar" th:text="${session.containsKey('bar')}"></span>
+                    <br />
+
+                    <label>${session.keySet().contains('foo')} :</label>
+                    <span id="keySetFoo" th:text="${session.keySet().contains('foo')}"></span>
+                    <br />
+
+                    <label>${session.keySet().contains('bar')} :</label>
+                    <span id="keySetBar" th:text="${session.keySet().contains('bar')}"></span>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">プロフィール編集画面</h3>
+
+                <br />
+                <div id="xMLHttpRequestResult" class="hidden alert">
+                    <ul>
+                        <li id="returnStatus"></li>
+                    </ul>
+                </div>
+                <div id="resultMessage" class="hidden alert"></div>
+
+                <form id="committerForm" th:action="@{/thymeleaf/0201}">
+                    <fieldset>
+                        <legend>プロフィール</legend>
+                        <div th:with="committer=${#authentication.principal.committer}">
+                            <br />
+                            <div class="form-group">
+                                <div class="col col-md-2">
+                                    <label for="username">ユーザ名</label>
+                                </div>
+                                <div class="col col-md-4">
+                                    <input id="username" readonly="readonly" class="form-control input-sm" th:value="${committer.username}" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col col-md-2">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="col col-md-4">
+                                    <input type="text" id="email" name="email" class="form-control input-sm" th:value="${committer.email}" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col col-md-2">
+                                    <label for="url">URL</label>
+                                </div>
+                                <div class="col col-md-4">
+                                    <input type="text" id="url" name="url" class="form-control input-sm" th:value="${committer.url}" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <div class="col col-md-2">
+                                    <label for="company">会社名</label>
+                                </div>
+                                <div class="col col-md-4">
+                                    <input type="text" id="company" name="company" class="form-control input-sm" th:value="${committer.company}" />
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="form-group">
+                                <div class="col col-md-2">
+                                    <label for="location">所在地</label>
+                                </div>
+                                <div class="col col-md-4">
+                                    <input type="text" id="location" name="location" class="form-control input-sm" th:value="${committer.location}" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group col col-md-5">
+                            <input id="edit" type="button" name="edit" class="btn btn-default" value="編集" onclick="return cspr.editProfile()" />
+                        </div>
+                    </fieldset>
+                </form>
+
+                <form id="logout" th:action="@{/thymeleaf/logout}" method="post">
+                    <div class="text-right">
+                        <input id="logoutButton" type="submit" name="logout" class="btn btn-default" value="ログアウト" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

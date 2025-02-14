@@ -17,34 +17,24 @@ package jp.co.ntt.fw.spring.functionaltest.config.app;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jndi.JndiObjectFactoryBean;
 import org.springframework.transaction.TransactionManager;
-import org.terasoluna.gfw.common.time.DefaultClockFactory;
 
 /**
  * Define settings for the environment.
  */
 @Configuration
+@Import({SpringFunctionaltestJsr310Config.class})
 public class SpringFunctionaltestEnvConfig {
 
     /**
-     * Configure {@link DefaultClockFactory}.
-     * @return Bean of configured {@link DefaultClockFactory}
-     */
-    @Bean("dateFactory")
-    public DefaultClockFactory dateFactory() {
-        return new DefaultClockFactory();
-    }
-
-    /**
      * Configure {@link DataSource} bean.
+     * 
      * @return Bean of configured {@link JndiObjectFactoryBean}
      * @throws NamingException JNDI Lookup failed.
      */
@@ -60,6 +50,23 @@ public class SpringFunctionaltestEnvConfig {
 
     /**
      * Configure {@link DataSource} bean.
+     * 
+     * @return Bean of configured {@link JndiObjectFactoryBean}
+     * @throws NamingException JNDI Lookup failed.
+     */
+    @Bean(name = "dataSourceDefault")
+    public DataSource dataSourceDefault() throws NamingException {
+        JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
+        bean.setJndiName("jdbc/springFunctionaltestDataSource");
+        bean.setExpectedType(javax.sql.DataSource.class);
+        bean.setResourceRef(true);
+        bean.afterPropertiesSet();
+        return (DataSource) bean.getObject();
+    }
+
+    /**
+     * Configure {@link DataSource} bean.
+     * 
      * @return Bean of configured {@link JndiObjectFactoryBean}
      * @throws NamingException JNDI Lookup failed.
      */
@@ -75,6 +82,7 @@ public class SpringFunctionaltestEnvConfig {
 
     /**
      * Configure {@link DataSource} bean.
+     * 
      * @return Bean of configured {@link JndiObjectFactoryBean}
      * @throws NamingException JNDI Lookup failed.
      */
@@ -101,33 +109,8 @@ public class SpringFunctionaltestEnvConfig {
     }
 
     /**
-     * Configuration to set up database during initialization.
-     * @return Bean of configured {@link DataSourceInitializer}
-     * @throws NamingException JNDI Lookup failed.
-     */
-    @Bean("dataSourceOpenInitializer")
-    @DependsOn({ "dataSourceInitializer" })
-    public DataSourceInitializer dataSourceOpenInitializer() throws NamingException {
-        DataSourceInitializer bean = new DataSourceInitializer();
-        bean.setDataSource(dataSourceOpen());
-        return bean;
-    }
-
-    /**
-     * Configuration to set up database during initialization.
-     * @return Bean of configured {@link DataSourceInitializer}
-     * @throws NamingException JNDI Lookup failed.
-     */
-    @Bean("dataSourceCloseInitializer")
-    @DependsOn({ "dataSourceOpenInitializer" })
-    public DataSourceInitializer dataSourceCloseInitializer() throws NamingException {
-        DataSourceInitializer bean = new DataSourceInitializer();
-        bean.setDataSource(dataSourceClose());
-        return bean;
-    }
-
-    /**
      * Configure {@link TransactionManager} bean.
+     * 
      * @return Bean of configured {@link DataSourceTransactionManager}
      * @throws NamingException JNDI Lookup failed.
      */
@@ -139,19 +122,14 @@ public class SpringFunctionaltestEnvConfig {
         return bean;
     }
 
-    /**
-     * Configure {@link DataSource} bean.
-     * @return Bean of configured {@link BasicDataSource}
-     */
-    @Bean(name = "dataSourceForLogging", destroyMethod = "close")
-    public DataSource dataSourceForLogging() {
-        BasicDataSource bean = new BasicDataSource();
-        bean.setDriverClassName("org.h2.Driver");
-        bean.setUrl("jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1");
-        bean.setUsername("sa");
-        bean.setPassword("");
-        bean.setDefaultAutoCommit(false);
-        return bean;
-    }
-}
+    // JPA transaction Manager
 
+    // @Bean("jpaTransactionManager")
+    // public TransactionManager jpaTransactionManager(
+    // @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory)
+    // {
+    // JpaTransactionManager bean = new JpaTransactionManager();
+    // bean.setEntityManagerFactory(entityManagerFactory);
+    // return bean;
+    // }
+}

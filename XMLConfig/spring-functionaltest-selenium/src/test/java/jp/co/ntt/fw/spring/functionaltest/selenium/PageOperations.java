@@ -24,14 +24,13 @@ public class PageOperations {
         // NOP
     }
 
-    public static <P extends Page<P>> P loadNextPage(Page<?> currentPage,
-            Class<P> nextPage, WebDriver driver) {
+    public static <P extends Page<P>> P loadNextPage(Page<?> currentPage, Class<P> nextPage,
+            WebDriver driver) {
         if (nextPage == currentPage.getClass()) {
             return nextPage.cast(currentPage).reload();
         }
         try {
-            return BeanUtils.instantiateClass(nextPage.getConstructor(
-                    WebDriver.class), driver);
+            return BeanUtils.instantiateClass(nextPage.getConstructor(WebDriver.class), driver);
         } catch (NoSuchMethodException e) {
             throw new IllegalStateException(e);
         }

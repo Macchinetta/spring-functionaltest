@@ -20,14 +20,11 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class MethodValidation_JSP_Test extends FunctionTestSupport {
@@ -35,7 +32,7 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
     @Value("${selenium.vldt.waitForLogAssertion.duration}")
     protected int waitForAssertionNum;
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     @Before
     public void setUp() {
@@ -66,13 +63,12 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
     }
 
     public void assertNotContainsWarnAndError() {
-        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations
-                .getXTrack());
+        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
     }
 
     /**
      * <ul>
-     * <li>入力チェックエラー(@NotNull)なしを返却できることを確認する。</li>
+     * <li>入力チェックエラー(@NotEmpty)なしを返却できることを確認する。</li>
      * </ul>
      */
     @Test
@@ -103,8 +99,7 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>入力チェックエラー(@NotNull)で入力が""(空文字)でチェックエラーなし
-     * <li>(@NotNull)で出力が""(空文字)でチェックエラーなしを確認する。</li>
+     * <li>入力チェックエラー(@NotEmpty)で入力が""(空文字)の場合、チェックエラーを返却できることを確認する。</li>
      * </ul>
      */
     @Test
@@ -123,19 +118,28 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
 
         // 結果確認
         {
-            assertThat(getTextString(id("userId")), is(""));
+            assertThat(webDriverOperations.getTitle(), is("System Error!"));
         }
 
-        // ログ確認(エラーがないこと)
+        // ログ確認(エラー)
         {
             waitForAssertion(waitForAssertionNum);
-            assertNotContainsWarnAndError();
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
+            assertThat(list.size(), is(1));
+            String logMessage = list.get(0).toString();
+            assertThat(logMessage, containsString("interpolatedMessage='空要素は許可されていません',"));
+            assertThat(logMessage, anyOf(containsString("propertyPath=convertUserId.arg0,"),
+                    containsString("propertyPath=convertUserId.userId,")));
+            assertThat(logMessage, containsString(
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
     /**
      * <ul>
-     * <li>入力チェックエラー(@NotNull)で入力がnullの場合、チェックエラーを返却できることを確認する。</li>
+     * <li>入力チェックエラー(@NotEmpty)で入力がnullの場合、チェックエラーを返却できることを確認する。</li>
      * </ul>
      */
     @Test
@@ -160,25 +164,22 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認(エラー)
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
+            assertThat(logMessage, containsString("interpolatedMessage='空要素は許可されていません',"));
+            assertThat(logMessage, anyOf(containsString("propertyPath=convertUserId.arg0,"),
+                    containsString("propertyPath=convertUserId.userId,")));
             assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(containsString(
-                    "propertyPath=convertUserId.arg0,"), containsString(
-                            "propertyPath=convertUserId.userId,")));
-            assertThat(logMessage, containsString(
-                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
     /**
      * <ul>
-     * <li>入力チェックエラー(@NotNull)で出力がnullの場合、チェックエラーを返却できることを確認する。</li>
+     * <li>入力チェックエラー(@NotEmpty)で出力がnullの場合、チェックエラーを返却できることを確認する。</li>
      * </ul>
      */
     @Test
@@ -203,16 +204,15 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認(エラー)
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません', propertyPath=convertUserId.<return value>,"));
+                    "interpolatedMessage='空要素は許可されていません', propertyPath=convertUserId.<return value>,"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
@@ -241,8 +241,7 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         {
             assertThat(getTextString(id("userId")), is("visitUserId"));
             assertThat(getTextString(id("userName")), is("visitUserId"));
-            assertThat(getTextString(id("dateOfBirth")), is(
-                    "Wed Dec 11 00:00:00 JST 2013"));
+            assertThat(getTextString(id("dateOfBirth")), is("Wed Dec 11 00:00:00 JST 2013"));
         }
 
         // ログ確認(エラーがないこと)
@@ -281,18 +280,15 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertThat(logMessage, containsString(
-                    "interpolatedMessage='過去の日付にしてください',"));
-            assertThat(logMessage, anyOf(containsString(
-                    "propertyPath=convertUserInfo.arg0.visitDate,"),
-                    containsString(
-                            "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate")));
+            assertThat(logMessage, containsString("interpolatedMessage='過去の日付にしてください',"));
+            assertThat(logMessage, anyOf(
+                    containsString("propertyPath=convertUserInfo.arg0.visitDate,"),
+                    containsString("propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{jakarta.validation.constraints.Past.message}'"));
         }
@@ -327,17 +323,14 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(containsString(
-                    "propertyPath=convertUserInfo.arg0.visitDate,"),
-                    containsString(
+            assertThat(logMessage, containsString("interpolatedMessage='null は許可されていません',"));
+            assertThat(logMessage, anyOf(
+                    containsString("propertyPath=convertUserInfo.arg0.visitDate,"), containsString(
                             "propertyPath=convertUserInfo.userInfoUseBeanInput.visitDate,")));
             assertThat(logMessage, containsString(
                     "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
@@ -373,20 +366,18 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
-            assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません',"));
-            assertThat(logMessage, anyOf(containsString(
-                    "propertyPath=convertUserInfo.arg0.visitMessage,"),
+            assertThat(logMessage, containsString("interpolatedMessage='空要素は許可されていません',"));
+            assertThat(logMessage, anyOf(
+                    containsString("propertyPath=convertUserInfo.arg0.visitMessage,"),
                     containsString(
                             "propertyPath=convertUserInfo.userInfoUseBeanInput.visitMessage,")));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
@@ -419,10 +410,9 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
@@ -461,10 +451,9 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
@@ -503,16 +492,15 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
+                    "interpolatedMessage='空要素は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userId"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
@@ -545,16 +533,15 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(
-                    "interpolatedMessage='null は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
+                    "interpolatedMessage='空要素は許可されていません', propertyPath=convertUserInfo.<return value>.userInfo.userName"));
             assertThat(logMessage, containsString(
-                    "messageTemplate='{jakarta.validation.constraints.NotNull.message}'"));
+                    "messageTemplate='{jakarta.validation.constraints.NotEmpty.message}'"));
         }
     }
 
@@ -587,10 +574,9 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         // ログ確認
         {
             waitForAssertion(waitForAssertionNum);
-            List<String> list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*ConstraintViolationExceptionHandler",
-                    "\\[ConstraintViolationImpl*");
+            List<String> list =
+                    dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                            ".*ConstraintViolationExceptionHandler", "\\[ConstraintViolationImpl*");
             assertThat(list.size(), is(1));
             String logMessage = list.get(0).toString();
             assertThat(logMessage, containsString(

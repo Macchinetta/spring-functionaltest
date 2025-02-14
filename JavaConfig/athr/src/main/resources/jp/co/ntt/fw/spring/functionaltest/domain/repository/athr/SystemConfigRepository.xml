@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.athr.SystemConfigRepository">
+
+    <resultMap id="systemConfig-resultMap" type="SystemConfig">
+        <result property="device" column="device" />
+        <result property="broadcast" column="broadcast" />
+        <result property="ipaddr" column="ipaddr" />
+        <result property="netmask" column="netmask" />
+        <result property="network" column="network" />
+        <result property="onboot" column="onboot" />
+        <result property="deviceType" column="device_type" />
+        <result property="gateway" column="gateway" />
+        <result property="owner" column="owner" />
+    </resultMap>
+
+    <sql id="selectSystemConfig">
+        SELECT
+            device,
+            broadcast,
+            ipaddr,
+            netmask,
+            network,
+            onboot,
+            device_type,
+            gateway,
+            owner
+        FROM
+            t_system_config
+    </sql>
+
+    <select id="findByDevice" resultMap="systemConfig-resultMap" parameterType="String">
+        <include refid="selectSystemConfig" />
+        WHERE device = #{device}
+    </select>
+
+    <insert id="insert">
+        <trim prefix="INSERT INTO t_system_config (" suffix=")" suffixOverrides=",">
+            <if test="device != null"> device, </if>
+            <if test="broadcast != null"> broadcast, </if>
+            <if test="ipaddr != null"> ipaddr, </if>
+            <if test="netmask != null"> netmask, </if>
+            <if test="network != null"> network, </if>
+            <if test="onboot != null"> onboot, </if>
+            <if test="deviceType != null"> device_type, </if>
+            <if test="gateway != null"> gateway, </if>
+            <if test="owner != null"> owner, </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="device != null"> #{device}, </if>
+            <if test="broadcast != null"> #{broadcast}, </if>
+            <if test="ipaddr != null"> #{ipaddr}, </if>
+            <if test="netmask != null"> #{netmask}, </if>
+            <if test="network != null"> #{network}, </if>
+            <if test="onboot != null"> #{onboot}, </if>
+            <if test="deviceType != null"> #{deviceType}, </if>
+            <if test="gateway != null"> #{gateway}, </if>
+            <if test="owner != null"> #{owner}, </if>
+        </trim>
+    </insert>
+
+</mapper>

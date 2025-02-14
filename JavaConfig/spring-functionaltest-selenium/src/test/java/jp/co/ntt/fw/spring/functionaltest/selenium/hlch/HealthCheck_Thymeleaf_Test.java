@@ -17,9 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.hlch;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import java.io.IOException;
-
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -27,12 +25,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class HealthCheck_Thymeleaf_Test extends FunctionTestSupport {
 
-    private static String VIEW_TYPE = "thymeleaf";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     /**
      * <ul>
@@ -99,7 +96,7 @@ public class HealthCheck_Thymeleaf_Test extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexMessage(xTrack,
                     "^org.terasoluna.gfw.common.exception.ExceptionLogger$",
-                    "^\\[e.sf.cmmn.9009\\] throw DB Error$");
+                    "^\\[e.sf.fw.9002\\] throw DB Error$");
             dbLogAssertOperations.assertNotContainsWarn(xTrack);
         }
 

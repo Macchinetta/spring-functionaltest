@@ -19,13 +19,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
@@ -35,7 +33,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.annotation.IfProfileValue;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class JMS_JSP_Test extends FunctionTestSupport {
@@ -46,12 +43,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
     @Value("${selenium.jmss.retryForExpectedString.max}")
     private int retryCount;
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     @After
     public void clear() {
-        restOperations.getForEntity(getPackageRootUrl() + "/jmss/clear",
-                Void.class);
+        restOperations.getForEntity(getPackageRootUrl() + "/jmss/clear", Void.class);
     }
 
     /**
@@ -78,13 +74,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -112,13 +106,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -146,13 +138,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -202,13 +192,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -247,13 +235,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -281,14 +267,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"),
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
                 "All of the subscriber has been received.");
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "All of the subscriber has been received."));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("All of the subscriber has been received."));
     }
 
     /**
@@ -315,8 +300,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "receiveCount"), "3");
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("receiveCount"), "3");
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
@@ -347,13 +331,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -376,15 +358,14 @@ public class JMS_JSP_Test extends FunctionTestSupport {
 
         // クリックする要素が出現するまで待機
         webDriverOperations.setDefaultTimeoutForImplicitlyWait(30);
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .elementToBeClickable(By.id("receiveMessage")));
+        webDriverOperations
+                .waitForDisplayed(ExpectedConditions.elementToBeClickable(By.id("receiveMessage")));
 
         // 結果の取得
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is("Not Received!"));
     }
 
     /**
@@ -420,8 +401,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is("Not Received!"));
     }
 
     /**
@@ -448,13 +428,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -482,13 +460,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -515,15 +491,12 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
-                "TestQueue0403001B"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is("TestQueue0403001B"));
 
     }
 
@@ -551,15 +524,12 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
-                "TestQueue0403001C"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is("TestQueue0403001C"));
     }
 
     /**
@@ -586,15 +556,12 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
-        assertThat(webDriverOperations.getText(id("receiveQueue")), is(
-                "TestQueue0403003B"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
+        assertThat(webDriverOperations.getText(id("receiveQueue")), is("TestQueue0403003B"));
     }
 
     /**
@@ -621,14 +588,12 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        List<String> threadIdLogs = dbLogAssertOperations.getLogByRegexMessage(
-                null, null, "Message : " + identifier
-                        + ", ConcurrentThreadID is ..*");
+        List<String> threadIdLogs = dbLogAssertOperations.getLogByRegexMessage(null, null,
+                "Message : " + identifier + ", ConcurrentThreadID is ..*");
 
         // 複数のメッセージを受信しているので、大前提として2件以上メッセージが存在していること
         assertThat(threadIdLogs.size(), Matchers.greaterThan(1));
@@ -644,10 +609,9 @@ public class JMS_JSP_Test extends FunctionTestSupport {
      * <ul>
      * <li>Concurrencyの設定によるマルチスレッドの動作を確認する。</li>
      * </ul>
-     * 
      * nonMqServerでは1スレッドになるため、試験対象はmqServerのみとする。
      */
-    @IfProfileValue(name = "jms.test.environment", values = { "mqServer" })
+    @IfProfileValue(name = "jms.test.environment", values = {"mqServer"})
     @Test
     public void testJMSS0404002() {
 
@@ -666,14 +630,12 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        List<String> threadIdLogs = dbLogAssertOperations.getLogByRegexMessage(
-                null, null, "Message : " + identifier
-                        + ", ConcurrentThreadID is ..*");
+        List<String> threadIdLogs = dbLogAssertOperations.getLogByRegexMessage(null, null,
+                "Message : " + identifier + ", ConcurrentThreadID is ..*");
 
         // 複数のメッセージを受信しているので、大前提として2件以上メッセージが存在していること
         assertThat(threadIdLogs.size(), Matchers.greaterThan(1));
@@ -705,13 +667,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -736,13 +696,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -768,8 +726,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is("Not Received!"));
 
     }
 
@@ -795,13 +752,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -827,8 +782,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "Not Received!"));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is("Not Received!"));
 
     }
 
@@ -855,13 +809,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -889,13 +841,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "rollbacked_" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "rollbacked_" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "rollbacked_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("rollbacked_" + identifier));
 
     }
 
@@ -923,13 +875,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -955,13 +905,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "rollbacked_MQandDB_" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "rollbacked_MQandDB_" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "rollbacked_MQandDB_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("rollbacked_MQandDB_" + identifier));
 
     }
 
@@ -989,13 +939,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
 
     }
 
@@ -1023,13 +971,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "rollbacked_MQ_" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "rollbacked_MQ_" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "rollbacked_MQ_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("rollbacked_MQ_" + identifier));
     }
 
     /**
@@ -1056,13 +1004,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -1089,13 +1035,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "Validated!! :" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "Validated!! :" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "Validated!! :" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("Validated!! :" + identifier));
     }
 
     /**
@@ -1121,13 +1067,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -1153,13 +1097,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -1185,13 +1127,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -1217,13 +1157,11 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
@@ -1249,13 +1187,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "rollbacked_DB_" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "rollbacked_DB_" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "rollbacked_DB_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("rollbacked_DB_" + identifier));
     }
 
     /**
@@ -1281,13 +1219,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "not_rollbacked_MQandDB_" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "not_rollbacked_MQandDB_" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "not_rollbacked_MQandDB_" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("not_rollbacked_MQandDB_" + identifier));
     }
 
     /**
@@ -1328,8 +1266,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
 
         // エラーログの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(null, null,
-                "SystemException Error.*");
+        dbLogAssertOperations.assertContainsByRegexMessage(null, null, "SystemException Error.*");
     }
 
     /**
@@ -1360,7 +1297,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
 
         // エラーログの確認
         dbLogAssertOperations.assertContainsByRegexMessage(null, null,
-                "ResultMessage \\[code=e.sf.jmss.8004");
+                "ResultMessage \\[code=e.sf.js.8004");
     }
 
     /**
@@ -1387,13 +1324,13 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), "BusinessException! :" + identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"),
+                "BusinessException! :" + identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                "BusinessException! :" + identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")),
+                is("BusinessException! :" + identifier));
     }
 
     /**
@@ -1420,22 +1357,21 @@ public class JMS_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMessage"));
 
         // 期待値が画面に表示されることを確認
-        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id(
-                "uniqueIdentifier"), identifier);
+        boolean isShow = this.tryAssertAndRefreshUntilReceiving(id("uniqueIdentifier"), identifier);
         assertTrue(isShow);
 
         // メッセージ受信内容の確認
-        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(
-                identifier));
+        assertThat(webDriverOperations.getText(id("uniqueIdentifier")), is(identifier));
     }
 
     /**
      * RestTemplate で受信するまで待機する
+     * 
      * @param identifier
      */
     private void await(String identifier) {
-        this.restOperations.getForEntity(getPackageRootUrl()
-                + "/jmss/await?jmsTodoId=" + identifier, Void.class);
+        this.restOperations.getForEntity(
+                getPackageRootUrl() + "/jmss/await?jmsTodoId=" + identifier, Void.class);
     }
 
     /**
@@ -1443,6 +1379,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
      * <p>
      * <code>selenium.jmss.retryForExpectedString.max</code>プロパティで指定した回数分画面を更新しても、期待する文字列が出現しない場合、{@link Assert#fail(String)}する。
      * </p>
+     * 
      * @param by 要素を探すための識別子
      * @param expected 期待する文字列
      */
@@ -1452,8 +1389,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
                 return true;
             }
 
-            this.webDriverOperations.suspend(this.retryInterval,
-                    TimeUnit.MILLISECONDS);
+            this.webDriverOperations.suspend(this.retryInterval, TimeUnit.MILLISECONDS);
 
             // 画面の再読み込み
             this.webDriverOperations.refresh();

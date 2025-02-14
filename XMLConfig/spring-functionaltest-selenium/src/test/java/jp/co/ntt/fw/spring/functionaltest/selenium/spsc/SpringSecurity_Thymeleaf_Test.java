@@ -21,10 +21,8 @@ import static org.junit.Assert.assertNull;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.By.name;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
-
 import java.io.IOException;
 import java.util.Map;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -33,7 +31,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
 import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -42,7 +39,7 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
     @Inject
     protected RestTemplate restTemplate;
 
-    private static String VIEW_TYPE = "thymeleaf";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     /**
      * <ul>
@@ -60,8 +57,7 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("spsc0101001_" + VIEW_TYPE));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // デフォルトのログイン画面の確認
         // ユーザ
@@ -69,8 +65,7 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
         // パスワード
         assert (webDriverOperations.exists(name("password")));
         // パス
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/login"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl() + "/login"));
 
     }
 
@@ -97,17 +92,16 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/001",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/001",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
@@ -138,10 +132,9 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/002",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/002",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -179,10 +172,9 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/003",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/003",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -227,23 +219,22 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/004",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/004",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
         assertThat(resultMap.get("X-Frame-Options"), is("DENY"));
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "default-src 'self'"));
+        assertNull(resultMap.get("X-XSS-Protection"));
+        assertThat(resultMap.get("Content-Security-Policy"), is("default-src 'self'"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
         assertThat(resultMap.get("Referrer-Policy"), is("no-referrer"));
         assertThat(resultMap.get("Permissions-Policy"), is("geolocation=(self)"));
@@ -267,10 +258,9 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/006",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/006",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -295,10 +285,9 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/007",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/007",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -322,10 +311,9 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0301/001",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0301/001",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -352,8 +340,7 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
         ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE
-                        + "/0401/001/notsecure/001", HttpMethod.GET,
+                getPackageRootUrl() + "/" + VIEW_TYPE + "/0401/001/notsecure/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
@@ -364,16 +351,16 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
         assertNull(resultMap.get("Pragma"));
         assertNull(resultMap.get("Expires"));
 
-        entity = restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE
-                + "/0401/001/secure/001", HttpMethod.GET,
+        entity = restTemplate.exchange(
+                getPackageRootUrl() + "/" + VIEW_TYPE + "/0401/001/secure/001", HttpMethod.GET,
                 new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         requestHeaders2 = entity.getHeaders();
         resultMap = requestHeaders2.toSingleValueMap();
 
         // キャッシュコントロールされているレスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
     }
@@ -394,17 +381,15 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/001",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/001",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "default-src 'self'"));
+        assertThat(resultMap.get("Content-Security-Policy"), is("default-src 'self'"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -414,7 +399,8 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" report-only="true" />
+     *      <sec:content-security-policy policy-directives=
+    "default-src 'self'; report-uri /csp_report;" report-only="true" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -424,18 +410,17 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/002",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/002",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
         assertNull(resultMap.get("Content-Security-Policy"));
-        assertThat(resultMap.get("Content-Security-Policy-Report-Only"), is(
-                "default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy-Report-Only"),
+                is("default-src 'self'; report-uri /csp_report;"));
     }
 
     /**
@@ -444,7 +429,8 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
+     *      <sec:content-security-policy policy-directives=
+    "default-src 'self'; report-uri /csp_report;" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -454,17 +440,16 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/003",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/003",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy"),
+                is("default-src 'self'; report-uri /csp_report;"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -474,7 +459,8 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
+     *      <sec:content-security-policy policy-directives=
+    "upgrade-insecure-requests; default-src 'self';" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -484,17 +470,16 @@ public class SpringSecurity_Thymeleaf_Test extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/004",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(getPackageRootUrl() + "/" + VIEW_TYPE + "/0501/004",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "upgrade-insecure-requests; default-src 'self';"));
+        assertThat(resultMap.get("Content-Security-Policy"),
+                is("upgrade-insecure-requests; default-src 'self';"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 

@@ -22,17 +22,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
-
 import java.io.IOException;
 import java.util.UUID;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.annotation.IfProfileValue;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class Email_JSP_Test extends FunctionTestSupport {
@@ -58,7 +55,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
     @Value("${mail.noauth.from.address}")
     private String from;
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     /**
      * <ul>
@@ -90,10 +87,8 @@ public class Email_JSP_Test extends FunctionTestSupport {
 
         // 送信内容（＝受信内容）の確認
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")), is(
-                "Registration confirmation."));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("subject")), is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
     }
 
@@ -116,8 +111,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
-        webDriverOperations.overrideText(id("replyTo"), "reply@"
-                + mailNoauthDomain);
+        webDriverOperations.overrideText(id("replyTo"), "reply@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
@@ -132,16 +126,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
         // 送信内容（＝受信内容）の確認
         // GreenMail用（1件受信してチェック）
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")), is(
-                "Registration confirmation."));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("cc")), is("foo@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("date")), startsWith(
-                "2015/07/06"));
+        assertThat(webDriverOperations.getText(id("subject")), is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("cc")), is("foo@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("replyTo")), is("reply@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("date")), startsWith("2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
     }
@@ -166,8 +155,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
-        webDriverOperations.overrideText(id("replyTo"), "reply@"
-                + mailNoauthDomain);
+        webDriverOperations.overrideText(id("replyTo"), "reply@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
@@ -181,16 +169,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
 
         // 送信内容（＝受信内容）の確認
         assertThat(webDriverOperations.getText(id("from")), is(from));
-        assertThat(webDriverOperations.getText(id("subject")), is(
-                "Registration confirmation."));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("cc")), is("foo@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("replyTo")), is("reply@"
-                + mailNoauthDomain));
-        assertThat(webDriverOperations.getText(id("date")), startsWith(
-                "2015/07/06"));
+        assertThat(webDriverOperations.getText(id("subject")), is("Registration confirmation."));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("cc")), is("foo@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("replyTo")), is("reply@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("date")), startsWith("2015/07/06"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
 
         // メールの受信
@@ -232,13 +215,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
 
         // メールの送信
         webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
-        webDriverOperations.overrideText(id("to1"), "hoge2@"
-                + mailNoauthDomain);
+        webDriverOperations.overrideText(id("to1"), "hoge2@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("cc0"), "foo@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("cc1"), "foo2@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("bcc0"), "bar@" + mailNoauthDomain);
-        webDriverOperations.overrideText(id("bcc1"), "bar2@"
-                + mailNoauthDomain);
+        webDriverOperations.overrideText(id("bcc1"), "bar2@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
@@ -377,14 +358,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
-                + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("contentType")),
-                containsString("text/plain"));
+        assertThat(webDriverOperations.getText(id("contentType")), containsString("text/plain"));
     }
 
     /**
@@ -396,8 +374,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
     public void testEMAL0302001() {
 
         String identifier = UUID.randomUUID().toString();
-        String text = "<html><body>あいう①～③</body></html>" + "<!-- " + identifier
-                + " -->";
+        String text = "<html><body>あいう①～③</body></html>" + "<!-- " + identifier + " -->";
 
         // メニュー画面の操作
         webDriverOperations.click(id("emal0302001_" + VIEW_TYPE));
@@ -416,14 +393,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
-                + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("contentType")),
-                containsString("text/html"));
+        assertThat(webDriverOperations.getText(id("contentType")), containsString("text/html"));
     }
 
     /**
@@ -457,14 +431,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
-                + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("attachment")), is(
-                "説明①.txt"));
+        assertThat(webDriverOperations.getText(id("attachment")), is("説明①.txt"));
     }
 
     /**
@@ -477,8 +448,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
 
         String identifier = UUID.randomUUID().toString();
         String text = "<html><head><link rel=\"stylesheet\" href='cid:identifier1234'>"
-                + "</head><body>あいう①～③</body></html>" + "<!-- " + identifier
-                + " -->";
+                + "</head><body>あいう①～③</body></html>" + "<!-- " + identifier + " -->";
 
         // メニュー画面の操作
         webDriverOperations.click(id("emal0304001_" + VIEW_TYPE));
@@ -500,14 +470,11 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
-                + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         assertThat(webDriverOperations.getText(id("body")), is(text));
-        assertThat(webDriverOperations.getText(id("inline")), is(
-                "<identifier1234>"));
+        assertThat(webDriverOperations.getText(id("inline")), is("<identifier1234>"));
     }
 
     /**
@@ -527,8 +494,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.overrideText(id("text"), "Hello!");
         webDriverOperations.click(id("sendMail"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"),
-                "System Error!"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h1"), "System Error!"));
 
         // システムエラー画面に遷移
         assertThat(webDriverOperations.getTitle(), is("System Error!"));
@@ -612,8 +578,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
     public void testEMAL0501001() {
 
         String identifier = UUID.randomUUID().toString();
-        String text = "<script>alert(\"あいう①～③\");</script>" + "<!-- "
-                + identifier + " -->";
+        String text = "<script>alert(\"あいう①～③\");</script>" + "<!-- " + identifier + " -->";
 
         // メニュー画面の操作
         webDriverOperations.click(id("emal0501001_" + VIEW_TYPE));
@@ -621,8 +586,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
         // メールの送信
         webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
         webDriverOperations.overrideText(id("text"), text);
-        webDriverOperations.select(id("templateName"),
-                "registration-confirmation");
+        webDriverOperations.select(id("templateName"), "registration-confirmation");
         webDriverOperations.click(id("sendMail"));
 
         // メールの受信
@@ -634,20 +598,15 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from
-                + ">"));
+        assertThat(webDriverOperations.getText(id("from")), is("\"髙山\" <" + from + ">"));
         assertThat(webDriverOperations.getText(id("subject")), is("お知らせ①"));
-        assertThat(webDriverOperations.getText(id("to")), is("hoge@"
-                + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
         String expectedBodyPattern = "<html>\\s*<body>\\s*"
-                + "<h3>Hi &lt;script&gt;alert\\(&quot;あいう①～③&quot;\\);&lt;/script&gt;"
-                + ".*" + identifier + ".*"
-                + ", welcome to Macchinetta\\.github\\.io!</h3>\\s*"
+                + "<h3>Hi &lt;script&gt;alert\\(&quot;あいう①～③&quot;\\);&lt;/script&gt;" + ".*"
+                + identifier + ".*" + ", welcome to Macchinetta\\.github\\.io!</h3>\\s*"
                 + "</body>\\s*</html>";
-        assertTrue(webDriverOperations.getText(id("body")).matches(
-                expectedBodyPattern));
-        assertThat(webDriverOperations.getText(id("contentType")),
-                containsString("text/html"));
+        assertTrue(webDriverOperations.getText(id("body")).matches(expectedBodyPattern));
+        assertThat(webDriverOperations.getText(id("contentType")), containsString("text/html"));
     }
 
     /**
@@ -666,8 +625,8 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("emal0601001_" + VIEW_TYPE));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "\"" + iso2022jpBadChars
-                + "\" <hoge@" + mailNoauthDomain + ">");
+        webDriverOperations.overrideText(id("to0"),
+                "\"" + iso2022jpBadChars + "\" <hoge@" + mailNoauthDomain + ">");
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
@@ -681,14 +640,13 @@ public class Email_JSP_Test extends FunctionTestSupport {
 
         // 送信内容（＝受信内容）の確認
         String expectedConverted = "—−〜‖¢£¬";
-        assertThat(webDriverOperations.getText(id("from")), is("\""
-                + expectedConverted + "\" <" + from + ">"));
-        assertThat(webDriverOperations.getText(id("subject")), is(
-                expectedConverted));
-        assertThat(webDriverOperations.getText(id("to")), is("\""
-                + expectedConverted + "\" <hoge@" + mailNoauthDomain + ">"));
-        assertThat(webDriverOperations.getText(id("body")), is(expectedConverted
-                + "<!-- " + identifier + " -->"));
+        assertThat(webDriverOperations.getText(id("from")),
+                is("\"" + expectedConverted + "\" <" + from + ">"));
+        assertThat(webDriverOperations.getText(id("subject")), is(expectedConverted));
+        assertThat(webDriverOperations.getText(id("to")),
+                is("\"" + expectedConverted + "\" <hoge@" + mailNoauthDomain + ">"));
+        assertThat(webDriverOperations.getText(id("body")),
+                is(expectedConverted + "<!-- " + identifier + " -->"));
     }
 
     /**
@@ -708,8 +666,8 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("emal0601002_" + VIEW_TYPE));
 
         // メールの送信
-        webDriverOperations.overrideText(id("to0"), "\"" + externalChars
-                + "\" <hoge@" + mailNoauthDomain + ">");
+        webDriverOperations.overrideText(id("to0"),
+                "\"" + externalChars + "\" <hoge@" + mailNoauthDomain + ">");
         webDriverOperations.overrideText(id("text"), text);
         webDriverOperations.click(id("sendMail"));
 
@@ -722,13 +680,81 @@ public class Email_JSP_Test extends FunctionTestSupport {
         webDriverOperations.click(id("receiveMail"));
 
         // 送信内容（＝受信内容）の確認
-        assertThat(webDriverOperations.getText(id("from")), is("\""
-                + externalChars + "\" <" + from + ">"));
-        assertThat(webDriverOperations.getText(id("subject")), is(
-                externalChars));
-        assertThat(webDriverOperations.getText(id("to")), is("\""
-                + externalChars + "\" <hoge@" + mailNoauthDomain + ">"));
+        assertThat(webDriverOperations.getText(id("from")),
+                is("\"" + externalChars + "\" <" + from + ">"));
+        assertThat(webDriverOperations.getText(id("subject")), is(externalChars));
+        assertThat(webDriverOperations.getText(id("to")),
+                is("\"" + externalChars + "\" <hoge@" + mailNoauthDomain + ">"));
         assertThat(webDriverOperations.getText(id("body")), is(text));
     }
 
+    /**
+     * <ul>
+     * <li>JNDI参照でsessionを作成し、メールが送信できることを確認する。</li>
+     * <li>JakartaEEアプリケーションが予期する"java:comp/env/"プレフィックスを付与して参照を行う。</li>
+     * </ul>
+     */
+    @Test
+    public void testEMAL0701001() {
+
+        String identifier = UUID.randomUUID().toString();
+        String text = "Hello!" + "<!-- " + identifier + " -->";
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("emal0701001_" + VIEW_TYPE));
+
+        // メールの送信
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("text"), text);
+        webDriverOperations.click(id("sendMail"));
+
+        // メールの受信
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
+        webDriverOperations.overrideText(id("user"), "hoge");
+        webDriverOperations.overrideText(id("password"), "Ntt01");
+        webDriverOperations.overrideText(id("identifier"), identifier);
+        webDriverOperations.click(id("receiveMail"));
+
+        // 送信内容（＝受信内容）の確認
+        assertThat(webDriverOperations.getText(id("from")), is(from));
+        assertThat(webDriverOperations.getText(id("subject")), is("JNDI Lookup(Container Prefix)"));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("body")), is(text));
+    }
+
+    /**
+     * <ul>
+     * <li>JNDI参照でsessionを作成し、メールが送信できることを確認する。</li>
+     * <li>文字列をもとにネーミングコンテキストに直接参照を行う。</li>
+     * </ul>
+     */
+    @Test
+    public void testEMAL0701002() {
+
+        String identifier = UUID.randomUUID().toString();
+        String text = "Hello!" + "<!-- " + identifier + " -->";
+
+        // メニュー画面の操作
+        webDriverOperations.click(id("emal0701002_" + VIEW_TYPE));
+
+        // メールの送信
+        webDriverOperations.overrideText(id("to0"), "hoge@" + mailNoauthDomain);
+        webDriverOperations.overrideText(id("text"), text);
+        webDriverOperations.click(id("sendMail"));
+
+        // メールの受信
+        webDriverOperations.overrideText(id("host"), mailNoauthPop3Host);
+        webDriverOperations.overrideText(id("port"), mailNoauthPop3Port);
+        webDriverOperations.overrideText(id("user"), "hoge");
+        webDriverOperations.overrideText(id("password"), "Ntt01");
+        webDriverOperations.overrideText(id("identifier"), identifier);
+        webDriverOperations.click(id("receiveMail"));
+
+        // 送信内容（＝受信内容）の確認
+        assertThat(webDriverOperations.getText(id("from")), is(from));
+        assertThat(webDriverOperations.getText(id("subject")), is("JNDI Lookup(Origin)"));
+        assertThat(webDriverOperations.getText(id("to")), is("hoge@" + mailNoauthDomain));
+        assertThat(webDriverOperations.getText(id("body")), is(text));
+    }
 }

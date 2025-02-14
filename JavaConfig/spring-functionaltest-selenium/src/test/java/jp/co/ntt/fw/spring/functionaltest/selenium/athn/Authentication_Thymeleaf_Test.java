@@ -20,20 +20,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
-
 import java.io.IOException;
 import java.util.regex.Pattern;
-
 import org.junit.After;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
-    private static String VIEW_TYPE = "thymeleaf";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     @After
     public void afterTest() {
@@ -54,8 +51,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0102001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(DefaultFormAuthentication)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(DefaultFormAuthentication)"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -65,15 +62,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -90,8 +85,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0201001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationSeccess）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationSeccess）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("uid"), "Josh");
@@ -103,20 +98,20 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 認証後のユーザ情報の確認
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
-        // HttpSessionRequestCache の matchingRequestParameterName が初期値"continue"で登録されるようになった
+        // HttpSessionRequestCache の matchingRequestParameterName
+        // が初期値"continue"で登録されるようになった
         // https://github.com/spring-projects/spring-security/commit/f84f08c4b9da4f326de1fed2772ae5e582d7cdf7
         // フレームワークとしては影響ないが、ユーザによっては影響を受ける可能性がある
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0201/001?loginSuccess&continue"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0201/001?loginSuccess&continue"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -132,8 +127,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0201002_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationSeccess）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationSeccess）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("uid"), "Josh");
@@ -143,12 +138,10 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（アプリケーションルート）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl() + "/"));
 
         // 機能テストTOPの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ATHN 認証"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ATHN 認証"));
     }
 
     /**
@@ -163,8 +156,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0301001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationFailure）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationFailure）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -174,19 +167,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0301/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0301/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -203,8 +194,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0401001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -217,15 +208,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0401/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0401/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0401001_" + VIEW_TYPE));
@@ -238,19 +228,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0401/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0401/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0401001_" + VIEW_TYPE));
@@ -263,19 +251,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0401/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0401/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -293,8 +279,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0402001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication with PasswordEncoder specified）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication with PasswordEncoder specified）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Smith");
@@ -307,15 +293,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Smith"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402001_" + VIEW_TYPE));
@@ -328,19 +313,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402001_" + VIEW_TYPE));
@@ -353,19 +336,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -383,8 +364,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0402004_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication with hash type specified）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication with hash type specified）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Smith");
@@ -397,15 +378,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Smith"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/004?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/004?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402004_" + VIEW_TYPE));
@@ -418,19 +398,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/004/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/004/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402004_" + VIEW_TYPE));
@@ -443,19 +421,17 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0402/004/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0402/004/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -478,14 +454,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "John.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("John.T"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -512,17 +485,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Adam.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Adam.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -540,11 +509,9 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Adam.T"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -558,8 +525,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -585,14 +551,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Pola.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Pola.T"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -619,17 +582,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Pole.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Pole.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -646,11 +605,10 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Pole.T"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -664,8 +622,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -691,15 +648,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Susan.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Susan.T"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -726,18 +679,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Steven.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Steven.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -754,13 +702,10 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Steven.T"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+        assertTrue(Pattern.compile("\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -774,8 +719,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -801,15 +745,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Smith.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Smith.T"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -836,18 +777,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Wesson.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Wesson.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -866,11 +803,9 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -884,8 +819,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -911,14 +845,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Jack.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Jack.T"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -945,17 +876,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Ann.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Ann.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -972,11 +899,10 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Ann.T"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -990,8 +916,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1018,9 +943,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Tom"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\{bcrypt\\}\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}").matcher(
-                        webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{bcrypt\\}\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1047,10 +971,9 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Dave"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\{scrypt\\}\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+        assertTrue(Pattern
+                .compile("\\{scrypt\\}\\$100801\\$[./0-9A-Za-z+/-]{22}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1079,8 +1002,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\{argon2\\}\\$argon2id\\$v=19\\$m=16384,t=2,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1102,8 +1024,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0601001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(AuthEventHandle)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1115,28 +1036,25 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Autnenticated. username : Josh");
         }
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Session changed. sessionId : *");
         }
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Autnenticate completed. username : Josh");
         }
 
-         // イベントハンドラが実行されることを確認(ログ)
+        // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
             dbLogAssertOperations.assertContainsByRegexMessage(
@@ -1165,8 +1083,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0602001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(AuthEventHandle)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1178,8 +1095,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Bad credentials is detected. username : Josh");
         }
 
@@ -1193,8 +1109,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "User deisabled is detected. username : Claire");
         }
 
@@ -1208,8 +1123,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "User locked is detected. username : Rock");
         }
 
@@ -1223,8 +1137,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Authentication expired is detected. username : Edword");
         }
 
@@ -1238,8 +1151,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Credentials expired is detected. username : Jenkins");
         }
 
@@ -1258,8 +1170,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0602002_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthenticationServiceException)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(AuthenticationServiceException)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1271,8 +1183,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "ServiceException is detected. username : Josh");
         }
     }
@@ -1289,8 +1200,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0701001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForLogout)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(loginForLogout)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1303,8 +1213,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0701/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0701/001?loginSuccess"));
 
         // ログアウトボタン押下
         // TODO:
@@ -1313,19 +1223,16 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("logout"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // パスの確認（ログアウト成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/login?logout"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl() + "/login?logout"));
 
         // 機能トップへ
         webDriverOperations.getWebDriver().get(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -1341,8 +1248,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0702001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForLogoutDeleteCookie)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForLogoutDeleteCookie)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1355,8 +1262,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0702/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0702/001?loginSuccess"));
 
         // ログアウトボタン押下
         // TODO:
@@ -1365,19 +1272,16 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("logout"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // パスの確認（ログアウト成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/login?logout"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl() + "/login?logout"));
 
         // 機能トップへ
         webDriverOperations.getWebDriver().get(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
     }
 
     /**
@@ -1393,8 +1297,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn0901001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForDispAutentication)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForDispAutentication)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1406,14 +1310,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 認証後のユーザ情報の確認
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
-        assertThat(webDriverOperations.getText(id("lastname")), is(
-                "Josh Last"));
-        assertThat(webDriverOperations.getText(id("useruuid")), is(
-                "000000000000000000000000000000000001"));
+        assertThat(webDriverOperations.getText(id("lastname")), is("Josh Last"));
+        assertThat(webDriverOperations.getText(id("useruuid")),
+                is("000000000000000000000000000000000001"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/0901/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/0901/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1431,8 +1334,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1201001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedAuthSucessUrl)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedAuthSucessUrl)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1445,8 +1348,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1201/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1201/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1464,8 +1367,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1202001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedAuthSucessHandler)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedAuthSucessHandler)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1478,14 +1381,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1202/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1202/001?loginSuccess"));
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*MyAuthenticationSuccessHandler",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*MyAuthenticationSuccessHandler",
                     "Excute MyAuthenticationSuccessHandler. username : Josh");
         }
 
@@ -1509,8 +1411,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1302001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForCustomizedAuthFailure)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForCustomizedAuthFailure)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1520,8 +1422,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：パスワード誤り）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/badCredentials"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/badCredentials"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1534,8 +1436,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：無効ユーザ）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/disabled"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/disabled"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1548,8 +1450,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：不明ユーザ）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/usernameNotFound"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/usernameNotFound"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1562,8 +1464,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：不明ユーザ(デフォルト)）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/systemError"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/systemError"));
 
     }
 
@@ -1578,8 +1480,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1501002_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedLogout)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedLogout)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1592,8 +1494,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1501/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1501/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1601,8 +1503,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*MyLogoutSuccessHandler",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*MyLogoutSuccessHandler",
                     "Excute MyLogoutSuccessHandler. username : Josh");
         }
 
@@ -1620,8 +1521,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1601001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AutenticationSystemError)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(AutenticationSystemError)"));
 
         // 入力条件設定（認証失敗）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1631,12 +1532,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証失敗：認証エラー）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1601/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1601/001/login?error"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "connectionerror");
@@ -1646,12 +1546,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証失敗：システムエラー）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1601/001/login?systemError"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1601/001/login?systemError"));
 
         // エラー画面の確認
-        assertThat(webDriverOperations.getText(id("loginSystemError")), is(
-                "システムエラーが発生しました。"));
+        assertThat(webDriverOperations.getText(id("loginSystemError")), is("システムエラーが発生しました。"));
     }
 
     /**
@@ -1666,8 +1565,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1602001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AutenticationSystemError)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(AutenticationSystemError)"));
 
         // 入力条件設定（認証失敗）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1678,12 +1577,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // authentication-failure-urlにより、認証失敗時は?errorではなく?systemErrorをクエリパラメータとして設定している
         // パスの確認（認証失敗：システムエラー）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1602/001/login?systemError"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1602/001/login?systemError"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("loginSystemError")), is(
-                "システムエラーが発生しました。"));
+        assertThat(webDriverOperations.getText(id("loginSystemError")), is("システムエラーが発生しました。"));
     }
 
     /**
@@ -1707,8 +1605,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // 認証成功に独自実装した不可情報である住所が取得できることの確認
         assertThat(webDriverOperations.getText(id("customerName")), is("Josh"));
-        assertThat(webDriverOperations.getText(id("customerAddress")), is(
-                "san diego"));
+        assertThat(webDriverOperations.getText(id("customerAddress")), is("san diego"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1735,8 +1632,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("companyIdLogin"));
 
         // 認証失敗時に設定したエラーメッセージが表示できることの確認
-        assertThat(webDriverOperations.getText(id(
-                "customerCompanyIdLoginError")), is("Bad credentials"));
+        assertThat(webDriverOperations.getText(id("customerCompanyIdLoginError")),
+                is("Bad credentials"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1767,8 +1664,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn1703001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（BeanValidation）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム（BeanValidation）"));
 
         // 入力条件設定(Validationエラー)
         webDriverOperations.overrideText(id("username"), "");
@@ -1778,12 +1674,10 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 入力エラーメッセージの確認
-        assertThat(webDriverOperations.getText(id("usernameError")), is(
-                "値を入力してください。"));
+        assertThat(webDriverOperations.getText(id("usernameError")), is("値を入力してください。"));
 
         // 入力エラーメッセージの確認
-        assertThat(webDriverOperations.getText(id("passwordError")), is(
-                "値を入力してください。"));
+        assertThat(webDriverOperations.getText(id("passwordError")), is("値を入力してください。"));
 
         // 入力条件設定(認証エラー)
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1793,8 +1687,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 入力条件設定(Validationエラー)
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1807,8 +1700,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(getPackageRootUrl()
-                + "/" + VIEW_TYPE + "/1703/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(getPackageRootUrl() + "/" + VIEW_TYPE + "/1703/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1834,14 +1727,11 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Carl.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Carl.T"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -1868,17 +1758,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Samson.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Samson.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncoderでエンコードされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -1893,18 +1779,16 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 管理者情報が表示されるまで待機
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("screenTitle"),
-                        "DelegatingPasswordEncoderを使用して認証"));
+        webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                By.id("screenTitle"), "DelegatingPasswordEncoderを使用して認証"));
 
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Samson.T"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{96}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1922,8 +1806,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.waitForDisplayed(id("loginError"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1954,17 +1837,13 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Billy.T"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Billy.T"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -1982,11 +1861,9 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Billy.T"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -2015,13 +1892,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Shigeru.T"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Shigeru.T"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
     }
 
@@ -2049,16 +1925,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Akira.T"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Akira.T"));
             // DBの中身と一致することを確認する為、事前に取得
-            encodePassword = webDriverOperations.getText(id(
-                    "getAfterEncodePassword"));
+            encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
 
         // パスワードハッシュメニュー画面に戻る
@@ -2078,14 +1952,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("username")), is(
-                    "Akira.T"));
+            assertThat(webDriverOperations.getText(id("username")), is("Akira.T"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
-            assertTrue(webDriverOperations.getText(id("password")).matches(
-                    "\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertTrue(webDriverOperations.getText(id("password"))
+                    .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
             // 表示されていたパスワードと一致すること
-            assertThat(webDriverOperations.getText(id("password")), is(
-                    encodePassword));
+            assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
         }
 
         // ログアウトしてセッションを削除
@@ -2102,8 +1974,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -2132,13 +2003,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Satoshi.T"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Satoshi.T"));
             // ハッシュ化されたパスワードはShaPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
     }
 
@@ -2166,16 +2036,14 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Megumi.T"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Megumi.T"));
             // DBの中身と一致することを確認する為、事前に取得
-            encodePassword = webDriverOperations.getText(id(
-                    "getAfterEncodePassword"));
+            encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
 
         // パスワードハッシュメニュー画面に戻る
@@ -2195,14 +2063,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("username")), is(
-                    "Megumi.T"));
+            assertThat(webDriverOperations.getText(id("username")), is("Megumi.T"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
-            assertTrue(webDriverOperations.getText(id("password")).matches(
-                    "\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertTrue(webDriverOperations.getText(id("password"))
+                    .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
             // 表示されていたパスワードと一致すること
-            assertThat(webDriverOperations.getText(id("password")), is(
-                    encodePassword));
+            assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
         }
 
         // ログアウトしてセッションを削除
@@ -2219,8 +2085,7 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -2314,8 +2179,8 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("athn2301001_" + VIEW_TYPE));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(LogoutSuccessEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(LogoutSuccessEventHandle)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Emily");
@@ -2331,14 +2196,12 @@ public class Authentication_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Logout completed. username : Emily");
         }
 

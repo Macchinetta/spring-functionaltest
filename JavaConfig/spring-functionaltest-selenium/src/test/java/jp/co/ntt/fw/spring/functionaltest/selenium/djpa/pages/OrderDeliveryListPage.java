@@ -21,7 +21,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
 
@@ -147,31 +146,31 @@ public class OrderDeliveryListPage implements Page<OrderDeliveryListPage> {
     public DeliveryOrderDetailsPage displayOrderDetails(Integer orderNo) {
 
         switch (orderNo) {
-        case 1:
-            orderDel1Details.click();
-            break;
-        case 2:
-            orderDel2Details.click();
-            break;
-        case 3:
-            orderDel3Details.click();
-            break;
-        case 4:
-            orderDel4Details.click();
-            break;
-        case 7:
-            orderDel7Details.click();
-            break;
-        case 8:
-            orderDel8Details.click();
-            break;
-        case 15:
-            orderDel15Details.click();
-        case 20:
-            orderDel20Details.click();
-            break;
-        default:
-            break;
+            case 1:
+                orderDel1Details.click();
+                break;
+            case 2:
+                orderDel2Details.click();
+                break;
+            case 3:
+                orderDel3Details.click();
+                break;
+            case 4:
+                orderDel4Details.click();
+                break;
+            case 7:
+                orderDel7Details.click();
+                break;
+            case 8:
+                orderDel8Details.click();
+                break;
+            case 15:
+                orderDel15Details.click();
+            case 20:
+                orderDel20Details.click();
+                break;
+            default:
+                break;
         }
 
         DeliveryOrderDetailsPage orderDetailsPage = new DeliveryOrderDetailsPage(driver);
@@ -276,32 +275,32 @@ public class OrderDeliveryListPage implements Page<OrderDeliveryListPage> {
         WebElement orderUpdateLink = null;
 
         switch (bookNo) {
-        case 1:
-            orderUpdateLink = orderDel1Details;
-            break;
-        case 2:
-            orderUpdateLink = orderDel2Details;
-            break;
-        case 3:
-            orderUpdateLink = orderDel3Details;
-            break;
-        case 4:
-            orderUpdateLink = orderDel4Details;
-            break;
-        case 7:
-            orderUpdateLink = orderDel7Details;
-            break;
-        case 8:
-            orderUpdateLink = orderDel8Details;
-            break;
-        case 15:
-            orderUpdateLink = orderDel15Details;
-            break;
-        case 20:
-            orderUpdateLink = orderDel20Details;
-            break;
-        default:
-            break;
+            case 1:
+                orderUpdateLink = orderDel1Details;
+                break;
+            case 2:
+                orderUpdateLink = orderDel2Details;
+                break;
+            case 3:
+                orderUpdateLink = orderDel3Details;
+                break;
+            case 4:
+                orderUpdateLink = orderDel4Details;
+                break;
+            case 7:
+                orderUpdateLink = orderDel7Details;
+                break;
+            case 8:
+                orderUpdateLink = orderDel8Details;
+                break;
+            case 15:
+                orderUpdateLink = orderDel15Details;
+                break;
+            case 20:
+                orderUpdateLink = orderDel20Details;
+                break;
+            default:
+                break;
         }
 
         try {

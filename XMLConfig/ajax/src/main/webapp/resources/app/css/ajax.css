@@ -1,0 +1,15 @@
+.space {
+    margin-right: 1em;
+}
+
+.inline {
+    display: inline;
+}
+
+.pc-search-field {
+    width: 550px;
+}
+
+.write-comment-field {
+    width: 550px;
+}

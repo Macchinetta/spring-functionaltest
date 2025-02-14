@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">ユーザ登録確認画面(Springのformタグを使用)</h3>
+
+                <form th:action="@{/thymeleaf}" class="form-horizontal" method="post" th:object="${userForm}">
+                    <fieldset>
+                        <legend class="originalLegend">ユーザ情報</legend>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label class="userRegister" for="userName">ユーザ名</label>
+                            </div>
+                            <div class="col col-md-4"><span id="userName" th:text="*{userName}"></span> <input type="hidden" th:field="*{userName}" /></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label class="userRegister" for="email">Email</label>
+                            </div>
+                            <div class="col col-md-4"><span id="email" th:text="*{email}"></span> <input type="hidden" th:field="*{email}" /></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label class="userRegister" for="password">パスワード</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <span id="password">**********</span> <input type="hidden" th:field="*{password}" />
+                                <input type="hidden" th:field="*{confirmPassword}" />
+                            </div>
+                        </div>
+                        <div class="form-group col col-md-5">
+                            <button id="returnToRegisterUseSpringFormToGet" name="returnToRegisterUseSpringFormToGet" class="btn btn-default" type="submit" value="Submit">戻る</button>
+                            <button class="btn btn-default" type="submit" value="Submit">登録</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

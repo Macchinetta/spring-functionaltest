@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">Output Escaping</h3>
+
+                <form th:action="@{/thymeleaf/0101/output}" method="post">
+                    <span>Input Data</span> <br />
+                    <input id="text-output" type="text" class="text" name="outputData" /> <input id="btn-output" class="mainbtn" type="submit" value="input" />
+                </form>
+                <br />
+                <span>Output Data</span>
+                <p id="xssOutput" th:text="${outputData}">outputData</p>
+            </div>
+        </div>
+    </body>
+</html>

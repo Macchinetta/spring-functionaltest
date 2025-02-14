@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">AccessDeniedPagePge</h1>
+
+                <span id="errorMessage"><span th:text="#{e.sf.fw.8005}"></span></span>
+
+                <form th:action="@{/intr}" method="get">
+                    <input type="submit" id="top" class="btn btn-default" value="top" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -19,69 +19,59 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import java.io.File;
 import java.io.IOException;
-
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
-	private static String VIEW_TYPE = "thymeleaf";
+    private static final String VIEW_TYPE = "thymeleaf";
 
-	/**
+    /**
      * <ul>
      * <li>SpringMVCのAjax機能を使用した場合、JSON形式のレスポンスを返却することができることを確認する。
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
     public void testAJAX0101001() throws IOException, InterruptedException {
         webDriverOperations.click(id("ajax0101001_" + VIEW_TYPE));
 
-        webDriverOperations.appendText(id("personalComputerName"),
-                "Spring Test Server 1");
+        webDriverOperations.appendText(id("personalComputerName"), "Spring Test Server 1");
         webDriverOperations.click(id("searchBtn"));
 
         // 要素が見つかるまでアサーションを待つ
         webDriverOperations.waitForDisplayed(By.xpath("//td[2]/a"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath("//td[2]/a")), is(
-                "Spring Test Server 1"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is(
-                "Spring OS 64bit"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[4]")), is(
-                "Spring Core i9-440"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[5]")), is(
-                "DDR3-1600 16GB"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[6]")), is(
-                "Spring Chip"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[7]")), is(
-                "Spring SSD 500GB"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[8]")), is(
-                "Spring Power 800W"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[9]")), is(
-                "100000円"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[2]/a")), is("Spring Test Server 1"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is("Spring OS 64bit"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[4]")), is("Spring Core i9-440"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[5]")), is("DDR3-1600 16GB"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[6]")), is("Spring Chip"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[7]")), is("Spring SSD 500GB"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[8]")), is("Spring Power 800W"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[9]")), is("100000円"));
     }
 
     /**
      * <ul>
      * <li>Ajaxを使ってフォームのデータをPOSTした場合、Controllerのフォームで受け取ることができることを確認する。
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -89,8 +79,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0102001_" + VIEW_TYPE));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 11");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 11");
         webDriverOperations.overrideText(id("os"), "Spring OS 2 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-449");
         webDriverOperations.overrideText(id("ram"), "DDR3-3600 16GB");
@@ -102,18 +91,17 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("登録PCの編集に成功しました。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -121,22 +109,19 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("ajax0102001_" + VIEW_TYPE));
 
         // 変更されていることを確認
-        assertThat(webDriverOperations.getInputFieldValue(id(
-                "personalComputerName")).trim(), is("Spring Test Server 11"));
-        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(), is(
-                "Spring OS 2 64bit"));
-        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(), is(
-                "Spring Core i9-449"));
-        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is(
-                "DDR3-3600 16GB"));
-        assertThat(webDriverOperations.getInputFieldValue(id("videocard"))
-                .trim(), is("Spring Chip 5"));
-        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is(
-                "Spring SSD 1TB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("personalComputerName")).trim(),
+                is("Spring Test Server 11"));
+        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(),
+                is("Spring OS 2 64bit"));
+        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(),
+                is("Spring Core i9-449"));
+        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is("DDR3-3600 16GB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("videocard")).trim(),
+                is("Spring Chip 5"));
+        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is("Spring SSD 1TB"));
         assertThat(webDriverOperations.getInputFieldValue(id("power")).trim(),
                 is("Spring Power 1200W"));
-        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(),
-                is("200000"));
+        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(), is("200000"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -148,6 +133,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>AjaxでフォームのデータをJSON形式に変換してからPOSTした場合、Controllerのフォームで受け取ることができることを確認する。
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -155,8 +141,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0103001_" + VIEW_TYPE));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 11");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 11");
         webDriverOperations.overrideText(id("os"), "Spring OS 2 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-449");
         webDriverOperations.overrideText(id("ram"), "DDR3-3600 16GB");
@@ -168,18 +153,17 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("登録PCの編集に成功しました。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -187,22 +171,19 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("ajax0103001_" + VIEW_TYPE));
 
         // 変更されていることを確認
-        assertThat(webDriverOperations.getInputFieldValue(id(
-                "personalComputerName")).trim(), is("Spring Test Server 11"));
-        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(), is(
-                "Spring OS 2 64bit"));
-        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(), is(
-                "Spring Core i9-449"));
-        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is(
-                "DDR3-3600 16GB"));
-        assertThat(webDriverOperations.getInputFieldValue(id("videocard"))
-                .trim(), is("Spring Chip 5"));
-        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is(
-                "Spring SSD 1TB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("personalComputerName")).trim(),
+                is("Spring Test Server 11"));
+        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(),
+                is("Spring OS 2 64bit"));
+        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(),
+                is("Spring Core i9-449"));
+        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is("DDR3-3600 16GB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("videocard")).trim(),
+                is("Spring Chip 5"));
+        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is("Spring SSD 1TB"));
         assertThat(webDriverOperations.getInputFieldValue(id("power")).trim(),
                 is("Spring Power 1200W"));
-        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(),
-                is("200000"));
+        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(), is("200000"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -215,13 +196,13 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>AjaxでフォームのデータをXML形式に変換してからPOSTした場合、Controllerのフォームで受け取ることができることを確認する。
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
     public void testAJAX0104001() throws IOException, InterruptedException {
 
-        File xXETargetFile = new ClassPathResource("testdata/ajax/dummy.txt")
-                .getFile();
+        File xXETargetFile = new ClassPathResource("testdata/ajax/dummy.txt").getFile();
         String xXETargetString = "<!DOCTYPE comment [<!ELEMENT comment ANY ><!ENTITY xxe SYSTEM \""
                 + xXETargetFile.getAbsolutePath()
                 + "\" >]><messageBoardForm><comment>&xxe;Test</comment></messageBoardForm>";
@@ -238,12 +219,11 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
             // 要素が見つかるまでアサーションを待つ
             webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath(
-                            "//div[2]/div[1]/div[1]/ul/li")));
+                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
 
             // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")), is(
-                    String.valueOf(HttpStatus.BAD_REQUEST.value())));
+            assertThat(webDriverOperations.getText(id("returnStatus")),
+                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
             webDriverOperations.saveScreenCapture();
         }
@@ -261,12 +241,11 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
             // 要素が見つかるまでアサーションを待つ
             webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath(
-                            "//div[2]/div[1]/div[1]/ul/li")));
+                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
 
             // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")), is(
-                    String.valueOf(HttpStatus.BAD_REQUEST.value())));
+            assertThat(webDriverOperations.getText(id("returnStatus")),
+                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
             webDriverOperations.saveScreenCapture();
         }
@@ -276,6 +255,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>リクエストパラメータとして送信したデータをJavaBeanにバインドする際に、入力値に不正な値が指定された場合、発生する例外をハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -286,15 +266,14 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("PRICEは数値で入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("PRICEは数値で入力してください。"));
 
     }
 
@@ -302,6 +281,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>リクエストBodyに格納されているデータをJavaBeanにバインドする際に、入力値に不正な値が指定された場合、発生する例外をハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -312,16 +292,14 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -329,6 +307,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>リクエストBodyに格納されているデータをJavaBeanにバインドする際に、Bodyに格納されているデータからJavaBeanを生成できなかった場合、発生する例外をハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -339,15 +318,14 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("priceに入力された値が不正です。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("priceに入力された値が不正です。"));
 
     }
 
@@ -355,6 +333,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>正常終了時に返却するJavaBeanと入力エラー時に返却するJavaBeanの型が同じ場合、エラー情報を設定するオブジェクトを処理メソッドの引数として受けることでエラーハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -365,16 +344,14 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -382,6 +359,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>エラー情報を設定するオブジェクトを処理メソッドの引数として受け取る場合、HTTPステータスコードを処理結果によって分けることができることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -392,16 +370,14 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -409,52 +385,50 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>複数のメソッドに対するリクエストで同じエラー処理を実装する必要がある場合、発生する業務例外を共通的にハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
     public void testAJAX0301001() throws IOException, InterruptedException {
         webDriverOperations.click(id("ajax0301001001_" + VIEW_TYPE));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 2");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 2");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
 
         webDriverOperations.saveScreenCapture();
 
         webDriverOperations.click(id("retrunToIndex"));
         webDriverOperations.click(id("ajax0301001002_" + VIEW_TYPE));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 3");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 3");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.getWebDriver().findElement(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
     }
 
     /**
      * <ul>
      * <li>コントローラで業務例外が発生する処理をtry-catchする場合、リクエスト毎にエラーハンドリングできることを確認
      * </ul>
+     * 
      * @throws InterruptedException
      **/
     @Test
@@ -462,20 +436,18 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0302001_" + VIEW_TYPE));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 2");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 2");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
 
     }
 
@@ -487,8 +459,7 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
     }
 
     private void initData() {
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 1");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 1");
         webDriverOperations.overrideText(id("os"), "Spring OS 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-440");
         webDriverOperations.overrideText(id("ram"), "DDR3-1600 16GB");

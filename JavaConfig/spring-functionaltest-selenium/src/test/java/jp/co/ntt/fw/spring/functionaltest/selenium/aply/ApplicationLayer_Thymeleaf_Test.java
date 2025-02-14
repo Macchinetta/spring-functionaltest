@@ -21,27 +21,21 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Value;
-
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
-    
-    private static WebDriver driver;
 
-    @Value("/${selenium.contextName}")
-    private String contextRoot;
+    private static WebDriver driver;
 
     private static String VIEW_TYPE = "thymeleaf";
 
@@ -54,7 +48,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // 日本語ロケールのブラウザを起動
         {
             if (driver == null) {
-                driver = webDriverCreator.createLocaleSpecifiedDriver("ja");
+                driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.JAPAN);
             }
             setCurrentWebDriver(driver);
         }
@@ -85,15 +79,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@GetMapping(value = \"0101/001_1\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@GetMapping(value = \"0101/001_1\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -104,15 +97,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@PostMapping(value = \"0101/001_2\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@PostMapping(value = \"0101/001_2\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
         // Controllerの実装方法画面の操作
         {
@@ -129,8 +121,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -148,8 +139,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -174,15 +164,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@GetMapping(value = \"0101/002/hello\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@GetMapping(value = \"0101/002/hello\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -200,8 +189,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -219,8 +207,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -245,15 +232,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@GetMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@GetMapping(value = \"0101/003\", params = \"form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -270,8 +256,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -295,15 +280,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@GetMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@GetMapping(value = \"0101/004\", params = \"!form\")」のメソッドが実行されました。"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // Controllerの実装方法画面の操作
@@ -320,8 +304,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -350,8 +333,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -380,8 +362,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -410,8 +391,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -467,16 +447,15 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             // URLがリダイレクト先のものになっていること。
-            assertTrue(webDriverOperations.getCurrentUrl().contains(VIEW_TYPE
-                    + "/0102/005?complete"));
-            assertThat(webDriverOperations.getText(id("messages")), is(
-                    "「@GetMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
+            assertTrue(
+                    webDriverOperations.getCurrentUrl().contains(VIEW_TYPE + "/0102/005?complete"));
+            assertThat(webDriverOperations.getText(id("messages")),
+                    is("「@GetMapping(value = \"0102/005complete\")」のメソッドが実行されました。"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -500,16 +479,15 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // Controllerの実装方法画面の確認
         {
             // URLがリダイレクト先のものになっていること。
-            assertTrue(webDriverOperations.getCurrentUrl().contains(VIEW_TYPE
-                    + "/0102/006?complete&id=redirect_id"));
+            assertTrue(webDriverOperations.getCurrentUrl()
+                    .contains(VIEW_TYPE + "/0102/006?complete&id=redirect_id"));
             assertThat(webDriverOperations.getText(id("messages")), is(
                     "「@GetMapping(value = \"0102/006complete\")」のメソッドが実行されました。(id=redirect_id)"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -538,8 +516,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -574,8 +551,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -604,8 +580,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -634,8 +609,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -653,22 +627,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value1")), is(
-                    "1,234,567"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value1")), is("1,234,567"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "1234567"));
+            assertThat(webDriverOperations.getText(id("value1")), is("1234567"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -686,22 +657,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value2")), is(
-                    "2,345,678"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value2")), is("2,345,678"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "2345678"));
+            assertThat(webDriverOperations.getText(id("value2")), is("2345678"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -720,16 +688,15 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getWebDriver().findElement(id(
-                    "value3")).getAttribute("value"), is("$3,456,789.00"));
+            assertThat(webDriverOperations.getWebDriver().findElement(id("value3"))
+                    .getAttribute("value"), is("$3,456,789.00"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value3")), is(
-                    "3456789"));
+            assertThat(webDriverOperations.getText(id("value3")), is("3456789"));
         }
         // ログの確認
         {
@@ -752,8 +719,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value4")), is(
-                    "44%"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value4")), is("44%"));
 
             webDriverOperations.click(id("submit"));
         }
@@ -765,8 +731,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -784,22 +749,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value5")), is(
-                    "19550505"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value5")), is("19550505"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -817,22 +780,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value6")), is(
-                    "6,666,666,666"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value6")), is("6,666,666,666"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "6666666666"));
+            assertThat(webDriverOperations.getText(id("value6")), is("6666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -850,22 +810,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの実装 入力画面の操作
         {
-            assertThat(webDriverOperations.getInputFieldValue(id("value7")), is(
-                    "￥7,777,777,777"));
+            assertThat(webDriverOperations.getInputFieldValue(id("value7")), is("￥7,777,777,777"));
 
             webDriverOperations.click(id("submit"));
         }
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value7")), is(
-                    "7777777777"));
+            assertThat(webDriverOperations.getText(id("value7")), is("7777777777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -883,15 +840,13 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            assertThat(webDriverOperations.getText(id(
-                    "formObjectForm.initConfirmValue")), is(
-                            "@ModelAttribute属性名無し初期設定値"));
+            assertThat(webDriverOperations.getText(id("formObjectForm.initConfirmValue")),
+                    is("@ModelAttribute属性名無し初期設定値"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -909,15 +864,13 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            assertThat(webDriverOperations.getText(id(
-                    "formObjectForm2.initConfirmValue")), is(
-                            "@ModelAttribute属性名あり初期設定値"));
+            assertThat(webDriverOperations.getText(id("formObjectForm2.initConfirmValue")),
+                    is("@ModelAttribute属性名あり初期設定値"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -935,15 +888,13 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // フォームオブジェクトの初期化 確認画面の操作
         {
-            String assertText = webDriverOperations.getText(id(
-                    "formObjectForm3.initConfirmValue"));
+            String assertText = webDriverOperations.getText(id("formObjectForm3.initConfirmValue"));
             assertThat(assertText.length(), Matchers.greaterThan(0));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -966,31 +917,26 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1013,35 +959,28 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
-            webDriverOperations.overrideText(id("value7"),
-                    "￥777,777,777,777,777");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value7"), "￥777,777,777,777,777");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
-            assertThat(webDriverOperations.getText(id("value7")), is(
-                    "777777777777777"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
+            assertThat(webDriverOperations.getText(id("value7")), is("777777777777777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1064,31 +1003,26 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1111,22 +1045,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "null は許可されていません"));
+            assertThat(webDriverOperations.getText(id("value1.errors")), is("null は許可されていません"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1149,31 +1080,26 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1196,8 +1122,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
@@ -1210,8 +1135,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1234,31 +1158,26 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1281,22 +1200,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1.errors")), is(
-                    "null は許可されていません"));
+            assertThat(webDriverOperations.getText(id("value1.errors")), is("null は許可されていません"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1319,31 +1235,26 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "$34,567,890");
             webDriverOperations.overrideText(id("value4"), "44%");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 完了画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value1")), is(
-                    "87654321"));
-            assertThat(webDriverOperations.getText(id("value2")), is(
-                    "23456789"));
+            assertThat(webDriverOperations.getText(id("value1")), is("87654321"));
+            assertThat(webDriverOperations.getText(id("value2")), is("23456789"));
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")), is(
-                    "Thu May 05 00:00:00 JST 1955"));
-            assertThat(webDriverOperations.getText(id("value6")), is(
-                    "666666666666666"));
+            assertThat(webDriverOperations.getText(id("value5")),
+                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1366,22 +1277,19 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // webDriverOperations.overrideText(id("value3"), "");
             webDriverOperations.overrideText(id("value4"), "");
             webDriverOperations.overrideText(id("value5"), "19550505");
-            webDriverOperations.overrideText(id("value6"),
-                    "666,666,666,666,666");
+            webDriverOperations.overrideText(id("value6"), "666,666,666,666,666");
 
             webDriverOperations.click(id("submit"));
         }
 
         // フォームオブジェクトの実装 入力画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value4.errors")), is(
-                    "null は許可されていません"));
+            assertThat(webDriverOperations.getText(id("value4.errors")), is("null は許可されていません"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1401,8 +1309,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
             dbLogAssertOperations.assertContainsByRegexMessage(
                     "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
                     "Client IP Adress:");
@@ -1410,8 +1317,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("共通処理の実装 確認完了"));
         }
     }
 
@@ -1431,8 +1337,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
             dbLogAssertOperations.assertContainsByRegexMessage(
                     "jp.co.ntt.fw.spring.functionaltest.app.aply.LoggingIpAddressFilter",
                     "Client IP Adress:");
@@ -1440,8 +1345,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("共通処理の実装 確認完了"));
         }
     }
 
@@ -1462,33 +1366,30 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
-            list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
-                    ".*APLY04CommonController.*",
-                    "\\[APLY0403003.*");
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+            list = dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                    ".*APLY04CommonController.*", "\\[APLY0403003.*");
 
             // 順番通りに出力されていること。
             assertThat(list.size(), is(6));
-            assertThat(list.get(0).toString(), is(
-                    "[APLY040300301]APLY04CommonControllerAdvice01 initBinder Method Called"));
+            assertThat(list.get(0).toString(),
+                    is("[APLY040300301]APLY04CommonControllerAdvice01 initBinder Method Called"));
             assertThat(list.get(1).toString(), is(
                     "[APLY040300302]APLY04CommonControllerAdvice01 setUpCommonParameters01 Method Called"));
-            assertThat(list.get(2).toString(), is(
-                    "[APLY040300303]APLY04CommonControllerAdvice02 initBinder Method Called"));
+            assertThat(list.get(2).toString(),
+                    is("[APLY040300303]APLY04CommonControllerAdvice02 initBinder Method Called"));
             assertThat(list.get(3).toString(), is(
                     "[APLY040300304]APLY04CommonControllerAdvice02 setUpCommonParameters02 Method Called"));
-            assertThat(list.get(4).toString(), is(
-                    "[APLY040300305]APLY04CommonControllerAdvice03 initBinder Method Called"));
+            assertThat(list.get(4).toString(),
+                    is("[APLY040300305]APLY04CommonControllerAdvice03 initBinder Method Called"));
             assertThat(list.get(5).toString(), is(
                     "[APLY040300306]APLY04CommonControllerAdvice03 setUpCommonParameters03 Method Called"));
         }
 
         // エラー画面に遷移（例外処理を実施している為）
         {
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//div[2]/div/ul/li")), is("エラーにより、異常終了しました。"));
+            assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/ul/li")),
+                    is("エラーにより、異常終了しました。"));
         }
     }
 
@@ -1509,32 +1410,254 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         List<String> list;
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
-            list = dbLogAssertOperations.getLogByRegexMessage(
-                    webDriverOperations.getXTrack(),
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+            list = dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
                     ".*SuccessLoggingInterceptor", "\\[APLY0402.*");
 
             // 順番通りに出力されていること。
             assertThat(list.size(), is(3));
-            assertThat(list.get(0).toString(), is(
-                    "[APLY0402_01] preHandle method called"));
-            assertThat(list.get(1).toString(), is(
-                    "[APLY0402_02] postHandle method called"));
-            assertThat(list.get(2).toString(), is(
-                    "[APLY0402_03] afterCompletion method called"));
+            assertThat(list.get(0).toString(), is("[APLY0402_01] preHandle method called"));
+            assertThat(list.get(1).toString(), is("[APLY0402_02] postHandle method called"));
+            assertThat(list.get(2).toString(), is("[APLY0402_03] afterCompletion method called"));
         }
 
         // 確認画面に遷移(基本ログ確認の為、ダミー)
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "共通処理の実装 確認完了"));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("共通処理の実装 確認完了"));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Suffix Matchが適用されていない場合に拡張子なしのパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0601001() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0601001_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("Suffix Matchの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Suffix Matchが適用されていない場合に拡張子ありのパスがエラーになることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0601002() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0601002_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/ul/li")),
+                    is("Request error!"));
+        }
+
+        // 拡張子が原因でエラーになっていることを確認する。
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexStackTrace(
+                    "java.lang.NumberFormatException: For input string: \"1.json\"");
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Suffix Matchが適用されている場合に拡張子なしのパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0601003() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0601003_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("Suffix Matchの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Suffix Matchが適用されている場合に拡張子ありのパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0601004() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0601004_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")), is("Suffix Matchの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Suffix Matchが適用されている場合に許可されていない拡張子のパスがエラーになることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0601005() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0601005_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/ul/li")),
+                    is("Request error!"));
+        }
+
+        // 許可されていない拡張子が原因でエラーになっていることを確認する。
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertContainsByRegexStackTrace(
+                    "java.lang.NumberFormatException: For input string: \"1.txt\"");
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Trailing Slashが適用されていない場合に末尾に/のついていないパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0602001() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0602001_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")),
+                    is("Trailing Slashの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Trailing Slashが適用されていない場合に末尾に/のついたパスがエラーになることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0602002() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0602002_" + VIEW_TYPE));
+        }
+
+        // エラー画面に遷移することを確認する
+        {
+            assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/ul/li")),
+                    is("Resource not found."));
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Trailing Slashが適用されている場合に末尾に/のついていないパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0602003() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0602003_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")),
+                    is("Trailing Slashの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>Trailing Slashが適用されている場合に末尾に/のついたパスが通ることを確認する。</li>
+     * </ul>
+     */
+    @Test
+    public void testAPLY0602004() {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("aply0602004_" + VIEW_TYPE));
+        }
+
+        // 遷移後の画面の確認
+        {
+            assertThat(webDriverOperations.getText(id("screenTitle")),
+                    is("Trailing Slashの実装 確認完了"));
+        }
+
+        // ログの確認
+        {
+            dbLogAssertOperations.waitForAssertion();
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値を表示できること。（th:text属性）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1546,22 +1669,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのth:textを利用してエスケープ処理した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "<font color='red'>Sample</font>"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafのth:textを利用してエスケープ処理した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("<font color='red'>Sample</font>"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1573,22 +1696,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7,777"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7,777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1600,22 +1722,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "3,333.55"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("3,333.55"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatPercentメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1627,22 +1748,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatPercentを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "34.50%"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("34.50%"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.formatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1654,22 +1774,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("2013/12/09"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.formatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1681,22 +1800,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#calendars.formatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#calendars.formatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("2013/12/09"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatIntegerメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1708,22 +1826,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.arrayFormatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "1,111, 2,222, 3,333"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.arrayFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("1,111, 2,222, 3,333"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatIntegerメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1735,22 +1852,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.listFormatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "4,444, 5,555, 6,666"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.listFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("4,444, 5,555, 6,666"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatIntegerメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1762,22 +1878,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.setFormatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7,777, 8,888, 9,999"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.setFormatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7,777, 8,888, 9,999"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatDecimalメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1789,22 +1904,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.arrayFormatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "1,111.10, 2,222.20, 3,333.30"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.arrayFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("1,111.10, 2,222.20, 3,333.30"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatDecimalメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1816,22 +1931,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.listFormatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "4,444.40, 5,555.50, 6,666.60"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.listFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("4,444.40, 5,555.50, 6,666.60"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatDecimalメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1843,22 +1958,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.setFormatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7,777.70, 8,888.80, 9,999.90"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.setFormatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("7,777.70, 8,888.80, 9,999.90"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.arrayFormatPercentメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1870,22 +1985,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.arrayFormatPercentを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "11.10%, 22.20%, 33.30%"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.arrayFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("11.10%, 22.20%, 33.30%"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.listFormatPercentメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1897,22 +2011,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.listFormatPercentを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "44.40%, 55.50%, 66.60%"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.listFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("44.40%, 55.50%, 66.60%"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.setFormatPercentメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1924,16 +2037,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.setFormatPercentを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "77.70%, 88.80%, 99.90%"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.setFormatPercentを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("77.70%, 88.80%, 99.90%"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1941,6 +2052,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
      * <li>千の位の区切り文字 "." POINT</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1952,16 +2064,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7.777"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7.777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1969,6 +2079,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
      * <li>千の位の区切り文字 " " WHITESPACE</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -1980,16 +2091,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7 777"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7 777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -1997,6 +2106,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
      * <li>千の位の区切り文字 "" NONE</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2008,15 +2118,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is("7777"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2024,6 +2133,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
      * <li>千の位の区切り文字 "." DEFAULT(Local依存)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2035,18 +2145,15 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "7,777"));
-            assertThat(webDriverOperations.getText(id("message3")),
-                    containsString("ja"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("7,777"));
+            assertThat(webDriverOperations.getText(id("message3")), containsString("ja"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2054,6 +2161,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
      * <li>小数点 "," COMMA</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2065,16 +2173,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "3,333,55"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("3,333,55"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2082,6 +2188,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
      * <li>小数点 " " WHITESPACE</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2093,16 +2200,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "3,333 55"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("3,333 55"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2111,8 +2216,11 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
      * <li>小数点 "" NONE</li>
      * <li>小数点に NONEは使用すべきでない為、"?"が付与される。</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
-     * @see org.thymeleaf.util.NumberUtils#computeDecimalFormatSymbols(NumberPointType, NumberPointType, Locale)
+     * 
+     * @see org.thymeleaf.util.NumberUtils#computeDecimalFormatSymbols(NumberPointType,
+     *      NumberPointType, Locale)
      */
     @Test
     public void testAPLY1001024() {
@@ -2123,16 +2231,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "3,333?55"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("3,333?55"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2140,6 +2246,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatDecimalメソッド）</li>
      * <li>小数点 "." DEFAULT(Locale依存)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2151,18 +2258,15 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "3,333.55"));
-            assertThat(webDriverOperations.getText(id("message3")),
-                    containsString("ja"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatDecimalを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("3,333.55"));
+            assertThat(webDriverOperations.getText(id("message3")), containsString("ja"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
@@ -2170,6 +2274,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#numbers.formatIntegerメソッド）</li>
      * <li>最小桁数を指定し、指定した桁数になることを確認する。</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2181,21 +2286,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#numbers.formatIntegerを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is("099"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.arrayformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2207,22 +2312,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.listformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2234,22 +2339,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#dates.setformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2261,22 +2366,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.arrayformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2288,22 +2393,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#calendars.arrayFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#calendars.arrayFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.listformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2315,22 +2420,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#calendars.listFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#calendars.listFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された日時を指定した書式で表示できること。（#calendars.setformatメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2342,22 +2447,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#calendars.setFormatを利用して数値を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "2013/12/09, 2013/12/10, 2013/12/11"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#calendars.setFormatを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>リンクURL式を利用してURLを生成できること。(コンテキストルートからの相対パス)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2369,20 +2474,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    contextRoot + "-aply/" + VIEW_TYPE + "/1002/user/address"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("/aply/" + VIEW_TYPE + "/1002/user/address"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>リンクURL式を利用してURLを生成できること。(現在のページからの相対パス)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2394,20 +2499,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(VIEW_TYPE
-                    + "/1002/user/address"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is(VIEW_TYPE + "/1002/user/address"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>リンクURL式を利用してURLを生成できること。(パラメータの使用)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2419,20 +2524,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    contextRoot + "-aply/" + VIEW_TYPE + "/user/address?id=3"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("/aply/" + VIEW_TYPE + "/user/address?id=3"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>リンクURL式を利用してURLを生成できること。(パス内での変数式の使用)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2444,20 +2549,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    contextRoot + "-aply/" + VIEW_TYPE + "/3/address"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("/aply/" + VIEW_TYPE + "/3/address"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>#mvc.uriメソッドを利用してURLを生成できること。</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2469,20 +2574,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    contextRoot + "-aply/" + VIEW_TYPE + "/1002/address"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("/aply/" + VIEW_TYPE + "/1002/address"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>リンクURL式を利用してURLを生成できること。(パラメータの使用、変数値がnull評価)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2494,20 +2599,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    contextRoot + "-aply/" + VIEW_TYPE + "/user//address"));
+            assertThat(webDriverOperations.getText(id("message2")),
+                    is("/aply/" + VIEW_TYPE + "/user//address"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>プロパティファイルに格納されたメッセージを表示できること。（メッセージ式#{}）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2519,22 +2624,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafのメッセージ式を利用して文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "注文ステータス"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafのメッセージ式を利用して文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("注文ステータス"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値と文字列を結合して表示できること。（+演算子使用）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2546,22 +2650,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "+演算子を利用して値と文字列を結合した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "Message : Hello World!"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("+演算子を利用して値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("Message : Hello World!"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値と文字列を結合して表示できること。（パイプ（|）使用）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2573,22 +2676,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "パイプ(|)を利用して値と文字列を結合した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "Message : Hello World!"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("パイプ(|)を利用して値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("Message : Hello World!"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値と文字列を結合して表示できること。（変数値がnull評価）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2600,26 +2702,24 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "+演算子を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "Message : null"));
-            assertThat(webDriverOperations.getText(id("message3")), is(
-                    "パイプ(|)を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
-            assertThat(webDriverOperations.getText(id("message4")), is(
-                    "Message : null"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("+演算子を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message2")), is("Message : null"));
+            assertThat(webDriverOperations.getText(id("message3")),
+                    is("パイプ(|)を利用して、nullと評価された値と文字列を結合した文字列を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message4")), is("Message : null"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値により条件分岐して表示切替ができること。（等価演算子を用いた条件式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2650,21 +2750,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(user.ageが存在しない場合)
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "no age specified"));
+            assertThat(webDriverOperations.getText(id("message2")), is("no age specified"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値により条件分岐して表示切替ができること。（比較演算子を用いた条件式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2683,8 +2782,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(user.ageが12以上の場合)
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "adult"));
+            assertThat(webDriverOperations.getText(id("message2")), is("adult"));
         }
 
         // モデルに含まれる値を再度入力(user.ageが12未満の場合)
@@ -2696,21 +2794,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(user.ageが12未満の場合)
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "child"));
+            assertThat(webDriverOperations.getText(id("message2")), is("child"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値により条件分岐して表示切替ができること。（デフォルト式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2741,21 +2838,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(user.ageが存在しない場合)
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "no age specified"));
+            assertThat(webDriverOperations.getText(id("message2")), is("no age specified"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値により条件分岐して表示切替ができること。（th:if形式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2774,8 +2870,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(th:ifがtrueの場合)
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "「complete」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is("「complete」と入力された場合の分岐"));
         }
 
         // モデルに含まれる値を再度入力(th:ifがfalseの場合)
@@ -2788,21 +2883,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(<c:if>がfalseの場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")), not(
-                    "「complete」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), not("「complete」と入力された場合の分岐"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された値により条件分岐して表示切替ができること。（th:switch形式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2821,8 +2915,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面(th:case="gold"の場合)
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "「gold」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is("「gold」と入力された場合の分岐"));
         }
 
         // モデルに含まれる値を再度入力(th:case="silver"の場合)
@@ -2835,8 +2928,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(th:case="silver"の場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "「silver」と入力された場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")), is("「silver」と入力された場合の分岐"));
         }
 
         // モデルに含まれる値を再度入力(th:case="*"の場合)
@@ -2849,21 +2941,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面(th:case="*"の場合)
         {
             // メッセージが存在しないことを確認
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "「gold」と「silver」以外の入力の場合の分岐"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("「gold」と「silver」以外の入力の場合の分岐"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納されたコレクション型の値を画面表示表示できること。(statusなし)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2876,57 +2968,51 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // モデルに含まれるコレクション型の表示を設定する。（th:each>形式）
         {
-            webDriverOperations.appendText(id("thymeleafFormList0.userName"),
-                    "山田太郎");
+            webDriverOperations.appendText(id("thymeleafFormList0.userName"), "山田太郎");
             webDriverOperations.appendText(id("thymeleafFormList0.age"), "60");
-            webDriverOperations.appendText(id("thymeleafFormList0.conditions"),
-                    "old");
-            webDriverOperations.appendText(id("thymeleafFormList1.userName"),
-                    "佐藤次郎");
+            webDriverOperations.appendText(id("thymeleafFormList0.conditions"), "old");
+            webDriverOperations.appendText(id("thymeleafFormList1.userName"), "佐藤次郎");
             webDriverOperations.appendText(id("thymeleafFormList1.age"), "30");
-            webDriverOperations.appendText(id("thymeleafFormList1.conditions"),
-                    "middle");
-            webDriverOperations.appendText(id("thymeleafFormList2.userName"),
-                    "田中花子");
+            webDriverOperations.appendText(id("thymeleafFormList1.conditions"), "middle");
+            webDriverOperations.appendText(id("thymeleafFormList2.userName"), "田中花子");
             webDriverOperations.appendText(id("thymeleafFormList2.age"), "15");
-            webDriverOperations.appendText(id("thymeleafFormList2.conditions"),
-                    "young");
+            webDriverOperations.appendText(id("thymeleafFormList2.conditions"), "young");
             webDriverOperations.click(id("collectionInModel"));
         }
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[1]")), is("山田太郎"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[2]")), is("60"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[3]")), is("old"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[1]")), is("佐藤次郎"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[2]")), is("30"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[3]")), is("middle"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[1]")), is("田中花子"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[2]")), is("15"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[3]")), is("young"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[1]")),
+                    is("山田太郎"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[2]")),
+                    is("60"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[3]")),
+                    is("old"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[1]")),
+                    is("佐藤次郎"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[2]")),
+                    is("30"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[3]")),
+                    is("middle"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[1]")),
+                    is("田中花子"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[2]")),
+                    is("15"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[3]")),
+                    is("young"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納されたコレクション型の値を画面表示表示できること。(statusあり)</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -2939,63 +3025,54 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // モデルに含まれるコレクション型の表示を設定する。（th:each>形式）
         {
-            webDriverOperations.appendText(id("thymeleafFormList0.userName"),
-                    "山田太郎");
+            webDriverOperations.appendText(id("thymeleafFormList0.userName"), "山田太郎");
             webDriverOperations.appendText(id("thymeleafFormList0.age"), "60");
-            webDriverOperations.appendText(id("thymeleafFormList0.conditions"),
-                    "old");
-            webDriverOperations.appendText(id("thymeleafFormList1.userName"),
-                    "佐藤次郎");
+            webDriverOperations.appendText(id("thymeleafFormList0.conditions"), "old");
+            webDriverOperations.appendText(id("thymeleafFormList1.userName"), "佐藤次郎");
             webDriverOperations.appendText(id("thymeleafFormList1.age"), "30");
-            webDriverOperations.appendText(id("thymeleafFormList1.conditions"),
-                    "middle");
-            webDriverOperations.appendText(id("thymeleafFormList2.userName"),
-                    "田中花子");
+            webDriverOperations.appendText(id("thymeleafFormList1.conditions"), "middle");
+            webDriverOperations.appendText(id("thymeleafFormList2.userName"), "田中花子");
             webDriverOperations.appendText(id("thymeleafFormList2.age"), "15");
-            webDriverOperations.appendText(id("thymeleafFormList2.conditions"),
-                    "young");
+            webDriverOperations.appendText(id("thymeleafFormList2.conditions"), "young");
             webDriverOperations.click(id("collectionInModelUsingStatus"));
         }
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[1]")), is("1"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[2]")), is("山田太郎"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[3]")), is("60"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[2]/td[4]")), is("old"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[1]")), is("2"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[2]")), is("佐藤次郎"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[3]")), is("30"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[3]/td[4]")), is("middle"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[1]")), is("3"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[2]")), is("田中花子"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[3]")), is("15"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//table/tbody/tr[4]/td[4]")), is("young"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[1]")), is("1"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[2]")),
+                    is("山田太郎"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[3]")),
+                    is("60"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[2]/td[4]")),
+                    is("old"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[1]")), is("2"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[2]")),
+                    is("佐藤次郎"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[3]")),
+                    is("30"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[3]/td[4]")),
+                    is("middle"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[1]")), is("3"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[2]")),
+                    is("田中花子"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[3]")),
+                    is("15"));
+            assertThat(webDriverOperations.getText(By.xpath("//table/tbody/tr[4]/td[4]")),
+                    is("young"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>オブジェクト名を省略してプロパティを指定できること。（th:object形式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -3020,14 +3097,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>ローカル変数を定義できること。（th:with形式）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -3046,21 +3123,20 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message2")), is(
-                    "Hello, 山田太郎"));
+            assertThat(webDriverOperations.getText(id("message2")), is("Hello, 山田太郎"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>フォームオブジェクトのプロパティをHTMLフォームへバインドできること。</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -3081,24 +3157,22 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("getUserName")), is(
-                    "佐藤太郎"));
+            assertThat(webDriverOperations.getText(id("getUserName")), is("佐藤太郎"));
             assertThat(webDriverOperations.getText(id("getAge")), is("40"));
-            assertThat(webDriverOperations.getText(id("getConditions")), is(
-                    "platinum"));
+            assertThat(webDriverOperations.getText(id("getConditions")), is("platinum"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#aggregates.sumメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -3110,21 +3184,21 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#aggregates.sumを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#aggregates.sumを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is("1368"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 
     /**
      * <ul>
      * <li>モデルに格納された数値を指定した書式で表示できること。（#aggregates.avgメソッド）</li>
+     * <li>Thymeleafのみ実施</li>
      * </ul>
      */
     @Test
@@ -3136,15 +3210,14 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         }
         // リクエスト処理メソッドの応答に対応する画面
         {
-            assertThat(webDriverOperations.getText(id("message1")), is(
-                    "Thymeleafが提供している#aggregates.avgを利用して数値を以下に表示します。"));
+            assertThat(webDriverOperations.getText(id("message1")),
+                    is("Thymeleafが提供している#aggregates.avgを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is("456"));
         }
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
     }
 }

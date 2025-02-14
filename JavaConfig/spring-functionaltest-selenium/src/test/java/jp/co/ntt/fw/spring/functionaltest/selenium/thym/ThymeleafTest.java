@@ -23,10 +23,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.openqa.selenium.By.id;
-
 import java.io.IOException;
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -37,7 +35,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
-
 import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
@@ -63,11 +60,9 @@ public class ThymeleafTest extends FunctionTestSupport {
         // 検証
         assertThat(webDriverOperations.getTitle(), is("Search Screen"));
         assertThat(webDriverOperations.getText(By.tagName("h1")), is("Search"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.name(
-                "searchForm")).getAttribute("action"), is(getPackageRootUrl()
-                        + "/"));
-        assertThat(webDriverOperations.getInputFieldValue(By.name(
-                "fruitsPrice")), is("85"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.name("searchForm"))
+                .getAttribute("action"), is(getPackageRootUrl() + "/"));
+        assertThat(webDriverOperations.getInputFieldValue(By.name("fruitsPrice")), is("85"));
 
     }
 
@@ -85,11 +80,9 @@ public class ThymeleafTest extends FunctionTestSupport {
         // 検証
         assertThat(webDriverOperations.getTitle(), is("Search Screen"));
         assertThat(webDriverOperations.getText(By.tagName("h1")), is("Search"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.name(
-                "searchForm")).getAttribute("action"), is(getPackageRootUrl()
-                        + "/0201/002"));
-        assertThat(webDriverOperations.getInputFieldValue(By.name(
-                "fruitsName")), is(""));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.name("searchForm"))
+                .getAttribute("action"), is(getPackageRootUrl() + "/0201/002"));
+        assertThat(webDriverOperations.getInputFieldValue(By.name("fruitsName")), is(""));
 
     }
 
@@ -106,8 +99,7 @@ public class ThymeleafTest extends FunctionTestSupport {
 
         // 検証
         assertThat(webDriverOperations.getTitle(), is("Search Result Screen"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Search Result"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is("Search Result"));
         assertSearchResultCommon();
 
     }
@@ -137,8 +129,7 @@ public class ThymeleafTest extends FunctionTestSupport {
 
         // 検証
         assertThat(webDriverOperations.getTitle(), is("Search Screen"));
-        assertThat(webDriverOperations.getInputFieldValue(By.name(
-                "fruitsName")), is("apple"));
+        assertThat(webDriverOperations.getInputFieldValue(By.name("fruitsName")), is("apple"));
 
     }
 
@@ -154,14 +145,12 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0201004"));
 
         // 検証
-        webDriverOperations.waitForDisplayed(ExpectedConditions.titleIs(
-                "Unhandled System Error!"));
+        webDriverOperations.waitForDisplayed(ExpectedConditions.titleIs("Unhandled System Error!"));
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
                 "org.thymeleaf.TemplateEngine",
-                ".*Exception processing template \"thym/specifyUnknownProperty\": Exception evaluating SpringEL expression: \"searchForm.unknownProperty\" \\(template: \"thym/specifyUnknownProperty\" - line 14, col 13\\)",
+                ".*Exception processing template \"thym/specifyUnknownProperty\": Exception evaluating SpringEL expression: \"searchForm.unknownProperty\" \\(template: \"thym/specifyUnknownProperty\" - line 11, col 25\\)",
                 "org.thymeleaf.exceptions.TemplateProcessingException");
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                "org.thymeleaf.TemplateEngine",
+        dbLogAssertOperations.assertContainsByRegexStackTrace("org.thymeleaf.TemplateEngine",
                 "Caused by: org\\.springframework\\.expression\\.spel\\.SpelEvaluationException: EL1008E: Property or field 'unknownProperty' cannot be found on object of type 'jp\\.co\\.ntt\\.fw\\.spring\\.functionaltest\\.app\\.thym\\.SearchForm' - maybe not public or not valid\\?");
 
     }
@@ -178,8 +167,8 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0301001"));
 
         // 検証
-        assertThat(webDriverOperations.getWebDriver().getPageSource(), is(
-                containsString("<!-- This is Search Form -->")));
+        assertThat(webDriverOperations.getWebDriver().getPageSource(),
+                is(containsString("<!-- This is Search Form -->")));
 
     }
 
@@ -195,18 +184,16 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0301002"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Parser Level Comment Screen"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Parser Level Comment"));
-        List<WebElement> elements = webDriverOperations.getWebDriver()
-                .findElements(By.xpath("//table/tbody/tr[*]"));
+        assertThat(webDriverOperations.getTitle(), is("Parser Level Comment Screen"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is("Parser Level Comment"));
+        List<WebElement> elements =
+                webDriverOperations.getWebDriver().findElements(By.xpath("//table/tbody/tr[*]"));
         assertThat(elements.size(), is(5));
 
         // パーサーレベルコメントにより削除するtable内のコンテンツが存在しないこと
         for (WebElement elm : elements) {
-            assertThat(elm.findElement(By.xpath("./td[1]")).getText(), anyOf(
-                    not("Banana"), not("Strawberry")));
+            assertThat(elm.findElement(By.xpath("./td[1]")).getText(),
+                    anyOf(not("Banana"), not("Strawberry")));
         }
 
     }
@@ -223,12 +210,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0301003"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Prototype Only Comment Screen"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Prototype Only Comment"));
-        List<WebElement> elements = webDriverOperations.getWebDriver()
-                .findElements(By.xpath("//table/tbody/tr[*]"));
+        assertThat(webDriverOperations.getTitle(), is("Prototype Only Comment Screen"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is("Prototype Only Comment"));
+        List<WebElement> elements =
+                webDriverOperations.getWebDriver().findElements(By.xpath("//table/tbody/tr[*]"));
         assertThat(elements.size(), is(5));
 
     }
@@ -242,12 +227,11 @@ public class ThymeleafTest extends FunctionTestSupport {
     public void testTHYM0401001() throws IOException {
 
         // .jsonの拡張子付きURLでリクエスト
-        ResponseEntity<byte[]> entity = restTemplate.getForEntity(
-                getPackageRootUrl() + "/0401/001.json", byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.getForEntity(getPackageRootUrl() + "/0401/001.json", byte[].class);
 
         HttpHeaders headers = entity.getHeaders();
-        assertThat(headers.getContentType().toString(), is(
-                "text/html;charset=UTF-8"));
+        assertThat(headers.getContentType().toString(), is("text/html;charset=UTF-8"));
 
     }
 
@@ -260,12 +244,11 @@ public class ThymeleafTest extends FunctionTestSupport {
     public void testTHYM0402001() throws IOException {
 
         // .jsonの拡張子付きURLでリクエスト
-        ResponseEntity<byte[]> entity = restTemplate.getForEntity(
-                getPackageRootUrl() + "/0402/001.json", byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.getForEntity(getPackageRootUrl() + "/0402/001.json", byte[].class);
 
         HttpHeaders headers = entity.getHeaders();
-        assertThat(headers.getContentType().toString(), is(
-                "application/json;charset=UTF-8"));
+        assertThat(headers.getContentType().toString(), is("application/json;charset=UTF-8"));
     }
 
     /**
@@ -331,8 +314,7 @@ public class ThymeleafTest extends FunctionTestSupport {
 
         // ExpressionObjectに定義した内容が適用されているかをチェック
         // 適用されていない場合は "yyyy/MM/dd" が取得される
-        assertThat(webDriverOperations.getText(id("creationDate")), is(
-                "2017/11/15"));
+        assertThat(webDriverOperations.getText(id("creationDate")), is("2017/11/15"));
 
     }
 
@@ -349,10 +331,10 @@ public class ThymeleafTest extends FunctionTestSupport {
 
         // ExpressionObjectのインスタンスを生成したことを表すログを取得する
         dbLogAssertOperations.waitForAssertion();
-        List<String> logs = dbLogAssertOperations.getLogByRegexMessage(
-                webDriverOperations.getXTrack(),
-                "jp.co.ntt.fw.spring.functionaltest.dialects.thym.DateFormatSlashDialect",
-                "Create '.*' Object");
+        List<String> logs =
+                dbLogAssertOperations.getLogByRegexMessage(webDriverOperations.getXTrack(),
+                        "jp.co.ntt.fw.spring.functionaltest.dialects.thym.DateFormatSlashDialect",
+                        "Create '.*' Object");
 
         // 取得したログのサイズが3であるかチェックする
         assertThat(logs.size(), is(3));
@@ -372,8 +354,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("testTHYM0602001で実施")
-    public void testTHYM0601001() {
-    }
+    public void testTHYM0601001() {}
 
     /**
      * <ul>
@@ -413,8 +394,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
 
         // キャッシュにヒットすることの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(),
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations.getXTrack(),
                 "org.thymeleaf.TemplateEngine.cache.TEMPLATE_CACHE",
                 ".*Cache hit in cache \"TEMPLATE_CACHE\" for key \"thym/cacheTTLMs\".*");
 
@@ -428,9 +408,8 @@ public class ThymeleafTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
 
         // キャッシュされていたテンプレートが生存時間を過ぎたことで除外されたことの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations
-                .getXTrack(), ".*TEMPLATE_CACHE.*",
-                ".*Entry \"thym/cacheTTLMs\" is not valid anymore.*");
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations.getXTrack(),
+                ".*TEMPLATE_CACHE.*", ".*Entry \"thym/cacheTTLMs\" is not valid anymore.*");
     }
 
     /**
@@ -439,8 +418,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("有限時間内に確認不可能なためスキップ")
-    public void testTHYM0602002() {
-    }
+    public void testTHYM0602002() {}
 
     /**
      * <ul>
@@ -455,9 +433,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.click(id("thym060300101"));
 
             // 画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .textToBePresentInElementLocated(id("screenTitle"),
-                            "THYM0603001 cacheablePatterns01"));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                    id("screenTitle"), "THYM0603001 cacheablePatterns01"));
 
             // 初回画面のX-Trackを取得
             String xTrack = webDriverOperations.getXTrack();
@@ -466,9 +443,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.refresh();
 
             // 更新画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions.not(
-                    ExpectedConditions.textToBePresentInElementLocated(id(
-                            "xTrack"), xTrack)));
+            webDriverOperations.waitForDisplayed(ExpectedConditions
+                    .not(ExpectedConditions.textToBePresentInElementLocated(id("xTrack"), xTrack)));
         }
 
         // キャッシュにヒットしない画面の操作(cacheablePatterns01)
@@ -477,9 +453,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.click(id("thym060300102"));
 
             // 画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .textToBePresentInElementLocated(id("screenTitle"),
-                            "THYM0603001 cacheablePatterns02"));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                    id("screenTitle"), "THYM0603001 cacheablePatterns02"));
 
             // 初回画面のX-Trackを取得
             String xTrack = webDriverOperations.getXTrack();
@@ -488,19 +463,16 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.refresh();
 
             // 更新画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions.not(
-                    ExpectedConditions.textToBePresentInElementLocated(id(
-                            "xTrack"), xTrack)));
+            webDriverOperations.waitForDisplayed(ExpectedConditions
+                    .not(ExpectedConditions.textToBePresentInElementLocated(id("xTrack"), xTrack)));
         }
 
         // キャッシュにヒットすることの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(null,
-                ".*TEMPLATE_CACHE.*",
+        dbLogAssertOperations.assertContainsByRegexMessage(null, ".*TEMPLATE_CACHE.*",
                 ".*Cache hit in cache \"TEMPLATE_CACHE\" for key \"thym/cacheablePatterns01\".*");
 
         // キャッシュにヒットしないことの確認
-        dbLogAssertOperations.assertNotContainsByRegexMessage(null,
-                ".*TEMPLATE_CACHE.*",
+        dbLogAssertOperations.assertNotContainsByRegexMessage(null, ".*TEMPLATE_CACHE.*",
                 ".*Cache hit in cache \"TEMPLATE_CACHE\" for key \"thym/cacheablePatterns02\".*");
     }
 
@@ -517,9 +489,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.click(id("thym060300201"));
 
             // 画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .textToBePresentInElementLocated(id("screenTitle"),
-                            "THYM0603002 nonCacheablePatterns01"));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                    id("screenTitle"), "THYM0603002 nonCacheablePatterns01"));
 
             // 初回画面のX-Trackを取得
             String xTrack = webDriverOperations.getXTrack();
@@ -528,9 +499,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.refresh();
 
             // 更新画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions.not(
-                    ExpectedConditions.textToBePresentInElementLocated(id(
-                            "xTrack"), xTrack)));
+            webDriverOperations.waitForDisplayed(ExpectedConditions
+                    .not(ExpectedConditions.textToBePresentInElementLocated(id("xTrack"), xTrack)));
         }
 
         // キャッシュにヒットしない画面の操作(cacheablePatterns01)
@@ -539,9 +509,8 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.click(id("thym060300202"));
 
             // 画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .textToBePresentInElementLocated(id("screenTitle"),
-                            "THYM0603002 nonCacheablePatterns02"));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                    id("screenTitle"), "THYM0603002 nonCacheablePatterns02"));
 
             // 初回画面のX-Trackを取得
             String xTrack = webDriverOperations.getXTrack();
@@ -550,19 +519,16 @@ public class ThymeleafTest extends FunctionTestSupport {
             webDriverOperations.refresh();
 
             // 更新画面が表示されるまで待機
-            webDriverOperations.waitForDisplayed(ExpectedConditions.not(
-                    ExpectedConditions.textToBePresentInElementLocated(id(
-                            "xTrack"), xTrack)));
+            webDriverOperations.waitForDisplayed(ExpectedConditions
+                    .not(ExpectedConditions.textToBePresentInElementLocated(id("xTrack"), xTrack)));
         }
 
         // キャッシュにヒットすることの確認
-        dbLogAssertOperations.assertContainsByRegexMessage(null,
-                ".*TEMPLATE_CACHE.*",
+        dbLogAssertOperations.assertContainsByRegexMessage(null, ".*TEMPLATE_CACHE.*",
                 ".*Cache hit in cache \"TEMPLATE_CACHE\" for key \"thym/nonCacheablePatterns01\".*");
 
         // キャッシュにヒットしないことの確認
-        dbLogAssertOperations.assertNotContainsByRegexMessage(null,
-                ".*TEMPLATE_CACHE.*",
+        dbLogAssertOperations.assertNotContainsByRegexMessage(null, ".*TEMPLATE_CACHE.*",
                 ".*Cache hit in cache \"TEMPLATE_CACHE\" for key \"thym/nonCacheablePatterns02\".*");
     }
 
@@ -572,8 +538,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore
-    public void testTHYM0604001() {
-    }
+    public void testTHYM0604001() {}
 
     /**
      * <ul>
@@ -581,8 +546,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore
-    public void testTHYM0604002() {
-    }
+    public void testTHYM0604002() {}
 
     /**
      * <ul>
@@ -600,8 +564,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         dbLogAssertOperations.waitForAssertion();
 
         // 最大サイズを超えたことでテンプレートがキャッシュから除外されたログのリストを取得
-        List<String> logs = dbLogAssertOperations.getLogByRegexMessage(null,
-                ".*TEMPLATE_CACHE.*",
+        List<String> logs = dbLogAssertOperations.getLogByRegexMessage(null, ".*TEMPLATE_CACHE.*",
                 ".*\\[CACHE_REMOVE\\]\\[2\\] Max size exceeded for cache \"TEMPLATE_CACHE\".*");
 
         assertThat(logs.size() > 0, is(true));
@@ -613,8 +576,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore
-    public void testTHYM0605002() {
-    }
+    public void testTHYM0605002() {}
 
     /**
      * <ul>
@@ -622,8 +584,7 @@ public class ThymeleafTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore
-    public void testTHYM0605003() {
-    }
+    public void testTHYM0605003() {}
 
     /**
      * <ul>
@@ -655,10 +616,9 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0701001"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Search Result Screen(decoupled.th.xml)"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Search Result(decoupled.th.xml)"));
+        assertThat(webDriverOperations.getTitle(), is("Search Result Screen(decoupled.th.xml)"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("Search Result(decoupled.th.xml)"));
         assertSearchResultCommon();
 
     }
@@ -675,10 +635,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0701002"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Search Result Screen(decoupled_th_ref.th.xml)"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Search Result(decoupled_th_ref.th.xml)"));
+        assertThat(webDriverOperations.getTitle(),
+                is("Search Result Screen(decoupled_th_ref.th.xml)"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("Search Result(decoupled_th_ref.th.xml)"));
         assertSearchResultCommon();
 
     }
@@ -695,10 +655,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0702001"));
 
         // 検証
-        assertThat(webDriverOperations.getTitle(), is(
-                "Search Result Screen(decoupled-viewlogic.xml)"));
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Search Result(decoupled-viewlogic.xml)"));
+        assertThat(webDriverOperations.getTitle(),
+                is("Search Result Screen(decoupled-viewlogic.xml)"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("Search Result(decoupled-viewlogic.xml)"));
         assertSearchResultCommon();
 
     }
@@ -715,10 +675,9 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0801001"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Text Inlining"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.tagName(
-                "p")).getText(), is("Apple"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is("Text Inlining"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.tagName("p")).getText(),
+                is("Apple"));
 
     }
 
@@ -734,12 +693,11 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0801002"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "Other Inlining"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "js-template")).getAttribute("textContent"), is(allOf(
-                        containsString("Apple\"を購入しました。"), containsString(
-                                "Apple\"が売れました。"))));
+        assertThat(webDriverOperations.getText(By.tagName("h1")), is("Other Inlining"));
+        assertThat(
+                webDriverOperations.getWebDriver().findElement(By.id("js-template"))
+                        .getAttribute("textContent"),
+                is(allOf(containsString("Apple\"を購入しました。"), containsString("Apple\"が売れました。"))));
 
     }
 
@@ -755,11 +713,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0802003"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript Natural Template"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "js-template")).getAttribute("textContent").trim(), is(
-                        "var itemName = \"Orange\";"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript Natural Template"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id("js-template"))
+                .getAttribute("textContent").trim(), is("var itemName = \"Orange\";"));
 
     }
 
@@ -775,19 +732,17 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0802004"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript Object Serialize"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "js-template")).getAttribute("textContent"), is(allOf(
-                        containsString("var str = \"Orange\";"), containsString(
-                                "var num = 123.456;"), containsString(
-                                        "var bool = true;"), containsString(
-                                                "var ary = [\"abc\",\"def\",\"ghi\"];"),
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript Object Serialize"));
+        assertThat(
+                webDriverOperations.getWebDriver().findElement(By.id("js-template"))
+                        .getAttribute("textContent"),
+                is(allOf(containsString("var str = \"Orange\";"),
+                        containsString("var num = 123.456;"), containsString("var bool = true;"),
+                        containsString("var ary = [\"abc\",\"def\",\"ghi\"];"),
                         containsString("var col = [\"jkl\",\"mno\",\"pqr\"];"),
-                        containsString(
-                                "var map = {\"a\":\"abc\",\"d\":\"def\",\"g\":\"ghi\"};"),
-                        containsString(
-                                "var bean = {\"name\":\"Apple\",\"price\":100};"))));
+                        containsString("var map = {\"a\":\"abc\",\"d\":\"def\",\"g\":\"ghi\"};"),
+                        containsString("var bean = {\"name\":\"Apple\",\"price\":100};"))));
 
     }
 
@@ -803,8 +758,8 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0802006"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript Template Example"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript Template Example"));
 
         // xpathでtdタグの一覧が取得できなかった為、2回に分けて取得している。
         List<WebElement> elementsName = webDriverOperations.getWebDriver()
@@ -813,8 +768,8 @@ public class ThymeleafTest extends FunctionTestSupport {
                 .findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
 
         // Controllerで画面表示用に設定する値
-        String[] name = { "Orange", "Orange Juice", "Orange Jam" };
-        String[] price = { "200", "80", "400" };
+        String[] name = {"Orange", "Orange Juice", "Orange Jam"};
+        String[] price = {"200", "80", "400"};
 
         for (int i = 0; i < elementsName.size(); i++) {
             assertThat(elementsName.get(i).getText(), is(name[i]));
@@ -831,15 +786,13 @@ public class ThymeleafTest extends FunctionTestSupport {
     @Test
     public void testTHYM0803001() throws IOException {
         // テンプレートJavaScriptへのアクセス
-        ResponseEntity<String> entity = restTemplate.getForEntity(
-                getPackageRootUrl() + "/0803/javascript/thym0803.js",
-                String.class);
+        ResponseEntity<String> entity = restTemplate
+                .getForEntity(getPackageRootUrl() + "/0803/javascript/thym0803.js", String.class);
 
         assertThat(entity.getStatusCode().value(), is(200));
-        assertThat(entity.getHeaders().getContentType().toString(), is(
-                "application/javascript;charset=UTF-8"));
-        assertThat(entity.getBody(), containsString(
-                "var itemName = \"Orange\";"));
+        assertThat(entity.getHeaders().getContentType().toString(),
+                is("text/javascript;charset=UTF-8"));
+        assertThat(entity.getBody(), containsString("var itemName = \"Orange\";"));
     }
 
     /**
@@ -851,16 +804,15 @@ public class ThymeleafTest extends FunctionTestSupport {
     public void testTHYM0803002() throws IOException {
         // 静的JavaScriptへのアクセス
         try {
-            restTemplate.getForEntity(getPackageRootUrl()
-                    + "/0803/resources/app/js/welcome.js", byte[].class);
+            restTemplate.getForEntity(getPackageRootUrl() + "/0803/resources/app/js/welcome.js",
+                    byte[].class);
         } catch (HttpServerErrorException e) {
             assertThat(e.getStatusCode().value(), is(500));
         }
 
         // 静的JavaScriptをテンプレートJavaScriptとして解釈する旨のERRORログが出力されていること。
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                "org.thymeleaf.TemplateEngine",
+        dbLogAssertOperations.assertContainsByRegexStackTrace("org.thymeleaf.TemplateEngine",
                 "Caused by: java.io.FileNotFoundException: Could not open ServletContext resource \\[/WEB-INF/js/welcome.js\\]");
     }
 
@@ -873,15 +825,12 @@ public class ThymeleafTest extends FunctionTestSupport {
     public void testTHYM0803003() throws IOException {
         // テンプレートJavaScriptへのアクセス
         ResponseEntity<String> entity = restTemplate.getForEntity(
-                getPackageRootUrl()
-                        + "/0803/003/resources/app/js/thym0803003.js",
-                String.class);
+                getPackageRootUrl() + "/0803/003/resources/app/js/thym0803003.js", String.class);
 
         assertThat(entity.getStatusCode().value(), is(200));
-        assertThat(entity.getHeaders().getContentType().toString(), is(
-                "text/javascript;charset=UTF-8"));
-        assertThat(entity.getBody(), is(
-                "var itemName = /*[[${item.name}]]*/'Apple';"));
+        assertThat(entity.getHeaders().getContentType().toString(),
+                is("text/javascript;charset=UTF-8"));
+        assertThat(entity.getBody(), is("var itemName = /*[[${item.name}]]*/ \"Apple\";"));
     }
 
     /**
@@ -897,10 +846,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0803004"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript And HTML Template By TemplateResolver"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "itemName")).getText(), is("Grape"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript And HTML Template By TemplateResolver"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id("itemName")).getText(),
+                is("Grape"));
     }
 
     /**
@@ -916,10 +865,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0803005"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript And HTML Template By ViewResolver"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "itemName")).getText(), is("Peach"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript And HTML Template By ViewResolver"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id("itemName")).getText(),
+                is("Peach"));
     }
 
     /**
@@ -935,10 +884,10 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0803006"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript And HTML Template By Servlet"));
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "itemName")).getText(), is("Orange"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript And HTML Template By Servlet"));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id("itemName")).getText(),
+                is("Orange"));
     }
 
     /**
@@ -954,16 +903,15 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym0803007"));
 
         // 検証
-        assertThat(webDriverOperations.getText(By.tagName("h1")), is(
-                "JavaScript And HTML Template By ViewResolver"));
+        assertThat(webDriverOperations.getText(By.tagName("h1")),
+                is("JavaScript And HTML Template By ViewResolver"));
         // テンプレートJavaScriptを解決できないため、HTMLの<p>要素のテキストコンテンツが書き換えられない事を確認する。
-        assertThat(webDriverOperations.getWebDriver().findElement(By.id(
-                "itemName")).getText(), is(""));
+        assertThat(webDriverOperations.getWebDriver().findElement(By.id("itemName")).getText(),
+                is(""));
 
         // テンプレートJavaScriptをテンプレートHTMLとして解釈する旨のERRORログが出力されていること。
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                "org.thymeleaf.TemplateEngine",
+        dbLogAssertOperations.assertContainsByRegexStackTrace("org.thymeleaf.TemplateEngine",
                 "Caused by: java.io.FileNotFoundException: Could not open ServletContext resource \\[/WEB-INF/views/thym0803.html\\]",
                 greaterThanOrEqualTo(1L));
     }
@@ -981,14 +929,12 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym8001"));
 
         // 検証
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "リクエストパラメータの存在チェックについて(param)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("リクエストパラメータの存在チェックについて(param)"));
 
         // THYM8001001 : ${param.containsKey('xxx')}
-        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is(
-                "true"));
-        assertThat(webDriverOperations.getText(id("containsKeyBar")), is(
-                "true"));
+        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is("true"));
+        assertThat(webDriverOperations.getText(id("containsKeyBar")), is("true"));
 
         // THYM8001002 : ${param.keySet().contains('xxx')}
         assertThat(webDriverOperations.getText(id("keySetFoo")), is("true"));
@@ -1009,14 +955,12 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym8002"));
 
         // 検証
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "リクエストパラメータの存在チェックについて(session)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("リクエストパラメータの存在チェックについて(session)"));
 
         // THYM8002001 : ${session.containsKey('xxx')}
-        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is(
-                "true"));
-        assertThat(webDriverOperations.getText(id("containsKeyBar")), is(
-                "true"));
+        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is("true"));
+        assertThat(webDriverOperations.getText(id("containsKeyBar")), is("true"));
 
         // THYM8002002 : ${session.keySet().contains('xxx')}
         assertThat(webDriverOperations.getText(id("keySetFoo")), is("true"));
@@ -1037,14 +981,12 @@ public class ThymeleafTest extends FunctionTestSupport {
         webDriverOperations.click(id("thym8003"));
 
         // 検証
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "リクエストパラメータの存在チェックについて(application)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("リクエストパラメータの存在チェックについて(application)"));
 
         // THYM8003001 : ${application.containsKey('xxx')}
-        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is(
-                "true"));
-        assertThat(webDriverOperations.getText(id("containsKeyBar")), is(
-                "true"));
+        assertThat(webDriverOperations.getText(id("containsKeyFoo")), is("true"));
+        assertThat(webDriverOperations.getText(id("containsKeyBar")), is("true"));
 
         // THYM8003002 : ${application.keySet().contains('xxx')}
         assertThat(webDriverOperations.getText(id("keySetFoo")), is("true"));
@@ -1066,8 +1008,8 @@ public class ThymeleafTest extends FunctionTestSupport {
                 .findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
 
         // Controllerで画面表示用に設定する値
-        String[] name = { "Peach", "Grape", "Melon", "PineApple", "Orange" };
-        String[] price = { "1000", "2000", "3000", "4000", "5000" };
+        String[] name = {"Peach", "Grape", "Melon", "PineApple", "Orange"};
+        String[] price = {"1000", "2000", "3000", "4000", "5000"};
 
         assertThat(elementsName.size(), is(name.length));
         assertThat(elementsPrice.size(), is(price.length));

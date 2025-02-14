@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.rest;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -27,11 +26,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
@@ -41,17 +38,15 @@ public class RestAPIForJSR310Test extends RestTestSupport {
 
     @Override
     protected String baseURI(boolean enabled) {
-        // @formatter:off
-        return enabled
-                ? applicationContextUrl + "-rest/api/v1/DEFAULT_VIEW_INCLUSION-enable"
-                : applicationContextUrl + "-rest/api/v1/DEFAULT_VIEW_INCLUSION-disable";
-        // @formatter:on
+        return enabled ? getPackageRootUrl() + "/api/v1/DEFAULT_VIEW_INCLUSION-enable"
+                : getPackageRootUrl() + "/api/v1/DEFAULT_VIEW_INCLUSION-disable";
     }
 
     /**
      * setUp
      * <ul>
-     * <li>Remove all old member resources if any, and insert three new member resources every time</li>
+     * <li>Remove all old member resources if any, and insert three new member resources every
+     * time</li>
      * </ul>
      */
     @Before
@@ -135,11 +130,9 @@ public class RestAPIForJSR310Test extends RestTestSupport {
         jsonBody.put("time", time.toString());
 
         // Request Body 期待値作成
-        java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(date,
-                time);
-        String zoneDtStr = ZonedDateTime.of(dateTime, ZoneId.of(
-                "America/Los_Angeles")).format(
-                        DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(date, time);
+        String zoneDtStr = ZonedDateTime.of(dateTime, ZoneId.of("America/Los_Angeles"))
+                .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
         // @formatter:off
         given().body(jsonBody)

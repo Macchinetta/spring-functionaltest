@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">Method認可されたユーザが開くページ</h1>
+
+                <fieldset>
+                    <legend>Device Information</legend>
+                    <table class="table table-bordered table-condensed">
+                        <tr>
+                            <th>systemConfig.device</th>
+                            <td><span id="device" th:text="${systemConfig.device}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.broadcast</th>
+                            <td><span id="broadcast" th:text="${systemConfig.broadcast}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.ipaddr</th>
+                            <td><span id="ipaddr" th:text="${systemConfig.ipaddr}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.netmask</th>
+                            <td><span id="netmask" th:text="${systemConfig.netmask}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.network</th>
+                            <td><span id="network" th:text="${systemConfig.network}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.onboot</th>
+                            <td><span id="onboot" th:text="${systemConfig.onboot}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.deviceType</th>
+                            <td><span id="deviceType" th:text="${systemConfig.deviceType}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.gateway</th>
+                            <td><span id="gateway" th:text="${systemConfig.gateway}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>systemConfig.owner</th>
+                            <td><span id="owner" th:text="${systemConfig.owner}"></span></td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <form th:action="@{/thymeleaf/0301/001/logout}" method="post">
+                    <input type="submit" id="logout" class="btn btn-default" value="Logout" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

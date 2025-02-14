@@ -16,13 +16,11 @@
 package jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages;
 
 import static jp.co.ntt.fw.spring.functionaltest.selenium.PageOperations.loadNextPage;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 
 public class JPA_JSP_IndexPage implements Page<JPA_JSP_IndexPage> {
@@ -60,6 +58,10 @@ public class JPA_JSP_IndexPage implements Page<JPA_JSP_IndexPage> {
     @CacheLookup
     @FindBy(id = "djpa0103005_jsp")
     private WebElement registerFlashAttribute;
+
+    @CacheLookup
+    @FindBy(id = "djpa0105001_jsp")
+    private WebElement djpa0105001;
 
     @CacheLookup
     @FindBy(id = "djpa0201001_jsp")
@@ -338,6 +340,12 @@ public class JPA_JSP_IndexPage implements Page<JPA_JSP_IndexPage> {
     public JPAHomePage djpa0103005Click() {
         JPAHomePage homePage = new JPAHomePage(driver);
         registerFlashAttribute.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0105001Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        djpa0105001.click();
         return homePage;
     }
 

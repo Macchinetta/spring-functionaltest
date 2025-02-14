@@ -20,7 +20,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
 
@@ -70,14 +69,12 @@ public class StockPage implements Page<StockPage> {
 
     public void setPurchaseQuantity(Integer quantityVal) {
         purchaseQuantity.clear();
-        WebElementOperations.setValue(purchaseQuantity, String.valueOf(
-                quantityVal));
+        WebElementOperations.setValue(purchaseQuantity, String.valueOf(quantityVal));
     }
 
     public void setSleepTime(long sleepTimeInMillisec) {
         sleepTime.clear();
-        WebElementOperations.setValue(sleepTime, String.valueOf(
-                sleepTimeInMillisec));
+        WebElementOperations.setValue(sleepTime, String.valueOf(sleepTimeInMillisec));
     }
 
     public ExclusionResultPage buyWithRowLock() {

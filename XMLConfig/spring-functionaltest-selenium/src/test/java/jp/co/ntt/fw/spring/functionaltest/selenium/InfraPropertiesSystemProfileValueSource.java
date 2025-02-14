@@ -18,19 +18,17 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Properties;
-
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.test.annotation.ProfileValueSource;
 
-public class InfraPropertiesSystemProfileValueSource implements
-                                                     ProfileValueSource {
+public class InfraPropertiesSystemProfileValueSource implements ProfileValueSource {
 
     private static Properties properties;
 
     static {
         try {
-            properties = PropertiesLoaderUtils.loadAllProperties(
-                    "META-INF/spring/spring-functionaltest-infra.properties");
+            properties = PropertiesLoaderUtils
+                    .loadAllProperties("META-INF/spring/spring-functionaltest-infra.properties");
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

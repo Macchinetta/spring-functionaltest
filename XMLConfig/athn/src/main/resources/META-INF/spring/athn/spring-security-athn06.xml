@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <sec:authentication-manager id="authEventHandleUserLoginManager">
+        <sec:authentication-provider user-service-ref="authEventHandleUserDetailsService">
+            <sec:password-encoder ref="passwordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <sec:authentication-manager id="authEventHandleUserLoginManagerForServiceException">
+        <sec:authentication-provider ref="throwAuthenticationServiceExceptionAuthenticationProvider" />
+    </sec:authentication-manager>
+
+    <bean id="throwAuthenticationServiceExceptionAuthenticationProvider"
+        class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ThrowAuthenticationServiceExceptionAuthenticationProvider">
+    </bean>
+
+    <sec:http pattern="/jsp/0601/001/**" request-matcher="ant" authentication-manager-ref="authEventHandleUserLoginManager">
+        <sec:form-login login-page="/jsp/0601/001/login" login-processing-url="/jsp/0601/001/authenticate"
+            default-target-url="/jsp/0601/001?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/jsp/0601/001/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/jsp/0601/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/0601/001/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/0601/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/jsp/0602/002/**" request-matcher="ant" authentication-manager-ref="authEventHandleUserLoginManagerForServiceException">
+        <sec:form-login login-page="/jsp/0602/002/login" login-processing-url="/jsp/0602/002/authenticate"
+            default-target-url="/jsp/0602/002?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/jsp/0602/002/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/jsp/0602/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/0602/002/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/0602/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/thymeleaf/0601/001/**" request-matcher="ant" authentication-manager-ref="authEventHandleUserLoginManager">
+        <sec:form-login login-page="/thymeleaf/0601/001/login" login-processing-url="/thymeleaf/0601/001/authenticate"
+            default-target-url="/thymeleaf/0601/001?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/thymeleaf/0601/001/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/thymeleaf/0601/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/0601/001/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/0601/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/thymeleaf/0602/002/**" request-matcher="ant" authentication-manager-ref="authEventHandleUserLoginManagerForServiceException">
+        <sec:form-login login-page="/thymeleaf/0602/002/login" login-processing-url="/thymeleaf/0602/002/authenticate"
+            default-target-url="/thymeleaf/0602/002?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/thymeleaf/0602/002/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/thymeleaf/0602/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/0602/002/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/0602/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+</beans>

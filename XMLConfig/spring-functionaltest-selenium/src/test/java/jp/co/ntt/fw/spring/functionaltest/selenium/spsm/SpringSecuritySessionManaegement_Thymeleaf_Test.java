@@ -20,28 +20,24 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
 import org.junit.Test;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
 import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
-public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
-                                                             FunctionTestSupport {
+public class SpringSecuritySessionManaegement_Thymeleaf_Test extends FunctionTestSupport {
 
     @Inject
     protected RestTemplate restTemplate;
 
-    private static String VIEW_TYPE = "thymeleaf";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     /**
      * <ul>
@@ -59,26 +55,21 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         webDriverOperations.overrideText(id("password"), "spring1234");
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("session")), is(
-                "This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is("This is Session"));
 
-        String beforeCoookie = webDriverOperations.getCookie("JSESSIONID")
-                .getValue();
+        String beforeCoookie = webDriverOperations.getCookie("JSESSIONID").getValue();
 
         // ログインボタン押下
         webDriverOperations.click(id("login"));
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログイン完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログイン完了画面"));
 
         // ログイン前後でcookieIdが変更されれていることを確認
-        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(
-                beforeCoookie));
+        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(beforeCoookie));
 
         // セッション情報が引き継がれていないことを確認する。
-        assertThat(webDriverOperations.getText(id("session")), is(
-                "This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is("This is Session"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -101,22 +92,18 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         webDriverOperations.overrideText(id("password"), "spring1234");
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("session")), is(
-                "This is Session"));
+        assertThat(webDriverOperations.getText(id("session")), is("This is Session"));
 
-        String beforeCoookie = webDriverOperations.getCookie("JSESSIONID")
-                .getValue();
+        String beforeCoookie = webDriverOperations.getCookie("JSESSIONID").getValue();
 
         // ログインボタン押下
         webDriverOperations.click(id("login"));
 
         // セッションの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログイン完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログイン完了画面"));
 
         // ログイン前後でcookieIdが変更されれていることを確認
-        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(
-                beforeCoookie));
+        assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(), not(beforeCoookie));
 
         // セッション情報が引き継がれていないことを確認する。
         assertThat(webDriverOperations.getText(id("session")), is(""));
@@ -130,6 +117,7 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
      * <ul>
      * <li>セッション生成機能が正常に機能することを確認する。（セッションを使用しない）</li>
      * </ul>
+     * 
      * @throws URISyntaxException
      */
     @Test
@@ -139,31 +127,28 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         String password = "spring1234";
 
         String plainCredentials = userid + ":" + password;
-        String base64Credentials = Base64.getEncoder().encodeToString(
-                plainCredentials.getBytes(StandardCharsets.UTF_8));
+        String base64Credentials = Base64.getEncoder()
+                .encodeToString(plainCredentials.getBytes(StandardCharsets.UTF_8));
 
-        RequestEntity<Void> requestEntity = RequestEntity.get(
-                new URI(getPackageRootUrl() + "/" + VIEW_TYPE
-                        + "/0301/001?afterLogin")).header("Authorization",
-                                "Basic " + base64Credentials).build();
+        RequestEntity<Void> requestEntity = RequestEntity
+                .get(new URI(getPackageRootUrl() + "/" + VIEW_TYPE + "/0301/001?afterLogin"))
+                .header("Authorization", "Basic " + base64Credentials).build();
 
-        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(
-                requestEntity, byte[].class);
+        ResponseEntity<byte[]> responseEntity = restTemplate.exchange(requestEntity, byte[].class);
 
-        org.springframework.http.HttpStatusCode status = responseEntity
-                .getStatusCode();
+        org.springframework.http.HttpStatusCode status = responseEntity.getStatusCode();
         assertTrue(status.is2xxSuccessful());
 
         // セッション操作が行われてないことを確認する(作成)
         dbLogAssertOperations.waitForAssertion(1000);
-        dbLogAssertOperations.assertNotContainsByRegexMessage(
-                ".*HttpSessionEventLoggingListener", " * sessionCreated * ");
+        dbLogAssertOperations.assertNotContainsByRegexMessage(".*HttpSessionEventLoggingListener",
+                " * sessionCreated * ");
         // セッション操作が行われてないことを確認する(登録)
-        dbLogAssertOperations.assertNotContainsByRegexMessage(
-                ".*HttpSessionEventLoggingListener", " * attributeAdded * ");
+        dbLogAssertOperations.assertNotContainsByRegexMessage(".*HttpSessionEventLoggingListener",
+                " * attributeAdded * ");
         // セッション操作が行われてないことを確認する(変更)
-        dbLogAssertOperations.assertNotContainsByRegexMessage(
-                ".*HttpSessionEventLoggingListener", " * attributeReplaced * ");
+        dbLogAssertOperations.assertNotContainsByRegexMessage(".*HttpSessionEventLoggingListener",
+                " * attributeReplaced * ");
 
     }
 
@@ -192,8 +177,7 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         webDriverOperations.click(id("logout"));
 
         // 無効セッションエラーとなることを確認する
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "Invalid Session Error"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("Invalid Session Error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
@@ -215,8 +199,7 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         webDriverOperations.click(id("logout"));
 
         // 無効セッションエラーであっても遷移可能（ログインフォームに戻れる）であることを確認する。
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "forbidden Error!"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("forbidden Error!"));
     }
 
     /**
@@ -281,8 +264,7 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         browser1.click(id("spsm0501001nologin_" + VIEW_TYPE));
 
         // 認証失敗後の画面遷移確認
-        assertThat(browser1.getText(id("screenTitle")), is(
-                "Spring Security セッション管理"));
+        assertThat(browser1.getText(id("screenTitle")), is("Spring Security セッション管理"));
 
         // メニュー画面の操作
         browser1.click(id("spsm0501001_" + VIEW_TYPE));
@@ -354,8 +336,8 @@ public class SpringSecuritySessionManaegement_Thymeleaf_Test extends
         browser3.click(id("login"));
 
         // 認証失敗後の画面遷移確認
-        assertThat(browser3.getText(id("loginError")), is(
-                "Maximum sessions of 2 for this principal exceeded"));
+        assertThat(browser3.getText(id("loginError")),
+                is("Maximum sessions of 2 for this principal exceeded"));
 
         // ログアウトボタン押下
         browser1.click(id("logout"));

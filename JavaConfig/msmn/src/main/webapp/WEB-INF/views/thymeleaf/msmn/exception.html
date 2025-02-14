@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head},~{::body})}">
+    <head></head>
+    <body>
+        <h1 id="screenTitle">業務例外メッセージ</h1>
+        <div class="container">
+            <span th:replace="~{thymeleaf/common/fragments :: messagesPanel}"></span>
+            <ul>
+                <li>
+                    [MSMN0206001] <a id="msmn0206001_thymeleaf" th:href="@{/thymeleaf/02/create}">BusinessException</a>
+                </li>
+                <li>
+                    [MSMN0206002] <a id="msmn0206002_thymeleaf" th:href="@{/thymeleaf/02/update}">ResourceNotFoundException</a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

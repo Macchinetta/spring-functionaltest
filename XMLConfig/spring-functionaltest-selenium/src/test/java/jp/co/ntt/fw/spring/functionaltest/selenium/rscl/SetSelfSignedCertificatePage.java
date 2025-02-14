@@ -20,11 +20,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 
-public class SetSelfSignedCertificatePage implements
-                                          Page<SetSelfSignedCertificatePage> {
+public class SetSelfSignedCertificatePage implements Page<SetSelfSignedCertificatePage> {
 
     private WebDriver driver;
 

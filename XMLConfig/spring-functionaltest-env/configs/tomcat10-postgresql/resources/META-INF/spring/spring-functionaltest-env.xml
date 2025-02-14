@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-  xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
-        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc https://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
-  <bean id="dateFactory" class="org.terasoluna.gfw.common.time.DefaultClockFactory" />
+    <!-- JSR-310 -->
+    <import resource="classpath:META-INF/spring/spring-functionaltest-jsr310.xml" />
 
-  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/springFunctionaltestDataSource"
-    expected-type="javax.sql.DataSource" />
+    <jee:jndi-lookup id="dataSource" jndi-name="jdbc/springFunctionaltestDataSource"
+        expected-type="javax.sql.DataSource" />
 
-  <jee:jndi-lookup id="dataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
-    expected-type="javax.sql.DataSource" />
+    <jee:jndi-lookup id="dataSourceDefault" jndi-name="jdbc/springFunctionaltestDataSource"
+        expected-type="javax.sql.DataSource" />
 
-  <jee:jndi-lookup id="dataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
-    expected-type="javax.sql.DataSource" />
+    <jee:jndi-lookup id="dataSourceOpen" jndi-name="jdbc/springFunctionaltestDataSourceOpen"
+        expected-type="javax.sql.DataSource" />
 
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource" />
-    <property name="rollbackOnCommitFailure" value="true" />
-  </bean>
+    <jee:jndi-lookup id="dataSourceClose" jndi-name="jdbc/springFunctionaltestDataSourceClose"
+        expected-type="javax.sql.DataSource" />
 
-  <!-- Settings for DbAppender of logback. -->
-  <bean id="dataSourceForLogging" class="org.apache.commons.dbcp2.BasicDataSource"
-    destroy-method="close">
-    <property name="driverClassName" value="org.h2.Driver" />
-    <property name="url" value="jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1" />
-    <property name="username" value="sa" />
-    <property name="password" value="" />
-    <property name="defaultAutoCommit" value="false" />
-  </bean>
+    <!-- これはenvではなくDTACプロジェクトに配置するべきもの -->
+    <!-- 
+    <bean id="routingDataSource" class="jp.co.ntt.fw.spring.functionaltest.infra.datasource.dtac.RoutingDataSource">
+        <property name="targetDataSources">
+        <map>
+            <entry key="OPEN" value-ref="dataSourceOpen" />
+            <entry key="CLOSE" value-ref="dataSourceClose" />
+        </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSourceDefault" />
+        <property name="clockFactory" ref="clockFactoryDtac" />
+    </bean>
+    -->
+    
+    <!-- テーブル作成後に起動させるBeanが存在するため一部BeanがdataSourceInitializerをdependOnしている。PostgreSQLでは不要ではあるがBeanだけ生成する -->
+    <bean id="dataSourceInitializer" class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+        <property name="rollbackOnCommitFailure" value="true" />
+    </bean>
+
+    <!-- JPA transaction Manager -->
+    <!-- 
+    <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    -->
 
 </beans>

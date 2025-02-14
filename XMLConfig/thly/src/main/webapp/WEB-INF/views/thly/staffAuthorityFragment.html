@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Staff Authority</title>
+    </head>
+    <body>
+        <form>
+            <div>
+                <select class="form-control" th:field="*{authority}" th:fragment="dropdown">
+                    <option value="STAFF_MNG">Staff Management</option>
+                    <option value="MASTER_MNG">Master Management</option>
+                    <option value="STOCK_MNG">Stock Management</option>
+                    <option value="ORDER_MNG">Order Management</option>
+                    <option value="SHOW_SHOPPING_MNG">Show Shopping Management</option>
+                </select>
+            </div>
+            <div id="dropdownDisabled">
+                <select class="form-control" th:field="*{authority}" disabled="disabled" style="background-color: whitesmoke">
+                    <option value="STAFF_MNG">Staff Management</option>
+                    <option value="MASTER_MNG">Master Management</option>
+                    <option value="STOCK_MNG">Stock Management</option>
+                    <option value="ORDER_MNG">Order Management</option>
+                    <option value="SHOW_SHOPPING_MNG">Show Shopping Management</option>
+                </select>
+            </div>
+            <div th:fragment="dropdownParameterized (disabled,style)">
+                <select class="form-control" th:field="*{authority}" th:disabled="${disabled}" th:style="${style}">
+                    <option value="STAFF_MNG">Staff Management</option>
+                    <option value="MASTER_MNG">Master Management</option>
+                    <option value="STOCK_MNG">Stock Management</option>
+                    <option value="ORDER_MNG">Order Management</option>
+                    <option value="SHOW_SHOPPING_MNG">Show Shopping Management</option>
+                </select>
+            </div>
+        </form>
+    </body>
+</html>

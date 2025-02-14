@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <sec:authentication-manager id="loginWithCustomPbkdf2Password">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+            <sec:password-encoder ref="athnPasswordEncoderCustomPbkdf2" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <bean id="athnPasswordEncoderCustomPbkdf2" class="org.springframework.security.crypto.password.DelegatingPasswordEncoder">
+        <constructor-arg name="idForEncode" value="pbkdf2" />
+        <constructor-arg name="idToPasswordEncoder">
+            <map>
+                <entry key="pbkdf2">
+                    <bean class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder">
+                        <constructor-arg name="secret" value="" />
+                        <constructor-arg name="saltLength" value="16" />
+                        <constructor-arg name="iterations" value="${password.pbkdf2.iteration}" />
+                        <constructor-arg name="secretKeyFactoryAlgorithm" value="${password.pbkdf2.secretKeyFactoryAlgorithm}" />
+                    </bean>
+                </entry>
+            </map>
+        </constructor-arg>
+        <property name="defaultPasswordEncoderForMatches" ref="athnPasswordEncoderBCrypt" />
+    </bean>
+
+    <bean id="loginWithEncodingPasswordService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_administrator WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, authority FROM t_administrator WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
+
+    <!-- DelegatingPasswordEncoder（カスタマイズ）を利用した認証処理 -->
+    <sec:http pattern="/jsp/1801/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithCustomPbkdf2Password">
+        <sec:form-login login-page="/jsp/1801/002/login" login-processing-url="/jsp/1801/002/authenticate"
+            default-target-url="/jsp/1801/002/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/jsp/1801/002/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/jsp/1801/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/1801/002/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/1801/002/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <!-- DelegatingPasswordEncoder（カスタマイズ）を利用した認証処理 -->
+    <sec:http pattern="/thymeleaf/1801/002/**" request-matcher="ant" auto-config="false" authentication-manager-ref="loginWithCustomPbkdf2Password">
+        <sec:form-login login-page="/thymeleaf/1801/002/login" login-processing-url="/thymeleaf/1801/002/authenticate"
+            default-target-url="/thymeleaf/1801/002/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/thymeleaf/1801/002/logout" logout-success-url="/" />
+        <sec:intercept-url pattern="/thymeleaf/1801/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/1801/002/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/1801/002/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+</beans>

@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="../../../resources/app/css/styles.css" th:href="@{/resources/app/css/styles.css}" />
+        <title>Prototype Only Comment Screen</title>
+    </head>
+    <body>
+        <h1>Prototype Only Comment</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--/*/ <th:block th:each="item : ${items}"> /*/-->
+                <tr>
+                    <td th:text="${item.name}">Apple</td>
+                    <td th:text="${item.price}">300</td>
+                </tr>
+                <!--/*/ </th:block> /*/-->
+            </tbody>
+        </table>
+    </body>
+</html>

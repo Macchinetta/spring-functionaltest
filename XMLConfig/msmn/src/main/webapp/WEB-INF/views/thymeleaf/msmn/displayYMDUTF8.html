@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head},~{::body})}">
+    <head></head>
+    <body>
+        <h1 id="screenTitle">Display YMD(UTF-8)</h1>
+        <div class="container">
+            <form th:object="${sampleForm}">
+                <label for="year" th:text="${year}"> </label>: <input th:field="*{year}">
+                <br>
+                <label for="month" th:text="${month}"> </label>: <input th:field="*{month}">
+                <br>
+                <label for="day" th:text="${day}"> </label>: <input th:field="*{day}">
+            </form>
+        </div>
+    </body>
+</html>

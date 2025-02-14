@@ -1,0 +1,3 @@
+BEGIN
+DROP_SEQUENCE('s_car');
+END;

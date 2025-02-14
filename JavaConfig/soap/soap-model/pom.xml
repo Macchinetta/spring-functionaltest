@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>soap-model</artifactId>
+    <packaging>jar</packaging>
+    <parent>
+        <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
+        <artifactId>spring-functionaltest</artifactId>
+        <version>1.11.0.RELEASE</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    <name>Spring Functional Test - Domain Layer Common Models</name>
+    <description>Domain Layer Common Models of Spring Functional Test</description>
+    <scm>
+        <connection>scm:git:git://github.com/Macchinetta/spring-functionaltest.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Macchinetta/spring-functionaltest.git</developerConnection>
+        <url>https://github.com/Macchinetta/spring-functionaltest</url>
+    </scm>
+
+    <dependencies>
+        <!-- == Begin TERASOLUNA == -->
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <!-- == End TERASOLUNA == -->
+    </dependencies>
+
+    <properties>
+        <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+    </properties>
+</project>

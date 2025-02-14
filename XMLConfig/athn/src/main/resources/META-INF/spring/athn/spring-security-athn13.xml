@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <bean id="jspAuthenticationFailureHandler"
+        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <property name="defaultFailureUrl" value="/jsp/systemError" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.security.authentication.BadCredentialsException"> /jsp/badCredentials </prop>
+                <prop key="org.springframework.security.core.userdetails.UsernameNotFoundException"> /jsp/usernameNotFound </prop>
+                <prop key="org.springframework.security.authentication.DisabledException"> /jsp/disabled </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="thymeleafAuthenticationFailureHandler"
+        class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+        <property name="defaultFailureUrl" value="/thymeleaf/systemError" />
+        <property name="exceptionMappings">
+            <props>
+                <prop key="org.springframework.security.authentication.BadCredentialsException"> /thymeleaf/badCredentials </prop>
+                <prop key="org.springframework.security.core.userdetails.UsernameNotFoundException"> /thymeleaf/usernameNotFound </prop>
+                <prop key="org.springframework.security.authentication.DisabledException"> /thymeleaf/disabled </prop>
+            </props>
+        </property>
+    </bean>
+
+    <sec:authentication-manager id="authFailureEventHandleUserLoginManager">
+        <sec:authentication-provider ref="authFailureEventHandleAuthenticationProvider" />
+    </sec:authentication-manager>
+
+    <bean id="authFailureEventHandleAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="hideUserNotFoundExceptions" value="false" />
+        <property name="passwordEncoder" ref="passwordEncoder" />
+        <property name="userDetailsService" ref="authEventHandleUserDetailsService" />
+    </bean>
+
+    <sec:http pattern="/jsp/1302/**" request-matcher="ant" authentication-manager-ref="authFailureEventHandleUserLoginManager">
+        <sec:form-login login-page="/jsp/1302/001/login" login-processing-url="/jsp/1302/001/authenticate"
+            default-target-url="/jsp/1302/001?loginSuccess" always-use-default-target="true"
+            authentication-failure-handler-ref="jspAuthenticationFailureHandler" />
+        <sec:logout logout-url="/jsp/1302/001/logout" logout-success-url="/athn" />
+        <sec:intercept-url pattern="/jsp/1302/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/1302/001/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/jsp/1302/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/thymeleaf/1302/**" request-matcher="ant" authentication-manager-ref="authFailureEventHandleUserLoginManager">
+        <sec:form-login login-page="/thymeleaf/1302/001/login" login-processing-url="/thymeleaf/1302/001/authenticate"
+            default-target-url="/thymeleaf/1302/001?loginSuccess" always-use-default-target="true"
+            authentication-failure-handler-ref="thymeleafAuthenticationFailureHandler" />
+        <sec:logout logout-url="/thymeleaf/1302/001/logout" logout-success-url="/athn" />
+        <sec:intercept-url pattern="/thymeleaf/1302/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/1302/001/logout/**" access="permitAll" />
+        <sec:intercept-url pattern="/thymeleaf/1302/**" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+
+</beans>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ログインしました</h1>
+
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>User Name</th>
+                        <td>
+                            <span id="username"> <span th:if="${#authorization.expr('isAuthenticated()') && !#strings.isEmpty(username)}" sec:authentication="principal.username"></span> </span>
+                        </td>
+                    </tr>
+                </table>
+
+                <form th:action="@{/thymeleaf/1501/001/logout}" method="post">
+                    <button id="logout">Logout</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

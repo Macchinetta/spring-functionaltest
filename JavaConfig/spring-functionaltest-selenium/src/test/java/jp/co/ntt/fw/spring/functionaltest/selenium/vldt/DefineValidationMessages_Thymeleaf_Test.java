@@ -18,17 +18,12 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -36,33 +31,22 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT03 エラーメッセージの定義のテストケース
  * </p>
  */
-public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport {
+public class DefineValidationMessages_Thymeleaf_Test extends ValidationTestSupport {
 
     private static WebDriver driver;
 
-    private String validate = "validate";
+    private BrowserLocale currentLocale = BrowserLocale.JAPAN;
 
-    private String errors = ".errors";
-
-    private String currentLocale = "ja";
-
-    private static Map<String, String> localeDateFormat;
-
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "thymeleaf";
 
     public DefineValidationMessages_Thymeleaf_Test() {
-        localeDateFormat = new HashMap<String, String>();
-        localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yyyy");
-
         super.disableDefaultWebDriver();
     }
 
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -76,9 +60,9 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
     @Test
     public void testVLDT0301001() {
         String testId = "vldt0301001";
-        String[] targets = { "userName", "email" };
-        String[] errorMessages = { "ユーザ名 に設定できる文字数は 1 から 20 の範囲です。",
-                "Email に設定された値はEmail形式ではありません。" };
+        String[] targets = {"userName", "email"};
+        String[] errorMessages =
+                {"ユーザ名 に設定できる文字数は 1 から 20 の範囲です。", "Email に設定された値はEmail形式ではありません。"};
 
         // テスト画面表示
         {
@@ -89,18 +73,15 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTest");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "spring@test.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTest");
+                webDriverOperations.overrideText(id(targets[1]), "spring@test.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.exists(id(targets[i]
-                            + errors)), is(false));
+                    assertThat(webDriverOperations.exists(id(targets[i] + ID_ERRORS)), is(false));
                 }
             }
         }
@@ -109,18 +90,16 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTestS");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "springtest.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTestS");
+                webDriverOperations.overrideText(id(targets[1]), "springtest.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i]));
+                    assertThat(webDriverOperations.getText(id(targets[i] + ID_ERRORS)),
+                            is(errorMessages[i]));
                 }
             }
         }
@@ -136,9 +115,9 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
     @Test
     public void testVLDT0302001() {
         String testId = "vldt0302001";
-        String[] targets = { "userName", "email" };
-        String[] errorMessages = { "ユーザ名 に設定できる文字数は 1 から 20 の範囲です。",
-                "Email に設定された値はEmail形式ではありません。" };
+        String[] targets = {"userName", "email"};
+        String[] errorMessages =
+                {"ユーザ名 に設定できる文字数は 1 から 20 の範囲です。", "Email に設定された値はEmail形式ではありません。"};
 
         // テスト画面表示
         {
@@ -149,18 +128,15 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTest");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "spring@test.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTest");
+                webDriverOperations.overrideText(id(targets[1]), "spring@test.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.exists(id(targets[i]
-                            + errors)), is(false));
+                    assertThat(webDriverOperations.exists(id(targets[i] + ID_ERRORS)), is(false));
                 }
             }
         }
@@ -169,18 +145,16 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTestS");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "springtest.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTestS");
+                webDriverOperations.overrideText(id(targets[1]), "springtest.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i]));
+                    assertThat(webDriverOperations.getText(id(targets[i] + ID_ERRORS)),
+                            is(errorMessages[i]));
                 }
             }
         }
@@ -196,32 +170,27 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
     @Test
     public void testVLDT0303001() {
         String testId = "vldt0303001";
-        String[] targets = { "shortValue", "intValue", "longValue",
-                "floatValue", "doubleValue", "shortObject", "integerObject",
-                "longObject", "floatObject", "doubleObject", "date",
-                "localdatetime", "localdate", "booleanValue" };
-        String[] errorMessages = { "\"{0}\" はshort型を入力してください。",
-                "\"{0}\" はint型を入力してください。", "\"{0}\" はlong型を入力してください。",
-                "\"{0}\" はfloat型を入力してください。", "\"{0}\" はdouble型を入力してください。",
-                "\"{0}\" はShort型を入力してください。", "\"{0}\" はInteger型を入力してください。",
-                "\"{0}\" はLong型を入力してください。", "\"{0}\" はFloat型を入力してください。",
-                "\"{0}\" はDouble型を入力してください。", "\"{0}\" は日付ではありません。",
-                "\"{0}\" は日付時刻ではありません。", "\"{0}\" は日付ではありません。",
-                "\"{0}\" は無効です。", };
+        String[] targets = {"shortValue", "intValue", "longValue", "floatValue", "doubleValue",
+                "shortObject", "integerObject", "longObject", "floatObject", "doubleObject", "date",
+                "localdatetime", "localdate", "booleanValue"};
+        String[] errorMessages = {"\"{0}\" はshort型を入力してください。", "\"{0}\" はint型を入力してください。",
+                "\"{0}\" はlong型を入力してください。", "\"{0}\" はfloat型を入力してください。",
+                "\"{0}\" はdouble型を入力してください。", "\"{0}\" はShort型を入力してください。",
+                "\"{0}\" はInteger型を入力してください。", "\"{0}\" はLong型を入力してください。",
+                "\"{0}\" はFloat型を入力してください。", "\"{0}\" はDouble型を入力してください。", "\"{0}\" は日付ではありません。",
+                "\"{0}\" は日付時刻ではありません。", "\"{0}\" は日付ではありません。", "\"{0}\" は無効です。",};
 
         // テスト画面表示
         {
             webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
         }
 
-        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern(
-                localeDateFormat.get(currentLocale));
+        DateTimeFormatter dateTimeFormatter1 =
+                DateTimeFormatter.ofPattern(super.getLocalDateFormat(currentLocale));
 
-        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern(
-                "yy/MM/dd HH:mm");
+        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
 
-        DateTimeFormatter dateTimeFormatter3 = DateTimeFormatter.ofPattern(
-                "yy/MM/dd");
+        DateTimeFormatter dateTimeFormatter3 = DateTimeFormatter.ofPattern("yy/MM/dd");
 
         // 実施条件1
         {
@@ -231,35 +200,25 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
 
                 webDriverOperations.overrideText(id(targets[0]), "32767");
                 webDriverOperations.overrideText(id(targets[1]), "2147483647");
-                webDriverOperations.overrideText(id(targets[2]),
-                        "9223372036854775807");
-                webDriverOperations.overrideText(id(targets[3]),
-                        "3.4028235E38");
-                webDriverOperations.overrideText(id(targets[4]),
-                        "1.7976931348623157E308");
+                webDriverOperations.overrideText(id(targets[2]), "9223372036854775807");
+                webDriverOperations.overrideText(id(targets[3]), "3.4028235E38");
+                webDriverOperations.overrideText(id(targets[4]), "1.7976931348623157E308");
                 webDriverOperations.overrideText(id(targets[5]), "32767");
                 webDriverOperations.overrideText(id(targets[6]), "2147483647");
-                webDriverOperations.overrideText(id(targets[7]),
-                        "9223372036854775807");
-                webDriverOperations.overrideText(id(targets[8]),
-                        "3.4028235E38");
-                webDriverOperations.overrideText(id(targets[9]),
-                        "1.7976931348623157E308");
-                webDriverOperations.overrideText(id(targets[10]), dt.format(
-                        dateTimeFormatter1));
-                webDriverOperations.overrideText(id(targets[11]), dt.format(
-                        dateTimeFormatter2));
-                webDriverOperations.overrideText(id(targets[12]), dt.format(
-                        dateTimeFormatter3));
+                webDriverOperations.overrideText(id(targets[7]), "9223372036854775807");
+                webDriverOperations.overrideText(id(targets[8]), "3.4028235E38");
+                webDriverOperations.overrideText(id(targets[9]), "1.7976931348623157E308");
+                webDriverOperations.overrideText(id(targets[10]), dt.format(dateTimeFormatter1));
+                webDriverOperations.overrideText(id(targets[11]), dt.format(dateTimeFormatter2));
+                webDriverOperations.overrideText(id(targets[12]), dt.format(dateTimeFormatter3));
                 webDriverOperations.overrideText(id(targets[13]), "true");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.exists(id(targets[i]
-                            + errors)), is(false));
+                    assertThat(webDriverOperations.exists(id(targets[i] + ID_ERRORS)), is(false));
                 }
             }
         }
@@ -282,15 +241,14 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
                 webDriverOperations.overrideText(id(targets[11]), "SpringTest");
                 webDriverOperations.overrideText(id(targets[12]), "SpringTest");
                 webDriverOperations.overrideText(id(targets[13]), "SpringTest");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i].replace("{0}",
-                                    targets[i])));
+                    assertThat(webDriverOperations.getText(id(targets[i] + ID_ERRORS)),
+                            is(errorMessages[i].replace("{0}", targets[i])));
                 }
             }
         }
@@ -299,16 +257,16 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
     /**
      * VLDT0301004
      * <ul>
-     * <li>Bean Validationが管理するメッセージプロパティファイルにnative2asciiを行わずにメッセージを定義した場合、入力チェックエラー時に設定したメッセージが出力されることを確認する。</li>
+     * <li>Bean
+     * Validationが管理するメッセージプロパティファイルにnative2asciiを行わずにメッセージを定義した場合、入力チェックエラー時に設定したメッセージが出力されることを確認する。</li>
      * </ul>
      */
     @Test
     public void testVLDT0304001() {
         String testId = "vldt0304001";
-        String[] targets = { "userName", "email" };
-        String[] errorMessages = {
-                "not native2ascii message : ユーザ名 に設定できる文字数は 1 から 20 の範囲です。",
-                "not native2ascii message : Email に設定された値はEmail形式ではありません。" };
+        String[] targets = {"userName", "email"};
+        String[] errorMessages = {"not native2ascii message : ユーザ名 に設定できる文字数は 1 から 20 の範囲です。",
+                "not native2ascii message : Email に設定された値はEmail形式ではありません。"};
 
         // テスト画面表示
         {
@@ -319,18 +277,15 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTest");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "spring@test.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTest");
+                webDriverOperations.overrideText(id(targets[1]), "spring@test.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.exists(id(targets[i]
-                            + errors)), is(false));
+                    assertThat(webDriverOperations.exists(id(targets[i] + ID_ERRORS)), is(false));
                 }
             }
         }
@@ -339,18 +294,16 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[0]),
-                        "SpringTestSpringTestS");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "springtest.com");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[0]), "SpringTestSpringTestS");
+                webDriverOperations.overrideText(id(targets[1]), "springtest.com");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations.getText(id(targets[i]
-                            + errors)), is(errorMessages[i]));
+                    assertThat(webDriverOperations.getText(id(targets[i] + ID_ERRORS)),
+                            is(errorMessages[i]));
                 }
             }
         }
@@ -380,13 +333,12 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "0123456789");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -395,12 +347,12 @@ public class DefineValidationMessages_Thymeleaf_Test extends FunctionTestSupport
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "012-345-678");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targetForm + errors)),
+                assertThat(webDriverOperations.getText(id(targetForm + ID_ERRORS)),
                         is(errorMessage));
             }
         }

@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
 import java.io.File;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
@@ -49,13 +48,11 @@ public class WebDriverOperations {
 
     protected int defaultTimeoutSecondsForImplicitlyWait = 10;
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            WebDriverOperations.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebDriverOperations.class);
 
     public WebDriverOperations(WebDriver webDriver,
-            WebDriverInputFieldAccessor webDriverInputFieldAccessor,
-            ScreenCapture screenCapture, PageSource pageSource,
-            int offsetSecondsOfTimeoutForImplicitlyWait) {
+            WebDriverInputFieldAccessor webDriverInputFieldAccessor, ScreenCapture screenCapture,
+            PageSource pageSource, int offsetSecondsOfTimeoutForImplicitlyWait) {
         this.webDriver = webDriver;
         this.webDriverInputFieldAccessor = webDriverInputFieldAccessor;
         this.screenCapture = screenCapture;
@@ -66,6 +63,7 @@ public class WebDriverOperations {
 
     /**
      * 指定したURLのページを表示する。
+     * 
      * @param url ページを表示するためのURL
      */
     public void displayPage(String url) {
@@ -74,6 +72,7 @@ public class WebDriverOperations {
 
     /**
      * 要素を見つけるまでの待機処理のデフォルトのタイムアウト値を設定する。
+     * 
      * @param defaultTimeoutSecondsForImplicitlyWait 要素を見つけるまでの待機処理のデフォルトのタイムアウト値(秒)
      * @return WebDriverOperationsインスタンス
      */
@@ -88,24 +87,20 @@ public class WebDriverOperations {
      * 要素を見つけるまでの待機処理のタイムアウト値をデフォルト値に設定する。
      */
     public void setDefaultTimeoutForImplicitlyWait() {
-        setTimeoutForImplicitlyWait(defaultTimeoutSecondsForImplicitlyWait,
-                true);
+        setTimeoutForImplicitlyWait(defaultTimeoutSecondsForImplicitlyWait, true);
     }
 
     /**
      * 要素を見つけるまでの待機処理のタイムアウト値を設定する。
      */
-    public void setTimeoutForImplicitlyWait(int timeoutSeconds,
-            boolean applyOffset) {
+    public void setTimeoutForImplicitlyWait(int timeoutSeconds, boolean applyOffset) {
         int adjustWaitTime;
         if (applyOffset) {
-            adjustWaitTime = timeoutSeconds
-                    + offsetSecondsOfTimeoutForImplicitlyWait;
+            adjustWaitTime = timeoutSeconds + offsetSecondsOfTimeoutForImplicitlyWait;
         } else {
             adjustWaitTime = timeoutSeconds;
         }
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(
-                adjustWaitTime));
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(adjustWaitTime));
     }
 
     /**
@@ -113,6 +108,7 @@ public class WebDriverOperations {
      * <p>
      * 固有の操作を行いたい場合は、このメソッドで取得したWebDriverを使用してブラウザの操作を行ってください。
      * </p>
+     * 
      * @return WebDriver
      */
     public WebDriver getWebDriver() {
@@ -121,6 +117,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(ボタンやリンクなど)をクリックする。
+     * 
      * @param by 要素(ボタンやリンクなど)を探すための識別子
      */
     public void click(By by) {
@@ -129,15 +126,16 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(ボタンやリンクなど)を強制的にクリックする。
+     * 
      * @param by 要素(ボタンやリンクなど)を探すための識別子
      */
     public void forceClick(By by) {
-        getJavascriptExecutor().executeScript("arguments[0].click();", webDriver
-                .findElement(by));
+        getJavascriptExecutor().executeScript("arguments[0].click();", webDriver.findElement(by));
     }
 
     /**
      * 指定した要素(テキスト項目)に入力されている値をクリアする。
+     * 
      * @param by 要素(テキスト項目)を探すための識別子
      */
     public void clearText(By by) {
@@ -146,6 +144,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(テキストフィールド)に値を追加する。
+     * 
      * @param by 要素(テキストフィールド)を探すための識別子
      */
     public void appendText(By by, String value) {
@@ -154,6 +153,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(テキストフィールド)の値を上書きする。
+     * 
      * @param by 要素(テキストフィールド)を探すための識別子
      */
     public void overrideText(By by, String value) {
@@ -165,6 +165,7 @@ public class WebDriverOperations {
      * <p>
      * 使用頻度が低いため、高速モード(JavaScript)モードは対応していない。
      * </p>
+     * 
      * @param by 要素(テキストエリア)を探すための識別子
      */
     public void appendTextArea(By by, String value) {
@@ -176,6 +177,7 @@ public class WebDriverOperations {
      * <p>
      * 使用頻度が低いため、高速モード(JavaScript)モードは対応していない。
      * </p>
+     * 
      * @param by 要素(テキストエリア)を探すための識別子
      */
     public void overrideTextArea(By by, String value) {
@@ -186,6 +188,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(ファイル参照)に、指定したファイルを設定する。
+     * 
      * @param by 要素(ファイル参照)を探すための識別子
      */
     public void referUploadFile(By by, File file) {
@@ -195,6 +198,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(セレクト)を選択する。
+     * 
      * @param by 要素(テキスト項目)を探すための識別子
      */
     public void select(By by, String value) {
@@ -203,6 +207,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素に設定されているテキスト(表示値)を取得する。
+     * 
      * @param by 要素を探すための識別子
      */
     public String getText(By by) {
@@ -211,6 +216,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した入力フィールドに設定されている値を取得する。
+     * 
      * @param by 要素を探すための識別子
      */
     public String getInputFieldValue(By by) {
@@ -219,6 +225,7 @@ public class WebDriverOperations {
 
     /**
      * X-Trackを取得する。
+     * 
      * @return X-Track
      */
     public String getXTrack() {
@@ -227,6 +234,7 @@ public class WebDriverOperations {
 
     /**
      * X-Trackの識別オブジェクトを取得する。
+     * 
      * @return X-Trackの識別オブジェクト
      */
     public By getIdOfXTrack() {
@@ -235,6 +243,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素が存在するかチェックする。
+     * 
      * @param by 要素を探すための識別子
      * @return 指定した要素が存在する場合にtrueを返却する。
      */
@@ -254,6 +263,7 @@ public class WebDriverOperations {
 
     /**
      * 指定した要素(ボタンやリンクなど)が表示されるのを待つ。
+     * 
      * @param by 要素(ボタンやリンクなど)を探すための識別子
      */
     public void waitForDisplayed(By by) {
@@ -262,17 +272,18 @@ public class WebDriverOperations {
 
     /**
      * 指定された表示条件に一致するまで待つ。
+     * 
      * @param expectedCondition 表示条件
      */
     public void waitForDisplayed(ExpectedCondition<?> expectedCondition) {
-        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration
-                .ofSeconds(defaultTimeoutSecondsForImplicitlyWait
-                        + offsetSecondsOfTimeoutForImplicitlyWait));
+        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration.ofSeconds(
+                defaultTimeoutSecondsForImplicitlyWait + offsetSecondsOfTimeoutForImplicitlyWait));
         wait.until(expectedCondition);
     }
 
     /**
      * 指定した時間だけ処理を停止する。
+     * 
      * @param waitTime 停止する時間
      * @param timeUnit 時間の単位
      */
@@ -289,6 +300,7 @@ public class WebDriverOperations {
      * <p>
      * 指定したCookie名に対応するCookieを取得する。
      * </p>
+     * 
      * @param cookieName Cookie名
      * @return 指定したCookie名に対応するCookie
      */
@@ -301,6 +313,7 @@ public class WebDriverOperations {
      * <p>
      * 指定したCookie名に対応するCookieを削除する。
      * </p>
+     * 
      * @param cookieName Cookie名
      */
     public void deleteCookie(String cookieName) {
@@ -312,14 +325,15 @@ public class WebDriverOperations {
      * <p>
      * 指定したドメイン名に変更する。
      * </p>
+     * 
      * @param cookie 変更するCookie
      * @param domainName 変更するドメイン名
      * @return
      */
     public Cookie changeCookieDomainName(Cookie cookie, String domainName) {
-        return new Cookie.Builder(cookie.getName(), cookie.getValue()).domain(
-                domainName).expiresOn(cookie.getExpiry()).isHttpOnly(true)
-                .isSecure(false).path(cookie.getPath()).build();
+        return new Cookie.Builder(cookie.getName(), cookie.getValue()).domain(domainName)
+                .expiresOn(cookie.getExpiry()).isHttpOnly(true).isSecure(false)
+                .path(cookie.getPath()).build();
     }
 
     /**
@@ -357,6 +371,7 @@ public class WebDriverOperations {
      * <p>
      * 保存するファイル名の一部に、subTitleで指定した値が設定されます。
      * </p>
+     * 
      * @param subTitle サブタイトル
      */
     public void saveScreenCapture(String subTitle) {
@@ -375,6 +390,7 @@ public class WebDriverOperations {
      * <p>
      * 保存するファイル名の一部に、subTitleで指定した値が設定されます。
      * </p>
+     * 
      * @param subTitle サブタイトル
      */
     public void savePageSource(String subTitle) {
@@ -419,8 +435,7 @@ public class WebDriverOperations {
         try {
             return ApServerName.valueOf(serverName);
         } catch (IllegalArgumentException e) {
-            logger.warn("Unkown application server name:{} is detected.",
-                    serverName);
+            logger.warn("Unkown application server name:{} is detected.", serverName);
             // ApServerNameクラスで定義していないサーバ名の場合はUNKNOWNとする
             return ApServerName.UNKNOWN;
         }

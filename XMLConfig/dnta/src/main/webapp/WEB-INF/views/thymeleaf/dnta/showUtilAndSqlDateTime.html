@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <ul>
+                    <li>Date:<span id="getDateResult" th:text="|${#dates.format(resultDate, 'yyyy-MM-dd')}T${#dates.format(resultDate, 'HH:mm:ss')}|"></span></li>
+                    <li>Class:<span id="getDateClassResult" th:text="${resultDate.Class.Name}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

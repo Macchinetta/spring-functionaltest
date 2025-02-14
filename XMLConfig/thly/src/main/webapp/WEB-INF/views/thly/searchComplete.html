@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thly/template :: layout (~{::title},~{::body/content()},'thly')}">
+    <head>
+        <title>Search Result</title>
+    </head>
+    <body>
+        <div id="wrapper">
+            <h2 id="bodyTitle">Search Result</h2>
+            <form th:replace="~{thly/searchFormFragment :: searchForm (~{this::authority})}">
+                <select th:fragment="authority" th:remove="tag">
+                    <option value="STAFF_MNG">Staff Management</option>
+                    <option value="MASTER_MNG">Master Management</option>
+                    <option value="STOCK_MNG">Stock Management</option>
+                    <option value="ORDER_MNG">Order Management</option>
+                    <option value="SHOW_SHOPPING_MNG">Show Shopping Management</option>
+                </select>
+            </form>
+            <hr />
+            <div th:replace="~{thly/searchResultFragment}"></div>
+        </div>
+    </body>
+</html>

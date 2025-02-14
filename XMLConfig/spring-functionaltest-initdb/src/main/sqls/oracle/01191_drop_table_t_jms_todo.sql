@@ -1,0 +1,3 @@
+BEGIN
+DROP_TABLE('t_jms_todo');
+END;

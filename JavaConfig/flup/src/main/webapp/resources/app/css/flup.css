@@ -1,0 +1,25 @@
+.selectedFile,
+.description {
+    width: 600px;
+    display: inline-block;
+    overflow: visible;
+}
+
+.multipartFile {
+    margin-left: 10px;
+    width: 1px;
+    height: 1px;
+    outline: 0px;
+}
+
+.empty-item {
+    height: 34px;
+}
+
+.display-item {
+    overflow: visible;
+    word-wrap: break-word;
+    overflow: visible;
+    outline: 0px !important;
+    height: 100%;
+}

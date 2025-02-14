@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="SessionEventListeners " class="jp.co.ntt.fw.spring.functionaltest.app.spsm.listner.SessionEventListeners" />
+
+    <sec:http pattern="/jsp/0403/001/001/**" request-matcher="ant"
+        authentication-manager-ref="userLoginManagerForAthn">
+        <sec:form-login login-page="/jsp/0403/001/001/login" login-processing-url="/jsp/0403/001/001/authenticate"
+            default-target-url="/jsp/0403/001/001?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/jsp/0403/001/001/logout" logout-success-url="/jsp/0403/001/001/login" />
+        <sec:session-management invalid-session-url="/jsp/invalidSessionError" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/jsp/0403/001/002/**" request-matcher="ant"
+        authentication-manager-ref="userLoginManagerForAthn">
+        <sec:form-login login-page="/jsp/0403/001/002/login" login-processing-url="/jsp/0403/001/002/authenticate"
+            default-target-url="/jsp/0403/001/002?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/jsp/0403/001/002/logout" logout-success-url="/jsp/0403/001/002/login" />
+        <sec:session-management />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/thymeleaf/0403/001/001/**" request-matcher="ant"
+        authentication-manager-ref="userLoginManagerForAthn">
+        <sec:form-login login-page="/thymeleaf/0403/001/001/login" login-processing-url="/thymeleaf/0403/001/001/authenticate"
+            default-target-url="/thymeleaf/0403/001/001?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/thymeleaf/0403/001/001/logout" logout-success-url="/thymeleaf/0403/001/001/login" />
+        <sec:session-management invalid-session-url="/thymeleaf/invalidSessionError" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <sec:http pattern="/thymeleaf/0403/001/002/**" request-matcher="ant"
+        authentication-manager-ref="userLoginManagerForAthn">
+        <sec:form-login login-page="/thymeleaf/0403/001/002/login" login-processing-url="/thymeleaf/0403/001/002/authenticate"
+            default-target-url="/thymeleaf/0403/001/002?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/thymeleaf/0403/001/002/logout" logout-success-url="/thymeleaf/0403/001/002/login" />
+        <sec:session-management />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+</beans>

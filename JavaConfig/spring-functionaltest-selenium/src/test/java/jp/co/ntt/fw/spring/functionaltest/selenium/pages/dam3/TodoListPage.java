@@ -21,7 +21,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 import jp.co.ntt.fw.spring.functionaltest.selenium.SystemErrorPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
@@ -244,25 +243,25 @@ public class TodoListPage implements Page<TodoListPage> {
     public TodoDetailsPage displayTodoDetail(String todoEle) {
         TodoDetailsPage todoDetailsPage = new TodoDetailsPage(driver);
         switch (todoEle) {
-        case "0000000001":
-            todo1Link.click();
-            break;
+            case "0000000001":
+                todo1Link.click();
+                break;
 
-        case "0000000002":
-            todo2Link.click();
-            break;
+            case "0000000002":
+                todo2Link.click();
+                break;
 
-        case "0000000010":
-            todo10Link.click();
-            break;
+            case "0000000010":
+                todo10Link.click();
+                break;
 
-        case "0000000025":
-            todo25Link.click();
-            break;
+            case "0000000025":
+                todo25Link.click();
+                break;
 
-        case "0000001000":
-            todo1000Link.click();
-            break;
+            case "0000001000":
+                todo1000Link.click();
+                break;
         }
 
         return todoDetailsPage;
@@ -271,21 +270,21 @@ public class TodoListPage implements Page<TodoListPage> {
     public TodoUpdatePage updateTodo(String todoEle) {
         TodoUpdatePage todoUpdatePage = new TodoUpdatePage(driver);
         switch (todoEle) {
-        case "0000000001":
-            todo1Link.click();
-            break;
+            case "0000000001":
+                todo1Link.click();
+                break;
 
-        case "0000000002":
-            todo2Link.click();
-            break;
+            case "0000000002":
+                todo2Link.click();
+                break;
 
-        case "0000000003":
-            todo3Link.click();
-            break;
+            case "0000000003":
+                todo3Link.click();
+                break;
 
-        case "0000000025":
-            todo25Link.click();
-            break;
+            case "0000000025":
+                todo25Link.click();
+                break;
         }
 
         return todoUpdatePage;
@@ -295,33 +294,33 @@ public class TodoListPage implements Page<TodoListPage> {
         boolean todoExist = false;
         WebElement todoLink = null;
         switch (todoId) {
-        case "0000000001":
-            todoLink = todo1Link;
-            break;
-        case "0000000002":
-            todoLink = todo2Link;
-            break;
-        case "0000000003":
-            todoLink = todo3Link;
-            break;
-        case "0000000005":
-            todoLink = todo5Link;
-            break;
-        case "0000000010":
-            todoLink = todo10Link;
-            break;
-        case "0000000011":
-            todoLink = todo11Link;
-            break;
-        case "0000000031":
-            todoLink = todo31Link;
-            break;
-        case "0000000025":
-            todoLink = todo25Link;
-            break;
-        case "0000001000":
-            todoLink = todo1000Link;
-            break;
+            case "0000000001":
+                todoLink = todo1Link;
+                break;
+            case "0000000002":
+                todoLink = todo2Link;
+                break;
+            case "0000000003":
+                todoLink = todo3Link;
+                break;
+            case "0000000005":
+                todoLink = todo5Link;
+                break;
+            case "0000000010":
+                todoLink = todo10Link;
+                break;
+            case "0000000011":
+                todoLink = todo11Link;
+                break;
+            case "0000000031":
+                todoLink = todo31Link;
+                break;
+            case "0000000025":
+                todoLink = todo25Link;
+                break;
+            case "0000001000":
+                todoLink = todo1000Link;
+                break;
         }
 
         try {

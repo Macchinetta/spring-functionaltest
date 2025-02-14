@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ネストした単項目チェック</h1>
+
+                <form method="post" th:action="@{/thymeleaf/0102/002}" th:object="${nestedCollectionValidationForm}" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <span id="addresses.errors" th:errors="*{addresses}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div th:each="addresses,status : ${nestedCollectionValidationForm.addresses}">
+                        <legend th:text="|Address${status.index}|"></legend>
+
+                        <div class="form-group">
+                            <label th:for="|addresses${status.index}.userName|" class="col-sm-2 control-label">UserName</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{addresses[__${status.index}__].userName}" class="form-control" placeholder="UserName" />
+                                <span th:id="'addresses'+${status.index}+'.userName.errors'" th:errors="*{addresses[__${status.index}__].userName}" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label th:for="|addresses${status.index}.postCode|" class="col-sm-2 control-label">PostCode</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{addresses[__${status.index}__].postCode}" class="form-control" placeholder="PostCode" />
+                                <span th:id="'addresses'+${status.index}+'.postCode.errors'" th:errors="*{addresses[__${status.index}__].postCode}" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label th:for="|addresses${status.index}.address|" class="col-sm-2 control-label">Address</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{addresses[__${status.index}__].address}" class="form-control" placeholder="Address" />
+                                <span th:id="'addresses'+${status.index}+'.address.errors'" th:errors="*{addresses[__${status.index}__].address}" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div th:if="${status.index > 0}">
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="remove" name="remove" class="btn btn-default" type="submit" value="Submit">remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="add" name="add" class="btn btn-default" type="submit" value="Submit">add</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="validate" name="validate" class="btn btn-default" type="submit" value="Submit">validate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

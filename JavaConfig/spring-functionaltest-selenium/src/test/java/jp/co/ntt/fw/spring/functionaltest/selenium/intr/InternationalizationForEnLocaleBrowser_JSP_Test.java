@@ -18,19 +18,17 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.intr;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-public class InternationalizationForEnLocaleBrowser_JSP_Test extends
-                                                        FunctionTestSupport {
+public class InternationalizationForEnLocaleBrowser_JSP_Test extends FunctionTestSupport {
 
-    private static WebDriver enDriver;
+    private static WebDriver driver;
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     public InternationalizationForEnLocaleBrowser_JSP_Test() {
         disableDefaultWebDriver();
@@ -39,10 +37,10 @@ public class InternationalizationForEnLocaleBrowser_JSP_Test extends
 
     @Before
     public void setUpWebDriver() {
-        if (enDriver == null) {
-            enDriver = webDriverCreator.createLocaleSpecifiedDriver("en");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.ENGLISH_US);
         }
-        setCurrentWebDriver(enDriver);
+        setCurrentWebDriver(driver);
     }
 
     /**

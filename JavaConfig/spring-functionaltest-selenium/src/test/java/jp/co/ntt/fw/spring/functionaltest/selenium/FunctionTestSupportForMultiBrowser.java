@@ -17,13 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.junit.AfterClass;
 
-public abstract class FunctionTestSupportForMultiBrowser extends
-                                                         FunctionTestSupport {
+public abstract class FunctionTestSupportForMultiBrowser extends FunctionTestSupport {
 
-    private static final Map<Integer, WebDriverOperations> webDriverOperationsMap = new ConcurrentHashMap<Integer, WebDriverOperations>();
+    private static final Map<Integer, WebDriverOperations> webDriverOperationsMap =
+            new ConcurrentHashMap<Integer, WebDriverOperations>();
 
     @AfterClass
     public static void tearDownWebDriverOperationsMap() {
@@ -46,11 +45,11 @@ public abstract class FunctionTestSupportForMultiBrowser extends
      * <p>
      * 指定したIDのWebDriverが起動していない場合は、新たにブラウザを起動する。
      * </p>
+     * 
      * @param webDriverId WebDriverを識別するためのID
      * @return セットアップしたWebDriverを操作するためのオブジェクト
      */
-    protected final WebDriverOperations setUpWebDriverOperations(
-            int webDriverId) {
+    protected final WebDriverOperations setUpWebDriverOperations(int webDriverId) {
         WebDriverOperations operations = null;
         if (webDriverOperationsMap.containsKey(webDriverId)) {
             operations = webDriverOperationsMap.get(webDriverId);
@@ -67,6 +66,7 @@ public abstract class FunctionTestSupportForMultiBrowser extends
      * <p>
      * {@link #setUpWebDriverOperations()}を使って起動したブラウザ(WebDriverOperationsに関連付られているWebDirver)をquitする場合は、このメソッドを呼び出すこと。
      * </p>
+     * 
      * @param webDriverOperations quitするWebDriverと関連付られているWebDriverOperationsインスタンス
      */
     protected final void quitWebDriverWebDriverOperations(int webDriverId) {
@@ -78,11 +78,11 @@ public abstract class FunctionTestSupportForMultiBrowser extends
 
     /**
      * 指定したIDのWebDriverを操作するための操作オブジェクトを取得する。
+     * 
      * @param webDriverId WebDriverを識別するためのID
      * @return 指定したIDのWebDriverを操作するためのオブジェクト
      */
-    protected final WebDriverOperations getWebDriverOperations(
-            int webDriverId) {
+    protected final WebDriverOperations getWebDriverOperations(int webDriverId) {
         return webDriverOperationsMap.get(webDriverId);
     }
 

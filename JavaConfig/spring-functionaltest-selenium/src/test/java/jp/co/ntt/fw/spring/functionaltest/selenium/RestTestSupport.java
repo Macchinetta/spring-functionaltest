@@ -18,25 +18,21 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
 import static io.restassured.RestAssured.given;
 import static io.restassured.config.LogConfig.logConfig;
 import static io.restassured.config.RestAssuredConfig.config;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.io.output.WriterOutputStream;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import io.restassured.RestAssured;
 import jakarta.inject.Inject;
 
 public abstract class RestTestSupport extends FunctionTestSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            RestTestSupport.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestTestSupport.class);
 
     @Inject
     private RestLog restLog;
@@ -50,7 +46,8 @@ public abstract class RestTestSupport extends FunctionTestSupport {
         disableDefaultWebDriver();
     }
 
-    // RestAssured.baseURI = applicationContextUrl + "/api/v1/DEFAULT_VIEW_INCLUSION-enable";
+    // RestAssured.baseURI = applicationContextUrl +
+    // "/api/v1/DEFAULT_VIEW_INCLUSION-enable";
     abstract protected String baseURI(boolean enabled);
 
     @Before
@@ -62,11 +59,10 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     public final void setUpConfig() throws IOException {
         // Initialization of applicationContextUrl
         RestAssured.baseURI = baseURI(true);
-        RestAssured.config = config().logConfig(logConfig()
-                .enablePrettyPrinting(false));
+        RestAssured.config = config().logConfig(logConfig().enablePrettyPrinting(false));
         writer = new StringWriter();
-        WriterOutputStream writerOutputStream = WriterOutputStream.builder()
-                .setWriter(writer).setCharset(StandardCharsets.UTF_8).get();
+        WriterOutputStream writerOutputStream = WriterOutputStream.builder().setWriter(writer)
+                .setCharset(StandardCharsets.UTF_8).get();
         captor = new PrintStream(writerOutputStream, true);
     }
 
@@ -98,19 +94,18 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     }
 
     protected ApServerName getApServerName() {
-        return ApServerName.getByCode(given().when().get(
-                "/serverinfo/getServerInfo").then().extract().jsonPath()
-                .getString("apServerName").toUpperCase());
+        return ApServerName.getByCode(given().when().get("/serverinfo/getServerInfo").then()
+                .extract().jsonPath().getString("apServerName").toUpperCase());
     }
 
     protected String getApServerVersion() {
-        return given().when().get("/serverinfo/getServerInfo").then().extract()
-                .jsonPath().getString("apServerVersion");
+        return given().when().get("/serverinfo/getServerInfo").then().extract().jsonPath()
+                .getString("apServerVersion");
     }
 
     protected int getJavaVersion() {
-        return given().when().get("/serverinfo/getServerInfo").then().extract()
-                .jsonPath().getInt("javaVersion");
+        return given().when().get("/serverinfo/getServerInfo").then().extract().jsonPath()
+                .getInt("javaVersion");
     }
 
 }

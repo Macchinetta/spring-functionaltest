@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/jee https://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <!-- jms jndi caching -->
+    <bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="connectionFactory" />
+        <property name="sessionCacheSize" value="3" />
+        <property name="cacheConsumers" value="false" />
+    </bean>
+
+    <bean id="dynamicConnectionFactory" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.ExtendedActiveMQConnectionFactory">
+        <property name="brokerURL"
+            value="tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp" />
+        <property name="deserializationAllowList" value="jp.co.ntt.fw.spring.functionaltest.domain.model,java.time" />
+    </bean>
+
+    <beans profile="default, nonMqServer">
+        <bean id="activeMQServer" class="org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl" init-method="start" destroy-method="stop">
+            <constructor-arg name="configuration" ref="config" />
+            <constructor-arg name="securityManager" ref="activeMQJAASSecurityManager" />
+        </bean>
+        <bean id="config" class="org.apache.activemq.artemis.core.config.impl.ConfigurationImpl">
+            <property name="acceptorConfigurations" ref="acceptorConfigurations" />
+            <property name="securityEnabled" value="false" />
+        </bean>
+
+        <bean id="testQueue0403003B" class="org.apache.activemq.artemis.jms.client.ActiveMQQueue">
+            <constructor-arg name="address" value="TestQueue0403003B" />
+        </bean>
+
+        <bean id="acceptorConfigurations" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+            <property name="targetClass" value="org.apache.activemq.artemis.core.config.ConfigurationUtils" />
+            <property name="targetMethod" value="parseAcceptorURI" />
+            <property name="arguments">
+                <list>
+                    <value>tcp</value>
+                    <value>tcp://${jms.mq.host}:${jms.mq.port}</value>
+                </list>
+            </property>
+        </bean>
+
+        <bean id="connectionFactory" class="jp.co.ntt.fw.spring.functionaltest.app.jmss.ExtendedActiveMQConnectionFactory">
+            <property name="brokerURL"
+                value="tcp://${jms.mq.host}:${jms.mq.port}?jms.blobTransferPolicy.uploadUrl=file:/tmp" />
+            <property name="deserializationAllowList" value="jp.co.ntt.fw.spring.functionaltest.domain.model,java.time" />
+        </bean>
+
+        <bean id="activeMQJAASSecurityManager" class="org.apache.activemq.artemis.spi.core.security.ActiveMQJAASSecurityManager" />
+    </beans>
+
+    <beans profile="mqServer">
+        <jee:jndi-lookup id="connectionFactory" jndi-name="${jndi.prefix}jms/NormalConnectionFactory" />
+        <jee:jndi-lookup id="testQueue0403003B" jndi-name="${jndi.prefix}jms/queue/TestQueue0403003B" />
+    </beans>
+
+</beans>

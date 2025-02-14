@@ -17,18 +17,16 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.xspr;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
 
     private boolean acceptNextAlert = true;
-    
-    private static String VIEW_TYPE = "thymeleaf";
+
+    private static final String VIEW_TYPE = "thymeleaf";
 
     /**
      * <ul>
@@ -45,8 +43,8 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("btn-output"));
 
         // It is an error if the dialog alert has gone out
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "<script>alert(\"XSS Attack!\")</script>"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")),
+                is("<script>alert(\"XSS Attack!\")</script>"));
 
     }
 
@@ -65,8 +63,8 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("btn-output"));
 
         // It is an error if the dialog alert has gone out
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "<script>alert('XSS Attack!')</script>"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")),
+                is("<script>alert('XSS Attack!')</script>"));
 
     }
 
@@ -80,11 +78,9 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
     public void testXSPR0101003() {
 
         webDriverOperations.click(By.id("xspr0101_" + VIEW_TYPE));
-        webDriverOperations.overrideText(By.id("text-output"),
-                "Spring Framework");
+        webDriverOperations.overrideText(By.id("text-output"), "Spring Framework");
         webDriverOperations.click(By.id("btn-output"));
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "Spring Framework"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")), is("Spring Framework"));
 
     }
 
@@ -99,8 +95,7 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0201001_" + VIEW_TYPE));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "';alert('XSS Attack!');aaa='message"));
+        assertThat(closeAlertAndGetItsText(), is("';alert('XSS Attack!');aaa='message"));
 
     }
 
@@ -115,8 +110,7 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0201002_" + VIEW_TYPE));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "';alert(\"XSS Attack!\");aaa='message"));
+        assertThat(closeAlertAndGetItsText(), is("';alert(\"XSS Attack!\");aaa='message"));
 
     }
 
@@ -144,8 +138,7 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301001_" + VIEW_TYPE));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is \"); alert('XSS Attack!'); //."));
+        assertThat(closeAlertAndGetItsText(), is("output is \"); alert('XSS Attack!'); //."));
 
     }
 
@@ -158,8 +151,7 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301002_" + VIEW_TYPE));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is \"); alert(\"XSS Attack!\"); //."));
+        assertThat(closeAlertAndGetItsText(), is("output is \"); alert(\"XSS Attack!\"); //."));
 
     }
 
@@ -172,8 +164,7 @@ public class XSS_Thymeleaf_ProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301003_" + VIEW_TYPE));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is Spring Framework."));
+        assertThat(closeAlertAndGetItsText(), is("output is Spring Framework."));
 
     }
 

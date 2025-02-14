@@ -19,17 +19,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.openqa.selenium.By.id;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -37,33 +32,23 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT02 相関項目チェックのテストケース
  * </p>
  */
-public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
+public class CorrelationValidation_JSP_Test extends ValidationTestSupport {
 
     private static WebDriver driver;
 
-    private String validate = "validate";
+    private BrowserLocale currentLocale = BrowserLocale.ENGLISH_US;
 
-    private String errors = ".errors";
-
-    private String currentLocale = "en";
-
-    private static Map<String, String> localeDateFormat;
-
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     public CorrelationValidation_JSP_Test() {
-        localeDateFormat = new HashMap<String, String>();
-        localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yy");
-
         super.disableDefaultWebDriver();
     }
 
     @Before
     public void setUp() {
+
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -77,7 +62,7 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
     @Test
     public void testVLDT0201001() {
         String testId = "vldt0201001";
-        String[] targets = { "password", "confirmPassword" };
+        String[] targets = {"password", "confirmPassword"};
         String errorMessage = "password and confirm password must be same.";
 
         // テスト画面表示
@@ -91,13 +76,12 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
                 webDriverOperations.overrideText(id(targets[1]), "Spring1234");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(targets[1] + ID_ERRORS)), is(false));
             }
         }
 
@@ -106,14 +90,13 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "differentPassword");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[1]), "differentPassword");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + ID_ERRORS)),
                         is(errorMessage));
             }
         }
@@ -128,20 +111,18 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
     @Test
     public void testVLDT0201002() {
         String testId = "vldt0201002";
-        String[][] targets = { { "password", "confirmPassword" }, { "age",
-                "dateOfBirth" } };
-        String[] errorMessages = {
-                "password and confirm password must be same.",
-                "Age and Date of Birth is inconsistent." };
-        String[] validates = { "validateUser", "validateUserDetails" };
+        String[][] targets = {{"password", "confirmPassword"}, {"age", "dateOfBirth"}};
+        String[] errorMessages = {"password and confirm password must be same.",
+                "Age and Date of Birth is inconsistent."};
+        String[] validates = {"validateUser", "validateUserDetails"};
 
         // テスト画面表示
         {
             webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
         }
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
-                localeDateFormat.get(currentLocale));
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormatter.ofPattern(super.getLocalDateFormat(currentLocale));
 
         // 実施条件1
         {
@@ -149,17 +130,15 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
 
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[param][0]),
-                        "Spring1234");
-                webDriverOperations.overrideText(id(targets[param][1]),
-                        "Spring1234");
+                webDriverOperations.overrideText(id(targets[param][0]), "Spring1234");
+                webDriverOperations.overrideText(id(targets[param][1]), "Spring1234");
                 webDriverOperations.click(id(validates[param]));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[param][1]
-                        + errors)), is(false));
+                assertThat(webDriverOperations.exists(id(targets[param][1] + ID_ERRORS)),
+                        is(false));
             }
         }
 
@@ -169,17 +148,15 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
 
             // テスト実行
             {
-                webDriverOperations.overrideText(id(targets[param][0]),
-                        "Spring1234");
-                webDriverOperations.overrideText(id(targets[param][1]),
-                        "differentPassword");
+                webDriverOperations.overrideText(id(targets[param][0]), "Spring1234");
+                webDriverOperations.overrideText(id(targets[param][1]), "differentPassword");
                 webDriverOperations.click(id(validates[param]));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[param][1]
-                        + errors)), is(errorMessages[param]));
+                assertThat(webDriverOperations.getText(id(targets[param][1] + ID_ERRORS)),
+                        is(errorMessages[param]));
             }
         }
 
@@ -191,15 +168,15 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
-                webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(20).format(dateTimeFormatter));
+                webDriverOperations.overrideText(id(targets[param][1]),
+                        dt.minusYears(20).format(dateTimeFormatter));
                 webDriverOperations.click(id(validates[param]));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[param][0]
-                        + errors)), is(false));
+                assertThat(webDriverOperations.exists(id(targets[param][0] + ID_ERRORS)),
+                        is(false));
             }
         }
 
@@ -211,15 +188,15 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[param][0]), "20");
-                webDriverOperations.overrideText(id(targets[param][1]), dt
-                        .minusYears(19).format(dateTimeFormatter));
+                webDriverOperations.overrideText(id(targets[param][1]),
+                        dt.minusYears(19).format(dateTimeFormatter));
                 webDriverOperations.click(id(validates[param]));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[param][0]
-                        + errors)), is(errorMessages[param]));
+                assertThat(webDriverOperations.getText(id(targets[param][0] + ID_ERRORS)),
+                        is(errorMessages[param]));
             }
         }
     }
@@ -233,7 +210,7 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
     @Test
     public void testVLDT0201003() {
         String testId = "vldt0201003";
-        String[] targets = { "password", "confirmPassword" };
+        String[] targets = {"password", "confirmPassword"};
         String errorMessage = "password and confirm password must be same.";
 
         // テスト画面表示
@@ -247,15 +224,13 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
                 webDriverOperations.overrideText(id(targets[1]), "Spring1234");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[0] + errors)),
-                        is(false));
-                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(targets[0] + ID_ERRORS)), is(false));
+                assertThat(webDriverOperations.exists(id(targets[1] + ID_ERRORS)), is(false));
             }
         }
 
@@ -264,25 +239,22 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "differentPassword");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[1]), "differentPassword");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 // エラーメッセージ確認
-                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + ID_ERRORS)),
                         is(emptyString()));
-                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + ID_ERRORS)),
                         is(errorMessage));
                 // CSS適用確認
-                assertThat(webDriverOperations.getWebDriver().findElement(id(
-                        targets[0])).getAttribute("class"), is(
-                                "form-control error-input"));
-                assertThat(webDriverOperations.getWebDriver().findElement(id(
-                        targets[1])).getAttribute("class"), is(
-                                "form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(targets[0]))
+                        .getAttribute("class"), is("form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(targets[1]))
+                        .getAttribute("class"), is("form-control error-input"));
             }
         }
     }
@@ -296,7 +268,7 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
     @Test
     public void testVLDT0202001() {
         String testId = "vldt0202001";
-        String[] targets = { "password", "confirmPassword" };
+        String[] targets = {"password", "confirmPassword"};
         String errorMessage = "not match password.";
 
         // テスト画面表示
@@ -310,13 +282,12 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
                 webDriverOperations.overrideText(id(targets[1]), "Spring1234");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(targets[1] + ID_ERRORS)), is(false));
             }
         }
 
@@ -325,14 +296,13 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "differentPassword");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[1]), "differentPassword");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + ID_ERRORS)),
                         is(errorMessage));
             }
         }
@@ -347,7 +317,7 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
     @Test
     public void testVLDT0202002() {
         String testId = "vldt0202002";
-        String[] targets = { "password", "confirmPassword" };
+        String[] targets = {"password", "confirmPassword"};
         String errorMessage = "not match password.";
 
         // テスト画面表示
@@ -361,15 +331,13 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
                 webDriverOperations.overrideText(id(targets[1]), "Spring1234");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(targets[0] + errors)),
-                        is(false));
-                assertThat(webDriverOperations.exists(id(targets[1] + errors)),
-                        is(false));
+                assertThat(webDriverOperations.exists(id(targets[0] + ID_ERRORS)), is(false));
+                assertThat(webDriverOperations.exists(id(targets[1] + ID_ERRORS)), is(false));
             }
         }
 
@@ -378,25 +346,22 @@ public class CorrelationValidation_JSP_Test extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(targets[0]), "Spring1234");
-                webDriverOperations.overrideText(id(targets[1]),
-                        "differentPassword");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(targets[1]), "differentPassword");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
                 // エラーメッセージ確認
-                assertThat(webDriverOperations.getText(id(targets[0] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[0] + ID_ERRORS)),
                         is(emptyString()));
-                assertThat(webDriverOperations.getText(id(targets[1] + errors)),
+                assertThat(webDriverOperations.getText(id(targets[1] + ID_ERRORS)),
                         is(errorMessage));
                 // CSS適用確認
-                assertThat(webDriverOperations.getWebDriver().findElement(id(
-                        targets[0])).getAttribute("class"), is(
-                                "form-control error-input"));
-                assertThat(webDriverOperations.getWebDriver().findElement(id(
-                        targets[1])).getAttribute("class"), is(
-                                "form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(targets[0]))
+                        .getAttribute("class"), is("form-control error-input"));
+                assertThat(webDriverOperations.getWebDriver().findElement(id(targets[1]))
+                        .getAttribute("class"), is("form-control error-input"));
             }
         }
     }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <ul>
+                    <li>Day:<span id="getDay" th:text="${#temporals.day(resultDate)}"></span></li>
+                    <li>Month:<span id="getMonth" th:text="${#temporals.month(resultDate)}"></span></li>
+                    <li>MonthName:<span id="getMonthName" th:text="${#temporals.monthName(resultDate)}"></span></li>
+                    <li>MonthNameShort:<span id="getMonthNameShort" th:text="${#temporals.monthNameShort(resultDate)}"></span></li>
+                    <li>Year:<span id="getYear" th:text="${#temporals.year(resultDate)}"></span></li>
+                    <li>DayOfWeek:<span id="getDayOfWeek" th:text="${#temporals.dayOfWeek(resultDate)}"></span></li>
+                    <li>DayOfWeekName:<span id="getDayOfWeekName" th:text="${#temporals.dayOfWeekName(resultDate)}"></span></li>
+                    <li>DayOfWeekNameShort:<span id="getDayOfWeekNameShort" th:text="${#temporals.dayOfWeekNameShort(resultDate)}"></span></li>
+                    <li>Hour:<span id="getHour" th:text="${#temporals.hour(resultDate)}"></span></li>
+                    <li>Minute:<span id="getMinute" th:text="${#temporals.minute(resultDate)}"></span></li>
+                    <li>Second:<span id="getSecond" th:text="${#temporals.second(resultDate)}"></span></li>
+                    <li>Nanosecond:<span id="getNanosecond" th:text="${#temporals.nanosecond(resultDate)}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

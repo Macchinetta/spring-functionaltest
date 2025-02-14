@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>File Upload Error!</title>
+        <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}" />
+        <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+    </head>
+    <body>
+        <div th:insert="~{layout/header :: header}">header</div>
+        <div id="wrapper">
+            <h1>File Upload Error!</h1>
+            <!-- Tymeleaf3.1より#responseが使用できなくなった。 -->
+            <!-- <input type="hidden" id="statusCode" th:value="${T(org.springframework.http.HttpStatus).valueOf(#response.status)}" /> -->
+            <div class="alert alert-danger">
+                <ul>
+                    <li th:text="${#strings.isEmpty(exceptionCode)} ? #{e.sf.fw.9004} : |[${exceptionCode}] #{e.sf.fw.9004}|"></li>
+                </ul>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+        <div th:insert="~{layout/footer :: footer}">footer</div>
+    </body>
+</html>

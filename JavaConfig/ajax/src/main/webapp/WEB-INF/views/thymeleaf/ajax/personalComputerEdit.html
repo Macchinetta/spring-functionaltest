@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <script type="text/javascript" th:inline="javascript">
+            (function(ajax) {
+
+                $(document).ajaxSend(function(event, xhr, options) {
+                    xhr.setRequestHeader([[${_csrf.headerName}]], [[${_csrf.token}]]);
+                });
+
+                ajax.editPersonalComputer = function(method, path) {
+
+                    switch (method) {
+                    case 'ajax.editPersonalComputerForJson':
+                        return ajax.editPersonalComputerForJson(path);
+                        break;
+                    case 'ajax.editPersonalComputerForJsonAndBidingResultHandle':
+                        return ajax.editPersonalComputerForJsonAndBidingResultHandle(path);
+                        break;
+                    default:
+                        return ajax.editPersonalComputerDefault(path);
+                        break;
+                    }
+                };
+
+                ajax.editPersonalComputerDefault = function(path) {
+
+                    $.ajax([[@{/thymeleaf/}]] + path, {
+                        type : "POST",
+                        data : $("#personalComputerForm").serialize(),
+                        dataType : "json"
+                    }).done(function(json, status, xhr) {
+                        ajax.editNormalResultDisplay(json, xhr);
+                    }).fail(function(xhr) {
+                        ajax.errorResultDisplay(xhr);
+                    });
+
+                    return false;
+                };
+
+                ajax.editPersonalComputerForJson = function(path) {
+
+                    $.ajax([[@{/thymeleaf/}]] + path, {
+                        type : "POST",
+                        contentType : "application/json",
+                        data : ajax.toJson($("#personalComputerForm")),
+                        dataType : "json"
+                    }).done(function(json, status, xhr) {
+                        ajax.editNormalResultDisplay(json, xhr);
+                    }).fail(function(xhr) {
+                        ajax.errorResultDisplay(xhr);
+                    });
+
+                    return false;
+                };
+
+                ajax.editPersonalComputerForJsonAndBidingResultHandle = function(path) {
+
+                    $.ajax([[@{/thymeleaf/}]] + path, {
+                        type : "POST",
+                        contentType : "application/json",
+                         data : ajax.toJson($("#personalComputerForm")),
+                          dataType : "json"
+                    }).done(function(json, status, xhr) {
+                         ajax.sharedNormalResultDisplay(json, xhr);
+                    }).fail(function(xhr) {
+                         ajax.errorResultDisplay(xhr);
+                    });
+
+                    return false;
+                };
+            })(ajax);
+        </script>
+        <div class="container">
+            <div id="wrapper">
+                <div id="xMLHttpRequestResult" class="hidden alert">
+                    <ul>
+                        <li id="returnStatus"></li>
+                        <li id="contentType"></li>
+                    </ul>
+                </div>
+
+                <div id="resultMessage" class="hidden alert"></div>
+
+                <form id="personalComputerForm" th:action="@{/thymeleaf/0201}" th:object="${personalComputerForm}">
+                    <div th:errors="${personalComputerForm}"></div>
+                    <fieldset>
+                        <legend>登録PC編集画面</legend>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="personalComputerId">PC ID</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="personalComputerId" readonly="readonly" class="form-control input-sm" value="1" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="personalComputerName">PC名</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="personalComputerName" name="personalComputerName" class="form-control input-sm" th:field="*{personalComputerName}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="os">OS</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="os" name="os" class="form-control input-sm" th:field="*{os}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="cpu">CPU</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="cpu" name="cpu" class="form-control input-sm" th:field="*{cpu}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="ram">RAM</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="ram" name="ram" class="form-control input-sm" th:field="*{ram}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="videocard">VIDEOCARD</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="videocard" name="videocard" class="form-control input-sm" th:field="*{videocard}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="hdd">HDD</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="hdd" name="hdd" class="form-control input-sm" th:field="*{hdd}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="power">POWER</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="power" name="power" class="form-control input-sm" th:field="*{power}" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="price">PRICE(円)</label>
+                            </div>
+                            <div class="col col-md-4">
+                                <input id="price" name="price" class="form-control input-sm" th:field="*{price}" />
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group col col-md-5">
+                            <button id="retrunToIndex" name="retrunToIndex" class="btn btn-default">戻る</button>
+                            <input id="edit" type="button" name="edit" class="btn btn-default" th:onclick="return ajax.editPersonalComputer([[${method}]], [[${path}]])" value="編集" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

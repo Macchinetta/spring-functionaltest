@@ -18,35 +18,31 @@ package jp.co.ntt.fw.spring.functionaltest.config.app;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
-
 import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.TransactionManager;
-import org.terasoluna.gfw.common.time.DefaultClockFactory;
-
 import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
+import jp.co.ntt.fw.spring.functionaltest.database.PortChecker;
 
 /**
  * Define settings for the environment.
  */
 @Configuration
+@Import({SpringFunctionaltestJsr310Config.class})
 public class SpringFunctionaltestEnvConfig {
 
-    /**
-     * Bean of ResourceLoader
-     */
     @Inject
-    private ResourceLoader resourceLoader;
+    private ServletContext context;
 
     /**
      * DataSource.driverClassName property.
@@ -115,12 +111,47 @@ public class SpringFunctionaltestEnvConfig {
     private String database;
 
     /**
-     * Configure {@link DefaultClockFactory}.
-     * @return Bean of configured {@link DefaultClockFactory}
+     * Property tcp.port.
      */
-    @Bean("dateFactory")
-    public DefaultClockFactory dateFactory() {
-        return new DefaultClockFactory();
+    @Value("${tcp.port}")
+    private int tcpPort;
+
+    /**
+     * Property database.url.tcp.
+     */
+    @Value("${database.url.tcp}")
+    private String tcpUrl;
+
+    /**
+     * Property database.url.open.tcp.
+     */
+    @Value("${database.url.open.tcp}")
+    private String tcpOpenUrl;
+
+    /**
+     * Property database.url.close.tcp.
+     */
+    @Value("${database.url.close.tcp}")
+    private String tcpCloseUrl;
+
+    /**
+     * Determine if H2 has been initialized in this project.
+     */
+    private boolean isH2Initialized() {
+        return !PortChecker.isCustomPortInUse(tcpPort)
+                || Boolean.parseBoolean((String) context.getAttribute("h2InitializeStatus"));
+    }
+
+    private String getUrl() {
+        return isH2Initialized() ? this.url : this.tcpUrl;
+    }
+
+    private String getOpenUrl() {
+        return isH2Initialized() ? this.openUrl : this.tcpOpenUrl;
+    }
+
+    private String getCloseUrl() {
+        return isH2Initialized() ? this.closeUrl : this.tcpCloseUrl;
     }
 
     /**
@@ -131,7 +162,26 @@ public class SpringFunctionaltestEnvConfig {
     public DataSource dataSource() {
         BasicDataSource bean = new BasicDataSource();
         bean.setDriverClassName(driverClassName);
-        bean.setUrl(url);
+        bean.setUrl(getUrl());
+        bean.setUsername(username);
+        bean.setPassword(password);
+        bean.setDefaultAutoCommit(false);
+        bean.setMaxTotal(maxActive);
+        bean.setMaxIdle(maxIdle);
+        bean.setMinIdle(minIdle);
+        bean.setMaxWait(Duration.ofMillis(maxWait));
+        return bean;
+    }
+
+    /**
+     * Configure {@link DataSource} bean.
+     * @return Bean of configured {@link BasicDataSource}
+     */
+    @Bean(name = "dataSourceDefault", destroyMethod = "close")
+    public DataSource dataSourceDefault() {
+        BasicDataSource bean = new BasicDataSource();
+        bean.setDriverClassName(driverClassName);
+        bean.setUrl(getUrl());
         bean.setUsername(username);
         bean.setPassword(password);
         bean.setDefaultAutoCommit(false);
@@ -150,7 +200,7 @@ public class SpringFunctionaltestEnvConfig {
     public DataSource dataSourceOpen() {
         BasicDataSource bean = new BasicDataSource();
         bean.setDriverClassName(driverClassName);
-        bean.setUrl(openUrl);
+        bean.setUrl(getOpenUrl());
         bean.setUsername(username);
         bean.setPassword(password);
         bean.setDefaultAutoCommit(false);
@@ -169,7 +219,7 @@ public class SpringFunctionaltestEnvConfig {
     public DataSource dataSourceClose() {
         BasicDataSource bean = new BasicDataSource();
         bean.setDriverClassName(driverClassName);
-        bean.setUrl(closeUrl);
+        bean.setUrl(getCloseUrl());
         bean.setUsername(username);
         bean.setPassword(password);
         bean.setDefaultAutoCommit(false);
@@ -190,67 +240,88 @@ public class SpringFunctionaltestEnvConfig {
         DataSourceInitializer bean = new DataSourceInitializer();
         bean.setDataSource(dataSource());
 
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Arrays.asList(resolver.getResources("classpath*:/database/" + database + "-schema*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/" + database + "-procedure*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/" + database + "-dataload*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        databasePopulator.setSqlScriptEncoding("UTF-8");
-        databasePopulator.setIgnoreFailedDrops(true);
-        bean.setDatabasePopulator(databasePopulator);
+        if (isH2Initialized()) {
+            ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+            PathMatchingResourcePatternResolver resolver =
+                    new PathMatchingResourcePatternResolver();
+            Arrays.asList(
+                    resolver.getResources("classpath*:/database/" + database + "-schema*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(
+                    resolver.getResources("classpath*:/database/" + database + "-procedure*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(
+                    resolver.getResources("classpath*:/database/" + database + "-dataload*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            databasePopulator.setSqlScriptEncoding("UTF-8");
+            databasePopulator.setIgnoreFailedDrops(true);
+            bean.setDatabasePopulator(databasePopulator);
+        }
+
         return bean;
     }
 
     /**
      * Configuration to set up database during initialization.
      * @return Bean of configured {@link DataSourceInitializer}
-     * @throws IOException 
+     * @throws IOException
      */
     @Bean("dataSourceOpenInitializer")
-    @DependsOn({ "dataSourceInitializer" })
+    @DependsOn({"dataSourceInitializer"})
     public DataSourceInitializer dataSourceOpenInitializer() throws IOException {
         DataSourceInitializer bean = new DataSourceInitializer();
         bean.setDataSource(dataSourceOpen());
 
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Arrays.asList(resolver.getResources("classpath*:/database/open/" + database + "-schema*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/open/" + database + "-procedure*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/open/" + database + "-dataload*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        databasePopulator.setSqlScriptEncoding("UTF-8");
-        databasePopulator.setIgnoreFailedDrops(true);
-        bean.setDatabasePopulator(databasePopulator);
+        if (isH2Initialized()) {
+            ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+            PathMatchingResourcePatternResolver resolver =
+                    new PathMatchingResourcePatternResolver();
+            Arrays.asList(
+                    resolver.getResources("classpath*:/database/open/" + database + "-schema*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(resolver
+                    .getResources("classpath*:/database/open/" + database + "-procedure*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(resolver
+                    .getResources("classpath*:/database/open/" + database + "-dataload*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            databasePopulator.setSqlScriptEncoding("UTF-8");
+            databasePopulator.setIgnoreFailedDrops(true);
+            bean.setDatabasePopulator(databasePopulator);
+        }
+
         return bean;
     }
 
     /**
      * Configuration to set up database during initialization.
      * @return Bean of configured {@link DataSourceInitializer}
-     * @throws IOException 
+     * @throws IOException
      */
     @Bean("dataSourceCloseInitializer")
-    @DependsOn({ "dataSourceOpenInitializer" })
+    @DependsOn({"dataSourceOpenInitializer"})
     public DataSourceInitializer dataSourceCloseInitializer() throws IOException {
         DataSourceInitializer bean = new DataSourceInitializer();
         bean.setDataSource(dataSourceClose());
 
-        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Arrays.asList(resolver.getResources("classpath*:/database/close/" + database + "-schema*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/close/" + database + "-procedure*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        Arrays.asList(resolver.getResources("classpath*:/database/close/" + database + "-dataload*.sql"))
-                .forEach(f -> databasePopulator.addScript(f));
-        databasePopulator.setSqlScriptEncoding("UTF-8");
-        databasePopulator.setIgnoreFailedDrops(true);
-        bean.setDatabasePopulator(databasePopulator);
+        if (isH2Initialized()) {
+            ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+            PathMatchingResourcePatternResolver resolver =
+                    new PathMatchingResourcePatternResolver();
+            Arrays.asList(resolver
+                    .getResources("classpath*:/database/close/" + database + "-schema*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(resolver
+                    .getResources("classpath*:/database/close/" + database + "-procedure*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            Arrays.asList(resolver
+                    .getResources("classpath*:/database/close/" + database + "-dataload*.sql"))
+                    .forEach(f -> databasePopulator.addScript(f));
+            databasePopulator.setSqlScriptEncoding("UTF-8");
+            databasePopulator.setIgnoreFailedDrops(true);
+            bean.setDatabasePopulator(databasePopulator);
+        }
+
         return bean;
     }
 
@@ -266,18 +337,13 @@ public class SpringFunctionaltestEnvConfig {
         return bean;
     }
 
-    /**
-     * Configure {@link DataSource} bean.
-     * @return Bean of configured {@link BasicDataSource}
-     */
-    @Bean(name = "dataSourceForLogging", destroyMethod = "close")
-    public DataSource dataSourceForLogging() {
-        BasicDataSource bean = new BasicDataSource();
-        bean.setDriverClassName("org.h2.Driver");
-        bean.setUrl("jdbc:h2:mem:spring-functionaltest;DB_CLOSE_DELAY=-1");
-        bean.setUsername("sa");
-        bean.setPassword("");
-        bean.setDefaultAutoCommit(false);
-        return bean;
-    }
+    // JPA transaction Manager
+
+    // @Bean("jpaTransactionManager")
+    // public TransactionManager jpaTransactionManager(
+    // @Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
+    // JpaTransactionManager bean = new JpaTransactionManager();
+    // bean.setEntityManagerFactory(entityManagerFactory);
+    // return bean;
+    // }
 }

@@ -18,20 +18,17 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.dtac;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class DataAccessCommon_JSP_Test extends FunctionTestSupport {
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     private void clickLink(By by) {
         webDriverOperations.click(by);
@@ -46,9 +43,8 @@ public class DataAccessCommon_JSP_Test extends FunctionTestSupport {
     }
 
     private List<String> getValueList(By by) {
-        List<WebElement> elementList = webDriverOperations.getWebDriver()
-                .findElements(by);
-        List<String> valueList = new ArrayList<String>();
+        List<WebElement> elementList = webDriverOperations.getWebDriver().findElements(by);
+        List<String> valueList = new ArrayList<>();
         for (WebElement element : elementList) {
             valueList.add(element.getText());
         }
@@ -92,8 +88,7 @@ public class DataAccessCommon_JSP_Test extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("ローカル実行時のH2で確認可能")
-    public void testDTAC0101002() {
-    }
+    public void testDTAC0101002() {}
 
     /**
      * <ul>
@@ -191,8 +186,8 @@ public class DataAccessCommon_JSP_Test extends FunctionTestSupport {
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*jp.co.ntt.fw.spring.functionaltest.app.dtac.DTAC_JSP_UserController.*",
                     ".*DuplicateKeyExeption occur!!.*");
-            dbLogAssertOperations.assertContainsByRegexStackTrace(
-                    ".*SQLErrorCodeSQLExceptionTranslator.*");
+            dbLogAssertOperations
+                    .assertContainsByRegexStackTrace(".*SQLErrorCodeSQLExceptionTranslator.*");
         }
     }
 
@@ -202,7 +197,6 @@ public class DataAccessCommon_JSP_Test extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("testDTAC0401001同時実行")
-    public void testDTAC0401002() {
-    }
+    public void testDTAC0401002() {}
 
 }

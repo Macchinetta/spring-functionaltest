@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">複数ファイルのアップロードフォーム</h1>
+
+                <div th:if="${resultMessages} != null" class="alert alert-error" th:class="|alert alert-${resultMessages.type}|">
+                    <ul>
+                        <li th:each="message : ${resultMessages}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">error detail message</li>
+                    </ul>
+                </div>
+
+                <form th:action method="post" class="form-horizontal" enctype="multipart/form-data" th:object="${multiUploadForm}">
+                    <div th:each="i : ${#numbers.sequence(0, 1)}" class="form-group">
+                        <label th:for="|uploadForms${i}.multipartFile|" class="col col-md-2 control-label" th:text="|コンテンツファイル${i+1}|"></label>
+                        <div class="col col-md-10">
+                            <input type="file" th:field="*{uploadForms[__${i}__].multipartFile}" class="multipartFile" />
+                            <input type="text" readonly="readonly" th:id="|selectedFiles${i}|" class="selectedFile form-control" />
+                            <button th:id="|browseFiles${i}|" type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-open"></span>参照</button>
+                            <div th:id="|uploadForms${i}.multipartFile.errors|" th:errors="*{uploadForms[__${i}__].multipartFile}" class="text-danger"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col col-md-10 col-md-offset-2">
+                            <button id="uploadButton" name="upload" class="btn btn-default"><span class="glyphicon glyphicon-upload"></span>アップロード</button>
+                            <a th:href="@{/}" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span>戻る </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head>
+        <script th:inline="javascript">
+            $(function () {
+                // itemオブジェクトの配列
+                var items = /*[[${items}]]*/ [
+                    { name: "Apple", price: 300 },
+                    { name: "Apple Juice", price: 100 },
+                    { name: "Apple Pie", price: 500 },
+                ];
+
+                const trs = $("tbody tr");
+
+                // テーブルへのデータ追加
+                for (var i = 0; i < items.length; i++) {
+                    const tds = trs[i].cells;
+                    tds[0].textContent = items[i].name;
+                    tds[1].textContent = items[i].price;
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <h1>JavaScript Template Example</h1>
+        <table id="result-table">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Apple</td>
+                    <td>300</td>
+                </tr>
+                <tr>
+                    <td>Banana</td>
+                    <td>300</td>
+                </tr>
+                <tr>
+                    <td>Strawberry</td>
+                    <td>300</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

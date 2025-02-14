@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{thymeleaf/layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <ul>
+                    <li>year:<span id="year" th:text="${year}"></span></li>
+                    <li>month:<span id="month" th:text="${month}"></span></li>
+                    <li>day of month:<span id="dayOfMonth" th:text="${dayOfMonth}"></span></li>
+                    <li>day of year:<span id="dayOfYear" th:text="${dayOfYear}"></span></li>
+                    <li>hour:<span id="hour" th:text="${hour}"></span></li>
+                    <li>minute:<span id="minute" th:text="${minute}"></span></li>
+                    <li>second:<span id="second" th:text="${second}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

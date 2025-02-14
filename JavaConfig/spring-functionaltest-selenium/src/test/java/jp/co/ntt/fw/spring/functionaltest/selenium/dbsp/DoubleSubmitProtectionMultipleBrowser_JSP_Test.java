@@ -20,19 +20,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
-
 import java.io.IOException;
-
 import org.junit.Test;
 import org.openqa.selenium.Cookie;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupportForMultiBrowser;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebDriverOperations;
 
-public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
-                                                       FunctionTestSupportForMultiBrowser {
+public class DoubleSubmitProtectionMultipleBrowser_JSP_Test
+        extends FunctionTestSupportForMultiBrowser {
 
-    private static String VIEW_TYPE = "jsp";
+    private static final String VIEW_TYPE = "jsp";
 
     /**
      * <ul>
@@ -43,24 +40,23 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
     public void testDBSP0303002() throws IOException {
         WebDriverOperations[] browsers = new WebDriverOperations[11];
         browsers[0] = setUpWebDriverOperations(0);
-        Cookie cookie = browsers[0].changeCookieDomainName(browsers[0]
-                .getCookie("JSESSIONID"), null);
+        Cookie cookie =
+                browsers[0].changeCookieDomainName(browsers[0].getCookie("JSESSIONID"), null);
 
         for (int i = 1; i < 11; i++) {
             // 同一セッションで新しいブラウザを立ち上げる
             browsers[i] = setUpWebDriverOperations(i);
             browsers[i].getWebDriver().manage().addCookie(cookie);
         }
-        String[] buttonNames = { "dbsp0302002_" + VIEW_TYPE, "second", "third" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView" };
+        String[] buttonNames = {"dbsp0302002_" + VIEW_TYPE, "second", "third"};
+        String[] screenTitles = {"firstView", "secondView", "thirdView"};
 
         for (WebDriverOperations webDriverOperations : browsers) {
             for (int i = 0; i < 3; i++) {
                 // 画面遷移
                 webDriverOperations.click(id(buttonNames[i]));
                 // 各画面へ遷移したことをチェック
-                assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                        screenTitles[i]));
+                assertThat(webDriverOperations.getText(id("screenTitle")), is(screenTitles[i]));
             }
         }
         browsers[0].click(id("fourth"));
@@ -76,8 +72,7 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
             // 画面遷移
             browsers[i].click(id("fourth"));
             // 各画面へ遷移したことをチェック
-            browsers[i].waitForDisplayed(textToBe(id("screenTitle"),
-                    "fourthView"));
+            browsers[i].waitForDisplayed(textToBe(id("screenTitle"), "fourthView"));
         }
     }
 
@@ -90,13 +85,13 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
     public void testDBSP0303003() throws IOException {
         WebDriverOperations[] browsers = new WebDriverOperations[2];
         browsers[0] = setUpWebDriverOperations(0);
-        Cookie cookie = browsers[0].changeCookieDomainName(browsers[0]
-                .getCookie("JSESSIONID"), null);
+        Cookie cookie =
+                browsers[0].changeCookieDomainName(browsers[0].getCookie("JSESSIONID"), null);
         // 同一セッションで新しいブラウザを立ち上げる
         browsers[1] = setUpWebDriverOperations(1);
         browsers[1].getWebDriver().manage().addCookie(cookie);
-        String[] buttonNames = { "dbsp0303003_" + VIEW_TYPE, "second", "third" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView" };
+        String[] buttonNames = {"dbsp0303003_" + VIEW_TYPE, "second", "third"};
+        String[] screenTitles = {"firstView", "secondView", "thirdView"};
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 2; j++) {
@@ -110,8 +105,7 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
                         assertThat(browsers[j].getTitle(), is(expectedTitle));
                     }
                 } else {
-                    assertThat(browsers[j].getText(id("screenTitle")), is(
-                            screenTitles[i]));
+                    assertThat(browsers[j].getText(id("screenTitle")), is(screenTitles[i]));
                 }
             }
         }
@@ -128,14 +122,13 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
         String[] valueTexts = new String[2];
         WebDriverOperations[] browsers = new WebDriverOperations[2];
         browsers[0] = setUpWebDriverOperations(0);
-        Cookie cookie = browsers[0].changeCookieDomainName(browsers[0]
-                .getCookie("JSESSIONID"), null);
+        Cookie cookie =
+                browsers[0].changeCookieDomainName(browsers[0].getCookie("JSESSIONID"), null);
         // 同一セッションで新しいブラウザを立ち上げる
         browsers[1] = setUpWebDriverOperations(1);
         browsers[1].getWebDriver().manage().addCookie(cookie);
-        String[] buttonNames = { "second", "third", "fourth", "fifth" };
-        String[] screenTitles = { "secondView", "thirdView", "fourthView",
-                "fifthView" };
+        String[] buttonNames = {"second", "third", "fourth", "fifth"};
+        String[] screenTitles = {"secondView", "thirdView", "fourthView", "fifthView"};
 
         // NameSpaceは未設定のため、globalToken
         browsers[0].click(id("dbsp0303003_" + VIEW_TYPE));
@@ -148,13 +141,11 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
                 browsers[j].click(id(buttonNames[i]));
-                browsers[j].waitForDisplayed(textToBe(id("screenTitle"),
-                        screenTitles[i]));
+                browsers[j].waitForDisplayed(textToBe(id("screenTitle"), screenTitles[i]));
                 // トランザクショントークンを保持する第二、第三、第四画面にて、トークンのNameSpace情報を取得する。
                 if (i < 3) {
-                    valueTexts[j] = (String) browsers[j].getJavascriptExecutor()
-                            .executeScript(
-                                    "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                    valueTexts[j] = (String) browsers[j].getJavascriptExecutor().executeScript(
+                            "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
                 }
             }
 
@@ -168,6 +159,7 @@ public class DoubleSubmitProtectionMultipleBrowser_JSP_Test extends
 
     /**
      * トランザクショントークンタグのvalue文字列からNameSpaceの部分を抜き出して返却する。
+     * 
      * @param valueText
      * @return
      */
