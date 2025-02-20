@@ -35,14 +35,12 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 
 @Component
 public class TemporaryFilesHelper {
-    private static final Logger logger = LoggerFactory.getLogger(
-            TemporaryFilesHelper.class);
+    private static final Logger logger = LoggerFactory.getLogger(TemporaryFilesHelper.class);
 
     @Value("${app.upload.temporaryDirectory}")
     File temporaryDirectory;
 
-    public File saveTemporaryFile(
-            MultipartFile multipartFile) throws IOException {
+    public File saveTemporaryFile(MultipartFile multipartFile) throws IOException {
 
         Path temporaryDirectoryPath = temporaryDirectory.toPath();
 
@@ -53,7 +51,7 @@ public class TemporaryFilesHelper {
         String temporaryFileId = UUID.randomUUID().toString();
         File temporaryFile = new File(temporaryDirectory, temporaryFileId);
 
-        FileUtils.copyInputStreamToFile(multipartFile.getInputStream(),temporaryFile);
+        FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), temporaryFile);
 
         return temporaryFile;
     }
@@ -70,7 +68,7 @@ public class TemporaryFilesHelper {
             temporaryFiles.add(uploadedFile);
         }
         if (temporaryFiles.size() == 0) {
-            model.addAttribute(ResultMessages.info().add("i.sf.flup.0001"));
+            model.addAttribute(ResultMessages.info().add("i.sf.fu.0001"));
         }
         model.addAttribute("temporaryFiles", temporaryFiles);
     }
@@ -89,8 +87,7 @@ public class TemporaryFilesHelper {
             // 誤ファイル削除防止のため、削除対象ファイルを確認
             checkDeleteFile(targetFile);
             Files.delete(targetFile.toPath());
-            logger.debug("アップロード一時ディレクトリのファイルを削除しました。ファイル名：" + targetFile
-                    .getAbsolutePath());
+            logger.debug("アップロード一時ディレクトリのファイルを削除しました。ファイル名：" + targetFile.getAbsolutePath());
         }
     }
 
@@ -102,18 +99,17 @@ public class TemporaryFilesHelper {
         String fileName = file.getName();
 
         if (file.isDirectory()) {
-            throw new IllegalStateException("アップロード一時ディレクトリ「"
-                    + temporaryDirectory.getAbsolutePath() + "」に" + "サブディレクトリ「"
-                    + fileName + "」が存在します。" + "一時ディレクト内ファイルの削除処理を中断します。");
+            throw new IllegalStateException("アップロード一時ディレクトリ「" + temporaryDirectory.getAbsolutePath()
+                    + "」に" + "サブディレクトリ「" + fileName + "」が存在します。" + "一時ディレクト内ファイルの削除処理を中断します。");
         }
         // UUID簡易チェック
         try {
             UUID.fromString(fileName);
         } catch (IllegalArgumentException iae) {
-            throw new IllegalStateException("アップロード一時ディレクトリ「"
-                    + temporaryDirectory.getAbsolutePath() + "」に"
-                    + "UUID形式でないファイル「" + fileName + "」が存在します。"
-                    + "一時ディレクト内ファイルの削除処理を中断します。", iae);
+            throw new IllegalStateException(
+                    "アップロード一時ディレクトリ「" + temporaryDirectory.getAbsolutePath() + "」に"
+                            + "UUID形式でないファイル「" + fileName + "」が存在します。" + "一時ディレクト内ファイルの削除処理を中断します。",
+                    iae);
         }
     }
 

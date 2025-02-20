@@ -25,8 +25,7 @@ public class DeliveryType implements Serializable {
 
     private String deliveryTypeName;
 
-    public DeliveryType() {
-    }
+    public DeliveryType() {}
 
     public DeliveryType(Integer deliveryTypeId, String deliveryTypeName) {
         this.deliveryTypeId = deliveryTypeId;

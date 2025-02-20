@@ -33,29 +33,27 @@ public class DTOP06Controller {
 
     @RequestMapping(value = "0601/001", method = RequestMethod.GET)
     public String handle05001(Model model) {
-        model.addAttribute("resultDate", dateOperationService
-                .getJapaneseDateStr("Gy.MM.dd"));
+        model.addAttribute("resultDate", dateOperationService.getJapaneseDateStr("Gy.MM.dd"));
         return "dtop/showJapaneseDate";
     }
 
     @RequestMapping(value = "0601/002", method = RequestMethod.GET)
     public String handle05002(Model model) {
-        model.addAttribute("resultDate", dateOperationService
-                .getJapaneseDateStr("GGGGyy/MM/dd"));
+        model.addAttribute("resultDate", dateOperationService.getJapaneseDateStr("GGGGyy/MM/dd"));
         return "dtop/showJapaneseDate";
     }
 
     @RequestMapping(value = "0601/003", method = RequestMethod.GET)
     public String handle05003(Model model) {
-        model.addAttribute("resultDate", dateOperationService.parseJapaneseDate(
-                "H25.12.09", "Gy.MM.dd"));
+        model.addAttribute("resultDate",
+                dateOperationService.parseJapaneseDate("H25.12.09", "Gy.MM.dd"));
         return "dtop/showJapaneseDate";
     }
 
     @RequestMapping(value = "0601/004", method = RequestMethod.GET)
     public String handle05004(Model model) {
-        model.addAttribute("resultDate", dateOperationService.parseJapaneseDate(
-                "平成25/12/09", "GGGGyy/MM/dd"));
+        model.addAttribute("resultDate",
+                dateOperationService.parseJapaneseDate("平成25/12/09", "GGGGyy/MM/dd"));
         return "dtop/showJapaneseDate";
     }
 

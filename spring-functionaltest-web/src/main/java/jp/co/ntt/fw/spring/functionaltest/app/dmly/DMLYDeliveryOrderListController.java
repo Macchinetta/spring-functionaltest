@@ -57,26 +57,22 @@ public class DMLYDeliveryOrderListController {
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list(@PageableDefault(page = 0, size = 10) Pageable pageable,
-            Model model) {
+    public String list(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 
-        Page<DeliveryOrder> deliveryOrders = deliveryOrderService.getOrders(
-                pageable);
+        Page<DeliveryOrder> deliveryOrders = deliveryOrderService.getOrders(pageable);
         model.addAttribute("page", deliveryOrders);
 
         return "dmly/list";
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST, params = "updateCriteria")
-    public String update(
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
+    public String update(@PageableDefault(page = 0, size = 10) Pageable pageable,
             DeliveryOrderListForm form, Model model) {
 
         DeliveryOrderCriteria criteria = new DeliveryOrderCriteria();
         criteria.setFromAcceptDatetime(form.getFromAcceptDatetime().toDate());
         criteria.setToAcceptDatetime(form.getToAcceptDatetime().toDate());
-        criteria.setUpdateCompletionDatetime(form.getUpdateCompletionDatetime()
-                .toDate());
+        criteria.setUpdateCompletionDatetime(form.getUpdateCompletionDatetime().toDate());
 
         deliveryOrderUpdateBLogic.execute(criteria);
 

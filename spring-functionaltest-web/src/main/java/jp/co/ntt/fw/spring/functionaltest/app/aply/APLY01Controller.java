@@ -56,19 +56,18 @@ public class APLY01Controller {
 
     @RequestMapping(value = "0101/001/hello")
     public String handle01001_1(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/001/hello\")" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0101/001/hello\")"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
-    @RequestMapping(value = { "0101/001/nihao", "0101/001/bonjour" })
+    @RequestMapping(value = {"0101/001/nihao", "0101/001/bonjour"})
     public String handle01001_2(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs =
+                {"@RequestMapping(value = {\"0101/001/nihao\", \"0101/001/bonjour\"})"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -79,20 +78,19 @@ public class APLY01Controller {
 
     @RequestMapping(value = "0101/002_1", method = RequestMethod.POST)
     public String handle01002_1(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/002_1\", method = RequestMethod.POST)" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs =
+                {"@RequestMapping(value = \"0101/002_1\", method = RequestMethod.POST)"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
-    @RequestMapping(value = "0101/002_2", method = { RequestMethod.GET,
-            RequestMethod.POST })
+    @RequestMapping(value = "0101/002_2", method = {RequestMethod.GET, RequestMethod.POST})
     public String handle01002_2(Model model) {
         String[] messageArgs = {
-                "@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+                "@RequestMapping(value = \"0101/002_2\", method = {RequestMethod.GET, RequestMethod.POST})"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -103,19 +101,18 @@ public class APLY01Controller {
 
     @RequestMapping(value = "0101/003", params = "form1")
     public String handle01003_1(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/003\", params = \"form\")" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0101/003\", params = \"form\")"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
-    @RequestMapping(value = "0101/003", params = { "form2", "formType=foo" })
+    @RequestMapping(value = "0101/003", params = {"form2", "formType=foo"})
     public String handle01003_2(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs =
+                {"@RequestMapping(value = \"0101/003\", params = {\"form\", \"formType=foo\"})"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -126,68 +123,61 @@ public class APLY01Controller {
 
     @RequestMapping(value = "0101/004/001", params = "!form")
     public String handle01004_1(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/004\", params = \"!form\")" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0101/004\", params = \"!form\")"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
-    @RequestMapping(value = "0101/004/001", params = { "form",
-            "formType!=foo" })
+    @RequestMapping(value = "0101/004/001", params = {"form", "formType!=foo"})
     public String handle01004_2(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs =
+                {"@RequestMapping(value = \"0101/004\", params = {\"form\", \"formType!=foo\"})"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/001/{id}/{version}")
     public String handle02001(@PathVariable("id") String id,
             @PathVariable("version") Integer version, Model model) {
-        Object[] messageArgs = {
-                "@RequestMapping(value = \"0102/001/{id}/{version}\")", id,
-                version };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0002", messageArgs, Locale.JAPANESE));
+        Object[] messageArgs =
+                {"@RequestMapping(value = \"0102/001/{id}/{version}\")", id, version};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0002", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/002/{id}/{version}")
-    public String handle02002(@PathVariable String id,
-            @PathVariable Integer version, Model model) {
-        Object[] messageArgs = {
-                "@RequestMapping(value = \"0102/002/{id}/{version}\")", id,
-                version };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0002", messageArgs, Locale.JAPANESE));
+    public String handle02002(@PathVariable String id, @PathVariable Integer version, Model model) {
+        Object[] messageArgs =
+                {"@RequestMapping(value = \"0102/002/{id}/{version}\")", id, version};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0002", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/003")
-    public String handle02003(@RequestParam("id") String id,
-            @RequestParam String name,
+    public String handle02003(@RequestParam("id") String id, @RequestParam String name,
             @RequestParam(value = "age", required = false) Integer age,
-            @RequestParam(value = "genderCode", required = false, defaultValue = "unknown") String genderCode,
+            @RequestParam(value = "genderCode", required = false,
+                    defaultValue = "unknown") String genderCode,
             Model model) {
-        Object[] messageArgs = { "@RequestMapping(value = \"0102/003\")", id,
-                name, age, genderCode };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0003", messageArgs, Locale.JAPANESE));
+        Object[] messageArgs = {"@RequestMapping(value = \"0102/003\")", id, name, age, genderCode};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0003", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/004")
-    public String handle02004(@RequestParam("id") String id,
-            @RequestParam String name,
+    public String handle02004(@RequestParam("id") String id, @RequestParam String name,
             @RequestParam(value = "age", required = false) Integer age,
-            @RequestParam(value = "genderCode", required = false, defaultValue = "unknown") String genderCode,
+            @RequestParam(value = "genderCode", required = false,
+                    defaultValue = "unknown") String genderCode,
             Model model) {
-        Object[] messageArgs = { "@RequestMapping(value = \"0102/004\")", id,
-                name, age, genderCode };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0003", messageArgs, Locale.JAPANESE));
+        Object[] messageArgs = {"@RequestMapping(value = \"0102/004\")", id, name, age, genderCode};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0003", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -200,10 +190,9 @@ public class APLY01Controller {
 
     @RequestMapping(value = "0102/005", params = "complete")
     public String handle02005complete(Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0102/005complete\")" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0102/005complete\")"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -215,22 +204,18 @@ public class APLY01Controller {
     }
 
     @RequestMapping(value = "0102/006", params = "complete")
-    public String handle02006complete(@RequestParam("id") String id,
-            Model model) {
-        String[] messageArgs = {
-                "@RequestMapping(value = \"0102/006complete\")", id };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0004", messageArgs, Locale.JAPANESE));
+    public String handle02006complete(@RequestParam("id") String id, Model model) {
+        String[] messageArgs = {"@RequestMapping(value = \"0102/006complete\")", id};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0004", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/007")
-    public String handle02007(@CookieValue("JSESSIONID") String sessionId,
-            Model model) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/007\")",
-                "JSESSIONID", sessionId };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0005", messageArgs, Locale.JAPANESE));
+    public String handle02007(@CookieValue("JSESSIONID") String sessionId, Model model) {
+        String[] messageArgs = {"@RequestMapping(value = \"0102/007\")", "JSESSIONID", sessionId};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0005", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
@@ -240,11 +225,10 @@ public class APLY01Controller {
     }
 
     @RequestMapping(value = "0102/008/setCookie")
-    public String handle02008SetCookie(Model model,
-            HttpServletResponse response) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/008\")" };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0001", messageArgs, Locale.JAPANESE));
+    public String handle02008SetCookie(Model model, HttpServletResponse response) {
+        String[] messageArgs = {"@RequestMapping(value = \"0102/008\")"};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0001", messageArgs, Locale.JAPANESE));
         Cookie cookie = new Cookie("HELLO", "helloworld!");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
@@ -252,22 +236,19 @@ public class APLY01Controller {
     }
 
     @RequestMapping(value = "0102/008/confirm")
-    public String handle02008confiem(@CookieValue("HELLO") String hello,
-            Model model) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/008\")",
-                "hello", hello };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0005", messageArgs, Locale.JAPANESE));
+    public String handle02008confiem(@CookieValue("HELLO") String hello, Model model) {
+        String[] messageArgs = {"@RequestMapping(value = \"0102/008\")", "hello", hello};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0005", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 
     @RequestMapping(value = "0102/009")
     public String handle02009(CommonParameters commonParams, Model model) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/009\")",
-                commonParams.getCommonParam1(), commonParams
-                        .getCommonParam2() };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0006", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0102/009\")",
+                commonParams.getCommonParam1(), commonParams.getCommonParam2()};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0006", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 }

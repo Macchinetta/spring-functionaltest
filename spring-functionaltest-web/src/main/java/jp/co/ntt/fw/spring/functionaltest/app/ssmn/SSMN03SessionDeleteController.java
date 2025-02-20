@@ -31,14 +31,13 @@ import org.springframework.web.bind.support.SessionStatus;
  * </p>
  */
 @Controller
-@SessionAttributes(value = { "memberForm" })
+@SessionAttributes(value = {"memberForm"})
 @RequestMapping(value = "ssmn/0301")
 public class SSMN03SessionDeleteController {
 
     @RequestMapping(value = "deleteSession", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Void> handleDeleteSession(
-            SessionStatus sessionStatus) {
+    public ResponseEntity<Void> handleDeleteSession(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return new ResponseEntity<>(HttpStatus.OK);
     }

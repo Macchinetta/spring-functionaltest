@@ -103,16 +103,17 @@ public class DTOP01Controller {
         return "dtop/showDateMidnight";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getWithTimeAtStartOfDay")
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getWithTimeAtStartOfDay")
     public String handleGetNowDateTimeAtStartOfDay(Model model) {
         DateTime dateTime = dateOperationService.getNowDateTime();
         model.addAttribute("resultDate", dateTime.withTimeAtStartOfDay());
         return "dtop/showDateTimeWithTimeAtStartOfDay";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getDateTimeSpecifiedTimezone")
-    public String handleGetDateTimeSpecifiedTimezone(Model model,
-            GetDateAndTimeForm form) {
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getDateTimeSpecifiedTimezone")
+    public String handleGetDateTimeSpecifiedTimezone(Model model, GetDateAndTimeForm form) {
         DateTime dateTime = dateOperationService.getNowDateTime();
         DateTimeZone timezone = DateTimeZone.forID(form.getTargetTimeZone());
         model.addAttribute("resultDate", dateTime.withZone(timezone));

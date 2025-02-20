@@ -48,7 +48,8 @@ public class JPABookLZServiceImpl implements JPABookLZService {
     public JPABookLZ findByIdAcquiringForeignKey(Integer id) {
         JPABookLZ jpaBookLZ = jpaBookRepositoryLZ.findById(id).orElse(null);
 
-        // can't fetch to avoid lazy LazyInitializationException when acquire foreign key (HHH-11838)
+        // can't fetch to avoid lazy LazyInitializationException when acquire foreign key
+        // (HHH-11838)
         jpaBookLZ.getCategory().getCategoryId();
         return jpaBookLZ;
     }

@@ -1,0 +1,3 @@
+INSERT ALL
+INTO operation_date(diff) VALUES ('-1440')
+SELECT * FROM DUAL

@@ -84,9 +84,10 @@ public class JMSS01SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=activeMqCon")
-    public String sendMessageAmqCon(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=activeMqCon")
+    public String sendMessageAmqCon(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         jmsAmqSendingService.sendMessageForAmq(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
@@ -94,17 +95,18 @@ public class JMSS01SendingController {
     }
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=jndiCon")
-    public String sendMessageJndiCon(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    public String sendMessageJndiCon(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         jmsJndiConSendingService.sendMessageByJndiCon(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=cacheCon")
-    public String sendMessageCacheCon(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=cacheCon")
+    public String sendMessageCacheCon(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         jmsCacheConSendingService.sendMessageByCacheCon(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);

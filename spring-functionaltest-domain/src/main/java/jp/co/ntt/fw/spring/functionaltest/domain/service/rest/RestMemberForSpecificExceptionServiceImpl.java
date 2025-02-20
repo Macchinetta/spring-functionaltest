@@ -24,8 +24,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.message.DomainMessageCodes;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.RestMember;
 
 @Service
-public class RestMemberForSpecificExceptionServiceImpl implements
-                                                       RestMemberForSpecificExceptionService {
+public class RestMemberForSpecificExceptionServiceImpl
+        implements RestMemberForSpecificExceptionService {
 
     /**
      * callBusinessException
@@ -38,8 +38,8 @@ public class RestMemberForSpecificExceptionServiceImpl implements
     @Override
     public void callBusinessException(String memberId) {
         // BusinessException例外をスロー
-        throw new BusinessException(ResultMessages.error().add(
-                DomainMessageCodes.E_SF_MM_8001, memberId), null);
+        throw new BusinessException(
+                ResultMessages.error().add(DomainMessageCodes.E_SF_RS_8001, memberId), null);
     }
 
     /**

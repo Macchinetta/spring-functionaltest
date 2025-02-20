@@ -54,9 +54,8 @@ public class EXHN0201001Controller {
     }
 
     @RequestMapping(value = "0201/001", params = "update", method = RequestMethod.POST)
-    public String employeeUpdateThrowBusinessException(
-            @Validated EmployeeForm form, BindingResult result, Model model,
-            RedirectAttributes redirectAttrs) {
+    public String employeeUpdateThrowBusinessException(@Validated EmployeeForm form,
+            BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
             model.addAttribute("testNumber", "0201/001");

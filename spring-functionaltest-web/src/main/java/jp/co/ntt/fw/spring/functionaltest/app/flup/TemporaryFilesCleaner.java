@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
 
 public class TemporaryFilesCleaner {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            TemporaryFilesCleaner.class);
+    private static final Logger logger = LoggerFactory.getLogger(TemporaryFilesCleaner.class);
 
     private boolean deletion;
 
@@ -56,8 +55,7 @@ public class TemporaryFilesCleaner {
         try {
             temporaryFilesHelper.clearTemporarydirectory();
         } catch (IOException e) {
-            logger.error("I/O error occurred in the Temporary Files Cleaner.",
-                    e);
+            logger.error("I/O error occurred in the Temporary Files Cleaner.", e);
         }
     }
 

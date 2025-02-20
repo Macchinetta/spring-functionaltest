@@ -42,8 +42,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookReposito
 @Service
 public class JPABookEGServiceImpl implements JPABookEGService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            JPABookEGServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JPABookEGServiceImpl.class);
 
     @Inject
     JPABookEGCrudRepository jpaBookEGCrudRepository;
@@ -76,11 +75,9 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public Page<JPABookEG> getPaginatedBooks(Pageable pageable) {
-        Page<JPABookEG> pagedBookList = jpaBookEGPaginationRepository.findAll(
-                pageable);
+        Page<JPABookEG> pagedBookList = jpaBookEGPaginationRepository.findAll(pageable);
         for (JPABookEG jpaBookEG : pagedBookList) {
-            jpaBookEG.setBlobCodeHex(new String(Hex.encode(jpaBookEG
-                    .getBlobCode())).toUpperCase());
+            jpaBookEG.setBlobCodeHex(new String(Hex.encode(jpaBookEG.getBlobCode())).toUpperCase());
         }
         return pagedBookList;
     }
@@ -181,8 +178,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Override
     public JPABookEG findUsingNoIntfInheriRepo(Integer bookId) {
-        return jpaBookNoInterfaceInheritanceRepository.findById(bookId).orElse(
-                null);
+        return jpaBookNoInterfaceInheritanceRepository.findById(bookId).orElse(null);
     }
 
     @Override
@@ -201,8 +197,7 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
         // Calling method
         JPABookEG jpaBookEGOrg = jpaBookEGMyProjectRepository
-                .findByIdWithValidVersion(jpaBookEG.getBookId(), jpaBookEG
-                        .getVersion());
+                .findByIdWithValidVersion(jpaBookEG.getBookId(), jpaBookEG.getVersion());
 
         jpaBookEGOrg.setTitle(jpaBookEG.getTitle());
 
@@ -211,8 +206,8 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Transactional(value = "jpaTransactionManager")
     @Override
-    public JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(
-            Integer bookId, Integer sleepTime) throws InterruptedException {
+    public JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(Integer bookId, Integer sleepTime)
+            throws InterruptedException {
 
         JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdate(bookId);
         try {
@@ -226,11 +221,10 @@ public class JPABookEGServiceImpl implements JPABookEGService {
 
     @Transactional(value = "jpaTransactionManager")
     @Override
-    public JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(
-            Integer bookId, Integer sleepTime) throws InterruptedException {
+    public JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(Integer bookId,
+            Integer sleepTime) throws InterruptedException {
 
-        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdateNoExcp(
-                bookId);
+        JPABookEG jpaBookEG = jpaBookEGRepository.findByBookIdForUpdateNoExcp(bookId);
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {

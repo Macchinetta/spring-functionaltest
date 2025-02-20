@@ -35,8 +35,7 @@ public class AccountUserDetailsService implements UserDetailsService {
     @Autowired
     AccountSharedService accountSharedService;
 
-    public UserDetails loadUserByUsername(
-            String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         try {
             Account account = accountSharedService.findOne(username);
@@ -49,8 +48,7 @@ public class AccountUserDetailsService implements UserDetailsService {
     // (4)
     private Collection<GrantedAuthority> getAuthorities(Account account) {
         if (account.isAdmin()) {
-            return AuthorityUtils.createAuthorityList("ROLE_USER",
-                    "ROLE_ADMIN");
+            return AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
         } else {
             return AuthorityUtils.createAuthorityList("ROLE_USER");
         }

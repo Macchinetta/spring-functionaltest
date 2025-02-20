@@ -26,21 +26,18 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class Precedence2000Processor extends AbstractAttributeTagProcessor {
 
     public Precedence2000Processor(final String dialectPrefix) {
-        super(TemplateMode.HTML, dialectPrefix, null, false, "p2000", true,
-                2000, true);
+        super(TemplateMode.HTML, dialectPrefix, null, false, "p2000", true, 2000, true);
     }
 
     @Override
-    protected void doProcess(ITemplateContext context,
-            IProcessableElementTag tag, AttributeName attributeName,
-            String attributeValue,
+    protected void doProcess(ITemplateContext context, IProcessableElementTag tag,
+            AttributeName attributeName, String attributeValue,
             IElementTagStructureHandler structureHandler) {
 
         for (IAttribute attribute : tag.getAllAttributes()) {
             String name = attribute.getAttributeCompleteName();
             if (!"id".equals(name)) {
-                structureHandler.removeAttribute(attribute
-                        .getAttributeCompleteName());
+                structureHandler.removeAttribute(attribute.getAttributeCompleteName());
             }
         }
 

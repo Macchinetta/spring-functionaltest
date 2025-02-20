@@ -31,13 +31,13 @@ import org.slf4j.LoggerFactory;
 
 public class ClobReaderTypeHandlerForPostgres extends BaseTypeHandler<Reader> {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            BlobInputStreamTypeHandlerForPostgres.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(BlobInputStreamTypeHandlerForPostgres.class);
 
     // (2)
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i,
-            Reader parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, Reader parameter,
+            JdbcType jdbcType) throws SQLException {
         String result = "";
         try {
             result = IOUtils.toString(parameter);
@@ -49,22 +49,19 @@ public class ClobReaderTypeHandlerForPostgres extends BaseTypeHandler<Reader> {
 
     // (3)
     @Override
-    public Reader getNullableResult(ResultSet rs,
-            String columnName) throws SQLException {
+    public Reader getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return toReader(rs.getString(columnName));
     }
 
     // (3)
     @Override
-    public Reader getNullableResult(ResultSet rs,
-            int columnIndex) throws SQLException {
+    public Reader getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return toReader(rs.getString(columnIndex));
     }
 
     // (3)
     @Override
-    public Reader getNullableResult(CallableStatement cs,
-            int columnIndex) throws SQLException {
+    public Reader getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return toReader(cs.getString(columnIndex));
     }
 

@@ -54,24 +54,20 @@ public interface TodoRepository {
     AutoMapTodoMB3 findAutoMapByCompositeKey(@Param("todoId") String todoId,
             @Param("categoryId") String categoryId);
 
-    AutoMapTodoMB3 findAutoMapByCompositeKeyNoParamAnnot(String todoId,
-            String categoryId);
+    AutoMapTodoMB3 findAutoMapByCompositeKeyNoParamAnnot(String todoId, String categoryId);
 
     List<AutoMapTodoMB3> findAllAutoMapByCriteria(TodoCriteria criteria);
 
     @MapKey("todoId")
-    Map<String, AutoMapTodoMB3> findAllAutoMapByCriteriaRetMap(
-            TodoCriteria criteria);
+    Map<String, AutoMapTodoMB3> findAllAutoMapByCriteriaRetMap(TodoCriteria criteria);
 
     long countByFinished(boolean finished);
 
     long countByCriteria(TodoCriteria criteria);
 
-    List<TodoMB3> findPageByCriteria(TodoCriteria criteria,
-            RowBounds rowBounds);
+    List<TodoMB3> findPageByCriteria(TodoCriteria criteria, RowBounds rowBounds);
 
-    List<TodoMB3> findPageByCriteriaSqLRef(
-            @Param("criteria") TodoCriteria criteria,
+    List<TodoMB3> findPageByCriteriaSqLRef(@Param("criteria") TodoCriteria criteria,
             @Param("pageable") Pageable pageable);
 
     boolean createAndReturnBoolean(TodoMB3 todoMB3);
@@ -99,13 +95,11 @@ public interface TodoRepository {
 
     List<TodoMB3> findAllByCriteriaEscapeSrch(TodoCriteria todoCriteria);
 
-    void collectAllByCriteria(TodoCriteria todoCriteria,
-            ResultHandler<TodoMB3> handler);
+    void collectAllByCriteria(TodoCriteria todoCriteria, ResultHandler<TodoMB3> handler);
 
     AutoMapTodoMB3 findAutoMapBySP(String todoId);
 
-    List<AutoMapTodoMB3> findAutoMapByUsingClassTypeAlias(
-            TodoSearchCriteria todoSearchCriteria);
+    List<AutoMapTodoMB3> findAutoMapByUsingClassTypeAlias(TodoSearchCriteria todoSearchCriteria);
 
     List<AutoMapTodoMB3> findAutoMapByUsingOverwrittenDefltTypeAliasName(
             TodoCriteria2 todoSearchCriteria);

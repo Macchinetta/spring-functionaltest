@@ -46,9 +46,10 @@ public class ArticleSearchController {
     }
 
     @RequestMapping(value = "articleSearch", method = RequestMethod.GET)
-    public String search(ArticleSearchCriteria criteria,
-            @PageableDefault(page = 0, size = 6, direction = Direction.DESC, sort = {
-                    "article_id" }) Pageable pageable, Model model) {
+    public String search(
+            ArticleSearchCriteria criteria, @PageableDefault(page = 0, size = 6,
+                    direction = Direction.DESC, sort = {"article_id"}) Pageable pageable,
+            Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
         model.addAttribute("page", page);
@@ -57,8 +58,8 @@ public class ArticleSearchController {
     }
 
     @RequestMapping(value = "articleSearchDispTen", method = RequestMethod.GET)
-    public String searchDispTen(ArticleSearchCriteria criteria,
-            @PageableDefault Pageable pageable, Model model) {
+    public String searchDispTen(ArticleSearchCriteria criteria, @PageableDefault Pageable pageable,
+            Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
         model.addAttribute("page", page);
@@ -78,7 +79,8 @@ public class ArticleSearchController {
 
     @RequestMapping(value = "articleSearchDispTwelve", method = RequestMethod.GET)
     public String searchDispTwelve(ArticleSearchCriteria criteria,
-            @PageableDefault(12) @SortDefault(sort = "article_id", direction = Direction.DESC) Pageable pageable,
+            @PageableDefault(12)
+            @SortDefault(sort = "article_id", direction = Direction.DESC) Pageable pageable,
             Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
@@ -88,8 +90,7 @@ public class ArticleSearchController {
     }
 
     @RequestMapping(value = "articleSearchDispTwenty", method = RequestMethod.GET)
-    public String searchDispTwenty(ArticleSearchCriteria criteria,
-            Pageable pageable, Model model) {
+    public String searchDispTwenty(ArticleSearchCriteria criteria, Pageable pageable, Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
         model.addAttribute("page", page);
@@ -99,8 +100,7 @@ public class ArticleSearchController {
 
     @RequestMapping(value = "articleSearchSortSpecified", method = RequestMethod.GET)
     public String searchSortSpecified(ArticleSearchCriteria criteria,
-            @PageableDefault(sort = "article_id") Pageable pageable,
-            Model model) {
+            @PageableDefault(sort = "article_id") Pageable pageable, Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
         model.addAttribute("page", page);

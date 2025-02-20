@@ -99,8 +99,7 @@ public class JPABookListForm implements Serializable {
         return searchInQueryBookIdIntercept;
     }
 
-    public void setSearchInQueryBookIdIntercept(
-            String searchInQueryBookIdIntercept) {
+    public void setSearchInQueryBookIdIntercept(String searchInQueryBookIdIntercept) {
         this.searchInQueryBookIdIntercept = searchInQueryBookIdIntercept;
     }
 
@@ -127,7 +126,8 @@ public class JPABookListForm implements Serializable {
 
     public void setSearchInQueryBookIdAndRegisterFlashAttribute(
             String searchInQueryBookIdAndRegisterFlashAttribute) {
-        this.searchInQueryBookIdAndRegisterFlashAttribute = searchInQueryBookIdAndRegisterFlashAttribute;
+        this.searchInQueryBookIdAndRegisterFlashAttribute =
+                searchInQueryBookIdAndRegisterFlashAttribute;
     }
 
     public String getSearchInQueryBookIdAcquiringNotForeignKey() {

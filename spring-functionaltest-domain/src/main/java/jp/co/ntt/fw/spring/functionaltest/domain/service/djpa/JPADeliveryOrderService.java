@@ -29,8 +29,7 @@ public interface JPADeliveryOrderService {
 
     JPADeliveryOrder findById(Integer deliveryNumber);
 
-    Page<JPADeliveryOrder> findByStatusCode(String statusCode,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByStatusCode(String statusCode, Pageable pageable);
 
     List<JPADeliveryOrder> findUsingNativeQuery(String statusCode);
 
@@ -46,25 +45,18 @@ public interface JPADeliveryOrderService {
 
     List<JPADeliveryOrder> partialSearch(String senderName);
 
-    Page<JPADeliveryOrder> findEntityPageMatchingCondition(String delStatus,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findEntityPageMatchingCondition(String delStatus, Pageable pageable);
 
-    List<JPADeliveryOrder> searchUsingGiveSearchType(String searchVal,
-            String serachCriteria[]);
+    List<JPADeliveryOrder> searchUsingGiveSearchType(String searchVal, String serachCriteria[]);
 
-    List<JPADeliveryOrder> searchUsingDynamicCond(
-            DeliveryOrderCriteria deliveryOrderCriteria);
+    List<JPADeliveryOrder> searchUsingDynamicCond(DeliveryOrderCriteria deliveryOrderCriteria);
 
-    Page<JPADeliveryOrder> findByEscapeSearchMod(String keyword,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByEscapeSearchMod(String keyword, Pageable pageable);
 
-    Page<JPADeliveryOrder> findByEscapeSearchDash(String keyword,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByEscapeSearchDash(String keyword, Pageable pageable);
 
-    Page<JPADeliveryOrder> findByEscapeSearchMatchInLogic(String keyword,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByEscapeSearchMatchInLogic(String keyword, Pageable pageable);
 
-    Page<JPADeliveryOrder> search(DeliveryOrderCriteria criteria,
-            Pageable pageable);
+    Page<JPADeliveryOrder> search(DeliveryOrderCriteria criteria, Pageable pageable);
 
 }

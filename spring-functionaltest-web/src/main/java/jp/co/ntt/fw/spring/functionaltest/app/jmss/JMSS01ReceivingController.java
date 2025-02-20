@@ -41,12 +41,12 @@ public class JMSS01ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=activeMqCon")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=activeMqCon")
     public String receiveMessageActiveMqCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", jmsTodo.getJmsTodoId());
@@ -55,12 +55,12 @@ public class JMSS01ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=jndiCon")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=jndiCon")
     public String receiveMessageJndiCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", jmsTodo.getJmsTodoId());
@@ -69,12 +69,12 @@ public class JMSS01ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=cacheCon")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=cacheCon")
     public String receiveMessageCacheCon(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", jmsTodo.getJmsTodoId());

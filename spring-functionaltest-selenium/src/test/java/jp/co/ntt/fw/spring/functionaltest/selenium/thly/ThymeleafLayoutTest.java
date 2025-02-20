@@ -32,7 +32,7 @@ import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-@IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+@IfProfileValue(name = "test.environment.view", values = {"thymeleaf"})
 public class ThymeleafLayoutTest extends FunctionTestSupport {
 
     /**
@@ -80,8 +80,7 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
         // 登録完了画面に遷移したことをチェック
         {
-            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is(
-                    "Register Result"));
+            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is("Register Result"));
         }
 
         // フラグメントのHTMLが挿入されていることの確認
@@ -92,8 +91,8 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
                     "id('authority-input')/div[@class='col-md-4']/select[@disabled='disabled']/option[@value='SHOW_SHOPPING_MNG']")));
             assertTrue(webDriverOperations.exists(By.xpath(
                     "id('authority-input')/div[@class='col-md-4']/select[@disabled='disabled']/option[@value='STOCK_MNG' and @selected='selected']")));
-            assertFalse(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/span")));
+            assertFalse(webDriverOperations
+                    .exists(By.xpath("id('authority-input')/div[@class='col-md-4']/span")));
         }
     }
 
@@ -112,15 +111,14 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
         // フラグメントのコンテンツのみ挿入されていることの確認
         {
-            assertFalse(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/div")));
+            assertFalse(webDriverOperations
+                    .exists(By.xpath("id('authority-input')/div[@class='col-md-4']/div")));
             assertTrue(webDriverOperations.exists(By.xpath(
                     "id('authority-input')/div[@class='col-md-4']/select/option[@value='STAFF_MNG']")));
             assertTrue(webDriverOperations.exists(By.xpath(
                     "id('authority-input')/div[@class='col-md-4']/select/option[@value='SHOW_SHOPPING_MNG']")));
             WebElement selectElement = webDriverOperations.getWebDriver()
-                    .findElement(By.xpath(
-                            "id('authority-input')/div[@class='col-md-4']/select"));
+                    .findElement(By.xpath("id('authority-input')/div[@class='col-md-4']/select"));
             assertThat(selectElement.getAttribute("disabled"), is(nullValue()));
             assertThat(selectElement.getAttribute("style"), is(""));
         }
@@ -149,8 +147,7 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
         // 変更完了画面に遷移したことをチェック
         {
-            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is(
-                    "Update Result"));
+            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is("Update Result"));
         }
 
         // フラグメント部分のHTMLで引数として受け取った値（変数）を出力できることの確認
@@ -184,9 +181,8 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
             assertTrue(webDriverOperations.exists(By.xpath(
                     "//form[@method='post']//div[@id='authority-input']/div[@class='col-md-4']/select[@class='form-control']/option[@value='SHOW_SHOPPING_MNG']")));
-            List<WebElement> optionElements = webDriverOperations.getWebDriver()
-                    .findElements(By.xpath(
-                            "id('authority-input')/div[@class='col-md-4']/select/option"));
+            List<WebElement> optionElements = webDriverOperations.getWebDriver().findElements(
+                    By.xpath("id('authority-input')/div[@class='col-md-4']/select/option"));
             assertThat(optionElements.size(), is(5));
         }
 
@@ -200,8 +196,7 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
         // 検索完了画面に遷移したことをチェック
         {
-            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is(
-                    "Search Result"));
+            assertThat(webDriverOperations.getText(By.id("bodyTitle")), is("Search Result"));
         }
 
         // フラグメント部分のHTMLで引数として受け取った値（フラグメント）を出力できることの確認
@@ -211,9 +206,8 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
             assertTrue(webDriverOperations.exists(By.xpath(
                     "//form[@method='post']//div[@id='authority-input']/div[@class='col-md-4']/select[@class='form-control']/option[@value='SHOW_SHOPPING_MNG']")));
-            List<WebElement> optionElements = webDriverOperations.getWebDriver()
-                    .findElements(By.xpath(
-                            "id('authority-input')/div[@class='col-md-4']/select/option"));
+            List<WebElement> optionElements = webDriverOperations.getWebDriver().findElements(
+                    By.xpath("id('authority-input')/div[@class='col-md-4']/select/option"));
             assertThat(optionElements.size(), is(5));
         }
     }
@@ -234,17 +228,16 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // レイアウトが適用された画面が表示されることの確認
         {
             // template.html
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getTitle(), is("Create Staff Information"));
             // header.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")), is(
-                    "Staff Management System"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")),
+                    is("Staff Management System"));
             // createForm.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h2")), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h2")),
+                    is("Create Staff Information"));
             // footer.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/p")), is(
-                    "Copyright \u00A9 20XX CompanyName"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/p")),
+                    is("Copyright \u00A9 20XX CompanyName"));
         }
     }
 
@@ -264,17 +257,16 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // レイアウトが適用された画面が表示されTitleタグがデフォルトのままであることの確認
         {
             // template.html
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Staff Management System"));
+            assertThat(webDriverOperations.getTitle(), is("Staff Management System"));
             // header.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")), is(
-                    "Staff Management System"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")),
+                    is("Staff Management System"));
             // createForm.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h2")), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h2")),
+                    is("Create Staff Information"));
             // footer.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/p")), is(
-                    "Copyright \u00A9 20XX CompanyName"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/p")),
+                    is("Copyright \u00A9 20XX CompanyName"));
         }
     }
 
@@ -294,17 +286,16 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // レイアウトが適用された画面が表示されることの確認
         {
             // template.html
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getTitle(), is("Create Staff Information"));
             // header.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")), is(
-                    "Staff Management System"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")),
+                    is("Staff Management System"));
             // createForm.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h2")), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h2")),
+                    is("Create Staff Information"));
             // footer.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/p")), is(
-                    "Copyright \u00A9 20XX CompanyName"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/p")),
+                    is("Copyright \u00A9 20XX CompanyName"));
         }
     }
 
@@ -324,22 +315,21 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // レイアウトが適用された画面が表示され追加パラメータが埋め込まれることの確認
         {
             // template.html
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getTitle(), is("Create Staff Information"));
             // header.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")), is(
-                    "Staff Management System"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h1/a")),
+                    is("Staff Management System"));
             // createForm.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/h2")), is(
-                    "Create Staff Information"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/h2")),
+                    is("Create Staff Information"));
             // footer.html
-            assertThat(webDriverOperations.getText(By.xpath("//body/p")), is(
-                    "Copyright \u00A9 20XX CompanyName"));
+            assertThat(webDriverOperations.getText(By.xpath("//body/p")),
+                    is("Copyright \u00A9 20XX CompanyName"));
             // script tag
-            assertTrue(webDriverOperations.exists(By.xpath(
-                    "//head/script[contains(@src,'/resources/app/js/sample.js')]")));
-            List<WebElement> scriptElements = webDriverOperations.getWebDriver()
-                    .findElements(By.xpath("//head/script"));
+            assertTrue(webDriverOperations.exists(
+                    By.xpath("//head/script[contains(@src,'/resources/app/js/sample.js')]")));
+            List<WebElement> scriptElements =
+                    webDriverOperations.getWebDriver().findElements(By.xpath("//head/script"));
             assertThat(scriptElements.size(), is(1));
         }
     }
@@ -359,14 +349,12 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
         // 部品化したメッセージパネルが表示されていることの確認
         {
-            assertTrue(webDriverOperations.exists(By.xpath(
-                    "//div[@class='error']/div[@class='alert alert-error']")));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//div[@class='error']/span")), is(
-                            "[e.xx.fw.8001] Business error occurred!"));
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//div[@class='error']/div/ul/li")), is(
-                            "Create Staff error occurred!"));
+            assertTrue(webDriverOperations
+                    .exists(By.xpath("//div[@class='error']/div[@class='alert alert-error']")));
+            assertThat(webDriverOperations.getText(By.xpath("//div[@class='error']/span")),
+                    is("[e.sf.fw.8001] Business error occurred!"));
+            assertThat(webDriverOperations.getText(By.xpath("//div[@class='error']/div/ul/li")),
+                    is("Create Staff error occurred!"));
         }
     }
 

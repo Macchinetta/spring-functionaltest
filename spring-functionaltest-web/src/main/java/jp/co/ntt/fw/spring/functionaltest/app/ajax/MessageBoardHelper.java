@@ -34,8 +34,8 @@ public class MessageBoardHelper {
         ErrorResults errorResults = new ErrorResults();
 
         for (FieldError fieldError : fildErrors) {
-            errorResults.add(fieldError.getCode(), messageSource.getMessage(
-                    fieldError, locale), fieldError.getField());
+            errorResults.add(fieldError.getCode(), messageSource.getMessage(fieldError, locale),
+                    fieldError.getField());
         }
         return errorResults;
     }

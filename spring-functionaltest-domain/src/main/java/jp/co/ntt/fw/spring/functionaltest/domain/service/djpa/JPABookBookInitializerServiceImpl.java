@@ -31,8 +31,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPABookReposito
 
 @Transactional(value = "jpaTransactionManager")
 @Service
-public class JPABookBookInitializerServiceImpl implements
-                                               JPABookInitializerService {
+public class JPABookBookInitializerServiceImpl implements JPABookInitializerService {
 
     @Inject
     JPABookRepository jaBookRepository;

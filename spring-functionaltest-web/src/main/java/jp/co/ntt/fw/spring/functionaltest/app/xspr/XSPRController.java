@@ -36,8 +36,7 @@ public class XSPRController {
     }
 
     @RequestMapping(value = "0101/output", method = RequestMethod.POST)
-    public String output_InputData(
-            @RequestParam("outputData") String outputData, Model model) {
+    public String output_InputData(@RequestParam("outputData") String outputData, Model model) {
         model.addAttribute("outputData", outputData);
 
         return "xspr/outputEscaping";

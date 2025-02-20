@@ -24,9 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ATHN07Controller {
 
-    @RequestMapping(value = { "0701/001", "0702/001" }, params = "loginSuccess")
-    public String handle0701LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    @RequestMapping(value = {"0701/001", "0702/001"}, params = "loginSuccess")
+    public String handle0701LoginSuccess(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         return "athn/topForDefaultLogout";
     }

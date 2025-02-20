@@ -50,8 +50,8 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
     String pop3password;
 
     @Override
-    public void sendSimpleMessage(String to, String cc, String bcc,
-            String replyTo, String text, Store store) {
+    public void sendSimpleMessage(String to, String cc, String bcc, String replyTo, String text,
+            Store store) {
 
         SimpleMailMessage message = new SimpleMailMessage(templateMessage);
         message.setTo(to);
@@ -67,8 +67,8 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
     }
 
     @Override
-    public void sendSimpleMessages(String[] to, String[] cc, String[] bcc,
-            String text, Store store) {
+    public void sendSimpleMessages(String[] to, String[] cc, String[] bcc, String text,
+            Store store) {
 
         SimpleMailMessage message = new SimpleMailMessage(templateMessage);
         message.setTo(to);
@@ -82,8 +82,7 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
     @Override
     public Store popBeforeSmtp() {
 
-        return mailReceivingService.connect(pop3host, pop3port, pop3user,
-                pop3password);
+        return mailReceivingService.connect(pop3host, pop3port, pop3user, pop3password);
 
     }
 

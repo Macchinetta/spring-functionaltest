@@ -31,8 +31,7 @@ public class AccountUserDetails implements UserDetails, CredentialsContainer {
 
     private final Collection<GrantedAuthority> authorities;
 
-    public AccountUserDetails(Account account,
-            Collection<GrantedAuthority> authorities) {
+    public AccountUserDetails(Account account, Collection<GrantedAuthority> authorities) {
         this.account = account;
         this.authorities = authorities;
     }

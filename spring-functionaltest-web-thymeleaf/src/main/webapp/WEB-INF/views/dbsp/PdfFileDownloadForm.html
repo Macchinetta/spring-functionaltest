@@ -1,50 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-
-      <h1 id="screenTitle">PDFファイルのダウンロード</h1>
-      <form id="ID" th:action="@{/dbsp/0302/001}" th:object="${contentDownloadForm}"
-        class="form-horizontal" method="post">
-        <fieldset>
-          <legend>新規口座開設用情報入力</legend>
-          <div class="form-group">
-            <div class="col col-md-2">名前</div>
-            <div class="col col-md-3">
-              <input type="text" th:field="*{name}" class="quantity form-control input-sm" />
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">PDFファイルのダウンロード</h1>
+                <form id="ID" th:action="@{/dbsp/0302/001}" th:object="${contentDownloadForm}" class="form-horizontal" method="post">
+                    <fieldset>
+                        <legend>新規口座開設用情報入力</legend>
+                        <div class="form-group">
+                            <div class="col col-md-2">名前</div>
+                            <div class="col col-md-3">
+                                <input type="text" th:field="*{name}" class="quantity form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">住所</div>
+                            <div class="col col-md-3">
+                                <input type="text" th:field="*{address}" class="quantity form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">生年月日(yyyyMMdd)</div>
+                            <div class="col col-md-3">
+                                <input type="text" th:field="*{birthdate}" class="quantity form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-10 col-md-offset-2">
+                                <input type="submit" id="downloadButton" name="pdf" value="ダウンロード" class="btn btn-default" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-10 col-md-offset-2">
+                                <input type="submit" id="fifth" name="fifth" value="第五画面へ" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-          </div>
-          <div class="form-group">
-            <div class="col col-md-2">住所</div>
-            <div class="col col-md-3">
-              <input type="text" th:field="*{address}" class="quantity form-control input-sm" />
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col col-md-2">生年月日(yyyyMMdd)</div>
-            <div class="col col-md-3">
-              <input type="text" th:field="*{birthdate}" class="quantity form-control input-sm" />
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col col-md-10 col-md-offset-2">
-              <input type="submit" id="downloadButton" name="pdf" value="ダウンロード"
-                class="btn btn-default">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col col-md-10 col-md-offset-2">
-              <input type="submit" id="fifth" name="fifth" value="第五画面へ" class="btn btn-default">
-            </div>
-          </div>
-        </fieldset>
-      </form>
-
-    </div>
-  </div>
-</body>
+        </div>
+    </body>
 </html>

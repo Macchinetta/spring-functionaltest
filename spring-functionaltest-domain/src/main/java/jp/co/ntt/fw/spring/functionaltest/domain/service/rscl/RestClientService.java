@@ -53,14 +53,13 @@ public interface RestClientService {
 
     UserResource exchangeWithSourceHttpMessageConverter(UserResource user);
 
-    UserResource exchangeWithAllEncompassingFormHttpMessageConverter(
-            UserResource user);
+    UserResource exchangeApplicationWithAllEncompassingFormHttpMessageConverter(UserResource user);
 
-    UserResource exchangeWithMappingJackson2HttpMessageConverter(
-            UserResource user);
+    UserResource exchangeMultipartWithAllEncompassingFormHttpMessageConverter(UserResource user);
 
-    UserResource exchangeWithJaxb2RootElementHttpMessageConverter(
-            UserResource user);
+    UserResource exchangeWithMappingJackson2HttpMessageConverter(UserResource user);
+
+    UserResource exchangeWithJaxb2RootElementHttpMessageConverter(UserResource user);
 
     UserResource exchangeWithAuthentication(String username, String password);
 

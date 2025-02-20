@@ -60,10 +60,8 @@ public class OrderMB3Helper {
 
         orderMB3Form.setId(orderMB3.getId());
         if (!orderMB3.getOrderItems().isEmpty()) {
-            orderMB3Form.setItemCode(orderMB3.getOrderItems().get(0).getItem()
-                    .getCode());
-            orderMB3Form.setQuantity(orderMB3.getOrderItems().get(0)
-                    .getQuantity());
+            orderMB3Form.setItemCode(orderMB3.getOrderItems().get(0).getItem().getCode());
+            orderMB3Form.setQuantity(orderMB3.getOrderItems().get(0).getQuantity());
         }
         orderMB3Form.setMemo(orderMB3.getMemo());
         orderMB3Form.setOrderStatus(orderMB3.getOrderStatus().getCode());

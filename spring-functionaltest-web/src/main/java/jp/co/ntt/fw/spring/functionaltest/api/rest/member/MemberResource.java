@@ -34,8 +34,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractLinksSupportedResource;
 
-public class MemberResource extends AbstractLinksSupportedResource implements
-                            Serializable {
+public class MemberResource extends AbstractLinksSupportedResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,20 +50,20 @@ public class MemberResource extends AbstractLinksSupportedResource implements
     interface Detail {
     }
 
-    @JsonView({ Summary.class, Detail.class })
+    @JsonView({Summary.class, Detail.class})
     @Null(groups = PostMembers.class)
-    @NotEmpty(groups = PutMember.class)
+    @NotNull(groups = PutMember.class)
     @Size(min = 10, max = 10, groups = PutMember.class)
     private String memberId;
 
-    @JsonView({ Summary.class, Detail.class })
-    @NotEmpty
-    @Size(max = 128)
+    @JsonView({Summary.class, Detail.class})
+    @NotNull
+    @Size(min = 1, max = 128)
     private String firstName;
 
-    @JsonView({ Summary.class, Detail.class })
-    @NotEmpty
-    @Size(max = 128)
+    @JsonView({Summary.class, Detail.class})
+    @NotNull
+    @Size(min = 1, max = 128)
     private String lastName;
 
     @JsonView(Detail.class)
@@ -79,8 +78,8 @@ public class MemberResource extends AbstractLinksSupportedResource implements
     private LocalDate dateOfBirth;
 
     @JsonView(Detail.class)
-    @NotEmpty
-    @Size(max = 256)
+    @NotNull
+    @Size(min = 1, max = 256)
     @Email
     private String emailAddress;
 

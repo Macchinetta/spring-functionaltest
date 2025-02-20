@@ -17,8 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Null;
 
 public class Todo implements Serializable {
@@ -32,10 +31,10 @@ public class Todo implements Serializable {
     }
 
     @Null(groups = Create.class)
-    @NotNull(groups = Update.class)
+    @NotEmpty(groups = Update.class)
     private String todoId;
 
-    @NotNull
+    @NotEmpty
     private String title;
 
     private String description;

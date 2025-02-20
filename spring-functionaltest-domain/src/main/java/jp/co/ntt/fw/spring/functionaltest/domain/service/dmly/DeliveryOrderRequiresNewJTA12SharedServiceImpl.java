@@ -27,8 +27,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(value = Transactional.TxType.REQUIRES_NEW)
 @Service
-public class DeliveryOrderRequiresNewJTA12SharedServiceImpl implements
-                                                            DeliveryOrderRequiresNewJTA12SharedService {
+public class DeliveryOrderRequiresNewJTA12SharedServiceImpl
+        implements DeliveryOrderRequiresNewJTA12SharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

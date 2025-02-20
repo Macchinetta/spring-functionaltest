@@ -88,8 +88,7 @@ public class CSPR03Controller {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public ProfileResult edit(@Validated CommitterForm form,
-            Principal principal, Locale locale) {
+    public ProfileResult edit(@Validated CommitterForm form, Principal principal, Locale locale) {
 
         Committer committer = new Committer();
         beanMapper.map(form, committer);
@@ -99,8 +98,7 @@ public class CSPR03Controller {
 
         ProfileResult result = new ProfileResult();
 
-        result.setMessages(Arrays.asList(messageSource.getMessage(
-                "i.sf.cspr.0001", null, locale)));
+        result.setMessages(Arrays.asList(messageSource.getMessage("i.sf.cp.0001", null, locale)));
 
         return result;
     }
@@ -125,8 +123,8 @@ public class CSPR03Controller {
         ErrorResults result = new ErrorResults();
 
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-            result.add(fieldError.getCode(), messageSource.getMessage(
-                    fieldError, locale), fieldError.getField());
+            result.add(fieldError.getCode(), messageSource.getMessage(fieldError, locale),
+                    fieldError.getField());
         }
 
         return result;

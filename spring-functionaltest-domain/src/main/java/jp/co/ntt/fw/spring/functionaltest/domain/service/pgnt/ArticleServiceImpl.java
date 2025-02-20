@@ -39,17 +39,15 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleRepository articleRepository;
 
     @Override
-    public Page<Article> getArticles(ArticleSearchCriteria criteria,
-            Pageable pageable) {
+    public Page<Article> getArticles(ArticleSearchCriteria criteria, Pageable pageable) {
         List<Article> articles = null;
-        PageableArticleSearchCriteria pageableArticleSearchCriteria = new PageableArticleSearchCriteria(criteria, pageable);
+        PageableArticleSearchCriteria pageableArticleSearchCriteria =
+                new PageableArticleSearchCriteria(criteria, pageable);
 
-        long total = articleRepository.countByCriteria(
-                pageableArticleSearchCriteria);
+        long total = articleRepository.countByCriteria(pageableArticleSearchCriteria);
 
         if (0 < total) {
-            articles = articleRepository.findPage(
-                    pageableArticleSearchCriteria);
+            articles = articleRepository.findPage(pageableArticleSearchCriteria);
 
         } else {
             articles = Collections.emptyList();

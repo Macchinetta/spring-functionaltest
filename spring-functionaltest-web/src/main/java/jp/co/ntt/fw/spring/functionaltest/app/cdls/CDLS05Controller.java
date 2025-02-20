@@ -40,8 +40,7 @@ public class CDLS05Controller {
 
     @ModelAttribute
     public void setUpLocale(Model model, HttpServletRequest request) {
-        model.addAttribute("requestLocale", RequestContextUtils.getLocale(
-                request));
+        model.addAttribute("requestLocale", RequestContextUtils.getLocale(request));
         model.addAttribute("fallBackLocale", fallBackLocale);
     }
 

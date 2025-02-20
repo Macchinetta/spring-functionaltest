@@ -52,16 +52,15 @@ public class TodoServiceImpl implements TodoService {
 
     public Todo getTodo(String todoId) {
         if (!todos.containsKey(todoId)) {
-            throw new ResourceNotFoundException(ResultMessages.error().add(
-                    "e.sf.soap.5001", todoId));
+            throw new ResourceNotFoundException(
+                    ResultMessages.error().add("e.sf.soap.5001", todoId));
         }
         return todos.get(todoId);
     }
 
     public Todo createTodo(Todo todo) {
         if (todos.size() >= TODO_MAX_COUNT) {
-            throw new BusinessException(ResultMessages.error().add(
-                    "e.sf.soap.8001"));
+            throw new BusinessException(ResultMessages.error().add("e.sf.soap.8001"));
         }
         todo.setTodoId(UUID.randomUUID().toString());
         todo.setCreatedAt(dateFactory.newDate());
@@ -90,8 +89,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public boolean uploadFile(InputStream stream) throws IOException {
-        InputStream checkStream = new ClassPathResource("testdata/soap/test.png")
-                .getInputStream();
+        InputStream checkStream = new ClassPathResource("testdata/soap/test.png").getInputStream();
         return IOUtils.contentEquals(stream, checkStream);
     }
 

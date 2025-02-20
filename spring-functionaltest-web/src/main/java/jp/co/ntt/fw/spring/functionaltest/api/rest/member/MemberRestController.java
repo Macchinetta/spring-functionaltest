@@ -72,18 +72,16 @@ public class MemberRestController {
      */
     @RequestMapping(method = RequestMethod.GET, params = "name")
     @ResponseStatus(HttpStatus.OK)
-    public Page<MemberResource> getMembers(@Validated MembersSearchQuery query,
-            Pageable pageable) {
+    public Page<MemberResource> getMembers(@Validated MembersSearchQuery query, Pageable pageable) {
 
-        Page<RestMember> page = restMemberService.searchMembers(query.getName(),
-                pageable);
+        Page<RestMember> page = restMemberService.searchMembers(query.getName(), pageable);
 
         List<MemberResource> memberResources = new ArrayList<>();
         for (RestMember member : page.getContent()) {
             memberResources.add(beanMapper.map(member, MemberResource.class));
         }
-        Page<MemberResource> responseResource = new PageImpl<>(memberResources, pageable, page
-                .getTotalElements());
+        Page<MemberResource> responseResource =
+                new PageImpl<>(memberResources, pageable, page.getTotalElements());
 
         return responseResource;
     }
@@ -114,18 +112,16 @@ public class MemberRestController {
      * <li>特定のMemberリソースを取得</li>
      * </ul>
      */
-    @RequestMapping(value = "{memberId}", method = { RequestMethod.GET })
+    @RequestMapping(value = "{memberId}", method = {RequestMethod.GET})
     @ResponseStatus(HttpStatus.OK)
     public MemberResource getMember(@PathVariable("memberId") String memberId,
             UriComponentsBuilder uriBuilder) {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member, MemberResource.class);
 
-        responseResource.addSelf(uriBuilder.path("/members").pathSegment(
-                memberId).build().toUri());
+        responseResource.addSelf(uriBuilder.path("/members").pathSegment(memberId).build().toUri());
 
         return responseResource;
     }
@@ -138,22 +134,19 @@ public class MemberRestController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<MemberResource> postMembers(@RequestBody @Validated({
-            PostMembers.class,
-            Default.class }) MemberResource requestedResource,
+    public ResponseEntity<MemberResource> postMembers(
+            @RequestBody
+            @Validated({PostMembers.class, Default.class}) MemberResource requestedResource,
             UriComponentsBuilder uriBuilder) {
 
-        RestMember creatingMember = beanMapper.map(requestedResource,
-                RestMember.class);
+        RestMember creatingMember = beanMapper.map(requestedResource, RestMember.class);
 
-        RestMember createdMember = restMemberService.createMember(
-                creatingMember);
+        RestMember createdMember = restMemberService.createMember(creatingMember);
 
-        MemberResource responseResource = beanMapper.map(createdMember,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(createdMember, MemberResource.class);
 
-        URI createdUri = uriBuilder.path("/members/{memberId}").buildAndExpand(
-                responseResource.getMemberId()).toUri();
+        URI createdUri = uriBuilder.path("/members/{memberId}")
+                .buildAndExpand(responseResource.getMemberId()).toUri();
 
         return ResponseEntity.created(createdUri).body(responseResource);
     }
@@ -166,18 +159,14 @@ public class MemberRestController {
      */
     @RequestMapping(value = "{memberId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public MemberResource putMember(@PathVariable("memberId") String memberId,
-            @RequestBody @Validated({ PutMember.class,
-                    Default.class }) MemberResource requestedResource) {
+    public MemberResource putMember(@PathVariable("memberId") String memberId, @RequestBody
+    @Validated({PutMember.class, Default.class}) MemberResource requestedResource) {
 
-        RestMember updatingMember = beanMapper.map(requestedResource,
-                RestMember.class);
+        RestMember updatingMember = beanMapper.map(requestedResource, RestMember.class);
 
-        RestMember updatedMember = restMemberService.updateMember(memberId,
-                updatingMember);
+        RestMember updatedMember = restMemberService.updateMember(memberId, updatingMember);
 
-        MemberResource responseResource = beanMapper.map(updatedMember,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(updatedMember, MemberResource.class);
 
         return responseResource;
     }
@@ -203,8 +192,7 @@ public class MemberRestController {
      * </ul>
      */
     @RequestMapping(value = "businessExp/{memberId}", method = RequestMethod.PUT)
-    public void callBusinessException(
-            @PathVariable("memberId") String memberId) {
+    public void callBusinessException(@PathVariable("memberId") String memberId) {
         restMemberForSpecificExceptionService.callBusinessException(memberId);
     }
 
@@ -216,8 +204,7 @@ public class MemberRestController {
      */
     @RequestMapping(value = "optimisticExp", method = RequestMethod.PUT)
     public void callOptimisticFailureException() {
-        restMemberForSpecificExceptionService.callOptimisticFailureException(
-                "memberId");
+        restMemberForSpecificExceptionService.callOptimisticFailureException("memberId");
     }
 
     /**
@@ -244,8 +231,8 @@ public class MemberRestController {
      * </ul>
      */
     @RequestMapping(value = "unknownError", method = RequestMethod.GET)
-    public void responseUnknownError(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void responseUnknownError(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         // Send 508 (Unknown Error) error to servlet container
         response.sendError(508);
     }
@@ -259,8 +246,8 @@ public class MemberRestController {
      * </ul>
      */
     @RequestMapping(value = "httpVersionNotSupport", method = RequestMethod.GET)
-    public void responseServiceUnavailable(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void responseServiceUnavailable(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         // Send 505 (HTTP Version Not Supported) error to servlet container
         response.sendError(505);
     }
@@ -274,8 +261,8 @@ public class MemberRestController {
      * </ul>
      */
     @RequestMapping(value = "gatewayTimeout", method = RequestMethod.GET)
-    public void responseGatewayTimeout(HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public void responseGatewayTimeout(HttpServletRequest request, HttpServletResponse response)
+            throws IOException {
         // Send 504 (Gateway Timeout) error to servlet container
         response.sendError(504);
     }
@@ -287,20 +274,16 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Summary.class)
-    @RequestMapping(value = "{memberId}", params = "format=summary", method = {
-            RequestMethod.GET })
+    @RequestMapping(value = "{memberId}", params = "format=summary", method = {RequestMethod.GET})
     @ResponseStatus(HttpStatus.OK)
-    public MemberResource getMemberSummary(
-            @PathVariable("memberId") String memberId,
+    public MemberResource getMemberSummary(@PathVariable("memberId") String memberId,
             UriComponentsBuilder uriBuilder) {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member, MemberResource.class);
 
-        responseResource.addSelf(uriBuilder.path("/members").pathSegment(
-                memberId).build().toUri());
+        responseResource.addSelf(uriBuilder.path("/members").pathSegment(memberId).build().toUri());
 
         return responseResource;
     }
@@ -312,20 +295,16 @@ public class MemberRestController {
      * </ul>
      */
     @JsonView(Detail.class)
-    @RequestMapping(value = "{memberId}", params = "format=detail", method = {
-            RequestMethod.GET })
+    @RequestMapping(value = "{memberId}", params = "format=detail", method = {RequestMethod.GET})
     @ResponseStatus(HttpStatus.OK)
-    public MemberResource getMemberDetail(
-            @PathVariable("memberId") String memberId,
+    public MemberResource getMemberDetail(@PathVariable("memberId") String memberId,
             UriComponentsBuilder uriBuilder) {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResource responseResource = beanMapper.map(member,
-                MemberResource.class);
+        MemberResource responseResource = beanMapper.map(member, MemberResource.class);
 
-        responseResource.addSelf(uriBuilder.path("/members").pathSegment(
-                memberId).build().toUri());
+        responseResource.addSelf(uriBuilder.path("/members").pathSegment(memberId).build().toUri());
 
         return responseResource;
     }
@@ -336,8 +315,7 @@ public class MemberRestController {
      * <li>特定のMemberリソースを取得</li>
      * </ul>
      */
-    @RequestMapping(value = "getMemberWithAdvice", method = {
-            RequestMethod.POST })
+    @RequestMapping(value = "getMemberWithAdvice", method = {RequestMethod.POST})
     @ResponseStatus(HttpStatus.OK)
     public MemberResourceWithAdvice getMemberWithAdvice(
             @RequestBody MemberResourceWithAdvice requestedResource,
@@ -348,8 +326,8 @@ public class MemberRestController {
 
         RestMember member = restMemberService.getMember(memberId);
 
-        MemberResourceWithAdvice responseResource = beanMapper.map(member,
-                MemberResourceWithAdvice.class);
+        MemberResourceWithAdvice responseResource =
+                beanMapper.map(member, MemberResourceWithAdvice.class);
         responseResource.setStartDateTime(startDateTime);
 
         return responseResource;

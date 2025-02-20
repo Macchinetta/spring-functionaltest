@@ -26,8 +26,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails
 public class ATHN13Controller {
 
     @RequestMapping(value = "1302/001", params = "loginSuccess")
-    public String handle1302LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle1302LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1302/001");

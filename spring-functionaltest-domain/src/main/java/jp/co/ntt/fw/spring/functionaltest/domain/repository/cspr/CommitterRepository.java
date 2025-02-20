@@ -25,8 +25,7 @@ public interface CommitterRepository {
 
     long countByCriteria(CommitterCriteria committerCriteria);
 
-    List<Committer> findAllByCommitterCriteria(
-            CommitterCriteria committerCriteria);
+    List<Committer> findAllByCommitterCriteria(CommitterCriteria committerCriteria);
 
     void update(Committer committer);
 

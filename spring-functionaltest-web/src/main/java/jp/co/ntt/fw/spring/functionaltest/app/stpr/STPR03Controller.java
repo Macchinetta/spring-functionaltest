@@ -44,8 +44,8 @@ public class STPR03Controller {
         String targetValue = form.getTargetValue();
         int targetValueLength = targetValue.length();
         model.addAttribute("resultLength", targetValueLength);
-        model.addAttribute("resultLengthConsideringSurrogate", targetValue
-                .codePointCount(0, targetValueLength));
+        model.addAttribute("resultLengthConsideringSurrogate",
+                targetValue.codePointCount(0, targetValueLength));
 
         return "stpr/lengthConsideringSurrogateResult";
     }
@@ -66,11 +66,10 @@ public class STPR03Controller {
         int startIndex = form.getStartIndex();
         int endIndex = form.getEndIndex();
 
-        model.addAttribute("resultString", targetValue.substring(startIndex,
-                endIndex));
+        model.addAttribute("resultString", targetValue.substring(startIndex, endIndex));
 
-        model.addAttribute("resultStringConsideringSurrogate", targetValue
-                .substring(targetValue.offsetByCodePoints(0, startIndex),
+        model.addAttribute("resultStringConsideringSurrogate",
+                targetValue.substring(targetValue.offsetByCodePoints(0, startIndex),
                         targetValue.offsetByCodePoints(0, endIndex)));
 
         return "stpr/substringConsideringSurrogateResult";

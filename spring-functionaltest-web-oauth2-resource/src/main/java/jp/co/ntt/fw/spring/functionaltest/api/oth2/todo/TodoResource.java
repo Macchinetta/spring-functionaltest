@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.api.oth2.todo;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 

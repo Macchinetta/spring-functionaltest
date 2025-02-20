@@ -56,6 +56,10 @@ public class DAM3IndexPage implements Page<DAM3IndexPage> {
     private WebElement dam30205001;
 
     @CacheLookup
+    @FindBy(id = "dam30206001")
+    private WebElement dam30206001;
+
+    @CacheLookup
     @FindBy(id = "dam30301001")
     private WebElement dam30301001;
 
@@ -243,6 +247,11 @@ public class DAM3IndexPage implements Page<DAM3IndexPage> {
 
     public TodoListPage dam30205001Click() {
         dam30205001.click();
+        return showTodoListPage();
+    }
+
+    public TodoListPage dam30206001Click() {
+        dam30206001.click();
         return showTodoListPage();
     }
 

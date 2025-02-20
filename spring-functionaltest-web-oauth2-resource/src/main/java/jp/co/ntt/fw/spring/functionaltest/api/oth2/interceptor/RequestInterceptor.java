@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.api.oth2.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -27,16 +26,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class RequestInterceptor implements HandlerInterceptor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            RequestInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object handler) {
         // アクセストークンを出力する
         Object header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        LOGGER.info("resource server : {} {}", HttpHeaders.AUTHORIZATION,
-                header);
+        LOGGER.info("resource server : {} {}", HttpHeaders.AUTHORIZATION, header);
 
         return true;
     }

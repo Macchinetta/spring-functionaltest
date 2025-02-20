@@ -58,8 +58,7 @@ public class ATHN17Controller {
     }
 
     @RequestMapping(value = "1703/001/login")
-    public String handle1703001login(@Validated LoginForm form,
-            BindingResult result) {
+    public String handle1703001login(@Validated LoginForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "athn/loginForBeanValidationAuthentication";
         }
@@ -67,8 +66,7 @@ public class ATHN17Controller {
     }
 
     @RequestMapping(value = "1703/001", params = "loginSuccess")
-    public String handle0101LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle0101LoginSuccess(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1703/001");
         return "athn/topForDefault";

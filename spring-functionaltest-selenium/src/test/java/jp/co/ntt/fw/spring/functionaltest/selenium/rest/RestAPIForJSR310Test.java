@@ -42,14 +42,15 @@ public class RestAPIForJSR310Test extends RestTestSupport {
     /**
      * setUp
      * <ul>
-     * <li>Remove all old member resources if any, and insert three new member resources every time</li>
+     * <li>Remove all old member resources if any, and insert three new member resources every
+     * time</li>
      * </ul>
      */
     @Before
     public void setUp() throws Exception {
         // Get all existing member resources
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
         // Delete all existing members
         for (String memberId : memberIds) {
             given().when().delete("/members/{memberId}", memberId);
@@ -90,8 +91,7 @@ public class RestAPIForJSR310Test extends RestTestSupport {
             jsonBody.put("genderCode", genderCode);
 
             // posting request
-            given().body(jsonBody).contentType(ContentType.JSON).when().post(
-                    "/members");
+            given().body(jsonBody).contentType(ContentType.JSON).when().post("/members");
         }
     }
 
@@ -113,19 +113,15 @@ public class RestAPIForJSR310Test extends RestTestSupport {
         jsonBody.put("time", time.toString());
 
         // Request Body 期待値作成
-        java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(date,
-                time);
-        String zoneDtStr = ZonedDateTime.of(dateTime, ZoneId.of(
-                "America/Los_Angeles")).format(
-                        DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(date, time);
+        String zoneDtStr = ZonedDateTime.of(dateTime, ZoneId.of("America/Los_Angeles"))
+                .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-        given().body(jsonBody).contentType(ContentType.JSON).filters(
-                new RequestLoggingFilter(captor),
-                new ResponseLoggingFilter(captor)).when().post(
-                        "/datetime/getAmericaDateTime").then().statusCode(200)
-                .header("content-Type", containsString(
-                        MediaType.APPLICATION_JSON_VALUE)).body("dateTime", is(
-                                zoneDtStr));
+        given().body(jsonBody).contentType(ContentType.JSON)
+                .filters(new RequestLoggingFilter(captor), new ResponseLoggingFilter(captor)).when()
+                .post("/datetime/getAmericaDateTime").then().statusCode(200)
+                .header("content-Type", containsString(MediaType.APPLICATION_JSON_VALUE))
+                .body("dateTime", is(zoneDtStr));
 
     }
 }

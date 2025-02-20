@@ -63,8 +63,7 @@ public class VLDT0102002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "remove")
-    public String handleRemove(NestedCollectionValidationForm form,
-            Model model) {
+    public String handleRemove(NestedCollectionValidationForm form, Model model) {
 
         LinkedList<AddressForm> addresses = form.getAddresses();
         addresses.removeLast();

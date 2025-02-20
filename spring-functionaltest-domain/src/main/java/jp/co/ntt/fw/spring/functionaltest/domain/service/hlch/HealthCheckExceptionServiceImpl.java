@@ -25,8 +25,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.hlch.HealthCheckRepo
 
 @Service
 @Transactional
-public class HealthCheckExceptionServiceImpl implements
-                                             HealthCheckExceptionService {
+public class HealthCheckExceptionServiceImpl implements HealthCheckExceptionService {
 
     @Inject
     HealthCheckRepository healthcheckRepository;

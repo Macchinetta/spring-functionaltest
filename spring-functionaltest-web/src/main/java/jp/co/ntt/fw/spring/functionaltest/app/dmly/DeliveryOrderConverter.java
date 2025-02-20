@@ -21,8 +21,7 @@ import org.joda.time.LocalDateTime;
 
 import com.github.dozermapper.core.DozerConverter;
 
-public class DeliveryOrderConverter extends
-                                    DozerConverter<LocalDateTime, Date> {
+public class DeliveryOrderConverter extends DozerConverter<LocalDateTime, Date> {
     public DeliveryOrderConverter() {
         super(LocalDateTime.class, Date.class);
     }

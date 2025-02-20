@@ -57,22 +57,18 @@ public class SSMN04ShoppingOrderController {
 
     @RequestMapping(method = RequestMethod.POST)
     @TransactionTokenCheck(value = "order")
-    public String createOrder(RedirectAttributes redirectAttributes,
-            HttpServletRequest request) {
+    public String createOrder(RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
         // 注文商品登録
-        Order order = orderService.createOrder(shoppingCartHelper
-                .convertCartToOrder(cart));
+        Order order = orderService.createOrder(shoppingCartHelper.convertCartToOrder(cart));
 
         // 完了画面用
         redirectAttributes.addFlashAttribute(order);
 
-        ResultMessages messages = ResultMessages.success().add(
-                "i.sf.ssmn.0003");
+        ResultMessages messages = ResultMessages.success().add("i.sf.sm.0003");
         redirectAttributes.addFlashAttribute(messages);
 
-        return "redirect:" + urlPathHelper.getServletPath(request)
-                + "/shopping/order?complete";
+        return "redirect:" + urlPathHelper.getServletPath(request) + "/shopping/order?complete";
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "complete")

@@ -24,15 +24,13 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 public class UserListRoutingRepositoryImpl extends SqlSessionDaoSupport
-                                           implements
-                                           UserListRoutingRepository {
+        implements UserListRoutingRepository {
 
     private MapperRegistry mapperRegistory = null;
 
     private void mapping() {
         if (mapperRegistory == null) {
-            mapperRegistory = getSqlSession().getConfiguration()
-                    .getMapperRegistry();
+            mapperRegistory = getSqlSession().getConfiguration().getMapperRegistry();
             mapperRegistory.addMapper(UserListRepository.class);
         }
     }
@@ -46,15 +44,13 @@ public class UserListRoutingRepositoryImpl extends SqlSessionDaoSupport
     @Override
     public List<User> findPage(RowBounds rowBounds) {
         mapping();
-        return getSqlSession().getMapper(UserListRepository.class).findPage(
-                rowBounds);
+        return getSqlSession().getMapper(UserListRepository.class).findPage(rowBounds);
     }
 
     @Override
     public User findByUsername(String username) {
         mapping();
-        return getSqlSession().getMapper(UserListRepository.class)
-                .findByUsername(username);
+        return getSqlSession().getMapper(UserListRepository.class).findByUsername(username);
     }
 
     @Override

@@ -30,8 +30,8 @@ public class ReservationUserDetails implements UserDetails {
 
     private final Customer customer;
 
-    private static final List<? extends GrantedAuthority> DEFAULT_AUTHORITIES = Collections
-            .singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+    private static final List<? extends GrantedAuthority> DEFAULT_AUTHORITIES =
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
     public ReservationUserDetails(Customer customer) {
         this.customer = customer;

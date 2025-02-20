@@ -43,10 +43,9 @@ import org.terasoluna.gfw.common.exception.SystemException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.MailMessage;
 
 @Service
-public class MailReceivingSharedServiceImpl implements
-                                            MailReceivingSharedService {
-    private static final Logger logger = LoggerFactory.getLogger(
-            MailReceivingSharedServiceImpl.class);
+public class MailReceivingSharedServiceImpl implements MailReceivingSharedService {
+    private static final Logger logger =
+            LoggerFactory.getLogger(MailReceivingSharedServiceImpl.class);
 
     @Override
     public Store connect(String host, int port, String user, String password) {
@@ -67,7 +66,7 @@ public class MailReceivingSharedServiceImpl implements
             return store;
 
         } catch (MessagingException e) {
-            throw new SystemException("e.xx.xx.0001", "connecting via pop3 failed.", e);
+            throw new SystemException("e.sf.ea.0001", "connecting via pop3 failed.", e);
         }
 
     }
@@ -95,7 +94,7 @@ public class MailReceivingSharedServiceImpl implements
             }
 
         } catch (MessagingException e) {
-            throw new SystemException("e.xx.xx.0002", "receiving email via pop3 failed.", e);
+            throw new SystemException("e.sf.ea.0002", "receiving email via pop3 failed.", e);
         } finally {
 
             if (folder != null) {
@@ -114,8 +113,8 @@ public class MailReceivingSharedServiceImpl implements
     }
 
     @Override
-    public MailMessage receive(String identifier, int retryCount,
-            Store store) throws InterruptedException {
+    public MailMessage receive(String identifier, int retryCount, Store store)
+            throws InterruptedException {
 
         for (int i = 0; i < retryCount; i++) {
             MailMessage mail = receive(identifier, store);
@@ -140,8 +139,7 @@ public class MailReceivingSharedServiceImpl implements
 
         try {
             if (message.getFrom() != null && message.getFrom().length > 0) {
-                mail.setFrom(((InternetAddress) message.getFrom()[0])
-                        .toUnicodeString());
+                mail.setFrom(((InternetAddress) message.getFrom()[0]).toUnicodeString());
             }
 
             // 件名
@@ -150,8 +148,7 @@ public class MailReceivingSharedServiceImpl implements
             // To
             List<String> to = new ArrayList<>();
             if (message.getRecipients(RecipientType.TO) != null) {
-                for (Address address : message.getRecipients(
-                        RecipientType.TO)) {
+                for (Address address : message.getRecipients(RecipientType.TO)) {
                     to.add(((InternetAddress) address).toUnicodeString());
                 }
             }
@@ -160,18 +157,15 @@ public class MailReceivingSharedServiceImpl implements
             // Cc
             List<String> cc = new ArrayList<>();
             if (message.getRecipients(RecipientType.CC) != null) {
-                for (Address address : message.getRecipients(
-                        RecipientType.CC)) {
+                for (Address address : message.getRecipients(RecipientType.CC)) {
                     cc.add(((InternetAddress) address).toUnicodeString());
                 }
             }
             mail.setCc(cc);
 
             // 送信日
-            if (message.getReplyTo() != null && message
-                    .getReplyTo().length > 0) {
-                mail.setReplyTo(((InternetAddress) message.getReplyTo()[0])
-                        .toUnicodeString());
+            if (message.getReplyTo() != null && message.getReplyTo().length > 0) {
+                mail.setReplyTo(((InternetAddress) message.getReplyTo()[0]).toUnicodeString());
             }
 
             mail.setSentDate(message.getSentDate());
@@ -185,7 +179,7 @@ public class MailReceivingSharedServiceImpl implements
                 mail.setContentType(message.getContentType());
             }
         } catch (MessagingException | IOException e) {
-            throw new SystemException("e.xx.xx.000", "processing email message failed.", e);
+            throw new SystemException("e.sf.ea.000", "processing email message failed.", e);
         }
 
         return mail;
@@ -199,8 +193,8 @@ public class MailReceivingSharedServiceImpl implements
      * @throws MessagingException
      * @throws IOException
      */
-    void processMultipart(Multipart multipart,
-            MailMessage mail) throws MessagingException, IOException {
+    void processMultipart(Multipart multipart, MailMessage mail)
+            throws MessagingException, IOException {
 
         int count = multipart.getCount();
         for (int i = 0; i < count; i++) {
@@ -210,13 +204,11 @@ public class MailReceivingSharedServiceImpl implements
             } else {
                 // 添付ファイル
                 if (Part.ATTACHMENT.equals(part.getDisposition())) {
-                    mail.setAttachment(MimeUtility.decodeText(part
-                            .getFileName()));
+                    mail.setAttachment(MimeUtility.decodeText(part.getFileName()));
                     // インライン
                 } else if (Part.INLINE.equals(part.getDisposition())) {
                     mail.setInline(part.getHeader("Content-ID")[0]);
-                } else if (part.isMimeType("text/plain") || part.isMimeType(
-                        "text/html")) {
+                } else if (part.isMimeType("text/plain") || part.isMimeType("text/html")) {
                     mail.setBody(part.getContent().toString());
                     mail.setContentType(part.getContentType());
                 }

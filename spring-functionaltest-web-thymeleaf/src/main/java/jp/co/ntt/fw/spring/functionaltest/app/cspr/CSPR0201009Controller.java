@@ -31,8 +31,7 @@ public class CSPR0201009Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "confirm")
-    public String confirm(@Validated NoThActionValueForm form,
-            BindingResult result) {
+    public String confirm(@Validated NoThActionValueForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegister0201009";
         }
@@ -40,8 +39,7 @@ public class CSPR0201009Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String create(@Validated NoThActionValueForm form,
-            BindingResult result) {
+    public String create(@Validated NoThActionValueForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegister0201009";
         }

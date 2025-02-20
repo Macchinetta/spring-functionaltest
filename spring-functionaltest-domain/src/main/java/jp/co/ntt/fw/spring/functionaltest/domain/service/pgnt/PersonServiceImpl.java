@@ -37,13 +37,12 @@ public class PersonServiceImpl implements PersonService {
     protected PersonRepository personRepostiroy;
 
     @Override
-    public Page<Person> getPersons(PersonSearchCriteria criteria,
-            Pageable pageable) {
+    public Page<Person> getPersons(PersonSearchCriteria criteria, Pageable pageable) {
         List<Person> persons = null;
-        PageablePersonSearchCriteria pageablePersonSearchCriteria = new PageablePersonSearchCriteria(criteria, pageable);
+        PageablePersonSearchCriteria pageablePersonSearchCriteria =
+                new PageablePersonSearchCriteria(criteria, pageable);
 
-        long total = personRepostiroy.countByCriteria(
-                pageablePersonSearchCriteria);
+        long total = personRepostiroy.countByCriteria(pageablePersonSearchCriteria);
 
         if (0 < total) {
             persons = personRepostiroy.findPage(pageablePersonSearchCriteria);

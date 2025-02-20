@@ -77,20 +77,17 @@ public class JmsAmqSendingServiceImpl implements JmsAmqSendingService {
 
         List<String> arrayStr = new ArrayList<>();
         arrayStr.add(id);
-        jmsSharedService.writeListToFile(temporaryDirectory, "input_" + id,
-                arrayStr);
+        jmsSharedService.writeListToFile(temporaryDirectory, "input_" + id, arrayStr);
 
         Path path = Paths.get(temporaryDirectory + "input_" + id);
         try (final InputStream inputStream = Files.newInputStream(path)) {
 
             dynamicJmsTemplate.send("TestQueue0901001", new MessageCreator() {
-                public Message createMessage(
-                        Session session) throws JMSException {
+                public Message createMessage(Session session) throws JMSException {
 
                     ActiveMQSession activeMQSession = (ActiveMQSession) session;
 
-                    BlobMessage blobMessage = activeMQSession.createBlobMessage(
-                            inputStream);
+                    BlobMessage blobMessage = activeMQSession.createBlobMessage(inputStream);
                     return blobMessage;
                 }
             });

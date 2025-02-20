@@ -61,8 +61,7 @@ public class BookListForm implements Serializable {
         return searchLikeQueryCategoryName;
     }
 
-    public void setSearchLikeQueryCategoryName(
-            String searchLikeQueryCategoryName) {
+    public void setSearchLikeQueryCategoryName(String searchLikeQueryCategoryName) {
         this.searchLikeQueryCategoryName = searchLikeQueryCategoryName;
     }
 
@@ -86,8 +85,7 @@ public class BookListForm implements Serializable {
         return searchLikeLogicCategoryName;
     }
 
-    public void setSearchLikeLogicCategoryName(
-            String searchLikeLogicCategoryName) {
+    public void setSearchLikeLogicCategoryName(String searchLikeLogicCategoryName) {
         this.searchLikeLogicCategoryName = searchLikeLogicCategoryName;
     }
 

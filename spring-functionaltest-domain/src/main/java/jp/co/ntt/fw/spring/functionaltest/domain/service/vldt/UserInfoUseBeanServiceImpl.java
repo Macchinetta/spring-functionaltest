@@ -25,8 +25,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserInfo;
 public class UserInfoUseBeanServiceImpl implements UserInfoUseBeanService {
 
     @Override
-    public UserInfoUseBeanOutput convertUserInfo(
-            UserInfoUseBeanInput userInfoUseBeanInput) {
+    public UserInfoUseBeanOutput convertUserInfo(UserInfoUseBeanInput userInfoUseBeanInput) {
 
         // return nullの試験用の特殊設定
         if ("outputObjectNull".equals(userInfoUseBeanInput.getVisitMessage())) {
@@ -49,8 +48,7 @@ public class UserInfoUseBeanServiceImpl implements UserInfoUseBeanService {
         }
 
         // User.udateOfBirthが未来日の試験用の特殊設定
-        if ("dateOfBirthFuture".equals(userInfoUseBeanInput
-                .getVisitMessage())) {
+        if ("dateOfBirthFuture".equals(userInfoUseBeanInput.getVisitMessage())) {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, 1);
             userInfo.setDateOfBirth(cal.getTime());
@@ -58,10 +56,8 @@ public class UserInfoUseBeanServiceImpl implements UserInfoUseBeanService {
 
         UserInfoUseBeanOutput UserInfoUseBeanOutput = new UserInfoUseBeanOutput();
         UserInfoUseBeanOutput.setUserInfo(userInfo);
-        UserInfoUseBeanOutput.setAcceptDate(userInfoUseBeanInput
-                .getVisitDate());
-        UserInfoUseBeanOutput.setAcceptMessage(userInfoUseBeanInput
-                .getVisitMessage());
+        UserInfoUseBeanOutput.setAcceptDate(userInfoUseBeanInput.getVisitDate());
+        UserInfoUseBeanOutput.setAcceptMessage(userInfoUseBeanInput.getVisitMessage());
 
         return UserInfoUseBeanOutput;
     }

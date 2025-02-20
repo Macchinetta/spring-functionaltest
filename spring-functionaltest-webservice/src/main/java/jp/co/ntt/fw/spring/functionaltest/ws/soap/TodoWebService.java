@@ -36,22 +36,18 @@ public interface TodoWebService {
 
     @WebMethod
     @WebResult(name = "todo")
-    public Todo getTodo(
-            @WebParam(name = "todoId") String todoId) throws WebFaultException;
+    public Todo getTodo(@WebParam(name = "todoId") String todoId) throws WebFaultException;
 
     @WebMethod
     @WebResult(name = "todo")
-    public Todo createTodo(
-            @WebParam(name = "todo") Todo todo) throws WebFaultException;
+    public Todo createTodo(@WebParam(name = "todo") Todo todo) throws WebFaultException;
 
     @WebMethod
     @WebResult(name = "todo")
-    public Todo updateTodo(
-            @WebParam(name = "todo") Todo todo) throws WebFaultException;
+    public Todo updateTodo(@WebParam(name = "todo") Todo todo) throws WebFaultException;
 
     @WebMethod
-    public void deleteTodo(
-            @WebParam(name = "todoId") String todoId) throws WebFaultException;
+    public void deleteTodo(@WebParam(name = "todoId") String todoId) throws WebFaultException;
 
     @WebMethod
     public void deleteTodos();
@@ -63,7 +59,7 @@ public interface TodoWebService {
     public void timeoutTest() throws WebFaultException, InterruptedException;
 
     @WebMethod
-    public boolean uploadFile(
-            @XmlMimeType("application/octet-stream") DataHandler handler) throws WebFaultException;
+    public boolean uploadFile(@XmlMimeType("application/octet-stream") DataHandler handler)
+            throws WebFaultException;
 
 }

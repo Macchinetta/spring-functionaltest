@@ -51,10 +51,8 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     }
 
     @Override
-    public Page<JPADeliveryOrder> findByStatusCode(String statusCode,
-            Pageable pageable) {
-        return jpaDeliveryOrderRepository.findByDeliveryStatus(statusCode,
-                pageable);
+    public Page<JPADeliveryOrder> findByStatusCode(String statusCode, Pageable pageable) {
+        return jpaDeliveryOrderRepository.findByDeliveryStatus(statusCode, pageable);
     }
 
     @Override
@@ -74,31 +72,28 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     }
 
     @Override
-    public List<JPADeliveryOrder> queryHint(String statusCode,
-            Integer sleepTime) {
-        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository
-                .getByDeliveryStatus(statusCode);
+    public List<JPADeliveryOrder> queryHint(String statusCode, Integer sleepTime) {
+        List<JPADeliveryOrder> orderList =
+                jpaDeliveryOrderRepository.getByDeliveryStatus(statusCode);
         return orderList;
     }
 
     @Override
     public List<JPADeliveryOrder> forwardSearch(String senderAddress) {
-        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository
-                .forwardSearch(senderAddress);
+        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository.forwardSearch(senderAddress);
         return orderList;
     }
 
     @Override
     public List<JPADeliveryOrder> backwardSearch(String receiverAddress) {
-        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository
-                .backwardSearch(receiverAddress);
+        List<JPADeliveryOrder> orderList =
+                jpaDeliveryOrderRepository.backwardSearch(receiverAddress);
         return orderList;
     }
 
     @Override
     public List<JPADeliveryOrder> partialSearch(String senderName) {
-        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository
-                .partialSearch(senderName);
+        List<JPADeliveryOrder> orderList = jpaDeliveryOrderRepository.partialSearch(senderName);
         return orderList;
     }
 
@@ -106,14 +101,11 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     public List<JPADeliveryOrder> searchUsingGiveSearchType(String searchVal,
             String serachCriteria[]) {
         List<JPADeliveryOrder> orderList = null;
-        if (serachCriteria[0].equals("senderAddress") && serachCriteria[1]
-                .equals("FW")) {
+        if (serachCriteria[0].equals("senderAddress") && serachCriteria[1].equals("FW")) {
             orderList = forwardSearch(searchVal);
-        } else if (serachCriteria[0].equals("receiverAddress")
-                && serachCriteria[1].equals("BK")) {
+        } else if (serachCriteria[0].equals("receiverAddress") && serachCriteria[1].equals("BK")) {
             orderList = backwardSearch(searchVal);
-        } else if (serachCriteria[0].equals("senderName") && serachCriteria[1]
-                .equals("PT")) {
+        } else if (serachCriteria[0].equals("senderName") && serachCriteria[1].equals("PT")) {
             orderList = partialSearch(searchVal);
         }
         return orderList;
@@ -122,28 +114,24 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     @Override
     public List<JPADeliveryOrder> searchUsingDynamicCond(
             DeliveryOrderCriteria deliveryOrderCriteria) {
-        return tDeliveryOrderRepository.findAllByCriteria(
-                deliveryOrderCriteria);
+        return tDeliveryOrderRepository.findAllByCriteria(deliveryOrderCriteria);
     }
 
     @Override
-    public Page<JPADeliveryOrder> findEntityPageMatchingCondition(
-            String delStatus, Pageable pageable) {
-        return jpaDeliveryOrderRepository
-                .findEntityPageMatchingConditionByDeliveryStatus(delStatus,
-                        pageable);
-    }
-
-    @Override
-    public Page<JPADeliveryOrder> findByEscapeSearchMod(String keyword,
+    public Page<JPADeliveryOrder> findEntityPageMatchingCondition(String delStatus,
             Pageable pageable) {
+        return jpaDeliveryOrderRepository.findEntityPageMatchingConditionByDeliveryStatus(delStatus,
+                pageable);
+    }
+
+    @Override
+    public Page<JPADeliveryOrder> findByEscapeSearchMod(String keyword, Pageable pageable) {
         String escapedWord = QueryEscapeUtils.toLikeCondition(keyword);
         return jpaDeliveryOrderRepository.findPageByMod(escapedWord, pageable);
     }
 
     @Override
-    public Page<JPADeliveryOrder> findByEscapeSearchDash(String keyword,
-            Pageable pageable) {
+    public Page<JPADeliveryOrder> findByEscapeSearchDash(String keyword, Pageable pageable) {
         return jpaDeliveryOrderRepository.findPageByDash(keyword, pageable);
     }
 
@@ -151,13 +139,11 @@ public class JPADeliveryOrderServiceImpl implements JPADeliveryOrderService {
     public Page<JPADeliveryOrder> findByEscapeSearchMatchInLogic(String keyword,
             Pageable pageable) {
         String escapedWord = QueryEscapeUtils.toContainingCondition(keyword);
-        return jpaDeliveryOrderRepository.findPageByMatchTypeInLogic(
-                escapedWord, pageable);
+        return jpaDeliveryOrderRepository.findPageByMatchTypeInLogic(escapedWord, pageable);
     }
 
     @Override
-    public Page<JPADeliveryOrder> search(DeliveryOrderCriteria criteria,
-            Pageable pageable) {
+    public Page<JPADeliveryOrder> search(DeliveryOrderCriteria criteria, Pageable pageable) {
         return jpaDeliveryOrderRepository.findByCriteria(criteria, pageable);
     }
 

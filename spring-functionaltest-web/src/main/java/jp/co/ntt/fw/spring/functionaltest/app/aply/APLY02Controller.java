@@ -56,8 +56,7 @@ public class APLY02Controller {
     }
 
     @ModelAttribute("formObjectForm3")
-    public FormObjectForm setUpSampleForm(
-            @CookieValue("JSESSIONID") String sessionId) {
+    public FormObjectForm setUpSampleForm(@CookieValue("JSESSIONID") String sessionId) {
         FormObjectForm form = new FormObjectForm();
         form.setInitConfirmValue1(sessionId);
         return form;
@@ -73,8 +72,7 @@ public class APLY02Controller {
     @InitBinder("formObjectForm2")
     public void initWebDataBinder2(WebDataBinder binder) {
         binder.registerCustomEditor(Long.class, "value7",
-                new CustomNumberEditor(Long.class, NumberFormat
-                        .getCurrencyInstance(), true));
+                new CustomNumberEditor(Long.class, NumberFormat.getCurrencyInstance(), true));
     }
 
     @RequestMapping(value = "0201/001", method = RequestMethod.GET)
@@ -122,8 +120,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0201/005", method = RequestMethod.GET)
-    public String handle01005(FormObjectForm form,
-            Model model) throws ParseException {
+    public String handle01005(FormObjectForm form, Model model) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         form.setValue5(sdf.parse("19550505"));
         return "aply/formObjectForm";
@@ -146,16 +143,13 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0201/007", method = RequestMethod.GET)
-    public String handle01007(
-            @ModelAttribute("formObjectForm2") FormObjectForm form,
-            Model model) {
+    public String handle01007(@ModelAttribute("formObjectForm2") FormObjectForm form, Model model) {
         form.setValue7(Long.valueOf(7777777777l));
         return "aply/formObjectForm2";
     }
 
     @RequestMapping(value = "0201/007")
-    public String handle01007_1(
-            @ModelAttribute("formObjectForm2") FormObjectForm form,
+    public String handle01007_1(@ModelAttribute("formObjectForm2") FormObjectForm form,
             Model model) {
         return "aply/formObjectComplete2";
     }
@@ -186,15 +180,12 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/002", method = RequestMethod.GET)
-    public String handle03002(
-            @ModelAttribute("formObjectForm2") FormObjectForm form,
-            Model model) {
+    public String handle03002(@ModelAttribute("formObjectForm2") FormObjectForm form, Model model) {
         return "aply/formObjectForm2";
     }
 
     @RequestMapping(value = "0203/002")
-    public String handle03002_1(
-            @ModelAttribute("formObjectForm2") @Validated FormObjectForm form,
+    public String handle03002_1(@ModelAttribute("formObjectForm2") @Validated FormObjectForm form,
             Model model) {
         return "aply/formObjectComplete2";
     }
@@ -205,8 +196,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/003")
-    public String handle03003(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03003(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "aply/formObjectForm";
         }
@@ -219,8 +209,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/004")
-    public String handle03004(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03004(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "aply/formObjectForm";
         }
@@ -233,8 +222,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/005")
-    public String handle03005(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03005(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasGlobalErrors()) {
             return "aply/formObjectForm";
         }
@@ -247,8 +235,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/006")
-    public String handle03006(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03006(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasGlobalErrors()) {
             return "aply/formObjectForm";
         }
@@ -261,8 +248,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/007")
-    public String handle03007(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03007(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasFieldErrors()) {
             return "aply/formObjectForm";
         }
@@ -275,8 +261,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/008")
-    public String handle03008(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03008(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasFieldErrors()) {
             return "aply/formObjectForm";
         }
@@ -289,8 +274,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/009")
-    public String handle03009(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03009(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasFieldErrors("value3")) {
             return "aply/formObjectForm";
         }
@@ -303,8 +287,7 @@ public class APLY02Controller {
     }
 
     @RequestMapping(value = "0203/010")
-    public String handle03010(@Validated FormObjectForm form,
-            BindingResult result, Model model) {
+    public String handle03010(@Validated FormObjectForm form, BindingResult result, Model model) {
         if (result.hasFieldErrors("value3")) {
             return "aply/formObjectForm";
         }

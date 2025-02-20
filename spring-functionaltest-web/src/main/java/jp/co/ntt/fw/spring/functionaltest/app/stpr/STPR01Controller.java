@@ -39,11 +39,9 @@ public class STPR01Controller {
     }
 
     @RequestMapping(value = "0101/001/trimWhitespace", method = RequestMethod.POST)
-    public String handle0101001TrimWhitespace(Model model,
-            StringProcessing01Form form) {
+    public String handle0101001TrimWhitespace(Model model, StringProcessing01Form form) {
 
-        model.addAttribute("resultString", StringUtils.trimWhitespace(form
-                .getTargetText()));
+        model.addAttribute("resultString", StringUtils.trimWhitespace(form.getTargetText()));
 
         return "stpr/trimWhitespaceResult";
     }
@@ -60,8 +58,8 @@ public class STPR01Controller {
         if (result.hasErrors()) {
             return handle0101002();
         }
-        model.addAttribute("resultString", StringUtils.trimLeadingCharacter(form
-                .getTargetText(), form.getTrimText().charAt(0)));
+        model.addAttribute("resultString", StringUtils.trimLeadingCharacter(form.getTargetText(),
+                form.getTrimText().charAt(0)));
 
         return "stpr/trimLeadingCharacterResult";
     }
@@ -78,8 +76,8 @@ public class STPR01Controller {
         if (result.hasErrors()) {
             return handle0101003();
         }
-        model.addAttribute("resultString", StringUtils.trimTrailingCharacter(
-                form.getTargetText(), form.getTrimText().charAt(0)));
+        model.addAttribute("resultString", StringUtils.trimTrailingCharacter(form.getTargetText(),
+                form.getTrimText().charAt(0)));
 
         return "stpr/trimTrailingCharacterResult";
     }

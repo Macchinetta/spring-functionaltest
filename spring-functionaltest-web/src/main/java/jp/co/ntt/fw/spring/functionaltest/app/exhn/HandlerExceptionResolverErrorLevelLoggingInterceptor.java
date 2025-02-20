@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.terasoluna.gfw.web.exception.HandlerExceptionResolverLoggingInterceptor;
 
-public class HandlerExceptionResolverErrorLevelLoggingInterceptor extends
-                                                                  HandlerExceptionResolverLoggingInterceptor {
+public class HandlerExceptionResolverErrorLevelLoggingInterceptor
+        extends HandlerExceptionResolverLoggingInterceptor {
 
     /**
      * Outputs the Error Level log
@@ -31,8 +31,8 @@ public class HandlerExceptionResolverErrorLevelLoggingInterceptor extends
      * @param handler handler
      */
     @Override
-    protected void log(Exception ex, HttpServletRequest request,
-            HttpServletResponse response, Object handler) {
+    protected void log(Exception ex, HttpServletRequest request, HttpServletResponse response,
+            Object handler) {
         getExceptionLogger().error(ex);
     }
 }

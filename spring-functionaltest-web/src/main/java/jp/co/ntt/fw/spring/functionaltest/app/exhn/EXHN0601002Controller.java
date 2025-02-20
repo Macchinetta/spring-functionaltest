@@ -56,14 +56,12 @@ public class EXHN0601002Controller {
     }
 
     @RequestMapping(value = "0601/002/register", params = "upload")
-    public String uploadRegister(@Validated({ Register.class,
-            Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegister(
+            @Validated({Register.class, Default.class}) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
-            RedirectAttributes redirectAttrs,
-            SessionStatus sessionStatus) throws IOException {
+            RedirectAttributes redirectAttrs, SessionStatus sessionStatus) throws IOException {
 
-        String uploadTemporaryFileId = articleSessionInfo
-                .getUploadTemporaryFileId();
+        String uploadTemporaryFileId = articleSessionInfo.getUploadTemporaryFileId();
         if (result.hasErrors() || !StringUtils.hasText(uploadTemporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }

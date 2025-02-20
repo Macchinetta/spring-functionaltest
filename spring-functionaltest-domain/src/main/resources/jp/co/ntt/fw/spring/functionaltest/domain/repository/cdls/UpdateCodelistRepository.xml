@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.cdls.UpdateCodelistRepository">
 
-  <update id="updateAuthorityTableValueById">
-    UPDATE t_authority
-    SET authority_name = #{value}
-    WHERE authority_id =
-    #{id}
-  </update>
+    <update id="updateAuthorityTableValueById">
+        UPDATE
+            t_authority
+        SET
+            authority_name = #{value}
+        WHERE
+            authority_id = #{id}
+    </update>
+
+    <update id="updatePriceTableValueById">
+        UPDATE
+            t_price
+        SET
+            label = #{label}
+        WHERE
+            locale = #{locale}
+        AND
+            code = #{code}
+    </update>
 
 </mapper>

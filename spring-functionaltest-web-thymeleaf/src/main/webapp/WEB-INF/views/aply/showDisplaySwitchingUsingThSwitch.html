@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">モデルに格納された値により条件分岐して表示切替ができることの確認（th:switch形式）</h1>
 
-      <h1 id="screenTitle">モデルに格納された値により条件分岐して表示切替ができることの確認（th:switch形式）</h1>
-
-      <div th:switch="${thymeleafForm.conditions}">
-        <span th:case="gold"> <span id="message1">「gold」と入力された場合の分岐</span>
-        </span> <span th:case="silver"> <span id="message1">「silver」と入力された場合の分岐</span>
-        </span> <span th:case="*"> <span id="message1">「gold」と「silver」以外の入力の場合の分岐</span>
-        </span>
-      </div>
-
-    </div>
-  </div>
-</body>
+                <div th:switch="${thymeleafForm.conditions}">
+                    <span th:case="gold"> <span id="message1">「gold」と入力された場合の分岐</span> </span> <span th:case="silver"> <span id="message1">「silver」と入力された場合の分岐</span> </span>
+                    <span th:case="*"> <span id="message1">「gold」と「silver」以外の入力の場合の分岐</span> </span>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

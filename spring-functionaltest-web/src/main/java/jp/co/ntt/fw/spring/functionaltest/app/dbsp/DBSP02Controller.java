@@ -33,8 +33,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("dbsp")
 public class DBSP02Controller {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DBSP02Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(DBSP02Controller.class);
 
     @ModelAttribute
     public UserCreateForm setUpForm() {
@@ -42,8 +41,7 @@ public class DBSP02Controller {
     }
 
     @RequestMapping(value = "0201/001/create", method = RequestMethod.GET, params = "form")
-    public String createForm(UserCreateForm userCreateForm,
-            BindingResult bindingResult) {
+    public String createForm(UserCreateForm userCreateForm, BindingResult bindingResult) {
         return "dbsp/createForm";
     }
 
@@ -57,8 +55,7 @@ public class DBSP02Controller {
     }
 
     @RequestMapping(value = "0201/001/create", method = RequestMethod.POST)
-    public String create(@Validated UserCreateForm userCreateForm,
-            BindingResult bindingResult,
+    public String create(@Validated UserCreateForm userCreateForm, BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "dbsp/createForm";

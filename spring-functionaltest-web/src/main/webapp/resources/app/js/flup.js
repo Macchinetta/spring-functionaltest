@@ -1,50 +1,50 @@
-$(function() {
+$(function () {
     /**
      * 単一ファイル用
      */
-    $("#browseFile").on("click", function() {
+    $("#browseFile").on("click", function () {
         $("#multipartFile").click();
     });
-    $("#selectedFile").on("click", function() {
+    $("#selectedFile").on("click", function () {
         $("#multipartFile").click();
     });
-    $("#multipartFile").change(function() {
+    $("#multipartFile").change(function () {
         $("#selectedFile").val($(this).val());
     });
 
     /**
      * HTML5複数ファイル用
      */
-    $("#browseFiles").on("click", function() {
+    $("#browseFiles").on("click", function () {
         $("#multipartFiles").click();
     });
-    $("#selectedFiles").on("click", function() {
+    $("#selectedFiles").on("click", function () {
         $("#multipartFiles").click();
     });
-    $("#multipartFiles").change(function() {
+    $("#multipartFiles").change(function () {
         $("#selectedFiles").val($(this).val());
     });
 
     /**
      * 複数ファイル用
      */
-    $("#browseFiles0").on("click", function() {
+    $("#browseFiles0").on("click", function () {
         $("#uploadForms0\\.multipartFile").click();
     });
-    $("#selectedFiles0").on("click", function() {
+    $("#selectedFiles0").on("click", function () {
         $("#uploadForms0\\.multipartFile").click();
     });
-    $("#uploadForms0\\.multipartFile").change(function() {
+    $("#uploadForms0\\.multipartFile").change(function () {
         $("#selectedFiles0").val($(this).val());
     });
 
-    $("#browseFiles1").on("click", function() {
+    $("#browseFiles1").on("click", function () {
         $("#uploadForms1\\.multipartFile").click();
     });
-    $("#selectedFiles1").on("click", function() {
+    $("#selectedFiles1").on("click", function () {
         $("#uploadForms1\\.multipartFile").click();
     });
-    $("#uploadForms1\\.multipartFile").change(function() {
+    $("#uploadForms1\\.multipartFile").change(function () {
         $("#selectedFiles1").val($(this).val());
     });
 
@@ -55,5 +55,4 @@ $(function() {
     if ($descriptionText.text() === "") {
         $descriptionText.removeClass("display-item");
     }
-
 });

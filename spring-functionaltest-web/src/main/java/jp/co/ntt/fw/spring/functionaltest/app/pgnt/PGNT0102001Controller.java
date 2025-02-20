@@ -43,8 +43,7 @@ public class PGNT0102001Controller {
     }
 
     @RequestMapping(value = "celebritySearchDispFive", method = RequestMethod.GET)
-    public String search(CelebritySearchCriteria criteria, Pageable pageable,
-            Model model) {
+    public String search(CelebritySearchCriteria criteria, Pageable pageable, Model model) {
 
         Page<Celebrity> page = celebrityService.getNames(criteria, pageable);
         model.addAttribute("page", page);

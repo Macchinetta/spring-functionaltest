@@ -31,7 +31,7 @@ import org.springframework.test.annotation.IfProfileValue;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class DataAccessCommonTest extends FunctionTestSupport {
 
     private void clickLink(By by) {
@@ -47,8 +47,7 @@ public class DataAccessCommonTest extends FunctionTestSupport {
     }
 
     private List<String> getValueList(By by) {
-        List<WebElement> elementList = webDriverOperations.getWebDriver()
-                .findElements(by);
+        List<WebElement> elementList = webDriverOperations.getWebDriver().findElements(by);
         List<String> valueList = new ArrayList<String>();
         for (WebElement element : elementList) {
             valueList.add(element.getText());
@@ -93,8 +92,7 @@ public class DataAccessCommonTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("ローカル実行時のH2で確認可能")
-    public void testDTAC0101002() {
-    }
+    public void testDTAC0101002() {}
 
     /**
      * <ul>
@@ -192,8 +190,8 @@ public class DataAccessCommonTest extends FunctionTestSupport {
             dbLogAssertOperations.assertContainsByRegexMessage(
                     ".*jp.co.ntt.fw.spring.functionaltest.app.dtac.DTACUserController.*",
                     ".*DuplicateKeyExeption occur!!.*");
-            dbLogAssertOperations.assertContainsByRegexStackTrace(
-                    ".*SQLErrorCodeSQLExceptionTranslator.*");
+            dbLogAssertOperations
+                    .assertContainsByRegexStackTrace(".*SQLErrorCodeSQLExceptionTranslator.*");
         }
     }
 
@@ -203,7 +201,6 @@ public class DataAccessCommonTest extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("testDTAC0401001同時実行")
-    public void testDTAC0401002() {
-    }
+    public void testDTAC0401002() {}
 
 }

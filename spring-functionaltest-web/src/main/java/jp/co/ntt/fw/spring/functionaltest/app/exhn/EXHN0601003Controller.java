@@ -51,8 +51,7 @@ public class EXHN0601003Controller {
     }
 
     @RequestMapping(value = "0601/003", params = "update")
-    public String employeeUpdateCustomSystemExceptionResolver(
-            EmployeeForm form) {
+    public String employeeUpdateCustomSystemExceptionResolver(EmployeeForm form) {
 
         Employee inputEmployee = employeeHelper.convertToEntity(form);
         employeeService.updateEmployee(inputEmployee);

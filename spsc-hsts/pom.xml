@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>spsc-hsts</artifactId>
+    <packaging>war</packaging>
+    <parent>
+        <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
+        <artifactId>spring-functionaltest</artifactId>
+        <version>1.8.4.RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <name>Spring Functional Test - HSTS</name>
+    <description>HSTS of Spring Functional Test</description>
+    <scm>
+        <connection>scm:git:git://github.com/Macchinetta/spring-functionaltest.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Macchinetta/spring-functionaltest.git</developerConnection>
+        <url>https://github.com/Macchinetta/spring-functionaltest</url>
+    </scm>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven3-plugin</artifactId>
+                    <configuration>
+                        <container>
+                            <timeout>600000</timeout>
+                        </container>
+                        <deployables>
+                            <deployable>
+                                <location>${project.basedir}/target/${cargo.deployable.warName}.war</location>
+                                <type>war</type>
+                                <properties>
+                                    <context>${cargo.deployable.warName}</context>
+                                </properties>
+                            </deployable>
+                        </deployables>
+                        <!-- SSL support (both http and https ports available) -->
+                        <configuration>
+                            <properties>
+                                <!-- If you want to enable only the https protocol, the following settings are fine.
+                                     If you want to enable both http and https protocols, you need to edit server.xml directly. -->
+                                <!-- <cargo.protocol>https</cargo.protocol>
+                                 <cargo.servlet.port>443</cargo.servlet.port>
+                                <cargo.tomcat.connector.keystoreFile>${project.basedir}/config/testkeystore.jks</cargo.tomcat.connector.keystoreFile>
+                                <cargo.tomcat.connector.keystoreType>RSA</cargo.tomcat.connector.keystoreType>
+                                <cargo.tomcat.connector.keyAlias>testKey</cargo.tomcat.connector.keyAlias>
+                                <cargo.tomcat.connector.keystorePass>password</cargo.tomcat.connector.keystorePass>
+                                <cargo.tomcat.connector.protocolClass>org.apache.coyote.http11.Http11NioProtocol</cargo.tomcat.connector.protocolClass> -->
+
+                                <!-- CARGO goes to access the following URL with a health check.
+                                    http://localhost:8080/cargocpc/index.html
+                                    However, since the 8080 port is closed in server.xml, an error occurs when accessing the port.
+                                    Therefore, set the cargo.servlet.port attribute to port 80.-->
+                                <cargo.servlet.port>80</cargo.servlet.port>
+                            </properties>
+                            <configfiles>
+                                <configfile>
+                                    <file>${project.build.directory}/tmp/server.xml</file>
+                                    <todir>conf</todir>
+                                </configfile>
+                            </configfiles>
+                        </configuration>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.apache.taglibs</groupId>
+                    <artifactId>taglibs-standard-jstlel</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.transaction</groupId>
+                    <artifactId>jakarta.transaction-api</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <!-- SSL support (both http and https ports available) -->
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-resources-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>server-xml-replace</id>
+                                    <phase>process-test-resources</phase>
+                                    <goals>
+                                        <goal>copy-resources</goal>
+                                    </goals>
+                                    <configuration>
+                                        <resources>
+                                            <resource>
+                                                <directory>${project.basedir}/configs/local/ContainerConfigXML</directory>
+                                                <filtering>true</filtering>
+                                                <includes>
+                                                    <include>server.xml</include>
+                                                </includes>
+                                            </resource>
+                                        </resources>
+                                        <outputDirectory>${project.build.directory}/tmp</outputDirectory>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+            <properties>
+                <sig.server.key.path>${project.basedir}/configs/local/keystore/localserver.key</sig.server.key.path>
+                <sig.server.file.path>${project.basedir}/configs/local/keystore/localserver.crt</sig.server.file.path>
+                <ca.file.path>${project.basedir}/configs/local/keystore/testinterimca.crt</ca.file.path>
+            </properties>
+        </profile>
+        <!-- Add profile for JAXB jars -->
+        <profile>
+            <id>warpack-jaxb</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdk11</id>
+            <activation>
+                <jdk>11</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.activation</groupId>
+                    <artifactId>jakarta.activation</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdk17</id>
+            <activation>
+                <jdk>17</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.activation</groupId>
+                    <artifactId>jakarta.activation</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdk21</id>
+            <activation>
+                <jdk>21</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.activation</groupId>
+                    <artifactId>jakarta.activation</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!-- When running with jdk11+local, redefine with "runtime" because it becomes "provided" in jdk11 profile -->
+        <profile>
+            <id>warpack-activation</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun.activation</groupId>
+                    <artifactId>jakarta.activation</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.activation</groupId>
+                    <artifactId>jakarta.activation-api</artifactId>
+                </dependency>                
+                <dependency>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <!-- == Begin TERASOLUNA == -->
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-common-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-mybatis3-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-jpa-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-jodatime-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-security-core-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-recommended-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-web-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-web-jsp-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-security-web-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-validator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.terasoluna.gfw</groupId>
+            <artifactId>terasoluna-gfw-recommended-web-dependencies</artifactId>
+            <type>pom</type>
+        </dependency>
+        <!-- == End TERASOLUNA == -->
+
+        <!-- == Begin Database == -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- == End Database == -->
+
+        <!-- == Begin Tomcat == -->
+        <!-- Servlet API 4.0 & JSP API 2.3 -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- == End Tomcat == -->
+
+        <!-- XXE Injection Countermeasure -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+        </dependency>
+
+        <!-- == Begin Log4j 2 to SLF4J Adapter == -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+        </dependency>
+        <!-- == End Log4j 2 to SLF4J Adapter == -->
+
+        <!-- == Begin Password Encode == -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+        </dependency>
+        <!-- == End Password Encode == -->
+
+        <!-- not required in JDK8 and conflicts with JAXB implementation of some APserver in JDK11, set scope to provided. -->
+        <!-- == Begin JAXB == -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- == End JAXB == -->
+
+        <!-- == Begin jakarta.transaction == -->
+        <dependency>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- == Ebd jakarta.transaction == -->
+
+        <!-- == Begin Spring == -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <!-- == End Spring == -->
+
+        <!-- == Begin logback-db == -->
+        <dependency>
+            <groupId>ch.qos.logback.db</groupId>
+            <artifactId>logback-classic-db</artifactId>
+        </dependency>
+        <!-- == End logback-db == -->
+
+    </dependencies>
+    <properties>
+        <project.root.basedir>${project.parent.basedir}</project.root.basedir>
+        <cargo.deployable.artifactId>${project.artifactId}</cargo.deployable.artifactId>
+        <cargo.deployable.warName>${project.artifactId}</cargo.deployable.warName>
+    </properties>
+</project>

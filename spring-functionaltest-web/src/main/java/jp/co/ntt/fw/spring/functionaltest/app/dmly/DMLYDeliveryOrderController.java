@@ -59,8 +59,7 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "complete")
-    public String registerComplete(@RequestParam("no") Integer no,
-            Model model) {
+    public String registerComplete(@RequestParam("no") Integer no, Model model) {
 
         DeliveryOrder deliveryOrder = deliveryOrderService.getOrderExists(no);
         if (null == deliveryOrder) {
@@ -75,8 +74,7 @@ public class DMLYDeliveryOrderController {
     public String registerRedo(DeliveryOrderForm form, Model model) {
         DeliveryOrder deliveryOrder = beanMapper.map(form, DeliveryOrder.class);
         List<DeliveryType> deliveryTypeList = deliveryTypeService.findAll();
-        List<DeliveryStatus> deliveryStatusList = deliveryStatusService
-                .findAll();
+        List<DeliveryStatus> deliveryStatusList = deliveryStatusService.findAll();
         model.addAttribute("deliveryOrder", deliveryOrder);
         model.addAttribute("deliveryTypeList", deliveryTypeList);
         model.addAttribute("deliveryStatusList", deliveryStatusList);
@@ -85,8 +83,7 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "cancel")
-    public String registerCancel(RedirectAttributes redirectAttrs,
-            Model model) {
+    public String registerCancel(RedirectAttributes redirectAttrs, Model model) {
         return "redirect:/dmly/deliveryorder/list";
     }
 
@@ -96,8 +93,7 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(DeliveryOrderForm form,
-            RedirectAttributes redirectAttrs, Model model) {
+    public String register(DeliveryOrderForm form, RedirectAttributes redirectAttrs, Model model) {
         DeliveryOrder deliveryOrder = beanMapper.map(form, DeliveryOrder.class);
         deliveryOrderService.register(deliveryOrder);
 
@@ -110,8 +106,7 @@ public class DMLYDeliveryOrderController {
     @RequestMapping(value = "register", params = "form")
     public String registerForm(Model model) {
         List<DeliveryType> deliveryTypeList = deliveryTypeService.findAll();
-        List<DeliveryStatus> deliveryStatusList = deliveryStatusService
-                .findAll();
+        List<DeliveryStatus> deliveryStatusList = deliveryStatusService.findAll();
         model.addAttribute("deliveryTypeList", deliveryTypeList);
         model.addAttribute("deliveryStatusList", deliveryStatusList);
 
@@ -125,8 +120,7 @@ public class DMLYDeliveryOrderController {
             deliveryOrder = new DeliveryOrder();
         }
         List<DeliveryType> deliveryTypeList = deliveryTypeService.findAll();
-        List<DeliveryStatus> deliveryStatusList = deliveryStatusService
-                .findAll();
+        List<DeliveryStatus> deliveryStatusList = deliveryStatusService.findAll();
 
         model.addAttribute("deliveryOrder", deliveryOrder);
         model.addAttribute("deliveryTypeList", deliveryTypeList);
@@ -151,8 +145,7 @@ public class DMLYDeliveryOrderController {
     public String updateRedo(DeliveryOrderForm form, Model model) {
         DeliveryOrder deliveryOrder = beanMapper.map(form, DeliveryOrder.class);
         List<DeliveryType> deliveryTypeList = deliveryTypeService.findAll();
-        List<DeliveryStatus> deliveryStatusList = deliveryStatusService
-                .findAll();
+        List<DeliveryStatus> deliveryStatusList = deliveryStatusService.findAll();
         model.addAttribute("deliveryOrder", deliveryOrder);
         model.addAttribute("deliveryTypeList", deliveryTypeList);
         model.addAttribute("deliveryStatusList", deliveryStatusList);
@@ -161,8 +154,8 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "{no}/update", method = RequestMethod.POST, params = "cancel")
-    public String updateCancel(@PathVariable("no") Integer no,
-            RedirectAttributes redirectAttrs, Model model) {
+    public String updateCancel(@PathVariable("no") Integer no, RedirectAttributes redirectAttrs,
+            Model model) {
         return "redirect:/dmly/deliveryorder/list";
     }
 
@@ -179,14 +172,14 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "{no}/update", method = RequestMethod.POST, params = "back")
-    public String updateBack(@PathVariable("no") Integer no,
-            RedirectAttributes redirectAttrs, Model model) {
+    public String updateBack(@PathVariable("no") Integer no, RedirectAttributes redirectAttrs,
+            Model model) {
         return "redirect:/dmly/deliveryorder/list";
     }
 
     @RequestMapping(value = "{no}/update", method = RequestMethod.POST, params = "delete")
-    public String updateDelete(@PathVariable("no") Integer no,
-            RedirectAttributes redirectAttrs, Model model) {
+    public String updateDelete(@PathVariable("no") Integer no, RedirectAttributes redirectAttrs,
+            Model model) {
         deliveryOrderService.delete(no);
 
         redirectAttrs.addAttribute("complete", "");
@@ -208,8 +201,8 @@ public class DMLYDeliveryOrderController {
     }
 
     @RequestMapping(value = "{no}/delete", method = RequestMethod.POST, params = "back")
-    public String delete(@PathVariable("no") Integer no,
-            RedirectAttributes redirectAttrs, Model model) {
+    public String delete(@PathVariable("no") Integer no, RedirectAttributes redirectAttrs,
+            Model model) {
         return "redirect:/dmly/deliveryorder/list";
     }
 

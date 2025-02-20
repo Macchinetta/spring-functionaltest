@@ -37,8 +37,7 @@ import org.terasoluna.gfw.common.message.ResultMessages;
  * 閉塞状況を監視と、ステータスコード：503時のリトライ処理を行う。
  */
 public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(
-            AccessCtrlInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(AccessCtrlInterceptor.class);
 
     @Value("${rscl.retry.maxCount}")
     int retryMaxCount;
@@ -64,8 +63,7 @@ public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
         // 閉塞検知ファイルを検知した場合
         if (trgFileLst != null && trgFileLst.length != 0) {
             logger.info("AccessCtrlInterceptor Obstruction File Called!");
-            throw new BusinessException(ResultMessages.error().add(
-                    "e.rc.fw.8001"));
+            throw new BusinessException(ResultMessages.error().add("e.sf.rc.8001"));
         } else {
             response = this.execute(request, body, execution);
         }
@@ -116,8 +114,7 @@ public class AccessCtrlInterceptor implements ClientHttpRequestInterceptor {
                         statusCode, retryCount);
 
                 try {
-                    Thread.sleep((long) (retryWaitTimeCoefficient
-                            * retryCount));
+                    Thread.sleep((long) (retryWaitTimeCoefficient * retryCount));
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }

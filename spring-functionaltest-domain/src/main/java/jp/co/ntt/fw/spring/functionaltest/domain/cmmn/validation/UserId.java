@@ -38,7 +38,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.UserId.List;
 
 @Documented
 @Constraint(validatedBy = {})
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 @ReportAsSingleViolation
@@ -53,8 +53,7 @@ public @interface UserId {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

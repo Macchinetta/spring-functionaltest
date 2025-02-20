@@ -23,10 +23,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-public class InternationalizationForFrLocaleBrowserTest extends
-                                                        FunctionTestSupport {
+public class InternationalizationForFrLocaleBrowserTest extends FunctionTestSupport {
 
     public InternationalizationForFrLocaleBrowserTest() {
         disableDefaultWebDriver();
@@ -41,8 +41,7 @@ public class InternationalizationForFrLocaleBrowserTest extends
     @Test
     public void testINTR0101005() {
         // フランス語Locale
-        WebDriver frDriver = webDriverCreator.createLocaleSpecifiedDriver(
-                "fr, FR");
+        WebDriver frDriver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.FRANCE);
         setCurrentWebDriver(frDriver);
 
         webDriverOperations.click(id("intr0101005"));
@@ -64,8 +63,7 @@ public class InternationalizationForFrLocaleBrowserTest extends
     @Test
     public void testINTR0102001() {
         // フランス語Locale
-        WebDriver frDriver = webDriverCreator.createLocaleSpecifiedDriver(
-                "fr, FR");
+        WebDriver frDriver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.FRANCE);
         setCurrentWebDriver(frDriver);
 
         webDriverOperations.click(id("intr0102001"));

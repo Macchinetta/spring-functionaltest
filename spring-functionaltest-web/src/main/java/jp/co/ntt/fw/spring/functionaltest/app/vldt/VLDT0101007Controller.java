@@ -37,8 +37,7 @@ public class VLDT0101007Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated SimpleValidationByInclusiveForm form,
+    public String handleValidate(@Validated SimpleValidationByInclusiveForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

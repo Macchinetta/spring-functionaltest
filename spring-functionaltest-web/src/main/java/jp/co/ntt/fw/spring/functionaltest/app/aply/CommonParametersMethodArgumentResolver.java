@@ -21,8 +21,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-public class CommonParametersMethodArgumentResolver implements
-                                                    HandlerMethodArgumentResolver {
+public class CommonParametersMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -30,9 +29,8 @@ public class CommonParametersMethodArgumentResolver implements
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter,
-            ModelAndViewContainer mavContainer, NativeWebRequest webRequest,
-            WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         CommonParameters params = new CommonParameters();
         params.setCommonParam1(webRequest.getParameter("commonParam1"));
         params.setCommonParam2(webRequest.getParameter("commonParam2"));

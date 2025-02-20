@@ -28,6 +28,6 @@ public interface JmsValidationService {
 
     void validate(@Valid JmsTodo jmsTodo) throws IOException;
 
-    void writeValidatedObjectToFile(String dir, String fileName,
-            @Valid Object obj) throws IOException;
+    void writeValidatedObjectToFile(String dir, String fileName, @Valid Object obj)
+            throws IOException;
 }

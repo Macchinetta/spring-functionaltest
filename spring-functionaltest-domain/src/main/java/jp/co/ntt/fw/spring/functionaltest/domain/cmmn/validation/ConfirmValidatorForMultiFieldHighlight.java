@@ -23,8 +23,8 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-public class ConfirmValidatorForMultiFieldHighlight implements
-                                                    ConstraintValidator<ConfirmForMultiFieldHighlight, Object> {
+public class ConfirmValidatorForMultiFieldHighlight
+        implements ConstraintValidator<ConfirmForMultiFieldHighlight, Object> {
 
     private String field;
 
@@ -49,10 +49,10 @@ public class ConfirmValidatorForMultiFieldHighlight implements
             return true;
         } else {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(message)
-                    .addPropertyNode(confirmField).addConstraintViolation();
-            context.buildConstraintViolationWithTemplate("").addPropertyNode(
-                    field).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(message).addPropertyNode(confirmField)
+                    .addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("").addPropertyNode(field)
+                    .addConstraintViolation();
 
             return false;
         }

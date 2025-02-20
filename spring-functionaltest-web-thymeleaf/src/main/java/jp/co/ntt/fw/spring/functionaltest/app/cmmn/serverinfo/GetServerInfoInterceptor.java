@@ -11,8 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class GetServerInfoInterceptor implements HandlerInterceptor {
 
     @Override
-    public void postHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             @Nullable ModelAndView modelAndView) throws Exception {
 
         if (modelAndView != null) {

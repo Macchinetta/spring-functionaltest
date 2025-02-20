@@ -42,8 +42,8 @@ public class ReceiveMessageHelper {
     @Inject
     JmsSharedService jmsSharedService;
 
-    public List<String> receivedMessageAndForList(
-            String jmsTodoId) throws InterruptedException, IOException {
+    public List<String> receivedMessageAndForList(String jmsTodoId)
+            throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 
@@ -59,8 +59,8 @@ public class ReceiveMessageHelper {
         return list != null ? list : null;
     }
 
-    public Map<String, String> receivedMessageAndForMap(
-            String jmsTodoId) throws InterruptedException, IOException {
+    public Map<String, String> receivedMessageAndForMap(String jmsTodoId)
+            throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 
@@ -76,8 +76,8 @@ public class ReceiveMessageHelper {
         return map != null ? map : null;
     }
 
-    public JmsTodo receiveMessagesForJmsTodo(
-            String jmsTodoId) throws InterruptedException, IOException {
+    public JmsTodo receiveMessagesForJmsTodo(String jmsTodoId)
+            throws InterruptedException, IOException {
 
         String filepath = temporaryDirectory + jmsTodoId;
 

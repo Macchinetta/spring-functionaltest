@@ -37,8 +37,7 @@ public class VLDT0302001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated DefineMessageByMessageSourceForm form,
+    public String handleValidate(@Validated DefineMessageByMessageSourceForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

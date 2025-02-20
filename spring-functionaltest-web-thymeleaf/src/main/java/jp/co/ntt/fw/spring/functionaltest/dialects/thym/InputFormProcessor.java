@@ -28,14 +28,12 @@ import org.thymeleaf.templatemode.TemplateMode;
 public class InputFormProcessor extends AbstractAttributeTagProcessor {
 
     public InputFormProcessor(final String dialectPrefix) {
-        super(TemplateMode.HTML, dialectPrefix, null, false, "form-input", true,
-                1000, true);
+        super(TemplateMode.HTML, dialectPrefix, null, false, "form-input", true, 1000, true);
     }
 
     @Override
-    protected void doProcess(ITemplateContext context,
-            IProcessableElementTag tag, AttributeName attributeName,
-            String attributeValue,
+    protected void doProcess(ITemplateContext context, IProcessableElementTag tag,
+            AttributeName attributeName, String attributeValue,
             IElementTagStructureHandler structureHandler) {
 
         String classValue = tag.getAttributeValue("class");
@@ -52,16 +50,13 @@ public class InputFormProcessor extends AbstractAttributeTagProcessor {
 
         String label = getLabel(attributeValue);
 
-        model.add(modelFactory.createOpenElementTag("label", "id", label
-                + "Label"));
+        model.add(modelFactory.createOpenElementTag("label", "id", label + "Label"));
         model.add(modelFactory.createText(label));
         model.add(modelFactory.createCloseElementTag("label"));
 
-        model.add(modelFactory.createStandaloneElementTag("input", "th:field",
-                attributeValue));
+        model.add(modelFactory.createStandaloneElementTag("input", "th:field", attributeValue));
 
-        model.add(modelFactory.createOpenElementTag("span", "th:errors",
-                attributeValue));
+        model.add(modelFactory.createOpenElementTag("span", "th:errors", attributeValue));
         model.add(modelFactory.createCloseElementTag("span"));
 
         structureHandler.setBody(model, true);

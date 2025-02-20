@@ -28,15 +28,14 @@ import org.terasoluna.gfw.common.message.ResultMessages;
 @Component
 public class FileUploadHelper {
 
-    public void bindToModel(MultipartFile multipartFile,
-            RedirectAttributes redirectAttributes) throws IOException {
+    public void bindToModel(MultipartFile multipartFile, RedirectAttributes redirectAttributes)
+            throws IOException {
         UploadedContent uploadedContent = new UploadedContent();
         try (InputStream in = multipartFile.getInputStream()) {
             uploadedContent.setFileContent(in);
             uploadedContent.setFileName(multipartFile.getOriginalFilename());
             redirectAttributes.addFlashAttribute(uploadedContent);
-            redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                    "i.sf.flup.0002"));
+            redirectAttributes.addFlashAttribute(ResultMessages.success().add("i.sf.fu.0002"));
         }
     }
 
@@ -51,10 +50,8 @@ public class FileUploadHelper {
                 uploadedContents.add(uploadedContent);
             }
         }
-        redirectAttributes.addFlashAttribute("uploadedContents",
-                uploadedContents);
-        redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.sf.flup.0002"));
+        redirectAttributes.addFlashAttribute("uploadedContents", uploadedContents);
+        redirectAttributes.addFlashAttribute(ResultMessages.success().add("i.sf.fu.0002"));
     }
 
 }

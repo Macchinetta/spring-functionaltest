@@ -32,11 +32,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
-public class CustomErrorRestClientServiceImpl implements
-                                              CustomErrorRestClientService {
+public class CustomErrorRestClientServiceImpl implements CustomErrorRestClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            CustomErrorRestClientServiceImpl.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(CustomErrorRestClientServiceImpl.class);
 
     @Inject
     RestTemplate customErrorRestTemplate;
@@ -58,14 +57,13 @@ public class CustomErrorRestClientServiceImpl implements
         UserResource resUser = new UserResource();
 
         for (int retryCount = 0; retryCount < retryMaxCount; retryCount++) {
-            RequestEntity<Void> req = RequestEntity.get(targetUri).header(
-                    "x-Retry", String.valueOf(retryCount)).build();
-            res = this.customErrorRestTemplate.exchange(req,
-                    UserResource.class);
+            RequestEntity<Void> req = RequestEntity.get(targetUri)
+                    .header("x-Retry", String.valueOf(retryCount)).build();
+            res = this.customErrorRestTemplate.exchange(req, UserResource.class);
 
             if (HttpStatus.OK.equals(res.getStatusCode())) {
-                logger.info("RSCL0406001 : HttpStatus = {}, RetryCount = {}",
-                        res.getStatusCode(), retryCount);
+                logger.info("RSCL0406001 : HttpStatus = {}, RetryCount = {}", res.getStatusCode(),
+                        retryCount);
                 break;
 
             } else if (res.getStatusCode() == HttpStatus.SERVICE_UNAVAILABLE) {
@@ -75,8 +73,7 @@ public class CustomErrorRestClientServiceImpl implements
                         res.getStatusCode(), retryCount);
 
                 try {
-                    Thread.sleep((long) (retryWaitTimeCoefficient
-                            * retryCount));
+                    Thread.sleep((long) (retryWaitTimeCoefficient * retryCount));
                 } catch (InterruptedException ie) {
                     Thread.currentThread().interrupt();
                 }
@@ -99,8 +96,7 @@ public class CustomErrorRestClientServiceImpl implements
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 
 }

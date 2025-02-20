@@ -28,8 +28,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(propagation = Propagation.REQUIRED)
 @Service
-public class DeliveryOrderRequiredSharedServiceImpl implements
-                                                    DeliveryOrderRequiredSharedService {
+public class DeliveryOrderRequiredSharedServiceImpl implements DeliveryOrderRequiredSharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

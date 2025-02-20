@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ATHN02Controller {
 
     @RequestMapping(value = "0201/001", params = "loginSuccess")
-    public String handle0201001(@AuthenticationPrincipal User userDetails,
-            Model model) {
+    public String handle0201001(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("testNo", "0201/001");
         model.addAttribute("username", userDetails.getUsername());
 

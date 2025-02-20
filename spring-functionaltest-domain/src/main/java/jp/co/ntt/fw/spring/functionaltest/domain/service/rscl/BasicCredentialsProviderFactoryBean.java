@@ -21,8 +21,7 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 
-public class BasicCredentialsProviderFactoryBean implements
-                                                 FactoryBean<BasicCredentialsProvider> {
+public class BasicCredentialsProviderFactoryBean implements FactoryBean<BasicCredentialsProvider> {
 
     @Value("${rscl.http.proxyHost}")
     String host;
@@ -41,11 +40,11 @@ public class BasicCredentialsProviderFactoryBean implements
 
         AuthScope authScope = new AuthScope(this.host, this.port);
 
-        UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(this.userName, this.password);
+        UsernamePasswordCredentials usernamePasswordCredentials =
+                new UsernamePasswordCredentials(this.userName, this.password);
 
         BasicCredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-        credentialsProvider.setCredentials(authScope,
-                usernamePasswordCredentials);
+        credentialsProvider.setCredentials(authScope, usernamePasswordCredentials);
         return credentialsProvider;
     }
 

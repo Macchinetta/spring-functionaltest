@@ -20,10 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.AfterClass;
 
-public abstract class FunctionTestSupportForMultiBrowser extends
-                                                         FunctionTestSupport {
+public abstract class FunctionTestSupportForMultiBrowser extends FunctionTestSupport {
 
-    private static final Map<Integer, WebDriverOperations> webDriverOperationsMap = new ConcurrentHashMap<Integer, WebDriverOperations>();
+    private static final Map<Integer, WebDriverOperations> webDriverOperationsMap =
+            new ConcurrentHashMap<Integer, WebDriverOperations>();
 
     @AfterClass
     public static void tearDownWebDriverOperationsMap() {
@@ -49,8 +49,7 @@ public abstract class FunctionTestSupportForMultiBrowser extends
      * @param webDriverId WebDriverを識別するためのID
      * @return セットアップしたWebDriverを操作するためのオブジェクト
      */
-    protected final WebDriverOperations setUpWebDriverOperations(
-            int webDriverId) {
+    protected final WebDriverOperations setUpWebDriverOperations(int webDriverId) {
         WebDriverOperations operations = null;
         if (webDriverOperationsMap.containsKey(webDriverId)) {
             operations = webDriverOperationsMap.get(webDriverId);
@@ -81,8 +80,7 @@ public abstract class FunctionTestSupportForMultiBrowser extends
      * @param webDriverId WebDriverを識別するためのID
      * @return 指定したIDのWebDriverを操作するためのオブジェクト
      */
-    protected final WebDriverOperations getWebDriverOperations(
-            int webDriverId) {
+    protected final WebDriverOperations getWebDriverOperations(int webDriverId) {
         return webDriverOperationsMap.get(webDriverId);
     }
 

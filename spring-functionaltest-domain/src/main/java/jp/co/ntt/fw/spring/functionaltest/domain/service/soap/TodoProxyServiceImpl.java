@@ -43,8 +43,7 @@ import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
 @Service
 public class TodoProxyServiceImpl implements TodoProxyService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            TodoProxyServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TodoProxyServiceImpl.class);
 
     @Resource
     private Map<String, TodoWebService> todoWebServices;
@@ -56,6 +55,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         // Webサービスの実行
         List<Todo> todos = todoWebService.getTodos();
         loggingHttpStatusCode(todoWebService);
+        loggingHttpRespnseHeader(todoWebService);
         return todos;
     }
 
@@ -69,11 +69,12 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.createTodo(forCreateTodo);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (RemoteAccessException e) {
             throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
@@ -85,9 +86,10 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.getTodo(todoId);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
@@ -97,7 +99,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
 
         todoWebService.deleteTodos();
         loggingHttpStatusCode(todoWebService);
-        return;
+        loggingHttpRespnseHeader(todoWebService);
     }
 
     @Override
@@ -108,9 +110,10 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.updateTodo(forUpdateTodo);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
@@ -122,9 +125,10 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             todoWebService.deleteTodo(todoId);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
@@ -136,34 +140,35 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             todoWebService.handlerTest();
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (JaxWsSoapFaultException e) {
             throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
     @Override
-    public void requestTimeout(
-            String webServiceKey) throws InterruptedException {
+    public void requestTimeout(String webServiceKey) throws InterruptedException {
         TodoWebService todoWebService = getWebService(webServiceKey);
 
         try {
             todoWebService.timeoutTest();
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (RemoteAccessException e) {
             Throwable cause = e;
             while ((cause = cause.getCause()) != null) {
                 if (cause instanceof SocketTimeoutException) {
-                    throw new SystemException("e.sf.cmmn.9001", cause);
+                    throw new SystemException("e.sf.fw.9001", cause);
                 }
             }
             throw e;
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
     }
 
@@ -181,9 +186,10 @@ public class TodoProxyServiceImpl implements TodoProxyService {
 
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
+            loggingHttpRespnseHeader(todoWebService);
         }
 
     }
@@ -198,8 +204,8 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         if (todoWebServices.containsKey(webServiceKey)) {
             return todoWebServices.get(webServiceKey);
         } else {
-            throw new SystemException("e.sf.cmmn.9001", "web service "
-                    + webServiceKey + " is not found...");
+            throw new SystemException("e.sf.fw.9001",
+                    "web service " + webServiceKey + " is not found...");
         }
     }
 
@@ -208,8 +214,18 @@ public class TodoProxyServiceImpl implements TodoProxyService {
      * @param tws Web Service Proxyオブジェクト
      */
     private void loggingHttpStatusCode(TodoWebService tws) {
-        logger.info("httpStatusCode={}", ((BindingProvider) tws)
-                .getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE));
+        logger.info("httpStatusCode={}", ((BindingProvider) tws).getResponseContext()
+                .get(MessageContext.HTTP_RESPONSE_CODE));
+    }
+
+    /**
+     * HTTPレスポンスヘッダをログ出力する。
+     *
+     * @param tws Web Service Proxyオブジェクト
+     */
+    private void loggingHttpRespnseHeader(TodoWebService tws) {
+        logger.info("RespnseHeader={}", ((BindingProvider) tws).getResponseContext()
+                .get(MessageContext.HTTP_RESPONSE_HEADERS));
     }
 
     /**
@@ -223,8 +239,8 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         List<ErrorBean> errors = e.getErrors();
         logger.error("errorBeanSize={}", errors.size());
         for (ErrorBean error : errors) {
-            logger.error("code:message:path={}:{}:{}", error.getCode(), error
-                    .getMessage(), error.getPath());
+            logger.error("code:message:path={}:{}:{}", error.getCode(), error.getMessage(),
+                    error.getPath());
         }
     }
 

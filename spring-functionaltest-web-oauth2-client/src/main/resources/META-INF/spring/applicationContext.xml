@@ -3,11 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:aop="http://www.springframework.org/schema/aop"
-    xsi:schemaLocation="
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-    ">
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <import resource="classpath:/META-INF/spring/todo-domain.xml" />
 
@@ -57,13 +55,13 @@
         <!-- Setting and Customization by project. -->
         <property name="exceptionMappings">
             <map>
-                <entry key="ResourceNotFoundException" value="e.xx.fw.5001" />
-                <entry key="InvalidTransactionTokenException" value="e.xx.fw.7001" />
-                <entry key="BusinessException" value="e.xx.fw.8001" />
-                <entry key=".DataAccessException" value="e.xx.fw.9002" />
+                <entry key="ResourceNotFoundException" value="e.sf.fw.5001" />
+                <entry key="InvalidTransactionTokenException" value="e.sf.fw.7001" />
+                <entry key="BusinessException" value="e.sf.fw.8001" />
+                <entry key=".DataAccessException" value="e.sf.fw.9002" />
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.xx.fw.9001" />
+        <property name="defaultExceptionCode" value="e.sf.fw.9001" />
     </bean>
 
     <!-- Exception Logger. -->
@@ -74,7 +72,7 @@
 
     <!-- Filter. -->
     <bean id="exceptionLoggingFilter"
-        class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter" >
+        class="org.terasoluna.gfw.web.exception.ExceptionLoggingFilter">
         <property name="exceptionLogger" ref="exceptionLogger" />
     </bean>
 

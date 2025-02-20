@@ -27,8 +27,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoReposito
 
 @Transactional
 @Service
-public class JmsDbTransactedAmqReceivingServiceImpl implements
-                                                    JmsDbTransactedAmqReceivingService {
+public class JmsDbTransactedAmqReceivingServiceImpl implements JmsDbTransactedAmqReceivingService {
 
     @Inject
     JmsTodoRepository jmsTodoRepository;
@@ -37,15 +36,15 @@ public class JmsDbTransactedAmqReceivingServiceImpl implements
     JmsValidationService jmsValidationService;
 
     @Override
-    public void receiveInputValidationIsolatedTransactionJmsCommitDbRollback(
-            JmsTodo jmsTodo) throws IOException {
+    public void receiveInputValidationIsolatedTransactionJmsCommitDbRollback(JmsTodo jmsTodo)
+            throws IOException {
         jmsTodoRepository.insert(jmsTodo);
         jmsValidationService.validate(jmsTodo);
     }
 
     @Override
-    public void receiveInputValidationIsolatedTransactionJmsAndDbCommit(
-            JmsTodo jmsTodo) throws IOException {
+    public void receiveInputValidationIsolatedTransactionJmsAndDbCommit(JmsTodo jmsTodo)
+            throws IOException {
         jmsTodoRepository.insert(jmsTodo);
     }
 }

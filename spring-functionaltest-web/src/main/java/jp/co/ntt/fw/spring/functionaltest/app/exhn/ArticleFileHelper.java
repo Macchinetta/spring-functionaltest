@@ -45,14 +45,12 @@ public class ArticleFileHelper {
     @Inject
     ArticleFileService articleFileService;
 
-    String createTemporaryFile(
-            ArticleBatchRegisterForm form) throws IOException {
+    String createTemporaryFile(ArticleBatchRegisterForm form) throws IOException {
 
         String uploadTemporaryFileId = UUID.randomUUID().toString();
 
         Path uploadTemporaryDirectoryPath = Paths.get(uploadTemporaryDirectory);
-        Path uploadCompletedTemporaryDirectoryPath = Paths.get(
-                uploadCompletedTemporaryDirectory);
+        Path uploadCompletedTemporaryDirectoryPath = Paths.get(uploadCompletedTemporaryDirectory);
 
         if (Files.notExists(uploadTemporaryDirectoryPath)) {
             Files.createDirectories(uploadTemporaryDirectoryPath);
@@ -61,11 +59,10 @@ public class ArticleFileHelper {
             Files.createDirectories(uploadCompletedTemporaryDirectoryPath);
         }
 
-        Path uploadTemporaryFile = uploadTemporaryDirectoryPath.resolve(
-                uploadTemporaryFileId);
+        Path uploadTemporaryFile = uploadTemporaryDirectoryPath.resolve(uploadTemporaryFileId);
 
-        try(InputStream stream = form.getMultipartFile().getInputStream()){
-            Files.copy(stream,uploadTemporaryFile, StandardCopyOption.REPLACE_EXISTING);
+        try (InputStream stream = form.getMultipartFile().getInputStream()) {
+            Files.copy(stream, uploadTemporaryFile, StandardCopyOption.REPLACE_EXISTING);
         }
 
         form.setFileName(form.getMultipartFile().getOriginalFilename());
@@ -73,43 +70,41 @@ public class ArticleFileHelper {
         return uploadTemporaryFile.getFileName().toString();
     }
 
-    void uploadToDb(ArticleBatchRegisterForm form,
-            String uploadTemporaryFileId) throws IOException {
+    void uploadToDb(ArticleBatchRegisterForm form, String uploadTemporaryFileId)
+            throws IOException {
         articleFileService.save(uploadTemporaryFileId, form.getTitle());
     }
 
     void deleteTemporaryFile(String temporaryFileName) throws IOException {
-        Path uploadTemporaryFile = Paths.get(uploadTemporaryDirectory,
-                temporaryFileName);
+        Path uploadTemporaryFile = Paths.get(uploadTemporaryDirectory, temporaryFileName);
         Files.deleteIfExists(uploadTemporaryFile);
     }
 
     void deleteAll() throws IOException {
         Path uploadTemporaryDirectoryPath = Paths.get(uploadTemporaryDirectory);
         if (Files.exists(uploadTemporaryDirectoryPath)) {
-            Files.walkFileTree(uploadTemporaryDirectoryPath,
-                    new SimpleFileVisitor<Path>() {
-                        @Override
-                        public FileVisitResult visitFile(Path path,
-                                BasicFileAttributes attributes) throws IOException {
-                            Files.delete(path);
-                            return FileVisitResult.CONTINUE;
-                        }
+            Files.walkFileTree(uploadTemporaryDirectoryPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path path, BasicFileAttributes attributes)
+                        throws IOException {
+                    Files.delete(path);
+                    return FileVisitResult.CONTINUE;
+                }
 
-                        @Override
-                        public FileVisitResult postVisitDirectory(Path path,
-                                IOException exception) throws IOException {
-                            Files.delete(path);
-                            return FileVisitResult.CONTINUE;
-                        }
-                    });
+                @Override
+                public FileVisitResult postVisitDirectory(Path path, IOException exception)
+                        throws IOException {
+                    Files.delete(path);
+                    return FileVisitResult.CONTINUE;
+                }
+            });
         }
         articleFileService.deleteAll();
     }
 
     void copyTemporaryFile(String temporaryFileName) throws IOException {
         // testEXHN0203001でIOエラーが発生するように先にコピーしておく
-        Files.copy(Paths.get(uploadTemporaryDirectory, temporaryFileName), Paths
-                .get(uploadCompletedTemporaryDirectory, temporaryFileName));
+        Files.copy(Paths.get(uploadTemporaryDirectory, temporaryFileName),
+                Paths.get(uploadCompletedTemporaryDirectory, temporaryFileName));
     }
 }

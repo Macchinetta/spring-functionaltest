@@ -33,7 +33,7 @@ import javax.validation.Payload;
 
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileMaxSize.List;
 
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Constraint(validatedBy = UploadFileMaxSizeValidator.class)
 @Repeatable(List.class)
@@ -46,8 +46,7 @@ public @interface UploadFileMaxSize {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

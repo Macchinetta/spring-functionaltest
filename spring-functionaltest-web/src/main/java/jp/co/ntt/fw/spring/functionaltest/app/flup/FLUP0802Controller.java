@@ -28,7 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/0802")
 @Controller
@@ -48,8 +49,7 @@ public class FLUP0802Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handle001Upload(@Validated SingleUploadForm form,
-            BindingResult result,
+    public String handle001Upload(@Validated SingleUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
@@ -60,8 +60,7 @@ public class FLUP0802Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST)
-    public String handle002Upload(@Validated SingleUploadForm form,
-            BindingResult result,
+    public String handle002Upload(@Validated SingleUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
@@ -75,15 +74,13 @@ public class FLUP0802Controller {
         return "flup/singleFileUploadForm";
     }
 
-    private String upload(@Validated SingleUploadForm form,
-            BindingResult result,
+    private String upload(@Validated SingleUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         if (result.hasErrors()) {
             return form();
         }
 
-        fileUploadHelper.bindToModel(form.getMultipartFile(),
-                redirectAttributes);
+        fileUploadHelper.bindToModel(form.getMultipartFile(), redirectAttributes);
 
         return "redirect:/flup/0802?complete";
     }

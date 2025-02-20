@@ -45,8 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.MemberService;
 @RequestMapping("synchronism")
 public class SSMN0601001NormalController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            SSMN0601001NormalController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SSMN0601001NormalController.class);
 
     @Inject
     Mapper beanMapper;
@@ -71,24 +70,22 @@ public class SSMN0601001NormalController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "confirm")
-    public String createMemberConfirm(@Validated({ Personal.class,
-            Address.class, Other.class }) MemberForm form,
+    public String createMemberConfirm(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
             BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMember();
         }
-        logger.info(
-                "SSMN0601001NormalController createMemberConfirm process start");
+        logger.info("SSMN0601001NormalController createMemberConfirm process start");
         return "ssmn/createMemberConfirm";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createMember(@Validated({ Personal.class, Address.class,
-            Other.class }) MemberForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String createMember(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            throw new InvalidRequestException(ResultMessages.error().add(
-                    "e.sf.cmmn.8002"));
+            throw new InvalidRequestException(ResultMessages.error().add("e.sf.fw.8002"));
         }
 
         logger.info(
@@ -98,8 +95,7 @@ public class SSMN0601001NormalController {
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success().add(
-                "i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add("i.sf.sm.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         logger.info(
@@ -108,8 +104,7 @@ public class SSMN0601001NormalController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "complete")
-    public String createMemberComplete(Model model,
-            SessionStatus sessionStatus) {
+    public String createMemberComplete(Model model, SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "ssmn/createMemberComplete";
     }

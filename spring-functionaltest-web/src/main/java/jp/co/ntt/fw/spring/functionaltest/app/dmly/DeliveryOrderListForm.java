@@ -49,8 +49,7 @@ public class DeliveryOrderListForm implements Serializable {
         return updateCompletionDatetime;
     }
 
-    public void setUpdateCompletionDatetime(
-            LocalDateTime updateCompletionDatetime) {
+    public void setUpdateCompletionDatetime(LocalDateTime updateCompletionDatetime) {
         this.updateCompletionDatetime = updateCompletionDatetime;
     }
 

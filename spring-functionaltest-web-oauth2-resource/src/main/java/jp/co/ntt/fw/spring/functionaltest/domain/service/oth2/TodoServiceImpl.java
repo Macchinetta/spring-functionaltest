@@ -19,17 +19,14 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
-
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.date.jodatime.JodaTimeDateTimeFactory;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.exception.ResourceNotFoundException;
 import org.terasoluna.gfw.common.message.ResultMessages;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2.TodoRepository;
 

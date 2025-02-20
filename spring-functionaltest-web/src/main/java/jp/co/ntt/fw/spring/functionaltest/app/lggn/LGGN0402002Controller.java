@@ -26,6 +26,6 @@ public class LGGN0402002Controller {
 
     @RequestMapping(value = "0402/002", method = RequestMethod.GET)
     public String handle002() {
-        throw new SystemException("e.ab.cd.5001", "SystemException occurred!");
+        throw new SystemException("e.sf.fw.5001", "SystemException occurred!");
     }
 }

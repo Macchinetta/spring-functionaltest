@@ -35,8 +35,7 @@ public class ReceiveMessageController {
     }
 
     @RequestMapping(value = "receivemessage", method = RequestMethod.GET)
-    public String initReceive(Model model, JmsSendingForm form,
-            JmsReceivingForm jmsReceivingForm,
+    public String initReceive(Model model, JmsSendingForm form, JmsReceivingForm jmsReceivingForm,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
         jmsReceivingForm.setJmsTodoId(form.getJmsTodoId());

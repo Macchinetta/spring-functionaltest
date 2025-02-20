@@ -31,8 +31,7 @@ public interface JPAOrderService {
 
     JPAOrder placeOrder(List<JPAItem> itemList, String orderMemo);
 
-    JPAOrder addtoOrder(List<JPAItem> itemList, Integer orderId,
-            String comment);
+    JPAOrder addtoOrder(List<JPAItem> itemList, Integer orderId, String comment);
 
     JPAOrder updateStatus(Integer orderId, String orderStatus);
 
@@ -46,8 +45,7 @@ public interface JPAOrderService {
 
     List<OrderSummary> storeFetchResultInCustomObject();
 
-    JPAOrderForCommonCondition findOrderDeatilUsingCommonConditionOnEntity(
-            Integer orderId);
+    JPAOrderForCommonCondition findOrderDeatilUsingCommonConditionOnEntity(Integer orderId);
 
     JPAOrderForCmnConditionNoBoolean findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(
             Integer orderId);

@@ -28,8 +28,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class H2Function {
 
-    public static ResultSet findTodo(Connection con,
-            String todoId) throws SQLException {
+    public static ResultSet findTodo(Connection con, String todoId) throws SQLException {
 
         String sql = "select * from t_todo where todo_id = ?";
         PreparedStatement preparedStatement = con.prepareStatement(sql);

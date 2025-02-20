@@ -35,8 +35,7 @@ public class ATHR07Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showCustomizedAuthorizeErrorForAuthenticated";
     }
 

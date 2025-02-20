@@ -28,29 +28,26 @@ import org.apache.ibatis.type.JdbcType;
 public class ClobReaderTypeHandler extends BaseTypeHandler<Reader> {
     // (2)
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i,
-            Reader parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, Reader parameter,
+            JdbcType jdbcType) throws SQLException {
         ps.setClob(i, parameter);
     }
 
     // (3)
     @Override
-    public Reader getNullableResult(ResultSet rs,
-            String columnName) throws SQLException {
+    public Reader getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return toReader(rs.getClob(columnName));
     }
 
     // (3)
     @Override
-    public Reader getNullableResult(ResultSet rs,
-            int columnIndex) throws SQLException {
+    public Reader getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return toReader(rs.getClob(columnIndex));
     }
 
     // (3)
     @Override
-    public Reader getNullableResult(CallableStatement cs,
-            int columnIndex) throws SQLException {
+    public Reader getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return toReader(cs.getClob(columnIndex));
     }
 

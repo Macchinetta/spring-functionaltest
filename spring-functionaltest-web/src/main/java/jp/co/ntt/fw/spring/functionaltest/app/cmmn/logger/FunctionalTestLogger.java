@@ -99,8 +99,7 @@ public class FunctionalTestLogger {
 
     private String createLogMessage(String id, Object... args) {
 
-        return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id,
-                args));
+        return MessageFormat.format(LOG_MESSAGE_FORMAT, id, getMessage(id, args));
     }
 
     private String createLogMessage_noid(String id, Object... args) {
@@ -113,8 +112,7 @@ public class FunctionalTestLogger {
         try {
             message = messageSource.getMessage(id, args, Locale.getDefault());
         } catch (NoSuchMessageException e) {
-            message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id, Arrays
-                    .toString(args));
+            message = MessageFormat.format(UNDEFINED_MESSAGE_FORMAT, id, Arrays.toString(args));
         }
         return message;
     }

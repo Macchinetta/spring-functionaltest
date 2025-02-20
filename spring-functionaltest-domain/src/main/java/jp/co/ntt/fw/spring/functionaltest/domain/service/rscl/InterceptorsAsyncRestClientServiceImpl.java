@@ -37,11 +37,10 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
 @SuppressWarnings("deprecation")
-public class InterceptorsAsyncRestClientServiceImpl implements
-                                                    InterceptorsAsyncRestClientService {
+public class InterceptorsAsyncRestClientServiceImpl implements InterceptorsAsyncRestClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            InterceptorsAsyncRestClientServiceImpl.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(InterceptorsAsyncRestClientServiceImpl.class);
 
     @Inject
     AsyncRestTemplate interceptorsAsyncRestTemplate;
@@ -89,32 +88,29 @@ public class InterceptorsAsyncRestClientServiceImpl implements
         return getUser(targetUri, timeoutInterceptorsAsyncRestTemplate);
     }
 
-    private UserResource getUser(URI targetUri,
-            AsyncRestTemplate asyncRestTemplate) {
+    private UserResource getUser(URI targetUri, AsyncRestTemplate asyncRestTemplate) {
         ResponseEntity<UserResource> res = null;
         UserResource resUser = null;
         String statusCode = null;
 
-        ListenableFuture<ResponseEntity<UserResource>> responseEntity = asyncRestTemplate
-                .getForEntity(targetUri, UserResource.class);
+        ListenableFuture<ResponseEntity<UserResource>> responseEntity =
+                asyncRestTemplate.getForEntity(targetUri, UserResource.class);
 
-        responseEntity.addCallback(
-                new ListenableFutureCallback<ResponseEntity<UserResource>>() {
-                    @Override
-                    public void onSuccess(ResponseEntity<UserResource> res) {
-                        logger.info("onSuccess Called!");
-                    }
+        responseEntity.addCallback(new ListenableFutureCallback<ResponseEntity<UserResource>>() {
+            @Override
+            public void onSuccess(ResponseEntity<UserResource> res) {
+                logger.info("onSuccess Called!");
+            }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        logger.info("onFailure Called!");
-                        throw new SystemException("e.sf.rscl.9005", "async processing error.", t);
-                    }
-                });
+            @Override
+            public void onFailure(Throwable t) {
+                logger.info("onFailure Called!");
+                throw new SystemException("e.sf.rc.9005", "async processing error.", t);
+            }
+        });
         logger.info("before ListenableFuture#get(long, TimeUnit)");
         try {
-            res = responseEntity.get(waitCompleteOffsetMillis * 2,
-                    TimeUnit.MILLISECONDS);
+            res = responseEntity.get(waitCompleteOffsetMillis * 2, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             logger.error(e.getMessage(), e);
         }
@@ -137,8 +133,7 @@ public class InterceptorsAsyncRestClientServiceImpl implements
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 
 }

@@ -78,10 +78,8 @@ public class RestMemberServiceImpl implements RestMemberService {
         // Count Member by search criteria
         long total = restMemberRepository.countByContainsName(name);
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
-            restMembers = restMemberRepository.findPageByContainsName(name,
-                    rowBounds);
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
+            restMembers = restMemberRepository.findPageByContainsName(name, rowBounds);
 
         } else {
             restMembers = new ArrayList<RestMember>();
@@ -102,8 +100,8 @@ public class RestMemberServiceImpl implements RestMemberService {
         RestMember member = restMemberRepository.findByMemberId(memberId);
         if (member == null) {
             // If member is not exists
-            throw new ResourceNotFoundException(ResultMessages.error().add(
-                    DomainMessageCodes.E_SF_MM_5001, memberId));
+            throw new ResourceNotFoundException(
+                    ResultMessages.error().add(DomainMessageCodes.E_SF_RS_5001, memberId));
         }
         return member;
     }
@@ -116,8 +114,7 @@ public class RestMemberServiceImpl implements RestMemberService {
      */
     @Override
     public RestMember createMember(RestMember creatingMember) {
-        RestMemberCredential creatingCredential = creatingMember
-                .getCredential();
+        RestMemberCredential creatingCredential = creatingMember.getCredential();
 
         // get processing current date time
         DateTime currentDateTime = dateFactory.newDateTime();
@@ -148,9 +145,8 @@ public class RestMemberServiceImpl implements RestMemberService {
             return creatingMember;
         } catch (DuplicateKeyException e) {
             // If sign id is already used
-            throw new BusinessException(ResultMessages.error().add(
-                    DomainMessageCodes.E_SF_MM_8001, creatingCredential
-                            .getSignId()), e);
+            throw new BusinessException(ResultMessages.error().add(DomainMessageCodes.E_SF_RS_8001,
+                    creatingCredential.getSignId()), e);
         }
     }
 
@@ -175,8 +171,8 @@ public class RestMemberServiceImpl implements RestMemberService {
         // save updating member
         boolean updated = restMemberRepository.updateMember(member);
         if (!updated) {
-            throw new ObjectOptimisticLockingFailureException(RestMember.class, member
-                    .getMemberId());
+            throw new ObjectOptimisticLockingFailureException(RestMember.class,
+                    member.getMemberId());
         }
 
         return member;

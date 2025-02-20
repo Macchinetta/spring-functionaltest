@@ -17,11 +17,9 @@ package jp.co.ntt.fw.spring.functionaltest.app.todo;
 
 import java.net.URI;
 import java.util.Collection;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.groups.Default;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +36,7 @@ import org.springframework.web.util.UriComponents;
 import org.terasoluna.gfw.common.exception.BusinessException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
-
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.ntt.fw.spring.functionaltest.app.todo.TodoForm.TodoCreate;
 import jp.co.ntt.fw.spring.functionaltest.app.todo.TodoForm.TodoDelete;
 import jp.co.ntt.fw.spring.functionaltest.app.todo.TodoForm.TodoFinish;
@@ -50,38 +46,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.todo.TodoService;
 @Controller
 @RequestMapping("auth/todo/01")
 public class OTH201Controller {
-
-    // 命名規則は中項目ID + Controllerだが、中項目レベルではすべて同一のコントローラーとして処理できるのでまとめてしまう。
-
-    // 大項目ID : 01 : 認可コードグラント
-    // 中項目ID : 01 : 全スコープに権限を持つクライアントに対する操作
-
-    // 以下、すべて認可されていない状態で実施する
-    // 小項目ID : 001 : GETスコープ
-    // 小項目ID : 002 : POSTスコープ
-    // 小項目ID : 003 : PUTスコープ
-    // 小項目ID : 004 : DELETEスコープ
-
-    // 中項目ID : 02 : READスコープのみ権限を持つクライアントに対する操作
-
-    // 以下、すべて認可されていない状態で実施する
-    // 小項目ID : 001 : GETスコープ
-    // 小項目ID : 002 : POSTスコープ ・・・ リソースサーバ側でエラー
-    // 小項目ID : 003 : PUTスコープ ・・・ リソースサーバ側でエラー
-    // 小項目ID : 004 : DELETEスコープ ・・・ リソースサーバ側でエラー
-
-    // 中項目ID : 03 : 設定スコープと認可サーバ側の設定が合わないクライアントに対する操作
-
-    // 以下、すべて認可されていない状態で実施する
-    // 小項目ID : 001 : GETスコープ ・・・ 認証後にエラー
-
-    // 中項目ID : 04 : 認可サーバ側は全スコープを許容するが、クライアント側でスコープを絞っている場合の操作
-
-    // 以下、すべて認可されていない状態で実施する
-    // 小項目ID : 001 : GETスコープ ・・・ 正常
-    // 小項目ID : 002 : POSTスコープ ・・・ リソースサーバ側でエラー
-    // 小項目ID : 003 : PUTスコープ ・・・ リソースサーバ側でエラー
-    // 小項目ID : 004 : DELETEスコープ ・・・ 正常
 
     private static final String MAJOR_ITEM_ID = "01";
 
@@ -98,8 +62,7 @@ public class OTH201Controller {
 
     @ModelAttribute
     public TodoForm setUpForm() {
-        TodoForm form = new TodoForm();
-        return form;
+        return new TodoForm();
     }
 
     @GetMapping("index")
@@ -110,8 +73,7 @@ public class OTH201Controller {
 
     @GetMapping("list")
     @SuppressWarnings("unchecked")
-    public String list(Model model,
-            @RequestParam(name = "registrationId") String registrationId,
+    public String list(Model model, @RequestParam(name = "registrationId") String registrationId,
             @RequestParam(name = "resourceProtect") String resourceProtect) {
 
         // @formatter:off
@@ -125,10 +87,9 @@ public class OTH201Controller {
                 break;
             default:
                 todos = CollectionUtils.EMPTY_COLLECTION;
-        };
+        }
         // @formatter:off
 
-        todos = this.todoService.findAll(registrationId);
         model.addAttribute("todos", todos);
         model.addAttribute("registrationId", registrationId);
         model.addAttribute("resourceProtect", resourceProtect);
@@ -155,11 +116,9 @@ public class OTH201Controller {
                 case "intercepturl":
                     this.todoService.create(todo, registrationId);
                     break;
-
                 case "annotation":
                     this.todoMethodAnnotationService.create(todo, registrationId);
                     break;
-
                 default:
                     throw new IllegalStateException();
             }
@@ -169,18 +128,16 @@ public class OTH201Controller {
             return list(model, registrationId, resourceProtect);
         }
 
-        attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                .fromText("Created successfully!")));
+        attributes.addFlashAttribute(
+                ResultMessages.success().add(ResultMessage.fromText("Created successfully!")));
 
-        URI location = createRedirectUri(registrationId, resourceProtect)
-                .toUri();
+        URI location = createRedirectUri(registrationId, resourceProtect).toUri();
         return "redirect:" + location.toString();
     }
 
     @PostMapping("finish")
-    public String finish(@Validated({ Default.class,
-            TodoFinish.class }) TodoForm form, BindingResult bindingResult,
-            Model model, RedirectAttributes attributes,
+    public String finish(@Validated({Default.class, TodoFinish.class}) TodoForm form,
+            BindingResult bindingResult, Model model, RedirectAttributes attributes,
             @RequestParam(name = "registrationId") String registrationId,
             @RequestParam(name = "resourceProtect") String resourceProtect) {
 
@@ -194,11 +151,9 @@ public class OTH201Controller {
                 case "intercepturl":
                     this.todoService.finish(form.getTodoId(), registrationId);
                     break;
-
                 case "annotation":
                     this.todoMethodAnnotationService.finish(form.getTodoId(), registrationId);
                     break;
-
                 default:
                     throw new IllegalStateException();
             }
@@ -208,18 +163,16 @@ public class OTH201Controller {
             return list(model, registrationId, resourceProtect);
         }
 
-        attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                .fromText("Finished successfully!")));
+        attributes.addFlashAttribute(
+                ResultMessages.success().add(ResultMessage.fromText("Finished successfully!")));
 
-        URI location = createRedirectUri(registrationId, resourceProtect)
-                .toUri();
+        URI location = createRedirectUri(registrationId, resourceProtect).toUri();
         return "redirect:" + location.toString();
     }
 
     @PostMapping("delete")
-    public String delete(@Validated({ Default.class,
-            TodoDelete.class }) TodoForm form, BindingResult bindingResult,
-            Model model, RedirectAttributes attributes,
+    public String delete(@Validated({Default.class, TodoDelete.class}) TodoForm form,
+            BindingResult bindingResult, Model model, RedirectAttributes attributes,
             @RequestParam(name = "registrationId") String registrationId,
             @RequestParam(name = "resourceProtect") String resourceProtect) {
 
@@ -233,11 +186,9 @@ public class OTH201Controller {
                 case "intercepturl":
                     this.todoService.delete(form.getTodoId(), registrationId);
                     break;
-
                 case "annotation":
                     this.todoMethodAnnotationService.delete(form.getTodoId(), registrationId);
                     break;
-
                 default:
                     throw new IllegalStateException();
             }
@@ -247,19 +198,16 @@ public class OTH201Controller {
             return list(model, registrationId, resourceProtect);
         }
 
-        attributes.addFlashAttribute(ResultMessages.success().add(ResultMessage
-                .fromText("Deleted successfully!")));
+        attributes.addFlashAttribute(
+                ResultMessages.success().add(ResultMessage.fromText("Deleted successfully!")));
 
-        URI location = createRedirectUri(registrationId, resourceProtect)
-                .toUri();
+        URI location = createRedirectUri(registrationId, resourceProtect).toUri();
         return "redirect:" + location.toString();
     }
 
-    private UriComponents createRedirectUri(String registrationId,
-            String resourceProtect) {
-        UriComponents uriComponents = MvcUriComponentsBuilder.fromMethodName(
-                OTH201Controller.class, "list", new Object() {
-                }, registrationId, resourceProtect).build();
+    private UriComponents createRedirectUri(String registrationId, String resourceProtect) {
+        UriComponents uriComponents = MvcUriComponentsBuilder.fromMethodName(OTH201Controller.class,
+                "list", new Object() {}, registrationId, resourceProtect).build();
         return uriComponents;
     }
 }

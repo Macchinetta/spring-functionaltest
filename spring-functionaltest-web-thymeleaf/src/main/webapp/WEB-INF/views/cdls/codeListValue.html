@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">特定のコード値からコード名を表示する</h1>
 
-      <h1 id="screenTitle">特定のコード値からコード名を表示する</h1>
-
-      <div>CDLS0106001</div>
-      <div id="cdls0106001"
-        th:text="${orderStatusForm.id} != null ? ${CL_ORDERSTATUS.get(orderStatusForm.id)}">
-      </div>
-    </div>
-  </div>
-</body>
+                <div>CDLS0106001</div>
+                <div id="cdls0106001" th:text="${orderStatusForm.id} != null ? |Order Status : ${CL_ORDERSTATUS.get(orderStatusForm.id)}|"></div>
+            </div>
+        </div>
+    </body>
 </html>

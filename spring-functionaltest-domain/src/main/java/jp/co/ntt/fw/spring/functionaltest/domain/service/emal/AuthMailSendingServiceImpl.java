@@ -48,8 +48,8 @@ public class AuthMailSendingServiceImpl implements AuthMailSendingService {
     String pop3password;
 
     @Override
-    public void sendSimpleMessage(String[] to, String[] cc, String[] bcc,
-            String text, Store store) {
+    public void sendSimpleMessage(String[] to, String[] cc, String[] bcc, String text,
+            Store store) {
 
         SimpleMailMessage message = new SimpleMailMessage(templateMessage);
         message.setTo(to);
@@ -63,8 +63,7 @@ public class AuthMailSendingServiceImpl implements AuthMailSendingService {
     @Override
     public Store popBeforeSmtp() {
 
-        return mailReceivingService.connect(pop3host, pop3port, pop3user,
-                pop3password);
+        return mailReceivingService.connect(pop3host, pop3port, pop3user, pop3password);
 
     }
 

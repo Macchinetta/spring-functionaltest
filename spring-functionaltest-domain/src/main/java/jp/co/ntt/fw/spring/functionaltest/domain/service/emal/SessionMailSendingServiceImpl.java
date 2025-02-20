@@ -37,10 +37,9 @@ import freemarker.template.Template;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.User;
 
 @Service
-public class SessionMailSendingServiceImpl implements
-                                           SessionMailSendingService {
-    private static final Logger logger = LoggerFactory.getLogger(
-            SessionMailSendingServiceImpl.class);
+public class SessionMailSendingServiceImpl implements SessionMailSendingService {
+    private static final Logger logger =
+            LoggerFactory.getLogger(SessionMailSendingServiceImpl.class);
 
     @Inject
     JavaMailSender mailSenderSession;
@@ -80,15 +79,14 @@ public class SessionMailSendingServiceImpl implements
     }
 
     @Override
-    public void sendTextMimeMail(final String to, final String text,
-            Store store) {
+    public void sendTextMimeMail(final String to, final String text, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
@@ -98,15 +96,14 @@ public class SessionMailSendingServiceImpl implements
     }
 
     @Override
-    public void sendHtmlMimeMail(final String to, final String text,
-            Store store) {
+    public void sendHtmlMimeMail(final String to, final String text, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
@@ -116,16 +113,15 @@ public class SessionMailSendingServiceImpl implements
     }
 
     @Override
-    public void sendAttachmentMimeMail(final String to, final String text,
-            final String filename, final InputStreamSource attachment,
-            Store store) {
+    public void sendAttachmentMimeMail(final String to, final String text, final String filename,
+            final InputStreamSource attachment, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
@@ -137,16 +133,15 @@ public class SessionMailSendingServiceImpl implements
     }
 
     @Override
-    public void sendInlineMimeMail(final String to, final String text,
-            final String cid, final InputStreamSource inline,
-            final String contentType, Store store) {
+    public void sendInlineMimeMail(final String to, final String text, final String cid,
+            final InputStreamSource inline, final String contentType, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, true, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
@@ -158,30 +153,27 @@ public class SessionMailSendingServiceImpl implements
     }
 
     @Override
-    public void sendTemplatedMail(final String to, final User user,
-            final String templateName, Store store) {
+    public void sendTemplatedMail(final String to, final User user, final String templateName,
+            Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
-                Template template = freemarkerConfiguration.getTemplate(
-                        templateName + ".ftl");
-                String text = FreeMarkerTemplateUtils.processTemplateIntoString(
-                        template, user);
+                Template template = freemarkerConfiguration.getTemplate(templateName + ".ftl");
+                String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, user);
                 helper.setText(text, true);
             }
         });
     }
 
     @Override
-    public void sendIso2022jpMail(final String to, final String text,
-            Store store) {
+    public void sendIso2022jpMail(final String to, final String text, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
@@ -189,19 +181,17 @@ public class SessionMailSendingServiceImpl implements
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 String iso2022jpBadChars = "―－～∥￠￡￢";
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "ISO-2022-JP");
-                helper.setFrom(convertISO2022JPCharacters(iso2022jpBadChars
-                        + " <" + fromAddress + ">"));
+                helper.setFrom(
+                        convertISO2022JPCharacters(iso2022jpBadChars + " <" + fromAddress + ">"));
                 helper.setTo(convertISO2022JPCharacters(to));
-                helper.setSubject(convertISO2022JPCharacters(
-                        iso2022jpBadChars));
+                helper.setSubject(convertISO2022JPCharacters(iso2022jpBadChars));
                 helper.setText(convertISO2022JPCharacters(text));
             }
         });
     }
 
     @Override
-    public void sendExternalCharMail(final String to, final String text,
-            Store store) {
+    public void sendExternalCharMail(final String to, final String text, Store store) {
 
         mailSenderSession.send(new MimeMessagePreparator() {
 
@@ -220,12 +210,10 @@ public class SessionMailSendingServiceImpl implements
     @Override
     public Store popBeforeSmtp() {
         if (logger.isDebugEnabled()) {
-            logger.debug(pop3host + ":" + pop3port + "[" + pop3user + ","
-                    + pop3password + "]");
+            logger.debug(pop3host + ":" + pop3port + "[" + pop3user + "," + pop3password + "]");
         }
 
-        return mailReceivingService.connect(pop3host, pop3port, pop3user,
-                pop3password);
+        return mailReceivingService.connect(pop3host, pop3port, pop3user, pop3password);
 
     }
 
@@ -240,36 +228,36 @@ public class SessionMailSendingServiceImpl implements
         for (int i = 0; i < ch.length; i++) {
             switch (ch[i]) {
 
-            // '―'（全角ハイフン）
-            case '\u2015':
-                ch[i] = '\u2014';
-                break;
-            // '－'（全角マイナス）
-            case '\uff0d':
-                ch[i] = '\u2212';
-                break;
-            // '～'（波ダッシュ）
-            case '\uff5e':
-                ch[i] = '\u301c';
-                break;
-            // '∥'（双柱）
-            case '\u2225':
-                ch[i] = '\u2016';
-                break;
-            // '￠'（セント記号)
-            case '\uffe0':
-                ch[i] = '\u00A2';
-                break;
-            // '￡'（ポンド記号）
-            case '\uffe1':
-                ch[i] = '\u00A3';
-                break;
-            // '￢'（否定記号）
-            case '\uffe2':
-                ch[i] = '\u00AC';
-                break;
-            default:
-                break;
+                // '―'（全角ハイフン）
+                case '\u2015':
+                    ch[i] = '\u2014';
+                    break;
+                // '－'（全角マイナス）
+                case '\uff0d':
+                    ch[i] = '\u2212';
+                    break;
+                // '～'（波ダッシュ）
+                case '\uff5e':
+                    ch[i] = '\u301c';
+                    break;
+                // '∥'（双柱）
+                case '\u2225':
+                    ch[i] = '\u2016';
+                    break;
+                // '￠'（セント記号)
+                case '\uffe0':
+                    ch[i] = '\u00A2';
+                    break;
+                // '￡'（ポンド記号）
+                case '\uffe1':
+                    ch[i] = '\u00A3';
+                    break;
+                // '￢'（否定記号）
+                case '\uffe2':
+                    ch[i] = '\u00AC';
+                    break;
+                default:
+                    break;
             }
         }
 

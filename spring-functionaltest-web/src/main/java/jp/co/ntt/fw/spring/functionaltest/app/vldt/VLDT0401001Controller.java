@@ -37,8 +37,7 @@ public class VLDT0401001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated CustomBeanValidationByExistingRulesForm form,
+    public String handleValidate(@Validated CustomBeanValidationByExistingRulesForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

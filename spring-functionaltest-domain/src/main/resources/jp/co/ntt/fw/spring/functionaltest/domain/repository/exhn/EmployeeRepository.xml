@@ -1,48 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.exhn.EmployeeRepository">
 
-  <resultMap id="employeeResultMap" type="Employee">
-    <result property="employeeId" column="employee_id" />
-    <result property="employeeName" column="employee_name" />
-    <result property="email" column="email" />
-    <result property="address" column="address" />
-  </resultMap>
+    <resultMap id="employeeResultMap" type="Employee">
+        <result property="employeeId" column="employee_id" />
+        <result property="employeeName" column="employee_name" />
+        <result property="email" column="email" />
+        <result property="address" column="address" />
+    </resultMap>
 
-  <select id="findById" parameterType="int" resultMap="employeeResultMap">
-    <bind name="employeeId" value="_parameter" />
-    SELECT
-    employee_id
-    ,employee_name
-    ,email
-    ,address
-    FROM
-    t_employee
-    WHERE
-    employee_id = #{employeeId}
-  </select>
+    <select id="findById" parameterType="int" resultMap="employeeResultMap">
+        <bind name="employeeId" value="_parameter" />
+        SELECT
+            employee_id,
+            employee_name,
+            email,
+            address
+        FROM
+            t_employee
+        WHERE
+            employee_id = #{employeeId}
+    </select>
 
-  <update id="update" parameterType="jp.co.ntt.fw.spring.functionaltest.domain.model.Employee">
-    UPDATE t_employee
-    SET
-    employee_name = #{employeeName},
-    email = #{email},
-    address = #{address}
-    WHERE
-    employee_id = #{employeeId}
-  </update>
+    <update id="update" parameterType="jp.co.ntt.fw.spring.functionaltest.domain.model.Employee">
+        UPDATE
+            t_employee
+        SET
+            employee_name = #{employeeName},
+            email = #{email},
+            address = #{address}
+        WHERE
+            employee_id = #{employeeId}
+    </update>
 
-  <select id="countByEmployeeName" resultType="long">
-    SELECT
-    count(*)
-    FROM
-    t_employee
-    WHERE
-    employee_id !=
-    #{employeeId}
-    AND
-    employee_name LIKE #{employeeName} || '%' ESCAPE '~'
-  </select>
+    <select id="countByEmployeeName" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            t_employee
+        WHERE
+            employee_id != #{employeeId}
+        AND
+            employee_name LIKE #{employeeName} || '%' ESCAPE '~'
+    </select>
 
 </mapper>

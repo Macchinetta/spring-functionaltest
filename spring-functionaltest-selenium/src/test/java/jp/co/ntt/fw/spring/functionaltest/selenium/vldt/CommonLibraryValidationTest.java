@@ -23,9 +23,7 @@ import static org.openqa.selenium.By.id;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
-
-public class CommonLibraryValidationTest extends FunctionTestSupport {
+public class CommonLibraryValidationTest extends ValidationTestSupport {
 
     private void clickLink(By by) {
         webDriverOperations.click(by);
@@ -65,8 +63,8 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
 
         // 結果確認
         {
-            assertThat(getTextString(By.id("errors")), is(
-                    "\"key\" must exist in code list of CL_GENDER."));
+            assertThat(getTextString(By.id("errors")),
+                    is("\"key\" must exist in code list of CL_GENDER."));
         }
     }
 
@@ -80,8 +78,6 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
     public void testVLDT0502001() {
         String testId = "vldt0502001";
         String target = "roles";
-        String errors = "errors";
-        String validate = "validate";
         String errorMessage1 = "\"roles[0]\" must exist in code list of CL_ROLE.";
         String errorMessage2 = "\"roles[1]\" must exist in code list of CL_ROLE.";
 
@@ -95,13 +91,12 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
             {
                 webDriverOperations.click(id(target + "1"));
                 webDriverOperations.click(id(target + "2"));
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + "*."
-                        + errors)), is(false));
+                assertThat(webDriverOperations.exists(id(target + "*" + ID_ERRORS)), is(false));
             }
         }
 
@@ -111,15 +106,15 @@ public class CommonLibraryValidationTest extends FunctionTestSupport {
             {
                 webDriverOperations.overrideText(id(target + "1"), "3");
                 webDriverOperations.overrideText(id(target + "2"), "4");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + "*."
-                        + errors)), containsString(errorMessage1));
-                assertThat(webDriverOperations.getText(id(target + "*."
-                        + errors)), containsString(errorMessage2));
+                assertThat(webDriverOperations.getText(id(target + "*" + ID_ERRORS)),
+                        containsString(errorMessage1));
+                assertThat(webDriverOperations.getText(id(target + "*" + ID_ERRORS)),
+                        containsString(errorMessage2));
             }
         }
     }

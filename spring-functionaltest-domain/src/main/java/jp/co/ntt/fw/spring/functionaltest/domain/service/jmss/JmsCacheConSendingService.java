@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.jmss;
 
 import java.io.IOException;
-
 import javax.jms.JMSException;
 
 public interface JmsCacheConSendingService {
@@ -43,17 +42,15 @@ public interface JmsCacheConSendingService {
 
     void sendMessageForJmsResponseC(String id) throws IOException;
 
-    void sendMessageReSendAnotherMessage(
-            String id) throws IOException, JMSException;
+    void sendMessageReSendAnotherMessage(String id) throws IOException, JMSException;
 
-    void sendMessageConcurrentListenerSingle(String id) throws IOException;
+    void sendMessageConcurrentListenerSingle(String id, int count) throws IOException;
 
-    void sendMessageConcurrentListenerMultiple(String id) throws IOException;
+    void sendMessageConcurrentListenerMultiple(String id, int count) throws IOException;
 
     void sendMessageWithHeadersOK(String id) throws IOException;
 
-    void sendMessageWithHeadersNG(
-            String id) throws IOException, InterruptedException;
+    void sendMessageWithHeadersNG(String id) throws IOException, InterruptedException;
 
     void sendMessageValidationOK(String id) throws IOException;
 
@@ -85,8 +82,7 @@ public interface JmsCacheConSendingService {
 
     void sendMessageInputValidationJmsTransaction(String id);
 
-    void sendMessageInputValidationIsolatedTransactionJmsCommitDbRollback(
-            String id);
+    void sendMessageInputValidationIsolatedTransactionJmsCommitDbRollback(String id);
 
     void sendMessageInputValidationIsolatedTransactionJmsAndDbCommit(String id);
 

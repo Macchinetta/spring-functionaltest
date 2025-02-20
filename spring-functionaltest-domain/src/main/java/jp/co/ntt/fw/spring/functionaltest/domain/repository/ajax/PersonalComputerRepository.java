@@ -27,8 +27,7 @@ public interface PersonalComputerRepository {
 
     long countByNameAndNotEqualID(PersonalComputer personalComputer);
 
-    List<PersonalComputer> findPageByCriteria(
-            PersonalComputerCriteria criteria);
+    List<PersonalComputer> findPageByCriteria(PersonalComputerCriteria criteria);
 
     void update(PersonalComputer personalComputer);
 

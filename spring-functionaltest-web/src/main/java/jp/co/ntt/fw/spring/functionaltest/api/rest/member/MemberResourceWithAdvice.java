@@ -23,7 +23,7 @@ import org.joda.time.LocalDate;
 import jp.co.ntt.fw.spring.functionaltest.api.rest.common.resource.AbstractTimeSupportedResource;
 
 public class MemberResourceWithAdvice extends AbstractTimeSupportedResource
-                                      implements Serializable {
+        implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -40,7 +40,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Table(name = "t_book_eg")
 public class JPABookEG {
 
-    @SequenceGenerator(name = "GEN_BOOK_ID", sequenceName = "s_book_eg", allocationSize = 1, initialValue = 3)
+    @SequenceGenerator(name = "GEN_BOOK_ID", sequenceName = "s_book_eg", allocationSize = 1,
+            initialValue = 3)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_BOOK_ID")
     @Id
     @Column(name = "book_id", nullable = false, length = 10)

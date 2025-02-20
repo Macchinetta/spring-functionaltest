@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h3 id="businessError">業務エラー画面</h3>
-      <div>
-        <div>業務エラーが発生しました、詳細は以下のメッセージを参照してください。</div>
-        <br>
-        <div th:replace="~{common/fragments :: messagesPanel}"></div>
-      </div>
-      <br>
-      <ul>
-        <li><a id="index" th:href="@{/exhn}">EXHN Indexへ戻る</a></li>
-      </ul>
-    </div>
-  </div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="businessError">業務エラー画面</h3>
+                <div>
+                    <div>業務エラーが発生しました、詳細は以下のメッセージを参照してください。</div>
+                    <br />
+                    <div th:replace="~{common/fragments :: messagesPanel}"></div>
+                </div>
+                <br />
+                <ul>
+                    <li><a id="index" th:href="@{/exhn}">EXHN Indexへ戻る</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

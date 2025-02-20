@@ -75,8 +75,7 @@ public class CSPR02Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "confirmUseStandardFormToPost")
-    public String confirmUseStandardFormToPost(@Validated UserForm form,
-            BindingResult result) {
+    public String confirmUseStandardFormToPost(@Validated UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegisterUseStandardFormToPost";
         }
@@ -84,8 +83,7 @@ public class CSPR02Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "confirmUseStandardFormToGet")
-    public String confirmUseStandardFormToGet(@Validated UserForm form,
-            BindingResult result) {
+    public String confirmUseStandardFormToGet(@Validated UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegisterUseStandardFormToGet";
         }
@@ -93,17 +91,16 @@ public class CSPR02Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "confirmUseSpringFormToGet")
-    public String confirmUseSpringFormToGet(@Validated UserForm form,
-            BindingResult result) {
+    public String confirmUseSpringFormToGet(@Validated UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegisterUseSpringFormToGet";
         }
         return "cspr/userConfirm";
     }
 
-    @RequestMapping(value = "notUseDeniedHandler", method = RequestMethod.POST, params = "confirmNotUseDeniedHandler")
-    public String confirmNotUseDeniedHandler(@Validated UserForm form,
-            BindingResult result) {
+    @RequestMapping(value = "notUseDeniedHandler", method = RequestMethod.POST,
+            params = "confirmNotUseDeniedHandler")
+    public String confirmNotUseDeniedHandler(@Validated UserForm form, BindingResult result) {
         if (result.hasErrors()) {
             return "cspr/userRegisterNotUseDeniedHandler";
         }

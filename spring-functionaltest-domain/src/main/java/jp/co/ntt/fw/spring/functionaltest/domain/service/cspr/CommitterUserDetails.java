@@ -30,12 +30,12 @@ public class CommitterUserDetails extends User {
 
     private final Committer committer;
 
-    private static final List<? extends GrantedAuthority> DEFAULT_AUTHORITIES = Collections
-            .singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+    private static final List<? extends GrantedAuthority> DEFAULT_AUTHORITIES =
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
     public CommitterUserDetails(Committer committer) {
-        super(committer.getUsername(), committer.getPassword(), true, true,
-                true, true, DEFAULT_AUTHORITIES);
+        super(committer.getUsername(), committer.getPassword(), true, true, true, true,
+                DEFAULT_AUTHORITIES);
         this.committer = committer;
     }
 

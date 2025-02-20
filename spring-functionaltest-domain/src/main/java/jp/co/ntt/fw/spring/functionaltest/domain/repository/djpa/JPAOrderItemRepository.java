@@ -24,8 +24,7 @@ import org.springframework.data.repository.query.Param;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderItem;
 
-public interface JPAOrderItemRepository extends
-                                        JpaRepository<JPAOrderItem, Integer> {
+public interface JPAOrderItemRepository extends JpaRepository<JPAOrderItem, Integer> {
 
     /**
      * Updating the flag to true for given orderId.
@@ -42,8 +41,7 @@ public interface JPAOrderItemRepository extends
      * @return
      */
     @Query("UPDATE JPAOrderItem oi SET oi.logicalDelete = true WHERE oi.orderId = :orderId ")
-    int updateToLogicalDeleteNoModifyingAnnot(
-            @Param("orderId") Integer orderId);
+    int updateToLogicalDeleteNoModifyingAnnot(@Param("orderId") Integer orderId);
 
     List<JPAOrderItem> findByOrderId(Integer orderId);
 

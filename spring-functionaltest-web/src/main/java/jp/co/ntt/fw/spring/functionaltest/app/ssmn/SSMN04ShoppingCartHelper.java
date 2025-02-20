@@ -82,8 +82,7 @@ public class SSMN04ShoppingCartHelper {
         CartItem storedCartItem = cart.findCartItem(cartItem.getItemId());
 
         if (storedCartItem != null) {
-            storedCartItem.setQuantity(storedCartItem.getQuantity() + cartItem
-                    .getQuantity());
+            storedCartItem.setQuantity(storedCartItem.getQuantity() + cartItem.getQuantity());
         } else {
             cart.getCartItems().add(cartItem);
         }
@@ -96,8 +95,7 @@ public class SSMN04ShoppingCartHelper {
 
         // 入力された注文数をセッションに更新する
         for (CartItem targetInputCartItem : cartItems) {
-            CartItem targetCartItem = cart.findCartItem(targetInputCartItem
-                    .getItemId());
+            CartItem targetCartItem = cart.findCartItem(targetInputCartItem.getItemId());
             if (targetCartItem != null) {
                 targetCartItem.setQuantity(targetInputCartItem.getQuantity());
             }

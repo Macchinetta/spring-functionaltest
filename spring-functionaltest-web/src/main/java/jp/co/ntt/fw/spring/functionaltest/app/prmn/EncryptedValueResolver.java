@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.prmn;
 
 import java.nio.charset.StandardCharsets;
-
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.util.StringValueResolver;
 
@@ -37,7 +37,7 @@ public class EncryptedValueResolver implements StringValueResolver { // (1)
         String value = valueResolver.resolveStringValue(strVal); // (4)
 
         // Target messages only, implement coding
-        if (value.startsWith("Encrypted:")) { // (5)
+        if (StringUtils.startsWith(value, "Encrypted:")) { // (5)
             value = value.substring(10); // (6)
             decrpyted = new String(Hex.decode(value), StandardCharsets.UTF_8);
         }

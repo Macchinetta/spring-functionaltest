@@ -22,14 +22,11 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 
 public interface FileUploadService {
 
-    UploadFile saveFileToDisc(InputStream content,
-            UploadFile newUploadFile) throws IOException;
+    UploadFile saveFileToDisc(InputStream content, UploadFile newUploadFile) throws IOException;
 
-    UploadFile saveFileToDisc(String temporaryFileId,
-            UploadFile newUploadFile) throws IOException;
+    UploadFile saveFileToDisc(String temporaryFileId, UploadFile newUploadFile) throws IOException;
 
-    UploadFile saveFileToDb(String temporaryFileId,
-            UploadFile newUploadFile) throws IOException;
+    UploadFile saveFileToDb(String temporaryFileId, UploadFile newUploadFile) throws IOException;
 
     UploadFile getUploadFile(String fileId);
 }

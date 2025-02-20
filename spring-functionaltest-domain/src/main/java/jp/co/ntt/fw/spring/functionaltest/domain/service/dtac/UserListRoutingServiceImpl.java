@@ -45,8 +45,7 @@ public class UserListRoutingServiceImpl implements UserListRoutingService {
         List<User> users = null;
         long total = userListRoutingRepository.count();
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
             users = userListRoutingRepository.findPage(rowBounds);
         } else {
             users = new ArrayList<User>();

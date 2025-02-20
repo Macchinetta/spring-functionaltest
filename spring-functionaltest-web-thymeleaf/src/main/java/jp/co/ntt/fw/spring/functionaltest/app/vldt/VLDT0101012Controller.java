@@ -38,8 +38,7 @@ public class VLDT0101012Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String handleValidate(@Validated DisplayErrMessageForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated DisplayErrMessageForm form, BindingResult result) {
         if (result.hasErrors()) {
             return handle();
         }

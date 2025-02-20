@@ -21,19 +21,24 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class UploadFileRequiredValidator implements
-                                         ConstraintValidator<UploadFileRequired, MultipartFile> {
+public class UploadFileRequiredValidator
+        implements ConstraintValidator<UploadFileRequired, MultipartFile> {
 
     @Override
     public void initialize(UploadFileRequired constraint) {
         // The default implementation
     }
 
+    /**
+     * アップロードファイルの存在確認 ファイルがnull以外で且つ、ファイル名の指定がある場合はtrue ファイルがnullの場合、ファイル名が空の場合はfalse
+     * @param multipartFile 検証するアップロードファイル
+     * @param context ValidatorContext
+     * @see UploadFileNotEmptyValidator#isValid(MultipartFile, ConstraintValidatorContext)
+     * @return ファイルが存在する場合はtrue、存在しない場合はfalse
+     */
     @Override
-    public boolean isValid(MultipartFile multipartFile,
-            ConstraintValidatorContext context) {
-        return multipartFile != null && StringUtils.hasLength(multipartFile
-                .getOriginalFilename());
+    public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
+        return multipartFile != null && StringUtils.hasLength(multipartFile.getOriginalFilename());
     }
 
 }

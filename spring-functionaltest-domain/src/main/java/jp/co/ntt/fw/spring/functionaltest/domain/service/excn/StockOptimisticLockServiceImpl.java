@@ -34,8 +34,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.excn.StockRepository
 
 @Service
 @Transactional
-public class StockOptimisticLockServiceImpl implements
-                                            StockOptimisticLockService {
+public class StockOptimisticLockServiceImpl implements StockOptimisticLockService {
 
     @Inject
     StockRepository stockRepository;
@@ -50,8 +49,7 @@ public class StockOptimisticLockServiceImpl implements
     public Stock findOne(String itemCode) {
         Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
-            ResultMessages messages = ResultMessages.danger().add(
-                    "excn.result.datanotfound");
+            ResultMessages messages = ResultMessages.danger().add("excn.result.datanotfound");
             throw new ResourceNotFoundException(messages);
         }
         return stock;
@@ -75,8 +73,7 @@ public class StockOptimisticLockServiceImpl implements
     private Stock updateWithOptimisticLock(Stock subject) {
         awaitUntilGetVersion();
         if (stockRepository.updateQuantityWithOptimisticLock(subject) == 0) {
-            throw new ObjectOptimisticLockingFailureException(Stock.class, subject
-                    .getItemCode());
+            throw new ObjectOptimisticLockingFailureException(Stock.class, subject.getItemCode());
         }
         subject.setVersion(subject.getVersion() + 1);
         return subject;

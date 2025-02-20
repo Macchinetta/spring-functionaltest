@@ -35,7 +35,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmUsingCom
 
 @Documented
 @Constraint(validatedBy = {})
-@Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+@Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 @Compare(left = "", right = "", operator = Compare.Operator.EQUAL, requireBoth = true)
@@ -55,7 +55,7 @@ public @interface ConfirmUsingCompare {
     String confirmField();
 
     @Documented
-    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+    @Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
     @Retention(RUNTIME)
     @interface List {
         ConfirmUsingCompare[] value();

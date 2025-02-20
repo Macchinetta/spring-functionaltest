@@ -38,8 +38,8 @@ public class VLDT0502Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handleValidate(@Valid RoleForCollectionForm form,
-            BindingResult result, Model model) {
+    public String handleValidate(@Valid RoleForCollectionForm form, BindingResult result,
+            Model model) {
         return form();
     }
 

@@ -28,8 +28,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthErrorMailSendingServiceImpl implements
-                                             AuthErrorMailSendingService {
+public class AuthErrorMailSendingServiceImpl implements AuthErrorMailSendingService {
 
     @Inject
     JavaMailSender mailSenderAuthError;
@@ -59,8 +58,8 @@ public class AuthErrorMailSendingServiceImpl implements
 
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8
-                        .name());
+                MimeMessageHelper helper =
+                        new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
                 helper.setFrom("\"髙山\" <" + fromAddress + ">");
                 helper.setTo(to);
                 helper.setSubject("お知らせ①");
@@ -72,8 +71,7 @@ public class AuthErrorMailSendingServiceImpl implements
     @Override
     public Store popBeforeSmtp() {
 
-        return mailReceivingService.connect(pop3host, pop3port, pop3user,
-                pop3password);
+        return mailReceivingService.connect(pop3host, pop3port, pop3user, pop3password);
 
     }
 

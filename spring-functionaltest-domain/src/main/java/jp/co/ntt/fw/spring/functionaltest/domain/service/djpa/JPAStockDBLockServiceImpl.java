@@ -56,19 +56,15 @@ public class JPAStockDBLockServiceImpl implements JPAStockDBLockService {
 
     @Override
     public Integer decreamentQty(JPAStock jpaStock, Integer qty) {
-        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(),
-                qty);
+        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(), qty);
     }
 
     @Override
-    public JPAStock buy(JPAStock stock, int purchasingQuantity,
-            long sleepMillis) {
+    public JPAStock buy(JPAStock stock, int purchasingQuantity, long sleepMillis) {
         // できるだけ同時にDBアクセスするように同期する
         await();
-        if (jpaStockRepository.decrementQuantity(stock.getItemCode(),
-                purchasingQuantity) == 0) {
-            ResultMessages messages = ResultMessages.danger().add(
-                    "excn.result.stock.exclusive");
+        if (jpaStockRepository.decrementQuantity(stock.getItemCode(), purchasingQuantity) == 0) {
+            ResultMessages messages = ResultMessages.danger().add("excn.result.stock.exclusive");
             throw new BusinessException(messages);
         }
         jpaStockRepository.flush();

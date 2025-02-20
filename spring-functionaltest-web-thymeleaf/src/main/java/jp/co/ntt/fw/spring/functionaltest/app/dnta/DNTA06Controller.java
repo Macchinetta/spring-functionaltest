@@ -33,8 +33,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("dnta")
 @Controller
 public class DNTA06Controller {
-    private static final LocalDateTime DATE_TIME = LocalDateTime.of(2015, 12,
-            25, 23, 30, 59, 345);
+    private static final LocalDateTime DATE_TIME = LocalDateTime.of(2015, 12, 25, 23, 30, 59, 345);
 
     private static final LocalDate DATE = LocalDate.of(2015, 12, 25);
 
@@ -42,23 +41,21 @@ public class DNTA06Controller {
 
     private static final Date NOW_DATE = new Date();
 
-    private static final LocalDateTime DATE_TIME_01 = LocalDateTime.of(2014, 1,
-            1, 1, 1, 1, 123);
+    private static final LocalDateTime DATE_TIME_01 = LocalDateTime.of(2014, 1, 1, 1, 1, 1, 123);
 
-    private static final LocalDateTime DATE_TIME_02 = LocalDateTime.of(2015, 4,
-            8, 6, 11, 14, 234);
+    private static final LocalDateTime DATE_TIME_02 = LocalDateTime.of(2015, 4, 8, 6, 11, 14, 234);
 
-    private static final LocalDateTime DATE_TIME_03 = LocalDateTime.of(2016, 7,
-            15, 11, 21, 27, 345);
+    private static final LocalDateTime DATE_TIME_03 =
+            LocalDateTime.of(2016, 7, 15, 11, 21, 27, 345);
 
-    private static final LocalDateTime DATE_TIME_04 = LocalDateTime.of(2017, 10,
-            22, 16, 31, 40, 456);
+    private static final LocalDateTime DATE_TIME_04 =
+            LocalDateTime.of(2017, 10, 22, 16, 31, 40, 456);
 
-    private static final LocalDateTime DATE_TIME_05 = LocalDateTime.of(2018, 1,
-            29, 21, 41, 53, 567);
+    private static final LocalDateTime DATE_TIME_05 =
+            LocalDateTime.of(2018, 1, 29, 21, 41, 53, 567);
 
-    private static final LocalDateTime[] ARRAY_TEMPORALS = { DATE_TIME_01,
-            DATE_TIME_02, DATE_TIME_03, DATE_TIME_04, DATE_TIME_05 };
+    private static final LocalDateTime[] ARRAY_TEMPORALS =
+            {DATE_TIME_01, DATE_TIME_02, DATE_TIME_03, DATE_TIME_04, DATE_TIME_05};
 
     private static final List<LocalDateTime> LIST_TEMPORALS;
     static {

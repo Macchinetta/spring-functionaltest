@@ -30,8 +30,7 @@ public class CommitterUserDetailsService implements UserDetailsService {
     private CommitterRepository committerRepository;
 
     @Override
-    public UserDetails loadUserByUsername(
-            String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Committer committer = committerRepository.findByName(username);
 

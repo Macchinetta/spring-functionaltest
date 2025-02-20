@@ -46,9 +46,7 @@ public class DTACUserListController {
     }
 
     @RequestMapping(value = "list")
-    public String handleList(
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
-            Model model) {
+    public String handleList(@PageableDefault(page = 0, size = 10) Pageable pageable, Model model) {
 
         Page<User> users = userListRoutingService.getUsers(pageable);
         model.addAttribute("page", users);
@@ -57,21 +55,18 @@ public class DTACUserListController {
     }
 
     @RequestMapping(value = "listOpen")
-    public String handleListOpen(
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
+    public String handleListOpen(@PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
         return handleListBoth(10, pageable, model);
     }
 
     @RequestMapping(value = "listClose")
-    public String handleListClose(
-            @PageableDefault(page = 0, size = 10) Pageable pageable,
+    public String handleListClose(@PageableDefault(page = 0, size = 10) Pageable pageable,
             Model model) {
         return handleListBoth(1, pageable, model);
     }
 
-    private String handleListBoth(int hourOfDay, Pageable pageable,
-            Model model) {
+    private String handleListBoth(int hourOfDay, Pageable pageable, Model model) {
         Page<User> users = null;
         try {
             dateFactory.setHourOfDay(hourOfDay);

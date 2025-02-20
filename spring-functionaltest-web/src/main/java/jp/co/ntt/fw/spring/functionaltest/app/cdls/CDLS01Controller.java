@@ -15,6 +15,9 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
@@ -66,6 +69,11 @@ public class CDLS01Controller {
     }
 
     @ModelAttribute
+    public AuthorityForCollectionForm setUpAuthorityForCollectionForm() {
+        return new AuthorityForCollectionForm();
+    }
+
+    @ModelAttribute
     public ClEnumOrderStatusForm setUpCLEnumOrderStatusForm() {
         return new ClEnumOrderStatusForm();
     }
@@ -109,15 +117,15 @@ public class CDLS01Controller {
     }
 
     @RequestMapping(value = "0102/002", method = RequestMethod.POST, params = "post")
-    public String handle02002Post(RedirectAttributes redirectAttrs,
-            @Validated ClMonthAscForm form, BindingResult result) {
+    public String handle02002Post(RedirectAttributes redirectAttrs, @Validated ClMonthAscForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return "cdls/numberRangeCodeList";
         }
         CodeList codeList = beanMapper.map(form, CodeList.class);
 
-        redirectAttrs.addFlashAttribute("monthAscCodeListValue", codeListService
-                .getMonthAscCodeListValue(codeList.getId()));
+        redirectAttrs.addFlashAttribute("monthAscCodeListValue",
+                codeListService.getMonthAscCodeListValue(codeList.getId()));
         return "redirect:002";
     }
 
@@ -144,6 +152,26 @@ public class CDLS01Controller {
         return "redirect:002";
     }
 
+    @RequestMapping(value = "0103/003", method = RequestMethod.GET)
+    public String handle03003(Model model) {
+        return "cdls/jdbcCodeList";
+    }
+
+    @RequestMapping(value = "0103/003", method = RequestMethod.POST, params = "post")
+    public String handle03003Post(RedirectAttributes redirectAttrs,
+            @Validated AuthorityForCollectionForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return "cdls/jdbcCodeList";
+        }
+        List<String> authorities = new ArrayList<>();
+        for (String key : form.getAuthorities()) {
+            authorities.add(codeListService.getAuthoritiesCodeListValue(key));
+        }
+        redirectAttrs.addFlashAttribute("authorities", authorities);
+
+        return "redirect:003";
+    }
+
     @RequestMapping(value = "0104/001", method = RequestMethod.GET)
     public String handle04001(Model model) {
         return "cdls/enumCodeList";
@@ -162,8 +190,7 @@ public class CDLS01Controller {
         }
         CodeList codeList = beanMapper.map(form, CodeList.class);
         redirectAttrs.addFlashAttribute("enumOrderStatusCodeListValue",
-                codeListService.getEnumOrderStatusCodeListValue(codeList
-                        .getId()));
+                codeListService.getEnumOrderStatusCodeListValue(codeList.getId()));
         return "redirect:002";
     }
 
@@ -181,8 +208,8 @@ public class CDLS01Controller {
     }
 
     @RequestMapping(value = "0107/001", method = RequestMethod.POST, params = "post")
-    public String handle07001Post(Model model,
-            @Validated ClOrderStatusForm form, BindingResult result) {
+    public String handle07001Post(Model model, @Validated ClOrderStatusForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return "cdls/validationCodeList";
         }
@@ -200,8 +227,8 @@ public class CDLS01Controller {
     }
 
     @RequestMapping(value = "0107/002", method = RequestMethod.POST, params = "post")
-    public String handle07002Post(Model model,
-            @Validated ClOrderStatusForm form, BindingResult result) {
+    public String handle07002Post(Model model, @Validated ClOrderStatusForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return "cdls/validationCodeList";
         }

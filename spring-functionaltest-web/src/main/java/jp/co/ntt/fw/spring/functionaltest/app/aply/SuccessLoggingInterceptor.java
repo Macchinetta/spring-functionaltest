@@ -25,28 +25,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class SuccessLoggingInterceptor implements HandlerInterceptor {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            SuccessLoggingInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(SuccessLoggingInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object handler) throws Exception {
         logger.info("[APLY0402_01] preHandle method called");
 
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request,
-            HttpServletResponse response, Object handler,
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) throws Exception {
         logger.info("[APLY0402_02] postHandle method called");
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request,
-            HttpServletResponse response, Object handler,
-            Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+            Object handler, Exception ex) throws Exception {
         logger.info("[APLY0402_03] afterCompletion method called");
     }
 

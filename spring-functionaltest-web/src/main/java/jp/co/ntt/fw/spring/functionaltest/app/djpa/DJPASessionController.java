@@ -43,19 +43,18 @@ public class DJPASessionController {
     }
 
     /**
-     * This method demonstrates when acquire Session outside of OpenEntityManagerInViewInterceptor, LazyInitializationException
-     * occur.
+     * This method demonstrates when acquire Session outside of OpenEntityManagerInViewInterceptor,
+     * LazyInitializationException occur.
      * @param model
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "registerSession")
+    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST,
+            params = "registerSession")
     public String registerSession(Model model, JPABookListForm bookListForm) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdAndRegisterSession());
+        Integer bookId = Integer.valueOf(bookListForm.getSearchInQueryBookIdAndRegisterSession());
         JPABookLZ book = jpaBookLZService.findById(bookId);
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
 
         // register Session
         model.addAttribute("book", book);
@@ -64,15 +63,13 @@ public class DJPASessionController {
     }
 
     @RequestMapping(value = "getRegisterSession", method = RequestMethod.POST)
-    public String getRegisterSession(
-            @ModelAttribute(name = "book", binding = false) JPABookLZ book,
+    public String getRegisterSession(@ModelAttribute(name = "book", binding = false) JPABookLZ book,
             Model model, SessionStatus sessionStatus) {
 
         sessionStatus.setComplete();
 
         // when acquire CategoryName, LazyInitializationException will thrown
-        model.addAttribute("bookCategory", book.getCategory()
-                .getCategoryName());
+        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
 
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", book);

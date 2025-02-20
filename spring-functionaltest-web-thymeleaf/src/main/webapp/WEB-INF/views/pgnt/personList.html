@@ -1,46 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <h1 th:text="|${page.number + 1} Page|"></h1>
 
-  <div class="container">
+            <div th:if="${page} != null" th:with="pagination = ~{pgnt/fragment :: pagination (${page})}" th:remove="tag">
+                <div class="text-center">
+                    <div th:replace="${pagination}"></div>
+                </div>
 
-    <h1 th:text="|${page.number + 1} Page|"></h1>
+                <table class="maintable">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
 
-    <div th:if="${page} != null" th:with="pagination = ~{pgnt/fragment :: pagination (${page})}"
-      th:remove="tag">
+                    <tr th:each="article, status : ${page.content}" th:object="${article}">
+                        <td th:text="${page.number * page.size + status.count}"></td>
+                        <td th:text="*{firstname}"></td>
+                        <td th:text="*{lastname}"></td>
+                    </tr>
+                </table>
 
-      <div class="text-center">
-        <div th:replace="${pagination}"></div>
-      </div>
-
-      <table class="maintable">
-
-        <thead>
-          <tr>
-            <th>Number</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-          </tr>
-        </thead>
-
-        <tr th:each="article, status : ${page.content}" th:object="${article}">
-          <td th:text="${page.number * page.size + status.count}"></td>
-          <td th:text="*{firstname}"></td>
-          <td th:text="*{lastname}"></td>
-        </tr>
-
-      </table>
-
-      <div class="text-center">
-        <div th:replace="${pagination}"></div>
-      </div>
-
-    </div>
-
-  </div>
-
-</body>
+                <div class="text-center">
+                    <div th:replace="${pagination}"></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

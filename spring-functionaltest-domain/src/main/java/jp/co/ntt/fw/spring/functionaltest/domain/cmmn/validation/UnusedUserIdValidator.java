@@ -24,8 +24,7 @@ import org.springframework.stereotype.Component;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.vldt.UserService;
 
 @Component
-public class UnusedUserIdValidator implements
-                                   ConstraintValidator<UnusedUserId, String> {
+public class UnusedUserIdValidator implements ConstraintValidator<UnusedUserId, String> {
 
     @Inject
     UserService userService;

@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 public class ClMonthAscForm {
 
-    @NotNull
+    @NotEmpty
     @ExistInCodeList(codeListId = "CL_MONTH_ASC")
     private String id;
 

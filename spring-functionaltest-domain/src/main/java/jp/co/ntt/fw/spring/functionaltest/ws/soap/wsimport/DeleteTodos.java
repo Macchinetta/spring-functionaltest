@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * deleteTodos complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="deleteTodos">
  *   &lt;complexContent>

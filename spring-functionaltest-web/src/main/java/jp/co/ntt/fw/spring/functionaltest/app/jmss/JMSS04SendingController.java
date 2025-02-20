@@ -17,10 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.jmss;
 
 import java.io.IOException;
 import java.util.UUID;
-
 import javax.inject.Inject;
 import javax.jms.JMSException;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsCacheConSendingService;
 
 @Controller
@@ -122,101 +119,82 @@ public class JMSS04SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=selector_false")
-    public String sendMessageJmsMsg(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=selector_false")
+    public String sendMessageJmsMsg(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageBySelectorFalse(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageBySelectorFalse(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=selector_true")
-    public String sendMessageAddKey(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=selector_true")
+    public String sendMessageAddKey(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageBySelectorTrue(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageBySelectorTrue(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendto")
-    public String sendMessageSendTo(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    public String sendMessageSendTo(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         jmsCacheConSendingService.sendMessageForSendTo(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=jmsresponseB")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=jmsresponseB")
     public String sendMessageJmsresponseB(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageForJmsResponseB(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageForJmsResponseB(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=jmsresponseC")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=jmsresponseC")
     public String sendMessageJmsresponseC(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageForJmsResponseC(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageForJmsResponseC(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=resend_ano_mss")
-    public String sendMessageReSendAnotherMessage(Model model,
-            JmsSendingForm form,
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=resend_ano_mss")
+    public String sendMessageReSendAnotherMessage(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
-        jmsCacheConSendingService.sendMessageReSendAnotherMessage(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageReSendAnotherMessage(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=concurrent_listener_single")
-    public String sendMessageJmsConcurrentListenerSingle(Model model,
-            JmsSendingForm form,
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=concurrent_listener_single")
+    public String sendMessageJmsConcurrentListenerSingle(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageConcurrentListenerSingle(form.getJmsTodoId(), 5);
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=concurrent_listener_multiple")
-    public String sendMessageJmsConcurrentListenerMultiple(Model model,
-            JmsSendingForm form,
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=concurrent_listener_multiple")
+    public String sendMessageJmsConcurrentListenerMultiple(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
-                .getJmsTodoId());
-        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageConcurrentListenerMultiple(form.getJmsTodoId(), 5);
 
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";

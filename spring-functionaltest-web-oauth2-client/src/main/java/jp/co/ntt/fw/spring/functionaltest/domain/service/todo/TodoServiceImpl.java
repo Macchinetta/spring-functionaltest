@@ -18,12 +18,10 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.todo;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.inject.Named;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
@@ -31,111 +29,79 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 
 @Service
 @Transactional
 public class TodoServiceImpl implements TodoService {
 
-    @Value("${resource.server.base-uri:http://localhost:8080/spring-functionaltest-web-oauth2-resource}")
+    @Value("${oth2.resource.server.base-uri}")
     private String resourceServerBaseUri;
 
     @Resource
     @Named("oauthRestTemplateMap")
-    Map<String, RestTemplate> resttemplates;
+    private Map<String, RestTemplate> resttemplates;
 
     @Override
     @Transactional(readOnly = true)
-    public Todo findOne(@NotEmpty String todoId,
-            @NotEmpty String registrationId) {
+    public Todo findOne(@NotEmpty String todoId, @NotEmpty String registrationId) {
 
-        // @formatter:off
         RequestEntity<Void> requestEntity = RequestEntity
-                .get(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId)
-                .build();
-        // @formatter:on
+                .get(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId).build();
 
-        ResponseEntity<Todo> responseEntity = getRestTemplate(registrationId)
-                .exchange(requestEntity, Todo.class);
-        Todo todo = responseEntity.getBody();
+        ResponseEntity<Todo> responseEntity =
+                getRestTemplate(registrationId).exchange(requestEntity, Todo.class);
 
-        return todo;
+        return responseEntity.getBody();
     }
 
     @Override
     public Collection<Todo> findAll(@NotEmpty String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Void> requestEntity = RequestEntity
-                .get(this.resourceServerBaseUri + "/auth/intercepturl")
-                .build();
-        // @formatter:on
+        RequestEntity<Void> requestEntity =
+                RequestEntity.get(this.resourceServerBaseUri + "/auth/intercepturl").build();
 
-        // @formatter:off
-		ResponseEntity<List<Todo>> responseEntity = getRestTemplate(registrationId).exchange(requestEntity,
-				new ParameterizedTypeReference<List<Todo>>() {});
-        // @formatter:on
+        ResponseEntity<List<Todo>> responseEntity = getRestTemplate(registrationId)
+                .exchange(requestEntity, new ParameterizedTypeReference<List<Todo>>() {});
 
-        List<Todo> todos = responseEntity.getBody();
-
-        return todos;
+        return responseEntity.getBody();
     }
 
     @Override
     public Todo create(@NotNull Todo todo, @NotEmpty String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Todo> requestEntity = RequestEntity
-                .post(this.resourceServerBaseUri + "/auth/intercepturl")
-                .body(todo);
-        // @formatter:on
+        RequestEntity<Todo> requestEntity =
+                RequestEntity.post(this.resourceServerBaseUri + "/auth/intercepturl").body(todo);
 
-        ResponseEntity<Todo> responseEntity = getRestTemplate(registrationId)
-                .exchange(requestEntity, Todo.class);
+        ResponseEntity<Todo> responseEntity =
+                getRestTemplate(registrationId).exchange(requestEntity, Todo.class);
 
-        Todo createdTodo = responseEntity.getBody();
-
-        return createdTodo;
+        return responseEntity.getBody();
 
     }
 
     @Override
-    public Todo finish(@NotEmpty String todoId,
-            @NotEmpty String registrationId) {
+    public Todo finish(@NotEmpty String todoId, @NotEmpty String registrationId) {
 
-        // @formatter:off
         RequestEntity<Void> requestEntity = RequestEntity
-                .put(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId)
-                .build();
-        // @formatter:on
+                .put(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId).build();
 
-        ResponseEntity<Todo> responseEntity = getRestTemplate(registrationId)
-                .exchange(requestEntity, Todo.class);
-        Todo finishedTodo = responseEntity.getBody();
+        ResponseEntity<Todo> responseEntity =
+                getRestTemplate(registrationId).exchange(requestEntity, Todo.class);
 
-        return finishedTodo;
+        return responseEntity.getBody();
     }
 
     @Override
-    public void delete(@NotEmpty String todoId,
-            @NotEmpty String registrationId) {
+    public void delete(@NotEmpty String todoId, @NotEmpty String registrationId) {
 
-        // @formatter:off
         RequestEntity<Void> requestEntity = RequestEntity
-                .delete(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId)
-                .build();
-        // @formatter:on
+                .delete(this.resourceServerBaseUri + "/auth/intercepturl/" + todoId).build();
 
         getRestTemplate(registrationId).exchange(requestEntity, void.class);
     }
 
     private RestTemplate getRestTemplate(String registrationId) {
-
-        RestTemplate template = this.resttemplates.get(registrationId);
-
-        // エラーハンドリングを実施したいため切り出したが、一旦後回し
-
-        return template;
+        return this.resttemplates.get(registrationId);
     }
 }

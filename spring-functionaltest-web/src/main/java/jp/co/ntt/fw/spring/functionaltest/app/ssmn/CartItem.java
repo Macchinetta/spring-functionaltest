@@ -109,9 +109,8 @@ public class CartItem implements Serializable {
 
     @Override
     public String toString() {
-        return "CartItem [cartId=" + cartId + ", itemId=" + itemId
-                + ", quantity=" + quantity + ", item=" + item
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "CartItem [cartId=" + cartId + ", itemId=" + itemId + ", quantity=" + quantity
+                + ", item=" + item + ", super.hashCode()=" + super.hashCode() + "]";
     }
 
 }

@@ -1,103 +1,107 @@
-if (!ajax)
-    var ajax = {};
+if (!ajax) var ajax = {};
 
-(function(ajax) {
-
+(function (ajax) {
     var contextPath = $("meta[name='contextPath']").attr("content");
     var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
     var csrfToken = $("meta[name='_csrf']").attr("content");
 
-    $(document).ajaxSend(function(event, xhr, options) {
+    $(document).ajaxSend(function (event, xhr, options) {
         xhr.setRequestHeader(csrfHeaderName, csrfToken);
     });
 
-    ajax.search = function() {
-
+    ajax.search = function () {
         $.ajax(contextPath + "/ajax/search", {
-            type : "GET",
-            data : $("#personalComputerCriteria").serialize(),
-            dataType : "json"
-        }).done(function(json, status, xhr) {
-            searchNormalResultDisplay(json, xhr);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "GET",
+            data: $("#personalComputerCriteria").serialize(),
+            dataType: "json",
+        })
+            .done(function (json, status, xhr) {
+                searchNormalResultDisplay(json, xhr);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
 
         return false;
     };
 
-    ajax.editPersonalComputer = function(path) {
-
+    ajax.editPersonalComputer = function (path) {
         $.ajax(contextPath + "/ajax/" + path, {
-            type : "POST",
-            data : $("#personalComputerForm").serialize(),
-            dataType : "json"
-        }).done(function(json, status, xhr) {
-            editNormalResultDisplay(json, xhr);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "POST",
+            data: $("#personalComputerForm").serialize(),
+            dataType: "json",
+        })
+            .done(function (json, status, xhr) {
+                editNormalResultDisplay(json, xhr);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
 
         return false;
     };
 
-    ajax.editPersonalComputerForJson = function(path) {
-
+    ajax.editPersonalComputerForJson = function (path) {
         $.ajax(contextPath + "/ajax/" + path, {
-            type : "POST",
-            contentType : "application/json",
-            data : toJson($("#personalComputerForm")),
-            dataType : "json"
-        }).done(function(json, status, xhr) {
-            editNormalResultDisplay(json, xhr);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "POST",
+            contentType: "application/json",
+            data: toJson($("#personalComputerForm")),
+            dataType: "json",
+        })
+            .done(function (json, status, xhr) {
+                editNormalResultDisplay(json, xhr);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
 
         return false;
     };
 
-    ajax.editPersonalComputerForJsonAndBidingResultHandle = function(path) {
-
+    ajax.editPersonalComputerForJsonAndBidingResultHandle = function (path) {
         $.ajax(contextPath + "/ajax/" + path, {
-            type : "POST",
-            contentType : "application/json",
-            data : toJson($("#personalComputerForm")),
-            dataType : "json"
-        }).done(function(json, status, xhr) {
-            sharedNormalResultDisplay(json, xhr);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "POST",
+            contentType: "application/json",
+            data: toJson($("#personalComputerForm")),
+            dataType: "json",
+        })
+            .done(function (json, status, xhr) {
+                sharedNormalResultDisplay(json, xhr);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
 
         return false;
     };
 
-    ajax.write = function(path) {
+    ajax.write = function (path) {
         var result = $("#result");
         var comment = $("#comment").val();
 
         $.ajax(contextPath + "/ajax/" + path, {
-            type : "POST",
-            contentType : 'text/xml;charset=UTF-8',
-            data : comment,
-            dataType : "xml"
-        }).done(function(xml, status, xhr) {
-            writeNormalResultDisplay(xml, xhr, result);
-        }).fail(function(xhr) {
-            xmlErrorResultDisplay(xhr);
-        });
+            type: "POST",
+            contentType: "text/xml;charset=UTF-8",
+            data: comment,
+            dataType: "xml",
+        })
+            .done(function (xml, status, xhr) {
+                writeNormalResultDisplay(xml, xhr, result);
+            })
+            .fail(function (xhr) {
+                xmlErrorResultDisplay(xhr);
+            });
 
         return false;
     };
 
     function escapeHTML(val) {
-        return $('<div>').text(val).html();
+        return $("<div>").text(val).html();
     }
 
     function toJson($form) {
         var data = {};
-        $($form.serializeArray()).each(function(i, v) {
+        $($form.serializeArray()).each(function (i, v) {
             data[v.name] = v.value;
         });
         return JSON.stringify(data);
@@ -105,7 +109,7 @@ if (!ajax)
 
     function searchNormalResultDisplay(json, xhr) {
         $("#returnMessage").remove();
-        $("#resultMessage").addClass('hidden');
+        $("#resultMessage").addClass("hidden");
         setXMLHttpRequestResultNormal(xhr);
         setStatusCodeDom(xhr);
         setContentTypeDom(xhr);
@@ -117,30 +121,31 @@ if (!ajax)
         if (0 < json.personalComputerResult.length) {
             var personalComputerResult = $("#personalComputerResult");
             for (var i = 0; i < json.personalComputerResult.length; i++) {
-                personalComputerResult
-                        .append("<tr><td>"
-                                + (i + 1)
-                                + "</td><td><a href=\"#\">"
-                                + escapeHTML(json.personalComputerResult[i].personalComputerName)
-                                + "</a></td><td>"
-                                + escapeHTML(json.personalComputerResult[i].os)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].cpu)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].ram)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].videocard)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].hdd)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].power)
-                                + "</td><td>"
-                                + escapeHTML(json.personalComputerResult[i].price)
-                                + "円</td></tr>");
+                personalComputerResult.append(
+                    "<tr><td>" +
+                        (i + 1) +
+                        '</td><td><a href="#">' +
+                        escapeHTML(json.personalComputerResult[i].personalComputerName) +
+                        "</a></td><td>" +
+                        escapeHTML(json.personalComputerResult[i].os) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].cpu) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].ram) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].videocard) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].hdd) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].power) +
+                        "</td><td>" +
+                        escapeHTML(json.personalComputerResult[i].price) +
+                        "円</td></tr>"
+                );
             }
-            personalComputerResultTable.removeClass('hidden');
+            personalComputerResultTable.removeClass("hidden");
         } else {
-            personalComputerResultTable.addClass('hidden');
+            personalComputerResultTable.addClass("hidden");
         }
     }
 
@@ -149,8 +154,7 @@ if (!ajax)
 
         var returnMessage = $("#returnMessage");
         for (var i = 0; i < json.messages.length; i++) {
-            returnMessage.append("<li>" + escapeHTML(json.messages[i])
-                    + "</li>");
+            returnMessage.append("<li>" + escapeHTML(json.messages[i]) + "</li>");
         }
     }
 
@@ -161,8 +165,7 @@ if (!ajax)
 
         var returnMessage = $("#returnMessage");
         for (var i = 0; i < json.errorResults.length; i++) {
-            returnMessage.append("<li>"
-                    + escapeHTML(json.errorResults[i].message) + "</li>");
+            returnMessage.append("<li>" + escapeHTML(json.errorResults[i].message) + "</li>");
         }
     }
 
@@ -171,33 +174,30 @@ if (!ajax)
             setNormalBaseDom(xhr);
             var returnMessage = $("#returnMessage");
             for (var i = 0; i < json.messages.length; i++) {
-                returnMessage.append("<li>" + escapeHTML(json.messages[i])
-                        + "</li>");
+                returnMessage.append("<li>" + escapeHTML(json.messages[i]) + "</li>");
             }
-
         } else {
             setErrorBaseDom(xhr);
             var errroMessages = $("#returnMessage");
             for (var i = 0; i < json.errorResults.length; i++) {
-                errroMessages.append("<li>"
-                        + escapeHTML(json.errorResults[i].message) + "</li>");
+                errroMessages.append("<li>" + escapeHTML(json.errorResults[i].message) + "</li>");
             }
         }
     }
 
     function writeNormalResultDisplay(xml, xhr, result) {
         $("#returnMessage").remove();
-        $("#resultMessage").addClass('hidden');
+        $("#resultMessage").addClass("hidden");
         setXMLHttpRequestResultNormal(xhr);
         setStatusCodeDom(xhr);
         setContentTypeDom(xhr);
 
-        $(xml).find('resultMessages').each(
-                function() {
-                    var resultMessages = $(this).text();
-                    result.append("<ul><li>" + escapeHTML(resultMessages)
-                            + "</li><ul>");
-                });
+        $(xml)
+            .find("resultMessages")
+            .each(function () {
+                var resultMessages = $(this).text();
+                result.append("<ul><li>" + escapeHTML(resultMessages) + "</li><ul>");
+            });
     }
 
     function xmlErrorResultDisplay(xhr) {
@@ -207,14 +207,14 @@ if (!ajax)
 
         var xml = xhr.responseXML;
 
-        var errorResults = $(xml).find('errorResults').find('errorResults');
+        var errorResults = $(xml).find("errorResults").find("errorResults");
 
-        if ($(errorResults).find('message').text() != '') {
+        if ($(errorResults).find("message").text() != "") {
             setResultMessageError();
 
             var returnMessage = $("#returnMessage");
-            $(errorResults).each(function() {
-                var message = $(this).find('message').text();
+            $(errorResults).each(function () {
+                var message = $(this).find("message").text();
                 returnMessage.append("<li>" + escapeHTML(message) + "</li>");
             });
         }
@@ -236,16 +236,16 @@ if (!ajax)
 
     function setXMLHttpRequestResultNormal(xhr) {
         var xMLHttpRequestResult = $("#xMLHttpRequestResult");
-        xMLHttpRequestResult.removeClass('hidden');
-        xMLHttpRequestResult.removeClass('alert-danger');
-        xMLHttpRequestResult.addClass('alert-success');
+        xMLHttpRequestResult.removeClass("hidden");
+        xMLHttpRequestResult.removeClass("alert-danger");
+        xMLHttpRequestResult.addClass("alert-success");
     }
 
     function setXMLHttpRequestResultError(xhr) {
         var xMLHttpRequestResult = $("#xMLHttpRequestResult");
-        xMLHttpRequestResult.removeClass('hidden');
-        xMLHttpRequestResult.removeClass('alert-success');
-        xMLHttpRequestResult.addClass('alert-danger');
+        xMLHttpRequestResult.removeClass("hidden");
+        xMLHttpRequestResult.removeClass("alert-success");
+        xMLHttpRequestResult.addClass("alert-danger");
     }
 
     function setStatusCodeDom(xhr) {
@@ -263,20 +263,20 @@ if (!ajax)
     function setResultMessageNormal() {
         var resultMessage = $("#resultMessage");
         setResultMessage(resultMessage);
-        resultMessage.removeClass('alert-danger');
-        resultMessage.addClass('alert-success');
+        resultMessage.removeClass("alert-danger");
+        resultMessage.addClass("alert-success");
     }
 
     function setResultMessageError() {
         var resultMessage = $("#resultMessage");
         setResultMessage(resultMessage);
-        resultMessage.removeClass('alert-success');
-        resultMessage.addClass('alert-danger');
+        resultMessage.removeClass("alert-success");
+        resultMessage.addClass("alert-danger");
     }
 
     function setResultMessage(resultMessage) {
-        resultMessage.removeClass('hidden');
+        resultMessage.removeClass("hidden");
         resultMessage.text("");
-        resultMessage.append("<ul id=\"returnMessage\"></ul>");
+        resultMessage.append('<ul id="returnMessage"></ul>');
     }
 })(ajax);

@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">モデルに格納された値をHTMLエスケープして表示した画面（th:text形式）</h1>
 
-      <h1 id="screenTitle">モデルに格納された値をHTMLエスケープして表示した画面（th:text形式）</h1>
-
-      <ul>
-        <li id="message1">Thymeleafのth:textを利用してエスケープ処理した文字列を以下に表示します。</li>
-        <li id="message2" th:text="${valueUsingThText}"></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul>
+                    <li id="message1">Thymeleafのth:textを利用してエスケープ処理した文字列を以下に表示します。</li>
+                    <li id="message2" th:text="${valueUsingThText}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

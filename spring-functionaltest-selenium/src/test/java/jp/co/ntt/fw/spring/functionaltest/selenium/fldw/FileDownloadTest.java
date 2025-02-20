@@ -19,7 +19,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
-
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,7 +34,8 @@ import java.util.Enumeration;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
+import org.apache.pdfbox.Loader;
+import org.apache.pdfbox.io.RandomAccessReadBuffer;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
@@ -47,14 +47,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class FileDownloadTest extends FunctionTestSupport {
 
     private static Path downloadTempDirectory;
 
-    private static WebDriver downloadDriver;
+    private WebDriver downloadDriver;
 
     @Value("${selenium.app.download.pdf}")
     private String downloadPdfFileName;
@@ -74,8 +73,7 @@ public class FileDownloadTest extends FunctionTestSupport {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        downloadTempDirectory = Files.createTempDirectory("springtest-fldw-")
-                .toAbsolutePath();
+        downloadTempDirectory = Files.createTempDirectory("springtest-fldw-").toAbsolutePath();
     }
 
     @AfterClass
@@ -98,10 +96,8 @@ public class FileDownloadTest extends FunctionTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        if (downloadDriver == null) {
-            downloadDriver = webDriverCreator.createDownloadableWebDriver(
-                    downloadTempDirectory.toFile().getAbsolutePath());
-        }
+        downloadDriver = webDriverCreator
+                .createDownloadableWebDriver(downloadTempDirectory.toFile().getAbsolutePath());
         setCurrentWebDriver(downloadDriver);
     }
 
@@ -129,8 +125,7 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedPdf = new ClassPathResource("/testdata/fldw/日本語ファイル名.pdf");
 
         // ダウンロードされたファイルを読み込む
-        File actualPdf = new File(downloadTempDirectory
-                .toString(), downloadPdfFileName);
+        File actualPdf = new File(downloadTempDirectory.toString(), downloadPdfFileName);
         FileInputStream actualPdfInputStream = new FileInputStream(actualPdf);
 
         // ファイルダウンロードの確認
@@ -142,18 +137,15 @@ public class FileDownloadTest extends FunctionTestSupport {
 
         // ログの確認
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations
-                .getXTrack());
+        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
 
     }
 
     String readPdfAsStringWithoutRoot(InputStream stream) {
         StringBuilder builder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
-            for (String line = reader.readLine(); line != null; line = reader
-                    .readLine()) {
-                if (!line.startsWith("<</Root") && !line.startsWith(
-                        "<</Info")) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                if (!line.startsWith("<</Root") && !line.startsWith("<</Info")) {
                     builder.append(line);
                 } else {
                     builder.append("xxxxxxxxxx");
@@ -190,8 +182,7 @@ public class FileDownloadTest extends FunctionTestSupport {
         ClassPathResource expectedExcel = new ClassPathResource("/testdata/fldw/日本語ファイル名.xlsx");
 
         // ダウンロードされたファイルを読み込む中身の検証
-        File file = new File(downloadTempDirectory
-                .toString(), downloadXlsFileName);
+        File file = new File(downloadTempDirectory.toString(), downloadXlsFileName);
 
         // xlsxファイルを解凍してバイナリで比較
         compareFile(file, expectedExcel.getFile());
@@ -201,15 +192,13 @@ public class FileDownloadTest extends FunctionTestSupport {
 
         // ログの確認
         dbLogAssertOperations.waitForAssertion();
-        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations
-                .getXTrack());
+        dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
     }
 
     String readFileAsString(InputStream stream) {
         StringBuilder builder = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
-            for (String line = reader.readLine(); line != null; line = reader
-                    .readLine()) {
+            for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 builder.append(line);
                 builder.append("\n");
             }
@@ -227,20 +216,18 @@ public class FileDownloadTest extends FunctionTestSupport {
         }
     }
 
-    private void compareFile(File actualFile,
-            File expectedFile) throws IOException {
+    private void compareFile(File actualFile, File expectedFile) throws IOException {
 
-        try (ZipFile zipActual = new ZipFile(actualFile, Charset.forName(
-                "UTF-8")); ZipFile zipExpect = new ZipFile(expectedFile, Charset
-                        .forName("UTF-8"));) {
+        try (ZipFile zipActual = new ZipFile(actualFile, Charset.forName("UTF-8"));
+                ZipFile zipExpect = new ZipFile(expectedFile, Charset.forName("UTF-8"));) {
 
             // ファイルサイズ取得
             int fileSize = getTestDataFileSize(expectedFile);
 
             // ZIPファイルの中身を比較
             byte[] actual = new byte[fileSize];
-            for (Enumeration<? extends ZipEntry> zipEntries = zipActual
-                    .entries(); zipEntries.hasMoreElements();) {
+            for (Enumeration<? extends ZipEntry> zipEntries = zipActual.entries(); zipEntries
+                    .hasMoreElements();) {
                 ZipEntry entry = zipEntries.nextElement();
                 if (entry.getName().equals("docProps/core.xml")) {
                     // バイナリ値が異なるため比較対象外
@@ -255,8 +242,8 @@ public class FileDownloadTest extends FunctionTestSupport {
             }
 
             byte[] expected = new byte[fileSize];
-            for (Enumeration<? extends ZipEntry> zipEntries = zipExpect
-                    .entries(); zipEntries.hasMoreElements();) {
+            for (Enumeration<? extends ZipEntry> zipEntries = zipExpect.entries(); zipEntries
+                    .hasMoreElements();) {
                 ZipEntry entry = zipEntries.nextElement();
                 if (entry.getName().equals("docProps/core.xml")) {
                     // バイナリ値が異なるため比較対象外
@@ -279,8 +266,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         long size = 0;
         try (ZipFile zipFile = new ZipFile(file, Charset.forName("UTF-8"));) {
 
-            for (Enumeration<? extends ZipEntry> zipEntries = zipFile
-                    .entries(); zipEntries.hasMoreElements();) {
+            for (Enumeration<? extends ZipEntry> zipEntries = zipFile.entries(); zipEntries
+                    .hasMoreElements();) {
                 ZipEntry entry = zipEntries.nextElement();
                 if (entry.getName().equals("docProps/core.xml")) {
                     // バイナリが異なるファイルはサイズ計算対象外
@@ -292,29 +279,24 @@ public class FileDownloadTest extends FunctionTestSupport {
         return (int) size;
     }
 
-    private void assertPdfEquals(InputStream expected,
-            InputStream actual) throws IOException {
-        try (PDDocument expectedDoc = PDDocument.load(expected);
-                PDDocument actualDoc = PDDocument.load(actual)) {
+    private void assertPdfEquals(InputStream expected, InputStream actual) throws IOException {
+        try (PDDocument expectedDoc = Loader.loadPDF(new RandomAccessReadBuffer(expected));
+                PDDocument actualDoc = Loader.loadPDF(new RandomAccessReadBuffer(actual))) {
             // ページ数を比較する
-            assertThat(expectedDoc.getNumberOfPages(), is(actualDoc
-                    .getNumberOfPages()));
+            assertThat(expectedDoc.getNumberOfPages(), is(actualDoc.getNumberOfPages()));
 
             PDFRenderer expectedRenderer = new PDFRenderer(expectedDoc);
             PDFRenderer actualRenderer = new PDFRenderer(actualDoc);
 
             // PDFを画像化して比較する
             for (int i = 0; i < expectedDoc.getNumberOfPages(); i++) {
-                BufferedImage expectedImage = expectedRenderer
-                        .renderImageWithDPI(i, 72, ImageType.RGB);
-                BufferedImage actualImage = actualRenderer.renderImageWithDPI(i,
-                        72, ImageType.RGB);
+                BufferedImage expectedImage =
+                        expectedRenderer.renderImageWithDPI(i, 72, ImageType.RGB);
+                BufferedImage actualImage = actualRenderer.renderImageWithDPI(i, 72, ImageType.RGB);
 
                 // サイズを比較する
-                assertThat(expectedImage.getWidth(), is(actualImage
-                        .getWidth()));
-                assertThat(expectedImage.getHeight(), is(actualImage
-                        .getHeight()));
+                assertThat(expectedImage.getWidth(), is(actualImage.getWidth()));
+                assertThat(expectedImage.getHeight(), is(actualImage.getHeight()));
 
                 // 画像を比較する
                 assertTrue(compareImage(expectedImage, actualImage));
@@ -323,8 +305,8 @@ public class FileDownloadTest extends FunctionTestSupport {
         }
     }
 
-    private boolean compareImage(BufferedImage expectedImage,
-            BufferedImage actualImage) throws IOException {
+    private boolean compareImage(BufferedImage expectedImage, BufferedImage actualImage)
+            throws IOException {
         for (int x = 0; x < expectedImage.getWidth(); x++) {
             for (int y = 0; y < expectedImage.getHeight(); y++) {
                 if (expectedImage.getRGB(x, y) != actualImage.getRGB(x, y)) {

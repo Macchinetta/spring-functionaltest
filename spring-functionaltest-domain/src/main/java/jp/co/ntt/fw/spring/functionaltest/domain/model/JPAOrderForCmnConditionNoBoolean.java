@@ -38,7 +38,8 @@ import org.hibernate.annotations.Where;
 @Where(clause = "is_logical_delete = 0")
 public class JPAOrderForCmnConditionNoBoolean {
 
-    @SequenceGenerator(name = "GEN_ORDER_ID", sequenceName = "s_order_jpa", allocationSize = 1, initialValue = 7)
+    @SequenceGenerator(name = "GEN_ORDER_ID", sequenceName = "s_order_jpa", allocationSize = 1,
+            initialValue = 7)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_ORDER_ID")
     @Id
     @Column(name = "id", nullable = false, length = 10)
@@ -53,7 +54,8 @@ public class JPAOrderForCmnConditionNoBoolean {
     @Column(name = "is_logical_delete")
     private Boolean logicalDelete;
 
-    @OneToMany(targetEntity = JPAOrderItem.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = JPAOrderItem.class, fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")
     @OrderBy
     @Where(clause = "logical_delete = 0")

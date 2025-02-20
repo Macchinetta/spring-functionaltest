@@ -33,11 +33,14 @@ import org.hibernate.annotations.Where;
 @Where(clause = "is_logical_delete = false")
 public class JPAOrderItemForCommonCondition {
     /*
-     * CREATE TABLE t_order_item_jpa ( order_id INTEGER, item_num INTEGER, item_code CHAR(10), quantity INTEGER, logical_delete
-     * boolean, CONSTRAINT t_order_item_jpa_pk PRIMARY KEY(item_num), CONSTRAINT t_order_item_jpa_fk1 FOREIGN KEY(order_id)
-     * REFERENCES t_order_jpa(id), CONSTRAINT t_order_item_jpa_fk2 FOREIGN KEY(item_code) REFERENCES m_item_jpa(code) );
+     * CREATE TABLE t_order_item_jpa ( order_id INTEGER, item_num INTEGER, item_code CHAR(10),
+     * quantity INTEGER, logical_delete boolean, CONSTRAINT t_order_item_jpa_pk PRIMARY
+     * KEY(item_num), CONSTRAINT t_order_item_jpa_fk1 FOREIGN KEY(order_id) REFERENCES
+     * t_order_jpa(id), CONSTRAINT t_order_item_jpa_fk2 FOREIGN KEY(item_code) REFERENCES
+     * m_item_jpa(code) );
      */
-    @SequenceGenerator(name = "GEN_ORDER_ITEM_ID", sequenceName = "s_order_item_jpa", allocationSize = 1, initialValue = 7)
+    @SequenceGenerator(name = "GEN_ORDER_ITEM_ID", sequenceName = "s_order_item_jpa",
+            allocationSize = 1, initialValue = 7)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_ORDER_ITEM_ID")
     @Id
     @Column(name = "item_num")

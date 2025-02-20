@@ -19,14 +19,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.stereotype.Repository;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 
 @Repository
 public class TodoRepositoryImpl implements TodoRepository {
-    private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<String, Todo>();
+    private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<>();
 
     @Override
     public Optional<Todo> findById(String todoId) {

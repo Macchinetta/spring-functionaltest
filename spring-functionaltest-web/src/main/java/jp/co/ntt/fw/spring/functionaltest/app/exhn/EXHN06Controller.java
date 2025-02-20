@@ -99,11 +99,10 @@ public class EXHN06Controller {
     }
 
     @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.GET)
-    public String uploadRegisterGet(@Validated({ Register.class,
-            Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegisterGet(
+            @Validated({Register.class, Default.class}) ArticleBatchRegisterForm form,
             @RequestParam("uploadTemporaryFileId") String uploadTemporaryFileId,
-            BindingResult result,
-            RedirectAttributes redirectAttrs) throws IOException {
+            BindingResult result, RedirectAttributes redirectAttrs) throws IOException {
         if (result.hasErrors()) {
             throw new InvalidRequestException(result.toString());
         }
@@ -117,30 +116,28 @@ public class EXHN06Controller {
     }
 
     @RequestMapping(value = "0601/confirm", params = "upload", method = RequestMethod.POST)
-    public String uploadConfirm(@Validated({ Confirm.class,
-            Default.class }) ArticleBatchRegisterForm form,
-            BindingResult result, ArticleSessionInfo articleSessionInfo,
-            Model model, RedirectAttributes redirectAttrs) throws IOException {
+    public String uploadConfirm(
+            @Validated({Confirm.class, Default.class}) ArticleBatchRegisterForm form,
+            BindingResult result, ArticleSessionInfo articleSessionInfo, Model model,
+            RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("testNumber", "0601");
             return "exhn/articleBatchRegister";
         }
 
-        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
-                form);
+        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
         model.addAttribute("testNumber", "0601");
         return "exhn/articleBatchConfirm";
     }
 
     @RequestMapping(value = "0601/register", params = "upload", method = RequestMethod.POST)
-    public String uploadRegisterPost(@Validated({ Register.class,
-            Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegisterPost(
+            @Validated({Register.class, Default.class}) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             RedirectAttributes redirectAttrs) throws IOException {
-        String uploadTemporaryFileId = articleSessionInfo
-                .getUploadTemporaryFileId();
+        String uploadTemporaryFileId = articleSessionInfo.getUploadTemporaryFileId();
         if (result.hasErrors() || !StringUtils.hasText(uploadTemporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
@@ -159,26 +156,24 @@ public class EXHN06Controller {
     }
 
     @RequestMapping(value = "0601/002/confirm", params = "upload", method = RequestMethod.POST)
-    public String uploadConfirmChangeproperty(@Validated({ Confirm.class,
-            Default.class }) ArticleBatchRegisterForm form,
-            BindingResult result, ArticleSessionInfo articleSessionInfo,
-            Model model, RedirectAttributes redirectAttrs) throws IOException {
+    public String uploadConfirmChangeproperty(
+            @Validated({Confirm.class, Default.class}) ArticleBatchRegisterForm form,
+            BindingResult result, ArticleSessionInfo articleSessionInfo, Model model,
+            RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("testNumber", "0601/002");
             return "exhn/articleBatchRegister";
         }
 
-        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
-                form);
+        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
         model.addAttribute("testNumber", "0601/002");
         return "exhn/articleBatchConfirm";
     }
 
     @RequestMapping(value = "0601/002", params = "complete")
-    public String articleCompleteChangeproperty(
-            ArticleSessionInfo articleSessionInfo,
+    public String articleCompleteChangeproperty(ArticleSessionInfo articleSessionInfo,
             SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         articleSessionInfo.setUploadTemporaryFileId("");

@@ -23,12 +23,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-public class InternationalizationForEnLocaleBrowserTest extends
-                                                        FunctionTestSupport {
+public class InternationalizationForEnLocaleBrowserTest extends FunctionTestSupport {
 
-    private static WebDriver enDriver;
+    private static WebDriver driver;
 
     public InternationalizationForEnLocaleBrowserTest() {
         disableDefaultWebDriver();
@@ -37,10 +37,10 @@ public class InternationalizationForEnLocaleBrowserTest extends
 
     @Before
     public void setUpWebDriver() {
-        if (enDriver == null) {
-            enDriver = webDriverCreator.createLocaleSpecifiedDriver("en");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.ENGLISH_US);
         }
-        setCurrentWebDriver(enDriver);
+        setCurrentWebDriver(driver);
     }
 
     /**

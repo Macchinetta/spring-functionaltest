@@ -47,8 +47,7 @@ public class AJAX0104Controller {
     @RequestMapping(value = "0104/write", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public MessageBoardResult editForXml(
-            @Validated @RequestBody MessageBoardForm form) {
+    public MessageBoardResult editForXml(@Validated @RequestBody MessageBoardForm form) {
 
         MessageBoard messageBoard = new MessageBoard();
         String comment = form.getComment();
@@ -64,11 +63,10 @@ public class AJAX0104Controller {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResults handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e, Locale locale) {
+    public ErrorResults handleMethodArgumentNotValidException(MethodArgumentNotValidException e,
+            Locale locale) {
 
-        return messageBoardHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return messageBoardHelper.setErrorResults(e.getBindingResult().getFieldErrors(), locale);
     }
 
 }

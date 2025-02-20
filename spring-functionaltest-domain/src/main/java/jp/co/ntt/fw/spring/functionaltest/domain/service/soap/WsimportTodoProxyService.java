@@ -17,8 +17,12 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.soap;
 
 import java.util.List;
 
+import jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo;
+
 public interface WsimportTodoProxyService {
 
-    List<jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo> getTodos();
+    List<Todo> getTodosJaxWsPortProxy();
+
+    List<Todo> getTodosWsimport();
 
 }

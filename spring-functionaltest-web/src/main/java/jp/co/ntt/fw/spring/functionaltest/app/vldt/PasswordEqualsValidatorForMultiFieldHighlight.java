@@ -23,8 +23,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class PasswordEqualsValidatorForMultiFieldHighlight implements
-                                                           Validator {
+public class PasswordEqualsValidatorForMultiFieldHighlight implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -43,9 +42,9 @@ public class PasswordEqualsValidatorForMultiFieldHighlight implements
         }
 
         if (!Objects.equals(password, confirmPassword)) {
-            errors.rejectValue("confirmPassword", "i.sf.vldt.5001",
+            errors.rejectValue("confirmPassword", "i.sf.vd.5001",
                     "password and confirm password must be same.");
-            errors.rejectValue("password", "i.sf.vldt.5003", "");
+            errors.rejectValue("password", "i.sf.vd.5003", "");
         }
     }
 

@@ -39,11 +39,10 @@ public class APLY0102010Controller {
 
     @RequestMapping(value = "0102/010")
     public String handle02010(CommonParameters commonParams, Model model) {
-        String[] messageArgs = { "@RequestMapping(value = \"0102/010\")",
-                commonParams.getCommonParam1(), commonParams
-                        .getCommonParam2() };
-        model.addAttribute("resultMessage", messageSource.getMessage(
-                "i.sf.aply.0006", messageArgs, Locale.JAPANESE));
+        String[] messageArgs = {"@RequestMapping(value = \"0102/010\")",
+                commonParams.getCommonParam1(), commonParams.getCommonParam2()};
+        model.addAttribute("resultMessage",
+                messageSource.getMessage("i.sf.al.0006", messageArgs, Locale.JAPANESE));
         return "aply/showHandleRequestForm";
     }
 }

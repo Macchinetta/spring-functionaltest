@@ -30,8 +30,7 @@ public interface SystemConfigService {
     void insertForStaff(SystemConfig systemConfig);
 
     @PreAuthorize("hasRole('ADMIN') or (#username == principal.username)")
-    SystemConfig findDeviceForAdmin(String device,
-            @P("username") String username);
+    SystemConfig findDeviceForAdmin(String device, @P("username") String username);
 
     @PreAuthorize("hasRole('STAFF')")
     @PostAuthorize("(returnObject == null) or (returnObject.owner == principal.username)")

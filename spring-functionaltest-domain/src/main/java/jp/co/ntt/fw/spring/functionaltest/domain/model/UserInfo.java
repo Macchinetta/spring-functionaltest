@@ -17,18 +17,17 @@ package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = -6878040701728419212L;
 
-    @NotNull
+    @NotEmpty
     private String userId;
 
-    @NotNull
+    @NotEmpty
     private String userName;
 
     @Past

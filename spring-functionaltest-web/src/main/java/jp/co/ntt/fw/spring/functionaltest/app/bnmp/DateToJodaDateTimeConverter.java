@@ -21,8 +21,7 @@ import org.joda.time.DateTime;
 
 import com.github.dozermapper.core.DozerConverter;
 
-public class DateToJodaDateTimeConverter extends
-                                         DozerConverter<Date, DateTime> {
+public class DateToJodaDateTimeConverter extends DozerConverter<Date, DateTime> {
 
     public DateToJodaDateTimeConverter() {
         super(Date.class, DateTime.class);

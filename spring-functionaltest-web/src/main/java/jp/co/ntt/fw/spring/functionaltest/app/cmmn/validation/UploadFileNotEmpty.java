@@ -33,11 +33,11 @@ import javax.validation.Payload;
 
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty.List;
 
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
-@Constraint(validatedBy = { UploadFileNotEmptyValidator.class,
-        UploadFileNotEmptyForCollectionValidator.class })
+@Constraint(validatedBy = {UploadFileNotEmptyValidator.class,
+        UploadFileNotEmptyForCollectionValidator.class})
 public @interface UploadFileNotEmpty {
     String message() default "{jp.co.ntt.fw.spring.functionaltest.app.cmmn.validation.UploadFileNotEmpty.message}";
 
@@ -45,8 +45,7 @@ public @interface UploadFileNotEmpty {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

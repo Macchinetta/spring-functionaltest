@@ -36,8 +36,8 @@ public class AccountSharedServiceImpl implements AccountSharedService {
     public Account findOne(String username) {
         Account account = accountRepository.findByUsername(username);
         if (account == null) {
-            throw new ResourceNotFoundException("The given account is not found! username="
-                    + username);
+            throw new ResourceNotFoundException(
+                    "The given account is not found! username=" + username);
         }
         return account;
     }

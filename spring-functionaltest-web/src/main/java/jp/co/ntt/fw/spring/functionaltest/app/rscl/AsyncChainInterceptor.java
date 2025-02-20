@@ -27,35 +27,30 @@ import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @SuppressWarnings("deprecation")
-public class AsyncChainInterceptor implements
-                                   AsyncClientHttpRequestInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(
-            AsyncChainInterceptor.class);
+public class AsyncChainInterceptor implements AsyncClientHttpRequestInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(AsyncChainInterceptor.class);
 
     @Override
-    public ListenableFuture<ClientHttpResponse> intercept(HttpRequest request,
-            byte[] body,
+    public ListenableFuture<ClientHttpResponse> intercept(HttpRequest request, byte[] body,
             AsyncClientHttpRequestExecution execution) throws IOException {
 
         logger.info("AsyncChainInterceptor Called!");
 
-        ListenableFuture<ClientHttpResponse> future = execution.executeAsync(
-                request, body);
+        ListenableFuture<ClientHttpResponse> future = execution.executeAsync(request, body);
 
         if (logger.isInfoEnabled()) {
-            future.addCallback(
-                    new ListenableFutureCallback<ClientHttpResponse>() {
+            future.addCallback(new ListenableFutureCallback<ClientHttpResponse>() {
 
-                        @Override
-                        public void onSuccess(ClientHttpResponse response) {
-                            logger.info("onSuccess Called!");
-                        }
+                @Override
+                public void onSuccess(ClientHttpResponse response) {
+                    logger.info("onSuccess Called!");
+                }
 
-                        @Override
-                        public void onFailure(Throwable e) {
-                            logger.info("onFailure Called!");
-                        }
-                    });
+                @Override
+                public void onFailure(Throwable e) {
+                    logger.info("onFailure Called!");
+                }
+            });
         }
 
         return future;

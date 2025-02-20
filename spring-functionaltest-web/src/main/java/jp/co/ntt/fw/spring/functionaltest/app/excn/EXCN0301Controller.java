@@ -55,8 +55,7 @@ public class EXCN0301Controller {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
-        stock = stockDBLockService.buy(stock, form.getPurchasingQuantity(), form
-                .getSleepMillis());
+        stock = stockDBLockService.buy(stock, form.getPurchasingQuantity(), form.getSleepMillis());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));

@@ -21,11 +21,9 @@ import org.springframework.data.repository.query.Param;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategoryEG;
 
-public interface JPACategoryEGCRUDRepository extends
-                                             JpaRepository<JPACategoryEG, Integer> {
+public interface JPACategoryEGCRUDRepository extends JpaRepository<JPACategoryEG, Integer> {
 
     @Query("SELECT a FROM JPACategoryEG a WHERE a.categoryName = :categoryName")
-    JPACategoryEG findByCategoryName(
-            @Param("categoryName") String categoryName);
+    JPACategoryEG findByCategoryName(@Param("categoryName") String categoryName);
 
 }

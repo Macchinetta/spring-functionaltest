@@ -30,14 +30,12 @@ public class ATHN22Controller {
     }
 
     @RequestMapping(value = "2201", params = "loginSuccess")
-    public String handle2201LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle2201LoginSuccess(@AuthenticationPrincipal User userDetails, Model model) {
         // RememberMe機能を使用しない場合、認証済み情報は取得できないため、
         // 認証済み情報が存在するかチェックする。
         if (userDetails != null) {
             model.addAttribute("username", userDetails.getUsername());
-            model.addAttribute("userEmail", userDetails.getUsername()
-                    + "@example.com");
+            model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         }
         return "athn/rememberMeUserInfoDsp";
     }

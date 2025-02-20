@@ -27,16 +27,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice(basePackages = "jp.co.ntt.fw.spring.functionaltest.app.pgnt")
 public class PGNTControllerAdvice {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            PGNTControllerAdvice.class);
+    private static final Logger logger = LoggerFactory.getLogger(PGNTControllerAdvice.class);
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public String handleConstraintViolationException(
-            ConstraintViolationException e) {
+    public String handleConstraintViolationException(ConstraintViolationException e) {
         if (logger.isWarnEnabled()) {
-            logger.warn("ConstraintViolations[\n{}\n]", e
-                    .getConstraintViolations());
+            logger.warn("ConstraintViolations[\n{}\n]", e.getConstraintViolations());
         }
         return "common/error/requestError";
     }

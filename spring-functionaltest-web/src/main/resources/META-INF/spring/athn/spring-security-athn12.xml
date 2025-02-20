@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <bean id="authenticationSuccessHandler" class="jp.co.ntt.fw.spring.functionaltest.app.athn.handler.MyAuthenticationSuccessHandler">
-    <property name="defaultTargetUrl" value="/athn/1202/001?loginSuccess" />
-  </bean>
+    <bean id="authenticationSuccessHandler" class="jp.co.ntt.fw.spring.functionaltest.app.athn.handler.MyAuthenticationSuccessHandler">
+        <property name="defaultTargetUrl" value="/athn/1202/001?loginSuccess" />
+    </bean>
 
-  <sec:http pattern="/athn/1201/001/**" authentication-manager-ref="dbUserLoginManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athn/1201/001/login" login-processing-url="/athn/1201/001/authenticate"
-      default-target-url="/athn/1201/001?loginSuccess" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/1201/001/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/1201/001/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/1201/**" access="isAuthenticated()" />
-  </sec:http>
+    <sec:http pattern="/athn/1201/001/**" authentication-manager-ref="dbUserLoginManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athn/1201/001/login" login-processing-url="/athn/1201/001/authenticate"
+            default-target-url="/athn/1201/001?loginSuccess" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/1201/001/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/1201/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/1201/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:http pattern="/athn/1202/001/**" authentication-manager-ref="dbUserLoginManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athn/1202/001/login" login-processing-url="/athn/1202/001/authenticate"
-      authentication-success-handler-ref="authenticationSuccessHandler" />
-    <sec:logout logout-url="/athn/1202/001/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/1202/001/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/1202/**" access="isAuthenticated()" />
-  </sec:http>
+    <sec:http pattern="/athn/1202/001/**" authentication-manager-ref="dbUserLoginManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athn/1202/001/login" login-processing-url="/athn/1202/001/authenticate"
+            authentication-success-handler-ref="authenticationSuccessHandler" />
+        <sec:logout logout-url="/athn/1202/001/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/1202/001/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/1202/**" access="isAuthenticated()" />
+    </sec:http>
 </beans>

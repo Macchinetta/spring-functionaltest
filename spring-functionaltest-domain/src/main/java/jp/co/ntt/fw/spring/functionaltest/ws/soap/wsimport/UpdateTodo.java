@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * updateTodo complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="updateTodo">
  *   &lt;complexContent>
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "updateTodo", propOrder = { "todo" })
+@XmlType(name = "updateTodo", propOrder = {"todo"})
 public class UpdateTodo {
 
     protected Todo todo;

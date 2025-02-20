@@ -28,8 +28,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.ReceivedEvent;
 
 public class JmsErrorHandler implements ErrorHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            JmsErrorHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(JmsErrorHandler.class);
 
     @Inject
     ApplicationEventPublisher eventPublisher;
@@ -47,8 +46,7 @@ public class JmsErrorHandler implements ErrorHandler {
 
             logger.error("SystemException Error!");
             // messageに設定したTodoIdを引数にして受信完了を待っているスレッドの待機を解除するためにイベントを通知する
-            eventPublisher.publishEvent(new ReceivedEvent<String>(this, t
-                    .getCause().getMessage()));
+            eventPublisher.publishEvent(new ReceivedEvent<String>(this, t.getCause().getMessage()));
         } else {
             // Other Error
 

@@ -33,9 +33,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
  * HTTPS用RestTemplateのClientHttpRequestFactory作成クラス。
  * </ul>
  */
-public class RequestFactoryBean implements
-                                FactoryBean<ClientHttpRequestFactory>,
-                                DisposableBean {
+public class RequestFactoryBean implements FactoryBean<ClientHttpRequestFactory>, DisposableBean {
 
     private String keyStoreFileName;
 
@@ -50,22 +48,21 @@ public class RequestFactoryBean implements
         SSLContext sslContext = SSLContext.getInstance("TLS");
 
         KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
-        ks.load(this.getClass().getClassLoader().getResourceAsStream(
-                this.keyStoreFileName), this.keyStorePassword);
+        ks.load(this.getClass().getClassLoader().getResourceAsStream(this.keyStoreFileName),
+                this.keyStorePassword);
 
-        KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory
-                .getDefaultAlgorithm());
+        KeyManagerFactory kmf =
+                KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(ks, this.keyStorePassword);
 
-        TrustManagerFactory tmf = TrustManagerFactory.getInstance(
-                TrustManagerFactory.getDefaultAlgorithm());
+        TrustManagerFactory tmf =
+                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         tmf.init(ks);
 
         sslContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
         // SSLコンテキストを設定したHTTPClientの作成
-        HttpClient httpClient = HttpClientBuilder.create().setSSLContext(
-                sslContext).build();
+        HttpClient httpClient = HttpClientBuilder.create().setSSLContext(sslContext).build();
 
         // RestTemplateへ渡すRequestFactoryの作成
         this.factory = new HttpComponentsClientHttpRequestFactory(httpClient);

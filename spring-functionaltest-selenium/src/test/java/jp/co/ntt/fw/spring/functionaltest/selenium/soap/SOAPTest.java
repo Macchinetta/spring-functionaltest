@@ -30,10 +30,14 @@ import jp.co.ntt.fw.spring.functionaltest.ws.webfault.ErrorBean;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultType;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class SOAPTest extends SOAPTestSupport {
 
     private static final int TODO_MAX_COUNT = 5;
+
+    private static final String HEADER_EXISTS = "\\{.+\\}";
+
+    private static final String HEADER_NOT_EXISTS = "null";
 
     @Override
     protected void onFinished() {
@@ -45,6 +49,12 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>クライアントからSOAPサーバのWebサービスが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 ※ガイドライン全般の正常系および、設定周り全般
+     *
+     * Appendix / Tomcat上でのWebサービス開発 SOAPサーバの作成 / Webサービスの実装 クライアントの作成 / Webサービス クライアントの実装 /
+     * WebServiceインターフェースを実装したプロキシの作成 クライアントの作成 / Webサービス クライアントの実装 /
+     * ServiceからWebサービスを呼び出す(レスポンスの情報取得含む)
      */
     @Test
     public void testSOAP0101001() throws Exception {
@@ -59,6 +69,7 @@ public class SOAPTest extends SOAPTestSupport {
 
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(200);
+            assertHttpRespnseHeader(HEADER_EXISTS);
         }
 
     }
@@ -68,6 +79,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <li>ローカルにあるwsdlファイルを用いたクライアントのWebサービスが実行できることを確認する。</li>
      * <li>エンドポイントを指定したクライアントからSOAPサーバのWebサービスが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 クライアントの作成 / Webサービス クライアントの実装 / エンドポイントアドレスの上書き指定
      */
     @Test
     public void testSOAP0102002() throws Exception {
@@ -82,6 +95,7 @@ public class SOAPTest extends SOAPTestSupport {
 
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(200);
+            assertHttpRespnseHeader(HEADER_EXISTS);
         }
 
     }
@@ -90,6 +104,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバのWebサービスで引数の入力チェックが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 入力チェックの実装
      */
     @Test
     public void testSOAP0201001() throws Exception {
@@ -105,8 +121,7 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
@@ -116,6 +131,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -138,6 +154,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -158,10 +175,11 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
 
                 assertWebFaultIsInErrorBeans(WebFaultType.VALIDATION_FAULT,
-                        new ErrorBean("NotNull", "null は許可されていません", "todoId"),
-                        new ErrorBean("NotNull", "null は許可されていません", "arg0"));
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "todoId"),
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "arg0"));
             }
         }
 
@@ -171,6 +189,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバのWebサービスでJavaBeanの入力チェックが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 入力チェックの実装
      */
     @Test
     public void testSOAP0201002() throws Exception {
@@ -184,8 +204,7 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
@@ -194,6 +213,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -211,6 +231,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -225,16 +246,16 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.clearText(id("title"));
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
                 assertWebFault(WebFaultType.VALIDATION_FAULT,
-                        new ErrorBean("NotNull", "null は許可されていません", "title"));
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "title"));
             }
         }
 
@@ -252,6 +273,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -261,6 +283,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバのWebサービスでグループ化を用いたJavaBeanの入力チェックが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 入力チェックの実装
      */
     @Test
     public void testSOAP0201003() throws Exception {
@@ -285,8 +309,7 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
@@ -296,6 +319,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -311,26 +335,22 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 webDriverOperations.overrideText(id("todoId"), createdTodoId);
                 webDriverOperations.overrideText(id("title"), forUpdateTitle);
-                webDriverOperations.overrideText(id("description"),
-                        forUpdateDescription);
+                webDriverOperations.overrideText(id("description"), forUpdateDescription);
                 webDriverOperations.click(id("finished1"));
                 webDriverOperations.click(id("update"));
             }
             // 結果の確認
             {
-                assertThat(webDriverOperations.getText(id("todoId")), is(
-                        createdTodoId));
-                assertThat(webDriverOperations.getText(id("title")), is(
-                        forUpdateTitle));
-                assertThat(webDriverOperations.getText(id("description")), is(
-                        forUpdateDescription));
-                assertThat(webDriverOperations.getText(id("finished")), is(
-                        "true"));
-                assertThat(webDriverOperations.getText(id("createdAt")), is(
-                        createdAt));
+                assertThat(webDriverOperations.getText(id("todoId")), is(createdTodoId));
+                assertThat(webDriverOperations.getText(id("title")), is(forUpdateTitle));
+                assertThat(webDriverOperations.getText(id("description")),
+                        is(forUpdateDescription));
+                assertThat(webDriverOperations.getText(id("finished")), is("true"));
+                assertThat(webDriverOperations.getText(id("createdAt")), is(createdAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -348,13 +368,13 @@ public class SOAPTest extends SOAPTestSupport {
 
                 beforeTodoId = webDriverOperations.getText(id("todoId1"));
                 beforeTitle = webDriverOperations.getText(id("title1"));
-                beforeDescription = webDriverOperations.getText(id(
-                        "description1"));
+                beforeDescription = webDriverOperations.getText(id("description1"));
                 beforeFinished = webDriverOperations.getText(id("finished1"));
                 beforeCreatedAt = webDriverOperations.getText(id("createdAt1"));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -379,8 +399,9 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
                 assertWebFault(WebFaultType.VALIDATION_FAULT,
-                        new ErrorBean("NotNull", "null は許可されていません", "todoId"));
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "todoId"));
             }
         }
 
@@ -398,19 +419,15 @@ public class SOAPTest extends SOAPTestSupport {
                 // updateされていないことの確認
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
-                assertThat(webDriverOperations.getText(id("todoId1")), is(
-                        beforeTodoId));
-                assertThat(webDriverOperations.getText(id("title1")), is(
-                        beforeTitle));
-                assertThat(webDriverOperations.getText(id("description1")), is(
-                        beforeDescription));
-                assertThat(webDriverOperations.getText(id("finished1")), is(
-                        beforeFinished));
-                assertThat(webDriverOperations.getText(id("createdAt1")), is(
-                        beforeCreatedAt));
+                assertThat(webDriverOperations.getText(id("todoId1")), is(beforeTodoId));
+                assertThat(webDriverOperations.getText(id("title1")), is(beforeTitle));
+                assertThat(webDriverOperations.getText(id("description1")), is(beforeDescription));
+                assertThat(webDriverOperations.getText(id("finished1")), is(beforeFinished));
+                assertThat(webDriverOperations.getText(id("createdAt1")), is(beforeCreatedAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -420,6 +437,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバのWebサービスで複数項目の入力チェックが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 入力チェックの実装
      */
     @Test
     public void testSOAP0201004() throws Exception {
@@ -439,14 +458,14 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -464,13 +483,13 @@ public class SOAPTest extends SOAPTestSupport {
 
                 beforeTodoId = webDriverOperations.getText(id("todoId1"));
                 beforeTitle = webDriverOperations.getText(id("title1"));
-                beforeDescription = webDriverOperations.getText(id(
-                        "description1"));
+                beforeDescription = webDriverOperations.getText(id("description1"));
                 beforeFinished = webDriverOperations.getText(id("finished1"));
                 beforeCreatedAt = webDriverOperations.getText(id("createdAt1"));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -486,8 +505,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 webDriverOperations.clearText(id("todoId"));
                 webDriverOperations.clearText(id("title"));
-                webDriverOperations.overrideText(id("description"),
-                        "update test description");
+                webDriverOperations.overrideText(id("description"), "update test description");
                 webDriverOperations.click(id("finished1"));
                 webDriverOperations.click(id("update"));
             }
@@ -495,9 +513,10 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
                 assertWebFault(WebFaultType.VALIDATION_FAULT,
-                        new ErrorBean("NotNull", "null は許可されていません", "todoId"),
-                        new ErrorBean("NotNull", "null は許可されていません", "title"));
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "todoId"),
+                        new ErrorBean("NotEmpty", "空要素は許可されていません", "title"));
             }
         }
 
@@ -514,19 +533,15 @@ public class SOAPTest extends SOAPTestSupport {
                 assertThat(webDriverOperations.exists(id("todos")), is(true));
 
                 // updateされていないことの確認
-                assertThat(webDriverOperations.getText(id("todoId1")), is(
-                        beforeTodoId));
-                assertThat(webDriverOperations.getText(id("title1")), is(
-                        beforeTitle));
-                assertThat(webDriverOperations.getText(id("description1")), is(
-                        beforeDescription));
-                assertThat(webDriverOperations.getText(id("finished1")), is(
-                        beforeFinished));
-                assertThat(webDriverOperations.getText(id("createdAt1")), is(
-                        beforeCreatedAt));
+                assertThat(webDriverOperations.getText(id("todoId1")), is(beforeTodoId));
+                assertThat(webDriverOperations.getText(id("title1")), is(beforeTitle));
+                assertThat(webDriverOperations.getText(id("description1")), is(beforeDescription));
+                assertThat(webDriverOperations.getText(id("finished1")), is(beforeFinished));
+                assertThat(webDriverOperations.getText(id("createdAt1")), is(beforeCreatedAt));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -536,6 +551,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>クライアントからBASIC認証の認証情報を送信し、SOAPサーバでBASIC認証が実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / セキュリティ対策 / 認証処理(CSRF対策含む) クライアントの作成 / セキュリティ対策
      */
     @Test
     public void testSOAP0301001() throws Exception {
@@ -549,18 +566,18 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
             {
                 assertThat(webDriverOperations.getText(id("title")), is("テスト"));
-                assertThat(webDriverOperations.getText(id("description")), is(
-                        "test description by testuser"));
+                assertThat(webDriverOperations.getText(id("description")),
+                        is("test description by testuser"));
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -578,6 +595,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -592,26 +610,25 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(401);
+                assertHttpRespnseHeader(HEADER_NOT_EXISTS);
                 String exceptionClassName;
                 // Issue1231. WebSphere Traditionalだけ発生する例外クラスが異なるため
                 // チェックする名称を変更する。
-                if (webDriverOperations
-                        .getApServerName() == ApServerName.WEBSPHERETR) {
-                    exceptionClassName = "org.springframework.remoting.jaxws.JaxWsSoapFaultException";
+                if (webDriverOperations.getApServerName() == ApServerName.WEBSPHERETR) {
+                    exceptionClassName =
+                            "org.springframework.remoting.jaxws.JaxWsSoapFaultException";
                 } else {
                     exceptionClassName = "org.springframework.remoting.RemoteAccessException";
                 }
                 dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
-                        exceptionClassName);
+                        webDriverOperations.getXTrack(), null, "e.sf.fw.9001", exceptionClassName);
             }
         }
 
@@ -629,6 +646,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -638,6 +656,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバでServiceでの認可ができることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / セキュリティ対策 / 認可処理
      */
     @Test
     public void testSOAP0301002() throws Exception {
@@ -653,8 +673,7 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
@@ -663,6 +682,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -680,6 +700,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -700,6 +721,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -717,6 +739,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -731,8 +754,7 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
@@ -741,6 +763,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -759,6 +782,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -779,8 +803,10 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
                 assertWebFault(WebFaultType.ACCESS_DEFINED_FAULT,
-                        new ErrorBean("org.springframework.security.access.AccessDeniedException", "Access is denied", null));
+                        new ErrorBean("org.springframework.security.access.AccessDeniedException",
+                                "Access is denied", null));
             }
         }
 
@@ -798,6 +824,7 @@ public class SOAPTest extends SOAPTestSupport {
 
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -808,6 +835,9 @@ public class SOAPTest extends SOAPTestSupport {
      * <li>SOAPサーバで発生したリソース未検出エラーをSOAPFaultにラップしてスローできることを確認する。</li>
      * <li>SOAPFaultをクライアントでキャッチして処理できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 例外ハンドリングの実装 クライアントの作成 / 例外ハンドリングの実装
+     * ※TodoProxyServiceImpl#loggingWebFaultで出力したWebFaultTypeを確認
      */
     @Test
     public void testSOAP0401002() throws Exception {
@@ -821,14 +851,14 @@ public class SOAPTest extends SOAPTestSupport {
             // 作成情報入力
             {
                 webDriverOperations.overrideText(id("title"), "テスト");
-                webDriverOperations.overrideText(id("description"),
-                        "test description");
+                webDriverOperations.overrideText(id("description"), "test description");
                 webDriverOperations.click(id("create"));
             }
             // 結果の確認
             {
                 dbLogAssertOperations.waitForAssertion();
                 assertHttpStatusCode(200);
+                assertHttpRespnseHeader(HEADER_EXISTS);
             }
         }
 
@@ -849,6 +879,7 @@ public class SOAPTest extends SOAPTestSupport {
             {
                 dbLogAssertOperations.waitForAssertion(500);
                 assertHttpStatusCode(500);
+                assertHttpRespnseHeader(HEADER_EXISTS);
                 assertWebFault(WebFaultType.RESOURCE_NOT_FOUND_FAULT,
                         new ErrorBean("e.sf.soap.5001", "Resource not found", null));
             }
@@ -861,11 +892,13 @@ public class SOAPTest extends SOAPTestSupport {
      * <li>SOAPサーバで発生した業務エラーをSOAPFaultにラップしてスローできることを確認する。</li>
      * <li>SOAPFaultをクライアントでキャッチして処理できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 クライアントの作成 / 例外ハンドリングの実装 ※TodoProxyServiceImpl#loggingWebFaultで出力したWebFaultTypeを確認
      */
     @Test
     public void testSOAP0401003() throws Exception {
 
-        // 【１．TODO作成 - 失敗（101個目TODO作成で業務例外）】
+        // 【１．TODO作成 - 失敗（6個目TODO作成で業務例外）】
         {
             int count = TODO_MAX_COUNT + 1;
             for (int i = 0; i < count; i++) {
@@ -873,8 +906,7 @@ public class SOAPTest extends SOAPTestSupport {
                 webDriverOperations.click(id("SOAP0401003-01"));
 
                 webDriverOperations.overrideText(id("title"), "テスト " + (i + 1));
-                webDriverOperations.overrideText(id("description"),
-                        "test description " + (i + 1));
+                webDriverOperations.overrideText(id("description"), "test description " + (i + 1));
                 webDriverOperations.click(id("create"));
             }
         }
@@ -882,6 +914,7 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(500);
+            assertHttpRespnseHeader(HEADER_EXISTS);
             assertWebFault(WebFaultType.BUSINESS_FAULT,
                     new ErrorBean("e.sf.soap.8001", "Exceed todo count max", null));
         }
@@ -892,6 +925,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>SOAPサーバの例外ハンドラーで設定されていない例外が発生したとき、システム例外をスローすることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / 例外ハンドリングの実装
      */
     @Test
     public void testSOAP0401004() throws Exception {
@@ -904,8 +939,9 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(500);
+            assertHttpRespnseHeader(HEADER_EXISTS);
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                    webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                    webDriverOperations.getXTrack(), null, "e.sf.fw.9001",
                     "org.springframework.remoting.jaxws.JaxWsSoapFaultException");
         }
 
@@ -915,6 +951,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>MTOMを利用したファイル転送ができることを確認する</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 SOAPサーバの作成 / MTOMを利用した大容量のバイナリデータを扱う方法
      */
     @Test
     public void testSOAP0501001() throws Exception {
@@ -931,11 +969,12 @@ public class SOAPTest extends SOAPTestSupport {
         }
         // 結果の確認
         {
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    "SOAP SOAP Web Service（サーバ/クライアント）"));
+            assertThat(webDriverOperations.getText(id("screenTitle")),
+                    is("SOAP SOAP Web Service（サーバ/クライアント）"));
 
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(200);
+            assertHttpRespnseHeader(HEADER_EXISTS);
         }
 
     }
@@ -944,6 +983,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>クライアントで設定したSOAPサーバへのリクエストタイムアウトになることを確認する</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 クライアントの作成 / タイムアウトの設定
      */
     @Test
     public void testSOAP0601001() throws Exception {
@@ -956,8 +997,10 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                    webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                    webDriverOperations.getXTrack(), null, "e.sf.fw.9001",
                     "java.net.SocketTimeoutException");
+            assertHttpStatusCode(null);
+            assertHttpRespnseHeader(HEADER_NOT_EXISTS);
         }
 
     }
@@ -966,6 +1009,8 @@ public class SOAPTest extends SOAPTestSupport {
      * <ul>
      * <li>クライアントで設定したSOAPサーバへのコネクションタイムアウトになることを確認する</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 クライアントの作成 / タイムアウトの設定
      */
     @Ignore("コネクションタイムアウトを意図的に発生させることができないため")
     public void testSOAP0601002() throws Exception {
@@ -974,8 +1019,10 @@ public class SOAPTest extends SOAPTestSupport {
 
     /**
      * <ul>
-     * <li>wsimportを利用し、クライアントからSOAPサーバのWebサービスが実行できることを確認する。</li>
+     * <li>wsimportを利用し、クライアント(Proxy経由)からSOAPサーバのWebサービスが実行できることを確認する。</li>
      * </ul>
+     *
+     * ガイドライン記載箇所 Appendix / wsimportの使い方
      */
     @Test
     public void testSOAP0701001() throws Exception {
@@ -990,6 +1037,32 @@ public class SOAPTest extends SOAPTestSupport {
 
             dbLogAssertOperations.waitForAssertion();
             assertHttpStatusCode(200);
+            assertHttpRespnseHeader(HEADER_EXISTS);
+        }
+
+    }
+
+    /**
+     * <ul>
+     * <li>wsimportを利用し、クライアントからSOAPサーバのWebサービスが実行できることを確認する。</li>
+     * </ul>
+     *
+     * ガイドライン記載箇所 Appendix / wsimportの使い方
+     */
+    @Test
+    public void testSOAP0701002() throws Exception {
+
+        // メニュー画面の操作
+        {
+            webDriverOperations.click(id("SOAP0701002-01"));
+        }
+        // 結果の確認
+        {
+            assertThat(webDriverOperations.exists(id("todos")), is(false));
+
+            dbLogAssertOperations.waitForAssertion();
+            assertHttpStatusCode(200);
+            assertHttpRespnseHeader(HEADER_EXISTS);
         }
 
     }

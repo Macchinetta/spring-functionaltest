@@ -28,8 +28,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional
 @Service
-public class DeliveryOrderInitializerServiceImpl implements
-                                                 DeliveryOrderInitializerService {
+public class DeliveryOrderInitializerServiceImpl implements DeliveryOrderInitializerService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;
@@ -47,8 +46,9 @@ public class DeliveryOrderInitializerServiceImpl implements
         insertOrder.setSenderAddress("送り主住所1");
         insertOrder.setRecieverName("送り先名1");
         insertOrder.setRecieverAddress("送り先住所1");
-        insertOrder.setAcceptDatetime(DateTime.parse("2014/01/01 01:01:01",
-                DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")).toDate());
+        insertOrder.setAcceptDatetime(DateTime
+                .parse("2014/01/01 01:01:01", DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss"))
+                .toDate());
         insertOrder.setCompletionDatetime(null);
         insertOrder.setDeliveryDriver("ドライバー1");
         insertOrder.setDeliveryStatus("受付");
@@ -61,8 +61,9 @@ public class DeliveryOrderInitializerServiceImpl implements
         insertOrder.setSenderAddress("送り主住所2");
         insertOrder.setRecieverName("送り先名2");
         insertOrder.setRecieverAddress("送り先住所2");
-        insertOrder.setAcceptDatetime(DateTime.parse("2014/01/02 02:02:02",
-                DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")).toDate());
+        insertOrder.setAcceptDatetime(DateTime
+                .parse("2014/01/02 02:02:02", DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss"))
+                .toDate());
         insertOrder.setCompletionDatetime(null);
         insertOrder.setDeliveryDriver("ドライバー2");
         insertOrder.setDeliveryStatus("受付");
@@ -75,8 +76,9 @@ public class DeliveryOrderInitializerServiceImpl implements
         insertOrder.setSenderAddress("送り主住所3");
         insertOrder.setRecieverName("送り先名3");
         insertOrder.setRecieverAddress("送り先住所3");
-        insertOrder.setAcceptDatetime(DateTime.parse("2014/01/03 03:03:03",
-                DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")).toDate());
+        insertOrder.setAcceptDatetime(DateTime
+                .parse("2014/01/03 03:03:03", DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss"))
+                .toDate());
         insertOrder.setCompletionDatetime(null);
         insertOrder.setDeliveryDriver("ドライバー3");
         insertOrder.setDeliveryStatus("受付");
@@ -89,8 +91,9 @@ public class DeliveryOrderInitializerServiceImpl implements
         insertOrder.setSenderAddress("送り主住所4");
         insertOrder.setRecieverName("送り先名4");
         insertOrder.setRecieverAddress("送り先住所4");
-        insertOrder.setAcceptDatetime(DateTime.parse("2014/01/04 04:04:04",
-                DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")).toDate());
+        insertOrder.setAcceptDatetime(DateTime
+                .parse("2014/01/04 04:04:04", DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss"))
+                .toDate());
         insertOrder.setCompletionDatetime(null);
         insertOrder.setDeliveryDriver("ドライバー4");
         insertOrder.setDeliveryStatus("受付");
@@ -103,8 +106,9 @@ public class DeliveryOrderInitializerServiceImpl implements
         insertOrder.setSenderAddress("送り主住所5");
         insertOrder.setRecieverName("送り先名5");
         insertOrder.setRecieverAddress("送り先住所5");
-        insertOrder.setAcceptDatetime(DateTime.parse("2014/01/05 05:05:05",
-                DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss")).toDate());
+        insertOrder.setAcceptDatetime(DateTime
+                .parse("2014/01/05 05:05:05", DateTimeFormat.forPattern("yyyy/MM/dd HH:mm:ss"))
+                .toDate());
         insertOrder.setCompletionDatetime(null);
         insertOrder.setDeliveryDriver("ドライバー5");
         insertOrder.setDeliveryStatus("受付");

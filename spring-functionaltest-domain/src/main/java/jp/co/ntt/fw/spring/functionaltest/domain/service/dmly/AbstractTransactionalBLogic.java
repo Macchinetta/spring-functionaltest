@@ -20,14 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Service
-public abstract class AbstractTransactionalBLogic<I, O> implements
-                                                 BLogic<I, O> {
+public abstract class AbstractTransactionalBLogic<I, O> implements BLogic<I, O> {
 
-    protected void preExecute(I input) {
-    }
+    protected void preExecute(I input) {}
 
-    protected void postExecute() {
-    }
+    protected void postExecute() {}
 
     protected abstract O doExecute(I input);
 

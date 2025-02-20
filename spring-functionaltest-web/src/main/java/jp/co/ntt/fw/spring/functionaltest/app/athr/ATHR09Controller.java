@@ -66,11 +66,9 @@ public class ATHR09Controller {
     }
 
     @RequestMapping(value = "0901/003", params = "select")
-    public String handle09010031select(SystemConfigForm systemConfigForm,
-            Model model) {
-        model.addAttribute("systemConfig", systemConfigService
-                .findDeviceForStaff(systemConfigForm.getDevice(),
-                        systemConfigForm.getExecuteUser()));
+    public String handle09010031select(SystemConfigForm systemConfigForm, Model model) {
+        model.addAttribute("systemConfig", systemConfigService.findDeviceForStaff(
+                systemConfigForm.getDevice(), systemConfigForm.getExecuteUser()));
         return "athr/showMethodHierarchyAccessAllowedPage";
     }
 
@@ -80,13 +78,11 @@ public class ATHR09Controller {
     }
 
     @RequestMapping(value = "0901/003", params = "register")
-    public String handle09010031register(SystemConfigForm systemConfigForm,
-            Model model, RedirectAttributes redirectAttributes) {
-        SystemConfig systemConfig = beanMapper.map(systemConfigForm,
-                SystemConfig.class);
+    public String handle09010031register(SystemConfigForm systemConfigForm, Model model,
+            RedirectAttributes redirectAttributes) {
+        SystemConfig systemConfig = beanMapper.map(systemConfigForm, SystemConfig.class);
         systemConfigService.insertForStaff(systemConfig);
-        redirectAttributes.addFlashAttribute("systemConfigForm",
-                systemConfigForm);
+        redirectAttributes.addFlashAttribute("systemConfigForm", systemConfigForm);
         return "redirect:/athr/0901/003?select";
     }
 

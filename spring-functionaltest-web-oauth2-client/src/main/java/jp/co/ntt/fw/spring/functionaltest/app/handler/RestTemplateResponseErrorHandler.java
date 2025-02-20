@@ -17,58 +17,61 @@ package jp.co.ntt.fw.spring.functionaltest.app.handler;
 
 import java.io.IOException;
 import java.net.URI;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
 import org.terasoluna.gfw.common.exception.BusinessException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import jp.co.ntt.fw.spring.functionaltest.api.common.error.ApiError;
+import org.terasoluna.gfw.common.message.ResultMessages;
 
 public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final Logger logger =
+            LoggerFactory.getLogger(RestTemplateResponseErrorHandler.class);
 
     @Override
-    public boolean hasError(
-            ClientHttpResponse clientHttpResponse) throws IOException {
+    public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
         HttpStatus status = clientHttpResponse.getStatusCode();
         return status.is4xxClientError() || status.is5xxServerError();
     }
 
     @Override
-    public void handleError(
-            ClientHttpResponse clientHttpResponse) throws IOException {
-        // 409に関してはAPI側でBusinessExceptionとして扱う
-        if (clientHttpResponse.getStatusCode().value() == 409) {
+    public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
+        // 400系に関してはAPI側でBusinessExceptionとして扱う
+        if (clientHttpResponse.getStatusCode().is4xxClientError()) {
             throw new BusinessException(getMessage(clientHttpResponse));
         }
     }
 
     @Override
-    public void handleError(URI url, HttpMethod method,
-            ClientHttpResponse clientHttpResponse) throws IOException {
-        // 409に関してはAPI側でBusinessExceptionとして扱う
-        if (clientHttpResponse.getStatusCode().value() == 409) {
+    public void handleError(URI url, HttpMethod method, ClientHttpResponse clientHttpResponse)
+            throws IOException {
+        // 400系に関してはAPI側でBusinessExceptionとして扱う
+        if (clientHttpResponse.getStatusCode().is4xxClientError()) {
             throw new BusinessException(getMessage(clientHttpResponse));
         }
     }
 
-    private String getMessage(ClientHttpResponse clientHttpResponse) {
-        String message = "";
+    private ResultMessages getMessage(ClientHttpResponse clientHttpResponse) {
+
+        ResultMessages messages = null;
+
+        // 試験に必要なものだけハンドリングしている
         try {
-            // 本来はクライアント用に変換すべきだが、本質ではないので簡易的な措置としてそのまま出力する
-            ApiError error = MAPPER.readValue(clientHttpResponse.getBody(),
-                    ApiError.class);
-            message = error.getMessage();
+            int code = clientHttpResponse.getStatusCode().value();
+
+            String messageId = code == 403 ? "e.sf.fw.2001" : "e.sf.fw.8001";
+
+            messages = ResultMessages.error().add(messageId);
+
+            logger.warn("HttpStatusCode:{}, Headers:{}", code, clientHttpResponse.getHeaders());
         } catch (IOException e) {
             // noop
         }
 
-        return message;
+        return messages;
     }
 
 }

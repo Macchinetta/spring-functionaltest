@@ -1,46 +1,38 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">AJAX Ajax機能</h1>
 
-      <h1 id="screenTitle">AJAX Ajax機能</h1>
+                <div>[AJAX01] Controllerの実装</div>
+                <ul>
+                    <li><a id="ajax0101001" th:href="@{/ajax/0101/001}">ajax0101001</a></li>
+                    <li><a id="ajax0102001" th:href="@{/ajax/0102/001}">ajax0102001</a></li>
+                    <li><a id="ajax0103001" th:href="@{/ajax/0103/001}">ajax0103001</a></li>
+                    <li><a id="ajax0104001001" th:href="@{/ajax/0104/001/001}">ajax0104001001</a></li>
+                    <li><a id="ajax0104001" th:href="@{/ajax/0104/001}">ajax0104001</a></li>
+                    <li><a id="deleteAll" th:href="|javascript:document.messageBoardsDeleteForm.submit()|">ajax0104001 初期化(REST API)</a></li>
+                </ul>
 
-      <div>[AJAX01] Controllerの実装</div>
-      <ul>
-        <li><a id="ajax0101001" th:href="@{/ajax/0101/001}">ajax0101001</a></li>
-        <li><a id="ajax0102001" th:href="@{/ajax/0102/001}">ajax0102001</a></li>
-        <li><a id="ajax0103001" th:href="@{/ajax/0103/001}">ajax0103001</a></li>
-        <li><a id="ajax0104001001" th:href="@{/ajax/0104/001/001}">ajax0104001001</a></li>
-        <li><a id="ajax0104001" th:href="@{/ajax/0104/001}">ajax0104001</a></li>
-        <li><a id="deleteAll" th:href="|javascript:document.messageBoardsDeleteForm.submit()|">ajax0104001
-                   初期化(REST API)</a>
-      </ul>
+                <div>[AJAX02] 入力エラーのハンドリング</div>
+                <ul>
+                    <li><a id="ajax0201001" th:href="@{/ajax/0201/001}">ajax0201001</a></li>
+                    <li><a id="ajax0201002" th:href="@{/ajax/0201/002}">ajax0201002</a></li>
+                    <li><a id="ajax0201003" th:href="@{/ajax/0201/003}">ajax0201003</a></li>
+                    <li><a id="ajax0202001" th:href="@{/ajax/0202/001}">ajax0202001</a></li>
+                    <li><a id="ajax0202002" th:href="@{/ajax/0202/002}">ajax0202002</a></li>
+                </ul>
 
-      <div>[AJAX02] 入力エラーのハンドリング</div>
-      <ul>
-        <li><a id="ajax0201001" th:href="@{/ajax/0201/001}">ajax0201001</a></li>
-        <li><a id="ajax0201002" th:href="@{/ajax/0201/002}">ajax0201002</a></li>
-        <li><a id="ajax0201003" th:href="@{/ajax/0201/003}">ajax0201003</a></li>
-        <li><a id="ajax0202001" th:href="@{/ajax/0202/001}">ajax0202001</a></li>
-        <li><a id="ajax0202002" th:href="@{/ajax/0202/002}">ajax0202002</a></li>
-      </ul>
-
-      <div>[AJAX03] 業務エラーのハンドリング</div>
-      <ul>
-        <li><a id="ajax0301001001" th:href="@{/ajax/0301/001/001}">ajax0301001
-            first</a></li>
-        <li><a id="ajax0301001002" th:href="@{/ajax/0301/001/002}">ajax0301001
-            second</a></li>
-        <li><a id="ajax0302001" th:href="@{/ajax/0302/001}">ajax0302001</a></li>
-      </ul>
-      <form name="messageBoardsDeleteForm"
-        th:action="@{/ajax/testdata/messageBoards?_method=DELETE}"
-        method="post"></form>
-    </div>
-  </div>
-</body>
+                <div>[AJAX03] 業務エラーのハンドリング</div>
+                <ul>
+                    <li><a id="ajax0301001001" th:href="@{/ajax/0301/001/001}">ajax0301001 first</a></li>
+                    <li><a id="ajax0301001002" th:href="@{/ajax/0301/001/002}">ajax0301001 second</a></li>
+                    <li><a id="ajax0302001" th:href="@{/ajax/0302/001}">ajax0302001</a></li>
+                </ul>
+                <form name="messageBoardsDeleteForm" th:action="@{/ajax/testdata/messageBoards?_method=DELETE}" method="post"></form>
+            </div>
+        </div>
+    </body>
 </html>

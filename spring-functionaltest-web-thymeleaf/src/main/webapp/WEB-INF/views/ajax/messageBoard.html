@@ -1,69 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <script type="text/javascript" th:inline="javascript">
-  (function(ajax) {
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <script type="text/javascript" th:inline="javascript">
+            (function(ajax) {
 
-      $(document).ajaxSend(function(event, xhr, options) {
-          xhr.setRequestHeader([[${_csrf.headerName}]], [[${_csrf.token}]]);
-      });
+                $(document).ajaxSend(function(event, xhr, options) {
+                    xhr.setRequestHeader([[${_csrf.headerName}]], [[${_csrf.token}]]);
+                });
 
-      ajax.write = function(path) {
-          var result = $("#result");
-          var comment = $("#comment").val();
+                ajax.write = function(path) {
+                    var result = $("#result");
+                    var comment = $("#comment").val();
 
-          $.ajax([[@{/ajax/}]] + path, {
-              type : "POST",
-              contentType : 'text/xml;charset=UTF-8',
-              data : comment,
-              dataType : "xml"
-          }).done(function(xml, status, xhr) {
-              ajax.writeNormalResultDisplay(xml, xhr, result);
-          }).fail(function(xhr) {
-              ajax.xmlErrorResultDisplay(xhr);
-          });
+                    $.ajax([[@{/ajax/}]] + path, {
+                        type : "POST",
+                        contentType : 'text/xml;charset=UTF-8',
+                        data : comment,
+                        dataType : "xml"
+                    }).done(function(xml, status, xhr) {
+                        ajax.writeNormalResultDisplay(xml, xhr, result);
+                    }).fail(function(xhr) {
+                        ajax.xmlErrorResultDisplay(xhr);
+                    });
 
-          return false;
-      };
-  })(ajax);
-  </script>
+                    return false;
+                };
+            })(ajax);
+        </script>
 
-  <div class="container">
-    <div id="wrapper">
+        <div class="container">
+            <div id="wrapper">
+                <div id="xMLHttpRequestResult" class="hidden alert">
+                    <ul>
+                        <li id="returnStatus"></li>
+                        <li id="contentType"></li>
+                    </ul>
+                </div>
+                <div id="resultMessage" class="hidden alert"></div>
 
-      <div id="xMLHttpRequestResult" class="hidden alert">
-        <ul>
-          <li id="returnStatus"></li>
-          <li id="contentType"></li>
-        </ul>
-      </div>
-      <div id="resultMessage" class="hidden alert"></div>
+                <div class="text-center">
+                    <form id="messageBoardForm">
+                        <span th:errors="${messageBoardForm}"></span>
+                        <fieldset>
+                            <legend>Spring 掲示板</legend>
 
-      <div class="text-center">
-        <form id="messageBoardForm">
-          <span th:errors="${messageBoardForm}"></span>
-          <fieldset>
-            <legend>Spring 掲示板</legend>
+                            <label for="comment" class="space">コメント</label> <input id="comment" name="comment" class="space write-comment-field form-control inline" />
+                            <button id="writeBtn" class="btn btn-default" th:onclick="return ajax.write([[${path}]])">書き込み</button>
+                        </fieldset>
+                    </form>
+                </div>
+                <br />
 
-            <label for="comment" class="space">コメント</label> <input id="comment" name="comment"
-              class="space write-comment-field form-control inline" />
-            <button id="writeBtn" class="btn btn-default"
-              th:onclick="return ajax.write([[${path}]])">書き込み</button>
-          </fieldset>
-        </form>
-      </div>
-      <br>
-
-      <div class="text-center">ご自由にコメントしてください!!</div>
-      <div id="result">
-        <ul th:each="messages : ${messageResults}">
-          <li th:text="${messages.comment}"></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</body>
+                <div class="text-center">ご自由にコメントしてください!!</div>
+                <div id="result">
+                    <ul th:each="messages : ${messageResults}">
+                        <li th:text="${messages.comment}"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

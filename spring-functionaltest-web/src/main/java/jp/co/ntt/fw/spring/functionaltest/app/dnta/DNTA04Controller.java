@@ -151,143 +151,135 @@ public class DNTA04Controller {
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcYear")
     public String handleCalcYear(CalcDateForm form, Model model) {
-        int[] date = dateAndTimeApiService.parseAndGetDateElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusYear(date[0],
-                date[1], date[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusYear(date[0],
-                date[1], date[2], form.getMinus()));
+        int[] date = dateAndTimeApiService.parseAndGetDateElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusYear(date[0], date[1], date[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusYear(date[0], date[1], date[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcMonth")
     public String handleCalcMonth(CalcDateForm form, Model model) {
-        int[] date = dateAndTimeApiService.parseAndGetDateElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusMonth(date[0],
-                date[1], date[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusMonth(date[0],
-                date[1], date[2], form.getMinus()));
+        int[] date = dateAndTimeApiService.parseAndGetDateElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusMonth(date[0], date[1], date[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusMonth(date[0], date[1], date[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcDay")
     public String handleCalcDay(CalcDateForm form, Model model) {
-        int[] date = dateAndTimeApiService.parseAndGetDateElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusDay(date[0],
-                date[1], date[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusDay(date[0],
-                date[1], date[2], form.getMinus()));
+        int[] date = dateAndTimeApiService.parseAndGetDateElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusDay(date[0], date[1], date[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusDay(date[0], date[1], date[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcHour")
     public String handleCalcHour(CalcDateForm form, Model model) {
-        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusHour(time[0],
-                time[1], time[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusHour(time[0],
-                time[1], time[2], form.getMinus()));
+        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusHour(time[0], time[1], time[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusHour(time[0], time[1], time[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcMinute")
     public String handleCalcMinute(CalcDateForm form, Model model) {
-        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusMinute(time[0],
-                time[1], time[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusMinute(
-                time[0], time[1], time[2], form.getMinus()));
+        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusMinute(time[0], time[1], time[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusMinute(time[0], time[1], time[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "calcSecond")
     public String handleCalcSecond(CalcDateForm form, Model model) {
-        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
-                .getInputDateTime());
-        model.addAttribute("getPlus", dateAndTimeApiService.plusSecond(time[0],
-                time[1], time[2], form.getPlus()));
-        model.addAttribute("getMinus", dateAndTimeApiService.minusSecond(
-                time[0], time[1], time[2], form.getMinus()));
+        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form.getInputDateTime());
+        model.addAttribute("getPlus",
+                dateAndTimeApiService.plusSecond(time[0], time[1], time[2], form.getPlus()));
+        model.addAttribute("getMinus",
+                dateAndTimeApiService.minusSecond(time[0], time[1], time[2], form.getMinus()));
         return "dnta/showCalcResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "compareDate")
     public String handleCompareDate(CompareDateTimeForm form, Model model) {
-        model.addAttribute("NowIsBeforePast", dateAndTimeApiService
-                .isBeforeDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+        model.addAttribute("NowIsBeforePast",
+                dateAndTimeApiService.isBeforeDate(form.getYear2(), form.getMonth2(),
+                        form.getDay2(), form.getYear1(), form.getMonth1(), form.getDay1()));
+        model.addAttribute("NowIsBeforeNow",
+                dateAndTimeApiService.isBeforeDate(form.getYear2(), form.getMonth2(),
+                        form.getDay2(), form.getYear2(), form.getMonth2(), form.getDay2()));
+        model.addAttribute("NowIsBeforeFuture",
+                dateAndTimeApiService.isBeforeDate(form.getYear2(), form.getMonth2(),
+                        form.getDay2(), form.getYear3(), form.getMonth3(), form.getDay3()));
+        model.addAttribute("NowIsAfterPast",
+                dateAndTimeApiService.isAfterDate(form.getYear2(), form.getMonth2(), form.getDay2(),
                         form.getYear1(), form.getMonth1(), form.getDay1()));
-        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService.isBeforeDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear2(), form.getMonth2(), form.getDay2()));
-        model.addAttribute("NowIsBeforeFuture", dateAndTimeApiService
-                .isBeforeDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+        model.addAttribute("NowIsAfterNow",
+                dateAndTimeApiService.isAfterDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+                        form.getYear2(), form.getMonth2(), form.getDay2()));
+        model.addAttribute("NowIsAfterFuture",
+                dateAndTimeApiService.isAfterDate(form.getYear2(), form.getMonth2(), form.getDay2(),
                         form.getYear3(), form.getMonth3(), form.getDay3()));
-        model.addAttribute("NowIsAfterPast", dateAndTimeApiService.isAfterDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear1(), form.getMonth1(), form.getDay1()));
-        model.addAttribute("NowIsAfterNow", dateAndTimeApiService.isAfterDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear2(), form.getMonth2(), form.getDay2()));
-        model.addAttribute("NowIsAfterFuture", dateAndTimeApiService
-                .isAfterDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+        model.addAttribute("NowEqualsPast",
+                dateAndTimeApiService.equalsDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+                        form.getYear1(), form.getMonth1(), form.getDay1()));
+        model.addAttribute("NowEqualsNow",
+                dateAndTimeApiService.equalsDate(form.getYear2(), form.getMonth2(), form.getDay2(),
+                        form.getYear2(), form.getMonth2(), form.getDay2()));
+        model.addAttribute("NowEqualsFuture",
+                dateAndTimeApiService.equalsDate(form.getYear2(), form.getMonth2(), form.getDay2(),
                         form.getYear3(), form.getMonth3(), form.getDay3()));
-        model.addAttribute("NowEqualsPast", dateAndTimeApiService.equalsDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear1(), form.getMonth1(), form.getDay1()));
-        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsDate(form
-                .getYear2(), form.getMonth2(), form.getDay2(), form.getYear2(),
-                form.getMonth2(), form.getDay2()));
-        model.addAttribute("NowEqualsFuture", dateAndTimeApiService.equalsDate(
-                form.getYear2(), form.getMonth2(), form.getDay2(), form
-                        .getYear3(), form.getMonth3(), form.getDay3()));
         return "dnta/showCompareResult";
     }
 
     @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "compareTime")
     public String handleCompareTime(CompareDateTimeForm form, Model model) {
-        model.addAttribute("NowIsBeforePast", dateAndTimeApiService
-                .isBeforeTime(form.getHour2(), form.getMinute2(), form
-                        .getSecond2(), form.getHour1(), form.getMinute1(), form
-                                .getSecond1()));
-        model.addAttribute("NowIsBeforeNow", dateAndTimeApiService.isBeforeTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour2(), form.getMinute2(), form.getSecond2()));
-        model.addAttribute("NowIsBeforeFuture", dateAndTimeApiService
-                .isBeforeTime(form.getHour2(), form.getMinute2(), form
-                        .getSecond2(), form.getHour3(), form.getMinute3(), form
-                                .getSecond3()));
-        model.addAttribute("NowIsAfterPast", dateAndTimeApiService.isAfterTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour1(), form.getMinute1(), form.getSecond1()));
-        model.addAttribute("NowIsAfterNow", dateAndTimeApiService.isAfterTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour2(), form.getMinute2(), form.getSecond2()));
-        model.addAttribute("NowIsAfterFuture", dateAndTimeApiService
-                .isAfterTime(form.getHour2(), form.getMinute2(), form
-                        .getSecond2(), form.getHour3(), form.getMinute3(), form
-                                .getSecond3()));
-        model.addAttribute("NowEqualsPast", dateAndTimeApiService.equalsTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour1(), form.getMinute1(), form.getSecond1()));
-        model.addAttribute("NowEqualsNow", dateAndTimeApiService.equalsTime(form
-                .getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour2(), form.getMinute2(), form.getSecond2()));
-        model.addAttribute("NowEqualsFuture", dateAndTimeApiService.equalsTime(
-                form.getHour2(), form.getMinute2(), form.getSecond2(), form
-                        .getHour3(), form.getMinute3(), form.getSecond3()));
+        model.addAttribute("NowIsBeforePast",
+                dateAndTimeApiService.isBeforeTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour1(), form.getMinute1(), form.getSecond1()));
+        model.addAttribute("NowIsBeforeNow",
+                dateAndTimeApiService.isBeforeTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour2(), form.getMinute2(), form.getSecond2()));
+        model.addAttribute("NowIsBeforeFuture",
+                dateAndTimeApiService.isBeforeTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour3(), form.getMinute3(), form.getSecond3()));
+        model.addAttribute("NowIsAfterPast",
+                dateAndTimeApiService.isAfterTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour1(), form.getMinute1(), form.getSecond1()));
+        model.addAttribute("NowIsAfterNow",
+                dateAndTimeApiService.isAfterTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour2(), form.getMinute2(), form.getSecond2()));
+        model.addAttribute("NowIsAfterFuture",
+                dateAndTimeApiService.isAfterTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour3(), form.getMinute3(), form.getSecond3()));
+        model.addAttribute("NowEqualsPast",
+                dateAndTimeApiService.equalsTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour1(), form.getMinute1(), form.getSecond1()));
+        model.addAttribute("NowEqualsNow",
+                dateAndTimeApiService.equalsTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour2(), form.getMinute2(), form.getSecond2()));
+        model.addAttribute("NowEqualsFuture",
+                dateAndTimeApiService.equalsTime(form.getHour2(), form.getMinute2(),
+                        form.getSecond2(), form.getHour3(), form.getMinute3(), form.getSecond3()));
         return "dnta/showCompareResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkDateString")
+    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET,
+            params = "checkDateString")
     public String handleCheckDateString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
-            model.addAttribute("getResult", dateAndTimeApiService.parseToDate(
-                    form.getTargetDate()));
+            model.addAttribute("getResult",
+                    dateAndTimeApiService.parseToDate(form.getTargetDate()));
         } catch (DateTimeParseException e) {
             model.addAttribute("checkResult", false);
             model.addAttribute("getResult", e);
@@ -296,12 +288,13 @@ public class DNTA04Controller {
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkTimeString")
+    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET,
+            params = "checkTimeString")
     public String handleCheckTimeString(ChangeTypeForm form, Model model) {
         try {
             model.addAttribute("checkResult", true);
-            model.addAttribute("getResult", dateAndTimeApiService.parseToTime(
-                    form.getTargetDate()));
+            model.addAttribute("getResult",
+                    dateAndTimeApiService.parseToTime(form.getTargetDate()));
         } catch (DateTimeParseException e) {
             model.addAttribute("checkResult", false);
             model.addAttribute("getResult", e);
@@ -310,21 +303,21 @@ public class DNTA04Controller {
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "checkLeapYear")
+    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET,
+            params = "checkLeapYear")
     public String handleCheckLeapYear(ChangeTypeForm form, Model model) {
 
-        int[] date = dateAndTimeApiService.parseAndGetDateElement(form
-                .getTargetDate());
-        model.addAttribute("checkResult", dateAndTimeApiService.isLeapYear(
-                date[0], date[1], date[2]));
+        int[] date = dateAndTimeApiService.parseAndGetDateElement(form.getTargetDate());
+        model.addAttribute("checkResult",
+                dateAndTimeApiService.isLeapYear(date[0], date[1], date[2]));
         return "dnta/showCheckResult";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "getEachValueOfDate")
+    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET,
+            params = "getEachValueOfDate")
     public String handleGetEachValueOfDate(ChangeTypeForm form, Model model) {
 
-        int[] date = dateAndTimeApiService.parseAndGetDateElement(form
-                .getTargetDate());
+        int[] date = dateAndTimeApiService.parseAndGetDateElement(form.getTargetDate());
         model.addAttribute("year", date[0]);
         model.addAttribute("month", date[1]);
         model.addAttribute("dayOfMonth", date[2]);
@@ -332,10 +325,10 @@ public class DNTA04Controller {
         return "dnta/showEachValue";
     }
 
-    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET, params = "getEachValueOfTime")
+    @RequestMapping(value = "dateManipulation", method = RequestMethod.GET,
+            params = "getEachValueOfTime")
     public String handleGetEachValueOfTime(ChangeTypeForm form, Model model) {
-        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form
-                .getTargetDate());
+        int[] time = dateAndTimeApiService.parseAndGetTimeElement(form.getTargetDate());
         model.addAttribute("hour", time[0]);
         model.addAttribute("minute", time[1]);
         model.addAttribute("second", time[2]);

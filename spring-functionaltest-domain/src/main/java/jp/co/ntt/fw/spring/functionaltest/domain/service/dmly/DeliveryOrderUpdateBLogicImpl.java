@@ -23,10 +23,9 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderCr
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRepository;
 
 @Service
-public class DeliveryOrderUpdateBLogicImpl extends
-                                           AbstractTransactionalBLogic<DeliveryOrderCriteria, Long>
-                                           implements
-                                           DeliveryOrderUpdateBLogic {
+public class DeliveryOrderUpdateBLogicImpl
+        extends AbstractTransactionalBLogic<DeliveryOrderCriteria, Long>
+        implements DeliveryOrderUpdateBLogic {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

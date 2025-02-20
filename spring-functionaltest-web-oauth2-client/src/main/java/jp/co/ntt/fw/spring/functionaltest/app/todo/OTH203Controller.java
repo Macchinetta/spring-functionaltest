@@ -17,29 +17,17 @@ package jp.co.ntt.fw.spring.functionaltest.app.todo;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.todo.TodoService;
 
 @Controller
 @RequestMapping("auth/todo/03")
 public class OTH203Controller {
-
-    // 大項目ID : 03 : その他異常系
-    // 中項目ID : 01 : 認可サーバからの応答がない
-    // 小項目ID : 001 : トークンエンドポイントの誤り
-    // 小項目ID : 002 : 認可エンドポイントの誤り
-    // 小項目ID : 003 : JWTエンドポイントの誤り（リソースサーバ側でエラー）
-
-    // 中項目ID : 02 : トークン有効期限が切れている
-    // 小項目ID : 001 : （クライアント側は0201で試験しているのでリソースサーバのみ） 送信直前に一定時間待機
 
     @Inject
     @Named("todoServiceImpl")
@@ -50,12 +38,15 @@ public class OTH203Controller {
     TodoService todoWrongJWTEndpointService;
 
     @Inject
+    @Named("todoNotThroughAnAuthorizedServerServiceImpl")
+    private TodoService todoNotThroughAnAuthorizedServerService;
+
+    @Inject
     Mapper beanMapper;
 
     @ModelAttribute
     public TodoForm setUpForm() {
-        TodoForm form = new TodoForm();
-        return form;
+        return new TodoForm();
     }
 
     @GetMapping("index")
@@ -104,5 +95,14 @@ public class OTH203Controller {
         this.todoService.findAll("registration_wait");
 
         return "todo/list";
+    }
+
+    @GetMapping("03/001")
+    public String handler03_001(Model model) {
+
+        // 認可サーバーを経由せずにアクセストークンが必要なリソースサーバーにアクセスする
+        this.todoNotThroughAnAuthorizedServerService.findAll(null);
+
+        return "jsp/todo/list";
     }
 }

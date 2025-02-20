@@ -58,8 +58,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0101001"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -68,19 +67,17 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // セッションを削除
         HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.set("Cookie", "JSESSIONID=" + webDriverOperations
-                .getCookie("JSESSIONID").getValue());
-        restTemplate.exchange(applicationContextUrl + "/cspr/deleteSession",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        requestHeaders.set("Cookie",
+                "JSESSIONID=" + webDriverOperations.getCookie("JSESSIONID").getValue());
+        restTemplate.exchange(applicationContextUrl + "/cspr/deleteSession", HttpMethod.GET,
+                new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         webDriverOperations.saveScreenCapture();
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録確認画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録確認画面"));
     }
 
     /**
@@ -94,8 +91,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201001"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -104,17 +100,14 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
-                .executeScript(
-                        "return document.getElementsByName('_csrf')[1].value")
-                .toString();
-        assertThat(csrfToken, matchesPattern(
-                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+                .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
+        assertThat(csrfToken,
+                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面"));
 
     }
 
@@ -129,8 +122,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201002"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -139,17 +131,14 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
-                .executeScript(
-                        "return document.getElementsByName('_csrf')[1].value")
-                .toString();
-        assertThat(csrfToken, matchesPattern(
-                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+                .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
+        assertThat(csrfToken,
+                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面"));
 
     }
 
@@ -164,8 +153,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201003"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -177,12 +165,10 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面"));
 
         // _csrf がURLに含まれていないこと
-        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString(
-                "_csrf"))));
+        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString("_csrf"))));
 
     }
 
@@ -197,8 +183,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201004"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -210,12 +195,10 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面"));
 
         // _csrf がURLに含まれていないこと
-        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString(
-                "_csrf"))));
+        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString("_csrf"))));
 
     }
 
@@ -231,8 +214,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201005"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -244,12 +226,10 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面"));
 
         // _csrf がURLに含まれていないこと
-        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString(
-                "_csrf"))));
+        assertThat(webDriverOperations.getCurrentUrl(), is(not(containsString("_csrf"))));
 
     }
 
@@ -264,8 +244,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201006"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -289,8 +268,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
             map.add("_csrf", "123456abc9876abc");
 
-            restOperations.postForObject(applicationContextUrl + "/cspr", map,
-                    String.class);
+            restOperations.postForObject(applicationContextUrl + "/cspr", map, String.class);
         } catch (HttpClientErrorException e) {
             // ステータスコード 403が返却されることを確認。
             assertThat(e.getStatusCode(), is(HttpStatus.FORBIDDEN));
@@ -308,8 +286,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201007"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -318,26 +295,23 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // セッションを削除
         HttpHeaders requestHeaders = new HttpHeaders();
-        requestHeaders.set("Cookie", "JSESSIONID=" + webDriverOperations
-                .getCookie("JSESSIONID").getValue());
-        restTemplate.exchange(applicationContextUrl + "/cspr/deleteSession",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        requestHeaders.set("Cookie",
+                "JSESSIONID=" + webDriverOperations.getCookie("JSESSIONID").getValue());
+        restTemplate.exchange(applicationContextUrl + "/cspr/deleteSession", HttpMethod.GET,
+                new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         webDriverOperations.saveScreenCapture();
 
         webDriverOperations.click(id("confirm"));
 
         // missing CSRF Token Error画面に遷移
-        assertThat(webDriverOperations.getTitle(), is(
-                "missing CSRF Token Error!"));
+        assertThat(webDriverOperations.getTitle(), is("missing CSRF Token Error!"));
 
         try {
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
             map.add("_csrf", "123456abc9876abc");
 
-            restOperations.postForObject(applicationContextUrl + "/cspr", map,
-                    String.class);
+            restOperations.postForObject(applicationContextUrl + "/cspr", map, String.class);
         } catch (HttpClientErrorException e) {
             // ステータスコード 403が返却されることを確認。
             assertThat(e.getStatusCode(), is(HttpStatus.FORBIDDEN));
@@ -356,8 +330,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0201008"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -381,8 +354,7 @@ public class CSRFProtectionTest extends FunctionTestSupport {
             MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
             map.add("_csrf", "123456abc9876abc");
 
-            restOperations.postForObject(applicationContextUrl + "/cspr", map,
-                    String.class);
+            restOperations.postForObject(applicationContextUrl + "/cspr", map, String.class);
         } catch (HttpClientErrorException e) {
             // ステータスコード 403が返却されることを確認。
             assertThat(e.getStatusCode(), is(HttpStatus.FORBIDDEN));
@@ -395,15 +367,15 @@ public class CSRFProtectionTest extends FunctionTestSupport {
      * <li>(th:actionの値を指定しない)</li>
      * </ul>
      **/
-    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @IfProfileValue(name = "test.environment.view", values = {"thymeleaf"})
     @Test
     public void testCSPR0201009() throws IOException {
 
         webDriverOperations.click(id("cspr0201009"));
 
         // 登録画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録画面(th:actionの値を指定しない)"));
+        webDriverOperations
+                .waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録画面(th:actionの値を指定しない)"));
 
         webDriverOperations.appendText(id("userName"), "山田 太郎");
         webDriverOperations.appendText(id("email"), "yamada_tarou@example.com");
@@ -412,17 +384,15 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
-                .executeScript(
-                        "return document.getElementsByName('_csrf')[1].value")
-                .toString();
-        assertThat(csrfToken, matchesPattern(
-                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+                .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
+        assertThat(csrfToken,
+                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "ユーザ登録確認画面(th:actionの値を指定しない)"));
+        webDriverOperations
+                .waitForDisplayed(textToBe(id("screenTitle"), "ユーザ登録確認画面(th:actionの値を指定しない)"));
 
     }
 
@@ -440,10 +410,8 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("password"), "spring1234");
         webDriverOperations.click(id("committerLogin"));
 
-        webDriverOperations.overrideText(id("email"),
-                "spring_yamada@example.com");
-        webDriverOperations.overrideText(id("url"),
-                "http://example.com/yamada");
+        webDriverOperations.overrideText(id("email"), "spring_yamada@example.com");
+        webDriverOperations.overrideText(id("url"), "http://example.com/yamada");
         webDriverOperations.overrideText(id("company"), "spring con.inc");
         webDriverOperations.overrideText(id("location"), "埼玉");
 
@@ -452,20 +420,18 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.saveScreenCapture();
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 取得結果が正常に返却されていることを確認
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("アカウントの更新が成功しました。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("アカウントの更新が成功しました。"));
 
         // データ戻し
         webDriverOperations.click(id("springTestTop"));
         webDriverOperations.click(id("csprLink"));
         webDriverOperations.click(id("cspr0301001"));
 
-        webDriverOperations.overrideText(id("email"),
-                "yamada_tarou@example.com");
+        webDriverOperations.overrideText(id("email"), "yamada_tarou@example.com");
         webDriverOperations.overrideText(id("url"), "http://example.com/");
         webDriverOperations.overrideText(id("company"), "Spring Test.Inc");
         webDriverOperations.overrideText(id("location"), "東京 豊洲");
@@ -495,16 +461,13 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // 取得結果が正常に返却されていることを確認
         assertThat(webDriverOperations.getText(By.xpath("//td")), is("1"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[2]")), is(
-                "yamadah"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is(
-                "yamada_hanako@example.com"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td")), is(
-                "2"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[2]")), is(
-                "yamadat"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[3]")), is(
-                "yamada_tarou@example.com"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[2]")), is("yamadah"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[3]")),
+                is("yamada_hanako@example.com"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td")), is("2"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[2]")), is("yamadat"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[3]")),
+                is("yamada_tarou@example.com"));
 
     }
 
@@ -522,10 +485,8 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.overrideText(id("password"), "spring1234");
         webDriverOperations.click(id("committerLogin"));
 
-        webDriverOperations.overrideText(id("email"),
-                "spring_yamada@example.com");
-        webDriverOperations.overrideText(id("url"),
-                "http://example.com/yamada");
+        webDriverOperations.overrideText(id("email"), "spring_yamada@example.com");
+        webDriverOperations.overrideText(id("url"), "http://example.com/yamada");
         webDriverOperations.overrideText(id("company"), "spring con.inc");
         webDriverOperations.overrideText(id("location"), "埼玉");
 
@@ -536,14 +497,12 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // CSRFトークンエラーとなっていることを確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(
-                "ステータスコード:403"));
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("CSRF攻撃を検出しました！"));
+        assertThat(webDriverOperations.getText(id("returnStatus")), is("ステータスコード:403"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("CSRF攻撃を検出しました！"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -573,16 +532,13 @@ public class CSRFProtectionTest extends FunctionTestSupport {
 
         // 取得結果が正常に返却されていることを確認
         assertThat(webDriverOperations.getText(By.xpath("//td")), is("1"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[2]")), is(
-                "yamadah"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is(
-                "yamada_hanako@example.com"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td")), is(
-                "2"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[2]")), is(
-                "yamadat"));
-        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[3]")), is(
-                "yamada_tarou@example.com"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[2]")), is("yamadah"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[3]")),
+                is("yamada_hanako@example.com"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td")), is("2"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[2]")), is("yamadat"));
+        assertThat(webDriverOperations.getText(By.xpath("//tr[2]/td[3]")),
+                is("yamada_tarou@example.com"));
 
     }
 
@@ -597,22 +553,18 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0401001"));
 
         webDriverOperations.referUploadFile(id("multipartFile"),
-                new ClassPathResource("testdata/cspr/customerList.csv")
-                        .getFile());
+                new ClassPathResource("testdata/cspr/customerList.csv").getFile());
 
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
-                .executeScript(
-                        "return document.getElementsByName('_csrf')[1].value")
-                .toString();
-        assertThat(csrfToken, matchesPattern(
-                "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+                .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
+        assertThat(csrfToken,
+                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
 
         webDriverOperations.click(id("uploadButton"));
 
         // 完了画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "顧客一括登録完了画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "顧客一括登録完了画面"));
 
     }
 
@@ -627,19 +579,16 @@ public class CSRFProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("cspr0401002"));
 
         webDriverOperations.referUploadFile(id("multipartFile"),
-                new ClassPathResource("testdata/cspr/customerList.csv")
-                        .getFile());
+                new ClassPathResource("testdata/cspr/customerList.csv").getFile());
 
         webDriverOperations.saveScreenCapture();
         webDriverOperations.click(id("uploadButton"));
 
         // クエリパラメータにCSRFTokenが設定されていることを確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(containsString(
-                "_csrf")));
+        assertThat(webDriverOperations.getCurrentUrl(), is(containsString("_csrf")));
 
         // 完了画面に遷移したことをチェック
-        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"),
-                "顧客一括登録完了画面"));
+        webDriverOperations.waitForDisplayed(textToBe(id("screenTitle"), "顧客一括登録完了画面"));
 
     }
 }

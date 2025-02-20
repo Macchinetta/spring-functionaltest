@@ -28,26 +28,23 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Gender;
 public class GenderTypeHandler extends BaseTypeHandler<Gender> {
 
     @Override
-    public Gender getNullableResult(ResultSet rs,
-            String columnName) throws SQLException {
+    public Gender getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return getByCode(rs.getString(columnName));
     }
 
     @Override
-    public Gender getNullableResult(ResultSet rs,
-            int columnIndex) throws SQLException {
+    public Gender getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return getByCode(rs.getString(columnIndex));
     }
 
     @Override
-    public Gender getNullableResult(CallableStatement cs,
-            int columnIndex) throws SQLException {
+    public Gender getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         return getByCode(cs.getString(columnIndex));
     }
 
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i,
-            Gender parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, Gender parameter,
+            JdbcType jdbcType) throws SQLException {
         ps.setString(i, parameter.getCode());
 
     }

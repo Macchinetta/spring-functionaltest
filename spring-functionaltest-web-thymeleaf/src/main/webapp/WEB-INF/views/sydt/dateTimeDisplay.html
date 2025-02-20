@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div id="wrapper">
+            <h1 id="screenTitle">Server Time</h1>
+            
+            <span>(1)${factory_name}.newDateTime() first</span><br/>
+            <span id="jodaFactory_1" th:text="${#dates.format(jodaFactory1, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+            <br/>
+            <span>(2)new DateTime() first</span><br/>
+            <span id="DateTime_1" th:text="${#dates.format(DateTime1, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+            <br/>
+            
+            <span>(1)${factory_name}.newDateTime() second</span><br/>
+            <span id="jodaFactory_2" th:text="${#dates.format(jodaFactory2, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+            <br/>
+            <span>(2)new DateTime() second</span><br/>
+            <span id="DateTime_2" th:text="${#dates.format(DateTime2, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+            <br/>
+
+            <span>(1)${factory_name}.newDateTime() third</span><br/>
+            <span id="jodaFactory_3" th:text="${#dates.format(jodaFactory3, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+            <br/>
+            <span>(2)new DateTime() third</span><br/>
+            <span id="DateTime_3" th:text="${#dates.format(DateTime3, 'yyyy-MM-dd HH:mm:ss.SSS')}"></span><br/>
+        </div>
+    </body>
+</html>

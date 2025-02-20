@@ -27,8 +27,7 @@ public class APLY040100802Controller {
 
     @RequestMapping(value = "0401/008/02")
     public String handle040100802() {
-        throw new IntentionalException(ResultMessages.error().add(
-                "e.sf.cmmn.8003"));
+        throw new IntentionalException(ResultMessages.error().add("e.sf.fw.8003"));
     }
 
 }

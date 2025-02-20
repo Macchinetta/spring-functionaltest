@@ -18,9 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.api.oth2.todo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,9 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.TodoService;
 
@@ -65,20 +61,16 @@ public class TodoRestNoAuthController {
     @ResponseStatus(HttpStatus.OK)
     public TodoResource getTodo(@PathVariable("todoId") String todoId) {
         Todo todo = this.todoService.findOne(todoId);
-        TodoResource todoResource = this.beanMapper.map(todo,
-                TodoResource.class);
+        TodoResource todoResource = this.beanMapper.map(todo, TodoResource.class);
         return todoResource;
     }
 
     // create
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public TodoResource postTodos(
-            @RequestBody @Validated TodoResource todoResource) {
-        Todo createdTodo = this.todoService.create(this.beanMapper.map(
-                todoResource, Todo.class));
-        TodoResource createdTodoResponse = this.beanMapper.map(createdTodo,
-                TodoResource.class);
+    public TodoResource postTodos(@RequestBody @Validated TodoResource todoResource) {
+        Todo createdTodo = this.todoService.create(this.beanMapper.map(todoResource, Todo.class));
+        TodoResource createdTodoResponse = this.beanMapper.map(createdTodo, TodoResource.class);
         return createdTodoResponse;
     }
 
@@ -87,8 +79,7 @@ public class TodoRestNoAuthController {
     @ResponseStatus(HttpStatus.OK)
     public TodoResource putTodo(@PathVariable("todoId") String todoId) {
         Todo finishedTodo = this.todoService.finish(todoId);
-        TodoResource finishedTodoResource = this.beanMapper.map(finishedTodo,
-                TodoResource.class);
+        TodoResource finishedTodoResource = this.beanMapper.map(finishedTodo, TodoResource.class);
         return finishedTodoResource;
     }
 

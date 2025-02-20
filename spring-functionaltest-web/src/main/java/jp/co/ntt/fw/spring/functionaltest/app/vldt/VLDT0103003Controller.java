@@ -48,8 +48,7 @@ public class VLDT0103003Controller {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(String.class,
-                new StringTrimmerEditor(true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -63,11 +62,10 @@ public class VLDT0103003Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(AuthorizedValidationForm form,
-            BindingResult result, Authentication authentication) {
+    public String handleValidate(AuthorizedValidationForm form, BindingResult result,
+            Authentication authentication) {
 
-        smartValidator.validate(form, result, getUserValidationGroup(
-                authentication));
+        smartValidator.validate(form, result, getUserValidationGroup(authentication));
         if (result.hasErrors()) {
             return "vldt/authorizedValidationView";
         }
@@ -77,8 +75,7 @@ public class VLDT0103003Controller {
     private Class<?> getUserValidationGroup(Authentication authentication) {
 
         if (authentication != null) {
-            UserDetails userDetails = (UserDetails) authentication
-                    .getPrincipal();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             if (userDetails != null) {
                 return Default.class;
             }

@@ -29,8 +29,7 @@ import org.springframework.data.domain.Pageable;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
-public class JPADeliveryOrderRepositoryImpl implements
-                                            JPADeliveryOrderRepositoryCustom {
+public class JPADeliveryOrderRepositoryImpl implements JPADeliveryOrderRepositoryCustom {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -46,18 +45,15 @@ public class JPADeliveryOrderRepositoryImpl implements
         queryString.append(" ORDER BY o.deliverNumber");
         bindParameters.put("deliveryStatus", criteria.getDeliveryStatus());
 
-        final TypedQuery<JPADeliveryOrder> findQuery = entityManager
-                .createQuery(queryString.toString(), JPADeliveryOrder.class);
+        final TypedQuery<JPADeliveryOrder> findQuery =
+                entityManager.createQuery(queryString.toString(), JPADeliveryOrder.class);
         // Bind parameters.
-        for (Map.Entry<String, Object> bindParameter : bindParameters
-                .entrySet()) {
-            findQuery.setParameter(bindParameter.getKey(), bindParameter
-                    .getValue());
+        for (Map.Entry<String, Object> bindParameter : bindParameters.entrySet()) {
+            findQuery.setParameter(bindParameter.getKey(), bindParameter.getValue());
         }
 
         List<JPADeliveryOrder> jpaOrders = findQuery.getResultList();
-        return new PageImpl<JPADeliveryOrder>(jpaOrders, pageable, jpaOrders
-                .size());
+        return new PageImpl<JPADeliveryOrder>(jpaOrders, pageable, jpaOrders.size());
     }
 
 }

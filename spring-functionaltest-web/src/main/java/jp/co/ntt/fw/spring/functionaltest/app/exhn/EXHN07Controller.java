@@ -107,12 +107,12 @@ public class EXHN07Controller {
     }
 
     @RequestMapping(value = "0701/011")
-    public String handle0701011(@Validated EmployeeForm form,
-            BindingResult result) throws MethodArgumentNotValidException, NoSuchMethodException, SecurityException {
+    public String handle0701011(@Validated EmployeeForm form, BindingResult result)
+            throws MethodArgumentNotValidException, NoSuchMethodException, SecurityException {
 
-        throw new MethodArgumentNotValidException(new MethodParameter(this
-                .getClass().getMethod("handle0701011", EmployeeForm.class,
-                        BindingResult.class), 0), result);
+        throw new MethodArgumentNotValidException(new MethodParameter(
+                this.getClass().getMethod("handle0701011", EmployeeForm.class, BindingResult.class),
+                0), result);
     }
 
     @RequestMapping(value = "0701/012")
@@ -122,8 +122,7 @@ public class EXHN07Controller {
     }
 
     @RequestMapping(value = "0701/013")
-    public String handle0701013(
-            @Validated EmployeeForm form) throws BindException {
+    public String handle0701013(@Validated EmployeeForm form) throws BindException {
 
         return "cspr/exhn";
     }

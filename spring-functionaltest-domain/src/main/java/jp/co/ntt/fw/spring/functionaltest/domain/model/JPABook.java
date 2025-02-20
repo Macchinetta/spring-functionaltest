@@ -55,8 +55,9 @@ public class JPABook {
     private String blobCodeHex;
 
     /**
-     * Following properties are made transient because these are not columns of this entity. However, the jsp used to show the
-     * details is in common with the entity that has these properties as columns in DB table. START::
+     * Following properties are made transient because these are not columns of this entity.
+     * However, the jsp used to show the details is in common with the entity that has these
+     * properties as columns in DB table. START::
      */
     @Transient
     private long version;
@@ -74,8 +75,9 @@ public class JPABook {
     private DateTime lastModifiedDate;
 
     /**
-     * Following properties are made transient because these are not columns of this entity. However, the jsp used to show the
-     * details is in common with the entity that has these properties as columns in DB table. END::
+     * Following properties are made transient because these are not columns of this entity.
+     * However, the jsp used to show the details is in common with the entity that has these
+     * properties as columns in DB table. END::
      */
 
     @ManyToOne(targetEntity = JPACategory.class, fetch = FetchType.EAGER)
@@ -84,6 +86,7 @@ public class JPABook {
 
     /*
      * @ManyToOne( targetEntity=JPACategory.class , fetch=FetchType.LAZY)
+     *
      * @JoinColumn( name="category_id" )
      */
 

@@ -29,15 +29,14 @@ import org.apache.ibatis.type.JdbcType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BlobInputStreamTypeHandlerForPostgres extends
-                                                   BaseTypeHandler<InputStream> {
-    private static final Logger logger = LoggerFactory.getLogger(
-            BlobInputStreamTypeHandlerForPostgres.class);
+public class BlobInputStreamTypeHandlerForPostgres extends BaseTypeHandler<InputStream> {
+    private static final Logger logger =
+            LoggerFactory.getLogger(BlobInputStreamTypeHandlerForPostgres.class);
 
     // (2)
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i,
-            InputStream parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, InputStream parameter,
+            JdbcType jdbcType) throws SQLException {
         try {
             ps.setBytes(i, IOUtils.toByteArray(parameter));
         } catch (IOException e) {
@@ -47,22 +46,20 @@ public class BlobInputStreamTypeHandlerForPostgres extends
 
     // (3)
     @Override
-    public InputStream getNullableResult(ResultSet rs,
-            String columnName) throws SQLException {
+    public InputStream getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return toInputStream(rs.getBytes(columnName));
     }
 
     // (3)
     @Override
-    public InputStream getNullableResult(ResultSet rs,
-            int columnIndex) throws SQLException {
+    public InputStream getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return toInputStream(rs.getBytes(columnIndex));
     }
 
     // (3)
     @Override
-    public InputStream getNullableResult(CallableStatement cs,
-            int columnIndex) throws SQLException {
+    public InputStream getNullableResult(CallableStatement cs, int columnIndex)
+            throws SQLException {
         return toInputStream(cs.getBytes(columnIndex));
     }
 

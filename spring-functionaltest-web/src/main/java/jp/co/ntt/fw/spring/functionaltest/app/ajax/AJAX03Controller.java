@@ -79,21 +79,17 @@ public class AJAX03Controller {
     @RequestMapping(value = "0301/001/001/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult editFirst(
-            @Validated PersonalComputerForm form, Locale locale) {
+    public PersonalComputerResult editFirst(@Validated PersonalComputerForm form, Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @RequestMapping(value = "0301/001/002/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult editSecond(
-            @Validated PersonalComputerForm form, Locale locale) {
+    public PersonalComputerResult editSecond(@Validated PersonalComputerForm form, Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @RequestMapping(value = "0301", params = "retrunToIndex")
@@ -107,18 +103,16 @@ public class AJAX03Controller {
     @ResponseBody
     public ErrorResults handleBindException(BindException e, Locale locale) {
 
-        return personalComputerHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return personalComputerHelper.setErrorResults(e.getBindingResult().getFieldErrors(),
+                locale);
     }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT)
     @ResponseBody
-    public ErrorResults handleHttpBusinessException(BusinessException e,
-            Locale locale) {
+    public ErrorResults handleHttpBusinessException(BusinessException e, Locale locale) {
 
-        return personalComputerHelper.setBusinessExceptionErrorResults(e,
-                locale);
+        return personalComputerHelper.setBusinessExceptionErrorResults(e, locale);
     }
 
 }

@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if (0 < count) {
             ResultMessages messages = ResultMessages.danger();
-            messages.add("e.sf.exhn.8002");
+            messages.add("e.sf.eh.8002");
             throw new BusinessException(messages);
         }
 

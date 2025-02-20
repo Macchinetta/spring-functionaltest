@@ -113,8 +113,8 @@ public class DBLogAssertOperations {
      */
     public void waitForAssertion() {
         try {
-            long adjustedWaitTime = (50 + TimeUnit.SECONDS.toMillis(
-                    offsetSecondsOfWaitForLogAssertion));
+            long adjustedWaitTime =
+                    (50 + TimeUnit.SECONDS.toMillis(offsetSecondsOfWaitForLogAssertion));
             TimeUnit.MILLISECONDS.sleep(adjustedWaitTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -130,8 +130,8 @@ public class DBLogAssertOperations {
      */
     public void waitForAssertion(long waitTime) {
         try {
-            long adjustedWaitTime = waitTime + TimeUnit.SECONDS.toMillis(
-                    offsetSecondsOfWaitForLogAssertion);
+            long adjustedWaitTime =
+                    waitTime + TimeUnit.SECONDS.toMillis(offsetSecondsOfWaitForLogAssertion);
             TimeUnit.MILLISECONDS.sleep(adjustedWaitTime);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -159,8 +159,7 @@ public class DBLogAssertOperations {
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      * @param message メッセージ（必須）
      */
-    public void assertContainsByMessage(String xTrack, String loggerName,
-            String message) {
+    public void assertContainsByMessage(String xTrack, String loggerName, String message) {
         assertContainsByMessage(xTrack, loggerName, message, is(1L));
     }
 
@@ -173,8 +172,7 @@ public class DBLogAssertOperations {
      * @param message メッセージ（必須）
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByMessage(String loggerName, String message,
-            Matcher<Long> matcher) {
+    public void assertContainsByMessage(String loggerName, String message, Matcher<Long> matcher) {
         assertContainsByMessage(null, loggerName, message, matcher);
     }
 
@@ -188,17 +186,15 @@ public class DBLogAssertOperations {
      * @param message メッセージ（必須）
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByMessage(String xTrack, String loggerName,
-            String message, Matcher<Long> matcher) {
+    public void assertContainsByMessage(String xTrack, String loggerName, String message,
+            Matcher<Long> matcher) {
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT COUNT(*) FROM logging_event e");
         where.append(" WHERE e.formatted_message = :message");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerName)) {
             where.append(" AND e.logger_name = :loggerName");
@@ -209,8 +205,7 @@ public class DBLogAssertOperations {
         params.addValue("xTrack", xTrack);
         params.addValue("loggerName", loggerName);
         params.addValue("message", message);
-        long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, matcher);
     }
 
@@ -222,8 +217,7 @@ public class DBLogAssertOperations {
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
      */
-    public void assertContainsByRegexMessage(String loggerNamePattern,
-            String messagePattern) {
+    public void assertContainsByRegexMessage(String loggerNamePattern, String messagePattern) {
         assertContainsByRegexMessage(null, loggerNamePattern, messagePattern);
     }
 
@@ -236,10 +230,9 @@ public class DBLogAssertOperations {
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
      */
-    public void assertContainsByRegexMessage(String xTrack,
-            String loggerNamePattern, String messagePattern) {
-        assertContainsByRegexMessage(xTrack, loggerNamePattern, messagePattern,
-                is(1L));
+    public void assertContainsByRegexMessage(String xTrack, String loggerNamePattern,
+            String messagePattern) {
+        assertContainsByRegexMessage(xTrack, loggerNamePattern, messagePattern, is(1L));
     }
 
     /**
@@ -251,10 +244,9 @@ public class DBLogAssertOperations {
      * @param messagePattern メッセージのパターン（必須）
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexMessage(String loggerNamePattern,
-            String messagePattern, Matcher<Long> matcher) {
-        assertContainsByRegexMessage(null, loggerNamePattern, messagePattern,
-                matcher);
+    public void assertContainsByRegexMessage(String loggerNamePattern, String messagePattern,
+            Matcher<Long> matcher) {
+        assertContainsByRegexMessage(null, loggerNamePattern, messagePattern, matcher);
     }
 
     /**
@@ -267,18 +259,15 @@ public class DBLogAssertOperations {
      * @param messagePattern メッセージのパターン（必須）
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexMessage(String xTrack,
-            String loggerNamePattern, String messagePattern,
-            Matcher<Long> matcher) {
+    public void assertContainsByRegexMessage(String xTrack, String loggerNamePattern,
+            String messagePattern, Matcher<Long> matcher) {
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT COUNT(e.*) FROM logging_event e");
         where.append(" WHERE e.formatted_message REGEXP :message");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerNamePattern)) {
             where.append(" AND e.logger_name REGEXP :loggerName");
@@ -290,8 +279,7 @@ public class DBLogAssertOperations {
         params.addValue("loggerName", loggerNamePattern);
         params.addValue("message", messagePattern);
 
-        long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, matcher);
     }
 
@@ -307,8 +295,8 @@ public class DBLogAssertOperations {
     public void assertContainsByRegexExceptionMessage(String loggerNamePattern,
             String messagePattern, String exceptionMessagePattern) {
 
-        assertContainsByRegexExceptionMessage(null, loggerNamePattern,
-                messagePattern, exceptionMessagePattern);
+        assertContainsByRegexExceptionMessage(null, loggerNamePattern, messagePattern,
+                exceptionMessagePattern);
     }
 
     /**
@@ -321,12 +309,11 @@ public class DBLogAssertOperations {
      * @param messagePattern メッセージのパターン（必須）
      * @param exceptionMessagePattern 例外情報のパターン(必須)
      */
-    public void assertContainsByRegexExceptionMessage(String xTrack,
-            String loggerNamePattern, String messagePattern,
-            String exceptionMessagePattern) {
+    public void assertContainsByRegexExceptionMessage(String xTrack, String loggerNamePattern,
+            String messagePattern, String exceptionMessagePattern) {
 
-        assertContainsByRegexExceptionMessage(xTrack, loggerNamePattern,
-                messagePattern, exceptionMessagePattern, is(1L));
+        assertContainsByRegexExceptionMessage(xTrack, loggerNamePattern, messagePattern,
+                exceptionMessagePattern, is(1L));
     }
 
     /**
@@ -340,11 +327,10 @@ public class DBLogAssertOperations {
      * @param matcher 任意のMatcher(必須)
      */
     public void assertContainsByRegexExceptionMessage(String loggerNamePattern,
-            String messagePattern, String exceptionMessagePattern,
-            Matcher<Long> matcher) {
+            String messagePattern, String exceptionMessagePattern, Matcher<Long> matcher) {
 
-        assertContainsByRegexExceptionMessage(null, loggerNamePattern,
-                messagePattern, exceptionMessagePattern, matcher);
+        assertContainsByRegexExceptionMessage(null, loggerNamePattern, messagePattern,
+                exceptionMessagePattern, matcher);
     }
 
     /**
@@ -358,24 +344,19 @@ public class DBLogAssertOperations {
      * @param exceptionMessagePattern 例外情報のパターン(必須)
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexExceptionMessage(String xTrack,
-            String loggerNamePattern, String messagePattern,
-            String exceptionMessagePattern, Matcher<Long> matcher) {
+    public void assertContainsByRegexExceptionMessage(String xTrack, String loggerNamePattern,
+            String messagePattern, String exceptionMessagePattern, Matcher<Long> matcher) {
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT COUNT(e.*) FROM logging_event e");
         where.append(" WHERE e.formatted_message REGEXP :message");
 
-        sql.append(
-                " JOIN logging_event_exception ee ON ee.event_id = e.event_id");
-        where.append(
-                " AND ee.I = '0' AND ee.TRACE_LINE REGEXP :exceptionMessage");
+        sql.append(" JOIN logging_event_exception ee ON ee.event_id = e.event_id");
+        where.append(" AND ee.I = '0' AND ee.TRACE_LINE REGEXP :exceptionMessage");
 
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerNamePattern)) {
             where.append(" AND e.logger_name REGEXP :loggerName");
@@ -388,8 +369,7 @@ public class DBLogAssertOperations {
         params.addValue("message", messagePattern);
         params.addValue("exceptionMessage", exceptionMessagePattern);
 
-        Long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        Long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, matcher);
     }
 
@@ -411,8 +391,7 @@ public class DBLogAssertOperations {
      */
     public void assertContainsByRegexStackTrace(String loggerNamePattern,
             String stackTracePattern) {
-        assertContainsByRegexStackTrace(loggerNamePattern, stackTracePattern,
-                is(1L));
+        assertContainsByRegexStackTrace(loggerNamePattern, stackTracePattern, is(1L));
     }
 
     /**
@@ -420,8 +399,7 @@ public class DBLogAssertOperations {
      * @param stackTracePattern スタックトレースの文字列パターン(必須)
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexStackTrace(String stackTracePattern,
-            Matcher<Long> matcher) {
+    public void assertContainsByRegexStackTrace(String stackTracePattern, Matcher<Long> matcher) {
         assertContainsByRegexStackTrace(null, stackTracePattern, matcher);
     }
 
@@ -434,8 +412,8 @@ public class DBLogAssertOperations {
      * @param stackTracePattern スタックトレースの文字列パターン(必須)
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexStackTrace(String loggerNamePattern,
-            String stackTracePattern, Matcher<Long> matcher) {
+    public void assertContainsByRegexStackTrace(String loggerNamePattern, String stackTracePattern,
+            Matcher<Long> matcher) {
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT COUNT(ee.*) FROM logging_event_exception ee");
@@ -449,8 +427,7 @@ public class DBLogAssertOperations {
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("loggerName", loggerNamePattern);
         params.addValue("stackTrace", stackTracePattern);
-        Long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        Long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, matcher);
     }
 
@@ -475,8 +452,7 @@ public class DBLogAssertOperations {
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      * @param message メッセージ（必須）
      */
-    public void assertNotContainsByMessage(String xTrack, String loggerName,
-            String message) {
+    public void assertNotContainsByMessage(String xTrack, String loggerName, String message) {
         assertContainsByMessage(xTrack, loggerName, message, is(0L));
     }
 
@@ -488,10 +464,8 @@ public class DBLogAssertOperations {
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
      */
-    public void assertNotContainsByRegexMessage(String loggerNamePattern,
-            String messagePattern) {
-        assertNotContainsByRegexMessage(null, loggerNamePattern,
-                messagePattern);
+    public void assertNotContainsByRegexMessage(String loggerNamePattern, String messagePattern) {
+        assertNotContainsByRegexMessage(null, loggerNamePattern, messagePattern);
     }
 
     /**
@@ -503,10 +477,9 @@ public class DBLogAssertOperations {
      * @param loggerNamePattern 出力元のロガー名のパターン（絞り込みを行わない場合はnullを指定）
      * @param messagePattern メッセージのパターン（必須）
      */
-    public void assertNotContainsByRegexMessage(String xTrack,
-            String loggerNamePattern, String messagePattern) {
-        assertContainsByRegexMessage(xTrack, loggerNamePattern, messagePattern,
-                is(0L));
+    public void assertNotContainsByRegexMessage(String xTrack, String loggerNamePattern,
+            String messagePattern) {
+        assertContainsByRegexMessage(xTrack, loggerNamePattern, messagePattern, is(0L));
     }
 
     /**
@@ -519,18 +492,16 @@ public class DBLogAssertOperations {
      * @param messagePattern メッセージのパターン（必須）
      * @return 指定したメッセージパターン(正規表現)に一致するログ
      */
-    public List<String> getLogByRegexMessage(String xTrack,
-            String loggerNamePattern, String messagePattern) {
+    public List<String> getLogByRegexMessage(String xTrack, String loggerNamePattern,
+            String messagePattern) {
 
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT e.formatted_message FROM logging_event e");
         where.append(" WHERE e.formatted_message REGEXP :message");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerNamePattern)) {
             where.append(" AND e.logger_name REGEXP :loggerName");
@@ -544,8 +515,7 @@ public class DBLogAssertOperations {
         params.addValue("loggerName", loggerNamePattern);
         params.addValue("message", messagePattern);
 
-        return jdbcOperations.queryForList(sql.toString(), params,
-                String.class);
+        return jdbcOperations.queryForList(sql.toString(), params, String.class);
     }
 
     protected void assertNotContainsLevels(String xTrack, String... levels) {
@@ -562,10 +532,8 @@ public class DBLogAssertOperations {
         }
         where.append(")");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         sql.append(where);
 
@@ -574,23 +542,20 @@ public class DBLogAssertOperations {
         for (int i = 0; i < levels.length; i++) {
             params.addValue("level" + i, levels[i]);
         }
-        Long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        Long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, is(0L));
     }
 
-    public List<String> getLogByRegexMessageTime(String xTrack,
-            String loggerNamePattern, String messagePattern) {
+    public List<String> getLogByRegexMessageTime(String xTrack, String loggerNamePattern,
+            String messagePattern) {
 
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT e.timestmp FROM logging_event e");
         where.append(" WHERE e.formatted_message REGEXP :message");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerNamePattern)) {
             where.append(" AND e.logger_name REGEXP :loggerName");
@@ -604,8 +569,7 @@ public class DBLogAssertOperations {
         params.addValue("loggerName", loggerNamePattern);
         params.addValue("message", messagePattern);
 
-        return jdbcOperations.queryForList(sql.toString(), params,
-                String.class);
+        return jdbcOperations.queryForList(sql.toString(), params, String.class);
     }
 
     /**
@@ -618,18 +582,16 @@ public class DBLogAssertOperations {
      * @param messagePattern メッセージのパターン（必須）
      * @return 指定したメッセージパターン(正規表現)に一致するログのイベントID
      */
-    public List<Long> getLogEventIdByRegexMessage(String xTrack,
-            String loggerNamePattern, String messagePattern) {
+    public List<Long> getLogEventIdByRegexMessage(String xTrack, String loggerNamePattern,
+            String messagePattern) {
 
         StringBuilder sql = new StringBuilder();
         StringBuilder where = new StringBuilder();
         sql.append("SELECT e.event_id FROM logging_event e");
         where.append(" WHERE e.formatted_message REGEXP :message");
         if (StringUtils.hasText(xTrack)) {
-            sql.append(
-                    " JOIN logging_event_property ep ON ep.event_id = e.event_id");
-            where.append(
-                    " AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
+            sql.append(" JOIN logging_event_property ep ON ep.event_id = e.event_id");
+            where.append(" AND ep.mapped_key = 'X-Track' AND ep.mapped_value = :xTrack");
         }
         if (StringUtils.hasText(loggerNamePattern)) {
             where.append(" AND e.logger_name REGEXP :loggerName");
@@ -655,11 +617,10 @@ public class DBLogAssertOperations {
      * @param level ログレベル
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      */
-    public void assertContainsByRegexMessageAndLevelsAndLogger(String message,
-            String level, String loggerName) {
+    public void assertContainsByRegexMessageAndLevelsAndLogger(String message, String level,
+            String loggerName) {
 
-        assertContainsByRegexMessageAndLevelsAndLogger(message, level,
-                loggerName, is(1L));
+        assertContainsByRegexMessageAndLevelsAndLogger(message, level, loggerName, is(1L));
     }
 
     /**
@@ -672,8 +633,8 @@ public class DBLogAssertOperations {
      * @param loggerName 出力元のロガー名（絞り込みを行わない場合はnullを指定）
      * @param matcher 任意のMatcher(必須)
      */
-    public void assertContainsByRegexMessageAndLevelsAndLogger(String message,
-            String level, String loggerName, Matcher<Long> matcher) {
+    public void assertContainsByRegexMessageAndLevelsAndLogger(String message, String level,
+            String loggerName, Matcher<Long> matcher) {
         StringBuilder sql = new StringBuilder();
         sql.append(
                 "SELECT COUNT(e.*) FROM logging_event e WHERE e.formatted_message REGEXP :message AND e.level_string = :level");
@@ -687,8 +648,7 @@ public class DBLogAssertOperations {
         params.addValue("level", level);
         params.addValue("loggerName", loggerName);
 
-        long count = jdbcOperations.queryForObject(sql.toString(), params,
-                Long.class);
+        long count = jdbcOperations.queryForObject(sql.toString(), params, Long.class);
         assertThat(count, matcher);
     }
 }

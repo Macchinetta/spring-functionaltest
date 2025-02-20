@@ -33,10 +33,9 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Transactional("sendJmsTransactionManager")
 @Service
-public class JmsTransactedAmqReceivingServiceImpl implements
-                                                  JmsTransactedAmqReceivingService {
-    private static final Logger logger = LoggerFactory.getLogger(
-            JmsTransactedAmqReceivingServiceImpl.class);
+public class JmsTransactedAmqReceivingServiceImpl implements JmsTransactedAmqReceivingService {
+    private static final Logger logger =
+            LoggerFactory.getLogger(JmsTransactedAmqReceivingServiceImpl.class);
 
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
@@ -54,27 +53,24 @@ public class JmsTransactedAmqReceivingServiceImpl implements
     JmsMessagingTemplate jndiConCacheJmsMessagingTemplate;
 
     @Override
-    public void receiveMessage_TxRcvOK(
-            String id) throws IOException, InterruptedException {
+    public void receiveMessage_TxRcvOK(String id) throws IOException, InterruptedException {
 
         logger.debug("Received Message![TestQueue0602001] {}", id);
 
         // メッセージ受信までの間にreceiveWaitTime秒の待ち時間を発生させる
         try {
-            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime
-                    + addReceiveWaitTime));
+            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime + addReceiveWaitTime));
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
             throw e;
         }
 
         // メッセージ受信
-        JmsTodo jmsTodo = jndiConCacheJmsMessagingTemplate.receiveAndConvert(
-                "TestQueue0602001", JmsTodo.class);
+        JmsTodo jmsTodo = jndiConCacheJmsMessagingTemplate.receiveAndConvert("TestQueue0602001",
+                JmsTodo.class);
 
         // 一時ファイルへ出力
-        jmsSharedService.writeObjectToFile(temporaryDirectory, jmsTodo
-                .getJmsTodoId(), jmsTodo);
+        jmsSharedService.writeObjectToFile(temporaryDirectory, jmsTodo.getJmsTodoId(), jmsTodo);
     }
 
     @Override
@@ -84,19 +80,16 @@ public class JmsTransactedAmqReceivingServiceImpl implements
 
         // メッセージ受信までの間にreceiveWaitTime秒の待ち時間を発生させる
         try {
-            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime
-                    + addReceiveWaitTime));
+            TimeUnit.MILLISECONDS.sleep((long) (receiveWaitTime + addReceiveWaitTime));
         } catch (InterruptedException e) {
             logger.warn("InterruptedException Occured", e);
             throw e;
         }
 
         // メッセージ受信
-        jndiConCacheJmsMessagingTemplate.receiveAndConvert("TestQueue0602002",
-                JmsTodo.class);
+        jndiConCacheJmsMessagingTemplate.receiveAndConvert("TestQueue0602002", JmsTodo.class);
 
         // 例外発生
-        throw new BusinessException(ResultMessages.error().add(
-                "e.sf.jmss.8001"));
+        throw new BusinessException(ResultMessages.error().add("e.sf.js.8001"));
     }
 }

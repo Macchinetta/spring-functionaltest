@@ -65,17 +65,16 @@ public class ATHN18Controller {
         }
 
         // エンコード前のパスワード
-        redirectAttributes.addFlashAttribute("beforeEncodePassword", form
-                .getPassword());
+        redirectAttributes.addFlashAttribute("beforeEncodePassword", form.getPassword());
         redirectAttributes.addFlashAttribute(administrator);
 
         return "redirect:/athn/1801/001/createCompleteAdminUsingCustomPbkdf2?complete";
     }
 
-    @RequestMapping(value = "1801/001/createCompleteAdminUsingCustomPbkdf2", method = RequestMethod.GET, params = "complete")
-    public String createCompleteAdministratorUsingCustomPbkdf2Password(
-            Model model) {
-        ResultMessages messages = ResultMessages.info().add("i.sf.athn.0001");
+    @RequestMapping(value = "1801/001/createCompleteAdminUsingCustomPbkdf2",
+            method = RequestMethod.GET, params = "complete")
+    public String createCompleteAdministratorUsingCustomPbkdf2Password(Model model) {
+        ResultMessages messages = ResultMessages.info().add("i.sf.ah.0001");
         model.addAttribute(messages);
 
         return "athn/createCompleteAdministrator";
@@ -87,10 +86,9 @@ public class ATHN18Controller {
 
         model.addAttribute("username", userDetails.getUsername());
         // principalからパスワードを取得できない為、DBから取得
-        Administrator administrator = administratorService.findOneByUserName(
-                userDetails.getUsername());
-        model.addAttribute("administratorPassword", administrator
-                .getPassword());
+        Administrator administrator =
+                administratorService.findOneByUserName(userDetails.getUsername());
+        model.addAttribute("administratorPassword", administrator.getPassword());
 
         return "athn/showAdministratorInfoUsingCustomPbkdf2Password";
     }

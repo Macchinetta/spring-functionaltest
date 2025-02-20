@@ -56,16 +56,13 @@ public class WsExceptionHandler {
             faultInfo.addError(e.getClass().getName(), e.getMessage());
         } else if (e instanceof ConstraintViolationException) {
             faultInfo = new WebFaultBean(WebFaultType.VALIDATION_FAULT);
-            this.addErrors(faultInfo, ((ConstraintViolationException) e)
-                    .getConstraintViolations());
+            this.addErrors(faultInfo, ((ConstraintViolationException) e).getConstraintViolations());
         } else if (e instanceof ResourceNotFoundException) {
             faultInfo = new WebFaultBean(WebFaultType.RESOURCE_NOT_FOUND_FAULT);
-            this.addErrors(faultInfo, ((ResourceNotFoundException) e)
-                    .getResultMessages());
+            this.addErrors(faultInfo, ((ResourceNotFoundException) e).getResultMessages());
         } else if (e instanceof BusinessException) {
             faultInfo = new WebFaultBean(WebFaultType.BUSINESS_FAULT);
-            this.addErrors(faultInfo, ((BusinessException) e)
-                    .getResultMessages());
+            this.addErrors(faultInfo, ((BusinessException) e).getResultMessages());
         } else {
             // not translate.
             throw new SystemException("e.sf.soap.9001", e);
@@ -86,20 +83,18 @@ public class WsExceptionHandler {
             Iterator<Path.Node> pathIt = v.getPropertyPath().iterator();
             pathIt.next(); // method name node (skip)
             Path.Node methodArgumentNameNode = pathIt.next();
-            faultInfo.addError(v.getConstraintDescriptor().getAnnotation()
-                    .annotationType().getSimpleName(), v.getMessage(), pathIt
-                            .hasNext() ? pathIt.next().toString()
-                                    : methodArgumentNameNode.toString());
+            faultInfo.addError(
+                    v.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName(),
+                    v.getMessage(), pathIt.hasNext() ? pathIt.next().toString()
+                            : methodArgumentNameNode.toString());
         }
     }
 
-    private void addErrors(WebFaultBean faultInfo,
-            ResultMessages resultMessages) {
+    private void addErrors(WebFaultBean faultInfo, ResultMessages resultMessages) {
         Locale locale = Locale.getDefault();
         for (ResultMessage message : resultMessages) {
-            faultInfo.addError(message.getCode(), messageSource.getMessage(
-                    message.getCode(), message.getArgs(), message.getText(),
-                    locale));
+            faultInfo.addError(message.getCode(), messageSource.getMessage(message.getCode(),
+                    message.getArgs(), message.getText(), locale));
         }
     }
 

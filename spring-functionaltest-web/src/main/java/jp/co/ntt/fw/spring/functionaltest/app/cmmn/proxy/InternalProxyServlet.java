@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * アプリケーション内部ProxyServer用のサーブレット
- * 
+ *
  * <pre>
  * 認証が必要なURLのパスの場合、プロキシ用の認証ヘッダ("Proxy-Authorization")が必要となる。<br>
  * レスポンスヘッダに"Pass-Internal-Proxy"を追加する。
@@ -40,8 +40,7 @@ public class InternalProxyServlet extends ProxyServlet {
 
     private static final long serialVersionUID = 4051111343160785339L;
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            InternalProxyServlet.class);
+    private static final Logger logger = LoggerFactory.getLogger(InternalProxyServlet.class);
 
     private static String proxyUseAuthPath;
 
@@ -68,12 +67,13 @@ public class InternalProxyServlet extends ProxyServlet {
 
     /*
      * (non-Javadoc)
+     *
      * @see org.eclipse.jetty.proxy.ProxyServlet#service(javax.servlet.http. HttpServletRequest,
      * javax.servlet.http.HttpServletResponse)
      */
     @Override
-    protected void service(final HttpServletRequest request,
-            final HttpServletResponse response) throws ServletException, IOException {
+    protected void service(final HttpServletRequest request, final HttpServletResponse response)
+            throws ServletException, IOException {
         logger.debug("Start InternalProxyServlet.service");
         logger.debug("RequestURL:" + request.getRequestURL());
 
@@ -102,8 +102,7 @@ public class InternalProxyServlet extends ProxyServlet {
             final HttpServletResponse response) throws IOException {
 
         // URIに認証が必要なURLのパスが含まれない場合、認証不要。
-        if (!request.getPathInfo().contains(
-                InternalProxyServlet.proxyUseAuthPath)) {
+        if (!request.getPathInfo().contains(InternalProxyServlet.proxyUseAuthPath)) {
             return true;
         }
 
@@ -112,10 +111,9 @@ public class InternalProxyServlet extends ProxyServlet {
 
         // 認証情報が未設定 または Basic認証の情報ではない場合、クライアントにプロキシ認証情報を要求。(ステータスコード：407)
         if (header == null || !header.startsWith("Basic ")) {
-            response.addHeader("Proxy-Authenticate", "Basic realm=\""
-                    + getClass().getName() + "\"");
-            response.sendError(
-                    HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED,
+            response.addHeader("Proxy-Authenticate",
+                    "Basic realm=\"" + getClass().getName() + "\"");
+            response.sendError(HttpServletResponse.SC_PROXY_AUTHENTICATION_REQUIRED,
                     "No Authorization By " + getClass().getName());
             return false;
         }
@@ -124,9 +122,9 @@ public class InternalProxyServlet extends ProxyServlet {
         String[] credentials = getCredentialsFromHeader(header);
 
         // 認証情報の判定
-        if (credentials != null && Objects.equals(credentials[0],
-                InternalProxyServlet.proxyUserName) && Objects.equals(
-                        credentials[1], InternalProxyServlet.proxyPassword)) {
+        if (credentials != null
+                && Objects.equals(credentials[0], InternalProxyServlet.proxyUserName)
+                && Objects.equals(credentials[1], InternalProxyServlet.proxyPassword)) {
             // 認証情報が正しい場合、trueを返す。
             return true;
         } else {
@@ -144,13 +142,12 @@ public class InternalProxyServlet extends ProxyServlet {
      * Proxy-Authorizationヘッダーの値は、Basic認証の場合「Baseic 認証情報」形式。<br>
      * また、認証情報の値は、「ユーザ:パスワード」形式の値をBase64で変換されている。
      * </pre>
-     * 
+     *
      * @param header HTTPリクエストヘッダのProxy-Authorizationの値
      * @return 認証情報(1要素目：ユーザ、2要素目：パスワード)、ｎｕｌｌ：認証情報不正
      * @throws IOException
      */
-    private String[] getCredentialsFromHeader(
-            String header) throws IOException {
+    private String[] getCredentialsFromHeader(String header) throws IOException {
 
         // 先頭の"Basic "を除いた文字列を取得
         byte[] base64Token = header.substring(6).getBytes("UTF-8");

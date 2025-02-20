@@ -71,8 +71,7 @@ public class RSCL04Controller {
     @RequestMapping(value = "0404/001", method = RequestMethod.GET)
     public String handle0404001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "Occur return unKnown Status [901] Exception");
+        model.addAttribute("testDescription", "Occur return unKnown Status [901] Exception");
         model.addAttribute("testId", "0404/001");
 
         return "rscl/occurException";
@@ -88,8 +87,7 @@ public class RSCL04Controller {
     @RequestMapping(value = "0405/001", method = RequestMethod.GET)
     public String handle0405001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "Individual Error handling [retry]");
+        model.addAttribute("testDescription", "Individual Error handling [retry]");
         model.addAttribute("testId", "0405/001");
 
         return "rscl/occurException";
@@ -100,8 +98,7 @@ public class RSCL04Controller {
 
         UserResource rcvUser = this.restClientService.handleException04();
 
-        model.addAttribute("resultDescription",
-                "[0405]処理結果およびExceptionの有無、リトライ回数をログでアサート");
+        model.addAttribute("resultDescription", "[0405]処理結果およびExceptionの有無、リトライ回数をログでアサート");
         model.addAttribute("user", rcvUser);
 
         return "rscl/resultUserInf";
@@ -110,8 +107,7 @@ public class RSCL04Controller {
     @RequestMapping(value = "0406/001", method = RequestMethod.GET)
     public String handle0406001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "DefaultResponse Error handling [retry]");
+        model.addAttribute("testDescription", "DefaultResponse Error handling [retry]");
         model.addAttribute("testId", "0406/001");
 
         return "rscl/occurException";
@@ -120,11 +116,9 @@ public class RSCL04Controller {
     @RequestMapping(value = "0406/001", method = RequestMethod.POST)
     public String handle0406001(Model model) {
 
-        UserResource rcvUser = this.customErrorRestClientService
-                .handleException05();
+        UserResource rcvUser = this.customErrorRestClientService.handleException05();
 
-        model.addAttribute("resultDescription",
-                "[0406]処理結果およびExceptionの有無、リトライ回数をログでアサート");
+        model.addAttribute("resultDescription", "[0406]処理結果およびExceptionの有無、リトライ回数をログでアサート");
         model.addAttribute("user", rcvUser);
 
         return "rscl/resultUserInf";

@@ -26,8 +26,8 @@ public class PageInfoDialect implements IExpressionObjectDialect {
 
     private static final String PAGE_INFO_DIALECT_NAME = "pageInfo";
 
-    private static final Set<String> EXPRESSION_OBJECT_NAMES = Collections
-            .singleton(PAGE_INFO_DIALECT_NAME);
+    private static final Set<String> EXPRESSION_OBJECT_NAMES =
+            Collections.singleton(PAGE_INFO_DIALECT_NAME);
 
     @Override
     public IExpressionObjectFactory getExpressionObjectFactory() {
@@ -39,8 +39,7 @@ public class PageInfoDialect implements IExpressionObjectDialect {
             }
 
             @Override
-            public Object buildObject(IExpressionContext context,
-                    String expressionObjectName) {
+            public Object buildObject(IExpressionContext context, String expressionObjectName) {
                 if (PAGE_INFO_DIALECT_NAME.equals(expressionObjectName)) {
                     return new PageInfo();
                 }

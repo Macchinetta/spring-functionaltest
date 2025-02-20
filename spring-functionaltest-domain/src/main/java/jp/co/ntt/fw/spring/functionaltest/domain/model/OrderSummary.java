@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class OrderSummary implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
@@ -34,8 +34,8 @@ public class OrderSummary implements Serializable {
 
     private OrderSummaryStatus orderStatus;
 
-    public OrderSummary(Integer id, long totalPrice, String orderMemo,
-            String orderStatus, String statCode) {
+    public OrderSummary(Integer id, long totalPrice, String orderMemo, String orderStatus,
+            String statCode) {
         super();
         this.orderId = id;
         this.orderAmount = totalPrice;
@@ -84,8 +84,8 @@ public class OrderSummary implements Serializable {
     }
 
     /*
-     * public String getOrderStatus() { return orderStatus; } public void setOrderStatus(String orderStatus) { this.orderStatus
-     * = orderStatus; }
+     * public String getOrderStatus() { return orderStatus; } public void setOrderStatus(String
+     * orderStatus) { this.orderStatus = orderStatus; }
      */
 
 }

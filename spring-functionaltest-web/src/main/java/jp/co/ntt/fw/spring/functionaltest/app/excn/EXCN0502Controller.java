@@ -61,11 +61,9 @@ public class EXCN0502Controller {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         try {
-            stock = jpaStockOptimisticLockService.buy(stock, form
-                    .getPurchasingQuantity());
+            stock = jpaStockOptimisticLockService.buy(stock, form.getPurchasingQuantity());
         } catch (OptimisticLockingFailureException excp) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivebycontroller"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivebycontroller"));
             return "common/error/exclusiveLockError";
         }
 
@@ -87,11 +85,10 @@ public class EXCN0502Controller {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         try {
-            stock = jpaStockPessimisticLockService.buy(stock, form
-                    .getPurchasingQuantity(), form.getSleepMillis());
+            stock = jpaStockPessimisticLockService.buy(stock, form.getPurchasingQuantity(),
+                    form.getSleepMillis());
         } catch (PessimisticLockingFailureException excp) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivebycontroller"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivebycontroller"));
             return "common/error/exclusiveLockError";
         }
 

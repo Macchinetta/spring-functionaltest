@@ -70,8 +70,8 @@ public class JMSS05SendingController {
     }
 
     @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sync")
-    public String sendMessageJmsMsg(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    public String sendMessageJmsMsg(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         // send message
         jmsCacheConSendingService.sendSyncMessage(form.getJmsTodoId());

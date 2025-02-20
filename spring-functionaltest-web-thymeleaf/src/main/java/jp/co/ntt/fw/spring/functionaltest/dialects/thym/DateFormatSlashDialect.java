@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.dialects.thym;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.context.IExpressionContext;
@@ -26,16 +25,13 @@ import org.thymeleaf.expression.IExpressionObjectFactory;
 
 public class DateFormatSlashDialect implements IExpressionObjectDialect {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DateFormatSlashDialect.class);
+    private static final Logger logger = LoggerFactory.getLogger(DateFormatSlashDialect.class);
 
-    @SuppressWarnings("serial")
-    private Set<String> names = new HashSet<String>() {
-        {
-            add("dateformatslash");
-            add("nocachedateformat");
-        }
-    };
+    private Set<String> names = new HashSet<>();
+    {
+        names.add("dateformatslash");
+        names.add("nocachedateformat");
+    }
 
     @Override
     public IExpressionObjectFactory getExpressionObjectFactory() {
@@ -47,8 +43,7 @@ public class DateFormatSlashDialect implements IExpressionObjectDialect {
             }
 
             @Override
-            public Object buildObject(IExpressionContext context,
-                    String expressionObjectName) {
+            public Object buildObject(IExpressionContext context, String expressionObjectName) {
                 if ("dateformatslash".equals(expressionObjectName)
                         || "nocachedateformat".equals(expressionObjectName)) {
                     logger.info("Create '" + expressionObjectName + "' Object");

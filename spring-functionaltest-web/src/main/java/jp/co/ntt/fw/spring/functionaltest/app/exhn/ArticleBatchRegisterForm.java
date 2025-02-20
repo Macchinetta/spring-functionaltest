@@ -16,8 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.exhn;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +39,7 @@ public class ArticleBatchRegisterForm implements Serializable {
     @UploadFileRequired(groups = Confirm.class)
     private transient MultipartFile multipartFile;
 
-    @NotNull(groups = Register.class)
+    @NotEmpty(groups = Register.class)
     private String fileName;
 
     public String getTitle() {

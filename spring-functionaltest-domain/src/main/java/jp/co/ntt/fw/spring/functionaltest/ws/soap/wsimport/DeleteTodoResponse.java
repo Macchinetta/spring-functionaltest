@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * deleteTodoResponse complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="deleteTodoResponse">
  *   &lt;complexContent>

@@ -41,7 +41,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.StockPage;
  * </p>
  */
 // Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
     @Value("${selenium.excn.waitForNextRequest.offsetSeconds:0}")
@@ -78,8 +78,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
+            final long sleepMillisThatWaitNextRequest =
+                    TimeUnit.SECONDS.toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
@@ -122,7 +122,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
     /**
      * EXCN0302001
      * <ul>
-     * <li>Serviceクラスの一連の処理で、バージョンカラムの取得、更新を行う場合、更新時にバージョンの値が取得時と異なるとき、 楽観ロック例外を明示的にスロー可能なことを確認する。</li>
+     * <li>Serviceクラスの一連の処理で、バージョンカラムの取得、更新を行う場合、更新時にバージョンの値が取得時と異なるとき、
+     * 楽観ロック例外を明示的にスロー可能なことを確認する。</li>
      * </ul>
      * @throws InterruptedException
      */
@@ -175,7 +176,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
     /**
      * EXCN0302002
      * <ul>
-     * <li>複数リクエストにまたがったトランザクションの場合、別画面で取得したバージョンカラムの値を更新処理で参照することで、 バージョンの値が異なるとき、楽観ロック例外を明示的にスロー可能なことを確認する。</li>
+     * <li>複数リクエストにまたがったトランザクションの場合、別画面で取得したバージョンカラムの値を更新処理で参照することで、
+     * バージョンの値が異なるとき、楽観ロック例外を明示的にスロー可能なことを確認する。</li>
      * </ul>
      */
     @Test
@@ -383,8 +385,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
+            final long sleepMillisThatWaitNextRequest =
+                    TimeUnit.SECONDS.toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
@@ -504,8 +506,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             final CountDownLatch startSignal = new CountDownLatch(1);
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
+            final long sleepMillisThatWaitNextRequest =
+                    TimeUnit.SECONDS.toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
@@ -543,8 +545,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
         // 結果確認
         {
-            ExclusionResultPage exclusionResultPage = new ExclusionResultPage(getWebDriverOperations(
-                    0).getWebDriver());
+            ExclusionResultPage exclusionResultPage =
+                    new ExclusionResultPage(getWebDriverOperations(0).getWebDriver());
             if ("1".equals(exclusionResultPage.getVersion())) {
                 // 画面1の処理が先に行われた場合
                 assertionForTestEXCN0502002(0, 1, testIdUpperCase, 2, 1);
@@ -632,8 +634,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
 
             final CountDownLatch doneSignal = new CountDownLatch(2);
 
-            final long sleepMillisThatWaitNextRequest = TimeUnit.SECONDS
-                    .toMillis(3 + offsetSecondsOfWaitForNextRequest);
+            final long sleepMillisThatWaitNextRequest =
+                    TimeUnit.SECONDS.toMillis(3 + offsetSecondsOfWaitForNextRequest);
 
             // 画面1を操作するスレッドを起動。
             new Thread(new Runnable() {
@@ -672,19 +674,16 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
             } else {
                 completedId = 1;
             }
-            WebDriverOperations operations = getWebDriverOperations(
-                    completedId);
+            WebDriverOperations operations = getWebDriverOperations(completedId);
             WebDriver driver = operations.getWebDriver();
             ExclusionResultPage exclusionResultPage = new ExclusionResultPage(driver);
 
             String database = exclusionResultPage.getDatabase();
             if ("H2".equals(database)) {
                 if ("1".equals(exclusionResultPage.getVersion())) {
-                    assertionForTestEXCN0602002WithoutNoWaitOption(0, 1,
-                            testIdUpperCase, 2, 1);
+                    assertionForTestEXCN0602002WithoutNoWaitOption(0, 1, testIdUpperCase, 2, 1);
                 } else {
-                    assertionForTestEXCN0602002WithoutNoWaitOption(1, 0,
-                            testIdUpperCase, 4, 1);
+                    assertionForTestEXCN0602002WithoutNoWaitOption(1, 0, testIdUpperCase, 4, 1);
                 }
             } else {
                 if (completedId == 0) {
@@ -711,8 +710,7 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param purchaseQuantity 減算する数量
      * @param sleepMillis ロックする時間（厳密には、Thread#sleepする時間）
      */
-    private void jpaBuy(int webDriverId, int purchaseQuantity,
-            long sleepMillis) {
+    private void jpaBuy(int webDriverId, int purchaseQuantity, long sleepMillis) {
         jpaBuy(webDriverId, purchaseQuantity, sleepMillis, null);
     }
 
@@ -755,11 +753,9 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      */
     private void buy(int webDriverId, int purchaseQuantity, long sleepMillis) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
-        operations.overrideText(id("purchasingQuantity"), Integer.toString(
-                purchaseQuantity));
+        operations.overrideText(id("purchasingQuantity"), Integer.toString(purchaseQuantity));
         if (sleepMillis != -1) {
-            operations.overrideText(id("sleepMillis"), Long.toString(
-                    sleepMillis));
+            operations.overrideText(id("sleepMillis"), Long.toString(sleepMillis));
         }
         operations.click(id("buy"));
     }
@@ -781,8 +777,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param quantity
      * @param version
      */
-    private void assertCompleteView(int webDriverId, String itemCode,
-            String itemName, int quantity, int version) {
+    private void assertCompleteView(int webDriverId, String itemCode, String itemName, int quantity,
+            int version) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
 
         operations.waitForDisplayed(textToBe(By.xpath("//h1"), "売買完了"));
@@ -790,10 +786,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
         assertThat(operations.getText(id("screenTitle")), is("売買完了"));
         assertThat(operations.getText(id("result_itemCode")), is(itemCode));
         assertThat(operations.getText(id("result_itemName")), is(itemName));
-        assertThat(operations.getText(id("result_quantity")), is(Integer
-                .toString(quantity)));
-        assertThat(operations.getText(id("result_version")), is(Integer
-                .toString(version)));
+        assertThat(operations.getText(id("result_quantity")), is(Integer.toString(quantity)));
+        assertThat(operations.getText(id("result_version")), is(Integer.toString(version)));
     }
 
     /**
@@ -804,8 +798,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param quantity
      * @param version
      */
-    private void assertCompletePageView(int webDriverId, String itemCode,
-            String itemName, int quantity, int version) {
+    private void assertCompletePageView(int webDriverId, String itemCode, String itemName,
+            int quantity, int version) {
 
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
@@ -813,10 +807,8 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
         assertThat(operations.getText(id("screenTitle")), is("売買完了"));
         assertThat(exclusionResultPage.getItemCode(), is(itemCode));
         assertThat(exclusionResultPage.getItemName(), is(itemName));
-        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(
-                quantity)));
-        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(
-                version)));
+        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(quantity)));
+        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(version)));
     }
 
     /**
@@ -827,17 +819,15 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param quantity
      * @param version
      */
-    private void assertUpdatePageView(int webDriverId, String itemCode,
-            String itemName, int quantity, int version) {
+    private void assertUpdatePageView(int webDriverId, String itemCode, String itemName,
+            int quantity, int version) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
         ExclusionResultPage exclusionResultPage = new ExclusionResultPage(driver);
         assertThat(exclusionResultPage.getItemCode(), is(itemCode));
         assertThat(exclusionResultPage.getItemName(), is(itemName));
-        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(
-                quantity)));
-        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(
-                version)));
+        assertThat(exclusionResultPage.getQuantity(), is(Integer.toString(quantity)));
+        assertThat(exclusionResultPage.getVersion(), is(Integer.toString(version)));
     }
 
     /**
@@ -858,88 +848,79 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param quantity
      * @param version
      */
-    private void assertUpdateView(int webDriverId, String itemCode,
-            String itemName, int quantity, int version) {
+    private void assertUpdateView(int webDriverId, String itemCode, String itemName, int quantity,
+            int version) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         assertThat(operations.getText(id("result_itemCode")), is(itemCode));
         assertThat(operations.getText(id("result_itemName")), is(itemName));
-        assertThat(operations.getText(id("result_quantity")), is(Integer
-                .toString(quantity)));
-        assertThat(operations.getText(id("result_version")), is(Integer
-                .toString(version)));
+        assertThat(operations.getText(id("result_quantity")), is(Integer.toString(quantity)));
+        assertThat(operations.getText(id("result_version")), is(Integer.toString(version)));
     }
 
-    private void assertionForTestEXCN0301001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "0301/001", "Business Error!\nOther user updated!!");
+    private void assertionForTestEXCN0301001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0, "0301/001",
+                "Business Error!\nOther user updated!!");
     }
 
-    private void assertionForTestEXCN0302001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "0302/001",
+    private void assertionForTestEXCN0302001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1, "0302/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
-    private void assertionForTestEXCN0302002(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "0302/002",
+    private void assertionForTestEXCN0302002(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1, "0302/002",
                 "Exclusive Lock Error!\nOther user updated!!(request)");
     }
 
-    private void assertionForTestEXCN0402001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "0402/001",
+    private void assertionForTestEXCN0402001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0, "0402/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
-    private void assertionForTestEXCN0402002(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "0402/002",
+    private void assertionForTestEXCN0402002(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0, "0402/002",
                 "Exclusive Lock Error!\nOther user updated!!(request)");
     }
 
-    private void assertionForTestEXCN0501001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0,
-                "0501/001",
+    private void assertionForTestEXCN0501001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 0, "0501/001",
                 "Business Error!\nNot enough stock. Please, change quantity!!");
     }
 
-    private void assertionForTestEXCN0502001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "0502/001",
+    private void assertionForTestEXCN0502001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1, "0502/001",
                 "Exclusive Lock Error!\nOther user updated!!(controller)");
     }
 
     private void assertionForTestEXCN0502002(int completedId1, int completedId2,
             String testIdUpperCase, int quantity1, int quantity2) {
-        assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
-                testIdUpperCase, quantity1, quantity2, "0502/002");
+        assertionUpdatingAllCompletedTemplate(completedId1, completedId2, testIdUpperCase,
+                quantity1, quantity2, "0502/002");
     }
 
-    private void assertionForTestEXCN0602001(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "0602/001", "Exclusive Lock Error!\nOther user updated!!");
+    private void assertionForTestEXCN0602001(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1, "0602/001",
+                "Exclusive Lock Error!\nOther user updated!!");
     }
 
-    private void assertionForTestEXCN0602002(int completedId, int failedId,
-            String testIdUpperCase, int quantity) {
-        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1,
-                "0602/002", "Exclusive Lock Error!\nOther user updated!!");
+    private void assertionForTestEXCN0602002(int completedId, int failedId, String testIdUpperCase,
+            int quantity) {
+        assertionTemplete(completedId, failedId, testIdUpperCase, quantity, 1, "0602/002",
+                "Exclusive Lock Error!\nOther user updated!!");
     }
 
-    private void assertionForTestEXCN0602002WithoutNoWaitOption(
-            int completedId1, int completedId2, String testIdUpperCase,
-            int quantity1, int quantity2) {
-        assertionUpdatingAllCompletedTemplate(completedId1, completedId2,
-                testIdUpperCase, quantity1, quantity2, "0602/002");
+    private void assertionForTestEXCN0602002WithoutNoWaitOption(int completedId1, int completedId2,
+            String testIdUpperCase, int quantity1, int quantity2) {
+        assertionUpdatingAllCompletedTemplate(completedId1, completedId2, testIdUpperCase,
+                quantity1, quantity2, "0602/002");
     }
 
     /**
@@ -952,18 +933,14 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param path テストケースのパス
      * @param message エラーメッセージ
      */
-    private void assertionTemplete(int completedId, int failedId,
-            String testIdUpperCase, int quantity, int version, String path,
-            String message) {
+    private void assertionTemplete(int completedId, int failedId, String testIdUpperCase,
+            int quantity, int version, String path, String message) {
         // 更新に成功したブラウザが完了画面に遷移すること・入力した変更内容が反映されること
-        assertCompleteView(completedId, testIdUpperCase, testIdUpperCase,
-                quantity, version);
+        assertCompleteView(completedId, testIdUpperCase, testIdUpperCase, quantity, version);
         // 更新に失敗したブラウザが排他エラー完了画面に遷移すること・入力した変更内容が反映されないこと
         assertFailureView(failedId, message);
-        getWebDriverOperations(failedId).displayPage(getPackageRootUrl()
-                + path);
-        assertUpdateView(failedId, testIdUpperCase, testIdUpperCase, quantity,
-                version);
+        getWebDriverOperations(failedId).displayPage(getPackageRootUrl() + path);
+        assertUpdateView(failedId, testIdUpperCase, testIdUpperCase, quantity, version);
     }
 
     /**
@@ -975,15 +952,11 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param quantity2 バージョン2の画面の在庫数
      * @param path テストケースのパス
      */
-    private void assertionUpdatingAllCompletedTemplate(int completedId1,
-            int completedId2, String testIdUpperCase, int quantity1,
-            int quantity2, String path) {
-        assertCompletePageView(completedId1, testIdUpperCase, testIdUpperCase,
-                quantity1, 1);
-        getWebDriverOperations(completedId2).displayPage(getPackageRootUrl()
-                + path);
-        assertUpdatePageView(completedId2, testIdUpperCase, testIdUpperCase,
-                quantity2, 2);
+    private void assertionUpdatingAllCompletedTemplate(int completedId1, int completedId2,
+            String testIdUpperCase, int quantity1, int quantity2, String path) {
+        assertCompletePageView(completedId1, testIdUpperCase, testIdUpperCase, quantity1, 1);
+        getWebDriverOperations(completedId2).displayPage(getPackageRootUrl() + path);
+        assertUpdatePageView(completedId2, testIdUpperCase, testIdUpperCase, quantity2, 2);
     }
 
     /**
@@ -992,7 +965,6 @@ public class ExclusiveControlTest extends FunctionTestSupportForMultiBrowser {
      * @param waitTime
      */
     private void suspendWebDriver(int webDriverId, long waitTime) {
-        getWebDriverOperations(webDriverId).suspend(waitTime,
-                TimeUnit.MILLISECONDS);
+        getWebDriverOperations(webDriverId).suspend(waitTime, TimeUnit.MILLISECONDS);
     }
 }

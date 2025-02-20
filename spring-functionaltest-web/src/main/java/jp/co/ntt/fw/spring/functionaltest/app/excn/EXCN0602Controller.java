@@ -46,8 +46,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPAStockPessimisti
 @RequestMapping("excn/0602")
 public class EXCN0602Controller {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            EXCN0602Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(EXCN0602Controller.class);
 
     @Inject
     Mapper beanMapper;
@@ -74,19 +73,16 @@ public class EXCN0602Controller {
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockPessimisticLockService.findOne("EXCN0602002"),
-                form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0602002"), form);
         return "excn/jpaPessimisticLockViewExcpHandler";
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "buy")
-    public String handle001Buy(StockForm form, Model model,
-            RedirectAttributes attributes) {
+    public String handle001Buy(StockForm form, Model model, RedirectAttributes attributes) {
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
 
-        stock = stockOptimisticLockService.buy(stock, form
-                .getPurchasingQuantity());
+        stock = stockOptimisticLockService.buy(stock, form.getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -94,17 +90,16 @@ public class EXCN0602Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST, params = "buy")
-    public String handle002Buy(StockForm form, Model model,
-            RedirectAttributes attributes) {
+    public String handle002Buy(StockForm form, Model model, RedirectAttributes attributes) {
 
-        String dataBaseName = DataBaseInfo.getDataBaseID(
-                (HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName =
+                DataBaseInfo.getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         JPAStock stock = beanMapper.map(form, JPAStock.class);
         model.addAttribute("databaseId", dataBaseName);
-        stock = stockPessimisticLockService.buyExcp(stock, form
-                .getPurchasingQuantity(), form.getSleepMillis());
+        stock = stockPessimisticLockService.buyExcp(stock, form.getPurchasingQuantity(),
+                form.getSleepMillis());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));

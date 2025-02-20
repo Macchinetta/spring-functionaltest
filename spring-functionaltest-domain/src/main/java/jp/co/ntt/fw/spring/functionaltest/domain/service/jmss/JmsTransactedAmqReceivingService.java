@@ -19,8 +19,7 @@ import java.io.IOException;
 
 public interface JmsTransactedAmqReceivingService {
 
-    void receiveMessage_TxRcvOK(
-            String id) throws IOException, InterruptedException;
+    void receiveMessage_TxRcvOK(String id) throws IOException, InterruptedException;
 
     void receiveMessage_TxRcvNG(String id) throws InterruptedException;
 

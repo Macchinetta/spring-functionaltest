@@ -50,15 +50,16 @@ public class EMAL05Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=templatedMessage")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=templatedMessage")
     public String handleTemplatedMessage(Model model, EmailSendingForm form) {
 
         User user = new User();
         user.setUsername(form.getText());
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendTemplatedMail(form.getTo().get(0),
-                    user, form.getTemplateName(), store);
+            sessionMailSendingService.sendTemplatedMail(form.getTo().get(0), user,
+                    form.getTemplateName(), store);
         } catch (MessagingException e) {
             // ignore
         }

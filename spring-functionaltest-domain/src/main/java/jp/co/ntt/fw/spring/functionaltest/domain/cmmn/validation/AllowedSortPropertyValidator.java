@@ -24,8 +24,8 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-public class AllowedSortPropertyValidator implements
-                                          ConstraintValidator<AllowedSortProperty, Pageable> {
+public class AllowedSortPropertyValidator
+        implements ConstraintValidator<AllowedSortProperty, Pageable> {
 
     private Set<String> propertiesLowerCase;
 
@@ -52,8 +52,7 @@ public class AllowedSortPropertyValidator implements
             return true;
         }
         for (Sort.Order order : value.getSort()) {
-            if (!propertiesLowerCase.contains(order.getProperty()
-                    .toLowerCase())) {
+            if (!propertiesLowerCase.contains(order.getProperty().toLowerCase())) {
                 return false;
             }
         }

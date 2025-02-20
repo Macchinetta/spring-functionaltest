@@ -22,8 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PasswordEncodeSharedServiceImpl implements
-                                             PasswordEncodeSharedService {
+public class PasswordEncodeSharedServiceImpl implements PasswordEncodeSharedService {
 
     @Inject
     @Named("athnPasswordEncoderBCrypt")
@@ -94,15 +93,13 @@ public class PasswordEncodeSharedServiceImpl implements
     }
 
     @Override
-    public String passwordEncodeMessageDigest(String rawPassword,
-            String userSalt) {
+    public String passwordEncodeMessageDigest(String rawPassword, String userSalt) {
         // passwordをPasswordEncoderMessageDigestでエンコードする。
         return passwordEncoderMessageDigest.encode(rawPassword);
     }
 
     @Override
-    public String passwordEncodeMessageDigestDelegating(String rawPassword,
-            String userSalt) {
+    public String passwordEncodeMessageDigestDelegating(String rawPassword, String userSalt) {
         // passwordをDelegatingPasswordEncoder（PasswordEncoderMessageDigestに委譲）でエンコードする。
         return passwordEncoderMessageDigestDelegating.encode(rawPassword);
     }

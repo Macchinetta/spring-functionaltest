@@ -31,8 +31,7 @@ import org.springframework.http.client.ClientHttpResponse;
  * </ul>
  */
 public class LoggingInterceptor implements ClientHttpRequestInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(
-            LoggingInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,

@@ -68,21 +68,18 @@ public class BeanMappingHelper {
         return destinationSet;
     }
 
-    public List<Boolean> checkSameObjectRefference(List<?> sourceList,
-            List<?> destinationList) {
+    public List<Boolean> checkSameObjectRefference(List<?> sourceList, List<?> destinationList) {
         // コピー元とコピー先のサイズは同じ前提
         List<Boolean> objectRefferenceList = new ArrayList<Boolean>();
         int listSize = sourceList.size();
         for (int i = 0; i < listSize; i++) {
             // オブジェクト参照先(アドレス)が一致するかチェック
-            objectRefferenceList.add(sourceList.get(i) == destinationList.get(
-                    i));
+            objectRefferenceList.add(sourceList.get(i) == destinationList.get(i));
         }
         return objectRefferenceList;
     }
 
-    public Boolean checkSameCollectionRefference(List<?> sourceList,
-            List<?> destinationList) {
+    public Boolean checkSameCollectionRefference(List<?> sourceList, List<?> destinationList) {
         // Collection(List等)のオブジェクト参照先が一致するかチェック
         if (sourceList == destinationList) {
             return true;

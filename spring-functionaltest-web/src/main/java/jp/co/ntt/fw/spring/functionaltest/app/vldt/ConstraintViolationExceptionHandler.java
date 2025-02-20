@@ -24,14 +24,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice(basePackages = "jp.co.ntt.fw.spring.functionaltest.app.vldt")
 public class ConstraintViolationExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(
-            ConstraintViolationExceptionHandler.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(ConstraintViolationExceptionHandler.class);
 
     @ExceptionHandler
-    public String handleConstraintViolationException(
-            ConstraintViolationException e) {
-        logger.error("ConstraintViolations[\n{}\n]", e
-                .getConstraintViolations());
+    public String handleConstraintViolationException(ConstraintViolationException e) {
+        logger.error("ConstraintViolations[\n{}\n]", e.getConstraintViolations());
         return "common/error/systemError";
     }
 }

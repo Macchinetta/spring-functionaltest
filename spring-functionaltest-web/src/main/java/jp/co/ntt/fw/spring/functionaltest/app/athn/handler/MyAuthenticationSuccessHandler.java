@@ -26,15 +26,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-public class MyAuthenticationSuccessHandler extends
-                                            SavedRequestAwareAuthenticationSuccessHandler {
+public class MyAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            MyAuthenticationSuccessHandler.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(MyAuthenticationSuccessHandler.class);
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
-            HttpServletResponse response,
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
         logger.info("Excute MyAuthenticationSuccessHandler. username : {}",
                 authentication.getName());

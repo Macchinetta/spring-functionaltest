@@ -15,7 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.todo;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.Collection;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -45,41 +51,22 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.todo.TodoService;
 @RequestMapping("auth/todo/02")
 public class OTH202Controller {
 
-    // 命名規則は中項目ID + Controllerだが、中項目レベルではすべて同一のコントローラーとして処理できるのでまとめてしまう。
-
-    // 大項目ID : 02 : トークンに関する試験
-    // 中項目ID : 01 : アクセストークン（有効期限）
-
-    // 小項目ID : 001 : アクセストークンの有効期限内（0秒 ～ アクセストークンの有効期限-60秒）
-    // 小項目ID : 002 : リフレッシュトークンが実行される（アクセストークンの有効期限-60秒～リフレッシュトークン有効期限内）
-    // 小項目ID : 003 : 再認可（リフレッシュトークン有効期限外）
-    // 小項目ID : 004 : 誤ったアクセストークンを設定
-
-    // 中項目ID : 01 : アクセストークン（スコープ）
-
-    // 小項目ID : 001 : all
-    // 小項目ID : 002 : read
-    // 小項目ID : 003 : partial
-    // 小項目ID : 004 : wrong ・・・ 大項目01の方でスコープが一致しない場合は認可エラーとなることを確認するため、こちらの項目は実施しない
-
-    // アクセストークンの有効期限を90秒
-    // リフレッシュトークンの有効期限を120秒
-
-    // 小項目ID : 001 : 30秒以内に再アクセス
-    // 小項目ID : 002 : 30秒～90秒以内に再アクセス
-    // 小項目ID : 003 : 90秒以降に再アクセス
-    // 小項目ID : 004 : 取得したアクセストークンを加工する
-
-    // 何度も画面をたたくだけなので、GETのみでよい
-
     private static final Logger LOGGER = LoggerFactory.getLogger(
             OTH202Controller.class);
 
     private static final String MAJOR_ITEM_ID = "02";
+    
+    private static final  DateTimeFormatter FORAMATTER = DateTimeFormatter.ofPattern(
+            "uuuu-MM-dd HH:mm:ss").withLocale(Locale.JAPANESE)
+            .withResolverStyle(ResolverStyle.STRICT);
 
     @Inject
     @Named("todoServiceImpl")
     TodoService todoService;
+
+    @Inject
+    @Named("todoChangedTokenServiceImpl")
+    TodoService todoChangedTokenService;
 
     @Inject
     Mapper beanMapper;
@@ -89,8 +76,7 @@ public class OTH202Controller {
 
     @ModelAttribute
     public TodoForm setUpForm() {
-        TodoForm form = new TodoForm();
-        return form;
+        return new TodoForm();
     }
 
     @GetMapping("index")
@@ -125,29 +111,54 @@ public class OTH202Controller {
                         httpServletRequest);
 
         if (client != null) {
-            OAuth2AccessToken accessToken = client.getAccessToken();
-            OAuth2RefreshToken refreshToken = client.getRefreshToken();
+
 
             // アクセストークン
-            model.addAttribute("accessTokenIssued", accessToken.getIssuedAt());
-            model.addAttribute("accessTokenExpires", accessToken
-                    .getExpiresAt());
-            model.addAttribute("accessTokenScopes", accessToken.getScopes());
-            model.addAttribute("accessTokenType", accessToken.getTokenType()
-                    .getValue());
-            model.addAttribute("accessTokeValue", accessToken.getTokenValue());
+            OAuth2AccessToken accessToken = client.getAccessToken();
+            if (accessToken != null) {
+                model.addAttribute("accessTokenIssued", instantToString(
+                        accessToken.getIssuedAt()));
+                model.addAttribute("accessTokenExpires", instantToString(
+                        accessToken.getExpiresAt()));
+                model.addAttribute("accessTokenScopes", accessToken
+                        .getScopes());
+                model.addAttribute("accessTokenType", accessToken.getTokenType()
+                        .getValue());
+                model.addAttribute("accessTokeValue", accessToken
+                        .getTokenValue());
+            }
 
             // リフレッシュトークン
-            model.addAttribute("refreshTokenIssued", refreshToken
-                    .getIssuedAt());
-            model.addAttribute("refreshTokenExpires", refreshToken
-                    .getExpiresAt());
-            model.addAttribute("refreshTokeValue", refreshToken
-                    .getTokenValue());
-
+            OAuth2RefreshToken refreshToken = client.getRefreshToken();
+            if (refreshToken != null) {
+                model.addAttribute("refreshTokenIssued", instantToString(
+                        refreshToken.getIssuedAt()));
+                model.addAttribute("refreshTokenExpires", instantToString(
+                        refreshToken.getExpiresAt()));
+                model.addAttribute("refreshTokeValue", refreshToken
+                        .getTokenValue());
+            }
         } else {
             LOGGER.info("not exists client. registrationId = {}",
                     registrationId);
         }
     }
+
+    @GetMapping("02/001")
+    public void handler02_001(Model model,
+            @RequestParam(name = "registrationId") String registrationId) {
+        todoChangedTokenService.findAll(registrationId);
+        // Bussiness Error画面へ遷移する
+    }
+    
+    private String instantToString(Instant instant) {
+        if(instant == null) {
+            return "";
+        }
+
+        LocalDateTime dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        
+        return FORAMATTER.format(dateTime);
+    }
+
 }

@@ -45,14 +45,12 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     ExceptionCodeResolver exceptionCodeResolver;
 
     @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-            Object body, HttpHeaders headers, HttpStatus status,
-            WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
         final Object apiError;
         if (body == null) {
             String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-            apiError = apiErrorCreator.createApiError(request, errorCode, ex
-                    .getLocalizedMessage());
+            apiError = apiErrorCreator.createApiError(request, errorCode, ex.getLocalizedMessage());
         } else {
             apiError = body;
         }
@@ -61,43 +59,40 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
-        return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                request);
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
+            WebRequest request) {
+        return handleBindingResult(ex, ex.getBindingResult(), headers, status, request);
     }
 
     @Override
-    protected ResponseEntity<Object> handleBindException(BindException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return handleBindingResult(ex, ex.getBindingResult(), headers, status,
-                request);
+    protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
+        return handleBindingResult(ex, ex.getBindingResult(), headers, status, request);
     }
 
-    private ResponseEntity<Object> handleBindingResult(Exception ex,
-            BindingResult bindingResult, HttpHeaders headers, HttpStatus status,
-            WebRequest request) {
+    private ResponseEntity<Object> handleBindingResult(Exception ex, BindingResult bindingResult,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
         String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-        ApiError apiError = apiErrorCreator.createBindingResultApiError(request,
-                errorCode, bindingResult, ex.getMessage());
+        ApiError apiError = apiErrorCreator.createBindingResultApiError(request, errorCode,
+                bindingResult, ex.getMessage());
         return handleExceptionInternal(ex, apiError, headers, status, request);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status,
+            WebRequest request) {
         if (ex.getCause() instanceof Exception) {
-            return handleExceptionInternal((Exception) ex.getCause(), null,
-                    headers, status, request);
+            return handleExceptionInternal((Exception) ex.getCause(), null, headers, status,
+                    request);
         } else {
             return handleExceptionInternal(ex, null, headers, status, request);
         }
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(
-            ResourceNotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex,
+            WebRequest request) {
         return handleResultMessagesNotificationException(ex, new HttpHeaders(),
                 HttpStatus.NOT_FOUND, request);
     }
@@ -105,30 +100,27 @@ public class ApiGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Object> handleBusinessException(BusinessException ex,
             WebRequest request) {
-        return handleResultMessagesNotificationException(ex, new HttpHeaders(),
-                HttpStatus.CONFLICT, request);
+        return handleResultMessagesNotificationException(ex, new HttpHeaders(), HttpStatus.CONFLICT,
+                request);
     }
 
     private ResponseEntity<Object> handleResultMessagesNotificationException(
-            ResultMessagesNotificationException ex, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            ResultMessagesNotificationException ex, HttpHeaders headers, HttpStatus status,
+            WebRequest request) {
         String errorCode = exceptionCodeResolver.resolveExceptionCode(ex);
-        ApiError apiError = apiErrorCreator.createResultMessagesApiError(
-                request, errorCode, ex.getResultMessages(), ex.getMessage());
+        ApiError apiError = apiErrorCreator.createResultMessagesApiError(request, errorCode,
+                ex.getResultMessages(), ex.getMessage());
         return handleExceptionInternal(ex, apiError, headers, status, request);
     }
 
-    @ExceptionHandler({ OptimisticLockingFailureException.class,
-            PessimisticLockingFailureException.class })
-    public ResponseEntity<Object> handleLockingFailureException(Exception ex,
-            WebRequest request) {
-        return handleExceptionInternal(ex, null, new HttpHeaders(),
-                HttpStatus.CONFLICT, request);
+    @ExceptionHandler({OptimisticLockingFailureException.class,
+            PessimisticLockingFailureException.class})
+    public ResponseEntity<Object> handleLockingFailureException(Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, null, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleSystemError(Exception ex,
-            WebRequest request) {
+    public ResponseEntity<Object> handleSystemError(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, null, new HttpHeaders(),
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }

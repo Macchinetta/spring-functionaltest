@@ -47,8 +47,8 @@ public class FLDW0201Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "excel")
-    public String handle001Excel(Model model,
-            ContentDownloadForm form) throws UnsupportedEncodingException, IOException, ParseException {
+    public String handle001Excel(Model model, ContentDownloadForm form)
+            throws UnsupportedEncodingException, IOException, ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         Date date = format.parse("2013/12/09");
         model.addAttribute("serverTime", date);

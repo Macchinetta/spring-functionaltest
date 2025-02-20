@@ -41,10 +41,11 @@ public class SecurityConfig {
                 .build();
         // @formatter:on
 
-        DefaultOAuth2AuthorizedClientManager authorizedClientManager = new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientRepository);
+        DefaultOAuth2AuthorizedClientManager authorizedClientManager =
+                new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository,
+                        authorizedClientRepository);
 
-        authorizedClientManager.setAuthorizedClientProvider(
-                authorizedClientProvider);
+        authorizedClientManager.setAuthorizedClientProvider(authorizedClientProvider);
 
         return authorizedClientManager;
     }

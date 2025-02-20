@@ -65,8 +65,7 @@ public class Administrator implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((username == null) ? 0
-                : username.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         return result;
     }
 
@@ -89,8 +88,8 @@ public class Administrator implements Serializable {
 
     @Override
     public String toString() {
-        return "Administrator [userName=" + username + ", password=" + password
-                + ", enabled=" + enabled + ", authority=" + authority
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "Administrator [userName=" + username + ", password=" + password + ", enabled="
+                + enabled + ", authority=" + authority + ", super.hashCode()=" + super.hashCode()
+                + "]";
     }
 }

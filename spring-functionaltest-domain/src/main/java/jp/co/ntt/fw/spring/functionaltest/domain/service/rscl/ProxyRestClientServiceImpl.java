@@ -32,8 +32,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 @Service
 public class ProxyRestClientServiceImpl implements ProxyRestClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            RestClientServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestClientServiceImpl.class);
 
     @Inject
     RestTemplate proxyAuthRestTemplate;
@@ -51,11 +50,10 @@ public class ProxyRestClientServiceImpl implements ProxyRestClientService {
     public UserResource confirmProxy01(String path) {
 
         URI targetUri = this.getUri(this.uri, path);
-        ResponseEntity<UserResource> res = this.proxyAuthRestTemplate
-                .getForEntity(targetUri, UserResource.class);
+        ResponseEntity<UserResource> res =
+                this.proxyAuthRestTemplate.getForEntity(targetUri, UserResource.class);
 
-        logger.info(
-                "RSCL1401001 : Headers containsKey 'Pass-Internal-Proxy' is {}",
+        logger.info("RSCL1401001 : Headers containsKey 'Pass-Internal-Proxy' is {}",
                 res.getHeaders().containsKey("Pass-Internal-Proxy"));
 
         return res.getBody();
@@ -65,11 +63,10 @@ public class ProxyRestClientServiceImpl implements ProxyRestClientService {
     public UserResource confirmProxy02(String path) {
 
         URI targetUri = this.getUri(this.uri, path);
-        ResponseEntity<UserResource> res = this.proxyRestTemplate.getForEntity(
-                targetUri, UserResource.class);
+        ResponseEntity<UserResource> res =
+                this.proxyRestTemplate.getForEntity(targetUri, UserResource.class);
 
-        logger.info(
-                "RSCL1401002 : Headers containsKey 'Pass-Internal-Proxy' is {}",
+        logger.info("RSCL1401002 : Headers containsKey 'Pass-Internal-Proxy' is {}",
                 res.getHeaders().containsKey("Pass-Internal-Proxy"));
 
         return res.getBody();
@@ -79,11 +76,10 @@ public class ProxyRestClientServiceImpl implements ProxyRestClientService {
     public UserResource confirmSimpleHttpClientProxy(String path) {
 
         URI targetUri = this.getUri(this.uri, path);
-        ResponseEntity<UserResource> res = this.simpleClientRestTemplate
-                .getForEntity(targetUri, UserResource.class);
+        ResponseEntity<UserResource> res =
+                this.simpleClientRestTemplate.getForEntity(targetUri, UserResource.class);
 
-        logger.info(
-                "RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is {}",
+        logger.info("RSCL1402001 : Headers containsKey 'Pass-Internal-Proxy' is {}",
                 res.getHeaders().containsKey("Pass-Internal-Proxy"));
 
         return res.getBody();
@@ -97,7 +93,6 @@ public class ProxyRestClientServiceImpl implements ProxyRestClientService {
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 }

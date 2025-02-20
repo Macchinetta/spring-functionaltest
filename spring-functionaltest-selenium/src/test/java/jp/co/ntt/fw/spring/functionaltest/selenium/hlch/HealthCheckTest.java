@@ -97,7 +97,7 @@ public class HealthCheckTest extends FunctionTestSupport {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexMessage(xTrack,
                     "^org.terasoluna.gfw.common.exception.ExceptionLogger$",
-                    "^\\[e.sf.cmmn.9009\\] throw DB Error$");
+                    "^\\[e.sf.fw.9009\\] throw DB Error$");
             dbLogAssertOperations.assertNotContainsWarn(xTrack);
         }
 

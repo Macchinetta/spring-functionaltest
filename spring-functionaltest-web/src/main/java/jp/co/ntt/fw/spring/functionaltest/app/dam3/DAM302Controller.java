@@ -42,4 +42,9 @@ public class DAM302Controller {
         return "redirect:/dam3/todo/list";
     }
 
+    @RequestMapping(value = "0206/001")
+    public String handle0206001() {
+        return "redirect:/dam3/todo/list";
+    }
+
 }

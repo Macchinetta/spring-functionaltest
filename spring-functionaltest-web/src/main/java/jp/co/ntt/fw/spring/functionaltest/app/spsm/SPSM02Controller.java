@@ -38,8 +38,7 @@ public class SPSM02Controller {
     }
 
     @RequestMapping(value = "0201/001", params = "loginSuccess")
-    public String handle0102001LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model,
+    public String handle0102001LoginSuccess(@AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/001");
@@ -48,8 +47,7 @@ public class SPSM02Controller {
     }
 
     @RequestMapping("0201/001/send")
-    public String handle0102001send(@AuthenticationPrincipal User userDetails,
-            Model model) {
+    public String handle0102001send(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/001");
 
@@ -64,8 +62,7 @@ public class SPSM02Controller {
     }
 
     @RequestMapping(value = "0202/001", params = "loginSuccess")
-    public String handle002001LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model,
+    public String handle002001LoginSuccess(@AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0202/001");
@@ -74,8 +71,7 @@ public class SPSM02Controller {
     }
 
     @RequestMapping("0201/002/send")
-    public String handle0102002send(@AuthenticationPrincipal User userDetails,
-            Model model) {
+    public String handle0102002send(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0201/002");
 
@@ -90,8 +86,7 @@ public class SPSM02Controller {
     }
 
     @RequestMapping(value = "0202/002", params = "loginSuccess")
-    public String handle002002LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model,
+    public String handle002002LoginSuccess(@AuthenticationPrincipal User userDetails, Model model,
             SessionForm form) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0202/002");

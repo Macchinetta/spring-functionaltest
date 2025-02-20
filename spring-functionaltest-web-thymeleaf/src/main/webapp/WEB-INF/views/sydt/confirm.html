@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div id="wrapper">
+            <h1 id="screenTitle">差分時間確認</h1>
+            <br />
+   
+            <span>差分値</span><br/>
+            <span id="diff" th:text="${diff}"></span>
+        </div>
+    </body>
+</html>

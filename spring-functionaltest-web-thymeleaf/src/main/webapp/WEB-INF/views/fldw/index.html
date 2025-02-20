@@ -1,30 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">FLDW ファイルアップロード</h1>
 
-      <h1 id="screenTitle">FLDW ファイルアップロード</h1>
+                <div>[FLDW01] PDFダウンロード</div>
+                <ul>
+                    <li><a id="fldw0101001" th:href="@{/fldw/0101/001}">fldw0101001</a></li>
+                </ul>
 
-      <div>[FLDW01] PDFダウンロード</div>
-      <ul>
-        <li><a id="fldw0101001" th:href="@{/fldw/0101/001}">fldw0101001</a></li>
-      </ul>
+                <div>[FLDW02] Excelダウンロード</div>
+                <ul>
+                    <li><a id="fldw0201001" th:href="@{/fldw/0201/001}">fldw0201001</a></li>
+                </ul>
 
-      <div>[FLDW02] Excelダウンロード</div>
-      <ul>
-        <li><a id="fldw0201001" th:href="@{/fldw/0201/001}">fldw0201001</a></li>
-      </ul>
-
-      <div>[FLDW03] CSVダウンロード</div>
-      <ul>
-        <li><a id="fldw0301001" th:href="@{/fldw/0301/001}">fldw0301001</a></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <div>[FLDW03] CSVダウンロード</div>
+                <ul>
+                    <li><a id="fldw0301001" th:href="@{/fldw/0301/001}">fldw0301001</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

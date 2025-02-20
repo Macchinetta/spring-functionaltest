@@ -46,7 +46,8 @@ public class RestAPITest extends RestTestSupport {
     /**
      * setUp
      * <ul>
-     * <li>Remove all old member resources if any, and insert three new member resources every time</li>
+     * <li>Remove all old member resources if any, and insert three new member resources every
+     * time</li>
      * </ul>
      */
     @Before
@@ -452,7 +453,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members")
                .then().statusCode(405)
                .body(
-                     "code", is("e.sf.cmmn.6001"),
+                     "code", is("e.sf.fw.6001"),
                      "message", is("Request method not supported.")
                     );
         // @formatter:on
@@ -482,7 +483,7 @@ public class RestAPITest extends RestTestSupport {
                .post("/members")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7007"),
+                     "code", is("e.sf.fw.7007"),
                      "message", is("Validation error occurred on item in the request body."),
                      "details.code", hasItems("NotEmpty"),
                      "details.message", hasItems("空要素は許可されていません"),
@@ -510,7 +511,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members?name=")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7002"),
+                     "code", is("e.sf.fw.7002"),
                      "message", is("Validation error occurred on item in the request parameters."),
                      "details.code", hasItems("NotEmpty"),
                      "details.message", hasItems("空要素は許可されていません"),
@@ -543,7 +544,7 @@ public class RestAPITest extends RestTestSupport {
                .post("/members")
                .then().statusCode(400)
                .body(
-                     "code", is("e.sf.cmmn.7004"),
+                     "code", is("e.sf.fw.7004"),
                      "message", is("Unknown field exists in JSON.")
                     );
         // @formatter:on
@@ -567,7 +568,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members/non-existent-memberId")
                .then().statusCode(404)
                .body(
-                     "code", is("e.sf.mm.5001"),
+                     "code", is("e.sf.rs.5001"),
                      "message", is("Specified member not found. member id : non-existent-memberId")
                     );
         // @formatter:on
@@ -594,7 +595,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/businessExp/{memberId}", memberId)
                .then().statusCode(409)
                .body(
-                     "code", is("e.sf.mm.8001"),
+                     "code", is("e.sf.rs.8001"),
                      "message", is("Cannot use specified member id. member id : dummyID")
                     );
         // @formatter:on
@@ -619,7 +620,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/optimisticExp")
                .then().statusCode(409)
                .body(
-                     "code", is("e.sf.cmmn.8006"),
+                     "code", is("e.sf.fw.8006"),
                      "message", is("Conflict with other processing occurred.")
                     );
         // @formatter:on
@@ -644,7 +645,7 @@ public class RestAPITest extends RestTestSupport {
                .put("/members/exp")
                .then().statusCode(500)
                .body(
-                     "code", is("e.sf.cmmn.9001"),
+                     "code", is("e.sf.fw.9001"),
                      "message", is("System error occurred!")
                     );
         // @formatter:on
@@ -676,7 +677,7 @@ public class RestAPITest extends RestTestSupport {
                .get("/members/httpVersionNotSupport")
                .then().statusCode(505)
                .body(
-                     "code", is("e.sf.cmmn.9505"),
+                     "code", is("e.sf.fw.9505"),
                      "message", is("HTTP Version not supported.")
                     );
         // @formatter:on
@@ -734,7 +735,7 @@ public class RestAPITest extends RestTestSupport {
                .then().statusCode(508)
                .contentType(containsString(MediaType.APPLICATION_JSON_VALUE))
                .body(
-                     "code", is("e.sf.cmmn.0508"),
+                     "code", is("e.sf.fw.0508"),
                      "message", is("サービス利用できないエラーが発生しました。")
                     );
         // @formatter:on
@@ -750,8 +751,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0501001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -764,7 +765,7 @@ public class RestAPITest extends RestTestSupport {
                .then().statusCode(200)
                .body("links.rel[0]", equalTo("self"))
                .body(
-                     "links.href[0]", equalTo(applicationContextUrl 
+                     "links.href[0]", equalTo(applicationContextUrl
                              + "/api/v1/DEFAULT_VIEW_INCLUSION-enable/members/"
                              + memberIds.get(0)),
                      "memberId", equalTo(memberIds.get(0)),
@@ -778,7 +779,8 @@ public class RestAPITest extends RestTestSupport {
      * testREST0601001
      * <ul>
      * <li>POST時のLocationヘッダの実装</li>
-     * <li>Add one member resource and check if hyper media link is added in the Location of the Header part</li>
+     * <li>Add one member resource and check if hyper media link is added in the Location of the
+     * Header part</li>
      * </ul>
      */
     @Test
@@ -840,8 +842,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0603001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -870,8 +872,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0604001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Fetch content length of GET request
         // Response response = given().when().get("/members/{memberId}", memberIds
@@ -888,7 +890,7 @@ public class RestAPITest extends RestTestSupport {
                .then().statusCode(200)
                .contentType(containsString(MediaType.APPLICATION_JSON_VALUE))
                // Servlet6.0からdoHeadのデフォルトではcontent-lengthを返却しなくなった
-               // Content-Lengthを返却したい場合はweb.xmlでjakarta.servlet.http.legacyDoHeadをtrueに設定する必要がある 
+               // Content-Lengthを返却したい場合はweb.xmlでjakarta.servlet.http.legacyDoHeadをtrueに設定する必要がある
                //.header("Content-Length", o -> Integer.parseInt(o), is(getContentLength))
                .body(equalTo(""));
      // @formatter:on
@@ -904,8 +906,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -942,8 +944,8 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701002() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -979,12 +981,11 @@ public class RestAPITest extends RestTestSupport {
     @Test
     public void testREST0701003() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Set MapperFeature.DEFAULT_VIEW_INCLUSION to disable
-        RestAssured.baseURI = applicationContextUrl
-                + "/api/v1/DEFAULT_VIEW_INCLUSION-disable";
+        RestAssured.baseURI = applicationContextUrl + "/api/v1/DEFAULT_VIEW_INCLUSION-disable";
 
         // Get request for retrieving specified member resource &
         // Check the retrieved contents
@@ -1014,14 +1015,15 @@ public class RestAPITest extends RestTestSupport {
      * testREST0801001
      * <ul>
      * <li>リクエストとレスポンスへの共通的な処理</li>
-     * <li>Get specified member resource and check if RequestBodyAdvice and ResponseBodyAdvice is processed</li>
+     * <li>Get specified member resource and check if RequestBodyAdvice and ResponseBodyAdvice is
+     * processed</li>
      * </ul>
      */
     @Test
     public void testREST0801001() throws Exception {
         // Get all existing member resources for memberId
-        List<String> memberIds = given().when().get("/members").then().extract()
-                .jsonPath().getList("memberId");
+        List<String> memberIds =
+                given().when().get("/members").then().extract().jsonPath().getList("memberId");
 
         // Creating Hash map for jsonBody
         Map<String, Object> jsonBody = new HashMap<String, Object>();

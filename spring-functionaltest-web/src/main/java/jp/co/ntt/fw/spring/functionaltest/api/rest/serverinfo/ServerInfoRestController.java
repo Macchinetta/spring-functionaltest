@@ -42,7 +42,7 @@ public class ServerInfoRestController {
      * </ul>
      * @return
      */
-    @RequestMapping(value = "getServerInfo", method = { RequestMethod.GET })
+    @RequestMapping(value = "getServerInfo", method = {RequestMethod.GET})
     @ResponseStatus(HttpStatus.OK)
     public ServerInfoResource getServerInfo() {
         String[] version = System.getProperty("java.version").split("\\.");
@@ -53,14 +53,14 @@ public class ServerInfoRestController {
         // ServletContextのgetServerInfoでAPサーバの情報を取得した場合、APサーバによって出力される内容が異なるので、各サーバ毎に必要な部分のみを抽出する。
         if (info.contains("Apache Tomcat")) {
             apServerName = "Apache Tomcat";
-            Matcher matcher = Pattern.compile("\\d{1,2}.\\d.\\d{1,2}").matcher(
-                    info);
+            Matcher matcher = Pattern.compile("\\d{1,2}.\\d.\\d{1,2}").matcher(info);
             if (matcher.find()) {
                 apServerVersion = matcher.group();
             }
 
         } else {
-            throw new BusinessException("If you are using a new application server, add the setting to ServerInfoRestController.");
+            throw new BusinessException(
+                    "If you are using a new application server, add the setting to ServerInfoRestController.");
         }
 
         ServerInfoResource rsc = new ServerInfoResource();

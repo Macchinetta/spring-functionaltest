@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <!-- BCrypPasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/002/**" auto-config="false"
-    authentication-manager-ref="loginWithBCryptPassword" once-per-request="false">
-    <sec:form-login login-page="/athn/0501/002/login" login-processing-url="/athn/0501/002/authenticate"
-      default-target-url="/athn/0501/002/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/002/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/0501/002/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/0501/002/**" access="isAuthenticated()" />
-  </sec:http>
+    <!-- BCrypPasswordEncoderを利用した認証処理 -->
+    <sec:http pattern="/athn/0501/002/**" auto-config="false"
+        authentication-manager-ref="loginWithBCryptPassword" once-per-request="false">
+        <sec:form-login login-page="/athn/0501/002/login" login-processing-url="/athn/0501/002/authenticate"
+            default-target-url="/athn/0501/002/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0501/002/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0501/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/0501/002/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginWithBCryptPassword">
-    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
-      <sec:password-encoder ref="athnPasswordEncoderBCrypt" />
-    </sec:authentication-provider>
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginWithBCryptPassword">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+            <sec:password-encoder ref="athnPasswordEncoderBCrypt" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderBCrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    <constructor-arg name="strength" value="${password.bcrypt.iteration}" />
-  </bean>
+    <bean id="athnPasswordEncoderBCrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg name="strength" value="${password.bcrypt.iteration}" />
+    </bean>
 
-  <!-- Pbkdf2PasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/004/**" auto-config="false"
-    authentication-manager-ref="loginWithPbkdf2Password" once-per-request="false">
-    <sec:form-login login-page="/athn/0501/004/login" login-processing-url="/athn/0501/004/authenticate"
-      default-target-url="/athn/0501/004/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/004/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/0501/004/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/0501/004/**" access="isAuthenticated()" />
-  </sec:http>
+    <!-- Pbkdf2PasswordEncoderを利用した認証処理 -->
+    <sec:http pattern="/athn/0501/004/**" auto-config="false"
+        authentication-manager-ref="loginWithPbkdf2Password" once-per-request="false">
+        <sec:form-login login-page="/athn/0501/004/login" login-processing-url="/athn/0501/004/authenticate"
+            default-target-url="/athn/0501/004/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0501/004/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0501/004/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/0501/004/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginWithPbkdf2Password">
-    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
-      <sec:password-encoder ref="athnPasswordEncoderPbkdf2" />
-    </sec:authentication-provider>
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginWithPbkdf2Password">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+            <sec:password-encoder ref="athnPasswordEncoderPbkdf2" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderPbkdf2" class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" />
+    <bean id="athnPasswordEncoderPbkdf2" class="org.springframework.security.crypto.password.Pbkdf2PasswordEncoder" />
 
-  <!-- SCryptPasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/006/**" auto-config="false"
-    authentication-manager-ref="loginWithSCryptPassword" once-per-request="false">
-    <sec:form-login login-page="/athn/0501/006/login" login-processing-url="/athn/0501/006/authenticate"
-      default-target-url="/athn/0501/006/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/006/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/0501/006/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/0501/006/**" access="isAuthenticated()" />
-  </sec:http>
+    <!-- SCryptPasswordEncoderを利用した認証処理 -->
+    <sec:http pattern="/athn/0501/006/**" auto-config="false"
+        authentication-manager-ref="loginWithSCryptPassword" once-per-request="false">
+        <sec:form-login login-page="/athn/0501/006/login" login-processing-url="/athn/0501/006/authenticate"
+            default-target-url="/athn/0501/006/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0501/006/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0501/006/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/0501/006/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginWithSCryptPassword">
-    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
-      <sec:password-encoder ref="athnPasswordEncoderSCrypt" />
-    </sec:authentication-provider>
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginWithSCryptPassword">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+            <sec:password-encoder ref="athnPasswordEncoderSCrypt" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderSCrypt" class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
+    <bean id="athnPasswordEncoderSCrypt" class="org.springframework.security.crypto.scrypt.SCryptPasswordEncoder" />
 
-  <!-- Argon2PasswordEncoderを利用した認証処理 -->
-  <sec:http pattern="/athn/0501/008/**" auto-config="false"
-    authentication-manager-ref="loginWithArgon2Password" once-per-request="false">
-    <sec:form-login login-page="/athn/0501/008/login" login-processing-url="/athn/0501/008/authenticate"
-      default-target-url="/athn/0501/008/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0501/008/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/0501/008/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/0501/008/**" access="isAuthenticated()" />
-  </sec:http>
+    <!-- Argon2PasswordEncoderを利用した認証処理 -->
+    <sec:http pattern="/athn/0501/008/**" auto-config="false"
+        authentication-manager-ref="loginWithArgon2Password" once-per-request="false">
+        <sec:form-login login-page="/athn/0501/008/login" login-processing-url="/athn/0501/008/authenticate"
+            default-target-url="/athn/0501/008/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0501/008/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0501/008/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/0501/008/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginWithArgon2Password">
-    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
-      <sec:password-encoder ref="athnPasswordEncoderArgon2" />
-    </sec:authentication-provider>
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginWithArgon2Password">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService">
+            <sec:password-encoder ref="athnPasswordEncoderArgon2" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
 
-  <bean id="athnPasswordEncoderArgon2" class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
+    <bean id="athnPasswordEncoderArgon2" class="org.springframework.security.crypto.argon2.Argon2PasswordEncoder" />
 
-  <!-- DelegatingPasswordEncoder（applicationContextで定義）を利用した認証処理 -->
-  <sec:http pattern="/athn/0502/002/**" auto-config="false"
-    authentication-manager-ref="loginWithDelegatingPassword" once-per-request="false">
-    <sec:form-login login-page="/athn/0502/002/login" login-processing-url="/athn/0502/002/authenticate"
-      default-target-url="/athn/0502/002/afterLogin" always-use-default-target="true" />
-    <sec:logout logout-url="/athn/0502/002/logout" logout-success-url="/athn/" />
-    <sec:intercept-url pattern="/athn/0502/002/login/**" access="permitAll" />
-    <sec:intercept-url pattern="/athn/0502/002/**" access="isAuthenticated()" />
-  </sec:http>
+    <!-- DelegatingPasswordEncoder（applicationContextで定義）を利用した認証処理 -->
+    <sec:http pattern="/athn/0502/002/**" auto-config="false"
+        authentication-manager-ref="loginWithDelegatingPassword" once-per-request="false">
+        <sec:form-login login-page="/athn/0502/002/login" login-processing-url="/athn/0502/002/authenticate"
+            default-target-url="/athn/0502/002/afterLogin" always-use-default-target="true" />
+        <sec:logout logout-url="/athn/0502/002/logout" logout-success-url="/athn/" />
+        <sec:intercept-url pattern="/athn/0502/002/login/**" access="permitAll" />
+        <sec:intercept-url pattern="/athn/0502/002/**" access="isAuthenticated()" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginWithDelegatingPassword">
-    <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService" />
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginWithDelegatingPassword">
+        <sec:authentication-provider user-service-ref="loginWithEncodingPasswordService" />
+    </sec:authentication-manager>
 
 </beans>

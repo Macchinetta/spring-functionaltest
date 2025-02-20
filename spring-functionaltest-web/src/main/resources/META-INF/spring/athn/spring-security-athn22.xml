@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athn/2201/**" auto-config="false"
-    authentication-manager-ref="loginForRememberMeUserInfoManager" once-per-request="false">
-    <sec:form-login login-page="/athn/2201/loginForRememberMe" login-processing-url="/athn/2201/authenticate"
-      default-target-url="/athn/2201?loginSuccess" />
-    <sec:remember-me key="spring-test-km/ylnHv" user-service-ref="loginForRememberMeUserInfoDetailsService" />
-    <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
-    <sec:logout logout-url="/athn/2201/logout" logout-success-url="/athn/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+    <sec:http pattern="/athn/2201/**" auto-config="false"
+        authentication-manager-ref="loginForRememberMeUserInfoManager" once-per-request="false">
+        <sec:form-login login-page="/athn/2201/loginForRememberMe" login-processing-url="/athn/2201/authenticate"
+            default-target-url="/athn/2201?loginSuccess" />
+        <sec:remember-me key="spring-test-km/ylnHv" user-service-ref="loginForRememberMeUserInfoDetailsService" />
+        <sec:session-management session-authentication-strategy-ref="sessionAuthenticationStrategy" />
+        <sec:logout logout-url="/athn/2201/logout" logout-success-url="/athn/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:authentication-manager id="loginForRememberMeUserInfoManager">
-    <sec:authentication-provider user-service-ref="loginForRememberMeUserInfoDetailsService" />
-  </sec:authentication-manager>
+    <sec:authentication-manager id="loginForRememberMeUserInfoManager">
+        <sec:authentication-provider user-service-ref="loginForRememberMeUserInfoDetailsService" />
+    </sec:authentication-manager>
 
-  <bean id="loginForRememberMeUserInfoDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
-    <property name="rolePrefix" value="ROLE_" />
-    <property name="dataSource" ref="dataSource" />
-    <property name="usersByUsernameQuery"
-      value="SELECT username, password, enabled FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
-    <property name="authoritiesByUsernameQuery"
-      value="SELECT username, 'ROLE_USER' authority FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
-  </bean>
+    <bean id="loginForRememberMeUserInfoDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="rolePrefix" value="ROLE_" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="usersByUsernameQuery"
+            value="SELECT username, password, enabled FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
+        <property name="authoritiesByUsernameQuery"
+            value="SELECT username, 'ROLE_USER' authority FROM t_account WHERE username = ? and enabled = ${enabledValue} " />
+    </bean>
 
 </beans>

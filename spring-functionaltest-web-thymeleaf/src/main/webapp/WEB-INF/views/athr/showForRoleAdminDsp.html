@@ -1,42 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}"
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 sec:authorize-url="/athr/0401/001/afterLogin/admin/menu" id="screenTitle">カスタムJSPでROLE_ADMINを保持していたら文言が表示することを確認する。</h1>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 sec:authorize-url="/athr/0401/001/afterLogin/admin/menu" id="screenTitle">カスタムJSPでROLE_ADMINを保持していたら文言が表示することを確認する。</h1>
 
-      <fieldset>
-        <table class="table table-bordered table-condensed">
-          <tr>
-            <th>Message</th>
-            <td><span id="staffRole"> <span sec:authorize="hasRole('ADMIN')">
-                  This screen is for ROLE_ADMIN </span>
-            </span></td>
-          </tr>
-          <tr>
-            <th>Only Role_Admin User link</th>
-            <td><span id="staffRoleLink"> <a
-                sec:authorize-url="/athr/0401/001/afterLogin/admin/menu" th:href="@{/athr/}">Go
-                  To ATHR Top Page</a>
-            </span></td>
-          </tr>
-          <tr>
-            <th>Only Role_Admin User link(variable)</th>
-            <td><span id="staffRoleVarLink"> <a sec:authorize="hasRole('ADMIN')"
-                th:href="@{/athr/}">Go To ATHR Top Page(variable)</a>
-            </span></td>
-          </tr>
-        </table>
-      </fieldset>
-      <form th:action="@{/athr/0201/logout}" method="post">
-        <input type="submit" id="logout" class="btn btn-default" value="Logout">
-      </form>
-
-    </div>
-  </div>
-</body>
+                <fieldset>
+                    <table class="table table-bordered table-condensed">
+                        <tr>
+                            <th>Message</th>
+                            <td>
+                                <span id="staffRole"> <span sec:authorize="hasRole('ADMIN')"> This screen is for ROLE_ADMIN </span> </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Only Role_Admin User link</th>
+                            <td>
+                                <span id="staffRoleLink"> <a sec:authorize-url="/athr/0401/001/afterLogin/admin/menu" th:href="@{/athr/}">Go To ATHR Top Page</a> </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Only Role_Admin User link(variable)</th>
+                            <td>
+                                <span id="staffRoleVarLink"> <a sec:authorize="hasRole('ADMIN')" th:href="@{/athr/}">Go To ATHR Top Page(variable)</a> </span>
+                            </td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <form th:action="@{/athr/0201/logout}" method="post">
+                    <input type="submit" id="logout" class="btn btn-default" value="Logout" />
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

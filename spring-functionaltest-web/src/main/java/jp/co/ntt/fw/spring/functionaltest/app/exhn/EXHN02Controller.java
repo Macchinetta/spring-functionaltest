@@ -79,31 +79,29 @@ public class EXHN02Controller {
     }
 
     @RequestMapping(value = "0200/confirm", params = "upload", method = RequestMethod.POST)
-    public String uploadConfirm(@Validated({ Confirm.class,
-            Default.class }) ArticleBatchRegisterForm form,
-            BindingResult result, ArticleSessionInfo articleSessionInfo,
-            Model model, RedirectAttributes redirectAttrs) throws IOException {
+    public String uploadConfirm(
+            @Validated({Confirm.class, Default.class}) ArticleBatchRegisterForm form,
+            BindingResult result, ArticleSessionInfo articleSessionInfo, Model model,
+            RedirectAttributes redirectAttrs) throws IOException {
 
         if (result.hasErrors()) {
             model.addAttribute("testNumber", "0200");
             return "exhn/articleBatchRegister";
         }
 
-        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(
-                form);
+        String uploadTemporaryFileId = articleFileHelper.createTemporaryFile(form);
         articleSessionInfo.setUploadTemporaryFileId(uploadTemporaryFileId);
         model.addAttribute("testNumber", "0200");
         return "exhn/articleBatchConfirm";
     }
 
     @RequestMapping(value = "0200/register", params = "upload", method = RequestMethod.POST)
-    public String uploadRegister(@Validated({ Register.class,
-            Default.class }) ArticleBatchRegisterForm form,
+    public String uploadRegister(
+            @Validated({Register.class, Default.class}) ArticleBatchRegisterForm form,
             BindingResult result, ArticleSessionInfo articleSessionInfo,
             RedirectAttributes redirectAttrs) throws IOException {
 
-        String uploadTemporaryFileId = articleSessionInfo
-                .getUploadTemporaryFileId();
+        String uploadTemporaryFileId = articleSessionInfo.getUploadTemporaryFileId();
         if (result.hasErrors() || !StringUtils.hasText(uploadTemporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
@@ -129,8 +127,8 @@ public class EXHN02Controller {
     }
 
     @RequestMapping(value = "delete")
-    public String deleteTemporaryFile(
-            @RequestParam("temporaryFileName") String temporaryFileName) throws IOException {
+    public String deleteTemporaryFile(@RequestParam("temporaryFileName") String temporaryFileName)
+            throws IOException {
         articleFileHelper.deleteTemporaryFile(temporaryFileName);
         return "exhn/index";
     }
@@ -138,8 +136,8 @@ public class EXHN02Controller {
     @RequestMapping(value = "copy/temporaryFile")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void copyTemporaryFile(
-            @RequestParam("temporaryFileName") String temporaryFileName) throws IOException {
+    public void copyTemporaryFile(@RequestParam("temporaryFileName") String temporaryFileName)
+            throws IOException {
         articleFileHelper.copyTemporaryFile(temporaryFileName);
     }
 

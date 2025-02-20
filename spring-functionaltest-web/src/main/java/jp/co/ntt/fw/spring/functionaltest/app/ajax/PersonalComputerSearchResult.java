@@ -30,8 +30,7 @@ public class PersonalComputerSearchResult implements Serializable {
         return personalComputerResult;
     }
 
-    public void setPersonalComputerResult(
-            List<PersonalComputer> personalComputerResult) {
+    public void setPersonalComputerResult(List<PersonalComputer> personalComputerResult) {
         this.personalComputerResult = personalComputerResult;
     }
 

@@ -1,32 +1,32 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link th:ref="ref-css" rel="stylesheet" href="../../../resources/app/css/styles.css">
-    <title th:ref="ref-title">Search Result Screen</title>
-</head>
-<body>
-    <h1 th:ref="ref-h1">Search Result</h1>
-    <table id="result-table">
-        <thead>
-            <tr>
-                <th>name</th>
-                <th>price</th>
-            </tr>
-        </thead>
-        <tbody th:ref="ref-tbody">
-            <tr th:ref="ref-tr">
-                <td th:ref="ref-itemName">Apple</td>
-                <td th:ref="ref-itemPrice">300</td>
-            </tr>
-            <tr>
-                <td>Apple Juice</td>
-                <td>100</td>
-            </tr>
-            <tr>
-                <td>Apple Pie</td>
-                <td>500</td>
-            </tr>
-        </tbody>
-    </table>
-    <a id="back" href="search.html" th:ref="ref-back">Back</a>
-</body>
+    <head>
+        <link th:ref="ref-css" rel="stylesheet" href="../../../resources/app/css/styles.css" />
+        <title th:ref="ref-title">Search Result Screen</title>
+    </head>
+    <body>
+        <h1 th:ref="ref-h1">Search Result</h1>
+        <table id="result-table">
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>price</th>
+                </tr>
+            </thead>
+            <tbody th:ref="ref-tbody">
+                <tr th:ref="ref-tr">
+                    <td th:ref="ref-itemName">Apple</td>
+                    <td th:ref="ref-itemPrice">300</td>
+                </tr>
+                <tr>
+                    <td>Apple Juice</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>Apple Pie</td>
+                    <td>500</td>
+                </tr>
+            </tbody>
+        </table>
+        <a id="back" href="search.html" th:ref="ref-back">Back</a>
+    </body>
 </html>

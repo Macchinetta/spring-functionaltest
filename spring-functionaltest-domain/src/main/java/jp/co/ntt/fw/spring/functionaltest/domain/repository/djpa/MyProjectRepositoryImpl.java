@@ -25,23 +25,20 @@ import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
-public class MyProjectRepositoryImpl<T, ID extends Serializable> extends
-                                    SimpleJpaRepository<T, ID> implements
-                                    MyProjectRepository<T, ID> {
+public class MyProjectRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
+        implements MyProjectRepository<T, ID> {
 
     private JpaEntityInformation<T, ID> entityInformation;
 
     Method versionMethod;
 
-    public MyProjectRepositoryImpl(
-            JpaEntityInformation<T, ID> entityInformation,
+    public MyProjectRepositoryImpl(JpaEntityInformation<T, ID> entityInformation,
             EntityManager entityManager) {
 
         super(entityInformation, entityManager);
         this.entityInformation = entityInformation;
         try {
-            versionMethod = entityInformation.getJavaType().getMethod(
-                    "getVersion");
+            versionMethod = entityInformation.getJavaType().getMethod("getVersion");
         } catch (NoSuchMethodException | SecurityException e) {
         }
     }
@@ -49,9 +46,9 @@ public class MyProjectRepositoryImpl<T, ID extends Serializable> extends
     public T findByIdWithValidVersion(ID id, Long version) {
 
         if (versionMethod == null) {
-            throw new UnsupportedOperationException(String.format(
-                    "Does not found version field in entity class. class is '%s'.",
-                    entityInformation.getJavaType().getName()));
+            throw new UnsupportedOperationException(
+                    String.format("Does not found version field in entity class. class is '%s'.",
+                            entityInformation.getJavaType().getName()));
         }
 
         T entity = findById(id).orElse(null);
@@ -60,12 +57,13 @@ public class MyProjectRepositoryImpl<T, ID extends Serializable> extends
             Long currentVersion;
             try {
                 currentVersion = (Long) versionMethod.invoke(entity);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            } catch (IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException e) {
                 throw new IllegalStateException(e);
             }
             if (!version.equals(currentVersion)) {
-                throw new ObjectOptimisticLockingFailureException(entityInformation
-                        .getJavaType().getName(), id);
+                throw new ObjectOptimisticLockingFailureException(
+                        entityInformation.getJavaType().getName(), id);
             }
         }
         return entity;

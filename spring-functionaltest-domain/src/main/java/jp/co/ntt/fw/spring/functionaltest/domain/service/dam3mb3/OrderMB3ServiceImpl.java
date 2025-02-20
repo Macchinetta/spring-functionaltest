@@ -74,8 +74,7 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
         long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
             todos = orderMB3Repository.findPageMyBatis3(rowBounds);
         } else {
             todos = Collections.emptyList();
@@ -90,8 +89,7 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
         long total = orderMB3Repository.count();
         List<OrderMB3> todos;
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
             todos = orderMB3Repository.findPageMyBatis3Scroll(rowBounds);
         } else {
             todos = Collections.emptyList();
@@ -117,14 +115,12 @@ public class OrderMB3ServiceImpl implements OrderMB3Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<OrderMB3> findPageByItemcode(List<String> searchItemCode,
-            Pageable pageable) {
+    public Page<OrderMB3> findPageByItemcode(List<String> searchItemCode, Pageable pageable) {
 
         long total = orderMB3Repository.countPageByItemcode(searchItemCode);
 
         List<OrderMB3> orders;
-        orders = orderMB3Repository.findPageByItemcode(searchItemCode,
-                pageable);
+        orders = orderMB3Repository.findPageByItemcode(searchItemCode, pageable);
 
         return new PageImpl<>(orders, pageable, total);
 

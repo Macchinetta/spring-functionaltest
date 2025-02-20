@@ -43,8 +43,8 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("btn-output"));
 
         // It is an error if the dialog alert has gone out
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "<script>alert(\"XSS Attack!\")</script>"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")),
+                is("<script>alert(\"XSS Attack!\")</script>"));
 
     }
 
@@ -63,8 +63,8 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("btn-output"));
 
         // It is an error if the dialog alert has gone out
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "<script>alert('XSS Attack!')</script>"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")),
+                is("<script>alert('XSS Attack!')</script>"));
 
     }
 
@@ -78,11 +78,9 @@ public class XSSProtectionTest extends FunctionTestSupport {
     public void testXSPR0101003() {
 
         webDriverOperations.click(By.id("xspr0101"));
-        webDriverOperations.overrideText(By.id("text-output"),
-                "Spring Framework");
+        webDriverOperations.overrideText(By.id("text-output"), "Spring Framework");
         webDriverOperations.click(By.id("btn-output"));
-        assertThat(webDriverOperations.getText(By.id("xssOutput")), is(
-                "Spring Framework"));
+        assertThat(webDriverOperations.getText(By.id("xssOutput")), is("Spring Framework"));
 
     }
 
@@ -97,8 +95,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0201001"));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "';alert('XSS Attack!');aaa='message"));
+        assertThat(closeAlertAndGetItsText(), is("';alert('XSS Attack!');aaa='message"));
 
     }
 
@@ -113,8 +110,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0201002"));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "';alert(\"XSS Attack!\");aaa='message"));
+        assertThat(closeAlertAndGetItsText(), is("';alert(\"XSS Attack!\");aaa='message"));
 
     }
 
@@ -142,8 +138,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301001"));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is \"); alert('XSS Attack!'); //."));
+        assertThat(closeAlertAndGetItsText(), is("output is \"); alert('XSS Attack!'); //."));
 
     }
 
@@ -156,8 +151,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301002"));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is \"); alert(\"XSS Attack!\"); //."));
+        assertThat(closeAlertAndGetItsText(), is("output is \"); alert(\"XSS Attack!\"); //."));
 
     }
 
@@ -170,8 +164,7 @@ public class XSSProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("xspr0301003"));
         webDriverOperations.click(By.id("write"));
 
-        assertThat(closeAlertAndGetItsText(), is(
-                "output is Spring Framework."));
+        assertThat(closeAlertAndGetItsText(), is("output is Spring Framework."));
 
     }
 

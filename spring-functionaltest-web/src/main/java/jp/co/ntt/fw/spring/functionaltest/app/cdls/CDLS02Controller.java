@@ -38,7 +38,7 @@ public class CDLS02Controller {
     Mapper beanMapper;
 
     @Inject
-    ReloadCodeListService orderStatusService;
+    ReloadCodeListService reloadCodeListService;
 
     @ModelAttribute
     public UpdateCodeListForm setUpUpdateCodeListForm() {
@@ -51,15 +51,13 @@ public class CDLS02Controller {
     }
 
     @RequestMapping(value = "0201/001", method = RequestMethod.POST, params = "update")
-    public String handle01001Update(
-            @Validated UpdateCodeListForm updateCodeListForm,
+    public String handle01001Update(@Validated UpdateCodeListForm updateCodeListForm,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "cdls/codeListReload";
         }
-        CodeList updateCodeList = beanMapper.map(updateCodeListForm,
-                CodeList.class);
-        orderStatusService.updateAuthorityTableValue(updateCodeList);
+        CodeList updateCodeList = beanMapper.map(updateCodeListForm, CodeList.class);
+        reloadCodeListService.updateAuthorityTableValue(updateCodeList);
 
         return "redirect:001";
     }
@@ -70,22 +68,20 @@ public class CDLS02Controller {
     }
 
     @RequestMapping(value = "0201/002", method = RequestMethod.POST, params = "update")
-    public String handle01002Update(
-            @Validated UpdateCodeListForm updateCodeListForm,
+    public String handle01002Update(@Validated UpdateCodeListForm updateCodeListForm,
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "cdls/codeListReload";
         }
-        CodeList updateCodeList = beanMapper.map(updateCodeListForm,
-                CodeList.class);
-        orderStatusService.updateAuthorityTableValue(updateCodeList);
+        CodeList updateCodeList = beanMapper.map(updateCodeListForm, CodeList.class);
+        reloadCodeListService.updateAuthorityTableValue(updateCodeList);
 
         return "redirect:002";
     }
 
     @RequestMapping(value = "0201/002", method = RequestMethod.GET, params = "refresh")
     public String handle01002Refresh(Model model, UpdateCodeListForm form) {
-        orderStatusService.refresh();
+        reloadCodeListService.refresh();
         return "cdls/codeListReload";
     }
 }

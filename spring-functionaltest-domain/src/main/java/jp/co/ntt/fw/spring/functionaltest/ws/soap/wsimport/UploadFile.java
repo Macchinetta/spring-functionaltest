@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  * uploadFile complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="uploadFile">
  *   &lt;complexContent>
@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "uploadFile", propOrder = { "arg0" })
+@XmlType(name = "uploadFile", propOrder = {"arg0"})
 public class UploadFile {
 
     @XmlMimeType("application/octet-stream")

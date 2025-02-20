@@ -19,12 +19,13 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 
-public class ThrowAuthenticationServiceExceptionAuthenticationProvider implements
-                                                                       AuthenticationProvider {
+public class ThrowAuthenticationServiceExceptionAuthenticationProvider
+        implements AuthenticationProvider {
 
-    public Authentication authenticate(
-            Authentication authentication) throws AuthenticationServiceException {
-        throw new AuthenticationServiceException("Raise an AuthenticationServiceException for testing.");
+    public Authentication authenticate(Authentication authentication)
+            throws AuthenticationServiceException {
+        throw new AuthenticationServiceException(
+                "Raise an AuthenticationServiceException for testing.");
     }
 
     public boolean supports(Class<?> authentication) {

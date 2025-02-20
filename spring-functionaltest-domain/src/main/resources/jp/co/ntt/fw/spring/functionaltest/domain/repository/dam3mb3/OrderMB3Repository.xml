@@ -1,377 +1,404 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3mb3.OrderMB3Repository">
 
-  <resultMap id="orderResultMap" type="OrderMB3">
-    <id property="id" column="id" />
-    <result property="memo" column="memo" />
-    <result property="orderStatus.code" column="status_code" />
-    <result property="orderStatus.name" column="status_name" />
-    <result property="historyId" column="history_id" />
-    <collection property="orderItems" ofType="OrderItemMB3">
-      <id property="orderId" column="id" />
-      <id property="item.code" column="item_code" />
-      <result property="quantity" column="quantity" />
-      <association property="item" resultMap="itemResultMap" />
-    </collection>
-  </resultMap>
+    <resultMap id="orderResultMap" type="OrderMB3">
+        <id property="id" column="id" />
+        <result property="memo" column="memo" />
+        <result property="orderStatus.code" column="status_code" />
+        <result property="orderStatus.name" column="status_name" />
+        <result property="historyId" column="history_id" />
+        <collection property="orderItems" ofType="OrderItemMB3">
+            <id property="orderId" column="id" />
+            <id property="item.code" column="item_code" />
+            <result property="quantity" column="quantity" />
+            <association property="item" resultMap="itemResultMap" />
+        </collection>
+    </resultMap>
 
-  <resultMap id="itemResultMap" type="ItemMB3">
-    <id property="code" column="item_code" />
-    <result property="name" column="item_name" />
-    <result property="price" column="item_price" />
-    <collection property="categories" ofType="CategoryMB3">
-      <id property="code" column="category_code" />
-      <result property="name" column="category_name" />
-    </collection>
-  </resultMap>
+    <resultMap id="itemResultMap" type="ItemMB3">
+        <id property="code" column="item_code" />
+        <result property="name" column="item_name" />
+        <result property="price" column="item_price" />
+        <collection property="categories" ofType="CategoryMB3">
+            <id property="code" column="category_code" />
+            <result property="name" column="category_name" />
+        </collection>
+    </resultMap>
 
-  <sql id="selectFromJoin">
-    SELECT
-    o.id,
-    o.memo,
-    o.history_id,
-    o.status_code,
-    os.name AS status_name,
-    oi.quantity,
-    i.code AS item_code,
-    i.name AS item_name,
-    i.price AS item_price,
-    ct.code AS category_code,
-    ct.name
-    AS category_name
-    FROM
-    ${orderTable} o
-    INNER JOIN c_order_status_mb3 os ON os.code = o.status_code
-    INNER JOIN t_order_item_mb3 oi ON oi.order_id = o.id
-    INNER JOIN m_item_mb3 i ON i.code =
-    oi.item_code
-    INNER JOIN m_item_category_mb3 ic ON ic.item_code = i.code
-    INNER JOIN m_category_mb3
-    ct ON ct.code = ic.category_code
-  </sql>
+    <sql id="selectFromJoin">
+        SELECT
+            o.id,
+            o.memo,
+            o.history_id,
+            o.status_code,
+            os.name AS status_name,
+            oi.quantity,
+            i.code AS item_code,
+            i.name AS item_name,
+            i.price AS item_price,
+            ct.code AS category_code,
+            ct.name AS category_name
+        FROM
+            ${orderTable} o
+        INNER JOIN
+            c_order_status_mb3 os ON os.code = o.status_code
+        INNER JOIN
+            t_order_item_mb3 oi ON oi.order_id = o.id
+        INNER JOIN
+            m_item_mb3 i ON i.code = oi.item_code
+        INNER JOIN
+            m_item_category_mb3 ic ON ic.item_code = i.code
+        INNER JOIN
+            m_category_mb3 ct ON ct.code = ic.category_code
+    </sql>
 
-  <select id="findById" parameterType="_int" resultMap="orderResultMap">
-    <bind name="orderTable" value="'t_order_mb3'" />
-    <include refid="selectFromJoin" />
-    WHERE
-    o.id = #{id}
-    ORDER BY
-    id ASC,
-    item_code ASC,
-    category_code ASC
-  </select>
+    <select id="findById" parameterType="_int" resultMap="orderResultMap">
+        <bind name="orderTable" value="'t_order_mb3'" />
+        <include refid="selectFromJoin" />
+        WHERE
+            o.id = #{id}
+        ORDER BY
+            id ASC,
+            item_code ASC,
+            category_code ASC
+    </select>
 
-  <select id="findAll" resultMap="orderResultMap">
-    <bind name="orderTable" value="'t_order_mb3'" />
-    <include refid="selectFromJoin" />
-    ORDER BY
-    id ASC,
-    item_code ASC,
-    category_code ASC
-  </select>
+    <select id="findAll" resultMap="orderResultMap">
+        <bind name="orderTable" value="'t_order_mb3'" />
+        <include refid="selectFromJoin" />
+        ORDER BY
+            id ASC,
+            item_code ASC,
+            category_code ASC
+    </select>
 
-  <select id="findByCondSts" resultMap="orderResultMap">
-    <bind name="orderTable" value="'t_order_mb3'" />
-    <include refid="selectFromJoin" />
-    WHERE
-    o.id = #{id}
-    AND
-    o.status_code = #{statusCode}
-    ORDER BY
-    item_code ASC,
-    category_code ASC
-  </select>
+    <select id="findByCondSts" resultMap="orderResultMap">
+        <bind name="orderTable" value="'t_order_mb3'" />
+        <include refid="selectFromJoin" />
+        WHERE
+            o.id = #{id}
+        AND
+            o.status_code = #{statusCode}
+        ORDER BY
+            item_code ASC,
+            category_code ASC
+    </select>
 
-  <select id="count" resultType="_long">
-    SELECT
-    COUNT(*)
-    FROM
-    t_order_mb3
-  </select>
+    <select id="count" resultType="_long">
+        SELECT
+            COUNT(*)
+        FROM
+            t_order_mb3
+    </select>
 
-  <select id="findPageMyBatis3" resultMap="orderResultMap">
-    <bind name="orderTable" value="'t_order_mb3'" />
-    <include refid="selectFromJoin" />
-    ORDER BY
-    id ASC,
-    item_code ASC,
-    category_code ASC
-  </select>
+    <select id="findPageMyBatis3" resultMap="orderResultMap">
+        <bind name="orderTable" value="'t_order_mb3'" />
+        <include refid="selectFromJoin" />
+        ORDER BY
+            id ASC,
+            item_code ASC,
+            category_code ASC
+    </select>
 
-  <select id="findPageMyBatis3Scroll" resultMap="orderResultMap" resultSetType="SCROLL_INSENSITIVE">
-    <bind name="orderTable" value="'t_order_mb3'" />
-    <include refid="selectFromJoin" />
-    ORDER BY
-    id ASC,
-    item_code ASC,
-    category_code ASC
-  </select>
+    <select id="findPageMyBatis3Scroll" resultMap="orderResultMap" resultSetType="SCROLL_INSENSITIVE">
+        <bind name="orderTable" value="'t_order_mb3'" />
+        <include refid="selectFromJoin" />
+        ORDER BY
+            id ASC,
+            item_code ASC,
+            category_code ASC
+    </select>
 
-  <select id="findMaxOrderId" resultType="_int">
-    SELECT MAX(id)+1 from t_order_mb3
-  </select>
+    <select id="findMaxOrderId" resultType="_int">
+        SELECT
+            MAX(id)+1 from t_order_mb3
+    </select>
 
-  <insert id="insertEntity" parameterType="OrderMB3">
-    <selectKey keyProperty="id" resultType="int" order="BEFORE">
-      SELECT MAX(id)+1 from t_order_mb3
-    </selectKey>
+    <insert id="insertEntity" parameterType="OrderMB3">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            SELECT
+                MAX(id)+1 from t_order_mb3
+        </selectKey>
+        INSERT INTO
+            t_order_mb3
+            (
+                id,
+                status_code,
+                memo
+            )
+        VALUES
+        (
+            #{id},
+            #{orderStatus.code},
+            #{memo}
+        )
+    </insert>
 
-    INSERT INTO
-    t_order_mb3(id,status_code,memo)
-    VALUES
-    (
-    #{id},
-    #{orderStatus.code},
-    #{memo}
-    )
-  </insert>
+    <insert id="insertItem">
+        INSERT INTO
+            t_order_item_mb3
+            (
+                order_id,
+                item_code,
+                quantity
+            )
+        VALUES
+        (
+            #{orderId},
+            #{itemCode},
+            #{quantity}
+        )
+    </insert>
 
-  <insert id="insertItem">
-    INSERT INTO
-    t_order_item_mb3(order_id,item_code,quantity)
-    VALUES
-    (
-    #{orderId},
-    #{itemCode},
-    #{quantity}
-    )
-  </insert>
+    <insert id="insertAll" parameterType="List">
+        INSERT INTO
+            t_order_mb3
+            (
+                id,
+                status_code,
+                memo
+            )
+        VALUES
+        <foreach collection="list" item="orderMB3" separator=",">
+            (
+                #{orderMB3.id},
+                #{orderMB3.orderStatus.code},
+                #{orderMB3.memo}
+            )
+        </foreach>
+    </insert>
 
-  <insert id="insertAll" parameterType="List">
-    INSERT INTO
-    t_order_mb3(id,status_code,memo)
-    VALUES
-    <foreach collection="list" item="orderMB3" separator=",">
-      (
-      #{orderMB3.id},
-      #{orderMB3.orderStatus.code},
-      #{orderMB3.memo}
-      )
-    </foreach>
-  </insert>
+    <insert id="insertAll" parameterType="List" databaseId="oracle">
+        INSERT ALL
+        <foreach collection="list" item="orderMB3">
+            INTO
+                t_order_mb3
+                (
+                    id,
+                    status_code,
+                    memo
+                )
+            VALUES
+            (
+                #{orderMB3.id},
+                #{orderMB3.orderStatus.code},
+                #{orderMB3.memo}
+            )
+        </foreach>
+        SELECT
+            *
+        FROM
+            DUAL
+    </insert>
 
-  <insert id="insertAll" parameterType="List" databaseId="oracle">
-    INSERT ALL
-    <foreach collection="list" item="orderMB3">
-      INTO
-      t_order_mb3(id,status_code,memo)
-      VALUES
-      (
-      #{orderMB3.id},
-      #{orderMB3.orderStatus.code},
-      #{orderMB3.memo}
-      )
-    </foreach>
-    SELECT * FROM DUAL
-  </insert>
+    <update id="update">
+        UPDATE
+            t_order_mb3
+        SET
+            status_code = #{statusCode},
+            memo = #{memo}
+        WHERE
+            id = #{id}
+    </update>
 
-  <update id="update">
-    UPDATE t_order_mb3
-    SET
-    status_code = #{statusCode},
-    memo = #{memo}
-    WHERE
-    id = #{id}
-  </update>
+    <update id="updateHistory">
+        UPDATE
+            t_order_mb3
+        SET
+            history_id = #{historyId}
+        WHERE
+            id = #{id}
+    </update>
 
-  <update id="updateHistory">
-    UPDATE t_order_mb3
-    SET
-    history_id = #{historyId}
-    WHERE
-    id = #{id}
-  </update>
+    <resultMap id="itemResultMap2" type="ItemMB3">
+        <id property="code" column="item_code" />
+        <result property="name" column="item_name" />
+        <result property="price" column="item_price" />
+        <!-- (1) -->
+        <collection property="categories" column="item_code" select="findAllCategoryByItemCode" />
+    </resultMap>
 
-  <resultMap id="itemResultMap2" type="ItemMB3">
-    <id property="code" column="item_code" />
-    <result property="name" column="item_name" />
-    <result property="price" column="item_price" />
-    <!-- (1) -->
-    <collection property="categories" column="item_code" select="findAllCategoryByItemCode" />
-  </resultMap>
-
-  <select id="findAllCategoryByItemCode" parameterType="string" resultType="CategoryMB3">
-    SELECT
-    ct.code,
-    ct.name
-    FROM
-    m_item_category_mb3 ic
-    INNER JOIN m_category_mb3 ct ON ct.code = ic.category_code
-    WHERE
-    ic.item_code = #{itemCode}
-    ORDER BY
-    code
-  </select>
+    <select id="findAllCategoryByItemCode" parameterType="string" resultType="CategoryMB3">
+        SELECT
+            ct.code,
+            ct.name
+        FROM
+            m_item_category_mb3 ic
+        INNER JOIN
+            m_category_mb3 ct ON ct.code = ic.category_code
+        WHERE
+            ic.item_code = #{itemCode}
+        ORDER BY
+            code
+    </select>
 
 
-  <resultMap id="itemResultMapLazy" type="ItemMB3">
-    <id property="code" column="item_code" />
-    <result property="name" column="item_name" />
-    <result property="price" column="item_price" />
-    <!-- (1) -->
-    <collection property="categories" column="item_code" fetchType="lazy"
-      select="findAllCategoryByItemCodeLazy" />
-  </resultMap>
+    <resultMap id="itemResultMapLazy" type="ItemMB3">
+        <id property="code" column="item_code" />
+        <result property="name" column="item_name" />
+        <result property="price" column="item_price" />
+        <!-- (1) -->
+        <collection property="categories" column="item_code" fetchType="lazy"
+            select="findAllCategoryByItemCodeLazy" />
+    </resultMap>
 
-  <select id="findAllCategoryByItemCodeLazy" parameterType="string" resultType="CategoryMB3">
-    SELECT
-    ct.code,
-    ct.name
-    FROM
-    m_item_category_mb3 ic
-    INNER JOIN m_category_mb3 ct ON ct.code =
-    ic.category_code
-    WHERE
-    ic.item_code = #{itemCode}
-    ORDER BY
-    code
-  </select>
+    <select id="findAllCategoryByItemCodeLazy" parameterType="string" resultType="CategoryMB3">
+        SELECT
+            ct.code,
+            ct.name
+        FROM
+            m_item_category_mb3 ic
+        INNER JOIN
+            m_category_mb3 ct ON ct.code = ic.category_code
+        WHERE
+            ic.item_code = #{itemCode}
+        ORDER BY
+            code
+    </select>
 
-  <select id="findAllItemCode" resultMap="itemResultMap">
-    SELECT
-    item_code
-    FROM
-    t_order_item_mb3
-    GROUP BY
-    item_code
-    ORDER BY
-    item_code ASC
-  </select>
+    <select id="findAllItemCode" resultMap="itemResultMap">
+        SELECT
+            item_code
+        FROM
+            t_order_item_mb3
+        GROUP BY
+            item_code
+        ORDER BY
+            item_code ASC
+    </select>
 
-  <select id="countPageByItemcode" resultType="long">
-    SELECT
-    count(*)
-    FROM
-    (
-    SELECT
-    o.id
-    FROM
-    (
-    SELECT
-    vo.id,
-    vo.status_code,
-    vo.memo,
-    vo.history_id
-    FROM
-    t_order_mb3 vo
-    INNER JOIN
-    (
-    SELECT
-    voi.order_id
-    FROM
-    t_order_item_mb3 voi
-    <include refid="findPageByItemcodeWherePhrase" />
-    ) vvoi ON vvoi.order_id = vo.id
-    ) o
-    <include refid="findPageByItemcodeInnerPhrase" />
-    GROUP BY o.id
-    ) voc
-  </select>
+    <select id="countPageByItemcode" resultType="long">
+        SELECT
+            count(*)
+        FROM
+            (
+                SELECT
+                    o.id
+                FROM
+                    (
+                        SELECT
+                            vo.id,
+                            vo.status_code,
+                            vo.memo,
+                            vo.history_id
+                        FROM
+                            t_order_mb3 vo
+                        INNER JOIN
+                        (
+                            SELECT
+                                voi.order_id
+                            FROM
+                                t_order_item_mb3 voi
+                            <include refid="findPageByItemcodeWherePhrase" />
+                        )
+                        vvoi ON vvoi.order_id = vo.id
+                    ) o
+                    <include refid="findPageByItemcodeInnerPhrase" />
+                    GROUP BY
+                        o.id
+            ) voc
+    </select>
 
-  <select id="findPageByItemcode" resultMap="orderResultMap">
-    SELECT
-    o.id,
-    o.memo,
-    o.history_id,
-    o.status_code,
-    os.name AS status_name,
-    oi.quantity,
-    i.code AS
-    item_code,
-    i.name AS item_name,
-    i.price AS item_price,
-    ct.code AS category_code,
-    ct.name AS
-    category_name
-    FROM
-    (
-    SELECT
-    vo.id,
-    vo.status_code,
-    vo.memo,
-    vo.history_id
-    FROM
-    t_order_mb3 vo
-    INNER JOIN
-    (
-    SELECT
-    voi.order_id
-    FROM
-    t_order_item_mb3 voi
-    <include refid="findPageByItemcodeWherePhrase" />
-    ) vvoi ON vvoi.order_id = vo.id
-    ORDER BY id DESC
-    LIMIT #{pageable.pageSize}
-    OFFSET
-    #{pageable.offset}
-    ) o
-    <include refid="findPageByItemcodeInnerPhrase" />
-  </select>
+    <select id="findPageByItemcode" resultMap="orderResultMap">
+        SELECT
+            o.id,
+            o.memo,
+            o.history_id,
+            o.status_code,
+            os.name AS status_name,
+            oi.quantity,
+            i.code AS item_code,
+            i.name AS item_name,
+            i.price AS item_price,
+            ct.code AS category_code,
+            ct.name AS category_name
+        FROM
+        (
+            SELECT
+                vo.id,
+                vo.status_code,
+                vo.memo,
+                vo.history_id
+            FROM
+                t_order_mb3 vo
+            INNER JOIN
+            (
+                SELECT
+                    voi.order_id
+                FROM
+                    t_order_item_mb3 voi
+                <include refid="findPageByItemcodeWherePhrase" />
+            ) vvoi ON vvoi.order_id = vo.id
+            ORDER BY
+                id DESC
+            LIMIT
+                #{pageable.pageSize}
+            OFFSET
+                #{pageable.offset}
+        ) o
+        <include refid="findPageByItemcodeInnerPhrase" />
+    </select>
 
-  <select id="findPageByItemcode" resultMap="orderResultMap" databaseId="oracle">
-    SELECT
-    o.id,
-    o.memo,
-    o.history_id,
-    o.status_code,
-    os.name AS status_name,
-    oi.quantity,
-    i.code AS
-    item_code,
-    i.name AS item_name,
-    i.price AS item_price,
-    ct.code AS category_code,
-    ct.name AS
-    category_name
-    FROM
-    (
-    SELECT
-    vo.id,
-    vo.status_code,
-    vo.memo,
-    vo.history_id,
-    ROW_NUMBER() over(ORDER BY
-    vo.id desc) AS line
-    FROM
-    t_order_mb3 vo
-    INNER JOIN
-    (
-    SELECT
-    voi.order_id
-    FROM
-    t_order_item_mb3 voi
-    <include refid="findPageByItemcodeWherePhrase" />
-    ) vvoi ON vvoi.order_id = vo.id
-    ) o
-    <include refid="findPageByItemcodeInnerPhrase" />
-    WHERE
-    o.line
-    BETWEEN #{pageable.offset}
-    AND #{pageable.offset}+#{pageable.pageSize}
-    ORDER BY o.line
-  </select>
+    <select id="findPageByItemcode" resultMap="orderResultMap" databaseId="oracle">
+        SELECT
+            o.id,
+            o.memo,
+            o.history_id,
+            o.status_code,
+            os.name AS status_name,
+            oi.quantity,
+            i.code AS item_code,
+            i.name AS item_name,
+            i.price AS item_price,
+            ct.code AS category_code,
+            ct.name AS category_name
+        FROM
+        (
+            SELECT
+                vo.id,
+                vo.status_code,
+                vo.memo,
+                vo.history_id,
+                ROW_NUMBER() over(ORDER BY vo.id desc) AS line
+            FROM
+                t_order_mb3 vo
+            INNER JOIN
+            (
+                SELECT
+                    voi.order_id
+                FROM
+                    t_order_item_mb3 voi
+                <include refid="findPageByItemcodeWherePhrase" />
+            ) vvoi ON vvoi.order_id = vo.id
+        ) o
+        <include refid="findPageByItemcodeInnerPhrase" />
+        WHERE
+            o.line BETWEEN #{pageable.offset} AND #{pageable.offset}+#{pageable.pageSize}
+        ORDER BY
+            o.line
+    </select>
 
-  <sql id="findPageByItemcodeWherePhrase">
-    WHERE
-    <foreach collection="searchItemCode" item="searchItemCode" open="voi.item_code IN ("
-      separator="," close=")">
-      #{searchItemCode}
-    </foreach>
-    GROUP BY
-    voi.order_id
-  </sql>
+    <sql id="findPageByItemcodeWherePhrase">
+        WHERE
+            <foreach collection="searchItemCode" item="searchItemCode" open="voi.item_code IN (" separator="," close=")">
+                #{searchItemCode}
+            </foreach>
+        GROUP BY
+            voi.order_id
+    </sql>
 
-  <sql id="findPageByItemcodeInnerPhrase">
-    INNER JOIN c_order_status_mb3 os ON os.code = o.status_code
-    INNER JOIN t_order_item_mb3
-    oi ON oi.order_id = o.id
-    INNER JOIN m_item_mb3 i ON i.code = oi.item_code
-    INNER JOIN
-    m_item_category_mb3 ic ON ic.item_code = i.code
-    INNER JOIN m_category_mb3 ct ON ct.code =
-    ic.category_code
-  </sql>
+    <sql id="findPageByItemcodeInnerPhrase">
+        INNER JOIN
+            c_order_status_mb3 os ON os.code = o.status_code
+        INNER JOIN
+            t_order_item_mb3 oi ON oi.order_id = o.id
+        INNER JOIN
+            m_item_mb3 i ON i.code = oi.item_code
+        INNER JOIN
+            m_item_category_mb3 ic ON ic.item_code = i.code
+        INNER JOIN
+            m_category_mb3 ct ON ct.code = ic.category_code
+    </sql>
 
 </mapper>

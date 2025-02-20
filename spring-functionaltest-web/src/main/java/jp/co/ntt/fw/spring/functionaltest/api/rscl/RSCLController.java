@@ -62,8 +62,7 @@ import jp.co.ntt.fw.spring.functionaltest.app.cmmn.exception.IntentionalExceptio
 
 @RestController
 public class RSCLController {
-    private static final Logger logger = LoggerFactory.getLogger(
-            RSCLController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RSCLController.class);
 
     @Value("${rscl.timeoutRestTemplate.readTimeout}")
     long readTimeout;
@@ -76,10 +75,8 @@ public class RSCLController {
 
     private volatile boolean await;
 
-    public RSCLController(
-            @Value("${rscl.asyncRestTemplate.maxPoolSize}") int maxPoolSize) {
-        this.barrierForAsyncThreadLimitation = new CyclicBarrier(maxPoolSize
-                + 1);
+    public RSCLController(@Value("${rscl.asyncRestTemplate.maxPoolSize}") int maxPoolSize) {
+        this.barrierForAsyncThreadLimitation = new CyclicBarrier(maxPoolSize + 1);
     }
 
     /**
@@ -177,12 +174,35 @@ public class RSCLController {
      * @param rcvMap
      * @return
      */
-    @RequestMapping(value = "map", method = RequestMethod.POST, produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public MultiValueMap<String, String> map(
-            @RequestBody MultiValueMap<String, String> rcvMap) {
+    @RequestMapping(value = "map", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public MultiValueMap<String, String> map(@RequestBody MultiValueMap<String, String> rcvMap) {
         logger.debug("map");
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+
+        map.add("name", rcvMap.getFirst("name") + "_received");
+        map.add("age", "20");
+
+        return map;
+    }
+
+    /**
+     * <ul>
+     * <li>MultiValueMap<String, String>の送受信を行う。</li> <br>
+     * AllEncompassingFormHttpMessageConverter確認用。
+     * </ul>
+     * @param rcvMap
+     * @return
+     */
+    @RequestMapping(value = "multipart", method = RequestMethod.POST,
+            produces = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public MultiValueMap<String, Object> mapMulti(
+            @RequestBody MultiValueMap<String, Object> rcvMap) {
+
+        logger.debug("multipart");
+
+        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 
         map.add("name", rcvMap.getFirst("name") + "_received");
         map.add("age", "20");
@@ -252,11 +272,9 @@ public class RSCLController {
         UserResource user = null;
 
         if (id.equals("1")) {
-            throw new ResourceNotFoundException(ResultMessages.error().add(
-                    "e.rc.fw.8000"));
+            throw new ResourceNotFoundException(ResultMessages.error().add("e.sf.rc.8000"));
         } else if (id.equals("2")) {
-            throw new IntentionalException(ResultMessages.error().add(
-                    "e.rc.fw.9000"));
+            throw new IntentionalException(ResultMessages.error().add("e.sf.rc.9000"));
         } else {
             user = new UserResource();
         }
@@ -280,8 +298,7 @@ public class RSCLController {
 
         // 2回目のリトライで正常終了させる。
         if (!"2".equals(retryCount)) {
-            throw new MappingException(ResultMessage.fromCode("e.rc.fw.9002")
-                    .getText());
+            throw new MappingException(ResultMessage.fromCode("e.sf.rc.9002").getText());
         } else {
             user = new UserResource();
             user.setName("test");
@@ -296,12 +313,11 @@ public class RSCLController {
      * @param ex
      * @return
      */
-    @ExceptionHandler({ MappingException.class })
+    @ExceptionHandler({MappingException.class})
     public ResponseEntity<ApiError> mappingExceptionHandler(Exception ex) {
-        ApiError err = new ApiError(ResultMessage.fromCode("e.rc.fw.9002")
-                .getText());
-        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(
-                new HttpHeaders()).body(err);
+        ApiError err = new ApiError(ResultMessage.fromCode("e.sf.rc.9002").getText());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).headers(new HttpHeaders())
+                .body(err);
     }
 
     /**
@@ -331,7 +347,8 @@ public class RSCLController {
      * @throws BrokenBarrierException
      */
     @RequestMapping(value = "await", method = RequestMethod.GET)
-    public UserResource await() throws InterruptedException, BrokenBarrierException, TimeoutException {
+    public UserResource await()
+            throws InterruptedException, BrokenBarrierException, TimeoutException {
         barrierForAsyncThreadLimitation.await(30, TimeUnit.SECONDS);
         UserResource user = new UserResource();
         user.setName("test");
@@ -434,16 +451,14 @@ public class RSCLController {
         File rcvFile = null;
         try (InputStream in = mf.getInputStream()) {
             rcvFile = File.createTempFile("rcv", ".txt");
-            Files.copy(in, rcvFile.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(in, rcvFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-            List<String> lines = Files.readAllLines(rcvFile.toPath(),
-                    StandardCharsets.UTF_8);
+            List<String> lines = Files.readAllLines(rcvFile.toPath(), StandardCharsets.UTF_8);
 
             user.setName(lines.get(0));
             user.setAge(Integer.parseInt(lines.get(1)));
         } catch (IOException e) {
-            throw new SystemException("e.rc.fw.9001", e);
+            throw new SystemException("e.sf.rc.9001", e);
         } finally {
             if (rcvFile != null) {
                 // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。

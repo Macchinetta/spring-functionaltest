@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  * webFaultBean complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="webFaultBean">
  *   &lt;complexContent>
@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "webFaultBean", propOrder = { "errors", "type" })
+@XmlType(name = "webFaultBean", propOrder = {"errors", "type"})
 public class WebFaultBean {
 
     @XmlElement(nillable = true)
@@ -56,12 +56,12 @@ public class WebFaultBean {
     /**
      * Gets the value of the errors property.
      * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the errors
-     * property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any
+     * modification you make to the returned list will be present inside the JAXB object. This is
+     * why there is not a <CODE>set</CODE> method for the errors property.
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getErrors().add(newItem);
      * </pre>

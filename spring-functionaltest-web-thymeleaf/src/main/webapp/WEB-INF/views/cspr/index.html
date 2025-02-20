@@ -1,43 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">CSRF対策</h1>
-      <div>[CSPR01] CSRF対策機能の適用</div>
-      <ul>
-        <li><a id="cspr0101001" th:href="@{/disabledcspr/0101/001}">cspr0101001</a></li>
-      </ul>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">CSRF対策</h1>
+                <div>[CSPR01] CSRF対策機能の適用</div>
+                <ul>
+                    <li><a id="cspr0101001" th:href="@{/disabledcspr/0101/001}">cspr0101001</a></li>
+                </ul>
 
-      <div>[CSPR02] HTMLフォーム使用時の連携</div>
-      <ul>
-        <li><a id="cspr0201001" th:href="@{/cspr/0201/001}">cspr0201001</a></li>
-        <li><a id="cspr0201002" th:href="@{/cspr/0201/002}">cspr0201002</a></li>
-        <li><a id="cspr0201003" th:href="@{/cspr/0201/003}">cspr0201003</a></li>
-        <li><a id="cspr0201004" th:href="@{/cspr/0201/004}">cspr0201004</a></li>
-        <li><a id="cspr0201005" th:href="@{/cspr/0201/005}">cspr0201005</a></li>
-        <li><a id="cspr0201006" th:href="@{/cspr/0201/006}">cspr0201006</a></li>
-        <li><a id="cspr0201007" th:href="@{/cspr/0201/007}">cspr0201007</a></li>
-        <li><a id="cspr0201008" th:href="@{/cspr/0201/008}">cspr0201008</a></li>
-        <li><a id="cspr0201009" th:href="@{/cspr/0201/009}">cspr0201009</a></li>
-      </ul>
+                <div>[CSPR02] HTMLフォーム使用時の連携</div>
+                <ul>
+                    <li><a id="cspr0201001" th:href="@{/cspr/0201/001}">cspr0201001</a></li>
+                    <li><a id="cspr0201002" th:href="@{/cspr/0201/002}">cspr0201002</a></li>
+                    <li><a id="cspr0201003" th:href="@{/cspr/0201/003}">cspr0201003</a></li>
+                    <li><a id="cspr0201004" th:href="@{/cspr/0201/004}">cspr0201004</a></li>
+                    <li><a id="cspr0201005" th:href="@{/cspr/0201/005}">cspr0201005</a></li>
+                    <li><a id="cspr0201006" th:href="@{/cspr/0201/006}">cspr0201006</a></li>
+                    <li><a id="cspr0201007" th:href="@{/cspr/0201/007}">cspr0201007</a></li>
+                    <li><a id="cspr0201008" th:href="@{/cspr/0201/008}">cspr0201008</a></li>
+                    <li><a id="cspr0201009" th:href="@{/cspr/0201/009}">cspr0201009</a></li>
+                </ul>
 
-      <div>[CSPR03] Ajax使用時の連携</div>
-      <ul>
-        <li><a id="cspr0301001" th:href="@{/cspr/0301/001}">cspr0301001</a></li>
-        <li><a id="cspr0301002" th:href="@{/cspr/0301/002}">cspr0301002</a></li>
-        <li><a id="cspr0301003" th:href="@{/cspr/0301/003}">cspr0301003</a></li>
-        <li><a id="cspr0301004" th:href="@{/cspr/0301/004}">cspr0301004</a></li>
-      </ul>
-      <div>[CSPR03] マルチパートリクエスト時の留意点</div>
-      <ul>
-        <li><a id="cspr0401001" th:href="@{/cspr/0401/001}">cspr0401001</a></li>
-        <li><a id="cspr0401002" th:href="@{/cspr/0401/002}">cspr0401002</a></li>
-      </ul>
-    </div>
-  </div>
-</body>
+                <div>[CSPR03] Ajax使用時の連携</div>
+                <ul>
+                    <li><a id="cspr0301001" th:href="@{/cspr/0301/001}">cspr0301001</a></li>
+                    <li><a id="cspr0301002" th:href="@{/cspr/0301/002}">cspr0301002</a></li>
+                    <li><a id="cspr0301003" th:href="@{/cspr/0301/003}">cspr0301003</a></li>
+                    <li><a id="cspr0301004" th:href="@{/cspr/0301/004}">cspr0301004</a></li>
+                </ul>
+                <div>[CSPR03] マルチパートリクエスト時の留意点</div>
+                <ul>
+                    <li><a id="cspr0401001" th:href="@{/cspr/0401/001}">cspr0401001</a></li>
+                    <li><a id="cspr0401002" th:href="@{/cspr/0401/002}">cspr0401002</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

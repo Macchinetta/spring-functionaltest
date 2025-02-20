@@ -35,8 +35,7 @@ public class Person implements Serializable {
     @Size(min = 1, max = 25)
     private String lastname;
 
-    public Person() {
-    }
+    public Person() {}
 
     public Person(Integer personId) {
         this.personId = personId;

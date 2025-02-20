@@ -33,8 +33,7 @@ public interface OrderMB3Repository {
 
     OrderMB3 findById(int id);
 
-    OrderMB3 findByCondSts(@Param("id") int id,
-            @Param("statusCode") String statusCode);
+    OrderMB3 findByCondSts(@Param("id") int id, @Param("statusCode") String statusCode);
 
     List<OrderMB3> findAll();
 
@@ -44,8 +43,7 @@ public interface OrderMB3Repository {
 
     void insertEntity(OrderMB3 orderMB3);
 
-    void insertItem(@Param("orderId") Integer orderId,
-            @Param("itemCode") String itemCode,
+    void insertItem(@Param("orderId") Integer orderId, @Param("itemCode") String itemCode,
             @Param("quantity") int quantity);
 
     void insertAll(List<OrderMB3> orderMB3List);
@@ -64,11 +62,9 @@ public interface OrderMB3Repository {
 
     List<ItemMB3> findAllItemCode();
 
-    long countPageByItemcode(
-            @Param("searchItemCode") List<String> searchItemCode);
+    long countPageByItemcode(@Param("searchItemCode") List<String> searchItemCode);
 
-    List<OrderMB3> findPageByItemcode(
-            @Param("searchItemCode") List<String> searchItemCode,
+    List<OrderMB3> findPageByItemcode(@Param("searchItemCode") List<String> searchItemCode,
             @Param("pageable") Pageable pageable);
 
 }

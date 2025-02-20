@@ -56,12 +56,12 @@ public class EMAL06Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=iso2022jpCharMail")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=iso2022jpCharMail")
     public String handleIso2022jpCharMail(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendIso2022jpMail(form.getTo().get(0),
-                    form.getText(), store);
+            sessionMailSendingService.sendIso2022jpMail(form.getTo().get(0), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -69,12 +69,13 @@ public class EMAL06Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=externalCharMail")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=externalCharMail")
     public String handleExternalCharMail(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendExternalCharMail(form.getTo().get(0),
-                    form.getText(), store);
+            sessionMailSendingService.sendExternalCharMail(form.getTo().get(0), form.getText(),
+                    store);
         } catch (MessagingException e) {
             // ignore
         }

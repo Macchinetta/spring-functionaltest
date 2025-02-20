@@ -68,8 +68,7 @@ public class JmsTodo implements Serializable {
 
     @Override
     public String toString() {
-        return "JmsTodo [jmsTodoId=" + jmsTodoId + ", description="
-                + description + ", datetime=" + datetime + ", finished="
-                + finished + "]";
+        return "JmsTodo [jmsTodoId=" + jmsTodoId + ", description=" + description + ", datetime="
+                + datetime + ", finished=" + finished + "]";
     }
 }

@@ -48,12 +48,10 @@ public class ATHR03Controller {
     }
 
     @RequestMapping(value = "0301/001", params = "select")
-    public String handle0301001select(SystemConfigForm systemConfigForm,
-            Model model) {
+    public String handle0301001select(SystemConfigForm systemConfigForm, Model model) {
 
-        model.addAttribute("systemConfig", systemConfigService
-                .findDeviceForAdmin(systemConfigForm.getDevice(),
-                        systemConfigForm.getExecuteUser()));
+        model.addAttribute("systemConfig", systemConfigService.findDeviceForAdmin(
+                systemConfigForm.getDevice(), systemConfigForm.getExecuteUser()));
         return "athr/showMethodAccessAllowedPage";
     }
 
@@ -69,13 +67,11 @@ public class ATHR03Controller {
     }
 
     @RequestMapping(value = "0301/001", params = "register")
-    public String handle0301001register(SystemConfigForm systemConfigForm,
-            Model model, RedirectAttributes redirectAttributes) {
-        SystemConfig systemConfig = beanMapper.map(systemConfigForm,
-                SystemConfig.class);
+    public String handle0301001register(SystemConfigForm systemConfigForm, Model model,
+            RedirectAttributes redirectAttributes) {
+        SystemConfig systemConfig = beanMapper.map(systemConfigForm, SystemConfig.class);
         systemConfigService.insertForAdmin(systemConfig);
-        redirectAttributes.addFlashAttribute("systemConfigForm",
-                systemConfigForm);
+        redirectAttributes.addFlashAttribute("systemConfigForm", systemConfigForm);
         return "redirect:/athr/0301/001?select";
     }
 

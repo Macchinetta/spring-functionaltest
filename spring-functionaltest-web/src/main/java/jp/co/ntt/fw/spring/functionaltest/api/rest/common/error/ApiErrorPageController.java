@@ -40,27 +40,26 @@ public class ApiErrorPageController {
     private final Map<HttpStatus, String> errorCodeMap = new HashMap<HttpStatus, String>();
 
     public ApiErrorPageController() {
-        errorCodeMap.put(HttpStatus.HTTP_VERSION_NOT_SUPPORTED,
-                "e.sf.cmmn.9505");
+        errorCodeMap.put(HttpStatus.HTTP_VERSION_NOT_SUPPORTED, "e.sf.fw.9505");
     }
 
     // エラー応答を行う処理メソッド
     @RequestMapping
     public ResponseEntity<ApiError> handleErrorPage(WebRequest request) {
         // リクエストスコープに格納されているステータスコードを取得
-        HttpStatus httpStatus = HttpStatus.valueOf((Integer) request
-                .getAttribute(RequestDispatcher.ERROR_STATUS_CODE,
+        HttpStatus httpStatus = HttpStatus
+                .valueOf((Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE,
                         RequestAttributes.SCOPE_REQUEST));
 
         // ステータスコード毎のエラーコードを取得
         String errorCode = errorCodeMap.get(httpStatus);
 
         // リクエストパラメータで受け取ったエラーコードに対応するエラー情報を生成
-        ApiError apiError = apiErrorCreator.createApiError(request, errorCode,
-                httpStatus.getReasonPhrase());
+        ApiError apiError =
+                apiErrorCreator.createApiError(request, errorCode, httpStatus.getReasonPhrase());
         // 取得したエラー情報を応答
-        return ResponseEntity.status(httpStatus).contentType(
-                MediaType.APPLICATION_JSON).body(apiError);
+        return ResponseEntity.status(httpStatus).contentType(MediaType.APPLICATION_JSON)
+                .body(apiError);
     }
 
 }

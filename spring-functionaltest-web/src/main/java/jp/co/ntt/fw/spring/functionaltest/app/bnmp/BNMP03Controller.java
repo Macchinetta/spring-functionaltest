@@ -76,16 +76,16 @@ public class BNMP03Controller {
         return "bnmp/mappingFailed";
     }
 
-    @RequestMapping(value = "beanMappingExtention", method = RequestMethod.POST, params = "fieldExclusions")
-    public String handleFieldExclusions(Model model,
-            ExcludeSpecifiedFieldForm form) {
+    @RequestMapping(value = "beanMappingExtention", method = RequestMethod.POST,
+            params = "fieldExclusions")
+    public String handleFieldExclusions(Model model, ExcludeSpecifiedFieldForm form) {
 
         ExcludeSpecifiedFieldDto destinationBean = new ExcludeSpecifiedFieldDto();
         destinationBean.setFirstName("dummy");
         destinationBean.setLastName("dummy");
         destinationBean.setAge(99);
-        destinationBean.setBirthDate(DateTimeFormat.forPattern("yyyyMMdd")
-                .parseDateTime("99991231"));
+        destinationBean
+                .setBirthDate(DateTimeFormat.forPattern("yyyyMMdd").parseDateTime("99991231"));
 
         beanMapper.map(form, destinationBean);
 
@@ -94,16 +94,16 @@ public class BNMP03Controller {
         return "bnmp/showBeanMappingExcludeResult";
     }
 
-    @RequestMapping(value = "setBeanScopeMapping", method = RequestMethod.POST, params = "scopeSetting")
-    public String handleSetBeanScopeMapping(Model model,
-            ScopeMappingForm form) {
+    @RequestMapping(value = "setBeanScopeMapping", method = RequestMethod.POST,
+            params = "scopeSetting")
+    public String handleSetBeanScopeMapping(Model model, ScopeMappingForm form) {
         // 範囲指定なし
         ScopeMappingDto destinationBean = new ScopeMappingDto();
         destinationBean.setFirstName("dummy");
         destinationBean.setLastName("dummy");
         destinationBean.setAge(99);
-        destinationBean.setBirthDate(DateTimeFormat.forPattern("yyyyMMdd")
-                .parseDateTime("99991231"));
+        destinationBean
+                .setBirthDate(DateTimeFormat.forPattern("yyyyMMdd").parseDateTime("99991231"));
 
         beanMapper.map(form, destinationBean);
 
@@ -114,8 +114,8 @@ public class BNMP03Controller {
         destinationScopedBean.setFirstName("dummy");
         destinationScopedBean.setLastName("dummy");
         destinationScopedBean.setAge(99);
-        destinationScopedBean.setBirthDate(DateTimeFormat.forPattern("yyyyMMdd")
-                .parseDateTime("99991231"));
+        destinationScopedBean
+                .setBirthDate(DateTimeFormat.forPattern("yyyyMMdd").parseDateTime("99991231"));
 
         beanMapper.map(form, destinationScopedBean, "mapIdExclude");
 
@@ -124,16 +124,16 @@ public class BNMP03Controller {
         return "bnmp/showBeanMappingScopeResult";
     }
 
-    @RequestMapping(value = "excludeNullEmptyMapping", method = RequestMethod.POST, params = "excludeNullEmpty")
-    public String handleExcludeNullEmptyMapping(Model model,
-            ExcludeNullEmptyForm form) {
+    @RequestMapping(value = "excludeNullEmptyMapping", method = RequestMethod.POST,
+            params = "excludeNullEmpty")
+    public String handleExcludeNullEmptyMapping(Model model, ExcludeNullEmptyForm form) {
 
         ExcludeNullEmptyDto destinationBean = new ExcludeNullEmptyDto();
         destinationBean.setFirstName("dummy");
         destinationBean.setLastName("dummy");
         destinationBean.setAge(99);
-        destinationBean.setBirthDate(DateTimeFormat.forPattern("yyyyMMdd")
-                .parseDateTime("99991231"));
+        destinationBean
+                .setBirthDate(DateTimeFormat.forPattern("yyyyMMdd").parseDateTime("99991231"));
 
         beanMapper.map(form, destinationBean);
 
@@ -142,61 +142,53 @@ public class BNMP03Controller {
         return "bnmp/showBeanMappingExcludeResult";
     }
 
-    @RequestMapping(value = "stringToDateMapping", method = RequestMethod.POST, params = "stringToDate")
-    public String handleStringToDateMapping(Model model,
-            StringToDateMappingForm form) {
+    @RequestMapping(value = "stringToDateMapping", method = RequestMethod.POST,
+            params = "stringToDate")
+    public String handleStringToDateMapping(Model model, StringToDateMappingForm form) {
 
-        StringToDateMappingDto destinationBean = beanMapper.map(form,
-                StringToDateMappingDto.class);
+        StringToDateMappingDto destinationBean = beanMapper.map(form, StringToDateMappingDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 
         if (destinationBean.getBirthDateLocalDate() != null) {
-            model.addAttribute("birthDateLocalDate", destinationBean
-                    .getBirthDateLocalDate().format(DateTimeFormatter.ofPattern(
-                            "uuuu/MM/dd")));
+            model.addAttribute("birthDateLocalDate", destinationBean.getBirthDateLocalDate()
+                    .format(DateTimeFormatter.ofPattern("uuuu/MM/dd")));
         }
 
         if (destinationBean.getBirthDateLocalTime() != null) {
-            model.addAttribute("birthDateLocalTime", destinationBean
-                    .getBirthDateLocalTime().format(DateTimeFormatter.ofPattern(
-                            "HH:mm:ss.SSS")));
+            model.addAttribute("birthDateLocalTime", destinationBean.getBirthDateLocalTime()
+                    .format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS")));
         }
 
         if (destinationBean.getBirthDateLocalDateTime() != null) {
-            model.addAttribute("birthDateLocalDateTime", destinationBean
-                    .getBirthDateLocalDateTime().format(DateTimeFormatter
-                            .ofPattern("uuuu/MM/dd HH:mm:ss.SSS")));
+            model.addAttribute("birthDateLocalDateTime", destinationBean.getBirthDateLocalDateTime()
+                    .format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss.SSS")));
         }
 
         if (destinationBean.getBirthDateOffsetTime() != null) {
-            model.addAttribute("birthDateOffsetTime", destinationBean
-                    .getBirthDateOffsetTime().format(DateTimeFormatter
-                            .ofPattern("HH:mm:ss.SSSZZZZZ")));
+            model.addAttribute("birthDateOffsetTime", destinationBean.getBirthDateOffsetTime()
+                    .format(DateTimeFormatter.ofPattern("HH:mm:ss.SSSZZZZZ")));
         }
 
         if (destinationBean.getBirthDateOffsetDateTime() != null) {
-            model.addAttribute("birthDateOffsetDateTime", destinationBean
-                    .getBirthDateOffsetDateTime().format(DateTimeFormatter
-                            .ofPattern("uuuu/MM/dd HH:mm:ss.SSSZZZZZ")));
+            model.addAttribute("birthDateOffsetDateTime",
+                    destinationBean.getBirthDateOffsetDateTime()
+                            .format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss.SSSZZZZZ")));
         }
 
         if (destinationBean.getBirthDateZonedDateTime() != null) {
-            model.addAttribute("birthDateZonedDateTime", destinationBean
-                    .getBirthDateZonedDateTime().format(DateTimeFormatter
-                            .ofPattern(
-                                    "uuuu/MM/dd HH:mm:ss.SSSZZZZZ'['VV']'")));
+            model.addAttribute("birthDateZonedDateTime", destinationBean.getBirthDateZonedDateTime()
+                    .format(DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss.SSSZZZZZ'['VV']'")));
         }
 
         return "bnmp/showBeanMappingStringToDateResult";
     }
 
-    @RequestMapping(value = "dateToStringMapping", method = RequestMethod.POST, params = "dateToString")
-    public String handleDateToStringMapping(Model model,
-            DateToStringMappingForm form) {
+    @RequestMapping(value = "dateToStringMapping", method = RequestMethod.POST,
+            params = "dateToString")
+    public String handleDateToStringMapping(Model model, DateToStringMappingForm form) {
 
-        DateToStringMappingDto destinationBean = beanMapper.map(form,
-                DateToStringMappingDto.class);
+        DateToStringMappingDto destinationBean = beanMapper.map(form, DateToStringMappingDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 
@@ -206,8 +198,7 @@ public class BNMP03Controller {
     @RequestMapping(value = "mappingFailed", method = RequestMethod.POST, params = "mappingFailed")
     public String handleMappingFailed(Model model, MappingFailedForm form) {
 
-        MappingFailedDto destinationBean = beanMapper.map(form,
-                MappingFailedDto.class);
+        MappingFailedDto destinationBean = beanMapper.map(form, MappingFailedDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 

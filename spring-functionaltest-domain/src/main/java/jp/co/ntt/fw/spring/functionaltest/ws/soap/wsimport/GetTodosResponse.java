@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
  * getTodosResponse complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="getTodosResponse">
  *   &lt;complexContent>
@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getTodosResponse", propOrder = { "todos" })
+@XmlType(name = "getTodosResponse", propOrder = {"todos"})
 public class GetTodosResponse {
 
     protected List<Todo> todos;
@@ -49,12 +49,12 @@ public class GetTodosResponse {
     /**
      * Gets the value of the todos property.
      * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for the todos
-     * property.
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any
+     * modification you make to the returned list will be present inside the JAXB object. This is
+     * why there is not a <CODE>set</CODE> method for the todos property.
      * <p>
      * For example, to add a new item, do as follows:
-     * 
+     *
      * <pre>
      * getTodos().add(newItem);
      * </pre>

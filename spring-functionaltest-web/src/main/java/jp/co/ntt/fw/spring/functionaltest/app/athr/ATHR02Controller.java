@@ -38,8 +38,7 @@ public class ATHR02Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForStaffInfoDsp";
     }
 
@@ -54,8 +53,8 @@ public class ATHR02Controller {
     }
 
     @RequestMapping("0201/002/restrict")
-    public String handle0201002restrict(
-            @AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String handle0201002restrict(@AuthenticationPrincipal UserDetails userDetails,
+            Model model) {
         model.addAttribute("username", userDetails.getUsername());
         Collection<?> authorities = userDetails.getAuthorities();
         model.addAttribute("userRoles", authorities);

@@ -19,8 +19,7 @@ import javax.mail.Store;
 
 public interface AuthMailSendingService {
 
-    public void sendSimpleMessage(String[] to, String[] cc, String[] bcc,
-            String text, Store store);
+    public void sendSimpleMessage(String[] to, String[] cc, String[] bcc, String text, Store store);
 
     public Store popBeforeSmtp();
 }

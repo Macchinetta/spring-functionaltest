@@ -21,7 +21,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookLZ;
 
-public interface JPABookRepositoryLZ extends
-                                     JpaRepository<JPABookLZ, Serializable> {
+public interface JPABookRepositoryLZ extends JpaRepository<JPABookLZ, Serializable> {
 
 }

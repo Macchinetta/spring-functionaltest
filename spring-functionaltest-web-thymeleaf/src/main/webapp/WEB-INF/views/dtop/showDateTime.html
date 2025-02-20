@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <ul>
-        <li>DateTime:<span id="getDateResult" th:text="${resultDate.toString('yyyy/MM/dd HH:mm:ss.SSS ZZ')}"></span></li>
-        <li>Style:<span id="getResultStyle" th:text="${resultDate.toString('yy/MM/dd H:mm:ss')}"></span></li>
-        <li>Class:<span id="getDateClassResult" th:text="${resultDate.Class.Name}"></span></li>
-      </ul>
-    </div>
-  </div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <ul>
+                    <li>DateTime:<span id="getDateResult" th:text="${resultDate.toString('yyyy/MM/dd HH:mm:ss.SSS ZZ')}"></span></li>
+                    <li>Style:<span id="getResultStyle" th:text="${resultDate.toString('yy/MM/dd H:mm:ss')}"></span></li>
+                    <li>Class:<span id="getDateClassResult" th:text="${resultDate.Class.Name}"></span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

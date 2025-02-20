@@ -29,43 +29,34 @@ import org.springframework.data.repository.query.Param;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
-public interface JPADeliveryOrderRepository extends
-                                            JpaRepository<JPADeliveryOrder, Integer>,
-                                            JPADeliveryOrderRepositoryCustom {
+public interface JPADeliveryOrderRepository
+        extends JpaRepository<JPADeliveryOrder, Integer>, JPADeliveryOrderRepositoryCustom {
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.deliveryStatus = :deliveryStatus ORDER BY delOrder.deliverNumber DESC")
-    List<JPADeliveryOrder> searchUsingStatCode(
-            @Param("deliveryStatus") String statusCode);
+    List<JPADeliveryOrder> searchUsingStatCode(@Param("deliveryStatus") String statusCode);
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.senderAddress LIKE :senderAddress% ORDER BY delOrder.deliverNumber ASC")
-    List<JPADeliveryOrder> forwardSearch(
-            @Param("senderAddress") String senderAddress);
+    List<JPADeliveryOrder> forwardSearch(@Param("senderAddress") String senderAddress);
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.receiverAddress LIKE %:receiverAddress ORDER BY delOrder.deliverNumber ASC")
-    List<JPADeliveryOrder> backwardSearch(
-            @Param("receiverAddress") String receiverAddress);
+    List<JPADeliveryOrder> backwardSearch(@Param("receiverAddress") String receiverAddress);
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.senderName LIKE %:senderName% ORDER BY delOrder.deliverNumber ASC")
-    List<JPADeliveryOrder> partialSearch(
-            @Param("senderName") String senderName);
+    List<JPADeliveryOrder> partialSearch(@Param("senderName") String senderName);
 
-    Page<JPADeliveryOrder> findByDeliveryStatus(String deliveryStatus,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByDeliveryStatus(String deliveryStatus, Pageable pageable);
 
     @Query(name = "OrderRepository.findAllByStatusCode", nativeQuery = true)
-    List<JPADeliveryOrder> findAllByDeliveryStatus(
-            @Param("statusCode") String statusCode);
+    List<JPADeliveryOrder> findAllByDeliveryStatus(@Param("statusCode") String statusCode);
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE "
             + "delOrder.deliveryStatus = :deliveryStatus ORDER BY delOrder.deliverNumber")
-    @QueryHints(value = {
-            @QueryHint(name = "javax.persistence.query.timeout", value = "1001") })
-    List<JPADeliveryOrder> getByDeliveryStatus(
-            @Param("deliveryStatus") String statusCode);
+    @QueryHints(value = {@QueryHint(name = "javax.persistence.query.timeout", value = "1001")})
+    List<JPADeliveryOrder> getByDeliveryStatus(@Param("deliveryStatus") String statusCode);
 
     @Query("SELECT delOrder FROM JPADeliveryOrder delOrder WHERE delOrder.deliveryStatus = :deliveryStatus")
     Page<JPADeliveryOrder> findEntityPageMatchingConditionByDeliveryStatus(
@@ -73,26 +64,24 @@ public interface JPADeliveryOrderRepository extends
 
     @Query("SELECT jdo FROM JPADeliveryOrder jdo WHERE"
             + " (jdo.senderAddress LIKE %:word% ESCAPE '~' OR jdo.deliveryDriver LIKE %:word% ESCAPE '~')")
-    Page<JPADeliveryOrder> findPageByMod(@Param("word") String word,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findPageByMod(@Param("word") String word, Pageable pageable);
 
     @Query("SELECT jdo FROM JPADeliveryOrder jdo WHERE"
             + " (jdo.senderAddress LIKE :word ESCAPE '~' OR jdo.deliveryDriver LIKE :word ESCAPE '~')"
             + " ORDER BY jdo.deliverNumber ASC")
-    Page<JPADeliveryOrder> findPageByDash(@Param("word") String word,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findPageByDash(@Param("word") String word, Pageable pageable);
 
     /*
      * @Query("SELECT jdo FROM JPADeliveryOrder jdo WHERE" +
-     * " (jdo.senderAddress LIKE _:word_ ESCAPE '~' OR jdo.deliveryDriver LIKE _:word_ ESCAPE '~')") Page<JPADeliveryOrder>
-     * findPageByDash(@Param("word") String word, Pageable pageable);
+     * " (jdo.senderAddress LIKE _:word_ ESCAPE '~' OR jdo.deliveryDriver LIKE _:word_ ESCAPE '~')")
+     * Page<JPADeliveryOrder> findPageByDash(@Param("word") String word, Pageable pageable);
      */
 
     @Query("SELECT jdo FROM JPADeliveryOrder jdo WHERE"
             + " (jdo.senderAddress LIKE :word ESCAPE '~' OR jdo.deliveryDriver LIKE :word ESCAPE '~')"
             + " ORDER BY jdo.deliverNumber ASC")
-    Page<JPADeliveryOrder> findPageByMatchTypeInLogic(
-            @Param("word") String word, Pageable pageable);
+    Page<JPADeliveryOrder> findPageByMatchTypeInLogic(@Param("word") String word,
+            Pageable pageable);
 
     @Modifying
     @Query("DELETE FROM JPADeliveryOrder jdo WHERE jdo.deliverNumber > :deliverNumber")

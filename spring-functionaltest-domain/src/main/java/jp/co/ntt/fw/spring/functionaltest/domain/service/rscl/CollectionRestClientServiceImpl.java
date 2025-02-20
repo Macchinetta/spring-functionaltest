@@ -34,11 +34,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
-public class CollectionRestClientServiceImpl implements
-                                             CollectionRestClientService {
+public class CollectionRestClientServiceImpl implements CollectionRestClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            RestClientServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestClientServiceImpl.class);
 
     @Inject
     RestTemplate collectionRestTemplate;
@@ -50,13 +48,11 @@ public class CollectionRestClientServiceImpl implements
     public List<UserResource> exchangeCollection(String path) {
         URI targetUri = this.getUri(this.uri, path);
         // XMLで受け取り、Jaxb2CollectionHttpMessageConverterでList<UserResource>へ変換させる。
-        RequestEntity<Void> req = RequestEntity.get(targetUri).accept(
-                MediaType.APPLICATION_XML).build();
+        RequestEntity<Void> req =
+                RequestEntity.get(targetUri).accept(MediaType.APPLICATION_XML).build();
 
-        ResponseEntity<List<UserResource>> res = this.collectionRestTemplate
-                .exchange(req,
-                        new ParameterizedTypeReference<List<UserResource>>() {
-                        });
+        ResponseEntity<List<UserResource>> res = this.collectionRestTemplate.exchange(req,
+                new ParameterizedTypeReference<List<UserResource>>() {});
         logger.info("RSCL0105001 : {}", res.getStatusCode());
 
         return res.getBody();
@@ -70,8 +66,7 @@ public class CollectionRestClientServiceImpl implements
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 
 }

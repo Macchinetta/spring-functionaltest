@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * errorBean complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="errorBean">
  *   &lt;complexContent>
@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "errorBean", propOrder = { "code", "message", "path" })
+@XmlType(name = "errorBean", propOrder = {"code", "message", "path"})
 public class ErrorBean {
 
     protected String code;

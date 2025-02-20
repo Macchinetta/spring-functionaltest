@@ -37,8 +37,7 @@ public class VLDT0101005Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated DisplayOutsideMessagePropertyForm form,
+    public String handleValidate(@Validated DisplayOutsideMessagePropertyForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

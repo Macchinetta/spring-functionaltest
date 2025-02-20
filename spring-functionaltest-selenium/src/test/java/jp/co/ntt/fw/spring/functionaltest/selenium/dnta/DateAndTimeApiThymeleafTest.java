@@ -31,13 +31,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //JSP版未実装のためThymeleafのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+@IfProfileValue(name = "test.environment.view", values = {"thymeleaf"})
 public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
-    private static WebDriver deDriver;
+    private static WebDriver driver;
 
     public DateAndTimeApiThymeleafTest() {
         disableDefaultWebDriver();
@@ -46,11 +47,11 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
     @Before
     public void setUp() {
 
-        if (deDriver == null) {
-            deDriver = webDriverCreator.createLocaleSpecifiedDriver("ja, JP");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.JAPAN);
         }
 
-        setCurrentWebDriver(deDriver);
+        setCurrentWebDriver(driver);
 
         // トップ画面での操作
         {
@@ -73,8 +74,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDate")), is(
-                    "2015/12/25 23:30:59"));
+            assertThat(webDriverOperations.getText(id("getDate")), is("2015/12/25 23:30:59"));
         }
     }
 
@@ -93,8 +93,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDate")), is(
-                    "2015/12/25"));
+            assertThat(webDriverOperations.getText(id("getDate")), is("2015/12/25"));
         }
     }
 
@@ -113,8 +112,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDate")), is(
-                    "23:30:59"));
+            assertThat(webDriverOperations.getText(id("getDate")), is("23:30:59"));
         }
     }
 
@@ -134,8 +132,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
         {
             // システムエラー画面に遷移すること
             String expectedTitle = "Unhandled System Error!";
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .titleContains(expectedTitle));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.titleContains(expectedTitle));
 
             // エラーログが出力されていること
             dbLogAssertOperations.waitForAssertion();
@@ -160,12 +157,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDate")), is(
-                    "2015/12/25 23:30:59"));
-            assertThat(webDriverOperations.getText(id("getDateFormat")), is(
-                    "西暦 2015/12/25 金"));
-            assertThat(webDriverOperations.getText(id("getDateLocale")), is(
-                    "December 25, 2015 11:30:59 PM"));
+            assertThat(webDriverOperations.getText(id("getDate")), is("2015/12/25 23:30:59"));
+            assertThat(webDriverOperations.getText(id("getDateFormat")), is("西暦 2015/12/25 金"));
+            assertThat(webDriverOperations.getText(id("getDateLocale")),
+                    is("December 25, 2015 11:30:59 PM"));
             assertThat(webDriverOperations.getText(id("getDateFormatLocale")),
                     is("AD 2015/12/25 Fri"));
         }
@@ -196,9 +191,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDate4")));
             resultList.add(webDriverOperations.getText(id("getDate5")));
 
-            assertThat(resultList, contains("2014/01/01 1:01:01",
-                    "2015/04/08 6:11:14", "2016/07/15 11:21:27",
-                    "2017/10/22 16:31:40", "2018/01/29 21:41:53"));
+            assertThat(resultList, contains("2014/01/01 1:01:01", "2015/04/08 6:11:14",
+                    "2016/07/15 11:21:27", "2017/10/22 16:31:40", "2018/01/29 21:41:53"));
 
             resultList.clear();
 
@@ -209,9 +203,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateFormat4")));
             resultList.add(webDriverOperations.getText(id("getDateFormat5")));
 
-            assertThat(resultList, contains("西暦 2014/01/01 水",
-                    "西暦 2015/04/08 水", "西暦 2016/07/15 金", "西暦 2017/10/22 日",
-                    "西暦 2018/01/29 月"));
+            assertThat(resultList, contains("西暦 2014/01/01 水", "西暦 2015/04/08 水", "西暦 2016/07/15 金",
+                    "西暦 2017/10/22 日", "西暦 2018/01/29 月"));
 
             resultList.clear();
 
@@ -222,28 +215,22 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateLocale4")));
             resultList.add(webDriverOperations.getText(id("getDateLocale5")));
 
-            assertThat(resultList, contains("January 1, 2014 1:01:01 AM",
-                    "April 8, 2015 6:11:14 AM", "July 15, 2016 11:21:27 AM",
-                    "October 22, 2017 4:31:40 PM",
-                    "January 29, 2018 9:41:53 PM"));
+            assertThat(resultList,
+                    contains("January 1, 2014 1:01:01 AM", "April 8, 2015 6:11:14 AM",
+                            "July 15, 2016 11:21:27 AM", "October 22, 2017 4:31:40 PM",
+                            "January 29, 2018 9:41:53 PM"));
 
             resultList.clear();
 
             // arrayFormat(Temporal, フォーマット文字列, ロケール)の確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale5")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale1")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale2")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale3")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale4")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale5")));
 
-            assertThat(resultList, contains("AD 2014/01/01 Wed",
-                    "AD 2015/04/08 Wed", "AD 2016/07/15 Fri",
-                    "AD 2017/10/22 Sun", "AD 2018/01/29 Mon"));
+            assertThat(resultList, contains("AD 2014/01/01 Wed", "AD 2015/04/08 Wed",
+                    "AD 2016/07/15 Fri", "AD 2017/10/22 Sun", "AD 2018/01/29 Mon"));
         }
     }
 
@@ -272,9 +259,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDate4")));
             resultList.add(webDriverOperations.getText(id("getDate5")));
 
-            assertThat(resultList, contains("2015/04/08 6:11:14",
-                    "2016/07/15 11:21:27", "2017/10/22 16:31:40",
-                    "2018/01/29 21:41:53", "2014/01/01 1:01:01"));
+            assertThat(resultList, contains("2015/04/08 6:11:14", "2016/07/15 11:21:27",
+                    "2017/10/22 16:31:40", "2018/01/29 21:41:53", "2014/01/01 1:01:01"));
 
             resultList.clear();
 
@@ -285,9 +271,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateFormat4")));
             resultList.add(webDriverOperations.getText(id("getDateFormat5")));
 
-            assertThat(resultList, contains("西暦 2015/04/08 水",
-                    "西暦 2016/07/15 金", "西暦 2017/10/22 日", "西暦 2018/01/29 月",
-                    "西暦 2014/01/01 水"));
+            assertThat(resultList, contains("西暦 2015/04/08 水", "西暦 2016/07/15 金", "西暦 2017/10/22 日",
+                    "西暦 2018/01/29 月", "西暦 2014/01/01 水"));
 
             resultList.clear();
 
@@ -298,28 +283,22 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateLocale4")));
             resultList.add(webDriverOperations.getText(id("getDateLocale5")));
 
-            assertThat(resultList, contains("April 8, 2015 6:11:14 AM",
-                    "July 15, 2016 11:21:27 AM", "October 22, 2017 4:31:40 PM",
-                    "January 29, 2018 9:41:53 PM",
-                    "January 1, 2014 1:01:01 AM"));
+            assertThat(resultList,
+                    contains("April 8, 2015 6:11:14 AM", "July 15, 2016 11:21:27 AM",
+                            "October 22, 2017 4:31:40 PM", "January 29, 2018 9:41:53 PM",
+                            "January 1, 2014 1:01:01 AM"));
 
             resultList.clear();
 
             // listFormat(Temporal, フォーマット文字列, ロケール)の確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale5")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale1")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale2")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale3")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale4")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale5")));
 
-            assertThat(resultList, contains("AD 2015/04/08 Wed",
-                    "AD 2016/07/15 Fri", "AD 2017/10/22 Sun",
-                    "AD 2018/01/29 Mon", "AD 2014/01/01 Wed"));
+            assertThat(resultList, contains("AD 2015/04/08 Wed", "AD 2016/07/15 Fri",
+                    "AD 2017/10/22 Sun", "AD 2018/01/29 Mon", "AD 2014/01/01 Wed"));
         }
     }
 
@@ -349,9 +328,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDate5")));
 
             assertThat(resultList, hasSize(5));
-            assertThat(resultList, hasItems("2014/01/01 1:01:01",
-                    "2015/04/08 6:11:14", "2016/07/15 11:21:27",
-                    "2017/10/22 16:31:40", "2018/01/29 21:41:53"));
+            assertThat(resultList, hasItems("2014/01/01 1:01:01", "2015/04/08 6:11:14",
+                    "2016/07/15 11:21:27", "2017/10/22 16:31:40", "2018/01/29 21:41:53"));
 
             resultList.clear();
 
@@ -363,9 +341,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateFormat5")));
 
             assertThat(resultList, hasSize(5));
-            assertThat(resultList, hasItems("西暦 2014/01/01 水",
-                    "西暦 2015/04/08 水", "西暦 2016/07/15 金", "西暦 2017/10/22 日",
-                    "西暦 2018/01/29 月"));
+            assertThat(resultList, hasItems("西暦 2014/01/01 水", "西暦 2015/04/08 水", "西暦 2016/07/15 金",
+                    "西暦 2017/10/22 日", "西暦 2018/01/29 月"));
 
             resultList.clear();
 
@@ -377,29 +354,23 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateLocale5")));
 
             assertThat(resultList, hasSize(5));
-            assertThat(resultList, hasItems("January 1, 2014 1:01:01 AM",
-                    "April 8, 2015 6:11:14 AM", "July 15, 2016 11:21:27 AM",
-                    "October 22, 2017 4:31:40 PM",
-                    "January 29, 2018 9:41:53 PM"));
+            assertThat(resultList,
+                    hasItems("January 1, 2014 1:01:01 AM", "April 8, 2015 6:11:14 AM",
+                            "July 15, 2016 11:21:27 AM", "October 22, 2017 4:31:40 PM",
+                            "January 29, 2018 9:41:53 PM"));
 
             resultList.clear();
 
             // setFormat(Temporal, フォーマット文字列, ロケール)の確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDateFormatLocale5")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale1")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale2")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale3")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale4")));
+            resultList.add(webDriverOperations.getText(id("getDateFormatLocale5")));
 
             assertThat(resultList, hasSize(5));
-            assertThat(resultList, hasItems("AD 2014/01/01 Wed",
-                    "AD 2015/04/08 Wed", "AD 2016/07/15 Fri",
-                    "AD 2017/10/22 Sun", "AD 2018/01/29 Mon"));
+            assertThat(resultList, hasItems("AD 2014/01/01 Wed", "AD 2015/04/08 Wed",
+                    "AD 2016/07/15 Fri", "AD 2017/10/22 Sun", "AD 2018/01/29 Mon"));
         }
     }
 
@@ -418,8 +389,8 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("getDateISO")), is(
-                    "2015-12-25T23:30:59.000+0900"));
+            assertThat(webDriverOperations.getText(id("getDateISO")),
+                    is("2015-12-25T23:30:59.000+0900"));
         }
 
     }
@@ -448,11 +419,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateISO4")));
             resultList.add(webDriverOperations.getText(id("getDateISO5")));
 
-            assertThat(resultList, contains("2014-01-01T01:01:01.000+0900",
-                    "2015-04-08T06:11:14.000+0900",
-                    "2016-07-15T11:21:27.000+0900",
-                    "2017-10-22T16:31:40.000+0900",
-                    "2018-01-29T21:41:53.000+0900"));
+            assertThat(resultList,
+                    contains("2014-01-01T01:01:01.000+0900", "2015-04-08T06:11:14.000+0900",
+                            "2016-07-15T11:21:27.000+0900", "2017-10-22T16:31:40.000+0900",
+                            "2018-01-29T21:41:53.000+0900"));
         }
     }
 
@@ -480,11 +450,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateISO4")));
             resultList.add(webDriverOperations.getText(id("getDateISO5")));
 
-            assertThat(resultList, contains("2015-04-08T06:11:14.000+0900",
-                    "2016-07-15T11:21:27.000+0900",
-                    "2017-10-22T16:31:40.000+0900",
-                    "2018-01-29T21:41:53.000+0900",
-                    "2014-01-01T01:01:01.000+0900"));
+            assertThat(resultList,
+                    contains("2015-04-08T06:11:14.000+0900", "2016-07-15T11:21:27.000+0900",
+                            "2017-10-22T16:31:40.000+0900", "2018-01-29T21:41:53.000+0900",
+                            "2014-01-01T01:01:01.000+0900"));
         }
     }
 
@@ -512,11 +481,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getDateISO4")));
             resultList.add(webDriverOperations.getText(id("getDateISO5")));
 
-            assertThat(resultList, hasItems("2016-07-15T11:21:27.000+0900",
-                    "2017-10-22T16:31:40.000+0900",
-                    "2018-01-29T21:41:53.000+0900",
-                    "2014-01-01T01:01:01.000+0900",
-                    "2015-04-08T06:11:14.000+0900"));
+            assertThat(resultList,
+                    hasItems("2016-07-15T11:21:27.000+0900", "2017-10-22T16:31:40.000+0900",
+                            "2018-01-29T21:41:53.000+0900", "2014-01-01T01:01:01.000+0900",
+                            "2015-04-08T06:11:14.000+0900"));
         }
     }
 
@@ -537,22 +505,16 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getDay")), is("25"));
             assertThat(webDriverOperations.getText(id("getMonth")), is("12"));
-            assertThat(webDriverOperations.getText(id("getMonthName")), is(
-                    "12月"));
-            assertThat(webDriverOperations.getText(id("getMonthNameShort")), is(
-                    "12"));
+            assertThat(webDriverOperations.getText(id("getMonthName")), is("12月"));
+            assertThat(webDriverOperations.getText(id("getMonthNameShort")), is("12"));
             assertThat(webDriverOperations.getText(id("getYear")), is("2015"));
-            assertThat(webDriverOperations.getText(id("getDayOfWeek")), is(
-                    "5"));
-            assertThat(webDriverOperations.getText(id("getDayOfWeekName")), is(
-                    "金曜日"));
-            assertThat(webDriverOperations.getText(id("getDayOfWeekNameShort")),
-                    is("金"));
+            assertThat(webDriverOperations.getText(id("getDayOfWeek")), is("5"));
+            assertThat(webDriverOperations.getText(id("getDayOfWeekName")), is("金曜日"));
+            assertThat(webDriverOperations.getText(id("getDayOfWeekNameShort")), is("金"));
             assertThat(webDriverOperations.getText(id("getHour")), is("23"));
             assertThat(webDriverOperations.getText(id("getMinute")), is("30"));
             assertThat(webDriverOperations.getText(id("getSecond")), is("59"));
-            assertThat(webDriverOperations.getText(id("getNanosecond")), is(
-                    "345"));
+            assertThat(webDriverOperations.getText(id("getNanosecond")), is("345"));
         }
     }
 
@@ -608,16 +570,11 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // monthNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort5")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort5")));
 
             assertThat(resultList, contains("1", "4", "7", "10", "1"));
 
@@ -630,8 +587,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getYear4")));
             resultList.add(webDriverOperations.getText(id("getYear5")));
 
-            assertThat(resultList, contains("2014", "2015", "2016", "2017",
-                    "2018"));
+            assertThat(resultList, contains("2014", "2015", "2016", "2017", "2018"));
 
             resultList.clear();
 
@@ -647,32 +603,22 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // dayOfWeekNameメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName5")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName5")));
 
             assertThat(resultList, contains("水曜日", "水曜日", "金曜日", "日曜日", "月曜日"));
 
             resultList.clear();
 
             // dayOfWeekNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort5")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort5")));
 
             assertThat(resultList, contains("水", "水", "金", "日", "月"));
 
@@ -774,16 +720,11 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // monthNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort5")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort5")));
 
             assertThat(resultList, contains("4", "7", "10", "1", "1"));
 
@@ -796,8 +737,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getYear4")));
             resultList.add(webDriverOperations.getText(id("getYear5")));
 
-            assertThat(resultList, contains("2015", "2016", "2017", "2018",
-                    "2014"));
+            assertThat(resultList, contains("2015", "2016", "2017", "2018", "2014"));
 
             resultList.clear();
 
@@ -813,32 +753,22 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // dayOfWeekNameメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName5")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName5")));
 
             assertThat(resultList, contains("水曜日", "金曜日", "日曜日", "月曜日", "水曜日"));
 
             resultList.clear();
 
             // dayOfWeekNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort4")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort5")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort5")));
 
             assertThat(resultList, contains("水", "金", "日", "月", "水"));
 
@@ -940,14 +870,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // monthNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getMonthNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getMonthNameShort4")));
 
             assertThat(resultList, hasSize(4));
             assertThat(resultList, hasItems("1", "4", "7", "10"));
@@ -962,8 +888,7 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.add(webDriverOperations.getText(id("getYear5")));
 
             assertThat(resultList, hasSize(5));
-            assertThat(resultList, hasItems("2014", "2015", "2016", "2017",
-                    "2018"));
+            assertThat(resultList, hasItems("2014", "2015", "2016", "2017", "2018"));
 
             resultList.clear();
 
@@ -979,14 +904,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // dayOfWeekNameメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekName4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekName4")));
 
             assertThat(resultList, hasSize(4));
             assertThat(resultList, hasItems("月曜日", "水曜日", "金曜日", "日曜日"));
@@ -994,14 +915,10 @@ public class DateAndTimeApiThymeleafTest extends FunctionTestSupport {
             resultList.clear();
 
             // dayOfWeekNameShortメソッドの確認
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort1")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort2")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort3")));
-            resultList.add(webDriverOperations.getText(id(
-                    "getDayOfWeekNameShort4")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort1")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort2")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort3")));
+            resultList.add(webDriverOperations.getText(id("getDayOfWeekNameShort4")));
 
             assertThat(resultList, hasSize(4));
             assertThat(resultList, hasItems("月", "水", "金", "日"));

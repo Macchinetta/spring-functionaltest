@@ -28,8 +28,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(propagation = Propagation.NOT_SUPPORTED)
 @Service
-public class DeliveryOrderNotSupportedSharedServiceImpl implements
-                                                        DeliveryOrderNotSupportedSharedService {
+public class DeliveryOrderNotSupportedSharedServiceImpl
+        implements DeliveryOrderNotSupportedSharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

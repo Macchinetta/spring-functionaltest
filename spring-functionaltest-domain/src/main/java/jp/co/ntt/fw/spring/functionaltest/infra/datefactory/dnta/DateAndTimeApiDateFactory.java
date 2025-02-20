@@ -63,18 +63,17 @@ public class DateAndTimeApiDateFactory {
     }
 
     public static OffsetDateTime newOffsetDateTime() {
-        return OffsetDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND,
-                NANO_OF_SECOND, ZONE_OFFSET);
+        return OffsetDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_OF_SECOND,
+                ZONE_OFFSET);
     }
 
     public static ZonedDateTime newZonedDateTime() {
-        return ZonedDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND,
-                NANO_OF_SECOND, ZONE_ID);
+        return ZonedDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_OF_SECOND, ZONE_ID);
     }
 
     public static ZonedDateTime newSpecifiedZonedDateTime(String zone) {
-        return ZonedDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND,
-                NANO_OF_SECOND, ZoneId.of(zone));
+        return ZonedDateTime.of(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_OF_SECOND,
+                ZoneId.of(zone));
     }
 
     public static JapaneseDate newSpecifiedJapaneseDate() {

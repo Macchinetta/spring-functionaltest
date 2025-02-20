@@ -19,8 +19,7 @@ import org.terasoluna.gfw.common.exception.ResultMessagesNotificationException;
 import org.terasoluna.gfw.common.message.ResultMessage;
 import org.terasoluna.gfw.common.message.ResultMessages;
 
-public class InvalidRequestException extends
-                                     ResultMessagesNotificationException {
+public class InvalidRequestException extends ResultMessagesNotificationException {
 
     /**  */
     private static final long serialVersionUID = 1L;

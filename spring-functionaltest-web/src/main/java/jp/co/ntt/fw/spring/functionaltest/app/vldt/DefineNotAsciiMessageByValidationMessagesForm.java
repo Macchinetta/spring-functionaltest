@@ -20,8 +20,7 @@ import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-public class DefineNotAsciiMessageByValidationMessagesForm implements
-                                                           Serializable {
+public class DefineNotAsciiMessageByValidationMessagesForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

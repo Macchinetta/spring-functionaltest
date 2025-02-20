@@ -43,43 +43,40 @@ public class UploadFileDownloadView extends AbstractFileDownloadView {
     File uploadDirectory;
 
     @Override
-    protected InputStream getInputStream(Map<String, Object> model,
-            HttpServletRequest request) throws IOException {
+    protected InputStream getInputStream(Map<String, Object> model, HttpServletRequest request)
+            throws IOException {
         UploadFile uploadFile = extractUploadFile(model);
         InputStream downloadStream;
         if (uploadFile.getContent() != null) {
             downloadStream = new ByteArrayInputStream(uploadFile.getContent());
         } else {
             Path uploadDirectoryPath = Paths.get(uploadDirectory.getPath());
-            Path uploadFilePath = Paths.get(uploadDirectory.getPath(),
-                    uploadFile.getFileId());
+            Path uploadFilePath = Paths.get(uploadDirectory.getPath(), uploadFile.getFileId());
 
-            if (0 != uploadDirectoryPath.compareTo(uploadFilePath.normalize()
-                    .getParent())) {
-                throw new FileNotFoundException("File not found : "
-                        + uploadFilePath.toString());
+            if (0 != uploadDirectoryPath.compareTo(uploadFilePath.normalize().getParent())) {
+                throw new FileNotFoundException("File not found : " + uploadFilePath.toString());
             }
 
-            downloadStream = new FileSystemResource(new File(uploadDirectory, uploadFile
-                    .getFileId())).getInputStream();
+            downloadStream =
+                    new FileSystemResource(new File(uploadDirectory, uploadFile.getFileId()))
+                            .getInputStream();
         }
         return downloadStream;
     }
 
     @Override
-    protected void addResponseHeader(Map<String, Object> model,
-            HttpServletRequest request, HttpServletResponse response) {
+    protected void addResponseHeader(Map<String, Object> model, HttpServletRequest request,
+            HttpServletResponse response) {
         UploadFile downloadFile = extractUploadFile(model);
         String downloadFileName;
         try {
-            downloadFileName = URLEncoder.encode(new File(downloadFile
-                    .getFileName()).getName(), "UTF-8");
+            downloadFileName =
+                    URLEncoder.encode(new File(downloadFile.getFileName()).getName(), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException(e);
         }
         setContentType(downloadFile.getContentType());
-        response.setHeader("Content-Disposition", "attachment; filename="
-                + downloadFileName);
+        response.setHeader("Content-Disposition", "attachment; filename=" + downloadFileName);
 
     }
 

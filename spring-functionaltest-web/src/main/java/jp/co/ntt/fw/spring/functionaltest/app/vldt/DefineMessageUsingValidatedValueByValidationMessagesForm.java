@@ -16,16 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-public class DefineMessageUsingValidatedValueByValidationMessagesForm implements
-                                                                      Serializable {
+public class DefineMessageUsingValidatedValueByValidationMessagesForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @NotEmpty
     @Pattern(regexp = "[0-9]+")
     private String telNumber;
 

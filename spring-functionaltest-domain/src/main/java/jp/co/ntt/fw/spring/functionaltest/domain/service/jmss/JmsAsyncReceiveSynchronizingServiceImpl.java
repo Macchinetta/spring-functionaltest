@@ -37,8 +37,8 @@ import org.terasoluna.gfw.common.exception.ExceptionLogger;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Service
-public class JmsAsyncReceiveSynchronizingServiceImpl implements
-                                                     JmsAsyncReceiveSynchronizingService {
+public class JmsAsyncReceiveSynchronizingServiceImpl
+        implements JmsAsyncReceiveSynchronizingService {
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
 
@@ -84,21 +84,20 @@ public class JmsAsyncReceiveSynchronizingServiceImpl implements
         latchMap.clear();
         Path uploadTemporaryDirectoryPath = Paths.get(temporaryDirectory);
         if (Files.exists(uploadTemporaryDirectoryPath)) {
-            Files.walkFileTree(uploadTemporaryDirectoryPath,
-                    new SimpleFileVisitor<Path>() {
-                        @Override
-                        public FileVisitResult visitFile(Path path,
-                                BasicFileAttributes attributes) throws IOException {
-                            Files.delete(path);
-                            return FileVisitResult.CONTINUE;
-                        }
+            Files.walkFileTree(uploadTemporaryDirectoryPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path path, BasicFileAttributes attributes)
+                        throws IOException {
+                    Files.delete(path);
+                    return FileVisitResult.CONTINUE;
+                }
 
-                        @Override
-                        public FileVisitResult postVisitDirectory(Path path,
-                                IOException exception) throws IOException {
-                            return FileVisitResult.CONTINUE;
-                        }
-                    });
+                @Override
+                public FileVisitResult postVisitDirectory(Path path, IOException exception)
+                        throws IOException {
+                    return FileVisitResult.CONTINUE;
+                }
+            });
         }
     }
 
@@ -106,8 +105,7 @@ public class JmsAsyncReceiveSynchronizingServiceImpl implements
         CountDownLatch latch = latchMap.get(jmsTodoId);
         if (latch == null) {
             CountDownLatch newLatch = new CountDownLatch(1);
-            CountDownLatch existingLatch = latchMap.putIfAbsent(jmsTodoId,
-                    newLatch);
+            CountDownLatch existingLatch = latchMap.putIfAbsent(jmsTodoId, newLatch);
             latch = (existingLatch == null) ? newLatch : existingLatch;
         }
         return latch;

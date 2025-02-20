@@ -32,8 +32,8 @@ public class AddPrefixJndiDestinationResolver extends JndiDestinationResolver {
     private static final String TOPIC_NAME_PREFIX = "jms/topic/";
 
     @Override
-    public Destination resolveDestinationName(Session session,
-            String destinationName, boolean pubSubDomain) throws JMSException {
+    public Destination resolveDestinationName(Session session, String destinationName,
+            boolean pubSubDomain) throws JMSException {
         if (destinationName != null) {
             if (pubSubDomain) {
                 destinationName = TOPIC_NAME_PREFIX + destinationName;
@@ -45,7 +45,6 @@ public class AddPrefixJndiDestinationResolver extends JndiDestinationResolver {
             }
         }
 
-        return super.resolveDestinationName(session, destinationName,
-                pubSubDomain);
+        return super.resolveDestinationName(session, destinationName, pubSubDomain);
     }
 }

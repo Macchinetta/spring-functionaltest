@@ -37,8 +37,7 @@ public class VLDT0202001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated ConfirmForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated ConfirmForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/correlationValidationByBeanValiidationView";

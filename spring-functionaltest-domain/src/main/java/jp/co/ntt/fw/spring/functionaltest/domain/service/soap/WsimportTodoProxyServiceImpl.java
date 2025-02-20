@@ -25,24 +25,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo;
 import jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.TodoWebService;
+import jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.TodoWebService_Service;
 
 @Service
 public class WsimportTodoProxyServiceImpl implements WsimportTodoProxyService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            WsimportTodoProxyServiceImpl.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(WsimportTodoProxyServiceImpl.class);
 
     @Inject
     protected TodoWebService wsimportTodoWebService;
 
     @Override
-    public List<jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo> getTodos() {
-
-        List<jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo> todos = wsimportTodoWebService
-                .getTodos();
+    public List<Todo> getTodosJaxWsPortProxy() {
+        // JaxWsPortProxyFactoryBeanを使用してアクセス（wsimportで出力したソースを一部使用:WebService, Model）
+        List<Todo> todos = wsimportTodoWebService.getTodos();
 
         loggingHttpStatusCode(wsimportTodoWebService);
+        loggingHttpRespnseHeader(wsimportTodoWebService);
+
+        return todos;
+    }
+
+    @Override
+    public List<Todo> getTodosWsimport() {
+        // wsdlファイルをもとに、wsimportで生成したクラスを使いアクセス
+        TodoWebService_Service service = new TodoWebService_Service();
+        TodoWebService todoWebServicePort = service.getTodoWebPort();
+        List<Todo> todos = todoWebServicePort.getTodos();
+
+        loggingHttpStatusCode(todoWebServicePort);
+        loggingHttpRespnseHeader(todoWebServicePort);
 
         return todos;
     }
@@ -52,8 +67,17 @@ public class WsimportTodoProxyServiceImpl implements WsimportTodoProxyService {
      * @param tws Web Service Proxyオブジェクト
      */
     private void loggingHttpStatusCode(TodoWebService tws) {
-        logger.info("httpStatusCode={}", ((BindingProvider) tws)
-                .getResponseContext().get(MessageContext.HTTP_RESPONSE_CODE));
+        logger.info("httpStatusCode={}", ((BindingProvider) tws).getResponseContext()
+                .get(MessageContext.HTTP_RESPONSE_CODE));
     }
 
+    /**
+     * HTTPレスポンスヘッダをログ出力する。
+     *
+     * @param tws Web Service Proxyオブジェクト
+     */
+    private void loggingHttpRespnseHeader(TodoWebService tws) {
+        logger.info("RespnseHeader={}", ((BindingProvider) tws).getResponseContext()
+                .get(MessageContext.HTTP_RESPONSE_HEADERS));
+    }
 }

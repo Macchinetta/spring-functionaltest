@@ -15,13 +15,13 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import org.terasoluna.gfw.common.codelist.ExistInCodeList;
 
 public class ClAuthoritiesForm {
 
-    @NotNull
+    @NotEmpty
     @ExistInCodeList(codeListId = "CL_AUTHORITIES")
     private String id;
 

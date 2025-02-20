@@ -27,13 +27,13 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 public class AjaxAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            AjaxAuthenticationEntryPoint.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(AjaxAuthenticationEntryPoint.class);
 
     @Override
-    public void commence(HttpServletRequest request,
-            HttpServletResponse response,
-            org.springframework.security.core.AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            org.springframework.security.core.AuthenticationException authException)
+            throws IOException, ServletException {
 
         logger.info("Execute AjaxAuthenticationEntryPoint. RequestetURI is {} ",
                 request.getRequestURI());

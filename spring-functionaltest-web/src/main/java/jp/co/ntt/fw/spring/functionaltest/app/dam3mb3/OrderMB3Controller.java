@@ -61,8 +61,7 @@ public class OrderMB3Controller {
     @RequestMapping(value = "detail/{id}")
     public String detail(@PathVariable("id") Integer id, Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOne(id.intValue());
-        OrderMB3Form orderMB3Form = orderMB3Helper.chengeOrderMB3ToForm(
-                orderMB3);
+        OrderMB3Form orderMB3Form = orderMB3Helper.chengeOrderMB3ToForm(orderMB3);
         model.addAttribute("orderMB3Form", orderMB3Form);
         return "dam3mb3/orderUpdateForm";
     }
@@ -73,8 +72,8 @@ public class OrderMB3Controller {
     }
 
     @RequestMapping(value = "detailCondSts/{id}/{sts}")
-    public String detailCondSts(@PathVariable("id") Integer id,
-            @PathVariable("sts") String sts, Model model) {
+    public String detailCondSts(@PathVariable("id") Integer id, @PathVariable("sts") String sts,
+            Model model) {
         OrderMB3 orderMB3 = orderMB3Service.findOneCondSts(id.intValue(), sts);
         model.addAttribute("order", orderMB3);
         return "dam3mb3/orderCompleteForm";
@@ -84,8 +83,7 @@ public class OrderMB3Controller {
     public String listPageMyBatis3(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
-        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(
-                pageable);
+        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(pageable);
         model.addAttribute("page", orderMB3List);
         return "dam3mb3/orderListPager";
     }
@@ -94,8 +92,7 @@ public class OrderMB3Controller {
     public String listPageMyBatis3Scroll(
             @PageableDefault(page = 0, size = 3, direction = Direction.DESC) Pageable pageable,
             Model model) {
-        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(
-                pageable);
+        Page<OrderMB3> orderMB3List = orderMB3Service.findPageMyBatis3(pageable);
         model.addAttribute("page", orderMB3List);
         return "dam3mb3/orderListPager";
     }
@@ -110,8 +107,8 @@ public class OrderMB3Controller {
     @RequestMapping(value = "showCatDetl", method = RequestMethod.GET, params = "catDisplay")
     public String getCategoryDetail(OrderMB3Form orderMB3Form, Model model) {
 
-        List<CategoryMB3> categories = orderMB3Service
-                .findAllCategoryByItemCode(orderMB3Form.getItemCode());
+        List<CategoryMB3> categories =
+                orderMB3Service.findAllCategoryByItemCode(orderMB3Form.getItemCode());
 
         model.addAttribute("catListFlag", true);
         model.addAttribute("catList", categories);
@@ -119,11 +116,10 @@ public class OrderMB3Controller {
     }
 
     @RequestMapping(value = "showCatDetl", method = RequestMethod.GET, params = "catDisplayLazy")
-    public String getCategoryDetailLazy(OrderMB3Form orderMB3Form,
-            Model model) {
+    public String getCategoryDetailLazy(OrderMB3Form orderMB3Form, Model model) {
 
-        List<CategoryMB3> categories = orderMB3Service
-                .findAllCategoryByItemCodeLazy(orderMB3Form.getItemCode());
+        List<CategoryMB3> categories =
+                orderMB3Service.findAllCategoryByItemCodeLazy(orderMB3Form.getItemCode());
 
         model.addAttribute("catListFlag", true);
         model.addAttribute("catList", categories);
@@ -151,8 +147,8 @@ public class OrderMB3Controller {
 
         model.addAttribute("searchItemCode", searchItemCode);
 
-        Page<OrderMB3> orderMB3List = orderMB3Service.findPageByItemcode(
-                orderMB3Form.getSearchItemCode(), pageable);
+        Page<OrderMB3> orderMB3List =
+                orderMB3Service.findPageByItemcode(orderMB3Form.getSearchItemCode(), pageable);
 
         model.addAttribute("page", orderMB3List);
         return "dam3mb3/orderPageList";

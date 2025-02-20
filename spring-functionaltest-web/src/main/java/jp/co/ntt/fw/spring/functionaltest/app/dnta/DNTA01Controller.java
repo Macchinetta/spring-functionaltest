@@ -104,102 +104,91 @@ public class DNTA01Controller {
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowLocalDate")
     public String handleGetNowLocalDate(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowLocalDate());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowLocalDate());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowLocalTime")
     public String handleGetNowLocalTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowLocalTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowLocalTime());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNowLocalDateTime")
     public String handleGetNowLocalDateTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowLocalDateTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowLocalDateTime());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getSpecifiedDate")
     public String handleGetSpecifiedDate(DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getSpecifiedLocalDate(form.getYear(), form.getMonth(), form
-                        .getDay()));
+        model.addAttribute("resultDate", dateAndTimeApiService.getSpecifiedLocalDate(form.getYear(),
+                form.getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getSpecifiedTime")
     public String handleGetSpecifiedTime(DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getSpecifiedLocalTime(form.getHour(), form.getMinute(), form
-                        .getSecond()));
+        model.addAttribute("resultDate", dateAndTimeApiService.getSpecifiedLocalTime(form.getHour(),
+                form.getMinute(), form.getSecond()));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getSpecifiedDateTime")
     public String handleGetSpecifiedDateTime(DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getSpecifiedLocalDateTime(form.getYear(), form.getMonth(), form
-                        .getDay(), form.getHour(), form.getMinute(), form
-                                .getSecond()));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.getSpecifiedLocalDateTime(form.getYear(), form.getMonth(),
+                        form.getDay(), form.getHour(), form.getMinute(), form.getSecond()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getLastDateOfSpecifiedMonth")
-    public String handleGetLastDateOfSpecifiedMonth(DateForm form,
-            Model model) {
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getLastDateOfSpecifiedMonth")
+    public String handleGetLastDateOfSpecifiedMonth(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
-                .getLastDateOfSpecifiedMonth(form.getYear(), form.getMonth(),
-                        form.getDay()));
+                .getLastDateOfSpecifiedMonth(form.getYear(), form.getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getNextMondayOfSpecifiedDate")
-    public String handleGetNextMondayOfSpecifiedDate(DateForm form,
-            Model model) {
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getNextMondayOfSpecifiedDate")
+    public String handleGetNextMondayOfSpecifiedDate(DateForm form, Model model) {
         model.addAttribute("resultDate", dateAndTimeApiService
-                .getNextMondayOfSpecifiedMonth(form.getYear(), form.getMonth(),
-                        form.getDay()));
+                .getNextMondayOfSpecifiedMonth(form.getYear(), form.getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getOffsetTime")
     public String handleGetOffsetTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowOffsetTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowOffsetTime());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getOffsetDateTime")
     public String handleGetOffsetDateTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowOffsetDateTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowOffsetDateTime());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getZonedDateTime")
     public String handleGetZonedDateTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowZonedDateTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.getNowZonedDateTime());
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getDateTimeSpecifiedTimezoneByArea")
-    public String handleGetDateTimeSpecifiedTimezoneByArea(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowSpecifiedZonedDateTime(form.getZone()));
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getDateTimeSpecifiedTimezoneByArea")
+    public String handleGetDateTimeSpecifiedTimezoneByArea(DateForm form, Model model) {
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.getNowSpecifiedZonedDateTime(form.getZone()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "getdate", method = RequestMethod.GET, params = "getDateTimeSpecifiedTimezoneByTimeDifference")
-    public String handleGetDateTimeSpecifiedTimezoneByTimeDifference(
-            DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .getNowSpecifiedZonedDateTime(form.getZone()));
+    @RequestMapping(value = "getdate", method = RequestMethod.GET,
+            params = "getDateTimeSpecifiedTimezoneByTimeDifference")
+    public String handleGetDateTimeSpecifiedTimezoneByTimeDifference(DateForm form, Model model) {
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.getNowSpecifiedZonedDateTime(form.getZone()));
         return "dnta/showDateTime";
     }
 }

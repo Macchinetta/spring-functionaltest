@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -32,7 +33,7 @@ public class UserInfoUseBeanOutput implements Serializable {
     @Past
     private Date acceptDate;
 
-    @NotNull
+    @NotEmpty
     private String acceptMessage;
 
     @Valid

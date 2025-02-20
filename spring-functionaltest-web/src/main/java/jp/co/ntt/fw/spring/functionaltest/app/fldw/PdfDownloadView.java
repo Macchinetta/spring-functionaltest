@@ -49,20 +49,17 @@ import com.lowagie.text.pdf.PdfWriter;
 
 @Component
 public class PdfDownloadView extends AbstractPdfView {
-    private static final Logger logger = LoggerFactory.getLogger(
-            PdfDownloadView.class);
+    private static final Logger logger = LoggerFactory.getLogger(PdfDownloadView.class);
 
     @Inject
     JodaTimeDateFactory dateFactory;
 
     @Override
-    protected void buildPdfDocument(Map<String, Object> model,
-            Document document, PdfWriter writer, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // set output contents and embed the font
-        BaseFont bf = BaseFont.createFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H",
-                false);
+        BaseFont bf = BaseFont.createFont("HeiseiKakuGo-W5", "UniJIS-UCS2-H", false);
         Font normalFont = new Font(bf, 12);
         Font titleFont = new Font(bf, 18);
         Font headerFont = new Font(bf, 24);
@@ -72,7 +69,8 @@ public class PdfDownloadView extends AbstractPdfView {
         header.setAlignment(Element.ALIGN_CENTER);
         document.setHeader(header);
 
-        HeaderFooter footer = new HeaderFooter(new Phrase("-", headerFont), new Phrase("-", headerFont));
+        HeaderFooter footer =
+                new HeaderFooter(new Phrase("-", headerFont), new Phrase("-", headerFont));
         footer.setAlignment(Element.ALIGN_CENTER);
         document.setFooter(footer);
 
@@ -91,44 +89,41 @@ public class PdfDownloadView extends AbstractPdfView {
         // parent table
         PdfPTable parentTable = new PdfPTable(2);
         parentTable.setWidthPercentage(100.0f);
-        int relativeWidth[] = { 5, 95 };
+        int relativeWidth[] = {5, 95};
         parentTable.setWidths(relativeWidth);
         parentTable.getDefaultCell().setBorder(0000);
 
         // 申込日 table
         PdfPTable applicationDateTable = new PdfPTable(12);
-        float TableWidth[] = { mm2pixel(20.0f), mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f) };
+        float TableWidth[] = {mm2pixel(20.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
+                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
+                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f)};
         applicationDateTable.setTotalWidth(TableWidth);
         applicationDateTable.setLockedWidth(true);
-        applicationDateTable.getDefaultCell().setHorizontalAlignment(
-                Element.ALIGN_CENTER);
-        applicationDateTable.getDefaultCell().setVerticalAlignment(
-                Element.ALIGN_MIDDLE);
+        applicationDateTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        applicationDateTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         applicationDateTable.getDefaultCell().setBorder(0000);
         applicationDateTable.setHorizontalAlignment(Element.ALIGN_LEFT);
         applicationDateTable.addCell(new Phrase("お申込日", normalFont));
 
         // 年月日
-        PdfPCell applicationYearCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getYear()), normalFont));
+        PdfPCell applicationYearCell = new PdfPCell(
+                new Phrase(Integer.toString(dateFactory.newDateTime().getYear()), normalFont));
         applicationYearCell.setColspan(4);
         applicationYearCell.setBorder(0);
         applicationYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationYearCell);
         applicationDateTable.addCell(new Phrase("年", normalFont));
-        PdfPCell applicationMonthCell = new PdfPCell(new Phrase(Integer
-                .toString(dateFactory.newDateTime()
-                        .getMonthOfYear()), normalFont));
+        PdfPCell applicationMonthCell = new PdfPCell(new Phrase(
+                Integer.toString(dateFactory.newDateTime().getMonthOfYear()), normalFont));
         applicationMonthCell.setColspan(2);
         applicationMonthCell.setBorder(0);
         applicationMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         applicationDateTable.addCell(applicationMonthCell);
         applicationDateTable.addCell(new Phrase("月", normalFont));
-        PdfPCell applicationDayCell = new PdfPCell(new Phrase(Integer.toString(
-                dateFactory.newDateTime().getDayOfMonth()), normalFont));
+        PdfPCell applicationDayCell =
+                new PdfPCell(new Phrase(Integer.toString(dateFactory.newDateTime().getDayOfMonth()),
+                        normalFont));
         applicationDayCell.setColspan(2);
         applicationDayCell.setBorder(0);
         applicationDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -161,49 +156,42 @@ public class PdfDownloadView extends AbstractPdfView {
 
         // name and address table
         PdfPTable nameAndAddressTable = new PdfPTable(2);
-        float nameAndAddressTableWidth[] = { mm2pixel(20.0f), mm2pixel(
-                120.0f) };
+        float nameAndAddressTableWidth[] = {mm2pixel(20.0f), mm2pixel(120.0f)};
         nameAndAddressTable.setTotalWidth(nameAndAddressTableWidth);
         nameAndAddressTable.setLockedWidth(true);
         nameAndAddressTable.getDefaultCell().setPadding(2.0f);
         nameAndAddressTable.getDefaultCell().setBorderWidth(1.5f);
-        nameAndAddressTable.getDefaultCell().setHorizontalAlignment(
-                Element.ALIGN_CENTER);
-        nameAndAddressTable.getDefaultCell().setVerticalAlignment(
-                Element.ALIGN_MIDDLE);
+        nameAndAddressTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        nameAndAddressTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         nameAndAddressTable.getDefaultCell().setFixedHeight(60.0f);
 
         nameAndAddressTable.setHorizontalAlignment(Element.ALIGN_LEFT);
 
         nameAndAddressTable.addCell(new Phrase("お名前", normalFont));
 
-        nameAndAddressTable.addCell(new Phrase((String) (model.get(
-                "name")), normalFont));
+        nameAndAddressTable.addCell(new Phrase((String) (model.get("name")), normalFont));
 
         nameAndAddressTable.addCell(new Phrase("ご住所", normalFont));
 
-        nameAndAddressTable.addCell(new Phrase(String.valueOf(model.get(
-                "address")), normalFont));
+        nameAndAddressTable.addCell(new Phrase(String.valueOf(model.get("address")), normalFont));
 
         nameAndAddressTable.addCell(new Phrase("生年月日", normalFont));
 
         // 生年月日 table
         PdfPTable birthDateTable = new PdfPTable(11);
-        float birthDateTableWidth[] = { mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
-                mm2pixel(7.0f) };
+        float birthDateTableWidth[] = {mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
+                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f),
+                mm2pixel(7.0f), mm2pixel(7.0f), mm2pixel(7.0f)};
         birthDateTable.setTotalWidth(birthDateTableWidth);
         birthDateTable.setLockedWidth(true);
-        birthDateTable.getDefaultCell().setHorizontalAlignment(
-                Element.ALIGN_CENTER);
-        birthDateTable.getDefaultCell().setVerticalAlignment(
-                Element.ALIGN_MIDDLE);
+        birthDateTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        birthDateTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         birthDateTable.getDefaultCell().setBorder(0000);
 
         PdfPCell birthdateYearCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd")).getYear()), normalFont));
+                new DateTime(DateUtils.parseDate((String) model.get("birthdate"), "yyyyMMdd"))
+                        .getYear()),
+                normalFont));
         birthdateYearCell.setColspan(4);
         birthdateYearCell.setBorder(0);
         birthdateYearCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -211,9 +199,9 @@ public class PdfDownloadView extends AbstractPdfView {
         birthDateTable.addCell(new Phrase("年", normalFont));
 
         PdfPCell birthdateMonthCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd"))
-                                .getMonthOfYear()), normalFont));
+                new DateTime(DateUtils.parseDate((String) model.get("birthdate"), "yyyyMMdd"))
+                        .getMonthOfYear()),
+                normalFont));
         birthdateMonthCell.setColspan(2);
         birthdateMonthCell.setBorder(0);
         birthdateMonthCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -221,9 +209,9 @@ public class PdfDownloadView extends AbstractPdfView {
         birthDateTable.addCell(new Phrase("月", normalFont));
 
         PdfPCell birthdateDayCell = new PdfPCell(new Phrase(String.valueOf(
-                new DateTime(DateUtils.parseDate((String) model.get(
-                        "birthdate"), "yyyyMMdd"))
-                                .getDayOfMonth()), normalFont));
+                new DateTime(DateUtils.parseDate((String) model.get("birthdate"), "yyyyMMdd"))
+                        .getDayOfMonth()),
+                normalFont));
         birthdateDayCell.setColspan(2);
         birthdateDayCell.setBorder(0);
         birthdateDayCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -280,8 +268,8 @@ public class PdfDownloadView extends AbstractPdfView {
         String filename = "日本語ファイル名.pdf";
         response.setContentType("application/pdf");
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-Disposition", "attachment; " + browser
-                .appendAndEncodeFilename(filename));
+        response.setHeader("Content-Disposition",
+                "attachment; " + browser.appendAndEncodeFilename(filename));
     }
 
     // mmを、PDF解像度のpixelに変換

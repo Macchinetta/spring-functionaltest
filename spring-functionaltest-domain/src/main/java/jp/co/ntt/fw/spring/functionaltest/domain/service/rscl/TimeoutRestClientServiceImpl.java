@@ -44,10 +44,9 @@ public class TimeoutRestClientServiceImpl implements TimeoutRestClientService {
 
         try {
             // 存在しないサーバへアクセスを試みさせて、タイムアウトを狙う。
-            URI targetUri = UriComponentsBuilder.fromUriString(
-                    this.notExistServerUri).buildAndExpand("test").toUri();
-            this.timeoutRestTemplate.getForObject(targetUri,
-                    UserResource.class);
+            URI targetUri = UriComponentsBuilder.fromUriString(this.notExistServerUri)
+                    .buildAndExpand("test").toUri();
+            this.timeoutRestTemplate.getForObject(targetUri, UserResource.class);
 
         } catch (ResourceAccessException e) {
             throw e;
@@ -60,8 +59,7 @@ public class TimeoutRestClientServiceImpl implements TimeoutRestClientService {
         try {
             // 処理返却までにreadTimeout + 1秒sleepするRESTAPIを呼んで、リードタイムアウトを狙う。
             URI targetUri = this.getUri(this.uri, "readTimeout");
-            this.timeoutRestTemplate.getForObject(targetUri,
-                    UserResource.class);
+            this.timeoutRestTemplate.getForObject(targetUri, UserResource.class);
 
         } catch (ResourceAccessException e) {
             throw e;
@@ -76,7 +74,6 @@ public class TimeoutRestClientServiceImpl implements TimeoutRestClientService {
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 }

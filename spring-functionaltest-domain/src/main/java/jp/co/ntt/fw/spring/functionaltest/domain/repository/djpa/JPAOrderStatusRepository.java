@@ -19,8 +19,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderStatus;
 
-public interface JPAOrderStatusRepository extends
-                                          JpaRepository<JPAOrderStatus, String> {
+public interface JPAOrderStatusRepository extends JpaRepository<JPAOrderStatus, String> {
 
     JPAOrderStatus findByStatusName(String statusName);
 

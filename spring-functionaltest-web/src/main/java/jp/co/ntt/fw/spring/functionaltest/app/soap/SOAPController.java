@@ -18,9 +18,16 @@ package jp.co.ntt.fw.spring.functionaltest.app.soap;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * index page controller
+ */
 @Controller
 public class SOAPController {
 
+    /**
+     * Display index page. (SoapのIndexページに対応)
+     * @return index page
+     */
     @RequestMapping("/")
     public String handle() {
         return "soap/index";

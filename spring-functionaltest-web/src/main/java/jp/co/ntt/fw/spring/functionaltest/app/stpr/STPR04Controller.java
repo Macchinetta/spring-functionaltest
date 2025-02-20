@@ -44,46 +44,38 @@ public class STPR04Controller {
         return "stpr/normalizerInput";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFD" })
-    public String handle0401001Normalizer(Model model,
-            StringProcessing04Form form) {
+    @RequestMapping(value = "normalizer", method = RequestMethod.POST,
+            params = {"normalizationForm=NFD"})
+    public String handle0401001Normalizer(Model model, StringProcessing04Form form) {
 
-        setNormalizationAttribute(model, form.getTargetValue(),
-                Normalizer.Form.NFD);
+        setNormalizationAttribute(model, form.getTargetValue(), Normalizer.Form.NFD);
 
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFC" })
-    public String handle0402001Normalizer(Model model,
-            StringProcessing04Form form) {
+    @RequestMapping(value = "normalizer", method = RequestMethod.POST,
+            params = {"normalizationForm=NFC"})
+    public String handle0402001Normalizer(Model model, StringProcessing04Form form) {
 
-        setNormalizationAttribute(model, form.getTargetValue(),
-                Normalizer.Form.NFC);
+        setNormalizationAttribute(model, form.getTargetValue(), Normalizer.Form.NFC);
 
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFKD" })
-    public String handle0403001Normalizer(Model model,
-            StringProcessing04Form form) {
+    @RequestMapping(value = "normalizer", method = RequestMethod.POST,
+            params = {"normalizationForm=NFKD"})
+    public String handle0403001Normalizer(Model model, StringProcessing04Form form) {
 
-        setNormalizationAttribute(model, form.getTargetValue(),
-                Normalizer.Form.NFKD);
+        setNormalizationAttribute(model, form.getTargetValue(), Normalizer.Form.NFKD);
 
         return "stpr/normalizerResult";
     }
 
-    @RequestMapping(value = "normalizer", method = RequestMethod.POST, params = {
-            "normalizationForm=NFKC" })
-    public String handle0404001Normalizer(Model model,
-            StringProcessing04Form form) {
+    @RequestMapping(value = "normalizer", method = RequestMethod.POST,
+            params = {"normalizationForm=NFKC"})
+    public String handle0404001Normalizer(Model model, StringProcessing04Form form) {
 
-        setNormalizationAttribute(model, form.getTargetValue(),
-                Normalizer.Form.NFKC);
+        setNormalizationAttribute(model, form.getTargetValue(), Normalizer.Form.NFKC);
 
         return "stpr/normalizerResult";
     }
@@ -91,8 +83,7 @@ public class STPR04Controller {
     private void setNormalizationAttribute(Model model, String targetValue,
             Normalizer.Form normalizationForm) {
         model.addAttribute("normalizationForm", normalizationForm.name());
-        model.addAttribute("resultString", Normalizer.normalize(targetValue,
-                normalizationForm));
+        model.addAttribute("resultString", Normalizer.normalize(targetValue, normalizationForm));
     }
 
 }

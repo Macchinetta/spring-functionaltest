@@ -45,8 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.MemberService;
 @RequestMapping("synchronism/delay")
 public class SSMN0601001DelayController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            SSMN0601001DelayController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SSMN0601001DelayController.class);
 
     @Inject
     Mapper beanMapper;
@@ -74,8 +73,8 @@ public class SSMN0601001DelayController {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "confirm")
-    public String createMemberConfirm(@Validated({ Personal.class,
-            Address.class, Other.class }) MemberForm form,
+    public String createMemberConfirm(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
             BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMember();
@@ -85,12 +84,12 @@ public class SSMN0601001DelayController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createMember(@Validated({ Personal.class, Address.class,
-            Other.class }) MemberForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) throws InterruptedException {
+    public String createMember(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
+            BindingResult result, RedirectAttributes redirectAttributes)
+            throws InterruptedException {
         if (result.hasErrors()) {
-            throw new InvalidRequestException(ResultMessages.error().add(
-                    "e.sf.cmmn.8002"));
+            throw new InvalidRequestException(ResultMessages.error().add("e.sf.fw.8002"));
         }
 
         logger.info(
@@ -109,8 +108,7 @@ public class SSMN0601001DelayController {
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success().add(
-                "i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add("i.sf.sm.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         logger.info(

@@ -24,8 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import jp.co.ntt.fw.spring.functionaltest.selenium.Page;
 import jp.co.ntt.fw.spring.functionaltest.selenium.WebElementOperations;
 
-public class DeliveryOrderDetailsPage implements
-                                      Page<DeliveryOrderDetailsPage> {
+public class DeliveryOrderDetailsPage implements Page<DeliveryOrderDetailsPage> {
 
     public WebDriver getDriver() {
         return driver;
@@ -143,21 +142,21 @@ public class DeliveryOrderDetailsPage implements
     public String getItemCodeValue(Integer itemNum) {
         String value = "";
         switch (itemNum) {
-        case 1:
-            value = WebElementOperations.getElementTextValue(itemCode1);
-            break;
-        case 2:
-            value = WebElementOperations.getElementTextValue(itemCode2);
-            break;
-        case 3:
-            value = WebElementOperations.getElementTextValue(itemCode3);
-            break;
-        case 4:
-            value = WebElementOperations.getElementTextValue(itemCode4);
-            break;
+            case 1:
+                value = WebElementOperations.getElementTextValue(itemCode1);
+                break;
+            case 2:
+                value = WebElementOperations.getElementTextValue(itemCode2);
+                break;
+            case 3:
+                value = WebElementOperations.getElementTextValue(itemCode3);
+                break;
+            case 4:
+                value = WebElementOperations.getElementTextValue(itemCode4);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         return value;
@@ -232,8 +231,7 @@ public class DeliveryOrderDetailsPage implements
     }
 
     public void setCompletionDateTime(String completionDateTime) {
-        WebElementOperations.setValue(this.completionDateTime,
-                completionDateTime);
+        WebElementOperations.setValue(this.completionDateTime, completionDateTime);
     }
 
     public void setDeliveryDriver(String deliveryDriver) {

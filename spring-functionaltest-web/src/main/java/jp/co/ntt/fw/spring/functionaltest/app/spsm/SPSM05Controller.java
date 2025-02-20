@@ -31,8 +31,8 @@ public class SPSM05Controller {
     }
 
     @RequestMapping(value = "0501/001", params = "loginSuccess")
-    public String handle0501001LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle0501001LoginSuccess(@AuthenticationPrincipal User userDetails,
+            Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0501/001");
         return "spsm/topForDefault";
@@ -51,8 +51,8 @@ public class SPSM05Controller {
     }
 
     @RequestMapping(value = "0501/002", params = "loginSuccess")
-    public String handle0501002LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle0501002LoginSuccess(@AuthenticationPrincipal User userDetails,
+            Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0501/002");
         return "spsm/topForDefault";

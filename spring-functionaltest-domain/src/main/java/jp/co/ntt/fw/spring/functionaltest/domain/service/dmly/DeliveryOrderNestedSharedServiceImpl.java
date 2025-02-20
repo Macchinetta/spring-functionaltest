@@ -28,8 +28,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(propagation = Propagation.NESTED)
 @Service
-public class DeliveryOrderNestedSharedServiceImpl implements
-                                                  DeliveryOrderNestedSharedService {
+public class DeliveryOrderNestedSharedServiceImpl implements DeliveryOrderNestedSharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

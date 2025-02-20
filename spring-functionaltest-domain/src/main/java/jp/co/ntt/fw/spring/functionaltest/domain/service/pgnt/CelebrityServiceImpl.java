@@ -39,14 +39,13 @@ public class CelebrityServiceImpl implements CelebrityService {
     CelebrityRepository celebrityRepository;
 
     @Override
-    public Page<Celebrity> getNames(CelebritySearchCriteria criteria,
-            Pageable pageable) {
+    public Page<Celebrity> getNames(CelebritySearchCriteria criteria, Pageable pageable) {
 
         List<Celebrity> names = null;
-        PageableCelebritySearchCriteria celebritySearchCriteria = new PageableCelebritySearchCriteria(criteria, pageable);
+        PageableCelebritySearchCriteria celebritySearchCriteria =
+                new PageableCelebritySearchCriteria(criteria, pageable);
 
-        long total = celebrityRepository.countByCriteria(
-                celebritySearchCriteria);
+        long total = celebrityRepository.countByCriteria(celebritySearchCriteria);
 
         if (0 < total) {
             names = celebrityRepository.findPage(celebritySearchCriteria);

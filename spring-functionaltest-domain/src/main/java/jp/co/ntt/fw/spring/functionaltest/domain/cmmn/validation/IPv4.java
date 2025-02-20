@@ -34,8 +34,8 @@ import javax.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.IPv4.List;
 
 @Documented
-@Constraint(validatedBy = { IPv4Validator.class })
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Constraint(validatedBy = {IPv4Validator.class})
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 public @interface IPv4 {
@@ -47,8 +47,7 @@ public @interface IPv4 {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

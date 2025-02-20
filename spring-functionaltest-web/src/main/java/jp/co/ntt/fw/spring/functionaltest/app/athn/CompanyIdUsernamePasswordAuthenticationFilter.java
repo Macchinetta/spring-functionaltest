@@ -25,16 +25,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.CompanyIdUsernamePasswordAuthenticationToken;
 
-public class CompanyIdUsernamePasswordAuthenticationFilter extends
-                                                           UsernamePasswordAuthenticationFilter {
+public class CompanyIdUsernamePasswordAuthenticationFilter
+        extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
             HttpServletResponse response) throws AuthenticationException {
 
         if (!request.getMethod().equals("POST")) {
-            throw new AuthenticationServiceException("Authentication method not supported: "
-                    + request.getMethod());
+            throw new AuthenticationServiceException(
+                    "Authentication method not supported: " + request.getMethod());
         }
 
         // Obtain UserName, Password, CompanyId
@@ -50,7 +50,8 @@ public class CompanyIdUsernamePasswordAuthenticationFilter extends
             // このハードコードは残しても問題ないと判断したためSonarQube指摘は未対応です。
             password = "";
         }
-        CompanyIdUsernamePasswordAuthenticationToken authRequest = new CompanyIdUsernamePasswordAuthenticationToken(username, password, companyId);
+        CompanyIdUsernamePasswordAuthenticationToken authRequest =
+                new CompanyIdUsernamePasswordAuthenticationToken(username, password, companyId);
 
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);

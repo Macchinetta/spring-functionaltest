@@ -19,7 +19,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAOrderForCommonCondition;
 
-public interface JPAOrderForCommonConditionRepository extends
-                                                      JpaRepository<JPAOrderForCommonCondition, Integer> {
+public interface JPAOrderForCommonConditionRepository
+        extends JpaRepository<JPAOrderForCommonCondition, Integer> {
 
 }

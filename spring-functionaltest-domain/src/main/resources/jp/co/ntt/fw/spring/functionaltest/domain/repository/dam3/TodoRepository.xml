@@ -1,444 +1,437 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository">
 
-  <resultMap id="todoCategoryResultMap" type="CategoryMB3">
-    <result property="categoryId" column="category_id" />
-    <result property="name" column="name" />
-  </resultMap>
+    <resultMap id="todoCategoryResultMap" type="CategoryMB3">
+        <result property="categoryId" column="category_id" />
+        <result property="name" column="name" />
+    </resultMap>
 
-  <resultMap id="todoResultMap" type="TodoMB3">
-    <result property="todoId" column="todo_id" />
-    <result property="todoTitle" column="todo_title" />
-    <!-- <result property="todoCategory" column="category_id" /> -->
-    <result property="finished" column="finished" />
-    <result property="createdAt" column="created_at" />
-    <result property="completeAt" column="complete_at" />
-    <result property="desc1" column="desc1" />
-    <result property="desc2" column="desc2" />
-    <association property="category" column="category_id" javaType="CategoryMB3"
-      select="findByTodoCategoryId" />
-  </resultMap>
+    <resultMap id="todoResultMap" type="TodoMB3">
+        <result property="todoId" column="todo_id" />
+        <result property="todoTitle" column="todo_title" />
+        <!-- <result property="todoCategory" column="category_id" /> -->
+        <result property="finished" column="finished" />
+        <result property="createdAt" column="created_at" />
+        <result property="completeAt" column="complete_at" />
+        <result property="desc1" column="desc1" />
+        <result property="desc2" column="desc2" />
+        <association property="category" column="category_id" javaType="CategoryMB3"
+            select="findByTodoCategoryId" />
+    </resultMap>
 
-  <resultMap id="todoResultMapForPostgres" type="TodoMB3">
-    <result property="todoId" column="todo_id" />
-    <result property="todoTitle" column="todo_title" />
-    <!-- <result property="todoCategory" column="category_id" /> -->
-    <result property="finished" column="finished" />
-    <result property="createdAt" column="created_at" />
-    <result property="completeAt" column="complete_at" />
-    <result property="desc1" column="desc1" typeHandler="BlobInputStreamTypeHandlerForPostgres" />
-    <result property="desc2" column="desc2" typeHandler="ClobReaderTypeHandlerForPostgres" />
-    <association property="category" column="category_id" javaType="CategoryMB3"
-      select="findByTodoCategoryId" />
-  </resultMap>
+    <resultMap id="todoResultMapForPostgres" type="TodoMB3">
+        <result property="todoId" column="todo_id" />
+        <result property="todoTitle" column="todo_title" />
+        <!-- <result property="todoCategory" column="category_id" /> -->
+        <result property="finished" column="finished" />
+        <result property="createdAt" column="created_at" />
+        <result property="completeAt" column="complete_at" />
+        <result property="desc1" column="desc1" typeHandler="BlobInputStreamTypeHandlerForPostgres" />
+        <result property="desc2" column="desc2" typeHandler="ClobReaderTypeHandlerForPostgres" />
+        <association property="category" column="category_id" javaType="CategoryMB3"
+            select="findByTodoCategoryId" />
+    </resultMap>
 
-  <select id="findAutoMapByTodoIdIncludeSelectPhrase" parameterType="String" resultType="AutoMapTodoMB3">
-    <bind name="todoId" value="_parameter" />
+    <select id="findAutoMapByTodoIdIncludeSelectPhrase" parameterType="String" resultType="AutoMapTodoMB3">
+        <bind name="todoId" value="_parameter" />
+        <include refid="selectPhrase" />
+        WHERE
+            todo_id = #{todoId}
+    </select>
+
+    <select id="findAsClauseByTodoId" parameterType="String" resultType="AsClauseTodoMB3">
+        <bind name="todoId" value="_parameter" />
+        SELECT
+            todo_id AS "todoNum",
+            category_id AS "catCode",
+            todo_title AS "todoName",
+            finished AS "status",
+            created_at AS "originDate",
+            version AS "ver"
+        FROM
+            t_todo
+        WHERE
+            todo_id = #{todoId}
+    </select>
+
+
+    <select id="findByTodoCategoryId" parameterType="String" resultMap="todoCategoryResultMap">
+        <bind name="categoryId" value="_parameter" />
+        SELECT
+            category_id,
+            name FROM m_todo_cat
+        WHERE
+            category_id = #{categoryId}
+    </select>
+
+    <select id="findAllTodos" resultMap="todoResultMap" fetchSize="2">
+        SELECT
+            *
+        FROM
+            t_todo
+    </select>
+
+    <select id="findAllTodos" resultMap="todoResultMapForPostgres" fetchSize="2" databaseId="postgres">
+        SELECT
+            *
+        FROM
+            t_todo
+    </select>
+
+    <sql id="selectPhrase">
+        SELECT
+            todo_id,
+            category_id,
+            todo_title,
+            finished,
+            created_at,
+            version,
+            complete_at,
+            desc1,
+            desc2
+        FROM
+            t_todo
+    </sql>
+
+    <sql id="wherePhrase">
+        <where>
+            <if test="todoId != null">
+                AND book_id = #{bookId}
+            </if>
+            <!-- <if test="category != null and category.categoryId != null">
+                AND category_id = #{category.categoryId}
+            </if> -->
+            <if test="todoTitle != null">
+                AND todo_title = #{todoTitle}
+            </if>
+            <if test="finished != null">
+                AND finished = #{finished}
+            </if>
+            <if test="releaseDate != null">
+                AND created_at = #{createdAt}
+            </if>
+            <if test="version != null">
+                AND version = #{version}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findByTodoId" parameterType="String" resultMap="todoResultMap">
+        <bind name="todoId" value="_parameter" />
     <include refid="selectPhrase" />
-    WHERE
-    todo_id = #{todoId}
-  </select>
+        WHERE todo_id = #{todoId}
+    </select>
 
-  <select id="findAsClauseByTodoId" parameterType="String" resultType="AsClauseTodoMB3">
-    <bind name="todoId" value="_parameter" />
-    SELECT
-    todo_id AS "todoNum"
-    ,category_id AS "catCode"
-    ,todo_title AS "todoName"
-    ,finished AS
-    "status"
-    ,created_at AS "originDate"
-    ,version AS "ver"
-    FROM
-    t_todo
-    WHERE
-    todo_id = #{todoId}
-  </select>
-
-
-  <select id="findByTodoCategoryId" parameterType="String" resultMap="todoCategoryResultMap">
-    <bind name="categoryId" value="_parameter" />
-    SELECT
-    category_id
-    ,name
-    FROM
-    m_todo_cat
-    WHERE
-    category_id = #{categoryId}
-  </select>
-
-  <select id="findAllTodos" resultMap="todoResultMap" fetchSize="2">
-    SELECT
-    *
-    FROM
-    t_todo
-  </select>
-
-  <select id="findAllTodos" resultMap="todoResultMapForPostgres" fetchSize="2" databaseId="postgres">
-    SELECT
-    *
-    FROM
-    t_todo
-  </select>
-
-  <sql id="selectPhrase">
-    SELECT
-    todo_id
-    ,category_id
-    ,todo_title
-    ,finished
-    ,created_at
-    ,version
-    ,complete_at
-    ,desc1
-    ,desc2
-    FROM
-    t_todo
-  </sql>
-
-  <sql id="wherePhrase">
-    <where>
-      <if test="todoId != null">
-        AND book_id = #{bookId}
-      </if>
-      <!-- <if test="category != null and category.categoryId != null"> AND category_id = #{category.categoryId} 
-        </if> -->
-      <if test="todoTitle != null">
-        AND todo_title = #{todoTitle}
-      </if>
-      <if test="finished != null">
-        AND finished = #{finished}
-      </if>
-      <if test="releaseDate != null">
-        AND created_at = #{createdAt}
-      </if>
-      <if test="version != null">
-        AND version = #{version}
-      </if>
-    </where>
-  </sql>
-
-  <select id="findByTodoId" parameterType="String" resultMap="todoResultMap">
-    <bind name="todoId" value="_parameter" />
+    <select id="findByTodoId" parameterType="String" resultMap="todoResultMapForPostgres"
+        databaseId="postgres">
+        <bind name="todoId" value="_parameter" />
     <include refid="selectPhrase" />
-    WHERE
-    todo_id = #{todoId}
-  </select>
+        WHERE todo_id = #{todoId}
+    </select>
 
-  <select id="findByTodoId" parameterType="String" resultMap="todoResultMapForPostgres"
-    databaseId="postgres">
-    <bind name="todoId" value="_parameter" />
-    <include refid="selectPhrase" />
-    WHERE
-    todo_id = #{todoId}
-  </select>
+    <insert id="insert" parameterType="TodoMB3">
+        INSERT INTO
+            t_todo
+        (
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            complete_at,
+            version,
+            desc1,
+            desc2
+        )
+        VALUES
+        (
+            #{todoId},
+            #{todoTitle},
+            #{category.categoryId},
+            #{finished},
+            #{createdAt},
+            #{completeAt},
+            #{version},
+            #{desc1},
+            #{desc2}
+        )
+    </insert>
 
-  <insert id="insert" parameterType="TodoMB3">
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    complete_at,
-    version,
-    desc1,
-    desc2
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{category.categoryId},
-    #{finished},
-    #{createdAt},
-    #{completeAt},
-    #{version},
-    #{desc1},
-    #{desc2}
-    )
-  </insert>
+    <insert id="insert" parameterType="TodoMB3" databaseId="postgres">
+        INSERT INTO
+            t_todo
+        (
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            complete_at,
+            version,
+            desc1,
+            desc2
+        )
+        VALUES
+            (
+                #{todoId},
+                #{todoTitle},
+                #{category.categoryId},
+                #{finished}, #{createdAt},
+                #{completeAt},
+                #{version},
+                #{desc1,typeHandler=BlobInputStreamTypeHandlerForPostgres},
+                #{desc2,typeHandler=ClobReaderTypeHandlerForPostgres}
+            )
+    </insert>
 
-  <insert id="insert" parameterType="TodoMB3" databaseId="postgres">
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    complete_at,
-    version,
-    desc1,
-    desc2
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{category.categoryId},
-    #{finished},
-    #{createdAt},
-    #{completeAt},
-    #{version},
-    #{desc1,typeHandler=BlobInputStreamTypeHandlerForPostgres},
-    #{desc2,typeHandler=ClobReaderTypeHandlerForPostgres}
-    )
-  </insert>
+    <insert id="createAndReturnBoolean" parameterType="TodoMB3">
+        INSERT INTO
+            t_todo
+        (
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        )
+        VALUES
+        (
+            #{todoId},
+            #{todoTitle},
+            #{finished},
+            #{createdAt},
+            #{version}
+        )
+    </insert>
 
-  <insert id="createAndReturnBoolean" parameterType="TodoMB3">
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{finished},
-    #{createdAt},
-    #{version}
-    )
-  </insert>
+    <insert id="createAndReturnInt" parameterType="TodoMB3">
+        INSERT INTO
+            t_todo
+        (
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        )
+        VALUES
+        (
+            #{todoId},
+            #{todoTitle},
+            #{finished},
+            #{createdAt},
+            #{version}
+        )
+    </insert>
 
-  <insert id="createAndReturnInt" parameterType="TodoMB3">
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{finished},
-    #{createdAt},
-    #{version}
-    )
-  </insert>
+    <insert id="createUsingAutoIncreament" parameterType="TodoMB3">
+        <!-- (1) -->
+        <selectKey keyProperty="todoId" resultType="string" order="BEFORE">
+            select
+                trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),'0000000000'))
+            from
+                t_todo
+        </selectKey>
 
-  <insert id="createUsingAutoIncreament" parameterType="TodoMB3">
-    <!-- (1) -->
-    <selectKey keyProperty="todoId" resultType="string" order="BEFORE">
-      select
-      trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),
-      '0000000000')) from t_todo
-    </selectKey>
+        <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="H2">
+            select
+                trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),'0000000000'))
+            from
+                t_todo
+        </selectKey>
 
-    <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="H2">
-      select
-      trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),
-      '0000000000')) from t_todo
-    </selectKey>
+        <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="postgres">
+            select
+                trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),'0000000000'))
+            from
+                t_todo
+        </selectKey>
 
-    <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="postgres">
-      select
-      trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),
-      '0000000000')) from t_todo
-    </selectKey>
+        <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="oracle">
+            select
+                trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),'0000000000'))
+            from
+                t_todo
+        </selectKey>
+        INSERT INTO
+            t_todo
+            (
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                category_id,
+                version
+            )
+        VALUES
+        (
+            #{todoId},
+            #{todoTitle},
+            #{finished},
+            #{createdAt},
+            #{category.categoryId},
+            #{version}
+        )
+    </insert>
 
-    <selectKey keyProperty="todoId" resultType="string" order="BEFORE" databaseId="oracle">
-      select
-      trim(to_char(COALESCE(MAX(CAST(todo_id AS Int)) +1,1),
-      '0000000000')) from t_todo
-    </selectKey>
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    category_id,
-    version
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{finished},
-    #{createdAt},
-    #{category.categoryId},
-    #{version}
-    )
-  </insert>
+    <insert id="createUsingUseGeneratedKeys" parameterType="TodoMB3" useGeneratedKeys="true" keyProperty="todoId">
+        INSERT INTO
+            t_todo
+            (
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                category_id,
+                version
+            )
+        VALUES
+        (
+            #{todoId},
+            #{todoTitle},
+            #{finished},
+            #{createdAt},
+            #{category.categoryId},
+            #{version}
+        )
+    </insert>
 
-  <insert id="createUsingUseGeneratedKeys" parameterType="TodoMB3" useGeneratedKeys="true"
-    keyProperty="todoId">
-    INSERT INTO
-    t_todo
-    (
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    category_id,
-    version
-    )
-    VALUES
-    (
-    #{todoId},
-    #{todoTitle},
-    #{finished},
-    #{createdAt},
-    #{category.categoryId},
-    #{version}
-    )
-  </insert>
+    <insert id="createInBatch" parameterType="list">
+        INSERT INTO
+            t_todo
+            (
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                category_id,
+                complete_at,
+                version
+            )
+            VALUES
+            <foreach collection="list" item="todo" separator=",">
+            (
+                #{todo.todoId},
+                #{todo.todoTitle},
+                #{todo.finished},
+                #{todo.createdAt},
+                #{todo.category.categoryId},
+                #{todo.completeAt},
+                #{todo.version}
+            )
+            </foreach>
+    </insert>
 
-  <insert id="createInBatch" parameterType="list">
-    INSERT INTO t_todo
-    (
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    category_id,
-    complete_at,
-    version
-    )
-    VALUES
-    <foreach collection="list" item="todo" separator=",">
-      (
-      #{todo.todoId},
-      #{todo.todoTitle},
-      #{todo.finished},
-      #{todo.createdAt},
-      #{todo.category.categoryId},
-      #{todo.completeAt},
-      #{todo.version}
-      )
-    </foreach>
-  </insert>
-
-  <insert id="createInBatch" parameterType="List" databaseId="oracle">
-    INSERT ALL
-    <foreach collection="list" item="todo">
-      INTO t_todo
-      (
-      todo_id,
-      todo_title,
-      finished,
-      created_at,
-      category_id,
-      complete_at,
-      version
-      )
-      VALUES
-      (
-      #{todo.todoId},
-      #{todo.todoTitle},
-      #{todo.finished},
-      #{todo.createdAt},
-      #{todo.category.categoryId},
-      #{todo.completeAt},
-      #{todo.version}
-      )
-    </foreach>
-    SELECT * FROM DUAL
-  </insert>
+    <insert id="createInBatch" parameterType="List" databaseId="oracle">
+        INSERT ALL
+        <foreach collection="list" item="todo">
+        INTO
+            t_todo
+            (
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                category_id,
+                complete_at,
+                version
+            )
+        VALUES
+        (
+            #{todo.todoId},
+            #{todo.todoTitle},
+            #{todo.finished},
+            #{todo.createdAt},
+            #{todo.category.categoryId},
+            #{todo.completeAt},
+            #{todo.version}
+        )
+        </foreach>
+        SELECT
+            *
+        FROM
+            DUAL
+    </insert>
 
 
-  <delete id="delete" parameterType="String">
-    <bind name="todoId" value="_parameter" />
-    DELETE FROM
-    t_todo
-    WHERE
-    todo_id = #{todoId}
-  </delete>
+    <delete id="delete" parameterType="String">
+        <bind name="todoId" value="_parameter" />
+        DELETE FROM
+            t_todo
+        WHERE
+            todo_id = #{todoId}
+    </delete>
 
-  <delete id="deleteAll">
-    DELETE FROM
-    t_todo
+    <delete id="deleteAll">
+        DELETE FROM t_todo
+    </delete>
 
-  </delete>
+    <sql id="setPhrase">
+        <set>
+            <if test="category.categoryId != null"> category_id = #{category.categoryId}, </if>
+            <if test="todoTitle != null"> todo_title = #{todoTitle}, </if>
+            <if test="createdAt != null"> created_at = #{createdAt}, </if>
+            <if test="finished != null"> finished = #{finished}, </if>
+            version = #{version} + 1
+        </set>
+    </sql>
 
-  <sql id="setPhrase">
-    <set>
-      <if test="category.categoryId != null">
-        category_id = #{category.categoryId},
-      </if>
-      <if test="todoTitle != null">
-        todo_title = #{todoTitle},
-      </if>
-      <if test="createdAt != null">
-        created_at = #{createdAt},
-      </if>
-      <if test="finished != null">
-        finished = #{finished},
-      </if>
-      version = #{version} + 1
-    </set>
-  </sql>
+    <update id="update" parameterType="TodoMB3">
+        UPDATE
+            t_todo
+        <include refid="setPhrase" />
+        WHERE
+            todo_id = #{todoId}
+    </update>
 
-  <update id="update" parameterType="TodoMB3">
-    UPDATE
-    t_todo
-    <include refid="setPhrase" />
-    WHERE
-    todo_id = #{todoId}
-  </update>
+    <select id="findAutoMapByTodoId" parameterType="string" resultType="AutoMapTodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_id = #{todoId}
+    </select>
 
-  <select id="findAutoMapByTodoId" parameterType="string" resultType="AutoMapTodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_id = #{todoId}
-  </select>
+    <select id="findAutoMapByCompositeKey" resultType="AutoMapTodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_id = #{todoId}
+        AND
+            category_id = #{categoryId}
+    </select>
 
-  <select id="findAutoMapByCompositeKey" resultType="AutoMapTodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_id = #{todoId}
-    AND category_id= #{categoryId}
-  </select>
+    <select id="findAutoMapByCompositeKeyNoParamAnnot" resultType="AutoMapTodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_id = #{param1}
+        AND
+            category_id= #{param2}
+    </select>
 
-  <select id="findAutoMapByCompositeKeyNoParamAnnot" resultType="AutoMapTodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_id = #{param1}
-    AND category_id=
-    #{param2}
-  </select>
-
-  <select id="findAllAutoMapByCriteria" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
+    <select id="findAllAutoMapByCriteria" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
         <![CDATA[
         SELECT
             todo_id,
@@ -458,7 +451,7 @@
         ]]>
   </select>
 
-  <select id="findAllAutoMapByCriteriaRetMap" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
+    <select id="findAllAutoMapByCriteriaRetMap" parameterType="TodoCriteria" resultType="AutoMapTodoMB3">
         <![CDATA[
         SELECT
             todo_id,
@@ -478,47 +471,40 @@
         ]]>
   </select>
 
-  <select id="countByFinished" parameterType="_boolean" resultType="_long">
-    SELECT
-    COUNT(*)
-    FROM
-    t_todo
-    WHERE
-    finished = #{finished}
-  </select>
+    <select id="countByFinished" parameterType="_boolean" resultType="_long"> SELECT COUNT(*) FROM t_todo WHERE finished = #{finished} </select>
 
-  <sql id="findPageByCriteriaWherePhrase">
-    <![CDATA[
-    WHERE
-        todo_title LIKE #{title} || '%' ESCAPE '~'
-    AND
-        created_at < #{createdAt}
-    ]]>
-  </sql>
+    <sql id="findPageByCriteriaWherePhrase">
+        <![CDATA[
+        WHERE
+            todo_title LIKE #{title} || '%' ESCAPE '~'
+        AND
+            created_at < #{createdAt}
+        ]]>
+    </sql>
 
-  <select id="countByCriteria" parameterType="TodoCriteria" resultType="_long">
-    SELECT
-    COUNT(*)
-    FROM
-    t_todo
-    <include refid="findPageByCriteriaWherePhrase" />
-  </select>
+    <select id="countByCriteria" parameterType="TodoCriteria" resultType="_long">
+        SELECT
+            COUNT(*)
+        FROM
+            t_todo
+        <include refid="findPageByCriteriaWherePhrase" />
+    </select>
 
-  <select id="findPageByCriteria" parameterType="TodoCriteria" resultType="TodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    <include refid="findPageByCriteriaWherePhrase" />
-    ORDER BY
-    todo_id
-  </select>
+    <select id="findPageByCriteria" parameterType="TodoCriteria" resultType="TodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        <include refid="findPageByCriteriaWherePhrase" />
+        ORDER BY
+            todo_id
+    </select>
 
-  <sql id="findPageByCriteriaSQLRefWherePhrase">
+    <sql id="findPageByCriteriaSQLRefWherePhrase">
         <![CDATA[
         /* (3) */
         WHERE
@@ -526,87 +512,92 @@
         AND
             created_at < #{criteria.createdAt}
         ]]>
-  </sql>
+    </sql>
 
-  <select id="findPageByCriteriaSqLRef" resultType="TodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    <include refid="findPageByCriteriaSQLRefWherePhrase" />
-    ORDER BY
-    todo_id
-    LIMIT #{pageable.pageSize}
-    OFFSET #{pageable.offset}
-  </select>
+    <select id="findPageByCriteriaSqLRef" resultType="TodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        <include refid="findPageByCriteriaSQLRefWherePhrase" />
+        ORDER BY
+            todo_id
+        LIMIT
+            #{pageable.pageSize}
+        OFFSET
+            #{pageable.offset}
+    </select>
 
-  <select id="findPageByCriteriaSqLRef" resultType="TodoMB3" databaseId="oracle">
-    SELECT todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version FROM
-    ( SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version,
-    ROW_NUMBER() OVER (ORDER BY todo_id) Row_Num FROM cfw.t_todo)
-    WHERE
-    ( Row_Num
-    BETWEEN #{pageable.offset}+1 and
-    #{pageable.offset}+#{pageable.pageSize})
-    <![CDATA[ and  todo_title LIKE #{criteria.title} || '%' ESCAPE '~'
+    <select id="findPageByCriteriaSqLRef" resultType="TodoMB3" databaseId="oracle">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+        (
+            SELECT
+                todo_id,
+                todo_title,
+                finished,
+                created_at,
+                version,
+                ROW_NUMBER() OVER (ORDER BY todo_id) Row_Num
+            FROM
+                cfw.t_todo
+        )
+        WHERE
+        (
+            Row_Num BETWEEN #{pageable.offset}+1 AND #{pageable.offset}+#{pageable.pageSize}
+        )
+        <![CDATA[
+        AND
+            todo_title LIKE #{criteria.title} || '%' ESCAPE '~'
         AND
             created_at < #{criteria.createdAt}
-    
-     ]]>
+        ]]>
+    </select>
 
+    <update id="updateTodo" parameterType="TodoMB3">
+        UPDATE
+            t_todo
+        SET
+            todo_title = #{todoTitle},
+            finished = #{finished},
+            version = version + 1
+        WHERE
+            todo_id = #{todoId}
+        AND
+            version = #{version}
+    </update>
 
+    <update id="updateFinishedByTodIds">
+        UPDATE
+            t_todo
+        SET
+            finished = #{finished},
+            version = version + 1
+        WHERE
+            <foreach item="todoId" collection="todoIds" open="todo_id IN (" separator="," close=")">
+            #{todoId}
+            </foreach>
+    </update>
 
-  </select>
+    <delete id="deleteByTodo" parameterType="TodoMB3">
+        DELETE FROM
+            t_todo
+        WHERE
+            todo_id = #{todoId}
+        AND
+            version = #{version}
+    </delete>
 
-  <update id="updateTodo" parameterType="TodoMB3">
-    UPDATE
-    t_todo
-    SET
-    todo_title = #{todoTitle},
-    finished =
-    #{finished},
-    version = version + 1
-    WHERE
-    todo_id = #{todoId}
-    AND
-    version = #{version}
-  </update>
-
-  <update id="updateFinishedByTodIds">
-    UPDATE
-    t_todo
-    SET
-    finished = #{finished},
-    version = version + 1
-    WHERE
-    <foreach item="todoId" collection="todoIds" open="todo_id IN (" separator="," close=")">
-      #{todoId}
-    </foreach>
-  </update>
-
-  <delete id="deleteByTodo" parameterType="TodoMB3">
-    DELETE FROM
-    t_todo
-    WHERE
-    todo_id = #{todoId}
-    AND
-    version = #{version}
-  </delete>
-
-  <delete id="deleteOlderFinishedTodo" parameterType="date">
+    <delete id="deleteOlderFinishedTodo" parameterType="date">
         <![CDATA[
         DELETE FROM
             t_todo
@@ -615,9 +606,9 @@
         AND
             created_at  < #{criteriaDate}
         ]]>
-  </delete>
+    </delete>
 
-  <delete id="deleteOlderFinishedTodo" parameterType="date" databaseId="oracle">
+    <delete id="deleteOlderFinishedTodo" parameterType="date" databaseId="oracle">
         <![CDATA[
         DELETE FROM
             t_todo
@@ -626,204 +617,186 @@
         AND
             created_at  < #{criteriaDate}
         ]]>
-  </delete>
+     </delete>
 
-  <select id="findAllByCriteriaIFEle" parameterType="TodoCriteria" resultType="TodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_title LIKE #{title} ||
-    '%' ESCAPE '~'
-    <if test="finished != null">
-      AND
-      finished = #{finished}
-    </if>
-    ORDER BY
-    todo_id
-  </select>
-
-  <select id="findAllByCriteriaOSGNL" parameterType="TodoCriteria" resultType="TodoMB3">
-    <bind name="escapedTodoTitle" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toLikeCondition(title)" />
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_title LIKE
-    #{escapedTodoTitle} || '%' ESCAPE '~'
-    ORDER BY
-    todo_id
-  </select>
-
-  <select id="findAllByCriteriaEscapeSrch" parameterType="TodoCriteria" resultType="TodoMB3">
-    <bind name="todoTitleContainingCondition" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    WHERE
-    todo_title LIKE
-    #{todoTitleContainingCondition} ESCAPE '~'
-    ORDER BY
-    todo_id
-  </select>
-
-  <select id="collectAllByCriteria" parameterType="TodoCriteria" resultType="TodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    complete_at,
-    version
-    FROM
-    t_todo
-    <where>
-      <if test="title != null">
-        <bind name="titleContainingCondition"
-          value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
-        todo_title LIKE #{titleContainingCondition} ESCAPE '~'
-      </if>
-      <if test="createdAt != null">
-            <![CDATA[
-            AND created_at < #{createdAt}
-            ]]>
-      </if>
-    </where>
-  </select>
-
-  <!-- findAutoMapBySP for h2, postgres -->
-  <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE">
-    {call findTodo(#{todoId})}
-  </select>
-
-  <!-- findAutoMapBySP for oracle -->
-  <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE"
-    databaseId="oracle">
-    select * from table( findTodo(#{todoId}))
-  </select>
-
-  <select id="findAutoMapByUsingClassTypeAlias" parameterType="TodoSearchCriteria" resultType="AutoMapTodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    <where>
-      <if test="title != null">
-        <bind name="titleContainingCondition"
-          value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
-        todo_title LIKE #{titleContainingCondition} ESCAPE '~'
-      </if>
-      <if test="createdAt != null">
-            <![CDATA[
-            AND created_at < #{createdAt}
-            ]]>
-      </if>
-    </where>
-  </select>
-
-  <select id="findAutoMapByUsingOverwrittenDefltTypeAliasName" parameterType="DailyTodo" resultType="AutoMapTodoMB3">
-    SELECT
-    todo_id,
-    todo_title,
-    category_id,
-    finished,
-    created_at,
-    version
-    FROM
-    t_todo
-    <where>
-      <if test="dailyTodoTitle != null">
-        <bind name="titleContainingCondition"
-          value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(dailyTodoTitle)" />
-        todo_title LIKE #{titleContainingCondition} ESCAPE '~'
-      </if>
-      <if test="createdAt != null">
-            <![CDATA[
-            AND created_at < #{createdAt}
-            ]]>
-      </if>
-    </where>
-  </select>
-
-  <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMap">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    complete_at,
-    version,
-    desc1,
-    desc2
-    FROM
-    t_todo
-    WHERE
-    created_at <![CDATA[ < ]]>
-    #{createdAt}
-
-    <choose>
-      <when test="title != null">
+    <select id="findAllByCriteriaIFEle" parameterType="TodoCriteria" resultType="TodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_title LIKE #{title} || '%' ESCAPE '~'
+        <if test="finished != null">
         AND
-        todo_title LIKE #{title} || '%' ESCAPE '~'
-      </when>
-      <otherwise>
-        AND
-        todo_title LIKE '%sample%'
-      </otherwise>
-    </choose>
-    ORDER BY
-    todo_id
-  </select>
+            finished = #{finished}
+        </if>
+        ORDER BY
+            todo_id
+    </select>
 
-  <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMapForPostgres"
-    databaseId="postgres">
-    SELECT
-    todo_id,
-    todo_title,
-    finished,
-    created_at,
-    complete_at,
-    version,
-    desc1,
-    desc2
-    FROM
-    t_todo
-    WHERE
-    created_at <![CDATA[ < ]]>
-    #{createdAt}
+    <select id="findAllByCriteriaOSGNL" parameterType="TodoCriteria" resultType="TodoMB3">
+        <bind name="escapedTodoTitle" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toLikeCondition(title)" />
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_title LIKE #{escapedTodoTitle} || '%' ESCAPE '~'
+        ORDER BY
+            todo_id
+    </select>
 
-    <choose>
-      <when test="title != null">
-        AND
-        todo_title LIKE #{title} || '%' ESCAPE '~'
-      </when>
-      <otherwise>
-        AND
-        todo_title LIKE '%sample%'
-      </otherwise>
-    </choose>
-    ORDER BY
-    todo_id
-  </select>
+    <select id="findAllByCriteriaEscapeSrch" parameterType="TodoCriteria" resultType="TodoMB3">
+        <bind name="todoTitleContainingCondition" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        WHERE
+            todo_title LIKE #{todoTitleContainingCondition} ESCAPE '~'
+        ORDER BY
+            todo_id
+    </select>
+
+    <select id="collectAllByCriteria" parameterType="TodoCriteria" resultType="TodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            complete_at,
+            version
+        FROM
+            t_todo
+        <where>
+            <if test="title != null">
+                <bind name="titleContainingCondition" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
+                todo_title LIKE #{titleContainingCondition} ESCAPE '~'
+            </if>
+            <if test="createdAt != null">
+                <![CDATA[
+                AND created_at < #{createdAt}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <!-- findAutoMapBySP for h2, postgres -->
+    <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE">
+        {call findTodo(#{todoId})}
+    </select>
+
+    <!-- findAutoMapBySP for oracle -->
+    <select id="findAutoMapBySP" parameterType="string" resultType="AutoMapTodoMB3" statementType="CALLABLE" databaseId="oracle">
+        select * from table( findTodo(#{todoId}))
+    </select>
+
+    <select id="findAutoMapByUsingClassTypeAlias" parameterType="TodoSearchCriteria" resultType="AutoMapTodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        <where>
+            <if test="title != null">
+                <bind name="titleContainingCondition" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(title)" />
+                todo_title LIKE #{titleContainingCondition} ESCAPE '~'
+            </if>
+            <if test="createdAt != null">
+                <![CDATA[
+                AND created_at < #{createdAt}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="findAutoMapByUsingOverwrittenDefltTypeAliasName" parameterType="DailyTodo" resultType="AutoMapTodoMB3">
+        SELECT
+            todo_id,
+            todo_title,
+            category_id,
+            finished,
+            created_at,
+            version
+        FROM
+            t_todo
+        <where>
+            <if test="dailyTodoTitle != null">
+                <bind name="titleContainingCondition" value="@org.terasoluna.gfw.common.query.QueryEscapeUtils@toContainingCondition(dailyTodoTitle)" />
+                todo_title LIKE #{titleContainingCondition} ESCAPE '~' </if>
+            <if test="createdAt != null">
+                <![CDATA[
+                AND created_at < #{createdAt}
+                ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMap">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            complete_at,
+            version,
+            desc1,
+            desc2
+        FROM
+            t_todo
+        WHERE
+            created_at <![CDATA[ < ]]> #{createdAt}
+        <choose>
+            <when test="title != null">
+                AND todo_title LIKE #{title} || '%' ESCAPE '~'
+            </when>
+            <otherwise>
+                AND todo_title LIKE '%sample%'
+            </otherwise>
+        </choose>
+        ORDER BY
+            todo_id
+    </select>
+
+    <select id="findAllByUsingChooseEle" parameterType="TodoCriteria" resultMap="todoResultMapForPostgres" databaseId="postgres">
+        SELECT
+            todo_id,
+            todo_title,
+            finished,
+            created_at,
+            complete_at,
+            version,
+            desc1,
+            desc2
+        FROM
+            t_todo
+        WHERE
+            created_at <![CDATA[ < ]]> #{createdAt}
+        <choose>
+            <when test="title != null">
+                AND todo_title LIKE #{title} || '%' ESCAPE '~'
+            </when>
+            <otherwise>
+                AND todo_title LIKE '%sample%'
+            </otherwise>
+        </choose>
+        ORDER BY todo_id
+    </select>
 
 </mapper>

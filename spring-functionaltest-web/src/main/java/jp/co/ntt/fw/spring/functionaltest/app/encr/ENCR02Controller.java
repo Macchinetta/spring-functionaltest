@@ -53,45 +53,41 @@ public class ENCR02Controller {
     }
 
     @RequestMapping(value = "0201/001/generateBytesKey", method = RequestMethod.POST)
-    public String generateBytesKey(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String generateBytesKey(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0201001(model, form);
         }
 
-        model.addAttribute("generatedKey", Base64.getEncoder().encodeToString(
-                encryptionDataService.generateBytesKey(form.getKeyLength())));
+        model.addAttribute("generatedKey", Base64.getEncoder()
+                .encodeToString(encryptionDataService.generateBytesKey(form.getKeyLength())));
         return "encr/generateBytesKeyComplete";
     }
 
     @RequestMapping(value = "0202/001/generateSameBytesKey", method = RequestMethod.POST)
-    public String generateSameBytesKey(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String generateSameBytesKey(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0202001(model, form);
         }
 
-        BytesKeys generatedByteKeys = encryptionDataService
-                .generateSameBytesKey(form.getKeyLength());
-        model.addAttribute("generatedKey", Base64.getEncoder().encodeToString(
-                generatedByteKeys.getKey1()));
-        model.addAttribute("generatedKey2", Base64.getEncoder().encodeToString(
-                generatedByteKeys.getKey2()));
+        BytesKeys generatedByteKeys =
+                encryptionDataService.generateSameBytesKey(form.getKeyLength());
+        model.addAttribute("generatedKey",
+                Base64.getEncoder().encodeToString(generatedByteKeys.getKey1()));
+        model.addAttribute("generatedKey2",
+                Base64.getEncoder().encodeToString(generatedByteKeys.getKey2()));
         return "encr/generateSameBytesKeyComplete";
     }
 
     @RequestMapping(value = "0203/001/generateStringKey", method = RequestMethod.POST)
-    public String generateStringKey(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String generateStringKey(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0203001(model, form);
         }
 
-        model.addAttribute("generatedKey", encryptionDataService
-                .generateStringKey());
+        model.addAttribute("generatedKey", encryptionDataService.generateStringKey());
         return "encr/generateStringKeyComplete";
     }
 

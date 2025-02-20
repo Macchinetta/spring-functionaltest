@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">thirdView</h1>
-      <form id="ID" th:action="@{/dbsp/0303/001}" method="post">
-        <input type="submit" id="fourth" name="fourth" value="fourth" />
-      </form>
-    </div>
-  </div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">thirdView</h1>
+                <form id="ID" th:action="@{/dbsp/0303/001}" method="post">
+                    <input type="submit" id="fourth" name="fourth" value="fourth" />
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

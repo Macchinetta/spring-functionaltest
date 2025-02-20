@@ -44,36 +44,27 @@ public class AjaxTest extends FunctionTestSupport {
     public void testAJAX0101001() throws IOException, InterruptedException {
         webDriverOperations.click(id("ajax0101001"));
 
-        webDriverOperations.appendText(id("personalComputerName"),
-                "Spring Test Server 1");
+        webDriverOperations.appendText(id("personalComputerName"), "Spring Test Server 1");
         webDriverOperations.click(id("searchBtn"));
 
         // 要素が見つかるまでアサーションを待つ
         webDriverOperations.waitForDisplayed(By.xpath("//td[2]/a"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath("//td[2]/a")), is(
-                "Spring Test Server 1"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is(
-                "Spring OS 64bit"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[4]")), is(
-                "Spring Core i9-440"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[5]")), is(
-                "DDR3-1600 16GB"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[6]")), is(
-                "Spring Chip"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[7]")), is(
-                "Spring SSD 500GB"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[8]")), is(
-                "Spring Power 800W"));
-        assertThat(webDriverOperations.getText(By.xpath("//td[9]")), is(
-                "100000円"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[2]/a")), is("Spring Test Server 1"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[3]")), is("Spring OS 64bit"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[4]")), is("Spring Core i9-440"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[5]")), is("DDR3-1600 16GB"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[6]")), is("Spring Chip"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[7]")), is("Spring SSD 500GB"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[8]")), is("Spring Power 800W"));
+        assertThat(webDriverOperations.getText(By.xpath("//td[9]")), is("100000円"));
     }
 
     /**
@@ -87,8 +78,7 @@ public class AjaxTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0102001"));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 11");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 11");
         webDriverOperations.overrideText(id("os"), "Spring OS 2 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-449");
         webDriverOperations.overrideText(id("ram"), "DDR3-3600 16GB");
@@ -100,18 +90,17 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("登録PCの編集に成功しました。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -119,22 +108,19 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("ajax0102001"));
 
         // 変更されていることを確認
-        assertThat(webDriverOperations.getInputFieldValue(id(
-                "personalComputerName")).trim(), is("Spring Test Server 11"));
-        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(), is(
-                "Spring OS 2 64bit"));
-        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(), is(
-                "Spring Core i9-449"));
-        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is(
-                "DDR3-3600 16GB"));
-        assertThat(webDriverOperations.getInputFieldValue(id("videocard"))
-                .trim(), is("Spring Chip 5"));
-        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is(
-                "Spring SSD 1TB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("personalComputerName")).trim(),
+                is("Spring Test Server 11"));
+        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(),
+                is("Spring OS 2 64bit"));
+        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(),
+                is("Spring Core i9-449"));
+        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is("DDR3-3600 16GB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("videocard")).trim(),
+                is("Spring Chip 5"));
+        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is("Spring SSD 1TB"));
         assertThat(webDriverOperations.getInputFieldValue(id("power")).trim(),
                 is("Spring Power 1200W"));
-        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(),
-                is("200000"));
+        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(), is("200000"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -153,8 +139,7 @@ public class AjaxTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0103001"));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 11");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 11");
         webDriverOperations.overrideText(id("os"), "Spring OS 2 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-449");
         webDriverOperations.overrideText(id("ram"), "DDR3-3600 16GB");
@@ -166,18 +151,17 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
         assertThat(webDriverOperations.getText(id("contentType")),
                 containsString(MediaType.APPLICATION_JSON_VALUE));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("登録PCの編集に成功しました。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("登録PCの編集に成功しました。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -185,22 +169,19 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("ajax0103001"));
 
         // 変更されていることを確認
-        assertThat(webDriverOperations.getInputFieldValue(id(
-                "personalComputerName")).trim(), is("Spring Test Server 11"));
-        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(), is(
-                "Spring OS 2 64bit"));
-        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(), is(
-                "Spring Core i9-449"));
-        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is(
-                "DDR3-3600 16GB"));
-        assertThat(webDriverOperations.getInputFieldValue(id("videocard"))
-                .trim(), is("Spring Chip 5"));
-        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is(
-                "Spring SSD 1TB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("personalComputerName")).trim(),
+                is("Spring Test Server 11"));
+        assertThat(webDriverOperations.getInputFieldValue(id("os")).trim(),
+                is("Spring OS 2 64bit"));
+        assertThat(webDriverOperations.getInputFieldValue(id("cpu")).trim(),
+                is("Spring Core i9-449"));
+        assertThat(webDriverOperations.getInputFieldValue(id("ram")).trim(), is("DDR3-3600 16GB"));
+        assertThat(webDriverOperations.getInputFieldValue(id("videocard")).trim(),
+                is("Spring Chip 5"));
+        assertThat(webDriverOperations.getInputFieldValue(id("hdd")).trim(), is("Spring SSD 1TB"));
         assertThat(webDriverOperations.getInputFieldValue(id("power")).trim(),
                 is("Spring Power 1200W"));
-        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(),
-                is("200000"));
+        assertThat(webDriverOperations.getInputFieldValue(id("price")).trim(), is("200000"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -218,8 +199,7 @@ public class AjaxTest extends FunctionTestSupport {
     @Test
     public void testAJAX0104001() throws IOException, InterruptedException {
 
-        File xXETargetFile = new ClassPathResource("testdata/ajax/dummy.txt")
-                .getFile();
+        File xXETargetFile = new ClassPathResource("testdata/ajax/dummy.txt").getFile();
         String xXETargetString = "<!DOCTYPE comment [<!ELEMENT comment ANY ><!ENTITY xxe SYSTEM \""
                 + xXETargetFile.getAbsolutePath()
                 + "\" >]><messageBoardForm><comment>&xxe;Test</comment></messageBoardForm>";
@@ -236,12 +216,11 @@ public class AjaxTest extends FunctionTestSupport {
 
             // 要素が見つかるまでアサーションを待つ
             webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath(
-                            "//div[2]/div[1]/div[1]/ul/li")));
+                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
 
             // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")), is(
-                    String.valueOf(HttpStatus.BAD_REQUEST.value())));
+            assertThat(webDriverOperations.getText(id("returnStatus")),
+                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
             webDriverOperations.saveScreenCapture();
         }
@@ -259,12 +238,11 @@ public class AjaxTest extends FunctionTestSupport {
 
             // 要素が見つかるまでアサーションを待つ
             webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath(
-                            "//div[2]/div[1]/div[1]/ul/li")));
+                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
 
             // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")), is(
-                    String.valueOf(HttpStatus.BAD_REQUEST.value())));
+            assertThat(webDriverOperations.getText(id("returnStatus")),
+                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
             webDriverOperations.saveScreenCapture();
         }
@@ -284,15 +262,14 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("PRICEは数値で入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("PRICEは数値で入力してください。"));
 
     }
 
@@ -310,16 +287,14 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -337,15 +312,14 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("priceに入力された値が不正です。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("priceに入力された値が不正です。"));
 
     }
 
@@ -363,16 +337,14 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.OK.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.OK.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -390,16 +362,14 @@ public class AjaxTest extends FunctionTestSupport {
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.BAD_REQUEST.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is(
-                        "VIDEOCARDは1以上50以下の長さで入力してください。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("VIDEOCARDは1以上50以下の長さで入力してください。"));
 
     }
 
@@ -413,40 +383,36 @@ public class AjaxTest extends FunctionTestSupport {
     public void testAJAX0301001() throws IOException, InterruptedException {
         webDriverOperations.click(id("ajax0301001001"));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 2");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 2");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
 
         webDriverOperations.saveScreenCapture();
 
         webDriverOperations.click(id("retrunToIndex"));
         webDriverOperations.click(id("ajax0301001002"));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 3");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 3");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.getWebDriver().findElement(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
     }
 
     /**
@@ -460,20 +426,18 @@ public class AjaxTest extends FunctionTestSupport {
 
         webDriverOperations.click(id("ajax0302001"));
 
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 2");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 2");
         webDriverOperations.click(id("edit"));
 
         // 要素が見つかるまでアサーションを待つ
-        webDriverOperations.waitForDisplayed(By.xpath(
-                "//div[2]/div/div[2]/ul/li"));
+        webDriverOperations.waitForDisplayed(By.xpath("//div[2]/div/div[2]/ul/li"));
 
         // 戻り値の確認
-        assertThat(webDriverOperations.getText(id("returnStatus")), is(String
-                .valueOf(HttpStatus.CONFLICT.value())));
+        assertThat(webDriverOperations.getText(id("returnStatus")),
+                is(String.valueOf(HttpStatus.CONFLICT.value())));
 
-        assertThat(webDriverOperations.getText(By.xpath(
-                "//div[2]/div/div[2]/ul/li")), is("同一のPC名がすでに登録されています。"));
+        assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
+                is("同一のPC名がすでに登録されています。"));
 
     }
 
@@ -485,8 +449,7 @@ public class AjaxTest extends FunctionTestSupport {
     }
 
     private void initData() {
-        webDriverOperations.overrideText(id("personalComputerName"),
-                "Spring Test Server 1");
+        webDriverOperations.overrideText(id("personalComputerName"), "Spring Test Server 1");
         webDriverOperations.overrideText(id("os"), "Spring OS 64bit");
         webDriverOperations.overrideText(id("cpu"), "Spring Core i9-440");
         webDriverOperations.overrideText(id("ram"), "DDR3-1600 16GB");

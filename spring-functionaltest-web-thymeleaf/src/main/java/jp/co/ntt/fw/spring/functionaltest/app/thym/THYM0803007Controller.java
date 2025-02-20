@@ -35,8 +35,7 @@ public class THYM0803007Controller {
     }
 
     @RequestMapping(value = "{jsTemplate}.js", method = RequestMethod.GET)
-    public String handleJs(@PathVariable("jsTemplate") String jsTemplate,
-            Model model) {
+    public String handleJs(@PathVariable("jsTemplate") String jsTemplate, Model model) {
 
         Item item = new Item();
         item.setName("Peach");

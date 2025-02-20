@@ -16,15 +16,13 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl;
 
 import java.net.URI;
-
 import javax.inject.Inject;
-
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
@@ -33,15 +31,36 @@ public class HttpsRestClientServiceImpl implements HttpsRestClientService {
     @Inject
     RestTemplate httpsRestTemplate;
 
-    @Value("${rscl.httpsserver.uri}")
-    URI httpsUri;
+    @Value("${rscl.httpsserver1.uri}")
+    String httpsServer1Uri;
+
+    @Value("${rscl.destination1}")
+    String destination1;
 
     @Override
-    public UserResource connectHttps() {
+    public UserResource connectHttps(@NotNull SERVERS servers, @NotNull DESTINATION destination,
+            boolean isCausesSoTimeout) {
 
-        RequestEntity<Void> req = RequestEntity.get(this.httpsUri).build();
-        ResponseEntity<UserResource> res = this.httpsRestTemplate.exchange(req,
-                UserResource.class);
+        String serverUri;
+        if (servers == SERVERS.SERVER1) {
+            serverUri = this.httpsServer1Uri; // port : 8991
+        } else {
+            throw new IllegalStateException();
+        }
+
+        String target;
+        if (destination == DESTINATION.RSCL1) {
+            target = this.destination1; // 0秒待機
+        } else {
+            throw new IllegalStateException();
+        }
+
+        RestTemplate restTemplate = this.httpsRestTemplate;
+
+        URI uri = URI.create(serverUri + target);
+        RequestEntity<Void> req = RequestEntity.get(uri).build();
+
+        ResponseEntity<UserResource> res = restTemplate.exchange(req, UserResource.class);
 
         UserResource user = res.getBody();
 

@@ -27,8 +27,8 @@ public class PageableArticleSearchCriteria implements Serializable {
 
     private final transient Pageable pageable;
 
-    public PageableArticleSearchCriteria(
-            ArticleSearchCriteria articleSearchCriteria, Pageable pageable) {
+    public PageableArticleSearchCriteria(ArticleSearchCriteria articleSearchCriteria,
+            Pageable pageable) {
         this.articleSearchCriteria = articleSearchCriteria;
         this.pageable = pageable;
     }

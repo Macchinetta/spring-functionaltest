@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">モデルに格納された値と文字列を結合して表示した画面（+演算子）</h1>
 
-      <h1 id="screenTitle">モデルに格納された値と文字列を結合して表示した画面（+演算子）</h1>
-
-      <ul>
-        <li id="message1">+演算子を利用して値と文字列を結合した文字列を以下に表示します。</li>
-        <li id="message2" th:text="'Message : ' + ${textCombiningUsingPlus}"></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul>
+                    <li id="message1">+演算子を利用して値と文字列を結合した文字列を以下に表示します。</li>
+                    <li id="message2" th:text="'Message : ' + ${textCombiningUsingPlus}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

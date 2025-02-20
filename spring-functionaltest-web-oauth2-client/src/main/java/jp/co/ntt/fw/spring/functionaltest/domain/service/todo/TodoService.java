@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.todo;
 
 import java.util.Collection;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 
 public interface TodoService {
@@ -30,7 +29,7 @@ public interface TodoService {
 
     void delete(String todoId, String registrationId);
 
-    // test only
+    // NoAuth Only
     default void deleteAll() {
         throw new UnsupportedOperationException();
     };

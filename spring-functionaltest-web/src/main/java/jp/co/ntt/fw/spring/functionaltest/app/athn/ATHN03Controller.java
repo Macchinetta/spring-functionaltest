@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ATHN03Controller {
 
     @RequestMapping(value = "0301/001", params = "loginSuccess")
-    public String handle0301LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle0301LoginSuccess(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0301/001");
         return "athn/topForDefault";

@@ -37,8 +37,7 @@ public class VLDT0101003Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated DisplayInsideMessagesForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated DisplayInsideMessagesForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/displayInsideMessagesView";

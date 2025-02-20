@@ -47,8 +47,8 @@ public class SSMN04ShoppingCartController {
     @TransactionTokenCheck(value = "cart", type = TransactionTokenType.BEGIN)
     public String cart(CartItemsForm form) {
 
-        List<CartItemForm> cartItemForms = shoppingCartHelper
-                .convertToCartItemForms(cart.getCartItems());
+        List<CartItemForm> cartItemForms =
+                shoppingCartHelper.convertToCartItemForms(cart.getCartItems());
         form.setCartItemForms(cartItemForms);
 
         return "ssmn/shoppingCart";
@@ -56,9 +56,8 @@ public class SSMN04ShoppingCartController {
 
     @RequestMapping(method = RequestMethod.POST, params = "order")
     @TransactionTokenCheck(value = "cart")
-    public String shoppingOrderComfirm(@Validated CartItemsForm form,
-            BindingResult bindingResult, Model model,
-            HttpServletRequest request) {
+    public String shoppingOrderComfirm(@Validated CartItemsForm form, BindingResult bindingResult,
+            Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             model.addAttribute(cart);
             return "ssmn/shoppingCart";
@@ -68,7 +67,6 @@ public class SSMN04ShoppingCartController {
 
         model.addAttribute(cart);
 
-        return "forward:" + urlPathHelper.getServletPath(request)
-                + "/shopping/order?order";
+        return "forward:" + urlPathHelper.getServletPath(request) + "/shopping/order?order";
     }
 }

@@ -1,43 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">会員情報登録 その他</h1>
-      <br>
-      <form class="form-horizontal" method="post" th:object="${memberForm}" th:action>
-        <fieldset>
-          <legend>その他情報</legend>
-          <div class="form-group">
-            <div class="col col-md-2">職業</div>
-            <div class="col col-md-3">
-              <input type="text" th:field="*{occupation}" class="form-control input-sm" />
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">会員情報登録 その他</h1>
+                <br />
+                <form class="form-horizontal" method="post" th:object="${memberForm}" th:action>
+                    <fieldset>
+                        <legend>その他情報</legend>
+                        <div class="form-group">
+                            <div class="col col-md-2">職業</div>
+                            <div class="col col-md-3">
+                                <input type="text" th:field="*{occupation}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-3">
+                                <span id="occupation.errors" th:errors="*{occupation}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col col-md-2">メールアドレス</div>
+                            <div class="col col-md-3">
+                                <input type="text" th:field="*{mailAddress}" class="form-control input-sm" />
+                            </div>
+                            <div class="col col-md-3">
+                                <span id="mailAddress.errors" th:errors="*{mailAddress}" class="errorMessage"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button id="redoAddress" name="redoAddress" class="btn btn-default" type="submit" value="Submit">戻る</button>
+                            <button id="confirm" name="confirm" class="btn btn-default" type="submit" value="Submit">確認</button>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-            <div class="col col-md-3">
-              <span id="occupation.errors" th:errors="*{occupation}" class="errorMessage"></span>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col col-md-2">メールアドレス</div>
-            <div class="col col-md-3">
-              <input type="text" th:field="*{mailAddress}" class="form-control input-sm" />
-            </div>
-            <div class="col col-md-3">
-              <span id="mailAddress.errors" th:errors="*{mailAddress}" class="errorMessage"></span>
-            </div>
-          </div>
-          <div class="form-group">
-            <button id="redoAddress" name="redoAddress" class="btn btn-default" type="submit"
-              value="Submit">戻る</button>
-            <button id="confirm" name="confirm" class="btn btn-default" type="submit" value="Submit">確認</button>
-          </div>
-        </fieldset>
-      </form>
-
-    </div>
-  </div>
-</body>
+        </div>
+    </body>
 </html>

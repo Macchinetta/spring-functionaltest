@@ -19,7 +19,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
-public interface JPABookEGPaginationRepository extends
-                                               PagingAndSortingRepository<JPABookEG, Integer> {
+public interface JPABookEGPaginationRepository
+        extends PagingAndSortingRepository<JPABookEG, Integer> {
 
 }

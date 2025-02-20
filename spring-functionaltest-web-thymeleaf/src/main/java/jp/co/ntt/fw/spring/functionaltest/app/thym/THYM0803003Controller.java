@@ -26,8 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class THYM0803003Controller {
 
     @RequestMapping(value = "{jsTemplate}.js", method = RequestMethod.GET)
-    public String handleJs(@PathVariable("jsTemplate") String jsTemplate,
-            Model model) {
+    public String handleJs(@PathVariable("jsTemplate") String jsTemplate, Model model) {
 
         return jsTemplate;
     }

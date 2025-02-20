@@ -14,7 +14,7 @@ label {
     width: 30px;
 }
 
-td+.no {
+td + .no {
     text-align: right;
 }
 
@@ -23,11 +23,9 @@ td+.no {
 }
 
 .itemName {
-    
 }
 
 .overviewDescription {
-    
 }
 
 .price {
@@ -38,7 +36,7 @@ td+.no {
     width: 50px;
 }
 
-td+.price {
+td + .price {
     text-align: right;
 }
 
@@ -46,7 +44,7 @@ td+.price {
     text-align: right;
 }
 
-td+.quantity {
+td + .quantity {
     text-align: right;
 }
 
@@ -59,7 +57,8 @@ input[class="quantity"] {
     color: red;
 }
 
-#cartLink,#itemListLink {
+#cartLink,
+#itemListLink {
     text-align: right;
     padding-bottom: 10px;
 }

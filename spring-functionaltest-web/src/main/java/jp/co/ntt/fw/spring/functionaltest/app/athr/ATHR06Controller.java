@@ -36,12 +36,11 @@ public class ATHR06Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForAccessPolicy";
     }
 
-    @RequestMapping({ "0601/001/accounts", "0601/001/manager", "0601/001/all" })
+    @RequestMapping({"0601/001/accounts", "0601/001/manager", "0601/001/all"})
     public String handleAccessPolicy() {
         return "athr/showAccessPolicyAccessAllowedPage";
     }
@@ -56,13 +55,12 @@ public class ATHR06Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForAccessPolicyIpAddressAllow";
     }
 
-    @RequestMapping({ "0601/002/manager", "0601/002/configurations",
-            "0601/002/admin", "athr/0601/002/all" })
+    @RequestMapping({"0601/002/manager", "0601/002/configurations", "0601/002/admin",
+            "athr/0601/002/all"})
     public String handleAccessPolicyIpAddressAllow() {
         return "athr/showAccessPolicyAccessIpAddressAllowedPage";
     }
@@ -77,13 +75,12 @@ public class ATHR06Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForAccessPolicyIpAddressDeny";
     }
 
-    @RequestMapping({ "0601/003/accounts", "0601/003/configurations",
-            "0601/003/admin", "athr/0601/003/all" })
+    @RequestMapping({"0601/003/accounts", "0601/003/configurations", "0601/003/admin",
+            "athr/0601/003/all"})
     public String handleAccessPolicyIpAddressDeny() {
         return "athr/showAccessPolicyAccessIpAddressDeniedPage";
     }
@@ -98,23 +95,21 @@ public class ATHR06Controller {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForAccessPolicyDenyAll";
     }
 
-    @RequestMapping({ "0601/004/accounts", "0601/004/admin", "0601/004/all" })
+    @RequestMapping({"0601/004/accounts", "0601/004/admin", "0601/004/all"})
     public String handleAccessPolicyDenyAll() {
         return "athr/showAccessPolicyAccessDenyAllPage";
     }
 
-    @RequestMapping({ "0601/019", "0601/020", "0601/021", "0601/022" })
+    @RequestMapping({"0601/019", "0601/020", "0601/021", "0601/022"})
     public String handle0601019loginForPathVariable() {
         return "athr/loginForPathVariable";
     }
 
-    @RequestMapping({ "0601/{testNo}/account/{userName}",
-            "0601/{testNo}/account/{userName}.*" })
+    @RequestMapping({"0601/{testNo}/account/{userName}", "0601/{testNo}/account/{userName}.*"})
     public String handle0601019afterLogin(@PathVariable String testNo,
             @PathVariable String userName, Model model) {
         model.addAttribute("testNo", testNo);

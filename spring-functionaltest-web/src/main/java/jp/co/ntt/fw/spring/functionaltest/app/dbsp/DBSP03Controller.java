@@ -91,8 +91,8 @@ public class DBSP03Controller {
 
     @RequestMapping(value = "0301/005", params = "file", method = RequestMethod.POST)
     @TransactionTokenCheck(value = "create", type = TransactionTokenType.CHECK)
-    public String handlePdf(Model model,
-            DownloadForm form) throws UnsupportedEncodingException, IOException {
+    public String handlePdf(Model model, DownloadForm form)
+            throws UnsupportedEncodingException, IOException {
         downloadHelper.bindToModel(model, form);
         return "fileDownloadView";
     }

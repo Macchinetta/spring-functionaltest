@@ -50,19 +50,18 @@ public class PersonalComputerHelper {
     PersonalComputerService personalComputerService;
 
     void setPersonalComputer(int id, PersonalComputerForm form) {
-        PersonalComputer personalComputer = personalComputerService
-                .getPersonalComputer(id);
+        PersonalComputer personalComputer = personalComputerService.getPersonalComputer(id);
         beanMapper.map(personalComputer, form);
     }
 
-    PersonalComputerResult updateAndBindPersonalComputerResult(
-            PersonalComputerForm form, Locale locale) {
+    PersonalComputerResult updateAndBindPersonalComputerResult(PersonalComputerForm form,
+            Locale locale) {
 
         update(form);
 
         PersonalComputerResult personalComputerResult = new PersonalComputerResult();
-        personalComputerResult.setMessages(Arrays.asList(messageSource
-                .getMessage("i.sf.ajax.0001", null, locale)));
+        personalComputerResult
+                .setMessages(Arrays.asList(messageSource.getMessage("i.sf.aa.0001", null, locale)));
 
         return personalComputerResult;
     }
@@ -72,20 +71,21 @@ public class PersonalComputerHelper {
 
         update(form);
 
-        PersonalComputerWithErrorResults personalComputerWithErrorResult = new PersonalComputerWithErrorResults();
-        personalComputerWithErrorResult.setMessages(Arrays.asList(messageSource
-                .getMessage("i.sf.ajax.0001", null, locale)));
+        PersonalComputerWithErrorResults personalComputerWithErrorResult =
+                new PersonalComputerWithErrorResults();
+        personalComputerWithErrorResult
+                .setMessages(Arrays.asList(messageSource.getMessage("i.sf.aa.0001", null, locale)));
 
         return personalComputerWithErrorResult;
     }
 
-    PersonalComputerWithErrorResults setPersonalComputerErrorResults(
-            BindingResult bresult, Locale locale) {
-        PersonalComputerWithErrorResults personalComputerWithErrorResults = new PersonalComputerWithErrorResults();
+    PersonalComputerWithErrorResults setPersonalComputerErrorResults(BindingResult bresult,
+            Locale locale) {
+        PersonalComputerWithErrorResults personalComputerWithErrorResults =
+                new PersonalComputerWithErrorResults();
         for (FieldError fieldError : bresult.getFieldErrors()) {
-            personalComputerWithErrorResults.addErrorResults(fieldError
-                    .getCode(), messageSource.getMessage(fieldError, locale),
-                    fieldError.getField());
+            personalComputerWithErrorResults.addErrorResults(fieldError.getCode(),
+                    messageSource.getMessage(fieldError, locale), fieldError.getField());
         }
 
         return personalComputerWithErrorResults;
@@ -104,37 +104,36 @@ public class PersonalComputerHelper {
         ErrorResults errorResults = new ErrorResults();
 
         for (FieldError fieldError : fieldErrors) {
-            errorResults.add(fieldError.getCode(), messageSource.getMessage(
-                    fieldError, locale), fieldError.getField());
+            errorResults.add(fieldError.getCode(), messageSource.getMessage(fieldError, locale),
+                    fieldError.getField());
         }
 
         return errorResults;
     }
 
-    ErrorResults setHttpMessageNotReadableExceptionResults(
-            HttpMessageNotReadableException e, Locale locale) {
+    ErrorResults setHttpMessageNotReadableExceptionResults(HttpMessageNotReadableException e,
+            Locale locale) {
         ErrorResults errorResults = new ErrorResults();
 
         JsonMappingException jme = (JsonMappingException) e.getCause();
         List<Reference> errorObj = jme.getPath();
 
         for (Reference reference : errorObj) {
-            errorResults.add("e.sf.ajax.8002", messageSource.getMessage(
-                    "e.sf.ajax.8002", Arrays.asList(reference.getFieldName())
-                            .toArray(), locale), reference.getFieldName());
+            errorResults.add("e.sf.aa.8002",
+                    messageSource.getMessage("e.sf.aa.8002",
+                            Arrays.asList(reference.getFieldName()).toArray(), locale),
+                    reference.getFieldName());
         }
 
         return errorResults;
     }
 
-    ErrorResults setBusinessExceptionErrorResults(BusinessException e,
-            Locale locale) {
+    ErrorResults setBusinessExceptionErrorResults(BusinessException e, Locale locale) {
         ErrorResults errorResults = new ErrorResults();
 
         for (ResultMessage resultMessage : e.getResultMessages().getList()) {
-            errorResults.add(resultMessage.getCode(), messageSource.getMessage(
-                    resultMessage.getCode(), resultMessage.getArgs(), locale),
-                    "");
+            errorResults.add(resultMessage.getCode(), messageSource
+                    .getMessage(resultMessage.getCode(), resultMessage.getArgs(), locale), "");
         }
 
         return errorResults;

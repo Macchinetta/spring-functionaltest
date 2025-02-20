@@ -53,8 +53,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     public DeliveryOrder getOrderExists(Integer deliveryNo) {
         DeliveryOrder deliveryOrder = null;
         if (deliveryOrderRepository.existsByDeliveryNo(deliveryNo)) {
-            deliveryOrder = deliveryOrderRepository.findOneByDeliveryNo(
-                    deliveryNo);
+            deliveryOrder = deliveryOrderRepository.findOneByDeliveryNo(deliveryNo);
         }
 
         return deliveryOrder;
@@ -64,8 +63,7 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
         List<DeliveryOrder> deliveryOrders = null;
         long total = deliveryOrderRepository.count();
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
             deliveryOrders = deliveryOrderRepository.findPage(rowBounds);
         } else {
             deliveryOrders = new ArrayList<DeliveryOrder>();
@@ -74,20 +72,18 @@ public class DeliveryOrderServiceImpl implements DeliveryOrderService {
     }
 
     public void register(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository.findByTypeName(
-                deliveryOrder.getDeliveryType().getDeliveryTypeName());
-        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
-                .getDeliveryTypeId());
+        DeliveryType deliveryType = deliveryTypeRepository
+                .findByTypeName(deliveryOrder.getDeliveryType().getDeliveryTypeName());
+        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType.getDeliveryTypeId());
         deliveryOrderRepository.insert(deliveryOrder);
 
         return;
     }
 
     public void update(DeliveryOrder deliveryOrder) {
-        DeliveryType deliveryType = deliveryTypeRepository.findByTypeName(
-                deliveryOrder.getDeliveryType().getDeliveryTypeName());
-        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType
-                .getDeliveryTypeId());
+        DeliveryType deliveryType = deliveryTypeRepository
+                .findByTypeName(deliveryOrder.getDeliveryType().getDeliveryTypeName());
+        deliveryOrder.getDeliveryType().setDeliveryTypeId(deliveryType.getDeliveryTypeId());
         deliveryOrderRepository.update(deliveryOrder);
 
         return;

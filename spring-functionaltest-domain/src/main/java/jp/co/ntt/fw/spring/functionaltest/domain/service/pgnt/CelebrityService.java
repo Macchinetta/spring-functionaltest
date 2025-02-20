@@ -27,6 +27,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.CelebritySearch
 public interface CelebrityService {
 
     Page<Celebrity> getNames(CelebritySearchCriteria criteria,
-            @AllowedSortProperty({ "celebrity_id" }) Pageable pageable);
+            @AllowedSortProperty({"celebrity_id"}) Pageable pageable);
 
 }

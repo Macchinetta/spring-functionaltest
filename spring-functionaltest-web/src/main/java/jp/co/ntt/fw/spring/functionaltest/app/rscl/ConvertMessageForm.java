@@ -14,7 +14,7 @@
  * governing permissions and limitations under the License.
  */
 /**
- * 
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 

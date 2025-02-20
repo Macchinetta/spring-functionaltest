@@ -33,8 +33,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-        String orderId = String.format("O%09d", orderRepository
-                .getOrderSequence());
+        String orderId = String.format("O%09d", orderRepository.getOrderSequence());
         order.setOrderId(orderId);
 
         orderRepository.createOrder(order);

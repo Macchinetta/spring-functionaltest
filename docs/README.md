@@ -11,57 +11,55 @@
 5.  残った単語区切りの後ろから桁を減らす。最終形を作成(e.g. DBSP,DAM2,INTR)
 
 
-| 機能名(日本語) | 機能名(英語) | 機能ID |
+| 機能ID | 機能名(英語) | 機能名(日本語) |
 | ------------- |:------------- |:----- |
-| ドメイン層 | Domain Layer | DMLY |
-| インフラ層 | Infrastructure Layer | INLY |
-| アプリケーション層 | Application Layer| APLY |
-| データベースアクセス（共通編） | Data Access Common | DTAC |
-| データベースアクセス（Mybatis3編） | Data Access MyBatis3 | DAM3 |
-| データベースアクセス（JPA編） | Data Access JPA | DJPA |
-| 排他制御 | Exclusion Control| EXCN |
-| 入力チェック | Validation | VLDT |
-| ロギング | Logging| LGGN |
-| 例外ハンドリング | Exception Handling | EXHN |
-| セッション管理 | Session Management | SSMN |
-| メッセージ管理 | Message Management | MSMN |
-| プロパティ管理 | Property Management| PRMN |
-| ページネーション | Pagination | PGNT |
-| 二重送信防止 | Double Submit Protection | DBSP |
-| 国際化 | Internationalization | INTR |
-| コードリスト | Code List| CDLS |
-| Ajax | Ajax | AJAX |
-| Rest | Rest | REST |
-| RESTクライアント | Rest Client | RSCL |
-| SOAP通信(サーバ/クライアント) | SOAP (Server/Client) | SOAP |
-| ファイルアップロード | File Upload| FLUP |
-| ファイルダウンロード | File Download| FLDW |
-| Tilesによる画面レイアウト| Tiles Layout | TLLY |
-| Thymeleafにおける画面レイアウト| Thymeleaf Layout | THLY |
-| システム時刻 | System Date| SYDT |
-| Beanマッピング(Dozer)| Bean Mapping | BNMP |
-| 日付操作(Joda Time)| Date Operation | DTOP |
-| 日付操作(Date and Time API)| Date Operation(Date and Time API) | DNTA |
-| 文字列操作| String Processing | STPR |
-| Spring Security| Spring Security| SPSC |
-| 認証 | Authentication | ATHN |
-| パスワードハッシュ化 | Password Hash| PSHS |
-| 認可 | Authorization| ATHR |
-| XSS対策| XSS Protection | XSPR |
-| CSRF対策 | CSRF Protection| CSPR |
-| E-mail送信(SMTP) | E-mail (SMTP) | EMAL |
-| JMS | Java Message Service | JMSS |
-| ヘルスチェック | Health Check | HLCH |
-| OAuth2.0(Spring Security OAuth - depricated) | OAuth2.0 | OTH2 |
-| OAuth2.0(Spring Security) | OAuth2.0 | O2SP |
-| 暗号化 | Encryption | ENCR |
-| Spring Securityのセッション管理 | Spring Security Session Management | SPSM |
-| Thymeleaf | Thymeleaf | THYM |
-| 共通 | Common | CMMN |
-| サンプル | Example| EXMP |
+| AJAX | Ajax | Ajax |
+| APLY | Application Layer| アプリケーション層 |
+| ATHN | Authentication | 認証 |
+| ATHR | Authorization| 認可 |
+| BNMP | Bean Mapping | Beanマッピング(Dozer)|
+| CDLS | Code List| コードリスト |
+| CMMN | Common | 共通 |
+| CSPR | CSRF Protection| CSRF対策 |
+| DAM3 | Data Access MyBatis3 | データベースアクセス（Mybatis3編） |
+| DBSP | Double Submit Protection | 二重送信防止 |
+| DJPA | Data Access JPA | データベースアクセス（JPA編） |
+| DMLY | Domain Layer | ドメイン層 |
+| DNTA | Date Operation(Date and Time API) | 日付操作(Date and Time API)|
+| DTAC | Data Access Common | データベースアクセス（共通編） |
+| DTOP | Date Operation | 日付操作(Joda Time)|
+| EMAL | E-mail (SMTP) | E-mail送信(SMTP) |
+| ENCR | Encryption | 暗号化 |
+| EXCN | Exclusion Control| 排他制御 |
+| EXHN | Exception Handling | 例外ハンドリング |
+| EXMP | Example| サンプル |
+| FLDW | File Download| ファイルダウンロード |
+| FLUP | File Upload| ファイルアップロード |
+| HLCH | Health Check | ヘルスチェック |
+| INLY | Infrastructure Layer | インフラ層 |
+| INTR | Internationalization | 国際化 |
+| JMSS | Java Message Service | JMS |
+| LGGN | Logging| ロギング |
+| MSMN | Message Management | メッセージ管理 |
+| OTH2 | OAuth2.0 | OAuth2.0 |
+| PGNT | Pagination | ページネーション |
+| PRMN | Property Management| プロパティ管理 |
+| REST | Rest | Rest |
+| RSCL | Rest Client | RESTクライアント |
+| SOAP | SOAP (Server/Client) | SOAP通信(サーバ/クライアント) |
+| SPSC | Spring Security| Spring Security|
+| SPSM | Spring Security Session Management | Spring Securityのセッション管理 |
+| SSMN | Session Management | セッション管理 |
+| STPR | String Processing | 文字列操作|
+| SYDT | System Date| システム時刻 |
+| THLY | Thymeleaf Layout | Thymeleafにおける画面レイアウト|
+| THYM | Thymeleaf | Thymeleaf |
+| TLLY | Tiles Layout | Tilesによる画面レイアウト |
+| VLDT | Validation | 入力チェック |
+| XSPR | XSS Protection | XSS対策 |
 
--   共通(Common)は機能としてはないが、試験アプリを作る上で必要なので、機能定義しておく。
--   サンプル(Example)はテストに直接関係ないが、一応機能定義しておく。
+- 共通(Common)は機能としてはないが、試験アプリを作る上で必要なので、機能定義しておく。
+- サンプル(Example)はテストに直接関係ないが、一応機能定義しておく。
 
 試験項目表雛形
 --------------
@@ -107,18 +105,14 @@
 |:------------- |:----------------- |
 | spring-functionaltest | 依存関係とビルドの管理を行うparent POM。|
 | spring-functionaltest-domain | |
-| spring-functionaltest-domain-oauth2 | OAuth2.0試験用サーバに使用する。|
 | spring-functionaltest-env | |
 | spring-functionaltest-env-oauth2 | OAuth2.0試験用サーバに使用する。|
 | spring-functionaltest-initdb | |
 | spring-functionaltest-model | SOAP通信時のみ使用する。公開するModelとなるJavaBeanを配置する。 |
 | spring-functionaltest-selenium | |
 | spring-functionaltest-web | |
-| spring-functionaltest-web-oauth2-component | OAuth2.0試験用サーバの共通モジュール。|
-| spring-functionaltest-web-oauth2-db | OAuth2.0試験用サーバ。データベースを用いてアクセストークンを連携する。|
-| spring-functionaltest-web-oauth2-memory | OAuth2.0試験用サーバ。インメモリを用いてアクセストークンを連携する。|
-| spring-functionaltest-web-oauth2-remote | OAuth2.0試験用サーバ。http通信を用いてアクセストークンを連携する。|
-| spring-functionaltest-web-oauth2-resource | OAuth2.0(Spring Security)試験用リソースサーバ。|
+| spring-functionaltest-web-oauth2-client | OAuth2.0の試験用クライアントサーバ。|
+| spring-functionaltest-web-oauth2-resource | OAuth2.0の試験用リソースサーバ。|
 | spring-functionaltest-webservice | SOAP通信時のみ使用する。公開するWebserviceのインターフェースを配置する。 |
 | spring-functionaltest-web-thymeleaf | spring-functionaltest-webのViewにThymeleafを適用する。 |
 
@@ -194,11 +188,11 @@ throw new BussinessException("This is sample error message!");
 OK
 
 ```
-e.sf.exmp.8001=This is sample error message!
+e.sf.em.8001=This is sample error message!
 ```
 
 ```
-ResultMessages messages = ResultMessages.error().add("e.sf.exmp.8001");
+ResultMessages messages = ResultMessages.error().add("e.sf.em.8001");
 thrown new BussinessaException(messages);
 ```
 
@@ -474,7 +468,7 @@ public class FileUploadTest extends FunctionTestSupport {
     {メッセージタイプ}.sf.{機能ID(小文字)}.{エラーレベル}{連番(0から開始)}
     ```
 
--   例) e.sf.flup.8000
+-   例) e.sf.fu.8000
 -   各項目の説明は、ガイドライン「メッセージ管理#メッセージID体系」を参照。
 
 #### Title Message
@@ -542,14 +536,14 @@ spring-functionaltest-initdb/src/main/sqls/{DB名}/02{連番3桁(0開始)}_datal
 
 #### ファイル(サーバ側)
 
--   ローカル環境用のテスト用ファイルは以下のディレクトリ(配下)に格納する。
+-   環境依存のローカル環境用のテスト用ファイルは以下のディレクトリ(配下)に格納する。
     -   サブディレクトリは必要に応じて設けてよい。
 
 ```
-spring-functionaltest-env/src/main/resources/testdata/{機能ID(小文字)}
+spring-functionaltest-domain/src/main/resources/testdata/{機能ID(小文字)}
 ```
 
--   結合試験環境用のテスト用ファイルは以下のディレクトリ(配下)に格納する。
+-   環境依存の結合試験環境用のテスト用ファイルは以下のディレクトリ(配下)に格納する。
     -   サブディレクトリは必要に応じて設けてよい。
 
 ```
@@ -586,49 +580,6 @@ spring-functionaltest-selenium/src/test/resources/testdata/{機能ID(小文字)}
         <servlet-name>{中項目ID(小文字)}AppServlet</servlet-name>
         <url-pattern>/{大項目ID(小文字)}/{中項目ID(数字部分)}/*</url-pattern>
     </servlet-mapping>
-```
-
-#### spring-mvc.xml(通常使用時用のXML)
-
--   &lt;context:exclude-filter&gt;要素を使用して、サーブレット分割したサーブレットで使用するコントローラーをコンポーネントスキャン対象から除外する。
-
-```
-    <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app">
-        <context:exclude-filter type="assignable" expression="jp.co.ntt.fw.spring.functionaltest.app.flup.FLUP0102Controller"/>
-    </context:component-scan>
-```
-
-#### spring-mvc.xml(分割用のXML)
-
--   共通のXML(spring-mvc-common.xml)を読み込む。
--   必要最低限のコンポーネント(ControllerやHelper)のみbean定義する
--   コンポーネントスキャンしない場合は、&lt;context:annotation-config
-    /&gt;が必要。
-
-```
-    <import resource="classpath:META-INF/spring/spring-mvc-common.xml"/>
-
-    <context:annotation-config />
-
-    <bean class="jp.co.ntt.fw.spring.functionaltest.app.flup.FLUP0102Controller" />
-    <bean class="jp.co.ntt.fw.spring.functionaltest.app.flup.FileUploadHelper" />
-```
-
-#### Controller
-
--   @RequestMappingのvalue属性には、分割したサーブレットに割り振ったサーブレットパスからの相対パス部分のみでよい。
-
-```
-//@RequestMapping("flup/0102") ← 分割したサーブレットに割り振ったサーブレットパスは指定不要。（指定すると動かない・・）
-@Controller
-public class FLUP0102Controller {
-
-    @RequestMapping(value = "001", method = RequestMethod.GET)
-    public String handle001() {
-        return form();
-    }
-
-}
 ```
 
 その他ルール・注意事項

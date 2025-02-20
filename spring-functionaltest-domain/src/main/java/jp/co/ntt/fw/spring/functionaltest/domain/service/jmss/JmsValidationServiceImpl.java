@@ -35,8 +35,8 @@ public class JmsValidationServiceImpl implements JmsValidationService {
     }
 
     @Override
-    public void writeValidatedObjectToFile(String dir, String fileName,
-            Object obj) throws IOException {
+    public void writeValidatedObjectToFile(String dir, String fileName, Object obj)
+            throws IOException {
         jmsSharedService.writeObjectToFile(dir, fileName, obj);
     }
 }

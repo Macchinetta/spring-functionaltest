@@ -107,9 +107,8 @@ public class OrderItem implements Serializable {
 
     @Override
     public String toString() {
-        return "CartItem [orderId=" + orderId + ", itemId=" + itemId
-                + ", quantity=" + quantity + ", item=" + item
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "CartItem [orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity
+                + ", item=" + item + ", super.hashCode()=" + super.hashCode() + "]";
     }
 
 }

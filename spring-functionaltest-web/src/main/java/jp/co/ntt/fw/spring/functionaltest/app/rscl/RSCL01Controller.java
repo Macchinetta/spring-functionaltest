@@ -48,8 +48,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0101/001", method = RequestMethod.GET)
     public String handle0101001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateeのgetForObjectメソッドにリクエストパス送信");
+        model.addAttribute("testDescription", "RestTemplateeのgetForObjectメソッドにリクエストパス送信");
         model.addAttribute("testId", "0101/001");
 
         return "rscl/setRequestPass";
@@ -69,8 +68,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0102/001", method = RequestMethod.GET)
     public String handle0102001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのgetForEntityメソッドにリクエストパス送信");
+        model.addAttribute("testDescription", "RestTemplateのgetForEntityメソッドにリクエストパス送信");
         model.addAttribute("testId", "0102/001");
 
         return "rscl/setRequestPass";
@@ -90,8 +88,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0103/001", method = RequestMethod.GET)
     public String handle0103001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパス送信");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパス送信");
         model.addAttribute("testId", "0103/001");
 
         return "rscl/setRequestPass";
@@ -111,8 +108,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0104/001", method = RequestMethod.GET)
     public String handle0104001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0104/001");
 
         return "rscl/setRequestPass";
@@ -132,8 +128,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0105/001", method = RequestMethod.GET)
     public String handle0105001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0105/001");
 
         return "rscl/setRequestPass";
@@ -142,8 +137,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0105/001", method = RequestMethod.POST)
     public String handle0105001(Model model, @RequestParam String path) {
 
-        List<UserResource> rcvLst = this.collectionRestClientService
-                .exchangeCollection(path);
+        List<UserResource> rcvLst = this.collectionRestClientService.exchangeCollection(path);
 
         model.addAttribute("resultDescription", "取得したレスポンスデータとJavaBeanリスト情報確認");
         model.addAttribute("userList", rcvLst);
@@ -154,23 +148,20 @@ public class RSCL01Controller {
     @RequestMapping(value = "0106/001", method = RequestMethod.GET)
     public String handle0106001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのpostForObjectメソッドにリクエストパスとユーザ情報を設定");
+        model.addAttribute("testDescription", "RestTemplateのpostForObjectメソッドにリクエストパスとユーザ情報を設定");
         model.addAttribute("testId", "0106/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0106/001", method = RequestMethod.POST)
-    public String handle0106001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0106001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService.postForObject(path,
-                sendUser);
+        UserResource rcvUser = this.restClientService.postForObject(path, sendUser);
 
         model.addAttribute("resultDescription", "取得したJavaBean情報確認");
         model.addAttribute("user", rcvUser);
@@ -181,23 +172,20 @@ public class RSCL01Controller {
     @RequestMapping(value = "0107/001", method = RequestMethod.GET)
     public String handle0107001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのpostForEntityメソッドにリクエストパスとユーザ情報を設定");
+        model.addAttribute("testDescription", "RestTemplateのpostForEntityメソッドにリクエストパスとユーザ情報を設定");
         model.addAttribute("testId", "0107/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0107/001", method = RequestMethod.POST)
-    public String handle0107001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0107001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService.postForEntity(path,
-                sendUser);
+        UserResource rcvUser = this.restClientService.postForEntity(path, sendUser);
 
         model.addAttribute("resultDescription", "取得したレスポンスデータとJavaBean情報確認");
         model.addAttribute("user", rcvUser);
@@ -208,23 +196,20 @@ public class RSCL01Controller {
     @RequestMapping(value = "0108/001", method = RequestMethod.GET)
     public String handle0108001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスとユーザ情報を設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスとユーザ情報を設定");
         model.addAttribute("testId", "0108/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0108/001", method = RequestMethod.POST)
-    public String handle0108001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0108001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService.exchangeByPost(path,
-                sendUser);
+        UserResource rcvUser = this.restClientService.exchangeByPost(path, sendUser);
 
         model.addAttribute("resultDescription", "取得したレスポンスデータとJavaBean情報確認");
         model.addAttribute("user", rcvUser);
@@ -235,23 +220,20 @@ public class RSCL01Controller {
     @RequestMapping(value = "0109/001", method = RequestMethod.GET)
     public String handle0109001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスとユーザ情報を設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスとユーザ情報を設定");
         model.addAttribute("testId", "0109/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0109/001", method = RequestMethod.POST)
-    public String handle0109001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0109001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService.exchangeJsonByPost(path,
-                sendUser);
+        UserResource rcvUser = this.restClientService.exchangeJsonByPost(path, sendUser);
 
         model.addAttribute("resultDescription", "取得したレスポンスデータとJavaBean情報確認");
         model.addAttribute("user", rcvUser);
@@ -262,8 +244,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0110/001", method = RequestMethod.GET)
     public String handle0110001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのdeleteメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのdeleteメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0110/001");
 
         return "rscl/setDeleteRequestPass";
@@ -282,8 +263,7 @@ public class RSCL01Controller {
     @RequestMapping(value = "0111/001", method = RequestMethod.GET)
     public String handle0111001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0111/001");
 
         return "rscl/setDeleteRequestPass";
@@ -302,16 +282,14 @@ public class RSCL01Controller {
     @RequestMapping(value = "0112/001", method = RequestMethod.GET)
     public String handle0112001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0112/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0112/001", method = RequestMethod.POST)
-    public String handle0112001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0112001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());
@@ -327,16 +305,14 @@ public class RSCL01Controller {
     @RequestMapping(value = "0113/001", method = RequestMethod.GET)
     public String handle0113001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "RestTemplateのexchangeメソッドにリクエストパスを設定");
+        model.addAttribute("testDescription", "RestTemplateのexchangeメソッドにリクエストパスを設定");
         model.addAttribute("testId", "0113/001");
 
         return "rscl/sendUserInf";
     }
 
     @RequestMapping(value = "0113/001", method = RequestMethod.POST)
-    public String handle0113001(Model model, UserInfForm form,
-            @RequestParam String path) {
+    public String handle0113001(Model model, UserInfForm form, @RequestParam String path) {
 
         UserResource sendUser = new UserResource();
         sendUser.setName(form.getName());

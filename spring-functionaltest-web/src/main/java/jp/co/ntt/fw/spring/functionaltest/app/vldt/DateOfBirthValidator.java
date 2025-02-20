@@ -39,8 +39,7 @@ public class DateOfBirthValidator implements Validator {
             return;
 
         if (dateOfBirth.plusYears(age).getYear() != (new LocalDate()).getYear())
-            errors.rejectValue("age", "i.sf.vldt.5002",
-                    "Age and Date of Birth is inconsistent.");
+            errors.rejectValue("age", "i.sf.vd.5002", "Age and Date of Birth is inconsistent.");
     }
 
 }

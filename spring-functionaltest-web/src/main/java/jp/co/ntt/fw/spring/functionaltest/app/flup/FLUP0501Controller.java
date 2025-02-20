@@ -35,7 +35,8 @@ import jp.co.ntt.fw.spring.functionaltest.app.flup.ScreenFlowUploadForm.Confirm;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.ScreenFlowUploadForm.Upload;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/0501")
 @Controller
@@ -63,10 +64,10 @@ public class FLUP0501Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "confirm")
-    public String handle001Confirm(@Validated({ Confirm.class,
-            Default.class }) ScreenFlowUploadForm form,
-            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
-            BindingResult result) throws IOException {
+    public String handle001Confirm(
+            @Validated({Confirm.class, Default.class}) ScreenFlowUploadForm form,
+            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo, BindingResult result)
+            throws IOException {
         return confirm(form, screenFlowUploadSessionInfo, result);
     }
 
@@ -76,19 +77,16 @@ public class FLUP0501Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handle001Upload(@Validated({ Upload.class,
-            Default.class }) ScreenFlowUploadForm form,
-            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
-            BindingResult result,
+    public String handle001Upload(
+            @Validated({Upload.class, Default.class}) ScreenFlowUploadForm form,
+            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
-        String temporaryFileId = screenFlowUploadSessionInfo
-                .getTemporaryFileId();
+        String temporaryFileId = screenFlowUploadSessionInfo.getTemporaryFileId();
         if (result.hasErrors() || !StringUtils.hasText(temporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
 
-        screenFlowFileUploadHelper.uploadToDisc(form, temporaryFileId,
-                redirectAttributes);
+        screenFlowFileUploadHelper.uploadToDisc(form, temporaryFileId, redirectAttributes);
 
         return "redirect:/flup/0501?complete";
     }
@@ -99,10 +97,10 @@ public class FLUP0501Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST, params = "confirm")
-    public String handle002Confirm(@Validated({ Confirm.class,
-            Default.class }) ScreenFlowUploadForm form,
-            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
-            BindingResult result) throws IOException {
+    public String handle002Confirm(
+            @Validated({Confirm.class, Default.class}) ScreenFlowUploadForm form,
+            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo, BindingResult result)
+            throws IOException {
         return confirm(form, screenFlowUploadSessionInfo, result);
     }
 
@@ -112,19 +110,16 @@ public class FLUP0501Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST)
-    public String handle002Upload(@Validated({ Upload.class,
-            Default.class }) ScreenFlowUploadForm form,
-            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
-            BindingResult result,
+    public String handle002Upload(
+            @Validated({Upload.class, Default.class}) ScreenFlowUploadForm form,
+            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
-        String temporaryFileId = screenFlowUploadSessionInfo
-                .getTemporaryFileId();
+        String temporaryFileId = screenFlowUploadSessionInfo.getTemporaryFileId();
         if (result.hasErrors() || !StringUtils.hasText(temporaryFileId)) {
             throw new InvalidRequestException(result.toString());
         }
 
-        screenFlowFileUploadHelper.uploadToDb(form, temporaryFileId,
-                redirectAttributes);
+        screenFlowFileUploadHelper.uploadToDb(form, temporaryFileId, redirectAttributes);
 
         return "redirect:/flup/0501?complete";
     }
@@ -142,8 +137,8 @@ public class FLUP0501Controller {
     }
 
     private String confirm(ScreenFlowUploadForm form,
-            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo,
-            BindingResult result) throws IOException {
+            ScreenFlowUploadSessionInfo screenFlowUploadSessionInfo, BindingResult result)
+            throws IOException {
         if (result.hasErrors()) {
             return form();
         }

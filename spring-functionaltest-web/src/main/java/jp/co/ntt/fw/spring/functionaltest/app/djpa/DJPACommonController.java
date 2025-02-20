@@ -63,8 +63,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.djpa.JPACategoryService
 @RequestMapping("djpa/book")
 public class DJPACommonController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DJPACommonController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DJPACommonController.class);
 
     @Inject
     JPABookService jpaBookService;
@@ -104,12 +103,10 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String registerBook(Model model, BookForm bookForm,
-            RedirectAttributes redirectAttrs) {
+    public String registerBook(Model model, BookForm bookForm, RedirectAttributes redirectAttrs) {
         JPABook jpaBook = beaMapper.map(bookForm, JPABook.class);
 
-        JPACategory category = jpaCategoryService.getCategoryDetails(bookForm
-                .getCategoryName());
+        JPACategory category = jpaCategoryService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
         jpaBook = jpaBookService.addBook(jpaBook);
 
@@ -127,8 +124,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookLZ jpaBook = beaMapper.map(bookForm, JPABookLZ.class);
 
-        JPACategoryLZ category = jpaCategoryLzService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryLZ category =
+                jpaCategoryLzService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
         jpaBook = jpaBookLZService.addBook(jpaBook);
 
@@ -146,8 +143,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -163,12 +160,12 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "flush")
-    public String registerBookUsingFlush(BookForm bookForm,
-            RedirectAttributes redirectAttrs) throws InterruptedException {
+    public String registerBookUsingFlush(BookForm bookForm, RedirectAttributes redirectAttrs)
+            throws InterruptedException {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -184,12 +181,11 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "customRepoSave")
-    public String registerBookUsingCustomRepo(BookForm bookForm,
-            RedirectAttributes redirectAttrs) {
+    public String registerBookUsingCustomRepo(BookForm bookForm, RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -203,13 +199,14 @@ public class DJPACommonController {
         return "redirect:register";
     }
 
-    @RequestMapping(value = "register", method = RequestMethod.POST, params = "noIntfInheriRepoSave")
+    @RequestMapping(value = "register", method = RequestMethod.POST,
+            params = "noIntfInheriRepoSave")
     public String registerBookUsingNoIntfInheriRepo(BookForm bookForm,
             RedirectAttributes redirectAttrs) {
         JPABookEG jpaBook = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook.setBlobCode(jpaBook.getClobCode().getBytes());
@@ -224,15 +221,13 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "customRepoSearch")
-    public String searchBookUsingCustomRepo(JPABookListForm jpaBookListForm,
-            Model model) {
+    public String searchBookUsingCustomRepo(JPABookListForm jpaBookListForm, Model model) {
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());
 
         JPABookEG jpaBook = jpaBookEGService.findUsingCustomRepo(bookId);
 
-        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                .toUpperCase());
+        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
 
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", jpaBook);
@@ -243,15 +238,13 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "noPrimaryKeySearch")
-    public String searchBookUsingNonPrimarKey(JPABookListForm jpaBookListForm,
-            Model model) {
+    public String searchBookUsingNonPrimarKey(JPABookListForm jpaBookListForm, Model model) {
 
         String bookTitle = jpaBookListForm.getBookTitle();
 
         JPABookEG jpaBook = jpaBookEGService.findByTitle(bookTitle);
 
-        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                .toUpperCase());
+        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
 
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", jpaBook);
@@ -261,16 +254,15 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "noIntfInheriRepoSrch")
-    public String searchBookUsingNoInterfaceRepo(
-            JPABookListForm jpaBookListForm, Model model) {
+    @RequestMapping(value = "existence", method = RequestMethod.GET,
+            params = "noIntfInheriRepoSrch")
+    public String searchBookUsingNoInterfaceRepo(JPABookListForm jpaBookListForm, Model model) {
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());
 
         JPABookEG jpaBook = jpaBookEGService.findUsingNoIntfInheriRepo(bookId);
 
-        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                .toUpperCase());
+        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
 
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", jpaBook);
@@ -304,8 +296,7 @@ public class DJPACommonController {
         // SystemExceptionをthrowしているため、SonarQube指摘は未対応としています。
         JPABook jpaBook = beaMapper.map(bookForm, JPABook.class);
 
-        JPACategory category = jpaCategoryService.getCategoryDetails(bookForm
-                .getCategoryName());
+        JPACategory category = jpaCategoryService.getCategoryDetails(bookForm.getCategoryName());
         jpaBook.setCategory(category);
 
         jpaBook = jpaBookService.addBookWithRollback(jpaBook);
@@ -322,8 +313,8 @@ public class DJPACommonController {
             RedirectAttributes redirectAttrs) throws MappingException {
         JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBookEG.setCategory(category);
         jpaBookEG.setBlobCode(bookForm.getClobCode().getBytes());
         jpaBookEG = jpaBookEGService.addBook(jpaBookEG);
@@ -342,15 +333,14 @@ public class DJPACommonController {
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "lazyLoadIntercept")
-    public String searchLazyInterceptDemo(Model model,
-            JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdIntercept());
+    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST,
+            params = "lazyLoadIntercept")
+    public String searchLazyInterceptDemo(Model model, JPABookListForm bookListForm,
+            RedirectAttributes redirectAttrs) {
+        Integer bookId = Integer.valueOf(bookListForm.getSearchInQueryBookIdIntercept());
         JPABookLZ book = jpaBookLZService.findById(bookId);
         model.addAttribute("bookForm", new BookForm());
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         model.addAttribute("book", book);
         return "djpa/registerComplete";
 
@@ -364,22 +354,20 @@ public class DJPACommonController {
      * @return
      */
     @RequestMapping(value = "filterSrch", method = RequestMethod.POST, params = "lazyLoadFilter")
-    public String searchLazyFilterDemo(Model model,
-            JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdFilter());
+    public String searchLazyFilterDemo(Model model, JPABookListForm bookListForm,
+            RedirectAttributes redirectAttrs) {
+        Integer bookId = Integer.valueOf(bookListForm.getSearchInQueryBookIdFilter());
         JPABookLZ book = jpaBookLZService.findById(bookId);
         model.addAttribute("bookForm", new BookForm());
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         model.addAttribute("book", book);
         return "djpa/registerComplete";
 
     }
 
     /**
-     * This method demonstrates the lazy initialization exception if no settings are performed and dependent entities properties
-     * are accessed at application layer
+     * This method demonstrates the lazy initialization exception if no settings are performed and
+     * dependent entities properties are accessed at application layer
      * @param model
      * @param bookListForm
      * @param redirectAttrs
@@ -388,37 +376,34 @@ public class DJPACommonController {
     @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "noLazy")
     public String searchNoLazySetting(Model model, JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdNoLazy());
+        Integer bookId = Integer.valueOf(bookListForm.getSearchInQueryBookIdNoLazy());
         JPABookLZ book = jpaBookLZService.findById(bookId);
 
         // when acquire CategoryName, LazyInitializationException will thrown
-        model.addAttribute("bookCategory", book.getCategory()
-                .getCategoryName());
+        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
 
         model.addAttribute("bookForm", new BookForm());
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         model.addAttribute("book", book);
         return "djpa/registerComplete";
 
     }
 
     /**
-     * This method demonstrates when acquire FlashAttribute outside of OpenEntityManagerInViewInterceptor,
-     * LazyInitializationException occur.
+     * This method demonstrates when acquire FlashAttribute outside of
+     * OpenEntityManagerInViewInterceptor, LazyInitializationException occur.
      * @param bookListForm
      * @param redirectAttrs
      * @return
      */
-    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST, params = "registerFlashAttribute")
+    @RequestMapping(value = "interceptSrch", method = RequestMethod.POST,
+            params = "registerFlashAttribute")
     public String registerFlashAttribute(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdAndRegisterFlashAttribute());
+        Integer bookId =
+                Integer.valueOf(bookListForm.getSearchInQueryBookIdAndRegisterFlashAttribute());
         JPABookLZ book = jpaBookLZService.findById(bookId);
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
 
         // register FlashAttribute
         redirectAttrs.addFlashAttribute("book", book);
@@ -428,12 +413,10 @@ public class DJPACommonController {
 
     @RequestMapping(value = "redirectRegisterComplete", method = RequestMethod.GET)
     public String redirectRegisterComplete(
-            @ModelAttribute(name = "book", binding = false) JPABookLZ book,
-            Model model) {
+            @ModelAttribute(name = "book", binding = false) JPABookLZ book, Model model) {
 
         // when acquire CategoryName, LazyInitializationException will thrown
-        model.addAttribute("bookCategory", book.getCategory()
-                .getCategoryName());
+        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
 
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", book);
@@ -442,23 +425,22 @@ public class DJPACommonController {
     }
 
     /**
-     * This method demonstrates when acquiring anything but foreign key, the entire Entity is acquired.
+     * This method demonstrates when acquiring anything but foreign key, the entire Entity is
+     * acquired.
      * @param model
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringNotForeignKey")
+    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST,
+            params = "acquiringNotForeignKey")
     public String searchNoLazySettingAcquiringNotForeignKey(Model model,
             JPABookListForm bookListForm) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdAcquiringNotForeignKey());
-        JPABookLZ book = jpaBookLZService.findByIdAcquiringNotForeignKey(
-                bookId);
-        model.addAttribute("bookCategory", book.getCategory()
-                .getCategoryName());
+        Integer bookId =
+                Integer.valueOf(bookListForm.getSearchInQueryBookIdAcquiringNotForeignKey());
+        JPABookLZ book = jpaBookLZService.findByIdAcquiringNotForeignKey(bookId);
+        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
         model.addAttribute("bookForm", new BookForm());
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         model.addAttribute("book", book);
         return "djpa/registerComplete";
 
@@ -470,20 +452,18 @@ public class DJPACommonController {
      * @param bookListForm
      * @return
      */
-    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST, params = "acquiringForeignKey")
+    @RequestMapping(value = "noLazySetting", method = RequestMethod.POST,
+            params = "acquiringForeignKey")
     public String searchNoLazySettingAcquiringForeignKey(Model model,
             JPABookListForm bookListForm) {
-        Integer bookId = Integer.valueOf(bookListForm
-                .getSearchInQueryBookIdAcquiringForeignKey());
+        Integer bookId = Integer.valueOf(bookListForm.getSearchInQueryBookIdAcquiringForeignKey());
         JPABookLZ book = jpaBookLZService.findByIdAcquiringForeignKey(bookId);
 
         // when acquire CategoryName, LazyInitializationException will thrown
-        model.addAttribute("bookCategory", book.getCategory()
-                .getCategoryName());
+        model.addAttribute("bookCategory", book.getCategory().getCategoryName());
 
         model.addAttribute("bookForm", new BookForm());
-        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                .toUpperCase());
+        book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         model.addAttribute("book", book);
         return "djpa/registerComplete";
 
@@ -496,8 +476,7 @@ public class DJPACommonController {
         if (null == book) {
             book = new JPABook();
         } else {
-            String blob = new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase();
+            String blob = new String(Hex.encode(book.getBlobCode())).toUpperCase();
             book.setBlobCodeHex(blob);
         }
         model.addAttribute("bookForm", new BookForm());
@@ -507,15 +486,13 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "egComplete")
-    public String registerEGComplete(@RequestParam("bookId") String id,
-            Model model) {
+    public String registerEGComplete(@RequestParam("bookId") String id, Model model) {
 
         JPABookEG book = jpaBookEGService.findById(Integer.valueOf(id));
         if (null == book) {
             book = new JPABookEG();
         } else {
-            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase());
+            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         }
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", book);
@@ -525,16 +502,13 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "find")
-    public String displayBookDetail(@RequestParam("bookId") String id,
-            Model model) {
+    public String displayBookDetail(@RequestParam("bookId") String id, Model model) {
 
-        JPABookEG book = jpaBookEGService.findByIdUsingJPARepository(Integer
-                .valueOf(id));
+        JPABookEG book = jpaBookEGService.findByIdUsingJPARepository(Integer.valueOf(id));
         if (null == book) {
             book = new JPABookEG();
         } else {
-            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase());
+            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         }
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", book);
@@ -548,8 +522,8 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "{id}/update")
-    public String updateForm(@PathVariable("id") String id,
-            @Validated BookForm form, BindingResult result, Model model) {
+    public String updateForm(@PathVariable("id") String id, @Validated BookForm form,
+            BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             return updateRedo(form, model);
@@ -559,8 +533,7 @@ public class DJPACommonController {
         if (null == book) {
             book = new JPABook();
         } else {
-            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase());
+            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         }
         model.addAttribute("book", book);
 
@@ -568,8 +541,8 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "{id}/pgUpdate")
-    public String paginatedUpdateForm(@PathVariable("id") Integer id,
-            @Validated BookForm form, BindingResult result, Model model) {
+    public String paginatedUpdateForm(@PathVariable("id") Integer id, @Validated BookForm form,
+            BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             return updateRedo(form, model);
@@ -579,8 +552,7 @@ public class DJPACommonController {
         if (null == book) {
             book = new JPABookEG();
         } else {
-            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase());
+            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         }
         model.addAttribute("book", book);
 
@@ -629,13 +601,10 @@ public class DJPACommonController {
      */
 
     @RequestMapping(value = "pgList", method = RequestMethod.GET)
-    public String paginationUsingPageable(
-            @PageableDefault(page = 0, size = 4, sort = {
-                    "bookId" }, direction = Direction.ASC) Pageable pageable,
-            Model model) {
+    public String paginationUsingPageable(@PageableDefault(page = 0, size = 4, sort = {"bookId"},
+            direction = Direction.ASC) Pageable pageable, Model model) {
 
-        Page<JPABookEG> bookListPage = jpaBookEGService.getPaginatedBooks(
-                pageable);
+        Page<JPABookEG> bookListPage = jpaBookEGService.getPaginatedBooks(pageable);
 
         model.addAttribute("page", bookListPage);
         return "djpa/pageList";
@@ -660,7 +629,8 @@ public class DJPACommonController {
         return "redirect:list";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deleteAllByIdInBatch")
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE,
+            params = "deleteAllByIdInBatch")
     public String defaultDeleteAllByIdInBatch(JPABookListForm bookListForm) {
         // Split using comma on the BookIdDelOpnInput to get multiple book Ids.
         String[] idArray = bookListForm.getBookIdDelOpnInput().split(",");
@@ -678,8 +648,7 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE, params = "deletOne")
-    public String defaultDeleteOne(JPABookListForm bookListForm,
-            RedirectAttributes redirectAttrs) {
+    public String defaultDeleteOne(JPABookListForm bookListForm, RedirectAttributes redirectAttrs) {
 
         jpaBookService.delete(bookListForm.getBookIdDelOpnInput());
 
@@ -703,8 +672,7 @@ public class DJPACommonController {
     public String defaultDeleteByEntity(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
 
-        JPABook jpaBook = jpaBookService.findById(bookListForm
-                .getBookIdDelOpnInput());
+        JPABook jpaBook = jpaBookService.findById(bookListForm.getBookIdDelOpnInput());
 
         jpaBookService.delete(jpaBook);
 
@@ -714,8 +682,7 @@ public class DJPACommonController {
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "check")
     public String defaultExistenceCheck(JPABookListForm bookListForm,
             RedirectAttributes redirectAttrs) {
-        boolean isBookPresent = jpaBookService.isPresent(bookListForm
-                .getBookIdSrch());
+        boolean isBookPresent = jpaBookService.isPresent(bookListForm.getBookIdSrch());
         redirectAttrs.addFlashAttribute("isBookPresent", isBookPresent);
         return "redirect:list";
     }
@@ -730,8 +697,7 @@ public class DJPACommonController {
     @RequestMapping(value = "sort", method = RequestMethod.GET)
     public String defaultUsingSort(JPABookListForm bookListForm, Model model) {
         String sortFld[] = bookListForm.getSearchOrderBy().split(" ");
-        List<JPABook> bookList = jpaBookService.getSortedBookList(sortFld[0],
-                sortFld[1]);
+        List<JPABook> bookList = jpaBookService.getSortedBookList(sortFld[0], sortFld[1]);
         return displayJPAListPage(model, bookList);
     }
 
@@ -743,8 +709,7 @@ public class DJPACommonController {
      */
     private String displayJPAListPage(Model model, List<JPABook> bookList) {
         for (JPABook jpaBook : bookList) {
-            jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                    .toUpperCase());
+            jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
         }
 
         model.addAttribute("bookList", bookList);
@@ -756,8 +721,8 @@ public class DJPACommonController {
      */
     @RequestMapping(value = "{id}/update", method = RequestMethod.POST, params = "update")
     public String updateBookUsingProjectRepo(@PathVariable("id") String id,
-            @Validated BookUpdateForm bookForm, BindingResult result,
-            Model model, RedirectAttributes redirectAttrs) {
+            @Validated BookUpdateForm bookForm, BindingResult result, Model model,
+            RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
             model.addAttribute("book", bookForm);
@@ -768,8 +733,8 @@ public class DJPACommonController {
         bookForm.setBlobCode(null);
         JPABookEG jpaBookEG = beaMapper.map(bookForm, JPABookEG.class);
 
-        JPACategoryEG category = jpaCategoryEGService.getCategoryDetails(
-                bookForm.getCategoryName());
+        JPACategoryEG category =
+                jpaCategoryEGService.getCategoryDetails(bookForm.getCategoryName());
         jpaBookEG.setCategory(category);
 
         jpaBookEG.setBlobCode(jpaBookEG.getClobCode().getBytes());
@@ -792,8 +757,7 @@ public class DJPACommonController {
         if (null == book) {
             book = new JPABookEG();
         } else {
-            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode()))
-                    .toUpperCase());
+            book.setBlobCodeHex(new String(Hex.encode(book.getBlobCode())).toUpperCase());
         }
         model.addAttribute("bookForm", new BookForm());
         model.addAttribute("book", book);
@@ -809,28 +773,24 @@ public class DJPACommonController {
     }
 
     @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHint")
-    public String lockTimeoutAndPessimisticLocking(
-            JPABookListForm jpaBookListForm,
-            Model model) throws InterruptedException {
+    public String lockTimeoutAndPessimisticLocking(JPABookListForm jpaBookListForm, Model model)
+            throws InterruptedException {
 
-        String dataBaseName = DataBaseInfo.getDataBaseID(
-                (HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName =
+                DataBaseInfo.getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());
 
         JPABookEG jpaBook = new JPABookEG();
         try {
-            jpaBook = jpaBookEGService
-                    .findOneForUpdateLckTmeOutPessismisticLocking(bookId,
-                            jpaBookListForm.getSleepTime());
+            jpaBook = jpaBookEGService.findOneForUpdateLckTmeOutPessismisticLocking(bookId,
+                    jpaBookListForm.getSleepTime());
         } catch (PessimisticLockingFailureException e) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivelockacquired"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivelockacquired"));
             return "common/error/exclusiveLockError";
         }
-        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                .toUpperCase());
+        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
 
         model.addAttribute("databaseId", dataBaseName);
         model.addAttribute("bookForm", new BookForm());
@@ -841,29 +801,26 @@ public class DJPACommonController {
 
     }
 
-    @RequestMapping(value = "existence", method = RequestMethod.GET, params = "lckTmeOutQHintNoExcp")
-    public String lockTimeoutAndPessimisticLockingNoExp(
-            JPABookListForm jpaBookListForm,
+    @RequestMapping(value = "existence", method = RequestMethod.GET,
+            params = "lckTmeOutQHintNoExcp")
+    public String lockTimeoutAndPessimisticLockingNoExp(JPABookListForm jpaBookListForm,
             Model model) throws InterruptedException {
 
-        String dataBaseName = DataBaseInfo.getDataBaseID(
-                (HibernateJpaVendorAdapter) jpaVendorAdapter);
+        String dataBaseName =
+                DataBaseInfo.getDataBaseID((HibernateJpaVendorAdapter) jpaVendorAdapter);
         logger.debug("Current Database Under Test ::" + dataBaseName);
 
         Integer bookId = Integer.valueOf(jpaBookListForm.getBookIdSrch());
 
         JPABookEG jpaBook = new JPABookEG();
         try {
-            jpaBook = jpaBookEGService
-                    .findOneForUpdateLckTmeOutPessismisticLockingNoExcp(bookId,
-                            jpaBookListForm.getSleepTime());
+            jpaBook = jpaBookEGService.findOneForUpdateLckTmeOutPessismisticLockingNoExcp(bookId,
+                    jpaBookListForm.getSleepTime());
         } catch (PessimisticLockingFailureException e) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivelockacquired"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivelockacquired"));
             return "common/error/exclusiveLockError";
         }
-        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode()))
-                .toUpperCase());
+        jpaBook.setBlobCodeHex(new String(Hex.encode(jpaBook.getBlobCode())).toUpperCase());
 
         model.addAttribute("databaseId", dataBaseName);
         model.addAttribute("bookForm", new BookForm());

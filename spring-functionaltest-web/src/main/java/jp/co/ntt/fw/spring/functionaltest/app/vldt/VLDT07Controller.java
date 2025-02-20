@@ -44,8 +44,7 @@ public class VLDT07Controller {
     }
 
     @RequestMapping(value = "0701/001", method = RequestMethod.POST)
-    public String handleValidate(@Validated OsCommandInjectionForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated OsCommandInjectionForm form, BindingResult result) {
         if (result.hasErrors()) {
             return handle();
         }

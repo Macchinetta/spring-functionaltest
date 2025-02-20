@@ -27,8 +27,7 @@ public class PageableCelebritySearchCriteria implements Serializable {
 
     private final transient Pageable pageable;
 
-    public PageableCelebritySearchCriteria(
-            CelebritySearchCriteria celebritySearchCriteria,
+    public PageableCelebritySearchCriteria(CelebritySearchCriteria celebritySearchCriteria,
             Pageable pageable) {
         this.celebritySearchCriteria = celebritySearchCriteria;
         this.pageable = pageable;

@@ -28,8 +28,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(propagation = Propagation.NEVER)
 @Service
-public class DeliveryOrderNeverSharedServiceImpl implements
-                                                 DeliveryOrderNeverSharedService {
+public class DeliveryOrderNeverSharedServiceImpl implements DeliveryOrderNeverSharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

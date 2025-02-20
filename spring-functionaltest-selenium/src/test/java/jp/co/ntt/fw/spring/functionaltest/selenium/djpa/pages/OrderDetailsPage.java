@@ -194,18 +194,18 @@ public class OrderDetailsPage implements Page<OrderDetailsPage> {
     public String isItemRevmovable(Integer itemNum) {
         String removable = "No";
         switch (itemNum) {
-        case 1:
-            removable = WebElementOperations.getElementTextValue(itStatus1);
-            break;
-        case 2:
-            removable = WebElementOperations.getElementTextValue(itStatus2);
-            break;
-        case 3:
-            removable = WebElementOperations.getElementTextValue(itStatus3);
-            break;
+            case 1:
+                removable = WebElementOperations.getElementTextValue(itStatus1);
+                break;
+            case 2:
+                removable = WebElementOperations.getElementTextValue(itStatus2);
+                break;
+            case 3:
+                removable = WebElementOperations.getElementTextValue(itStatus3);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         return removable;
@@ -248,21 +248,21 @@ public class OrderDetailsPage implements Page<OrderDetailsPage> {
     public String getItemCodeValue(Integer itemNum) {
         String value = "";
         switch (itemNum) {
-        case 1:
-            value = WebElementOperations.getElementTextValue(itemCode1);
-            break;
-        case 2:
-            value = WebElementOperations.getElementTextValue(itemCode2);
-            break;
-        case 3:
-            value = WebElementOperations.getElementTextValue(itemCode3);
-            break;
-        case 4:
-            value = WebElementOperations.getElementTextValue(itemCode4);
-            break;
+            case 1:
+                value = WebElementOperations.getElementTextValue(itemCode1);
+                break;
+            case 2:
+                value = WebElementOperations.getElementTextValue(itemCode2);
+                break;
+            case 3:
+                value = WebElementOperations.getElementTextValue(itemCode3);
+                break;
+            case 4:
+                value = WebElementOperations.getElementTextValue(itemCode4);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
 
         return value;
@@ -271,20 +271,20 @@ public class OrderDetailsPage implements Page<OrderDetailsPage> {
     public boolean isItemPresent(Integer itemNumber) {
         boolean present = false;
         switch (itemNumber) {
-        case 1:
-            present = WebElementOperations.isElementPresent(itemCode1);
-            break;
-        case 2:
-            present = WebElementOperations.isElementPresent(itemCode2);
-            break;
-        case 3:
-            present = WebElementOperations.isElementPresent(itemCode3);
-            break;
-        case 4:
-            present = WebElementOperations.isElementPresent(itemCode4);
-            break;
-        default:
-            break;
+            case 1:
+                present = WebElementOperations.isElementPresent(itemCode1);
+                break;
+            case 2:
+                present = WebElementOperations.isElementPresent(itemCode2);
+                break;
+            case 3:
+                present = WebElementOperations.isElementPresent(itemCode3);
+                break;
+            case 4:
+                present = WebElementOperations.isElementPresent(itemCode4);
+                break;
+            default:
+                break;
         }
 
         return present;
@@ -293,20 +293,20 @@ public class OrderDetailsPage implements Page<OrderDetailsPage> {
     public ItemPage displayItemDetail(Integer itemNumber) {
         ItemPage ItemPage = new ItemPage(driver);
         switch (itemNumber) {
-        case 1:
-            itemDetail1Link.click();
-            break;
-        case 2:
-            itemDetail2Link.click();
-            break;
-        case 3:
-            itemDetail3Link.click();
-            break;
-        case 4:
-            itemDetail4Link.click();
-            break;
-        default:
-            break;
+            case 1:
+                itemDetail1Link.click();
+                break;
+            case 2:
+                itemDetail2Link.click();
+                break;
+            case 3:
+                itemDetail3Link.click();
+                break;
+            case 4:
+                itemDetail4Link.click();
+                break;
+            default:
+                break;
         }
         return ItemPage;
     }
@@ -314,20 +314,20 @@ public class OrderDetailsPage implements Page<OrderDetailsPage> {
     public String getItemQuantity(Integer itemNumber) {
         String qty = "";
         switch (itemNumber) {
-        case 1:
-            qty = WebElementOperations.getElementTextValue(itemQty1);
-            break;
-        case 2:
-            qty = WebElementOperations.getElementTextValue(itemQty2);
-            break;
-        case 3:
-            qty = WebElementOperations.getElementTextValue(itemQty3);
-            break;
-        case 4:
-            qty = WebElementOperations.getElementTextValue(itemQty4);
-            break;
-        default:
-            break;
+            case 1:
+                qty = WebElementOperations.getElementTextValue(itemQty1);
+                break;
+            case 2:
+                qty = WebElementOperations.getElementTextValue(itemQty2);
+                break;
+            case 3:
+                qty = WebElementOperations.getElementTextValue(itemQty3);
+                break;
+            case 4:
+                qty = WebElementOperations.getElementTextValue(itemQty4);
+                break;
+            default:
+                break;
         }
 
         return qty;

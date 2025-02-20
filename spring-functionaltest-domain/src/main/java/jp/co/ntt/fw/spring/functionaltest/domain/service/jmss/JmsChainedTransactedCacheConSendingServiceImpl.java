@@ -31,8 +31,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 @Transactional("sendChainedTransactionManager")
 @Service
-public class JmsChainedTransactedCacheConSendingServiceImpl implements
-                                                            JmsChainedTransactedCacheConSendingService {
+public class JmsChainedTransactedCacheConSendingServiceImpl
+        implements JmsChainedTransactedCacheConSendingService {
 
     @Inject
     JmsMessagingTemplate jndiConCacheJmsMessagingTemplate;
@@ -55,8 +55,7 @@ public class JmsChainedTransactedCacheConSendingServiceImpl implements
         jmsTodo.setDatetime(DateTime.now());
 
         // メッセージ送信
-        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604001",
-                jmsTodo);
+        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604001", jmsTodo);
 
         jmsSharedService.insert(jmsTodo);
 
@@ -77,14 +76,12 @@ public class JmsChainedTransactedCacheConSendingServiceImpl implements
         jmsTodo.setDatetime(DateTime.now());
 
         // メッセージ送信
-        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604002",
-                jmsTodo);
+        jndiConCacheJmsMessagingTemplate.convertAndSend("TestQueue0604002", jmsTodo);
 
         jmsSharedService.insert(jmsTodo);
 
         // 例外発生
-        throw new BusinessException(ResultMessages.error().add(
-                "e.sf.jmss.8003"));
+        throw new BusinessException(ResultMessages.error().add("e.sf.js.8003"));
 
     }
 }

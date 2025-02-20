@@ -26,8 +26,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails
 public class ATHN12Controller {
 
     @RequestMapping(value = "1201/001", params = "loginSuccess")
-    public String handle1201001LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle1201001LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1201/001");
@@ -35,8 +34,7 @@ public class ATHN12Controller {
     }
 
     @RequestMapping(value = "1201/001/afterLogin")
-    public String handle1201001afterLogin(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle1201001afterLogin(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1201/001");
@@ -44,8 +42,7 @@ public class ATHN12Controller {
     }
 
     @RequestMapping(value = "1202/001", params = "loginSuccess")
-    public String handle1201002LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle1201002LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "1202/001");

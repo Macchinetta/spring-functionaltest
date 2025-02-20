@@ -36,14 +36,17 @@ import javax.persistence.Table;
 @Table(name = "t_delivery_order")
 public class JPADeliveryOrder {
     /**
-     * delivery_no INTEGER ,delivery_type_id INTEGER ,sender_name VARCHAR(256) ,sender_address VARCHAR(1024) ,reciever_name
-     * VARCHAR(256) ,reciever_address VARCHAR(1024) ,accept_datetime DATETIME ,completion_datetime DATETIME ,delivery_driver
-     * VARCHAR(256) ,delivery_status VARCHAR(128) ,CONSTRAINT pk_delivery_order PRIMARY KEY (delivery_no) ,CONSTRAINT
-     * fk_delivery_type_id FOREIGN KEY (delivery_type_id) REFERENCES m_delivery_type(delivery_type_id) ,CONSTRAINT
-     * fk_delivery_status FOREIGN KEY (delivery_status) REFERENCES t_delivery_status(delivery_status)
+     * delivery_no INTEGER ,delivery_type_id INTEGER ,sender_name VARCHAR(256) ,sender_address
+     * VARCHAR(1024) ,reciever_name VARCHAR(256) ,reciever_address VARCHAR(1024) ,accept_datetime
+     * DATETIME ,completion_datetime DATETIME ,delivery_driver VARCHAR(256) ,delivery_status
+     * VARCHAR(128) ,CONSTRAINT pk_delivery_order PRIMARY KEY (delivery_no) ,CONSTRAINT
+     * fk_delivery_type_id FOREIGN KEY (delivery_type_id) REFERENCES
+     * m_delivery_type(delivery_type_id) ,CONSTRAINT fk_delivery_status FOREIGN KEY
+     * (delivery_status) REFERENCES t_delivery_status(delivery_status)
      */
 
-    @SequenceGenerator(name = "GEN_DEL_NO", sequenceName = "s_jpa_delivery_no", allocationSize = 1, initialValue = 3)
+    @SequenceGenerator(name = "GEN_DEL_NO", sequenceName = "s_jpa_delivery_no", allocationSize = 1,
+            initialValue = 3)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GEN_DEL_NO")
     @Id
     @Column(name = "delivery_no", nullable = false, length = 10)

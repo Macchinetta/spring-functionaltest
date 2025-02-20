@@ -54,24 +54,24 @@ public class DTOP02Controller {
         return "dtop/changeType";
     }
 
-    @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getDateToDateTimeObject")
+    @RequestMapping(value = "getdatetype", method = RequestMethod.GET,
+            params = "getDateToDateTimeObject")
     public String handleGetDateToDateTimeObject(Model model) {
-        model.addAttribute("resultDate", new DateTime(dateOperationService
-                .getNowDate()));
+        model.addAttribute("resultDate", new DateTime(dateOperationService.getNowDate()));
         return "dtop/showDateTime";
     }
 
-    @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getDateTimeToDateObject")
+    @RequestMapping(value = "getdatetype", method = RequestMethod.GET,
+            params = "getDateTimeToDateObject")
     public String handleGetDateTimeToDateObject(Model model) {
-        model.addAttribute("resultDate", dateOperationService.getNowDateTime()
-                .toDate());
+        model.addAttribute("resultDate", dateOperationService.getNowDateTime().toDate());
         return "dtop/showDate";
     }
 
     @RequestMapping(value = "getdatetype", method = RequestMethod.GET, params = "getParseDate")
     public String handleGetParseDateObject(Model model, ChangeTypeForm form) {
-        model.addAttribute("resultDate", DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseLocalDate(form.getTargetDate()));
+        model.addAttribute("resultDate",
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseLocalDate(form.getTargetDate()));
         return "dtop/showLocalDate";
     }
 }

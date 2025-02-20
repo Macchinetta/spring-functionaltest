@@ -77,8 +77,7 @@ public class ProxyLoggingDataSource implements DataSource {
     }
 
     @Override
-    public Connection getConnection(String username,
-            String password) throws SQLException {
+    public Connection getConnection(String username, String password) throws SQLException {
         Connection connection = dataSource.getConnection(username, password);
         return new ProxyLoggingConnection(connection);
     }

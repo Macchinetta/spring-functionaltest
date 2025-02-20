@@ -35,8 +35,8 @@ public class EXHN08Controller {
     @RequestMapping("001")
     public String handle0801001() {
         // 意図的にRuntimeExceptionをthrowしているためSonarQube指摘には未対応としています。
-        throw new RuntimeException(messageSource.getMessage("e.sf.exhn.8030",
-                null, null, Locale.getDefault()));
+        throw new RuntimeException(
+                messageSource.getMessage("e.sf.eh.8030", null, null, Locale.getDefault()));
     }
 
     @ExceptionHandler(RuntimeException.class)

@@ -18,9 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.api.oth2.todo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.inject.Inject;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -33,9 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.github.dozermapper.core.Mapper;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.oth2.TodoService;
 
@@ -66,15 +62,13 @@ public class TodoRestController {
 
     @PutMapping("intercepturl/{todoId}")
     @ResponseStatus(HttpStatus.OK)
-    public TodoResource putTodoWithInterceptUrl(
-            @PathVariable("todoId") String todoId) {
+    public TodoResource putTodoWithInterceptUrl(@PathVariable("todoId") String todoId) {
         return putTodo(todoId);
     }
 
     @DeleteMapping("intercepturl/{todoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTodoWithInterceptUrl(
-            @PathVariable("todoId") String todoId) {
+    public void deleteTodoWithInterceptUrl(@PathVariable("todoId") String todoId) {
         deleteTodo(todoId);
     }
 
@@ -98,16 +92,14 @@ public class TodoRestController {
     @PutMapping("annotation/{todoId}")
     @PreAuthorize("hasAuthority('SCOPE_UPDATE')")
     @ResponseStatus(HttpStatus.OK)
-    public TodoResource putTodoWithPreAuthorize(
-            @PathVariable("todoId") String todoId) {
+    public TodoResource putTodoWithPreAuthorize(@PathVariable("todoId") String todoId) {
         return putTodo(todoId);
     }
 
     @DeleteMapping("annotation/{todoId}")
     @PreAuthorize("hasAuthority('SCOPE_DELETE')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTodoWithPreAuthorize(
-            @PathVariable("todoId") String todoId) {
+    public void deleteTodoWithPreAuthorize(@PathVariable("todoId") String todoId) {
         deleteTodo(todoId);
     }
 
@@ -123,17 +115,14 @@ public class TodoRestController {
     }
 
     private TodoResource postTodos(TodoResource todoResource) {
-        Todo createdTodo = this.todoService.create(this.beanMapper.map(
-                todoResource, Todo.class));
-        TodoResource createdTodoResponse = this.beanMapper.map(createdTodo,
-                TodoResource.class);
+        Todo createdTodo = this.todoService.create(this.beanMapper.map(todoResource, Todo.class));
+        TodoResource createdTodoResponse = this.beanMapper.map(createdTodo, TodoResource.class);
         return createdTodoResponse;
     }
 
     private TodoResource putTodo(String todoId) {
         Todo finishedTodo = this.todoService.finish(todoId);
-        TodoResource finishedTodoResource = this.beanMapper.map(finishedTodo,
-                TodoResource.class);
+        TodoResource finishedTodoResource = this.beanMapper.map(finishedTodo, TodoResource.class);
         return finishedTodoResource;
     }
 

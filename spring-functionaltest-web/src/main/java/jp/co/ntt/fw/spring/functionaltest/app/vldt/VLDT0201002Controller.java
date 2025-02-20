@@ -62,8 +62,7 @@ public class VLDT0201002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validateUser")
-    public String handleValidateUser(@Validated UserForm userForm,
-            BindingResult result) {
+    public String handleValidateUser(@Validated UserForm userForm, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/correlationValidationForMultiFormView";
@@ -72,8 +71,8 @@ public class VLDT0201002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validateUserDetails")
-    public String handleValidateUserDetails(
-            @Validated UserDetailsForm userDetailsForm, BindingResult result) {
+    public String handleValidateUserDetails(@Validated UserDetailsForm userDetailsForm,
+            BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/correlationValidationForMultiFormView";

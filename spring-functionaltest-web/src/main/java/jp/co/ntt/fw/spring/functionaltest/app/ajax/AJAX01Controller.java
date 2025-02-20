@@ -100,8 +100,7 @@ public class AJAX01Controller {
     @RequestMapping(value = "0104/001/001")
     public String handle0104001001(Model model) {
 
-        List<MessageBoard> messageBoards = messageBoardService
-                .getMessageBoards();
+        List<MessageBoard> messageBoards = messageBoardService.getMessageBoards();
 
         model.addAttribute("messageResults", messageBoards);
         model.addAttribute("path", "0104/write");
@@ -112,8 +111,7 @@ public class AJAX01Controller {
     @RequestMapping(value = "0104/001")
     public String handle0104001(Model model) {
 
-        List<MessageBoard> messageBoards = messageBoardService
-                .getMessageBoards();
+        List<MessageBoard> messageBoards = messageBoardService.getMessageBoards();
 
         model.addAttribute("messageResults", messageBoards);
         model.addAttribute("path", "0104/001/write");
@@ -124,11 +122,9 @@ public class AJAX01Controller {
     @RequestMapping(value = "search", method = RequestMethod.GET)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerSearchResult search(
-            PersonalComputerCriteria criteria, Model model) {
+    public PersonalComputerSearchResult search(PersonalComputerCriteria criteria, Model model) {
 
-        List<PersonalComputer> result = personalComputerService
-                .getPersonalComputers(criteria);
+        List<PersonalComputer> result = personalComputerService.getPersonalComputers(criteria);
 
         PersonalComputerSearchResult computerSearchResult = new PersonalComputerSearchResult();
         computerSearchResult.setPersonalComputerResult(result);
@@ -139,21 +135,18 @@ public class AJAX01Controller {
     @RequestMapping(value = "0102/001/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult edit(@Validated PersonalComputerForm form,
-            Locale locale) {
+    public PersonalComputerResult edit(@Validated PersonalComputerForm form, Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @RequestMapping(value = "0103/001/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult editForJson(
-            @Validated @RequestBody PersonalComputerForm form, Locale locale) {
+    public PersonalComputerResult editForJson(@Validated @RequestBody PersonalComputerForm form,
+            Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @ExceptionHandler(BindException.class)
@@ -161,28 +154,27 @@ public class AJAX01Controller {
     @ResponseBody
     public ErrorResults handleBindException(BindException e, Locale locale) {
 
-        return personalComputerHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return personalComputerHelper.setErrorResults(e.getBindingResult().getFieldErrors(),
+                locale);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResults handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e, Locale locale) {
+    public ErrorResults handleMethodArgumentNotValidException(MethodArgumentNotValidException e,
+            Locale locale) {
 
-        return personalComputerHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return personalComputerHelper.setErrorResults(e.getBindingResult().getFieldErrors(),
+                locale);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResults handleHttpMessageNotReadableException(
-            HttpMessageNotReadableException e, Locale locale) {
+    public ErrorResults handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+            Locale locale) {
 
-        return personalComputerHelper.setHttpMessageNotReadableExceptionResults(
-                e, locale);
+        return personalComputerHelper.setHttpMessageNotReadableExceptionResults(e, locale);
     }
 
 }

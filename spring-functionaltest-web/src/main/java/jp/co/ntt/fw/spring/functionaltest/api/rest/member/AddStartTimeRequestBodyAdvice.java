@@ -31,8 +31,7 @@ public class AddStartTimeRequestBodyAdvice extends RequestBodyAdviceAdapter {
     public boolean supports(MethodParameter methodParameter, Type targetType,
             Class<? extends HttpMessageConverter<?>> converterType) {
 
-        return MemberResourceWithAdvice.class.isAssignableFrom(methodParameter
-                .getParameterType());
+        return MemberResourceWithAdvice.class.isAssignableFrom(methodParameter.getParameterType());
 
     }
 
@@ -43,8 +42,7 @@ public class AddStartTimeRequestBodyAdvice extends RequestBodyAdviceAdapter {
 
         MemberResourceWithAdvice resource = (MemberResourceWithAdvice) body;
 
-        resource.setStartDateTime(
-                new LocalDateTime(2015, 12, 16, 13, 10, 4, 5));
+        resource.setStartDateTime(new LocalDateTime(2015, 12, 16, 13, 10, 4, 5));
 
         return resource;
     }

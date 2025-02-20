@@ -1,116 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:sec="http://www.springframework.org/schema/security" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/athr/0601/001/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athr/0601/001" login-processing-url="/athr/0601/001/authenticate"
-      default-target-url="/athr/0601/001/afterLogin" />
+    <sec:http pattern="/athr/0601/001/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athr/0601/001" login-processing-url="/athr/0601/001/authenticate"
+            default-target-url="/athr/0601/001/afterLogin" />
 
-    <sec:intercept-url pattern="/athr/0601/001/accounts/**" access="hasAnyRole('ACCOUNT_MANAGER','ACCOUNT_USER')" />
-    <sec:intercept-url pattern="/athr/0601/001/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
-    <sec:intercept-url pattern="/athr/0601/001/afterLogin" access="isAuthenticated()" />
-    <sec:intercept-url pattern="/athr/0601/001/**" access="permitAll()" />
+        <sec:intercept-url pattern="/athr/0601/001/accounts/**" access="hasAnyRole('ACCOUNT_MANAGER','ACCOUNT_USER')" />
+        <sec:intercept-url pattern="/athr/0601/001/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
+        <sec:intercept-url pattern="/athr/0601/001/afterLogin" access="isAuthenticated()" />
+        <sec:intercept-url pattern="/athr/0601/001/**" access="permitAll()" />
 
-    <sec:logout logout-url="/athr/0601/001/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/001/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/002/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athr/0601/002" login-processing-url="/athr/0601/002/authenticate"
-      default-target-url="/athr/0601/002/afterLogin" />
+    <sec:http pattern="/athr/0601/002/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athr/0601/002" login-processing-url="/athr/0601/002/authenticate"
+            default-target-url="/athr/0601/002/afterLogin" />
 
-    <sec:intercept-url pattern="/athr/0601/002/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
-    <sec:intercept-url pattern="/athr/0601/002/configurations/**"
-      access="hasIpAddress('${RemoteIpAddress:localhost}') and hasRole('CONFIGURATION_MANAGER')" />
-    <sec:intercept-url pattern="/athr/0601/002/admin/**" access="hasRole('ADMIN')" />
-    <sec:intercept-url pattern="/athr/0601/002/**" access="permitAll()" />
-    <sec:logout logout-url="/athr/0601/002/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:intercept-url pattern="/athr/0601/002/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
+        <sec:intercept-url pattern="/athr/0601/002/configurations/**"
+            access="hasIpAddress('${RemoteIpAddress:localhost}') and hasRole('CONFIGURATION_MANAGER')" />
+        <sec:intercept-url pattern="/athr/0601/002/admin/**" access="hasRole('ADMIN')" />
+        <sec:intercept-url pattern="/athr/0601/002/**" access="permitAll()" />
+        <sec:logout logout-url="/athr/0601/002/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/003/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athr/0601/003" login-processing-url="/athr/0601/003/authenticate"
-      default-target-url="/athr/0601/003/afterLogin" />
+    <sec:http pattern="/athr/0601/003/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athr/0601/003" login-processing-url="/athr/0601/003/authenticate"
+            default-target-url="/athr/0601/003/afterLogin" />
 
-    <sec:intercept-url pattern="/athr/0601/003/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
-    <sec:intercept-url pattern="/athr/0601/003/configurations/**"
-      access="hasIpAddress('${ahthorization.ipaddress.deny}') and hasRole('CONFIGURATION_MANAGER')" />
-    <sec:intercept-url pattern="/athr/0601/003/admin/**" access="hasRole('ADMIN')" />
-    <sec:intercept-url pattern="/athr/0601/003/**" access="permitAll()" />
-    <sec:logout logout-url="/athr/0601/003/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:intercept-url pattern="/athr/0601/003/manager/**" access="hasRole('ACCOUNT_MANAGER')" />
+        <sec:intercept-url pattern="/athr/0601/003/configurations/**"
+            access="hasIpAddress('${ahthorization.ipaddress.deny}') and hasRole('CONFIGURATION_MANAGER')" />
+        <sec:intercept-url pattern="/athr/0601/003/admin/**" access="hasRole('ADMIN')" />
+        <sec:intercept-url pattern="/athr/0601/003/**" access="permitAll()" />
+        <sec:logout logout-url="/athr/0601/003/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/004/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athr/0601/004" login-processing-url="/athr/0601/004/authenticate"
-      default-target-url="/athr/0601/004/afterLogin" />
+    <sec:http pattern="/athr/0601/004/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athr/0601/004" login-processing-url="/athr/0601/004/authenticate"
+            default-target-url="/athr/0601/004/afterLogin" />
 
-    <sec:intercept-url pattern="/athr/0601/004/user/**" access="hasAnyRole('USER','ADMIN')" />
-    <sec:intercept-url pattern="/athr/0601/004/admin/**" access="hasRole('ADMIN')" />
-    <sec:intercept-url pattern="/athr/0601/004/deny/**" access="denyAll" />
-    <sec:intercept-url pattern="/athr/0601/004/**" access="permitAll()" />
+        <sec:intercept-url pattern="/athr/0601/004/user/**" access="hasAnyRole('USER','ADMIN')" />
+        <sec:intercept-url pattern="/athr/0601/004/admin/**" access="hasRole('ADMIN')" />
+        <sec:intercept-url pattern="/athr/0601/004/deny/**" access="denyAll" />
+        <sec:intercept-url pattern="/athr/0601/004/**" access="permitAll()" />
 
-    <sec:logout logout-url="/athr/0601/004/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/004/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/019/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login login-page="/athr/0601/019" login-processing-url="/athr/0601/019/authenticate"
-      default-target-url="/athr/" />
+    <sec:http pattern="/athr/0601/019/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login login-page="/athr/0601/019" login-processing-url="/athr/0601/019/authenticate"
+            default-target-url="/athr/" />
 
-    <sec:intercept-url pattern="/athr/0601/019/account/{userName}/**"
-      access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/019/account/{userName}/**"
+            access="isAuthenticated() and #userName == principal.username" />
 
-    <sec:logout logout-url="/athr/0601/019/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/019/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/020/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login />
+    <sec:http pattern="/athr/0601/020/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login />
 
-    <sec:intercept-url pattern="/athr/0601/020/account/{userName}/"
-      access="isAuthenticated() and #userName == principal.username" />
-    <sec:intercept-url pattern="/athr/0601/020/account/{userName}"
-      access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/020/account/{userName}/"
+            access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/020/account/{userName}"
+            access="isAuthenticated() and #userName == principal.username" />
 
-    <sec:logout logout-url="/athr/0601/020/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/020/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/021/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login />
+    <sec:http pattern="/athr/0601/021/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login />
 
-    <sec:intercept-url pattern="/athr/0601/021/account/{userName}.*"
-      access="isAuthenticated() and #userName == principal.username" />
-    <sec:intercept-url pattern="/athr/0601/021/account/{userName}/**"
-      access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/021/account/{userName}.*"
+            access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/021/account/{userName}/**"
+            access="isAuthenticated() and #userName == principal.username" />
 
-    <sec:logout logout-url="/athr/0601/021/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/021/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 
-  <sec:http pattern="/athr/0601/022/**" authentication-manager-ref="loginForStaffManager"
-    once-per-request="false">
-    <sec:form-login />
+    <sec:http pattern="/athr/0601/022/**" authentication-manager-ref="loginForStaffManager"
+        once-per-request="false">
+        <sec:form-login />
 
-    <sec:intercept-url pattern="/athr/0601/022/account/{userName}.*"
-      access="isAuthenticated() and #userName == principal.username" />
-    <sec:intercept-url pattern="/athr/0601/022/account/{userName}/"
-      access="isAuthenticated() and #userName == principal.username" />
-    <sec:intercept-url pattern="/athr/0601/022/account/{userName}"
-      access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/022/account/{userName}.*"
+            access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/022/account/{userName}/"
+            access="isAuthenticated() and #userName == principal.username" />
+        <sec:intercept-url pattern="/athr/0601/022/account/{userName}"
+            access="isAuthenticated() and #userName == principal.username" />
 
-    <sec:logout logout-url="/athr/0601/022/logout" logout-success-url="/athr/"
-      invalidate-session="true" delete-cookies="JSESSIONID" />
-  </sec:http>
+        <sec:logout logout-url="/athr/0601/022/logout" logout-success-url="/athr/"
+            invalidate-session="true" delete-cookies="JSESSIONID" />
+    </sec:http>
 </beans>

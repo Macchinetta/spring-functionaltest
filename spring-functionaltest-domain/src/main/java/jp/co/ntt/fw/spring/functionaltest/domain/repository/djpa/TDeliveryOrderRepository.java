@@ -19,8 +19,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
-public interface TDeliveryOrderRepository extends
-                                          JpaRepository<JPADeliveryOrder, Integer>,
-                                          TDeliveryOrderRepositoryCustom {
+public interface TDeliveryOrderRepository
+        extends JpaRepository<JPADeliveryOrder, Integer>, TDeliveryOrderRepositoryCustom {
 
 }

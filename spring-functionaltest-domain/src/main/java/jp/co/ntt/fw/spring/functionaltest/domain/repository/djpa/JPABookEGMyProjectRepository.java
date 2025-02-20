@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
-public interface JPABookEGMyProjectRepository extends
-                                              MyProjectRepository<JPABookEG, Integer> {
+public interface JPABookEGMyProjectRepository extends MyProjectRepository<JPABookEG, Integer> {
 
 }

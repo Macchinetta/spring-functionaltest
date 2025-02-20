@@ -27,17 +27,16 @@ public interface DateAndTimeApiService {
 
     String getSpecifiedLocalTime(int hour, int minute, int second);
 
-    String getSpecifiedLocalDateTime(int year, int month, int day, int hour,
-            int minute, int second);
+    String getSpecifiedLocalDateTime(int year, int month, int day, int hour, int minute,
+            int second);
 
-    String getSpecifiedOffsetTime(int hour, int minute, int second,
-            int nanoSecond, int zoneOffset);
+    String getSpecifiedOffsetTime(int hour, int minute, int second, int nanoSecond, int zoneOffset);
 
-    String getSpecifiedOffsetDateTime(int year, int month, int day, int hour,
-            int minute, int second, int nanoSecond, int zoneOffset);
+    String getSpecifiedOffsetDateTime(int year, int month, int day, int hour, int minute,
+            int second, int nanoSecond, int zoneOffset);
 
-    String getSpecifiedZonedDateTime(int year, int month, int day, int hour,
-            int minute, int second, int nanoSecond, String area);
+    String getSpecifiedZonedDateTime(int year, int month, int day, int hour, int minute, int second,
+            int nanoSecond, String area);
 
     String getLastDateOfSpecifiedMonth(int year, int month, int day);
 
@@ -51,45 +50,40 @@ public interface DateAndTimeApiService {
 
     String getNowSpecifiedZonedDateTime(String zone);
 
-    int[] compareDate(int year1, int month1, int day1, int year2, int month2,
-            int day2);
+    int[] compareDate(int year1, int month1, int day1, int year2, int month2, int day2);
 
-    long[] compareTime(int year1, int month1, int day1, int hour1, int minute1,
-            int second1, int nanoSecond1, String area1, int year2, int month2,
-            int day2, int hour2, int minute2, int second2, int nanoSecond2,
-            String area2);
+    long[] compareTime(int year1, int month1, int day1, int hour1, int minute1, int second1,
+            int nanoSecond1, String area1, int year2, int month2, int day2, int hour2, int minute2,
+            int second2, int nanoSecond2, String area2);
 
-    long[] compareTime(int hour1, int minute1, int second1, int hour2,
-            int minute2, int second2);
+    long[] compareTime(int hour1, int minute1, int second1, int hour2, int minute2, int second2);
 
-    String toLocalDateTimeFromLocalTime(int hour, int minute, int second,
+    String toLocalDateTimeFromLocalTime(int hour, int minute, int second, int year, int month,
+            int day);
+
+    String toLocalDateTimeFromLocalDate(int year, int month, int day, int hour, int minute,
+            int second);
+
+    String toLocalDate(int year, int month, int day, int hour, int minute, int second);
+
+    String toLocalTime(int year, int month, int day, int hour, int minute, int second);
+
+    String toOffsetDateTime(int hour, int minute, int second, int nanoSecond, int zoneOffset,
             int year, int month, int day);
 
-    String toLocalDateTimeFromLocalDate(int year, int month, int day, int hour,
-            int minute, int second);
+    String toZonedDateTime(int year, int month, int day, int hour, int minute, int second,
+            int nanoSecond, int zoneOffset, String area);
 
-    String toLocalDate(int year, int month, int day, int hour, int minute,
-            int second);
+    String toOffsetDateTime(int year, int month, int day, int hour, int minute, int second,
+            int nanoSecond, String area);
 
-    String toLocalTime(int year, int month, int day, int hour, int minute,
-            int second);
-
-    String toOffsetDateTime(int hour, int minute, int second, int nanoSecond,
-            int zoneOffset, int year, int month, int day);
-
-    String toZonedDateTime(int year, int month, int day, int hour, int minute,
-            int second, int nanoSecond, int zoneOffset, String area);
-
-    String toOffsetDateTime(int year, int month, int day, int hour, int minute,
-            int second, int nanoSecond, String area);
-
-    String toOffsetTime(int year, int month, int day, int hour, int minute,
-            int second, int nanoSecond, String area);
+    String toOffsetTime(int year, int month, int day, int hour, int minute, int second,
+            int nanoSecond, String area);
 
     String toOffsetTime(int hour, int minute, int second, int zoneOffset);
 
-    java.util.Date toUtilDate(int year, int month, int day, int hour,
-            int minute, int second, int zoneOffset);
+    java.util.Date toUtilDate(int year, int month, int day, int hour, int minute, int second,
+            int zoneOffset);
 
     String toLocalDateTime(java.util.Date date);
 
@@ -97,8 +91,8 @@ public interface DateAndTimeApiService {
 
     String toLocalDate(java.sql.Date date);
 
-    java.sql.Timestamp toSqlTimestamp(int year, int month, int day, int hour,
-            int minute, int second);
+    java.sql.Timestamp toSqlTimestamp(int year, int month, int day, int hour, int minute,
+            int second);
 
     String toLocalDateTime(java.sql.Timestamp timestamp);
 
@@ -142,23 +136,17 @@ public interface DateAndTimeApiService {
 
     String minusSecond(int hour, int minute, int second, int minus);
 
-    boolean isBeforeDate(int year1, int month1, int day1, int year2, int month2,
-            int day2);
+    boolean isBeforeDate(int year1, int month1, int day1, int year2, int month2, int day2);
 
-    boolean isAfterDate(int year1, int month1, int day1, int year2, int month2,
-            int day2);
+    boolean isAfterDate(int year1, int month1, int day1, int year2, int month2, int day2);
 
-    boolean equalsDate(int year1, int month1, int day1, int year2, int month2,
-            int day2);
+    boolean equalsDate(int year1, int month1, int day1, int year2, int month2, int day2);
 
-    boolean isBeforeTime(int hour1, int minute1, int second1, int hour2,
-            int minute2, int second2);
+    boolean isBeforeTime(int hour1, int minute1, int second1, int hour2, int minute2, int second2);
 
-    boolean isAfterTime(int hour1, int minute1, int second1, int hour2,
-            int minute2, int second2);
+    boolean isAfterTime(int hour1, int minute1, int second1, int hour2, int minute2, int second2);
 
-    boolean equalsTime(int hour1, int minute1, int second1, int hour2,
-            int minute2, int second2);
+    boolean equalsTime(int hour1, int minute1, int second1, int hour2, int minute2, int second2);
 
     boolean isLeapYear(int year, int month, int day);
 

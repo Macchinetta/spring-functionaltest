@@ -17,7 +17,7 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -29,7 +29,7 @@ public class UserInfoUseBeanInput implements Serializable {
     @Past
     private Date visitDate;
 
-    @NotNull
+    @NotEmpty
     private String visitMessage;
 
     private String userId;

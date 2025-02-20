@@ -28,29 +28,27 @@ import org.apache.ibatis.type.JdbcType;
 public class BlobInputStreamTypeHandler extends BaseTypeHandler<InputStream> {
     // (2)
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i,
-            InputStream parameter, JdbcType jdbcType) throws SQLException {
+    public void setNonNullParameter(PreparedStatement ps, int i, InputStream parameter,
+            JdbcType jdbcType) throws SQLException {
         ps.setBlob(i, parameter);
     }
 
     // (3)
     @Override
-    public InputStream getNullableResult(ResultSet rs,
-            String columnName) throws SQLException {
+    public InputStream getNullableResult(ResultSet rs, String columnName) throws SQLException {
         return toInputStream(rs.getBlob(columnName));
     }
 
     // (3)
     @Override
-    public InputStream getNullableResult(ResultSet rs,
-            int columnIndex) throws SQLException {
+    public InputStream getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         return toInputStream(rs.getBlob(columnIndex));
     }
 
     // (3)
     @Override
-    public InputStream getNullableResult(CallableStatement cs,
-            int columnIndex) throws SQLException {
+    public InputStream getNullableResult(CallableStatement cs, int columnIndex)
+            throws SQLException {
         return toInputStream(cs.getBlob(columnIndex));
     }
 

@@ -39,9 +39,8 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.JPAHomePage;
  * <p>
  * </p>
  */
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
-public class DataAccessExclusiveJPATest extends
-                                        FunctionTestSupportForMultiBrowser {
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
+public class DataAccessExclusiveJPATest extends FunctionTestSupportForMultiBrowser {
 
     @Value("${selenium.excn.waitForNextRequest.offsetSeconds:0}")
     private int offsetSecondsOfWaitForNextRequest;
@@ -88,8 +87,7 @@ public class DataAccessExclusiveJPATest extends
                 @Override
                 public void run() {
                     try {
-                        selectForUpdateNoExcp(0, "2",
-                                sleepMillisThatWaitNextRequest, startSignal);
+                        selectForUpdateNoExcp(0, "2", sleepMillisThatWaitNextRequest, startSignal);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -104,8 +102,7 @@ public class DataAccessExclusiveJPATest extends
                         // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
                         startSignal.await();
                         // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest
-                                / 2));
+                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest / 2));
                         selectForUpdateNoExcp(1, "2", 0);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -172,8 +169,7 @@ public class DataAccessExclusiveJPATest extends
                 @Override
                 public void run() {
                     try {
-                        selectForUpdate(0, "2", sleepMillisThatWaitNextRequest,
-                                startSignal);
+                        selectForUpdate(0, "2", sleepMillisThatWaitNextRequest, startSignal);
                     } finally {
                         doneSignal.countDown();
                     }
@@ -188,8 +184,7 @@ public class DataAccessExclusiveJPATest extends
                         // 画面1->画面2の順で画面操作が行われるようにするため、画面1でボタンが押下されるまで待機
                         startSignal.await();
                         // 画面1のボタン押下と実際にリクエストがサーバに届くタイムラグを考慮し、一定時間待機
-                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest
-                                / 2));
+                        suspendWebDriver(1, (sleepMillisThatWaitNextRequest / 2));
                         selectForUpdate(1, "2", 20000);
                     } catch (InterruptedException e) {
                         throw new IllegalStateException(e);
@@ -236,8 +231,7 @@ public class DataAccessExclusiveJPATest extends
      * @param bookId
      * @param sleepMillis
      */
-    private void selectForUpdate(int webDriverId, String bookId,
-            long sleepMillis) {
+    private void selectForUpdate(int webDriverId, String bookId, long sleepMillis) {
         selectForUpdate(webDriverId, bookId, sleepMillis, null);
     }
 
@@ -246,8 +240,7 @@ public class DataAccessExclusiveJPATest extends
      * @param bookId
      * @param sleepMillis
      */
-    private void selectForUpdateNoExcp(int webDriverId, String bookId,
-            long sleepMillis) {
+    private void selectForUpdateNoExcp(int webDriverId, String bookId, long sleepMillis) {
         selectForUpdateNoExcp(webDriverId, bookId, sleepMillis, null);
     }
 
@@ -257,8 +250,8 @@ public class DataAccessExclusiveJPATest extends
      * @param sleepMillis
      * @param startSignal
      */
-    private void selectForUpdate(int webDriverId, String bookId,
-            long sleepMillis, CountDownLatch startSignal) {
+    private void selectForUpdate(int webDriverId, String bookId, long sleepMillis,
+            CountDownLatch startSignal) {
 
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
@@ -278,8 +271,8 @@ public class DataAccessExclusiveJPATest extends
      * @param sleepMillis
      * @param startSignal
      */
-    private void selectForUpdateNoExcp(int webDriverId, String bookId,
-            long sleepMillis, CountDownLatch startSignal) {
+    private void selectForUpdateNoExcp(int webDriverId, String bookId, long sleepMillis,
+            CountDownLatch startSignal) {
 
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
@@ -301,8 +294,8 @@ public class DataAccessExclusiveJPATest extends
      * @param quantity
      * @param version
      */
-    private void assertCompleteView(int webDriverId, String itemCode,
-            String itemName, int quantity, int version) {
+    private void assertCompleteView(int webDriverId, String itemCode, String itemName, int quantity,
+            int version) {
         WebDriverOperations operations = getWebDriverOperations(webDriverId);
         WebDriver driver = operations.getWebDriver();
         BookDetailsPage bookDetailsPage = new BookDetailsPage(driver);
@@ -310,8 +303,8 @@ public class DataAccessExclusiveJPATest extends
         assertThat(bookDetailsPage.getTitle(), is("Manual Title 2"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("54455322"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("40"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/01/02"));
     }
@@ -332,8 +325,7 @@ public class DataAccessExclusiveJPATest extends
      * @param waitTime
      */
     private void suspendWebDriver(int webDriverId, long waitTime) {
-        getWebDriverOperations(webDriverId).suspend(waitTime,
-                TimeUnit.MILLISECONDS);
+        getWebDriverOperations(webDriverId).suspend(waitTime, TimeUnit.MILLISECONDS);
     }
 
 }

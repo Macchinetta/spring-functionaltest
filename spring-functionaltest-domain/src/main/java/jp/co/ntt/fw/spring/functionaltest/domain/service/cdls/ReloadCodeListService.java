@@ -15,6 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.cdls;
 
+import java.util.Locale;
 import org.terasoluna.gfw.common.codelist.ReloadableCodeList;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
@@ -23,7 +24,11 @@ public interface ReloadCodeListService {
 
     void refresh();
 
+    void refresh2();
+
     void updateAuthorityTableValue(CodeList updateCodeList);
+
+    void updatePriceTableValue(CodeList updateCodeList, Locale locale);
 
     String getSystemYear();
 

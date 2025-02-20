@@ -41,10 +41,9 @@ public class VLDT0103002Controller {
         return "vldt/groupedValidationByDefaultView";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate",
-            "country=jp" })
-    public String handleValidateForJapanese(@Validated({
-            Japanese.class }) GroupedValidationByDefaultForm form,
+    @RequestMapping(method = RequestMethod.POST, params = {"validate", "country=jp"})
+    public String handleValidateForJapanese(
+            @Validated({Japanese.class}) GroupedValidationByDefaultForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -53,10 +52,9 @@ public class VLDT0103002Controller {
         return "redirect:/vldt/0103/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate",
-            "country=sg" })
-    public String handleValidateForSingaporean(@Validated({
-            Singaporean.class }) GroupedValidationByDefaultForm form,
+    @RequestMapping(method = RequestMethod.POST, params = {"validate", "country=sg"})
+    public String handleValidateForSingaporean(
+            @Validated({Singaporean.class}) GroupedValidationByDefaultForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -65,9 +63,8 @@ public class VLDT0103002Controller {
         return "redirect:/vldt/0103/002";
     }
 
-    @RequestMapping(method = RequestMethod.POST, params = { "validate" })
-    public String handleValidate(@Validated({
-            Default.class }) GroupedValidationByDefaultForm form,
+    @RequestMapping(method = RequestMethod.POST, params = {"validate"})
+    public String handleValidate(@Validated({Default.class}) GroupedValidationByDefaultForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

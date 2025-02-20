@@ -45,8 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.exhn.ThrowErrorService;
 @RequestMapping("exhn")
 public class EXHN03Controller {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            EXHN03Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(EXHN03Controller.class);
 
     @Inject
     Mapper beanMapper;
@@ -91,8 +90,7 @@ public class EXHN03Controller {
     }
 
     @RequestMapping(value = "0301/001", params = "update", method = RequestMethod.POST)
-    public String employeeUpdate(@Validated EmployeeForm form,
-            BindingResult result, Model model) {
+    public String employeeUpdate(@Validated EmployeeForm form, BindingResult result, Model model) {
         model.addAttribute("testNumber", "0301/001");
 
         if (result.hasErrors()) {
@@ -104,17 +102,17 @@ public class EXHN03Controller {
         try {
             employeeService.updateEmployee(inputEmployee);
         } catch (BusinessException e) {
-            model.addAttribute(ResultMessages.danger().add("e.sf.exhn.8000"));
+            model.addAttribute(ResultMessages.danger().add("e.sf.eh.8000"));
         }
 
-        model.addAttribute(ResultMessages.success().add("e.sf.exhn.8001"));
+        model.addAttribute(ResultMessages.success().add("e.sf.eh.8001"));
 
         return "exhn/employeeEdit";
     }
 
     @RequestMapping(value = "0302/001/001", params = "update", method = RequestMethod.POST)
-    public String employeeUpdateFirst(@Validated EmployeeForm form,
-            BindingResult result, Model model) {
+    public String employeeUpdateFirst(@Validated EmployeeForm form, BindingResult result,
+            Model model) {
         model.addAttribute("testNumber", "0302/001/001");
 
         if (result.hasErrors()) {
@@ -123,15 +121,15 @@ public class EXHN03Controller {
 
         Employee inputEmployee = employeeHelper.convertToEntity(form);
 
-        model.addAttribute(ResultMessages.danger().add("e.sf.exhn.8010"));
+        model.addAttribute(ResultMessages.danger().add("e.sf.eh.8010"));
         employeeService.updateEmployee(inputEmployee);
 
         return "exhn/employeeEdit";
     }
 
     @RequestMapping(value = "0302/001/002", params = "update", method = RequestMethod.POST)
-    public String employeeUpdateSecond(@Validated EmployeeForm form,
-            BindingResult result, Model model) {
+    public String employeeUpdateSecond(@Validated EmployeeForm form, BindingResult result,
+            Model model) {
         model.addAttribute("testNumber", "0302/001/002");
 
         if (result.hasErrors()) {
@@ -140,7 +138,7 @@ public class EXHN03Controller {
 
         Employee inputEmployee = employeeHelper.convertToEntity(form);
 
-        model.addAttribute(ResultMessages.danger().add("e.sf.exhn.8011"));
+        model.addAttribute(ResultMessages.danger().add("e.sf.eh.8011"));
         employeeService.updateEmployee(inputEmployee);
 
         return "exhn/employeeEdit";
@@ -161,8 +159,8 @@ public class EXHN03Controller {
     }
 
     @ExceptionHandler(NestedServletException.class)
-    public void handleNestedServletException(
-            NestedServletException e) throws NestedServletException {
+    public void handleNestedServletException(NestedServletException e)
+            throws NestedServletException {
         logger.warn("NestedServletException Occured");
         throw e;
     }
@@ -177,12 +175,12 @@ public class EXHN03Controller {
         EmployeeForm form = beanMapper.map(employee, EmployeeForm.class);
         modelMap.addAttribute(form);
 
-        modelMap.addAttribute(ResultMessages.danger().add("e.sf.exhn.8020"));
+        modelMap.addAttribute(ResultMessages.danger().add("e.sf.eh.8020"));
         return new ModelAndView("exhn/employeeEdit", modelMap);
     }
 
-    @RequestMapping(value = { "301/001", "302/001/001",
-            "302/001/002" }, params = "backToIndex", method = RequestMethod.POST)
+    @RequestMapping(value = {"301/001", "302/001/001", "302/001/002"}, params = "backToIndex",
+            method = RequestMethod.POST)
     public String backToIndex() {
         return "exhn/index";
     }

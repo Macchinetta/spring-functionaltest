@@ -52,25 +52,25 @@ public class ENCR03Controller {
         return "encr/publicKeyEncryptByOpenSSLDecryptByJCA";
     }
 
-    @RequestMapping(value = "0301/001/publicKeyEncryptByJCADecryptByJCA", method = RequestMethod.POST)
-    public String publicKeyEncryptByJCADecryptByJCA(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "0301/001/publicKeyEncryptByJCADecryptByJCA",
+            method = RequestMethod.POST)
+    public String publicKeyEncryptByJCADecryptByJCA(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0301001(model, form);
         }
 
         KeyPair keyPair = encryptionDataService.generateKeyPairByJCA();
-        byte[] encryptedBytes = encryptionDataService.encryptByPublicKey(form
-                .getRawText(), keyPair.getPublic());
-        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
-                encryptedBytes));
-        model.addAttribute("decryptedText", encryptionDataService
-                .decryptByPrivateKey(encryptedBytes, keyPair.getPrivate()));
+        byte[] encryptedBytes =
+                encryptionDataService.encryptByPublicKey(form.getRawText(), keyPair.getPublic());
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(encryptedBytes));
+        model.addAttribute("decryptedText",
+                encryptionDataService.decryptByPrivateKey(encryptedBytes, keyPair.getPrivate()));
         return "encr/publicKeyEncryptionComplete";
     }
 
-    @RequestMapping(value = "0302/001/publicKeyEncryptByJCADecryptByOpenSSL", method = RequestMethod.POST)
+    @RequestMapping(value = "0302/001/publicKeyEncryptByJCADecryptByOpenSSL",
+            method = RequestMethod.POST)
     public String publicKeyEncryptByJCADecryptByOpenSSL(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -78,17 +78,16 @@ public class ENCR03Controller {
             return handle0302001(model, form);
         }
 
-        byte[] encryptedBytes = encryptionDataService
-                .encryptByJCAWithPublicKeyOfOpenSSL(form.getRawText());
-        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
-                encryptedBytes));
-        model.addAttribute("decryptedText", encryptionDataService
-                .openSSLDecrypt(encryptedBytes));
+        byte[] encryptedBytes =
+                encryptionDataService.encryptByJCAWithPublicKeyOfOpenSSL(form.getRawText());
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(encryptedBytes));
+        model.addAttribute("decryptedText", encryptionDataService.openSSLDecrypt(encryptedBytes));
 
         return "encr/publicKeyEncryptionComplete";
     }
 
-    @RequestMapping(value = "0303/001/publicKeyEncryptByOpenSSLDecryptByJCA", method = RequestMethod.POST)
+    @RequestMapping(value = "0303/001/publicKeyEncryptByOpenSSLDecryptByJCA",
+            method = RequestMethod.POST)
     public String publicKeyEncryptByOpenSSLDecryptByJCA(Model model,
             @Validated EncryptionDataForm form, BindingResult result,
             RedirectAttributes redirectAttributes) {
@@ -96,13 +95,11 @@ public class ENCR03Controller {
             return handle0303001(model, form);
         }
 
-        byte[] encryptedBytes = encryptionDataService.openSSLEncrypt(form
-                .getRawText());
+        byte[] encryptedBytes = encryptionDataService.openSSLEncrypt(form.getRawText());
 
-        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
-                encryptedBytes));
-        model.addAttribute("decryptedText", encryptionDataService
-                .decryptByJCAWithPrivateKeyOfOpenSSL(encryptedBytes));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(encryptedBytes));
+        model.addAttribute("decryptedText",
+                encryptionDataService.decryptByJCAWithPrivateKeyOfOpenSSL(encryptedBytes));
 
         return "encr/publicKeyEncryptionComplete";
     }

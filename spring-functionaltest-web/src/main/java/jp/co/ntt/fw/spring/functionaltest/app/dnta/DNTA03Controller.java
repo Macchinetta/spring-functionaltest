@@ -178,190 +178,184 @@ public class DNTA03Controller {
         return "dnta/changeType";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalTimeToLocalDateTime")
-    public String handleGetLocalTimeToLocalDateTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalDateTimeFromLocalTime(HOUR, MINUTE, SECOND, form
-                        .getYear(), form.getMonth(), form.getDay()));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalTimeToLocalDateTime")
+    public String handleGetLocalTimeToLocalDateTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTimeFromLocalTime(HOUR,
+                MINUTE, SECOND, form.getYear(), form.getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateToLocalDateTime")
-    public String handleGetLocalDateToLocalDateTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .toLocalDateTimeFromLocalDate(YEAR, MONTH, DAY, form.getHour(),
-                        form.getMinute(), form.getSecond()));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateToLocalDateTime")
+    public String handleGetLocalDateToLocalDateTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTimeFromLocalDate(YEAR,
+                MONTH, DAY, form.getHour(), form.getMinute(), form.getSecond()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToLocalTime")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateTimeToLocalTime")
     public String handleGetLocalDateTimeToLocalTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(YEAR,
-                MONTH, DAY, HOUR, MINUTE, SECOND));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.toLocalTime(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToLocalDate")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateTimeToLocalDate")
     public String handleGetLocalDateTimeToLocalDate(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(YEAR,
-                MONTH, DAY, HOUR, MINUTE, SECOND));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.toLocalDate(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getOffseTimeToOffsetDateTime")
-    public String handleGetOffseTimeToOffsetDateTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(
-                HOUR, MINUTE, SECOND, NANO_SECOND, OFFSET, form.getYear(), form
-                        .getMonth(), form.getDay()));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getOffseTimeToOffsetDateTime")
+    public String handleGetOffseTimeToOffsetDateTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(HOUR, MINUTE,
+                SECOND, NANO_SECOND, OFFSET, form.getYear(), form.getMonth(), form.getDay()));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getOffsetDateTimeToZonedDateTime")
-    public String handleGetOffsetDateTimeToZonedDateTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toZonedDateTime(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_SECOND, OFFSET,
-                AREA));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getOffsetDateTimeToZonedDateTime")
+    public String handleGetOffsetDateTimeToZonedDateTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toZonedDateTime(YEAR, MONTH, DAY,
+                HOUR, MINUTE, SECOND, NANO_SECOND, OFFSET, AREA));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getZonedDateTimeToOffsetDateTime")
-    public String handleGetZonedDateTimeToOffsetDateTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_SECOND, AREA));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getZonedDateTimeToOffsetDateTime")
+    public String handleGetZonedDateTimeToOffsetDateTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetDateTime(YEAR, MONTH, DAY,
+                HOUR, MINUTE, SECOND, NANO_SECOND, AREA));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getZonedDateTimeToOffsetTime")
-    public String handleGetZonedDateTimeToOffsetTime(DateForm form,
-            Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetTime(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANO_SECOND, AREA));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getZonedDateTimeToOffsetTime")
+    public String handleGetZonedDateTimeToOffsetTime(DateForm form, Model model) {
+        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetTime(YEAR, MONTH, DAY, HOUR,
+                MINUTE, SECOND, NANO_SECOND, AREA));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalTimeToOffsetTime")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalTimeToOffsetTime")
     public String handleGetLocalTimeToOffsetTime(DateForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toOffsetTime(
-                HOUR, MINUTE, SECOND, OFFSET));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.toOffsetTime(HOUR, MINUTE, SECOND, OFFSET));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToUtilDate")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateTimeToUtilDate")
     public String handleGetLocalDateTimeToUtilDate(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toUtilDate(YEAR,
-                MONTH, DAY, HOUR, MINUTE, SECOND, OFFSET));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.toUtilDate(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, OFFSET));
         return "dnta/showUtilAndSqlDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getUtilDateToLocalDateTime")
-    public String handleGetUtilDateToLocalDateTime(
-            Model model) throws ParseException {
-        java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                .parse("2012/12/15 12:10:30");
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(
-                utilDate));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getUtilDateToLocalDateTime")
+    public String handleGetUtilDateToLocalDateTime(Model model) throws ParseException {
+        java.util.Date utilDate =
+                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2012/12/15 12:10:30");
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(utilDate));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateToSqlDate")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateToSqlDate")
     public String handleGetLocalDateToSqlDate(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toSqlDate(YEAR,
-                MONTH, DAY));
+        model.addAttribute("resultDate", dateAndTimeApiService.toSqlDate(YEAR, MONTH, DAY));
         return "dnta/showUtilAndSqlDate";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlDateToLocalDate")
-    public String handleGetSqlDateToLocalDate(
-            Model model) throws ParseException {
-        java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                .parse("2012/12/15 12:10:30");
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getSqlDateToLocalDate")
+    public String handleGetSqlDateToLocalDate(Model model) throws ParseException {
+        java.util.Date utilDate =
+                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2012/12/15 12:10:30");
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(
-                sqlDate));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDate(sqlDate));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalDateTimeToSqlTimestamp")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalDateTimeToSqlTimestamp")
     public String handleGetLocalDateTimeToSqlTimestamp(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toSqlTimestamp(
-                YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.toSqlTimestamp(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND));
         return "dnta/showUtilAndSqlDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlTimestampToLocalDateTime")
-    public String handleGetSqlTimestampToLocalDateTime(
-            Model model) throws ParseException {
-        java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                .parse("2012/12/15 12:10:30");
-        java.sql.Timestamp timestamp = new java.sql.Timestamp(utilDate
-                .getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(
-                timestamp));
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getSqlTimestampToLocalDateTime")
+    public String handleGetSqlTimestampToLocalDateTime(Model model) throws ParseException {
+        java.util.Date utilDate =
+                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2012/12/15 12:10:30");
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(utilDate.getTime());
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalDateTime(timestamp));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getLocalTimeToSqlTime")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getLocalTimeToSqlTime")
     public String handleGetLocalTimeToSqlTime(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.toSqlTime(HOUR,
-                MINUTE, SECOND));
+        model.addAttribute("resultDate", dateAndTimeApiService.toSqlTime(HOUR, MINUTE, SECOND));
         return "dnta/showUtilAndSqlTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getSqlTimeToLocalTime")
-    public String handleGetSqlTimeToLocalTime(
-            Model model) throws ParseException {
-        java.util.Date utilDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-                .parse("2012/12/15 12:10:30");
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getSqlTimeToLocalTime")
+    public String handleGetSqlTimeToLocalTime(Model model) throws ParseException {
+        java.util.Date utilDate =
+                new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse("2012/12/15 12:10:30");
         java.sql.Time sqlTime = new java.sql.Time(utilDate.getTime());
-        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(
-                sqlTime));
+        model.addAttribute("resultDate", dateAndTimeApiService.toLocalTime(sqlTime));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getDateFromDateFactory")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getDateFromDateFactory")
     public String handleGetDateFromDateFactory(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .createLocalDateFromDateFactory());
+        model.addAttribute("resultDate", dateAndTimeApiService.createLocalDateFromDateFactory());
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getNormalFormat")
     public String handleGetNormalFormat(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.createDateString(
-                YEAR, MONTH, DAY));
+        model.addAttribute("resultDate", dateAndTimeApiService.createDateString(YEAR, MONTH, DAY));
         return "dnta/showDateTime";
     }
 
-    @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getPredefinedFormat")
+    @RequestMapping(value = "changeType", method = RequestMethod.GET,
+            params = "getPredefinedFormat")
     public String handleGetPredefinedFormat(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .createDateStringWithPredefinedFormat(YEAR, MONTH, DAY));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.createDateStringWithPredefinedFormat(YEAR, MONTH, DAY));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getAnyFormat")
     public String handleGetAnyFormat(Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService
-                .createDateStringWithAnyFormat(YEAR, MONTH, DAY));
+        model.addAttribute("resultDate",
+                dateAndTimeApiService.createDateStringWithAnyFormat(YEAR, MONTH, DAY));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getParseDate")
     public String handleGetParseDate(ChangeTypeForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.parseToDate(form
-                .getTargetDate()));
+        model.addAttribute("resultDate", dateAndTimeApiService.parseToDate(form.getTargetDate()));
         return "dnta/showDateTime";
     }
 
     @RequestMapping(value = "changeType", method = RequestMethod.GET, params = "getParseTime")
     public String handleGetParseTime(ChangeTypeForm form, Model model) {
-        model.addAttribute("resultDate", dateAndTimeApiService.parseToTime(form
-                .getTargetDate()));
+        model.addAttribute("resultDate", dateAndTimeApiService.parseToTime(form.getTargetDate()));
         return "dnta/showDateTime";
     }
 }

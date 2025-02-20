@@ -33,8 +33,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.TodoMB3;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository;
 
 @Service
-public class TodoMB3InitializerServiceImpl implements
-                                           TodoMB3InitializerService {
+public class TodoMB3InitializerServiceImpl implements TodoMB3InitializerService {
 
     @Inject
     TodoRepository todoRepositry;
@@ -47,11 +46,11 @@ public class TodoMB3InitializerServiceImpl implements
         TodoMB3 todoMB3 = new TodoMB3();
         CategoryMB3 cat = new CategoryMB3();
         cat.setCategoryId("0000000001");
-        InputStream desc1 = new ByteArrayInputStream(Charset.forName("UTF-8")
-                .encode("desc11").array());
+        InputStream desc1 =
+                new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc11").array());
         Reader desc2 = new StringReader("desc21");
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/24").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/24").toDate());
         todoMB3.setFinished(false);
         // todoMB3.setTodoCategory("0000000001");
         todoMB3.setCategory(cat);
@@ -64,12 +63,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000002");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc12").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc12").array());
         desc2 = new StringReader("desc22");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/24").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/24").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000002");
@@ -81,12 +79,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000003");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc13").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc13").array());
         desc2 = new StringReader("desc23");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/25").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/25").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000003");
@@ -98,12 +95,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000004");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc14").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc14").array());
         desc2 = new StringReader("desc24");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/25").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/25").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000004");
@@ -115,12 +111,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000005");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc15").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc15").array());
         desc2 = new StringReader("desc25");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/26").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/26").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000005");
@@ -132,12 +127,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000001");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc16").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc16").array());
         desc2 = new StringReader("desc26");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/26").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/26").toDate());
         todoMB3.setFinished(true);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000006");
@@ -145,18 +139,16 @@ public class TodoMB3InitializerServiceImpl implements
         todoMB3.setVersion(1);
         todoMB3.setDesc1(desc1);
         todoMB3.setDesc2(desc2);
-        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/30"));
+        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/30"));
         todoList.add(todoMB3);
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000002");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc17").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc17").array());
         desc2 = new StringReader("desc27");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/27").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/27").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000007");
@@ -168,15 +160,13 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000003");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc18").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc18").array());
         desc2 = new StringReader("desc28");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/28").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/28").toDate());
         todoMB3.setFinished(true);
-        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/30"));
+        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/30"));
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000008");
         todoMB3.setTodoTitle("Todo 8");
@@ -187,12 +177,11 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000004");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc19").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc19").array());
         desc2 = new StringReader("desc29");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/29").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/29").toDate());
         todoMB3.setFinished(false);
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000009");
@@ -204,15 +193,13 @@ public class TodoMB3InitializerServiceImpl implements
 
         cat = new CategoryMB3();
         cat.setCategoryId("0000000005");
-        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode(
-                "desc110").array());
+        desc1 = new ByteArrayInputStream(Charset.forName("UTF-8").encode("desc110").array());
         desc2 = new StringReader("desc210");
         todoMB3 = new TodoMB3();
-        todoMB3.setCreatedAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/29").toDate());
+        todoMB3.setCreatedAt(
+                DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/29").toDate());
         todoMB3.setFinished(true);
-        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd")
-                .parseDateTime("2016/12/30"));
+        todoMB3.setCompleteAt(DateTimeFormat.forPattern("yyyy/MM/dd").parseDateTime("2016/12/30"));
         todoMB3.setCategory(cat);
         todoMB3.setTodoId("0000000010");
         todoMB3.setTodoTitle("Todo 10");

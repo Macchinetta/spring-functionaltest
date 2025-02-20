@@ -77,8 +77,7 @@ public class JPAOrderServiceImpl implements JPAOrderService {
         List<JPAOrderItem> orderItemList = new ArrayList<JPAOrderItem>();
         for (JPAItem jpaItem : itemList) {
             if (null != jpaItem.getQuantity() && jpaItem.getQuantity() > 0) {
-                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem
-                        .getQuantity());
+                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem.getQuantity());
             }
         }
 
@@ -109,16 +108,14 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     }
 
     @Override
-    public JPAOrder addtoOrder(List<JPAItem> itemList, Integer orderId,
-            String comment) {
+    public JPAOrder addtoOrder(List<JPAItem> itemList, Integer orderId, String comment) {
 
         JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         Integer orderAmount = jpaOrder.getOrderAmount();
         List<JPAOrderItem> orderItemList = new ArrayList<JPAOrderItem>();
         for (JPAItem jpaItem : itemList) {
             if (null != jpaItem.getQuantity() && jpaItem.getQuantity() > 0) {
-                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem
-                        .getQuantity());
+                orderAmount = orderAmount + (jpaItem.getItemPrice() * jpaItem.getQuantity());
             }
         }
 
@@ -133,34 +130,30 @@ public class JPAOrderServiceImpl implements JPAOrderService {
         }
         jpaOrder.getOrderItem().addAll(orderItemList);
         jpaOrder.setOrderAmount(orderAmount);
-        jpaOrder.setOrderMemo(jpaOrder.getOrderMemo().concat("\n").concat(
-                comment));
+        jpaOrder.setOrderMemo(jpaOrder.getOrderMemo().concat("\n").concat(comment));
         return jpaOrder;
     }
 
     @Override
     public JPAOrder updateStatus(Integer orderId, String statusName) {
         JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
-        JPAOrderStatus orderStatus = jpaOrderStatusRepository.findByStatusName(
-                statusName);
+        JPAOrderStatus orderStatus = jpaOrderStatusRepository.findByStatusName(statusName);
         jpaOrder.setOrderStatus(orderStatus);
         return jpaOrder;
     }
 
     @Override
-    public JPAOrder updateOrderItem(Integer orderId, Integer itemNum,
-            Integer newQty) {
+    public JPAOrder updateOrderItem(Integer orderId, Integer itemNum, Integer newQty) {
         JPAOrder jpaOrder = jpaOrderRepository.findById(orderId).orElse(null);
         List<JPAOrderItem> orderItemList = jpaOrder.getOrderItem();
         for (JPAOrderItem jpaOrderItem : orderItemList) {
             if (itemNum.equals(jpaOrderItem.getItemNumber())) {
                 Integer initOrderAmt = jpaOrder.getOrderAmount();
                 Integer oldQty = jpaOrderItem.getQuantity();
-                Integer oldItemAmt = oldQty * jpaOrderItem.getOrderItem()
-                        .getItemPrice();
+                Integer oldItemAmt = oldQty * jpaOrderItem.getOrderItem().getItemPrice();
                 Integer ordAmtAdj = initOrderAmt - oldItemAmt;
-                Integer newOrderAmt = ordAmtAdj + (newQty * jpaOrderItem
-                        .getOrderItem().getItemPrice());
+                Integer newOrderAmt =
+                        ordAmtAdj + (newQty * jpaOrderItem.getOrderItem().getItemPrice());
                 jpaOrderItem.setQuantity(newQty);
                 jpaOrder.setOrderAmount(newOrderAmt);
             }
@@ -204,10 +197,9 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     }
 
     @Override
-    public JPAOrderForCommonCondition findOrderDeatilUsingCommonConditionOnEntity(
-            Integer orderId) {
-        JPAOrderForCommonCondition jpaOrder = jpaOrderForCommonConditionRepository
-                .findById(orderId).orElse(null);
+    public JPAOrderForCommonCondition findOrderDeatilUsingCommonConditionOnEntity(Integer orderId) {
+        JPAOrderForCommonCondition jpaOrder =
+                jpaOrderForCommonConditionRepository.findById(orderId).orElse(null);
         if (null == jpaOrder) {
             throw new ResourceNotFoundException(message);
         }
@@ -217,8 +209,8 @@ public class JPAOrderServiceImpl implements JPAOrderService {
     @Override
     public JPAOrderForCmnConditionNoBoolean findOrderDeatilUsingCommonConditionOnEntityWithNoBooleanSupport(
             Integer orderId) {
-        JPAOrderForCmnConditionNoBoolean jpaOrder = jpaOrderForCommonConditionNoBooleanRepository
-                .findById(orderId).orElse(null);
+        JPAOrderForCmnConditionNoBoolean jpaOrder =
+                jpaOrderForCommonConditionNoBooleanRepository.findById(orderId).orElse(null);
         if (null == jpaOrder) {
             throw new ResourceNotFoundException(message);
         }

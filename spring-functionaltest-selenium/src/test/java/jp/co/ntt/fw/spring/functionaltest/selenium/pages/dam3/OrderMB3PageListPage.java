@@ -105,29 +105,25 @@ public class OrderMB3PageListPage implements Page<OrderMB3PageListPage> {
         String categoryName = "";
         String memo = "";
         switch (orderNumber) {
-        case 4:
-            statusName = WebElementOperations.getElementTextValue(statusName4);
-            itemCode = WebElementOperations.getElementTextValue(itemCode4);
-            itemName = WebElementOperations.getElementTextValue(itemName4);
-            categoryCode = WebElementOperations.getElementTextValue(
-                    categorCode4);
-            categoryName = WebElementOperations.getElementTextValue(
-                    categoryName4);
-            memo = WebElementOperations.getElementTextValue(memo4);
-            break;
-        case 7:
-            statusName = WebElementOperations.getElementTextValue(statusName7);
-            itemCode = WebElementOperations.getElementTextValue(itemCode7);
-            itemName = WebElementOperations.getElementTextValue(itemName7);
-            categoryCode = WebElementOperations.getElementTextValue(
-                    categorCode7);
-            categoryName = WebElementOperations.getElementTextValue(
-                    categoryName7);
-            memo = WebElementOperations.getElementTextValue(memo7);
-            break;
+            case 4:
+                statusName = WebElementOperations.getElementTextValue(statusName4);
+                itemCode = WebElementOperations.getElementTextValue(itemCode4);
+                itemName = WebElementOperations.getElementTextValue(itemName4);
+                categoryCode = WebElementOperations.getElementTextValue(categorCode4);
+                categoryName = WebElementOperations.getElementTextValue(categoryName4);
+                memo = WebElementOperations.getElementTextValue(memo4);
+                break;
+            case 7:
+                statusName = WebElementOperations.getElementTextValue(statusName7);
+                itemCode = WebElementOperations.getElementTextValue(itemCode7);
+                itemName = WebElementOperations.getElementTextValue(itemName7);
+                categoryCode = WebElementOperations.getElementTextValue(categorCode7);
+                categoryName = WebElementOperations.getElementTextValue(categoryName7);
+                memo = WebElementOperations.getElementTextValue(memo7);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
         stringBuilder.append(statusName);
         stringBuilder.append(delimiter);

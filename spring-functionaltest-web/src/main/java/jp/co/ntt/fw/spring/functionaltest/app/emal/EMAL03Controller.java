@@ -72,12 +72,12 @@ public class EMAL03Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=textMimeMessage")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=textMimeMessage")
     public String handleTextMimeMessage(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendTextMimeMail(form.getTo().get(0), form
-                    .getText(), store);
+            sessionMailSendingService.sendTextMimeMail(form.getTo().get(0), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -85,12 +85,12 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=htmlMimeMessage")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=htmlMimeMessage")
     public String handleHtmlMimeMessage(Model model, EmailSendingForm form) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendHtmlMimeMail(form.getTo().get(0), form
-                    .getText(), store);
+            sessionMailSendingService.sendHtmlMimeMail(form.getTo().get(0), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -98,14 +98,14 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=attachmentMimeMessage")
-    public String handleAttachmentMimeMessage(Model model,
-            EmailSendingForm form) throws IOException {
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=attachmentMimeMessage")
+    public String handleAttachmentMimeMessage(Model model, EmailSendingForm form)
+            throws IOException {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendAttachmentMimeMail(form.getTo().get(
-                    0), form.getText(), form.getFilename(),
-                    new ByteArrayResource(form.getMultipartFile().getBytes()),
+            sessionMailSendingService.sendAttachmentMimeMail(form.getTo().get(0), form.getText(),
+                    form.getFilename(), new ByteArrayResource(form.getMultipartFile().getBytes()),
                     store);
         } catch (MessagingException e) {
             // ignore
@@ -114,16 +114,14 @@ public class EMAL03Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=inlineMimeMessage")
-    public String handleInlineMimeMessage(Model model,
-            EmailSendingForm form) throws IOException {
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=inlineMimeMessage")
+    public String handleInlineMimeMessage(Model model, EmailSendingForm form) throws IOException {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendInlineMimeMail(form.getTo().get(0),
-                    form.getText(), form.getCid(), new ByteArrayResource(form
-                            .getMultipartFile().getBytes()), form
-                                    .getMultipartFile().getContentType(),
-                    store);
+            sessionMailSendingService.sendInlineMimeMail(form.getTo().get(0), form.getText(),
+                    form.getCid(), new ByteArrayResource(form.getMultipartFile().getBytes()),
+                    form.getMultipartFile().getContentType(), store);
         } catch (MessagingException e) {
             // ignore
         }

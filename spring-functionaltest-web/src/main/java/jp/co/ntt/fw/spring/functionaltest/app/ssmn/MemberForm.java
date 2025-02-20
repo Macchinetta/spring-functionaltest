@@ -29,52 +29,52 @@ public class MemberForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty(groups = { Personal.class })
-    @Size(min = 1, max = 20, groups = { Personal.class })
+    @NotNull(groups = {Personal.class})
+    @Size(min = 1, max = 20, groups = {Personal.class})
     private String firstName;
 
-    @NotEmpty(groups = { Personal.class })
-    @Size(min = 1, max = 20, groups = { Personal.class })
+    @NotNull(groups = {Personal.class})
+    @Size(min = 1, max = 20, groups = {Personal.class})
     private String lastName;
 
-    @NotEmpty(groups = { Personal.class })
-    @Size(min = 1, max = 20, groups = { Personal.class })
+    @NotNull(groups = {Personal.class})
+    @Size(min = 1, max = 20, groups = {Personal.class})
     private String firstNameKana;
 
-    @NotEmpty(groups = { Personal.class })
-    @Size(min = 1, max = 20, groups = { Personal.class })
+    @NotNull(groups = {Personal.class})
+    @Size(min = 1, max = 20, groups = {Personal.class})
     private String lastNameKana;
 
-    @NotNull(groups = { Personal.class })
-    @Min(value = 0, groups = { Personal.class })
-    @Max(value = 200, groups = { Personal.class })
+    @NotNull(groups = {Personal.class})
+    @Min(value = 0, groups = {Personal.class})
+    @Max(value = 200, groups = {Personal.class})
     private Integer age;
 
     private String gender;
 
-    @NotEmpty(groups = { Address.class })
-    @Pattern(regexp = "[0-9]{3}-[0-9]{4}", groups = { Address.class })
+    @NotEmpty(groups = {Address.class})
+    @Pattern(regexp = "[0-9]{3}-[0-9]{4}", groups = {Address.class})
     private String zipCode;
 
-    @NotEmpty(groups = { Address.class })
-    @Size(min = 1, max = 30, groups = { Address.class })
+    @NotNull(groups = {Address.class})
+    @Size(min = 1, max = 30, groups = {Address.class})
     private String state;
 
-    @NotEmpty(groups = { Address.class })
-    @Size(min = 1, max = 30, groups = { Address.class })
+    @NotNull(groups = {Address.class})
+    @Size(min = 1, max = 30, groups = {Address.class})
     private String city;
 
-    @NotEmpty(groups = { Address.class })
-    @Size(min = 1, max = 30, groups = { Address.class })
+    @NotNull(groups = {Address.class})
+    @Size(min = 1, max = 30, groups = {Address.class})
     private String address;
 
-    @NotEmpty(groups = { Other.class })
-    @Size(min = 1, max = 20, groups = { Other.class })
+    @NotNull(groups = {Other.class})
+    @Size(min = 1, max = 20, groups = {Other.class})
     private String occupation;
 
-    @NotEmpty(groups = { Other.class })
-    @Size(min = 1, max = 50, groups = { Other.class })
-    @Email(groups = { Other.class })
+    @NotNull(groups = {Other.class})
+    @Size(min = 1, max = 50, groups = {Other.class})
+    @Email(groups = {Other.class})
     private String mailAddress;
 
     public String getFirstName() {

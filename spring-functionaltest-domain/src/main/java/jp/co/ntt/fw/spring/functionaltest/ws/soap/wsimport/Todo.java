@@ -26,7 +26,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * todo complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="todo">
  *   &lt;complexContent>
@@ -44,8 +44,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "todo", propOrder = { "createdAt", "description", "finished",
-        "title", "todoId" })
+@XmlType(name = "todo", propOrder = {"createdAt", "description", "finished", "title", "todoId"})
 public class Todo {
 
     @XmlSchemaType(name = "dateTime")

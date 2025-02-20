@@ -45,8 +45,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0102001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(DefaultFormAuthentication)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(DefaultFormAuthentication)"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -56,15 +56,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -81,8 +79,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0201001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationSeccess）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationSeccess）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("uid"), "Josh");
@@ -95,15 +93,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0201/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0201/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -119,8 +116,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0201002"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationSeccess）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationSeccess）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("uid"), "Josh");
@@ -130,12 +127,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（アプリケーションルート）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl + "/"));
 
         // 機能テストTOPの確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "Spring Functional Test Top Page"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("Spring Functional Test Top Page"));
 
         // sessionのクッキーを削除することにより、別セッションで実行する。
         webDriverOperations.deleteCookie("JSESSIONID");
@@ -154,8 +150,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0301001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DefaultAuthenticationFailure）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DefaultAuthenticationFailure）"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -165,19 +161,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0301/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0301/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -194,8 +188,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0401001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -208,15 +202,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0401/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0401/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0401001"));
@@ -229,19 +222,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0401/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0401/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0401001"));
@@ -254,19 +245,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0401/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0401/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -284,8 +273,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0402001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication with PasswordEncoder specified）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication with PasswordEncoder specified）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Smith");
@@ -298,15 +287,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Smith"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402001"));
@@ -319,19 +307,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402001"));
@@ -344,19 +330,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/001/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -374,8 +358,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0402004"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（DbFormAuthentication with hash type specified）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム（DbFormAuthentication with hash type specified）"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Smith");
@@ -388,15 +372,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Smith"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/004?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/004?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402004"));
@@ -409,19 +392,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/004/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/004/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // メニュー画面の操作
         webDriverOperations.click(id("athn0402004"));
@@ -434,19 +415,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // パスの確認
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0402/004/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0402/004/login?error"));
 
         // 機能毎のトップページを表示
         webDriverOperations.displayPage(getPackageRootUrl());
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -469,14 +448,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "John"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("John"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -503,17 +479,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Adam"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Adam"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -531,11 +503,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Adam"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -549,8 +519,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -576,14 +545,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Pola"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Pola"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -610,17 +576,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Pole"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Pole"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -637,11 +599,10 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Pole"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -655,8 +616,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -682,15 +642,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Susan"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Susan"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -717,18 +673,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Steven"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Steven"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -745,13 +696,10 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Steven"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+        assertTrue(Pattern.compile("\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -765,8 +713,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -792,15 +739,12 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Smith"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Smith"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -827,18 +771,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Wesson"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Wesson"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -857,11 +797,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -875,8 +813,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -902,14 +839,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Jack"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Jack"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -936,17 +870,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Ann"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Ann"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -963,11 +893,10 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Ann"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -981,8 +910,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1009,9 +937,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Tom"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\{bcrypt\\}\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}").matcher(
-                        webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{bcrypt\\}\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1038,10 +965,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Dave"));
         // ハッシュ化されたパスワードはSCryptPasswordEncodeされているか
-        assertTrue(Pattern.compile(
-                "\\{scrypt\\}\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+        assertTrue(Pattern
+                .compile("\\{scrypt\\}\\$e0801\\$[./0-9A-Za-z+/-]{86}==\\$[./0-9A-Za-z+/-]{43}=")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1070,8 +996,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // ハッシュ化されたパスワードはArgon2PasswordEncodeされているか
         assertTrue(Pattern.compile(
                 "\\{argon2\\}\\$argon2id\\$v=19\\$m=4096,t=3,p=1\\$[0-9A-Za-z+/]{22}\\$[0-9A-Za-z+/]{43}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1093,8 +1018,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0601001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(AuthEventHandle)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1106,24 +1030,21 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Autnenticated. username : Josh");
         }
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Session changed. sessionId : *");
         }
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Autnenticate completed. username : Josh");
         }
 
@@ -1156,8 +1077,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0602001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(AuthEventHandle)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1169,8 +1089,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Bad credentials is detected. username : Josh");
         }
 
@@ -1184,8 +1103,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "User deisabled is detected. username : Claire");
         }
 
@@ -1199,8 +1117,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "User locked is detected. username : Rock");
         }
 
@@ -1214,8 +1131,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Authentication expired is detected. username : Edword");
         }
 
@@ -1229,8 +1145,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Credentials expired is detected. username : Jenkins");
         }
 
@@ -1249,8 +1164,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0602002"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AuthenticationServiceException)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(AuthenticationServiceException)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1262,8 +1177,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "ServiceException is detected. username : Josh");
         }
     }
@@ -1280,8 +1194,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0701001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForLogout)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム(loginForLogout)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1294,8 +1207,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0701/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0701/001?loginSuccess"));
 
         // ログアウトボタン押下
         // TODO:
@@ -1304,20 +1217,17 @@ public class AuthenticationTest extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("logout"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // パスの確認（ログアウト成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/login?logout"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/login?logout"));
 
         // 機能トップへ
-        webDriverOperations.getWebDriver().get(applicationContextUrl
-                + "/athn/");
+        webDriverOperations.getWebDriver().get(applicationContextUrl + "/athn/");
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
     }
 
@@ -1333,8 +1243,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0702001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForLogoutDeleteCookie)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForLogoutDeleteCookie)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1347,8 +1257,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0702/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0702/001?loginSuccess"));
 
         // ログアウトボタン押下
         // TODO:
@@ -1357,12 +1267,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("logout"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // パスの確認（ログアウト成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/login?logout"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/login?logout"));
 
         // cookie確認 TODO：後でやる
         // assertThat(webDriverOperations.getCookie("JSESSIONID").getValue(),is(""));
@@ -1370,12 +1279,10 @@ public class AuthenticationTest extends FunctionTestSupport {
         // + applicationContextUrl));
 
         // 機能トップへ
-        webDriverOperations.getWebDriver().get(applicationContextUrl
-                + "/athn/");
+        webDriverOperations.getWebDriver().get(applicationContextUrl + "/athn/");
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
     }
 
     /**
@@ -1391,8 +1298,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn0901001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForDispAutentication)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForDispAutentication)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1404,14 +1311,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 認証後のユーザ情報の確認
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
-        assertThat(webDriverOperations.getText(id("lastname")), is(
-                "Josh Last"));
-        assertThat(webDriverOperations.getText(id("useruuid")), is(
-                "000000000000000000000000000000000001"));
+        assertThat(webDriverOperations.getText(id("lastname")), is("Josh Last"));
+        assertThat(webDriverOperations.getText(id("useruuid")),
+                is("000000000000000000000000000000000001"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/0901/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/0901/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1429,8 +1335,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1201001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedAuthSucessUrl)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedAuthSucessUrl)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1443,8 +1349,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1201/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1201/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1462,8 +1368,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1202001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedAuthSucessHandler)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedAuthSucessHandler)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1476,14 +1382,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1202/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1202/001?loginSuccess"));
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*MyAuthenticationSuccessHandler",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*MyAuthenticationSuccessHandler",
                     "Excute MyAuthenticationSuccessHandler. username : Josh");
         }
 
@@ -1507,8 +1412,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1302001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(loginForCustomizedAuthFailure)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(loginForCustomizedAuthFailure)"));
 
         // 入力条件設定（認証失敗：パスワード誤り）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1518,8 +1423,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：パスワード誤り）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/badCredentials"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/badCredentials"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1532,8 +1437,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：無効ユーザ）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/disabled"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/disabled"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1546,8 +1451,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：不明ユーザ）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/usernameNotFound"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/usernameNotFound"));
 
         // 戻る押下
         webDriverOperations.click(id("back"));
@@ -1560,8 +1465,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証エラー：不明ユーザ(デフォルト)）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/systemError"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/systemError"));
 
     }
 
@@ -1576,8 +1481,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1501002"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(CustomizedLogout)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(CustomizedLogout)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1590,8 +1495,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1501/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1501/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1599,8 +1504,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*MyLogoutSuccessHandler",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*MyLogoutSuccessHandler",
                     "Excute MyLogoutSuccessHandler. username : Josh");
         }
 
@@ -1618,8 +1522,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1601001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(AutenticationSystemError)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(AutenticationSystemError)"));
 
         // 入力条件設定（認証失敗）
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1629,12 +1533,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証失敗：認証エラー）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1601/001/login?error"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1601/001/login?error"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "connectionerror");
@@ -1644,12 +1547,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // パスの確認（認証失敗：システムエラー）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1601/001/login?systemError"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1601/001/login?systemError"));
 
         // エラー画面の確認
-        assertThat(webDriverOperations.getText(id("loginSystemError")), is(
-                "システムエラーが発生しました。"));
+        assertThat(webDriverOperations.getText(id("loginSystemError")), is("システムエラーが発生しました。"));
 
     }
 
@@ -1674,8 +1576,7 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 認証成功に独自実装した不可情報である住所が取得できることの確認
         assertThat(webDriverOperations.getText(id("customerName")), is("Josh"));
-        assertThat(webDriverOperations.getText(id("customerAddress")), is(
-                "san diego"));
+        assertThat(webDriverOperations.getText(id("customerAddress")), is("san diego"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1702,8 +1603,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("companyIdLogin"));
 
         // 認証失敗時に設定したエラーメッセージが表示できることの確認
-        assertThat(webDriverOperations.getText(id(
-                "customerCompanyIdLoginError")), is("Bad credentials"));
+        assertThat(webDriverOperations.getText(id("customerCompanyIdLoginError")),
+                is("Bad credentials"));
 
         // 入力条件設定
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1734,8 +1635,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn1703001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム（BeanValidation）"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ログインフォーム（BeanValidation）"));
 
         // 入力条件設定(Validationエラー)
         webDriverOperations.overrideText(id("username"), "");
@@ -1745,12 +1645,10 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 入力エラーメッセージの確認
-        assertThat(webDriverOperations.getText(id("usernameError")), is(
-                "値を入力してください。"));
+        assertThat(webDriverOperations.getText(id("usernameError")), is("値を入力してください。"));
 
         // 入力エラーメッセージの確認
-        assertThat(webDriverOperations.getText(id("passwordError")), is(
-                "値を入力してください。"));
+        assertThat(webDriverOperations.getText(id("passwordError")), is("値を入力してください。"));
 
         // 入力条件設定(認証エラー)
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1760,8 +1658,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証失敗後のデフォルトメッセージの確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // 入力条件設定(Validationエラー)
         webDriverOperations.overrideText(id("username"), "Josh");
@@ -1774,8 +1671,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Josh"));
 
         // パスの確認（認証成功）
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/athn/1703/001?loginSuccess"));
+        assertThat(webDriverOperations.getCurrentUrl(),
+                is(applicationContextUrl + "/athn/1703/001?loginSuccess"));
 
         // ログアウトボタン押下
         webDriverOperations.click(id("logout"));
@@ -1801,14 +1698,11 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("create"));
 
         // 管理者情報内容確認
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Carl"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Carl"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
     }
 
     /**
@@ -1835,17 +1729,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Samson"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Samson"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncoderでエンコードされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("getAfterEncodePassword")))
-                .matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -1860,18 +1750,16 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 管理者情報が表示されるまで待機
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("screenTitle"),
-                        "DelegatingPasswordEncoderを使用して認証"));
+        webDriverOperations.waitForDisplayed(ExpectedConditions.textToBePresentInElementLocated(
+                By.id("screenTitle"), "DelegatingPasswordEncoderを使用して認証"));
 
         // 管理者情報内容確認
         assertThat(webDriverOperations.getText(id("username")), is("Samson"));
         // ハッシュ化されたパスワードはPbkdf2PasswordEncodeされているか
-        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}").matcher(
-                webDriverOperations.getText(id("password"))).matches());
+        assertTrue(Pattern.compile("\\{pbkdf2\\}[./0-9A-Za-z]{80}")
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1889,8 +1777,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.waitForDisplayed(id("loginError"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1921,17 +1808,13 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
 
-        assertThat(webDriverOperations.getText(id("getAdministratorName")), is(
-                "Billy"));
+        assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Billy"));
         // DBの中身と一致することを確認する為、事前に取得
-        encodePassword = webDriverOperations.getText(id(
-                "getAfterEncodePassword"));
+        encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id(
-                        "getAfterEncodePassword"))).matches());
-        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
-                is("spring1234"));
+                .matcher(webDriverOperations.getText(id("getAfterEncodePassword"))).matches());
+        assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")), is("spring1234"));
 
         // パスワードハッシュメニュー画面に戻る
         webDriverOperations.click(id("goAthnMenu"));
@@ -1949,11 +1832,9 @@ public class AuthenticationTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(id("username")), is("Billy"));
         // ハッシュ化されたパスワードはBCryptPasswordEncodeされているか
         assertTrue(Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}")
-                .matcher(webDriverOperations.getText(id("password")))
-                .matches());
+                .matcher(webDriverOperations.getText(id("password"))).matches());
         // 表示されていたパスワードと一致すること
-        assertThat(webDriverOperations.getText(id("password")), is(
-                encodePassword));
+        assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -1982,13 +1863,12 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Shigeru"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Shigeru"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
     }
 
@@ -2016,16 +1896,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Akira"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Akira"));
             // DBの中身と一致することを確認する為、事前に取得
-            encodePassword = webDriverOperations.getText(id(
-                    "getAfterEncodePassword"));
+            encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
 
         // パスワードハッシュメニュー画面に戻る
@@ -2045,14 +1923,12 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("username")), is(
-                    "Akira"));
+            assertThat(webDriverOperations.getText(id("username")), is("Akira"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
-            assertTrue(webDriverOperations.getText(id("password")).matches(
-                    "\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertTrue(webDriverOperations.getText(id("password"))
+                    .matches("\\{\\S{1,}\\}[0-9a-f]{128}"));
             // 表示されていたパスワードと一致すること
-            assertThat(webDriverOperations.getText(id("password")), is(
-                    encodePassword));
+            assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
         }
 
         // ログアウトしてセッションを削除
@@ -2069,8 +1945,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -2099,13 +1974,12 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Satoshi"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Satoshi"));
             // ハッシュ化されたパスワードはShaPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
     }
 
@@ -2133,16 +2007,14 @@ public class AuthenticationTest extends FunctionTestSupport {
         // 管理者情報内容確認
         String encodePassword;
         {
-            assertThat(webDriverOperations.getText(id("getAdministratorName")),
-                    is("Megumi"));
+            assertThat(webDriverOperations.getText(id("getAdministratorName")), is("Megumi"));
             // DBの中身と一致することを確認する為、事前に取得
-            encodePassword = webDriverOperations.getText(id(
-                    "getAfterEncodePassword"));
+            encodePassword = webDriverOperations.getText(id("getAfterEncodePassword"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
             assertTrue(webDriverOperations.getText(id("getAfterEncodePassword"))
                     .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBeforeEncodePassword")), is("spring1234"));
+            assertThat(webDriverOperations.getText(id("getBeforeEncodePassword")),
+                    is("spring1234"));
         }
 
         // パスワードハッシュメニュー画面に戻る
@@ -2162,14 +2034,12 @@ public class AuthenticationTest extends FunctionTestSupport {
 
         // 管理者情報内容確認
         {
-            assertThat(webDriverOperations.getText(id("username")), is(
-                    "Megumi"));
+            assertThat(webDriverOperations.getText(id("username")), is("Megumi"));
             // ハッシュ化されたパスワードはMessageDigestPasswordEncodeされているか
-            assertTrue(webDriverOperations.getText(id("password")).matches(
-                    "\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
+            assertTrue(webDriverOperations.getText(id("password"))
+                    .matches("\\{MD\\}\\{\\S{1,}\\}[0-9a-f]{128}"));
             // 表示されていたパスワードと一致すること
-            assertThat(webDriverOperations.getText(id("password")), is(
-                    encodePassword));
+            assertThat(webDriverOperations.getText(id("password")), is(encodePassword));
         }
 
         // ログアウトしてセッションを削除
@@ -2186,8 +2056,7 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("login"));
 
         // 認証エラーとなることを確認
-        assertThat(webDriverOperations.getText(id("loginError")), is(
-                "Bad credentials"));
+        assertThat(webDriverOperations.getText(id("loginError")), is("Bad credentials"));
 
         // ログアウトしてセッションを削除
         webDriverOperations.click(id("logout"));
@@ -2285,8 +2154,8 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("athn2301001"));
 
         // ログイン画面の確認
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ログインフォーム(LogoutSuccessEventHandle)"));
+        assertThat(webDriverOperations.getText(id("screenTitle")),
+                is("ログインフォーム(LogoutSuccessEventHandle)"));
 
         // 入力条件設定（認証成功）
         webDriverOperations.overrideText(id("username"), "Emily");
@@ -2302,14 +2171,12 @@ public class AuthenticationTest extends FunctionTestSupport {
         webDriverOperations.click(id("logout"));
 
         // ログインしていないことの確認
-        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is(
-                "ゲスト"));
+        assertThat(webDriverOperations.getText(id("AuthenticateUserName")), is("ゲスト"));
 
         // イベントハンドラが実行されることを確認(ログ)
         {
             dbLogAssertOperations.waitForAssertion(1000);
-            dbLogAssertOperations.assertContainsByRegexMessage(
-                    ".*AuthenticationEventListeners",
+            dbLogAssertOperations.assertContainsByRegexMessage(".*AuthenticationEventListeners",
                     "Logout completed. username : Emily");
         }
 

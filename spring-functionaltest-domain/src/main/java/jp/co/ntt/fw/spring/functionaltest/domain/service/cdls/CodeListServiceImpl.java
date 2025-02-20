@@ -73,14 +73,14 @@ public class CodeListServiceImpl implements CodeListService {
 
     @Override
     public String getI18nPriceCodeListValue(String key, Locale locale) {
-        return this.nullToEmptyString(((SimpleI18nCodeList) i18nPriceCodeList)
-                .asMap(locale).get(key));
+        return this
+                .nullToEmptyString(((SimpleI18nCodeList) i18nPriceCodeList).asMap(locale).get(key));
     }
 
     @Override
     public String getI18nDBPriceCodeListValue(String key, Locale locale) {
-        return this.nullToEmptyString(((SimpleI18nCodeList) i18nDBPriceCodeList)
-                .asMap(locale).get(key));
+        return this.nullToEmptyString(
+                ((SimpleI18nCodeList) i18nDBPriceCodeList).asMap(locale).get(key));
     }
 
     private String nullToEmptyString(String str) {

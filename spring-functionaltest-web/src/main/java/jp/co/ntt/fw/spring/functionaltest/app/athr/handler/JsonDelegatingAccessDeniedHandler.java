@@ -47,8 +47,7 @@ public class JsonDelegatingAccessDeniedHandler implements AccessDeniedHandler {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             PrintWriter out = response.getWriter();
-            out.write(
-                    "{\"errorResults\":[{\"message\":\"Forbidden error!\"}]}");
+            out.write("{\"errorResults\":[{\"message\":\"Forbidden error!\"}]}");
             out.flush();
             // ...
         } else {

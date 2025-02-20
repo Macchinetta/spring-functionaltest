@@ -33,8 +33,7 @@ import org.terasoluna.gfw.common.exception.SystemException;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 
 @Service
-public class InterceptorsRestClientServiceImpl implements
-                                               InterceptorsRestClientService {
+public class InterceptorsRestClientServiceImpl implements InterceptorsRestClientService {
 
     @Inject
     RestTemplate interceptorsRestTemplate;
@@ -50,8 +49,8 @@ public class InterceptorsRestClientServiceImpl implements
 
         URI targetUri = this.getUri(this.uri, "basic");
 
-        UserResource user = this.interceptorsRestTemplate.getForObject(
-                targetUri, UserResource.class);
+        UserResource user =
+                this.interceptorsRestTemplate.getForObject(targetUri, UserResource.class);
 
         return user;
     }
@@ -61,8 +60,8 @@ public class InterceptorsRestClientServiceImpl implements
 
         URI targetUri = this.getUri(this.uri, "basic");
 
-        UserResource user = this.invalidCredentialInterceptorsRestTemplate
-                .getForObject(targetUri, UserResource.class);
+        UserResource user = this.invalidCredentialInterceptorsRestTemplate.getForObject(targetUri,
+                UserResource.class);
 
         return user;
     }
@@ -76,12 +75,11 @@ public class InterceptorsRestClientServiceImpl implements
         try {
             tmpFile = File.createTempFile("RSCL1104", ".block");
         } catch (IOException e) {
-            throw new SystemException("e.sf.rscl.9001", "input/output error.", e);
+            throw new SystemException("e.sf.rc.9001", "input/output error.", e);
         }
 
         try {
-            this.interceptorsRestTemplate.getForObject(targetUri,
-                    UserResource.class);
+            this.interceptorsRestTemplate.getForObject(targetUri, UserResource.class);
             // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
             tmpFile.delete();
         } catch (BusinessException e) {
@@ -98,8 +96,8 @@ public class InterceptorsRestClientServiceImpl implements
         URI targetUri = this.getUri(this.uri, "retry");
 
         RequestEntity<Void> req = RequestEntity.get(targetUri).build();
-        ResponseEntity<UserResource> res = this.interceptorsRestTemplate
-                .exchange(req, UserResource.class);
+        ResponseEntity<UserResource> res =
+                this.interceptorsRestTemplate.exchange(req, UserResource.class);
         UserResource user = res.getBody();
 
         return user;
@@ -113,7 +111,6 @@ public class InterceptorsRestClientServiceImpl implements
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 }

@@ -27,8 +27,7 @@ public class Order implements Serializable {
 
     private List<OrderItem> orderItems;
 
-    public Order() {
-    }
+    public Order() {}
 
     public Order(String orderId) {
         this.orderId = orderId;
@@ -85,8 +84,8 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order [orderId=" + orderId + ", cartItems=" + orderItems
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "Order [orderId=" + orderId + ", cartItems=" + orderItems + ", super.hashCode()="
+                + super.hashCode() + "]";
     }
 
 }

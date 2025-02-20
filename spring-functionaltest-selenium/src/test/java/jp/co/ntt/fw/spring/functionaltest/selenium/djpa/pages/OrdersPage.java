@@ -213,20 +213,20 @@ public class OrdersPage implements Page<OrdersPage> {
     public String getOrderAmount(Integer orderNum) {
         String amount = "";
         switch (orderNum) {
-        case 1:
-            amount = WebElementOperations.getElementTextValue(order1Amount);
-            break;
-        case 2:
-            amount = WebElementOperations.getElementTextValue(order2Amount);
-            break;
-        case 3:
-            amount = WebElementOperations.getElementTextValue(order3Amount);
-            break;
-        case 4:
-            amount = WebElementOperations.getElementTextValue(order4Amount);
-            break;
-        default:
-            break;
+            case 1:
+                amount = WebElementOperations.getElementTextValue(order1Amount);
+                break;
+            case 2:
+                amount = WebElementOperations.getElementTextValue(order2Amount);
+                break;
+            case 3:
+                amount = WebElementOperations.getElementTextValue(order3Amount);
+                break;
+            case 4:
+                amount = WebElementOperations.getElementTextValue(order4Amount);
+                break;
+            default:
+                break;
         }
         return amount;
     }
@@ -234,20 +234,20 @@ public class OrdersPage implements Page<OrdersPage> {
     public String getOrderMemo(Integer orderNum) {
         String memo = "";
         switch (orderNum) {
-        case 1:
-            memo = WebElementOperations.getElementTextValue(order1Memo);
-            break;
-        case 2:
-            memo = WebElementOperations.getElementTextValue(order2Memo);
-            break;
-        case 3:
-            memo = WebElementOperations.getElementTextValue(order3Memo);
-            break;
-        case 4:
-            memo = WebElementOperations.getElementTextValue(order4Memo);
-            break;
-        default:
-            break;
+            case 1:
+                memo = WebElementOperations.getElementTextValue(order1Memo);
+                break;
+            case 2:
+                memo = WebElementOperations.getElementTextValue(order2Memo);
+                break;
+            case 3:
+                memo = WebElementOperations.getElementTextValue(order3Memo);
+                break;
+            case 4:
+                memo = WebElementOperations.getElementTextValue(order4Memo);
+                break;
+            default:
+                break;
         }
         return memo;
     }
@@ -255,20 +255,20 @@ public class OrdersPage implements Page<OrdersPage> {
     public String getOrderStatus(Integer orderNum) {
         String status = "";
         switch (orderNum) {
-        case 1:
-            status = WebElementOperations.getElementTextValue(order1Status);
-            break;
-        case 2:
-            status = WebElementOperations.getElementTextValue(order2Status);
-            break;
-        case 3:
-            status = WebElementOperations.getElementTextValue(order3Status);
-            break;
-        case 4:
-            status = WebElementOperations.getElementTextValue(order4Status);
-            break;
-        default:
-            break;
+            case 1:
+                status = WebElementOperations.getElementTextValue(order1Status);
+                break;
+            case 2:
+                status = WebElementOperations.getElementTextValue(order2Status);
+                break;
+            case 3:
+                status = WebElementOperations.getElementTextValue(order3Status);
+                break;
+            case 4:
+                status = WebElementOperations.getElementTextValue(order4Status);
+                break;
+            default:
+                break;
         }
         return status;
     }
@@ -276,32 +276,32 @@ public class OrdersPage implements Page<OrdersPage> {
     public OrderDetailsPage displayOderDetail(Integer orderNum) {
         OrderDetailsPage orderDetailsPage = new OrderDetailsPage(driver);
         switch (orderNum) {
-        case 1:
-            orderDetailLnk1.click();
-            break;
-        case 2:
-            orderDetailLnk2.click();
-            break;
-        case 3:
-            orderDetailLnk3.click();
-            break;
-        case 4:
-            orderDetailLnk4.click();
-            break;
-        case 5:
-            orderDetailLnk5.click();
-            break;
-        case 6:
-            orderDetailLnk6.click();
-            break;
-        case 7:
-            orderDetailLnk7.click();
-            break;
-        case 8:
-            orderDetailLnk8.click();
-            break;
-        default:
-            break;
+            case 1:
+                orderDetailLnk1.click();
+                break;
+            case 2:
+                orderDetailLnk2.click();
+                break;
+            case 3:
+                orderDetailLnk3.click();
+                break;
+            case 4:
+                orderDetailLnk4.click();
+                break;
+            case 5:
+                orderDetailLnk5.click();
+                break;
+            case 6:
+                orderDetailLnk6.click();
+                break;
+            case 7:
+                orderDetailLnk7.click();
+                break;
+            case 8:
+                orderDetailLnk8.click();
+                break;
+            default:
+                break;
         }
         return orderDetailsPage;
 

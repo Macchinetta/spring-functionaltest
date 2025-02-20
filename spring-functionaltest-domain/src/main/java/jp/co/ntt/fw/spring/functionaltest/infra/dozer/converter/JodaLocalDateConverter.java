@@ -19,8 +19,7 @@ import org.joda.time.LocalDate;
 
 import com.github.dozermapper.core.DozerConverter;
 
-public class JodaLocalDateConverter extends
-                                    DozerConverter<LocalDate, LocalDate> {
+public class JodaLocalDateConverter extends DozerConverter<LocalDate, LocalDate> {
 
     public JodaLocalDateConverter() {
         super(LocalDate.class, LocalDate.class);

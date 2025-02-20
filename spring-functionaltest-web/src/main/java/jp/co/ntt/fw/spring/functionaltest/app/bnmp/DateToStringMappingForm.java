@@ -103,8 +103,7 @@ public class DateToStringMappingForm implements Serializable {
         return birthDateGregorianCalendar;
     }
 
-    public void setBirthDateGregorianCalendar(
-            GregorianCalendar birthDateGregorianCalendar) {
+    public void setBirthDateGregorianCalendar(GregorianCalendar birthDateGregorianCalendar) {
         this.birthDateGregorianCalendar = birthDateGregorianCalendar;
     }
 
@@ -136,8 +135,7 @@ public class DateToStringMappingForm implements Serializable {
         return birthDateLocalDateTime;
     }
 
-    public void setBirthDateLocalDateTime(
-            LocalDateTime birthDateLocalDateTime) {
+    public void setBirthDateLocalDateTime(LocalDateTime birthDateLocalDateTime) {
         this.birthDateLocalDateTime = birthDateLocalDateTime;
     }
 
@@ -153,8 +151,7 @@ public class DateToStringMappingForm implements Serializable {
         return birthDateOffsetDateTime;
     }
 
-    public void setBirthDateOffsetDateTime(
-            OffsetDateTime birthDateOffsetDateTime) {
+    public void setBirthDateOffsetDateTime(OffsetDateTime birthDateOffsetDateTime) {
         this.birthDateOffsetDateTime = birthDateOffsetDateTime;
     }
 
@@ -162,8 +159,7 @@ public class DateToStringMappingForm implements Serializable {
         return birthDateZonedDateTime;
     }
 
-    public void setBirthDateZonedDateTime(
-            ZonedDateTime birthDateZonedDateTime) {
+    public void setBirthDateZonedDateTime(ZonedDateTime birthDateZonedDateTime) {
         this.birthDateZonedDateTime = birthDateZonedDateTime;
     }
 }

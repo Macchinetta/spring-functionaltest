@@ -34,8 +34,8 @@ import javax.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.UnusedUserId.List;
 
 @Documented
-@Constraint(validatedBy = { UnusedUserIdValidator.class })
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Constraint(validatedBy = {UnusedUserIdValidator.class})
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 public @interface UnusedUserId {
@@ -47,8 +47,7 @@ public @interface UnusedUserId {
 
     Class<? extends Payload>[] payload() default {};
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

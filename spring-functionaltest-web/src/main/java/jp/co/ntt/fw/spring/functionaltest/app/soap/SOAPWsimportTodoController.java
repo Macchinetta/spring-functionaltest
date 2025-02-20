@@ -21,25 +21,46 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.service.soap.WsimportTodoProxyService;
 import jp.co.ntt.fw.spring.functionaltest.ws.soap.wsimport.Todo;
 
+/**
+ * Web service test controller. (本コントローラで処理される内容は、全てSOAPサーバー側に通信を行い処理されます。
+ * wsimportを使用したソースをもとに、SOAPサービスを呼び出す。)
+ */
 @RequestMapping("todo/wsimport")
 @Controller
 public class SOAPWsimportTodoController {
 
     @Inject
-    WsimportTodoProxyService todoProxyService;
+    WsimportTodoProxyService wsimportTodoService;
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String getTodos(Model model) {
+    /**
+     * Get all todo list. (JaxWsPortProxyFactoryBeanを使用してアクセス)
+     * @param model Model
+     * @return list page
+     */
+    @GetMapping(value = "list/jaxWsPortProxy")
+    public String getTodosJaxWsPortProxy(Model model) {
 
-        List<Todo> todos = todoProxyService.getTodos();
+        List<Todo> todos = wsimportTodoService.getTodosJaxWsPortProxy();
         model.addAttribute("todos", todos);
         return "soap/list";
     }
 
+    /**
+     * Get all todo list. (WSDLファイルから生成したクライアントよりアクセス)
+     * @param model Model
+     * @return list page
+     */
+    @GetMapping(value = "list/wsimport")
+    public String getTodosWsimport(Model model) {
+
+        List<Todo> todos = wsimportTodoService.getTodosWsimport();
+        model.addAttribute("todos", todos);
+        return "soap/list";
+    }
 }

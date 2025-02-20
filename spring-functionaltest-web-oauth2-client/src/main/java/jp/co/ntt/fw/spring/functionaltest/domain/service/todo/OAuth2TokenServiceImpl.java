@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.todo;
 
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -32,8 +31,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OAuth2TokenServiceImpl implements OAuth2TokenService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-            OAuth2TokenServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2TokenServiceImpl.class);
 
     @Inject
     OAuth2AuthorizedClientManager authorizedClientManager;
@@ -41,22 +39,18 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     @Override
     public OAuth2AccessToken getToken(String registrationId) {
 
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         OAuth2AuthorizeRequest authorizeRequest = OAuth2AuthorizeRequest
-                .withClientRegistrationId(registrationId).principal(
-                        authentication).build();
+                .withClientRegistrationId(registrationId).principal(authentication).build();
 
         // 認可されていない場合はClientAuthorizationRequiredExceptionをスローし、OAuth2AuthorizationRequestRedirectFilterで認可処理を行う
         OAuth2AuthorizedClient authorizedClient = null;
         try {
-            authorizedClient = this.authorizedClientManager.authorize(
-                    authorizeRequest);
+            authorizedClient = this.authorizedClientManager.authorize(authorizeRequest);
         } catch (OAuth2AuthorizationException e) {
             if ("invalid_grant".equals(e.getError().getErrorCode())) {
-                LOGGER.warn("refresh token expired. registrationId = {}",
-                        registrationId);
+                LOGGER.warn("refresh token expired. registrationId = {}", registrationId);
                 throw new ClientAuthorizationRequiredException(registrationId);
             }
             throw e;
@@ -67,9 +61,8 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         if (accessToken != null) {
             LOGGER.debug(
                     "access token [Issued = {}, Expires = {}, Scopes = {}, Type = {}, Value ={}",
-                    accessToken.getIssuedAt(), accessToken.getExpiresAt(),
-                    accessToken.getScopes(), accessToken.getTokenType()
-                            .getValue(), accessToken.getTokenValue());
+                    accessToken.getIssuedAt(), accessToken.getExpiresAt(), accessToken.getScopes(),
+                    accessToken.getTokenType().getValue(), accessToken.getTokenValue());
         }
 
         return accessToken;

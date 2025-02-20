@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  * getTodoResponse complex typeのJavaクラス。
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
- * 
+ *
  * <pre>
  * &lt;complexType name="getTodoResponse">
  *   &lt;complexContent>
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlType;
  * </pre>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getTodoResponse", propOrder = { "todo" })
+@XmlType(name = "getTodoResponse", propOrder = {"todo"})
 public class GetTodoResponse {
 
     protected Todo todo;

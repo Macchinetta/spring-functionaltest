@@ -56,10 +56,10 @@ public interface JPABookEGService {
 
     JPABookEG updateUsingMyProjectRepo(JPABookEG jpaBookEG);
 
-    JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(Integer bookId,
-            Integer sleepTime) throws InterruptedException;
+    JPABookEG findOneForUpdateLckTmeOutPessismisticLocking(Integer bookId, Integer sleepTime)
+            throws InterruptedException;
 
-    JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(Integer bookId,
-            Integer sleepTime) throws InterruptedException;
+    JPABookEG findOneForUpdateLckTmeOutPessismisticLockingNoExcp(Integer bookId, Integer sleepTime)
+            throws InterruptedException;
 
 }

@@ -41,8 +41,7 @@ public class RSCL13Controller {
     @RequestMapping(value = "1301/001", method = RequestMethod.GET)
     public String handle1301001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "AsyncRestTemplateを使用して、REST APIを呼び出し、JavaBeanを取得する");
+        model.addAttribute("testDescription", "AsyncRestTemplateを使用して、REST APIを呼び出し、JavaBeanを取得する");
         model.addAttribute("testId", "1301/001");
 
         return "rscl/setAsyncRestRequestPass";
@@ -53,8 +52,7 @@ public class RSCL13Controller {
 
         UserResource rcvUser = this.asyncRestClientService.confirmAsync01(path);
 
-        model.addAttribute("resultDescription",
-                "AsyncRestTemplateを使用して、想定される結果が返却されているか確認");
+        model.addAttribute("resultDescription", "AsyncRestTemplateを使用して、想定される結果が返却されているか確認");
         model.addAttribute("user", rcvUser);
 
         return "rscl/resultUserInf";
@@ -125,15 +123,13 @@ public class RSCL13Controller {
 
     @RequestMapping(value = "1303/001", method = RequestMethod.POST)
     public String handle1303001(Model model) {
-        UserResource rcvUser = this.interceptorsAsyncRestClientService
-                .getUserForStatusCode200();
+        UserResource rcvUser = this.interceptorsAsyncRestClientService.getUserForStatusCode200();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error().add(
-                    "e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add("e.sf.rc.8002");
             model.addAttribute(messages);
         }
 
@@ -152,15 +148,13 @@ public class RSCL13Controller {
 
     @RequestMapping(value = "1303/002", method = RequestMethod.POST)
     public String handle1303002(Model model) {
-        UserResource rcvUser = this.interceptorsAsyncRestClientService
-                .getUserForStatusCode401();
+        UserResource rcvUser = this.interceptorsAsyncRestClientService.getUserForStatusCode401();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error().add(
-                    "e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add("e.sf.rc.8002");
             model.addAttribute(messages);
         }
 
@@ -180,15 +174,13 @@ public class RSCL13Controller {
     @RequestMapping(value = "1303/003", method = RequestMethod.POST)
     public String handle1303003(Model model) {
 
-        UserResource rcvUser = this.interceptorsAsyncRestClientService
-                .getUserForConnectError();
+        UserResource rcvUser = this.interceptorsAsyncRestClientService.getUserForConnectError();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error().add(
-                    "e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add("e.sf.rc.8002");
             model.addAttribute(messages);
         }
         return "rscl/resultUserInf";
@@ -207,15 +199,13 @@ public class RSCL13Controller {
     @RequestMapping(value = "1303/004", method = RequestMethod.POST)
     public String handle1303004(Model model) {
 
-        UserResource rcvUser = this.interceptorsAsyncRestClientService
-                .getUserForReadTimeout();
+        UserResource rcvUser = this.interceptorsAsyncRestClientService.getUserForReadTimeout();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         if (rcvUser != null) {
             model.addAttribute("user", rcvUser);
         } else {
-            ResultMessages messages = ResultMessages.error().add(
-                    "e.rc.fw.8002");
+            ResultMessages messages = ResultMessages.error().add("e.sf.rc.8002");
             model.addAttribute(messages);
         }
 

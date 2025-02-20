@@ -27,8 +27,7 @@ public class MailAddressDto implements Serializable {
         this.email = email;
     }
 
-    public MailAddressDto() {
-    }
+    public MailAddressDto() {}
 
     public String getEmail() {
         return email;

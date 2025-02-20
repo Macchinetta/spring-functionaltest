@@ -17,22 +17,22 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.interceptor;
 
 import java.io.IOException;
 import java.time.Duration;
-
 import javax.inject.Inject;
-
 import org.apache.commons.lang3.ThreadUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.todo.OAuth2TokenService;
 
-public class RestTemplateSendWaitInterceptor implements
-                                             ClientHttpRequestInterceptor {
+public class RestTemplateSendWaitInterceptor implements ClientHttpRequestInterceptor {
 
     private String registrationId;
+
+    @Value("${oth2.send.wait.seconds}")
+    private Long sendWait;
 
     @Inject
     OAuth2TokenService oAuth2TokenService;
@@ -41,13 +41,11 @@ public class RestTemplateSendWaitInterceptor implements
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,
             ClientHttpRequestExecution execution) throws IOException {
 
-        OAuth2AccessToken accessToken = this.oAuth2TokenService.getToken(
-                this.registrationId);
+        OAuth2AccessToken accessToken = this.oAuth2TokenService.getToken(this.registrationId);
         request.getHeaders().setBearerAuth(accessToken.getTokenValue());
 
         try {
-            // TODO プロパティで設定できるようにした方が良いが、現時点ではべた書き
-            ThreadUtils.sleep(Duration.ofSeconds(300L));
+            ThreadUtils.sleep(Duration.ofSeconds(this.sendWait));
         } catch (InterruptedException e) {
             // noop
         }

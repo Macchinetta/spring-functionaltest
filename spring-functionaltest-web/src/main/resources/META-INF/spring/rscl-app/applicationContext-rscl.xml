@@ -1,206 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
-  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
-  xmlns:task="http://www.springframework.org/schema/task"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
-        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
-  <!-- Filter -->
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/task https://www.springframework.org/schema/task/spring-task.xsd">
 
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.rscl.RSCLHttpsServer" init-method="startServer"
-    destroy-method="stopServer" />
-
-  <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
-
-  <bean id="jaxb2CollectionHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter" />
-  <bean id="collectionRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <property name="messageConverters">
-      <list>
-        <ref bean="jaxb2CollectionHttpMessageConverter" />
-      </list>
-    </property>
-  </bean>
-
-  <bean id="customErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.CustomErrorHandler" />
-  <bean id="customErrorRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <property name="errorHandler" ref="customErrorHandler" />
-  </bean>
-
-  <bean id="clientHttpRequestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
-    <property name="connectTimeout" value="${rscl.timeoutRestTemplate.connectTimeout: 2000}" />
-    <property name="readTimeout" value="${rscl.timeoutRestTemplate.readTimeout: 2000}" />
-  </bean>
-  <bean id="timeoutRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <constructor-arg ref="clientHttpRequestFactory" />
-  </bean>
-
-  <bean id="httpsRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <constructor-arg>
-      <bean class="jp.co.ntt.fw.spring.functionaltest.app.rscl.RequestFactoryBean">
+    <bean id="rsclHttpsServer1" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.RSCLHttpsServer" init-method="startServer"
+        destroy-method="stopServer">
         <property name="keyStoreFileName" value="${rscl.keystore.filename}" />
         <property name="keyStorePassword" value="${rscl.keystore.password}" />
-      </bean>
-    </constructor-arg>
-  </bean>
+        <property name="port" value="${rscl.httpsserver1.port}" />
+    </bean>
 
-  <bean id="basicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
-    <constructor-arg index="0" value="${rscl.basicAuth.username}" />
-    <constructor-arg index="1" value="${rscl.basicAuth.password}" />
-  </bean>
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
 
-  <bean id="invalidCredentialBasicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
-    <constructor-arg index="0" value="${rscl.basicAuth.username}" />
-    <constructor-arg index="1" value="${rscl.basicAuth.invalidPassword}" />
-  </bean>
-
-  <bean id="loggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.LoggingInterceptor" />
-  <bean id="accessCtrlInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AccessCtrlInterceptor" />
-
-  <bean id="interceptorsRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <property name="interceptors">
-      <list>
-        <ref bean="basicAuthInterceptor" />
-        <ref bean="loggingInterceptor" />
-        <ref bean="accessCtrlInterceptor" />
-      </list>
-    </property>
-  </bean>
-
-  <bean id="invalidCredentialInterceptorsRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <property name="interceptors">
-      <list>
-        <ref bean="invalidCredentialBasicAuthInterceptor" />
-        <ref bean="loggingInterceptor" />
-        <ref bean="accessCtrlInterceptor" />
-      </list>
-    </property>
-  </bean>
-
-  <bean id="asyncTaskExecutorForCoreAndMaxSame" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-    <property name="corePoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
-    <property name="queueCapacity" value="${rscl.asyncRestTemplate.queueCapacity}" />
-    <property name="maxPoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
-  </bean>
-  <bean id="asyncRestTemplateForCoreAndMaxSame" class="org.springframework.web.client.AsyncRestTemplate">
-    <constructor-arg index="0" ref="asyncTaskExecutorForCoreAndMaxSame" />
-  </bean>
-
-  <bean id="asyncTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-    <property name="corePoolSize" value="${rscl.asyncRestTemplate.corePoolSize}" />
-    <property name="queueCapacity" value="${rscl.asyncRestTemplate.queueCapacity}" />
-    <property name="maxPoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
-  </bean>
-  <bean id="asyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
-    <constructor-arg index="0" ref="asyncTaskExecutor" />
-  </bean>
-
-  <bean id="asyncChainInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AsyncChainInterceptor" />
-  <bean id="asyncLoggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AsyncLoggingInterceptor" />
-  <bean id="interceptorsAsyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
-    <property name="interceptors">
-      <list>
-        <ref bean="asyncChainInterceptor" />
-        <ref bean="asyncLoggingInterceptor" />
-      </list>
-    </property>
-  </bean>
-
-  <bean id="simpleAsyncTaskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
-  <bean id="asyncClientHttpRequestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
-    <property name="taskExecutor" ref="simpleAsyncTaskExecutor" />
-    <property name="connectTimeout" value="${rscl.timeoutRestTemplate.connectTimeout: 2000}" />
-    <property name="readTimeout" value="${rscl.timeoutRestTemplate.readTimeout: 2000}" />
-  </bean>
-  <bean id="timeoutInterceptorsAsyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
-    <constructor-arg ref="asyncClientHttpRequestFactory" />
-    <property name="interceptors">
-      <list>
-        <ref bean="asyncChainInterceptor" />
-        <ref bean="asyncLoggingInterceptor" />
-      </list>
-    </property>
-  </bean>
-
-  <bean id="proxyAuthHttpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
-    factory-method="create">
-    <property name="defaultCredentialsProvider">
-      <bean
-        class="jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.BasicCredentialsProviderFactoryBean" />
-    </property>
-    <property name="proxy">
-      <bean class="org.apache.http.HttpHost">
-        <constructor-arg index="0" value="${rscl.http.proxyHost}" />
-        <constructor-arg index="1" value="${rscl.http.proxyPort}" />
-      </bean>
-    </property>
-  </bean>
-
-  <bean id="proxyAuthRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <constructor-arg>
-      <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
-        <constructor-arg>
-          <bean factory-bean="proxyAuthHttpClientBuilder" factory-method="build" />
-        </constructor-arg>
-      </bean>
-    </constructor-arg>
-  </bean>
-
-  <bean id="proxyHttpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
-    factory-method="create">
-    <property name="proxy">
-      <bean class="org.apache.http.HttpHost">
-        <constructor-arg index="0" value="${rscl.http.proxyHost}" />
-        <constructor-arg index="1" value="${rscl.http.proxyPort}" />
-      </bean>
-    </property>
-  </bean>
-
-  <bean id="proxyRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <constructor-arg>
-      <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
-        <constructor-arg>
-          <bean factory-bean="proxyHttpClientBuilder" factory-method="build" />
-        </constructor-arg>
-      </bean>
-    </constructor-arg>
-  </bean>
-
-  <bean id="inetSocketAddress" class="java.net.InetSocketAddress">
-    <constructor-arg index="0" value="${rscl.http.proxyHost}" />
-    <constructor-arg index="1" value="${rscl.http.proxyPort}" />
-  </bean>
-
-  <bean id="simpleClientRestTemplate" class="org.springframework.web.client.RestTemplate">
-    <constructor-arg>
-      <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory">
-        <property name="proxy">
-          <bean class="java.net.Proxy">
-            <constructor-arg index="0">
-              <util:constant static-field="java.net.Proxy.Type.HTTP" />
-            </constructor-arg>
-            <constructor-arg index="1" ref="inetSocketAddress" />
-          </bean>
+    <bean id="jaxb2CollectionHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter" />
+    <bean id="collectionRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jaxb2CollectionHttpMessageConverter" />
+            </list>
         </property>
-      </bean>
-    </constructor-arg>
-  </bean>
+    </bean>
 
-  <bean id="proxyServlet" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy.InternalProxyServlet">
-    <property name="proxyUseAuthPath" value="${cmmn.http.proxyUseAuthPath}" />
-    <property name="proxyUserName" value="${cmmn.http.proxyUserName}" />
-    <property name="proxyPassword" value="${cmmn.http.proxyPassword}" />
-  </bean>
+    <bean id="customErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.CustomErrorHandler" />
+    <bean id="customErrorRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="errorHandler" ref="customErrorHandler" />
+    </bean>
 
-  <!-- ProxyServer -->
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy.InternalProxyServer"
-    init-method="startServer" destroy-method="stopServer">
-    <property name="internalProxyServlet">
-      <ref bean="proxyServlet" />
-    </property>
-    <property name="port" value="${cmmn.http.proxyPort}" />
-  </bean>
+    <bean id="clientHttpRequestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+        <property name="connectTimeout" value="${rscl.timeoutRestTemplate.connectTimeout: 2000}" />
+        <property name="readTimeout" value="${rscl.timeoutRestTemplate.readTimeout: 2000}" />
+    </bean>
+    <bean id="timeoutRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="clientHttpRequestFactory" />
+    </bean>
+
+    <bean id="httpsRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="jp.co.ntt.fw.spring.functionaltest.app.rscl.RequestFactoryBean">
+                <property name="keyStoreFileName" value="${rscl.keystore.filename}" />
+                <property name="keyStorePassword" value="${rscl.keystore.password}" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="basicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+        <constructor-arg index="0" value="${rscl.basicAuth.username}" />
+        <constructor-arg index="1" value="${rscl.basicAuth.password}" />
+    </bean>
+
+    <bean id="invalidCredentialBasicAuthInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+        <constructor-arg index="0" value="${rscl.basicAuth.username}" />
+        <constructor-arg index="1" value="${rscl.basicAuth.invalidPassword}" />
+    </bean>
+
+    <bean id="loggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.LoggingInterceptor" />
+    <bean id="accessCtrlInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AccessCtrlInterceptor" />
+
+    <bean id="interceptorsRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="interceptors">
+            <list>
+                <ref bean="basicAuthInterceptor" />
+                <ref bean="loggingInterceptor" />
+                <ref bean="accessCtrlInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="invalidCredentialInterceptorsRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="interceptors">
+            <list>
+                <ref bean="invalidCredentialBasicAuthInterceptor" />
+                <ref bean="loggingInterceptor" />
+                <ref bean="accessCtrlInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="asyncTaskExecutorForCoreAndMaxSame" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
+        <property name="queueCapacity" value="${rscl.asyncRestTemplate.queueCapacity}" />
+        <property name="maxPoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
+    </bean>
+    <bean id="asyncRestTemplateForCoreAndMaxSame" class="org.springframework.web.client.AsyncRestTemplate">
+        <constructor-arg index="0" ref="asyncTaskExecutorForCoreAndMaxSame" />
+    </bean>
+
+    <bean id="asyncTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="${rscl.asyncRestTemplate.corePoolSize}" />
+        <property name="queueCapacity" value="${rscl.asyncRestTemplate.queueCapacity}" />
+        <property name="maxPoolSize" value="${rscl.asyncRestTemplate.maxPoolSize}" />
+    </bean>
+    <bean id="asyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
+        <constructor-arg index="0" ref="asyncTaskExecutor" />
+    </bean>
+
+    <bean id="asyncChainInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AsyncChainInterceptor" />
+    <bean id="asyncLoggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.rscl.AsyncLoggingInterceptor" />
+    <bean id="interceptorsAsyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
+        <property name="interceptors">
+            <list>
+                <ref bean="asyncChainInterceptor" />
+                <ref bean="asyncLoggingInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="simpleAsyncTaskExecutor" class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+    <bean id="asyncClientHttpRequestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+        <property name="taskExecutor" ref="simpleAsyncTaskExecutor" />
+        <property name="connectTimeout" value="${rscl.timeoutRestTemplate.connectTimeout: 2000}" />
+        <property name="readTimeout" value="${rscl.timeoutRestTemplate.readTimeout: 2000}" />
+    </bean>
+    <bean id="timeoutInterceptorsAsyncRestTemplate" class="org.springframework.web.client.AsyncRestTemplate">
+        <constructor-arg ref="asyncClientHttpRequestFactory" />
+        <property name="interceptors">
+            <list>
+                <ref bean="asyncChainInterceptor" />
+                <ref bean="asyncLoggingInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="proxyAuthHttpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
+        factory-method="create">
+        <property name="defaultCredentialsProvider">
+            <bean
+                class="jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.BasicCredentialsProviderFactoryBean" />
+        </property>
+        <property name="proxy">
+            <bean class="org.apache.http.HttpHost">
+                <constructor-arg index="0" value="${rscl.http.proxyHost}" />
+                <constructor-arg index="1" value="${rscl.http.proxyPort}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="proxyAuthRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean factory-bean="proxyAuthHttpClientBuilder" factory-method="build" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="proxyHttpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder"
+        factory-method="create">
+        <property name="proxy">
+            <bean class="org.apache.http.HttpHost">
+                <constructor-arg index="0" value="${rscl.http.proxyHost}" />
+                <constructor-arg index="1" value="${rscl.http.proxyPort}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="proxyRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean factory-bean="proxyHttpClientBuilder" factory-method="build" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="inetSocketAddress" class="java.net.InetSocketAddress">
+        <constructor-arg index="0" value="${rscl.http.proxyHost}" />
+        <constructor-arg index="1" value="${rscl.http.proxyPort}" />
+    </bean>
+
+    <bean id="simpleClientRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+                <property name="proxy">
+                    <bean class="java.net.Proxy">
+                        <constructor-arg index="0">
+                            <util:constant static-field="java.net.Proxy.Type.HTTP" />
+                        </constructor-arg>
+                        <constructor-arg index="1" ref="inetSocketAddress" />
+                    </bean>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="proxyServlet" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy.InternalProxyServlet">
+        <property name="proxyUseAuthPath" value="${cmmn.http.proxyUseAuthPath}" />
+        <property name="proxyUserName" value="${cmmn.http.proxyUserName}" />
+        <property name="proxyPassword" value="${cmmn.http.proxyPassword}" />
+    </bean>
+
+    <!-- ProxyServer -->
+    <bean class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.proxy.InternalProxyServer"
+        init-method="startServer" destroy-method="stopServer">
+        <property name="internalProxyServlet">
+            <ref bean="proxyServlet" />
+        </property>
+        <property name="port" value="${cmmn.http.proxyPort}" />
+    </bean>
 </beans>

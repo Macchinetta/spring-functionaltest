@@ -26,8 +26,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetails
 public class ATHN04Controller {
 
     @RequestMapping(value = "0401/001", params = "loginSuccess")
-    public String handle040101LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle040101LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0401/001");
@@ -35,8 +34,7 @@ public class ATHN04Controller {
     }
 
     @RequestMapping(value = "0402/001", params = "loginSuccess")
-    public String handle040201LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle040201LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0402/001");
@@ -44,8 +42,7 @@ public class ATHN04Controller {
     }
 
     @RequestMapping(value = "0402/004", params = "loginSuccess")
-    public String handle040204LoginSuccess(
-            @AuthenticationPrincipal AccountUserDetails userDetails,
+    public String handle040204LoginSuccess(@AuthenticationPrincipal AccountUserDetails userDetails,
             Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0402/004");

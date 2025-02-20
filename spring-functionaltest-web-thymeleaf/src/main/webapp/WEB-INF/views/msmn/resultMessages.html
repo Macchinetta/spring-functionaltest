@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <h1 id="screenTitle">ResultMessageの表示（複数）</h1>
+        <div class="container">
+            <h1>Result Message</h1>
+            <h2>Messages(SUCCESS)</h2>
+            <div th:if="${messages_success} != null" class="alert" th:classappend="|alert-${messages_success.type}|">
+                <ul>
+                    <li th:each="message : ${messages_success}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(INFO)</h2>
+            <div th:if="${messages_info} != null" class="alert" th:classappend="|alert-${messages_info.type}|">
+                <ul>
+                    <li th:each="message : ${messages_info}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(WARNING)</h2>
+            <div th:if="${messages_warning} != null" class="alert" th:classappend="|alert-${messages_warning.type}|">
+                <ul>
+                    <li th:each="message : ${messages_warning}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(ERROR)</h2>
+            <div th:if="${messages_error} != null" class="alert" th:classappend="|alert-${messages_error.type}|">
+                <ul>
+                    <li th:each="message : ${messages_error}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(DANGER)</h2>
+            <div th:if="${messages_danger} != null" class="alert" th:classappend="|alert-${messages_danger.type}|">
+                <ul>
+                    <li th:each="message : ${messages_danger}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(PRIMARY)</h2>
+            <div th:if="${messages_primary} != null" class="alert" th:classappend="|alert-${messages_primary.type}|">
+                <ul>
+                    <li th:each="message : ${messages_primary}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(SECONDARY)</h2>
+            <div th:if="${messages_secondary} != null" class="alert" th:classappend="|alert-${messages_secondary.type}|">
+                <ul>
+                    <li th:each="message : ${messages_secondary}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(LIGHT)</h2>
+            <div th:if="${messages_light} != null" class="alert" th:classappend="|alert-${messages_light.type}|">
+                <ul>
+                    <li th:each="message : ${messages_light}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+            <h2>Messages(DARK)</h2>
+            <div th:if="${messages_dark} != null" class="alert" th:classappend="|alert-${messages_dark.type}|">
+                <ul>
+                    <li th:each="message : ${messages_dark}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

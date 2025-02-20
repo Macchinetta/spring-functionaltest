@@ -49,17 +49,14 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     }
 
     @Override
-    public JPAOrderItem getOrderItemDetail(Integer orderId,
-            Integer itemNumber) {
+    public JPAOrderItem getOrderItemDetail(Integer orderId, Integer itemNumber) {
         return jpaOrderItemRepository.findById(itemNumber).orElse(null);
     }
 
     @Override
     @Transactional(value = "jpaTransactionManager")
-    public JPAOrderItem updateOrderItem(Integer orderItemId,
-            Integer newQuantity) {
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(orderItemId)
-                .orElse(null);
+    public JPAOrderItem updateOrderItem(Integer orderItemId, Integer newQuantity) {
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(orderItemId).orElse(null);
         jpaOrderItem.setQuantity(newQuantity);
         return jpaOrderItem;
     }
@@ -69,8 +66,7 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     public JPAOrderItem updateUsingQueryMethod(Integer orderId) {
         // getting the item#1 from the given orderId under entityManager
         Integer itemNum = 1;
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum)
-                .orElse(null);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum).orElse(null);
 
         jpaOrderItemRepository.updateByQueryNoClear(orderId);
 
@@ -82,8 +78,7 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     @Override
     @Transactional(value = "jpaTransactionManager")
     public int updateUsingQueryMethodErr(Integer orderId) {
-        return jpaOrderItemRepository.updateToLogicalDeleteNoModifyingAnnot(
-                orderId);
+        return jpaOrderItemRepository.updateToLogicalDeleteNoModifyingAnnot(orderId);
     }
 
     @Override
@@ -91,8 +86,7 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     public JPAOrderItem updateUsingQueryMethodAndClear(Integer orderId) {
         // getting the item#1 from the given orderId under entityManager
         Integer itemNum = 1;
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum)
-                .orElse(null);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.findById(itemNum).orElse(null);
 
         jpaOrderItemRepository.updateByQueryWithClear(orderId);
 
@@ -117,8 +111,7 @@ public class JPAOrderItemServiceImpl implements JPAOrderItemService {
     @Transactional(value = "jpaTransactionManager")
     public void deleteOrderItemNoSuccess(Integer orderItemId, Integer orderId) {
 
-        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getReferenceById(
-                orderItemId);
+        JPAOrderItem jpaOrderItem = jpaOrderItemRepository.getReferenceById(orderItemId);
         // Need to get JpaOrder.
         jpaOrderRepository.findById(orderId);
         jpaOrderItemRepository.delete(jpaOrderItem);

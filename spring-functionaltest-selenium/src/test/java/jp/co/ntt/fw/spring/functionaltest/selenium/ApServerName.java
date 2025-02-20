@@ -22,15 +22,10 @@ package jp.co.ntt.fw.spring.functionaltest.selenium;
  * UNKONWNが設定される。
  * </p>
  */
-public enum ApServerName { 
-    UNKNOWN("UNKNOWN"),
-    INTERSTAGE("INTERSTAGE"),
-    JBOSS("JBOSS"),
-    TOMCAT("APACHE TOMCAT"),
-    WEBLOGIC("WEBLOGIC SERVER"),
-    WEBOTX("WEBOTX"),
-    WEBSPHERELP("WEBSPHERELP"),
-    WEBSPHERETR("WEBSPHERETR");
+public enum ApServerName {
+    UNKNOWN("UNKNOWN"), INTERSTAGE("INTERSTAGE"), JBOSS("JBOSS"), TOMCAT("APACHE TOMCAT"), WEBLOGIC(
+            "WEBLOGIC SERVER"), WEBOTX(
+                    "WEBOTX"), WEBSPHERELP("WEBSPHERELP"), WEBSPHERETR("WEBSPHERETR");
 
     private final String apServerName;
 

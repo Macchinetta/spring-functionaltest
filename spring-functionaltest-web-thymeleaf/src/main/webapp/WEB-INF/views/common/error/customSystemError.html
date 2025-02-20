@@ -1,29 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8">
-<title>System Error!</title>
-<link rel="stylesheet" th:href="@{/resources/app/css/styles.css}">
-<link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}">
-<link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}">
-<link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}">
-</head>
-<body>
-  <div th:include="~{layout/header :: header}">header</div>
-  <div id="wrapper">
-    <h1>System Error!</h1>
-    <div class="alert alert-danger">
-      <ul>
-        <li
-          th:text="${#strings.isEmpty(errorCode)} ? #{e.sf.cmmn.9001} : |[${errorCode}] #{e.sf.cmmn.9001}|"></li>
-      </ul>
-      <ul th:unless="${#strings.isEmpty(exceptionForExceptionResolver.message)}">
-        <li th:text="${exceptionForExceptionResolver.message}"></li>
-      </ul>
-    </div>
-    <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
-    <br> <br> <br> <br>
-  </div>
-  <div th:include="~{layout/footer :: footer}">footer</div>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>System Error!</title>
+        <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}" />
+        <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+    </head>
+    <body>
+        <div th:include="~{layout/header :: header}">header</div>
+        <div id="wrapper">
+            <h1>System Error!</h1>
+            <div class="alert alert-danger">
+                <ul>
+                    <li th:text="${#strings.isEmpty(errorCode)} ? #{e.sf.fw.9001} : |[${errorCode}] #{e.sf.fw.9001}|"></li>
+                </ul>
+                <ul th:unless="${#strings.isEmpty(exceptionForExceptionResolver.message)}">
+                    <li th:text="${exceptionForExceptionResolver.message}"></li>
+                </ul>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+        <div th:include="~{layout/footer :: footer}">footer</div>
+    </body>
 </html>

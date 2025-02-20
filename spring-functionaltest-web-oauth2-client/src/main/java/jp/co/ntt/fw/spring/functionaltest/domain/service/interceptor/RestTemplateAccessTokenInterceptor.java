@@ -16,21 +16,19 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.interceptor;
 
 import java.io.IOException;
-
 import javax.inject.Inject;
-
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.todo.OAuth2TokenService;
 
-public class RestTemplateAccessTokenInterceptor implements
-                                                ClientHttpRequestInterceptor {
+public class RestTemplateAccessTokenInterceptor implements ClientHttpRequestInterceptor {
 
     private String registrationId;
+
+    private boolean changed = false;
 
     @Inject
     OAuth2TokenService oAuth2TokenService;
@@ -39,15 +37,21 @@ public class RestTemplateAccessTokenInterceptor implements
     public ClientHttpResponse intercept(HttpRequest request, byte[] body,
             ClientHttpRequestExecution execution) throws IOException {
 
-        OAuth2AccessToken accessToken = this.oAuth2TokenService.getToken(
-                this.registrationId);
-        request.getHeaders().setBearerAuth(accessToken.getTokenValue());
+        OAuth2AccessToken accessToken = this.oAuth2TokenService.getToken(this.registrationId);
+        String tokenValue =
+                changed ? accessToken.getTokenValue() + "dummy" : accessToken.getTokenValue();
+
+        request.getHeaders().setBearerAuth(tokenValue);
 
         return execution.execute(request, body);
     }
 
     public void setRegistrationId(String registrationId) {
         this.registrationId = registrationId;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
     }
 
 }

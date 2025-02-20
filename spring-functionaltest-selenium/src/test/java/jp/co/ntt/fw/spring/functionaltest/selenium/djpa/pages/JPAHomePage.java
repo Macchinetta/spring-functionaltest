@@ -257,34 +257,34 @@ public class JPAHomePage implements Page<JPAHomePage> {
     public BookDetailsPage displayBookDetails(Integer bookNo) {
 
         switch (bookNo) {
-        case 1:
-            book1Details.click();
-            break;
-        case 2:
-            book2Details.click();
-            break;
-        case 3:
-            book3Details.click();
-            break;
-        case 4:
-            book4Details.click();
-            break;
-        case 20:
-            // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block: 'center'});", driver
-                            .findElement(id("bookLink_20")));
-            book20Details.click();
-            break;
-        case 21:
-            // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
-            ((JavascriptExecutor) driver).executeScript(
-                    "arguments[0].scrollIntoView({block: 'center'});", driver
-                            .findElement(id("bookLink_21")));
-            book21Details.click();
-            break;
-        default:
-            break;
+            case 1:
+                book1Details.click();
+                break;
+            case 2:
+                book2Details.click();
+                break;
+            case 3:
+                book3Details.click();
+                break;
+            case 4:
+                book4Details.click();
+                break;
+            case 20:
+                // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({block: 'center'});",
+                        driver.findElement(id("bookLink_20")));
+                book20Details.click();
+                break;
+            case 21:
+                // 対象の要素が画面からはみ出しクリックできないことがあるため、中央にスクロールする
+                ((JavascriptExecutor) driver).executeScript(
+                        "arguments[0].scrollIntoView({block: 'center'});",
+                        driver.findElement(id("bookLink_21")));
+                book21Details.click();
+                break;
+            default:
+                break;
         }
 
         BookDetailsPage bookDetailsPage = new BookDetailsPage(driver);
@@ -517,26 +517,26 @@ public class JPAHomePage implements Page<JPAHomePage> {
         WebElement bookUpdateLink = null;
 
         switch (bookNo) {
-        case 1:
-            bookUpdateLink = book1Details;
-            break;
-        case 2:
-            bookUpdateLink = book2Details;
-            break;
-        case 3:
-            bookUpdateLink = book3Details;
-            break;
-        case 4:
-            bookUpdateLink = book4Details;
-            break;
-        case 20:
-            bookUpdateLink = book20Details;
-            break;
-        case 21:
-            bookUpdateLink = book21Details;
-            break;
-        default:
-            break;
+            case 1:
+                bookUpdateLink = book1Details;
+                break;
+            case 2:
+                bookUpdateLink = book2Details;
+                break;
+            case 3:
+                bookUpdateLink = book3Details;
+                break;
+            case 4:
+                bookUpdateLink = book4Details;
+                break;
+            case 20:
+                bookUpdateLink = book20Details;
+                break;
+            case 21:
+                bookUpdateLink = book21Details;
+                break;
+            default:
+                break;
         }
 
         try {

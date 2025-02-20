@@ -126,11 +126,10 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Item [itemId=" + itemId + ", itemName=" + itemName + ", price="
-                + price + ", overviewDescription=" + overviewDescription
-                + ", detailDescription=" + detailDescription + ", itemImage="
-                + itemImage + ", itemStock=" + itemStock + ", super.hashCode()="
-                + super.hashCode() + "]";
+        return "Item [itemId=" + itemId + ", itemName=" + itemName + ", price=" + price
+                + ", overviewDescription=" + overviewDescription + ", detailDescription="
+                + detailDescription + ", itemImage=" + itemImage + ", itemStock=" + itemStock
+                + ", super.hashCode()=" + super.hashCode() + "]";
     }
 
 }

@@ -34,7 +34,7 @@ import org.springframework.test.annotation.IfProfileValue;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class DomainLayerTest extends FunctionTestSupport {
 
     @Value("${selenium.dmly.retryForSetSelectString.max:3}")
@@ -78,8 +78,7 @@ public class DomainLayerTest extends FunctionTestSupport {
     }
 
     private List<String> getValueList(By by) {
-        List<WebElement> elementList = webDriverOperations.getWebDriver()
-                .findElements(by);
+        List<WebElement> elementList = webDriverOperations.getWebDriver().findElements(by);
         List<String> valueList = new ArrayList<String>();
         for (WebElement element : elementList) {
             valueList.add(element.getText());
@@ -119,8 +118,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         assertThat(getInputString(id("senderAddress")), is("送り主住所" + no));
         assertThat(getInputString(id("recieverName")), is("送り先名" + no));
         assertThat(getInputString(id("recieverAddress")), is("送り先住所" + no));
-        assertThat(getInputString(id("acceptDatetime")), is(String.format(
-                "%s/%s/%s %s:%s:%s", "2014", "01", no, no, no, no)));
+        assertThat(getInputString(id("acceptDatetime")),
+                is(String.format("%s/%s/%s %s:%s:%s", "2014", "01", no, no, no, no)));
         assertThat(getInputString(id("completionDatetime")), is(""));
         assertThat(getInputString(id("deliveryDriver")), is("ドライバー" + no));
         assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -160,8 +159,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -181,8 +179,7 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         // 登録画面表示
         {
-            List<String> deliveryTypeNameList = getValueList(id(
-                    "deliveryType"));
+            List<String> deliveryTypeNameList = getValueList(id("deliveryType"));
 
             assertThat(deliveryTypeNameList.size(), is(5));
             assertThat(deliveryTypeNameList.get(0), is("通常"));
@@ -195,8 +192,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -231,8 +227,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -260,8 +255,7 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")), is(
-                    "2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is("2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -270,8 +264,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -337,8 +330,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // オーダー登録
@@ -359,8 +351,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // 確認
@@ -371,8 +362,7 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所10"));
             assertThat(getInputString(id("recieverName")), is("送り先名10"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所10"));
-            assertThat(getInputString(id("acceptDatetime")), is(
-                    "2014/01/10 10:10:10"));
+            assertThat(getInputString(id("acceptDatetime")), is("2014/01/10 10:10:10"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー10"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -403,8 +393,7 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")), is(
-                    "2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is("2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -413,8 +402,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // 更新
@@ -439,8 +427,7 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所11"));
             assertThat(getInputString(id("recieverName")), is("送り先名11"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所11"));
-            assertThat(getInputString(id("acceptDatetime")), is(
-                    "2014/01/11 11:11:11"));
+            assertThat(getInputString(id("acceptDatetime")), is("2014/01/11 11:11:11"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー11"));
             assertThat(getInputString(id("deliveryStatus")), is("配達中"));
@@ -449,8 +436,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -478,8 +464,7 @@ public class DomainLayerTest extends FunctionTestSupport {
             assertThat(getInputString(id("senderAddress")), is("送り主住所1"));
             assertThat(getInputString(id("recieverName")), is("送り先名1"));
             assertThat(getInputString(id("recieverAddress")), is("送り先住所1"));
-            assertThat(getInputString(id("acceptDatetime")), is(
-                    "2014/01/01 01:01:01"));
+            assertThat(getInputString(id("acceptDatetime")), is("2014/01/01 01:01:01"));
             assertThat(getInputString(id("completionDatetime")), is(""));
             assertThat(getInputString(id("deliveryDriver")), is("ドライバー1"));
             assertThat(getInputString(id("deliveryStatus")), is("受付"));
@@ -488,8 +473,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
         // 削除
@@ -514,8 +498,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -557,28 +540,23 @@ public class DomainLayerTest extends FunctionTestSupport {
         {
             setInputString(id("fromAcceptDatetime"), "2014/01/03 00:00:00");
             setInputString(id("toAcceptDatetime"), "2014/01/04 23:59:59");
-            setInputString(id("updateCompletionDatetime"),
-                    "2014/01/06 15:15:15");
+            setInputString(id("updateCompletionDatetime"), "2014/01/06 15:15:15");
             clickButton(id("updateCriteria"));
         }
 
         // 確認
         {
-            List<String> completionDatetimeList = getValueList(id(
-                    "completionDatetime"));
+            List<String> completionDatetimeList = getValueList(id("completionDatetime"));
 
             assertThat(completionDatetimeList.size(), not(0));
-            assertThat(completionDatetimeList.get(2), is(
-                    "2014/01/06 15:15:15"));
-            assertThat(completionDatetimeList.get(3), is(
-                    "2014/01/06 15:15:15"));
+            assertThat(completionDatetimeList.get(2), is("2014/01/06 15:15:15"));
+            assertThat(completionDatetimeList.get(3), is("2014/01/06 15:15:15"));
         }
 
         // ログの確認
         {
             dbLogAssertOperations.waitForAssertion();
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -613,8 +591,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -649,8 +626,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -688,8 +665,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -726,8 +702,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -763,8 +739,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -799,8 +774,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -838,8 +813,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -876,8 +850,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -915,8 +889,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -957,8 +931,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -998,8 +971,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1037,8 +1010,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1075,8 +1047,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1117,8 +1089,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1158,8 +1129,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1202,8 +1173,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1245,8 +1215,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1282,8 +1252,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*IllegalTransactionStateException.*");
         }
 
@@ -1321,8 +1291,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1359,8 +1328,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1401,8 +1370,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1442,8 +1410,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1481,8 +1449,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*IllegalTransactionStateException.*");
         }
 
@@ -1518,8 +1486,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1554,8 +1521,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1599,8 +1566,7 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1637,8 +1603,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1682,8 +1648,8 @@ public class DomainLayerTest extends FunctionTestSupport {
 
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1721,8 +1687,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1758,8 +1724,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1794,8 +1759,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1833,8 +1798,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1871,8 +1835,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1908,8 +1872,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -1944,8 +1907,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -1983,8 +1946,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2021,8 +1983,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2060,8 +2022,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2102,8 +2064,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2143,8 +2104,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2182,8 +2143,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2220,8 +2180,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2262,8 +2222,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2303,8 +2262,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2347,8 +2306,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2390,8 +2348,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2427,8 +2385,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*IllegalTransactionStateException.*");
         }
 
@@ -2466,8 +2424,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2504,8 +2461,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2546,8 +2503,7 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertNotContainsWarnAndError(
-                    webDriverOperations.getXTrack());
+            dbLogAssertOperations.assertNotContainsWarnAndError(webDriverOperations.getXTrack());
         }
 
     }
@@ -2587,8 +2543,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*ProcessController exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*ProcessController exception catch\\..*",
                     ".*DataIntegrityViolationException.*");
         }
 
@@ -2626,8 +2582,8 @@ public class DomainLayerTest extends FunctionTestSupport {
         // ログ確認
         {
             dbLogAssertOperations.waitForAssertion(100);
-            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null,
-                    null, ".*PropagationService exception catch\\..*",
+            dbLogAssertOperations.assertContainsByRegexExceptionMessage(null, null,
+                    ".*PropagationService exception catch\\..*",
                     ".*IllegalTransactionStateException.*");
         }
 

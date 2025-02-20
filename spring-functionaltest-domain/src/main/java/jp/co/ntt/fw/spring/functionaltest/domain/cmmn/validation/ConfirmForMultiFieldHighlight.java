@@ -31,8 +31,8 @@ import javax.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.ConfirmForMultiFieldHighlight.List;
 
 @Documented
-@Constraint(validatedBy = { ConfirmValidatorForMultiFieldHighlight.class })
-@Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+@Constraint(validatedBy = {ConfirmValidatorForMultiFieldHighlight.class})
+@Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 public @interface ConfirmForMultiFieldHighlight {
@@ -46,7 +46,7 @@ public @interface ConfirmForMultiFieldHighlight {
 
     String confirmField();
 
-    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+    @Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

@@ -35,8 +35,7 @@ public class ShowDateController {
     @RequestMapping(value = "date", method = RequestMethod.GET)
     public String getDate(Model model) {
 
-        DateMB3 dateMB3 = todoMB3ForJSR310Service.findCreatedAtOne(
-                "0000000010");
+        DateMB3 dateMB3 = todoMB3ForJSR310Service.findCreatedAtOne("0000000010");
 
         model.addAttribute("resultDate", dateMB3.getLocalDate());
 

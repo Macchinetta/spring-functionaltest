@@ -45,8 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 @SuppressWarnings("deprecation")
 public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            AsyncRestClientServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AsyncRestClientServiceImpl.class);
 
     @Inject
     @Named("restTemplate")
@@ -98,36 +97,33 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
         UserResource resUser = new UserResource();
         String statusCode = null;
 
-        ListenableFuture<ResponseEntity<UserResource>> responseEntity = this.asyncRestTemplate
-                .getForEntity(targetUri, UserResource.class);
+        ListenableFuture<ResponseEntity<UserResource>> responseEntity =
+                this.asyncRestTemplate.getForEntity(targetUri, UserResource.class);
 
-        responseEntity.addCallback(
-                new ListenableFutureCallback<ResponseEntity<UserResource>>() {
-                    @Override
-                    public void onSuccess(ResponseEntity<UserResource> res) {
-                        countDownLatch.countDown();
-                    }
+        responseEntity.addCallback(new ListenableFutureCallback<ResponseEntity<UserResource>>() {
+            @Override
+            public void onSuccess(ResponseEntity<UserResource> res) {
+                countDownLatch.countDown();
+            }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        countDownLatch.countDown();
-                        throw new SystemException("e.sf.rscl.9005", "async processing error.", t);
-                    }
-                });
+            @Override
+            public void onFailure(Throwable t) {
+                countDownLatch.countDown();
+                throw new SystemException("e.sf.rc.9005", "async processing error.", t);
+            }
+        });
         try {
             res = responseEntity.get();
         } catch (InterruptedException | ExecutionException e) {
             logger.error(e.getMessage(), e);
         }
         try {
-            countDownLatch.await(waitCompleteOffsetMillis,
-                    TimeUnit.MILLISECONDS);
+            countDownLatch.await(waitCompleteOffsetMillis, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
-            throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
+            throw new SystemException("e.sf.rc.9006", "interrupted error.", e);
         }
-        logger.info("RSCL1301001 : CountDownLatch = {}", countDownLatch
-                .getCount());
+        logger.info("RSCL1301001 : CountDownLatch = {}", countDownLatch.getCount());
 
         if (res != null) {
             statusCode = res.getStatusCode().toString();
@@ -146,24 +142,24 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
         final CountDownLatch countDownLatch = new CountDownLatch(threadCapacity);
         final AtomicInteger successCount = new AtomicInteger();
-        ListenableFutureCallback<? super ResponseEntity<UserResource>> callback = new ListenableFutureCallback<ResponseEntity<UserResource>>() {
-            @Override
-            public void onSuccess(ResponseEntity<UserResource> entity) {
-                successCount.incrementAndGet();
-                countDownLatch.countDown();
-            }
+        ListenableFutureCallback<? super ResponseEntity<UserResource>> callback =
+                new ListenableFutureCallback<ResponseEntity<UserResource>>() {
+                    @Override
+                    public void onSuccess(ResponseEntity<UserResource> entity) {
+                        successCount.incrementAndGet();
+                        countDownLatch.countDown();
+                    }
 
-            @Override
-            public void onFailure(Throwable t) {
-                logger.error(t.getMessage(), t);
-                countDownLatch.countDown();
-            }
-        };
+                    @Override
+                    public void onFailure(Throwable t) {
+                        logger.error(t.getMessage(), t);
+                        countDownLatch.countDown();
+                    }
+                };
 
         int callCount = 0;
         int finishedCount = 0;
-        ThreadPoolExecutor executor = asyncTaskExecutorForCoreAndMaxSame
-                .getThreadPoolExecutor();
+        ThreadPoolExecutor executor = asyncTaskExecutorForCoreAndMaxSame.getThreadPoolExecutor();
         try {
             // キューを溢れさせるため、queueCapacity + maxPoolSize + 1 回連続でRESTAPI呼び出しを行う。
             for (int i = 0; i < threadCapacity + 1; i++) {
@@ -174,8 +170,9 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
                 } else {
                     targetUri = getUri(uri, "noawait");
                 }
-                ListenableFuture<ResponseEntity<UserResource>> responseEntity = this.asyncRestTemplateForCoreAndMaxSame
-                        .getForEntity(targetUri, UserResource.class);
+                ListenableFuture<ResponseEntity<UserResource>> responseEntity =
+                        this.asyncRestTemplateForCoreAndMaxSame.getForEntity(targetUri,
+                                UserResource.class);
                 responseEntity.addCallback(callback);
 
                 if (successCount.get() > finishedCount) {
@@ -186,15 +183,14 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
 
         } catch (TaskRejectedException e) {
             // 例外が発生したらRestTemplateでバリアを解除し、プール内のスレッドの処理が進むようにする
-            asyncRestTemplateForCoreAndMaxSame.getRestOperations().getForEntity(
-                    getUri(uri, "await"), UserResource.class);
+            asyncRestTemplateForCoreAndMaxSame.getRestOperations()
+                    .getForEntity(getUri(uri, "await"), UserResource.class);
             await(countDownLatch, (sleepMillis * 2) + waitCompleteOffsetMillis);
 
             int finishedCallCount = callCount - finishedCount;
             int finishedSuccessCount = successCount.get() - finishedCount;
 
-            logger.info(
-                    "RSCL1302001 : CallCount = {}, SuccessCount = {}, FinishedCount = {}",
+            logger.info("RSCL1302001 : CallCount = {}, SuccessCount = {}, FinishedCount = {}",
                     callCount, successCount.get(), finishedCount);
             logger.info(
                     "RSCL1302001 : CallCount - FinishedCount = {}, SuccessCount - FinishedCount = {}",
@@ -203,7 +199,7 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
             throw e;
         }
         // 9回とも正常に実行できてしまった場合はシステム例外
-        throw new SystemException("e.sf.rscl.9008", "all tasks are executed.");
+        throw new SystemException("e.sf.rc.9008", "all tasks are executed.");
     }
 
     @Override
@@ -216,16 +212,14 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
         for (int i = 0; i < corePoolSize; i++) {
 
             try {
-                this.asyncRestTemplate.getForEntity(targetUri,
-                        UserResource.class).get();
+                this.asyncRestTemplate.getForEntity(targetUri, UserResource.class).get();
             } catch (InterruptedException | ExecutionException e) {
                 logger.error(e.getMessage(), e);
             }
 
         }
 
-        logger.info("RSCL1301002 : thread pool size = {}", executor
-                .getPoolSize());
+        logger.info("RSCL1301002 : thread pool size = {}", executor.getPoolSize());
     }
 
     @Override
@@ -250,11 +244,9 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
             this.asyncRestTemplate.getForEntity(targetUri, UserResource.class);
         }
 
-        logger.info("RSCL1301003 : max thread pool size = {}", executor
-                .getPoolSize());
+        logger.info("RSCL1301003 : max thread pool size = {}", executor.getPoolSize());
 
-        this.restTemplate.getForEntity(getUri(uri, "releaseForMaxPool"),
-                boolean.class);
+        this.restTemplate.getForEntity(getUri(uri, "releaseForMaxPool"), boolean.class);
     }
 
     /**
@@ -265,8 +257,7 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
      * @return URI
      */
     private URI getUri(String uri, Object... args) {
-        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args)
-                .toUri();
+        return UriComponentsBuilder.fromUriString(uri).buildAndExpand(args).toUri();
     }
 
     /**
@@ -281,7 +272,7 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
             latch.await(sleepMillis, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
+            throw new SystemException("e.sf.rc.9006", "interrupted error.", e);
         }
     }
 
@@ -294,18 +285,18 @@ public class AsyncRestClientServiceImpl implements AsyncRestClientService {
     private void awaitRepeatedly(ThreadPoolExecutor executor) {
         long totalMillis = 0L;
         // activeスレッドがMAXプールサイズ以下で、キューがMAXキュー数まで詰まっている場合は一時待機
-        while ((executor.getActiveCount() < maxPoolSize) && (executor.getQueue()
-                .size() == queueCapacity)) {
+        while ((executor.getActiveCount() < maxPoolSize)
+                && (executor.getQueue().size() == queueCapacity)) {
             try {
                 Thread.sleep(waitStartQueuedTaskMillis);
             } catch (InterruptedException e) {
                 // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
-                throw new SystemException("e.sf.rscl.9006", "interrupted error.", e);
+                throw new SystemException("e.sf.rc.9006", "interrupted error.", e);
             }
             totalMillis += waitStartQueuedTaskMillis;
             // 直前のREST API 呼出しの応答が返るであろう「sleepMillis」秒 までは繰り返し待つ
             if (Long.compare(sleepMillis, totalMillis) <= 0) {
-                throw new SystemException("e.sf.rscl.9007", "queued task is not start.");
+                throw new SystemException("e.sf.rc.9007", "queued task is not start.");
             }
         }
     }

@@ -73,9 +73,8 @@ public class CDLS0105Controller {
     }
 
     @RequestMapping(value = "003", method = RequestMethod.POST, params = "post")
-    public String handle05003Post(RedirectAttributes redirectAttrs,
-            Locale locale, @Validated ClI18nPriceForm form,
-            BindingResult result) {
+    public String handle05003Post(RedirectAttributes redirectAttrs, Locale locale,
+            @Validated ClI18nPriceForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "cdls/simpleI18nCodeList";
@@ -84,8 +83,7 @@ public class CDLS0105Controller {
         CodeList codeList = beanMapper.map(form, CodeList.class);
 
         redirectAttrs.addFlashAttribute("i18nPriceCodeListValue",
-                (codeListService.getI18nPriceCodeListValue(codeList.getId(),
-                        locale)));
+                (codeListService.getI18nPriceCodeListValue(codeList.getId(), locale)));
 
         redirectAttrs.addAttribute("locale", locale.getLanguage());
         return "redirect:003";
@@ -97,9 +95,8 @@ public class CDLS0105Controller {
     }
 
     @RequestMapping(value = "004", method = RequestMethod.POST, params = "post")
-    public String handle05004Post(RedirectAttributes redirectAttrs,
-            Locale locale, @Validated ClI18nPriceForm form,
-            BindingResult result) {
+    public String handle05004Post(RedirectAttributes redirectAttrs, Locale locale,
+            @Validated ClI18nPriceForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "cdls/simpleI18nCodeList";
@@ -108,8 +105,7 @@ public class CDLS0105Controller {
         CodeList codeList = beanMapper.map(form, CodeList.class);
 
         redirectAttrs.addFlashAttribute("i18nPriceCodeListValue",
-                (codeListService.getI18nPriceCodeListValue(codeList.getId(),
-                        locale)));
+                (codeListService.getI18nPriceCodeListValue(codeList.getId(), locale)));
 
         redirectAttrs.addAttribute("locale", locale.getLanguage());
         return "redirect:004";
@@ -131,9 +127,8 @@ public class CDLS0105Controller {
     }
 
     @RequestMapping(value = "007", method = RequestMethod.POST, params = "post")
-    public String handle05007Post(RedirectAttributes redirectAttrs,
-            Locale locale, @Validated ClI18nDBPriceForm form,
-            BindingResult result) {
+    public String handle05007Post(RedirectAttributes redirectAttrs, Locale locale,
+            @Validated ClI18nDBPriceForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "cdls/simpleI18nCodeList";
@@ -142,8 +137,7 @@ public class CDLS0105Controller {
         CodeList codeList = beanMapper.map(form, CodeList.class);
 
         redirectAttrs.addFlashAttribute("i18nDBPriceCodeListValue",
-                (codeListService.getI18nDBPriceCodeListValue(codeList.getId(),
-                        locale)));
+                (codeListService.getI18nDBPriceCodeListValue(codeList.getId(), locale)));
 
         redirectAttrs.addAttribute("locale", locale.getLanguage());
         return "redirect:007";
@@ -155,9 +149,8 @@ public class CDLS0105Controller {
     }
 
     @RequestMapping(value = "008", method = RequestMethod.POST, params = "post")
-    public String handle05008Post(RedirectAttributes redirectAttrs,
-            Locale locale, @Validated ClI18nDBPriceForm form,
-            BindingResult result) {
+    public String handle05008Post(RedirectAttributes redirectAttrs, Locale locale,
+            @Validated ClI18nDBPriceForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "cdls/simpleI18nCodeList";
@@ -166,8 +159,7 @@ public class CDLS0105Controller {
         CodeList codeList = beanMapper.map(form, CodeList.class);
 
         redirectAttrs.addFlashAttribute("i18nDBPriceCodeListValue",
-                (codeListService.getI18nDBPriceCodeListValue(codeList.getId(),
-                        locale)));
+                (codeListService.getI18nDBPriceCodeListValue(codeList.getId(), locale)));
 
         redirectAttrs.addAttribute("locale", locale.getLanguage());
         return "redirect:008";

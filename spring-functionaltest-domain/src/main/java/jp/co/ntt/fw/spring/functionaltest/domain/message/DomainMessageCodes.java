@@ -25,9 +25,9 @@ public class DomainMessageCodes {
         // NOP
     }
 
-    /** e.sf.mm.5001=Specified member not found. member id : {0} */
-    public static final String E_SF_MM_5001 = "e.sf.mm.5001";
+    /** e.sf.rs.5001=Specified member not found. member id : {0} */
+    public static final String E_SF_RS_5001 = "e.sf.rs.5001";
 
-    /** e.sf.mm.8001=Cannot use specified member id member id : {0} */
-    public static final String E_SF_MM_8001 = "e.sf.mm.8001";
+    /** e.sf.rs.8001=Cannot use specified member id member id : {0} */
+    public static final String E_SF_RS_8001 = "e.sf.rs.8001";
 }

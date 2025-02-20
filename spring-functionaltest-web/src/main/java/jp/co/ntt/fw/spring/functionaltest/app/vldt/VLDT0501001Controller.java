@@ -39,8 +39,8 @@ public class VLDT0501001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String handleValidate(@Valid ExistInCheckDefaultForm form,
-            BindingResult result, Model model) {
+    public String handleValidate(@Valid ExistInCheckDefaultForm form, BindingResult result,
+            Model model) {
         return "vldt/existIncheckDefaultForm";
     }
 }

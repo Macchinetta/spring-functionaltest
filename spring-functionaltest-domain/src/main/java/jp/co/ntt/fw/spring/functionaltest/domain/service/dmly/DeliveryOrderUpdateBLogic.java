@@ -17,6 +17,5 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.dmly;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderCriteria;
 
-public interface DeliveryOrderUpdateBLogic extends
-                                           BLogic<DeliveryOrderCriteria, Long> {
+public interface DeliveryOrderUpdateBLogic extends BLogic<DeliveryOrderCriteria, Long> {
 }

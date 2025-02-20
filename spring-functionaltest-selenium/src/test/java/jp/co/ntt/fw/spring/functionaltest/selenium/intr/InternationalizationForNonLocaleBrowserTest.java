@@ -25,12 +25,12 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-public class InternationalizationForNonLocaleBrowserTest extends
-                                                         FunctionTestSupport {
+public class InternationalizationForNonLocaleBrowserTest extends FunctionTestSupport {
 
-    private static WebDriver noLocaleDriver;
+    private static WebDriver driver;
 
     public InternationalizationForNonLocaleBrowserTest() {
         disableDefaultWebDriver();
@@ -38,10 +38,10 @@ public class InternationalizationForNonLocaleBrowserTest extends
 
     @Before
     public void setUpWebDriver() {
-        if (noLocaleDriver == null) {
-            noLocaleDriver = webDriverCreator.createLocaleSpecifiedDriver("");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.NONE);
         }
-        setCurrentWebDriver(noLocaleDriver);
+        setCurrentWebDriver(driver);
     }
 
     /**
@@ -158,8 +158,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -261,8 +260,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに日本語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=ja";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=ja";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -295,8 +293,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -343,8 +340,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに存在しないロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=xw";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=xw";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -378,15 +374,14 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("english"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("changeMessage")), is(
-                "changed locale."));
+        assertThat(webDriverOperations.getText(id("changeMessage")), is("changed locale."));
 
         // 確認画面に遷移
         webDriverOperations.click(id("check"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("checkMessage")), is(
-                "Confirm change of locale on next screen"));
+        assertThat(webDriverOperations.getText(id("checkMessage")),
+                is("Confirm change of locale on next screen"));
         webDriverOperations.saveScreenCapture();
 
         // back to /intr
@@ -399,15 +394,13 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("japanese"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("changeMessage")), is(
-                "ロケールを変更しました。"));
+        assertThat(webDriverOperations.getText(id("changeMessage")), is("ロケールを変更しました。"));
 
         // 確認画面に遷移
         webDriverOperations.click(id("check"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("checkMessage")), is(
-                "次の画面でのロケール変更を確認"));
+        assertThat(webDriverOperations.getText(id("checkMessage")), is("次の画面でのロケール変更を確認"));
 
         // ブラウザのセッションIDを削除
         webDriverOperations.deleteCookie("JSESSIONID");
@@ -458,15 +451,13 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("invalidLocale"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("changeMessage")), is(
-                "ロケールを変更しました。"));
+        assertThat(webDriverOperations.getText(id("changeMessage")), is("ロケールを変更しました。"));
 
         // 確認画面に遷移
         webDriverOperations.click(id("check"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("checkMessage")), is(
-                "次の画面でのロケール変更を確認"));
+        assertThat(webDriverOperations.getText(id("checkMessage")), is("次の画面でのロケール変更を確認"));
 
         // ブラウザのセッションIDを削除
         webDriverOperations.deleteCookie("JSESSIONID");
@@ -491,8 +482,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -501,9 +491,9 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("Age"));
 
         // Cookieに enロケールが指定されていること
-        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("en"));
+        String localeCookieName =
+                "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("en"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -516,8 +506,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("Age"));
 
         // Cookieに enロケールが指定されていること
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("en"));
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("en"));
 
         // Cookieの破棄
         webDriverOperations.deleteCookie(localeCookieName);
@@ -542,8 +531,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに日本語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=ja";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=ja";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -552,9 +540,9 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("年齢"));
 
         // Cookieに jaロケールが指定されていること
-        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("ja"));
+        String localeCookieName =
+                "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("ja"));
 
         // Cookieの破棄
         webDriverOperations.deleteCookie(localeCookieName);
@@ -580,8 +568,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -591,8 +578,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
 
         // Cookieに enロケールが指定されていること
         String localeCookieName = "localeCookie";
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("en"));
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("en"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -605,8 +591,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("Age"));
 
         // Cookieに enロケールが指定されていること
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("en"));
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("en"));
 
         webDriverOperations.deleteCookie(localeCookieName);
     }
@@ -629,8 +614,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -639,9 +623,9 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("Age"));
 
         // Cookieに enロケールが指定されていること
-        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("en"));
+        String localeCookieName =
+                "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("en"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -676,8 +660,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.saveScreenCapture();
 
         // クエリに存在しないロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=xw";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=xw";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
@@ -686,9 +669,9 @@ public class InternationalizationForNonLocaleBrowserTest extends
         assertThat(webDriverOperations.getText(id("age")), is("年齢"));
 
         // Cookieに xwロケールが指定されていること
-        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
-        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(),
-                is("xw"));
+        String localeCookieName =
+                "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        assertThat(webDriverOperations.getCookie(localeCookieName).getValue(), is("xw"));
 
         // Cookieの破棄
         webDriverOperations.deleteCookie(localeCookieName);
@@ -709,15 +692,14 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("english"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("changeMessage")), is(
-                "changed locale."));
+        assertThat(webDriverOperations.getText(id("changeMessage")), is("changed locale."));
 
         // 確認画面に遷移
         webDriverOperations.click(id("check"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("checkMessage")), is(
-                "Confirm change of locale on next screen"));
+        assertThat(webDriverOperations.getText(id("checkMessage")),
+                is("Confirm change of locale on next screen"));
         webDriverOperations.saveScreenCapture();
 
         // back to /intr
@@ -730,18 +712,17 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("japanese"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("changeMessage")), is(
-                "ロケールを変更しました。"));
+        assertThat(webDriverOperations.getText(id("changeMessage")), is("ロケールを変更しました。"));
 
         // 確認画面に遷移
         webDriverOperations.click(id("check"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("checkMessage")), is(
-                "次の画面でのロケール変更を確認"));
+        assertThat(webDriverOperations.getText(id("checkMessage")), is("次の画面でのロケール変更を確認"));
 
         // Cookieの破棄
-        String localeCookieName = "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
+        String localeCookieName =
+                "org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE";
         webDriverOperations.deleteCookie(localeCookieName);
 
     }
@@ -751,7 +732,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
      * <li>Controllerを経由せずにJSPに直接遷移する場合に、ロケールが有効にならないことの確認</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
+    @IfProfileValue(name = "test.environment.view", values = {"jsp"})
     @Test
     public void testINTR0301001() {
         // 実施条件1
@@ -771,20 +752,17 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("intr0301001"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "アクセス権限がありません。"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("アクセス権限がありません。"));
 
         webDriverOperations.saveScreenCapture();
 
         // 実施条件2
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "アクセス権限がありません。"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("アクセス権限がありません。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -796,8 +774,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("intr0301001"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "アクセス権限がありません。"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("アクセス権限がありません。"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -818,7 +795,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
      * <li>Controllerを経由してJSPに遷移する場合に、ロケールが有効になることの確認</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment.view", values = { "jsp" })
+    @IfProfileValue(name = "test.environment.view", values = {"jsp"})
     @Test
     public void testINTR0301002() {
         // 実施条件1
@@ -838,20 +815,17 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("intr0301002"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "アクセス権限がありません。"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("アクセス権限がありません。"));
 
         webDriverOperations.saveScreenCapture();
 
         // 実施条件2
         // クエリに英語ロケールを指定し、遷移する
-        String localeAddURL = webDriverOperations.getCurrentUrl()
-                + "?locale=en";
+        String localeAddURL = webDriverOperations.getCurrentUrl() + "?locale=en";
         webDriverOperations.getWebDriver().get(localeAddURL);
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "Access Denied!"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("Access Denied!"));
 
         webDriverOperations.saveScreenCapture();
 
@@ -863,8 +837,7 @@ public class InternationalizationForNonLocaleBrowserTest extends
         webDriverOperations.click(id("intr0301002"));
 
         // 出力メッセージの確認
-        assertThat(webDriverOperations.getText(id("errorMessage")), is(
-                "Access Denied!"));
+        assertThat(webDriverOperations.getText(id("errorMessage")), is("Access Denied!"));
 
         webDriverOperations.saveScreenCapture();
 

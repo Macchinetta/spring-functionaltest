@@ -33,17 +33,15 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class SessionEventListeners {
-    private static final String HANDLE_LOGOUT_KEY = SecurityContextLogoutHandler.class
-            .getName().concat(".logout");
+    private static final String HANDLE_LOGOUT_KEY =
+            SecurityContextLogoutHandler.class.getName().concat(".logout");
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            SessionEventListeners.class);
+    private static final Logger logger = LoggerFactory.getLogger(SessionEventListeners.class);
 
     // (1)
     @Before(value = "execution(* org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler.logout(..))")
     public void handleLogout(JoinPoint joinPoint) {
-        HttpServletRequest request = HttpServletRequest.class.cast(joinPoint
-                .getArgs()[0]);
+        HttpServletRequest request = HttpServletRequest.class.cast(joinPoint.getArgs()[0]);
         logger.info("SessionEventListeners execute [logout]");
         request.getSession().setAttribute(HANDLE_LOGOUT_KEY, true);
     }
@@ -53,11 +51,10 @@ public class SessionEventListeners {
     public void handleSessionTimeout(HttpSessionDestroyedEvent event) { // (3)
 
         // (4)
-        Boolean isHandleLogout = Boolean.class.cast(event.getSession()
-                .getAttribute(HANDLE_LOGOUT_KEY));
+        Boolean isHandleLogout =
+                Boolean.class.cast(event.getSession().getAttribute(HANDLE_LOGOUT_KEY));
         if (isHandleLogout != null && isHandleLogout) {
-            logger.info(
-                    "SessionEventListeners execute [session timeout(logout)]");
+            logger.info("SessionEventListeners execute [session timeout(logout)]");
             return;
         }
 
@@ -66,8 +63,7 @@ public class SessionEventListeners {
         for (SecurityContext securityContext : securityContexts) {
             // ログアウト処理などを実装する
             securityContext.getAuthentication().setAuthenticated(false);
-            logger.info(
-                    "SessionEventListeners execute [session timeout username:{}]",
+            logger.info("SessionEventListeners execute [session timeout username:{}]",
                     securityContext.getAuthentication().getName());
         }
 

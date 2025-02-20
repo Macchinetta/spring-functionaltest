@@ -61,8 +61,8 @@ public class SSMN0302002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "addressForm")
-    public String createMemberAddressForm(Model model,
-            @Validated(Personal.class) MemberForm form, BindingResult result) {
+    public String createMemberAddressForm(Model model, @Validated(Personal.class) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMemberPersonal(model, form);
         }
@@ -71,8 +71,8 @@ public class SSMN0302002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "otherForm")
-    public String createMemberOtherForm(Model model,
-            @Validated(Address.class) MemberForm form, BindingResult result) {
+    public String createMemberOtherForm(Model model, @Validated(Address.class) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMemberAddress(model, form);
         }
@@ -81,8 +81,8 @@ public class SSMN0302002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "confirm")
-    public String createMemberConfirm(Model model,
-            @Validated(Other.class) MemberForm form, BindingResult result) {
+    public String createMemberConfirm(Model model, @Validated(Other.class) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMemberOther(model, form);
         }
@@ -91,28 +91,25 @@ public class SSMN0302002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createMember(@Validated({ Personal.class, Address.class,
-            Other.class }) MemberForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String createMember(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            throw new InvalidRequestException(ResultMessages.error().add(
-                    "e.sf.cmmn.8002"));
+            throw new InvalidRequestException(ResultMessages.error().add("e.sf.fw.8002"));
         }
 
         Member member = beanMapper.map(form, Member.class);
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success().add(
-                "i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add("i.sf.sm.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         return "redirect:/ssmn/0302/002?complete";
     }
 
     @RequestMapping(method = RequestMethod.GET, params = "complete")
-    public String createMemberComplete(Model model,
-            SessionStatus sessionStatus) {
+    public String createMemberComplete(Model model, SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "ssmn/createMemberComplete";
     }

@@ -89,8 +89,7 @@ public class AJAX02Controller {
         personalComputerHelper.setPersonalComputer(1, form);
 
         model.addAttribute("path", "0202/001/edit");
-        model.addAttribute("method",
-                "ajax.editPersonalComputerForJsonAndBidingResultHandle");
+        model.addAttribute("method", "ajax.editPersonalComputerForJsonAndBidingResultHandle");
 
         return "ajax/personalComputerEdit";
     }
@@ -101,8 +100,7 @@ public class AJAX02Controller {
         personalComputerHelper.setPersonalComputer(1, form);
 
         model.addAttribute("path", "0202/002/edit");
-        model.addAttribute("method",
-                "ajax.editPersonalComputerForJsonAndBidingResultHandle");
+        model.addAttribute("method", "ajax.editPersonalComputerForJsonAndBidingResultHandle");
 
         return "ajax/personalComputerEdit";
     }
@@ -110,53 +108,49 @@ public class AJAX02Controller {
     @RequestMapping(value = "0201/001/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult edit(@Validated PersonalComputerForm form,
-            Locale locale) {
+    public PersonalComputerResult edit(@Validated PersonalComputerForm form, Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @RequestMapping(value = "0201/edit", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PersonalComputerResult editForJson(
-            @Validated @RequestBody PersonalComputerForm form, Locale locale) {
+    public PersonalComputerResult editForJson(@Validated @RequestBody PersonalComputerForm form,
+            Locale locale) {
 
-        return personalComputerHelper.updateAndBindPersonalComputerResult(form,
-                locale);
+        return personalComputerHelper.updateAndBindPersonalComputerResult(form, locale);
     }
 
     @RequestMapping(value = "0202/001/edit", method = RequestMethod.POST)
     @ResponseBody
     public PersonalComputerWithErrorResults editForJsonAndUseBindingResult(
-            @Validated @RequestBody PersonalComputerForm form,
-            BindingResult bresult, Locale locale) {
+            @Validated @RequestBody PersonalComputerForm form, BindingResult bresult,
+            Locale locale) {
 
         if (bresult.hasErrors()) {
-            return personalComputerHelper.setPersonalComputerErrorResults(
-                    bresult, locale);
+            return personalComputerHelper.setPersonalComputerErrorResults(bresult, locale);
         }
 
-        return personalComputerHelper
-                .updateAndBindPersonalComputerWithErrorResults(form, locale);
+        return personalComputerHelper.updateAndBindPersonalComputerWithErrorResults(form, locale);
     }
 
     @RequestMapping(value = "0202/002/edit", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<PersonalComputerWithErrorResults> editForJsonAndSetStatusCode(
-            @Validated @RequestBody PersonalComputerForm form,
-            BindingResult bresult, Locale locale) {
+            @Validated @RequestBody PersonalComputerForm form, BindingResult bresult,
+            Locale locale) {
 
         if (bresult.hasErrors()) {
-            PersonalComputerWithErrorResults personalComputerWithErrorResults = personalComputerHelper
-                    .setPersonalComputerErrorResults(bresult, locale);
-            return new ResponseEntity<PersonalComputerWithErrorResults>(personalComputerWithErrorResults, HttpStatus.BAD_REQUEST);
+            PersonalComputerWithErrorResults personalComputerWithErrorResults =
+                    personalComputerHelper.setPersonalComputerErrorResults(bresult, locale);
+            return new ResponseEntity<PersonalComputerWithErrorResults>(
+                    personalComputerWithErrorResults, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<PersonalComputerWithErrorResults>(personalComputerHelper
-                .updateAndBindPersonalComputerWithErrorResults(form,
-                        locale), HttpStatus.OK);
+        return new ResponseEntity<PersonalComputerWithErrorResults>(
+                personalComputerHelper.updateAndBindPersonalComputerWithErrorResults(form, locale),
+                HttpStatus.OK);
     }
 
     @RequestMapping(value = "0201", params = "retrunToIndex")
@@ -170,28 +164,27 @@ public class AJAX02Controller {
     @ResponseBody
     public ErrorResults handleBindException(BindException e, Locale locale) {
 
-        return personalComputerHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return personalComputerHelper.setErrorResults(e.getBindingResult().getFieldErrors(),
+                locale);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResults handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e, Locale locale) {
+    public ErrorResults handleMethodArgumentNotValidException(MethodArgumentNotValidException e,
+            Locale locale) {
 
-        return personalComputerHelper.setErrorResults(e.getBindingResult()
-                .getFieldErrors(), locale);
+        return personalComputerHelper.setErrorResults(e.getBindingResult().getFieldErrors(),
+                locale);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResults handleHttpMessageNotReadableException(
-            HttpMessageNotReadableException e, Locale locale) {
+    public ErrorResults handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+            Locale locale) {
 
-        return personalComputerHelper.setHttpMessageNotReadableExceptionResults(
-                e, locale);
+        return personalComputerHelper.setHttpMessageNotReadableExceptionResults(e, locale);
     }
 
 }

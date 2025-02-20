@@ -28,8 +28,7 @@ public class APLY040100502Controller implements ISODateApplicable {
 
     @RequestMapping(value = "0401/005/02")
     public String handle040100502() {
-        throw new IntentionalException(ResultMessages.error().add(
-                "e.sf.cmmn.8003"));
+        throw new IntentionalException(ResultMessages.error().add("e.sf.fw.8003"));
     }
 
 }

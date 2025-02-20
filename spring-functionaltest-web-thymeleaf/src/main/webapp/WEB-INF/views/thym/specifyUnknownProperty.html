@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:input=""
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:input="" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">TemplateProcessingException 発生</h1>
 
-      <h1 id="screenTitle">TemplateProcessingException 発生</h1>
-
-      <ul>
-        <li id="message1">参照オブジェクトに存在しないプロパティを指定しているためTemplateProcessingExceptionが発生します。</li>
-        <li th:text="${searchForm.unknownProperty}"></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul>
+                    <li id="message1">参照オブジェクトに存在しないプロパティを指定しているためTemplateProcessingExceptionが発生します。</li>
+                    <li th:text="${searchForm.unknownProperty}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

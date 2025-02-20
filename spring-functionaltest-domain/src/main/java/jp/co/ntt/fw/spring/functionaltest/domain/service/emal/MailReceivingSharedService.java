@@ -25,7 +25,7 @@ public interface MailReceivingSharedService {
 
     public MailMessage receive(String identifier, Store store);
 
-    public MailMessage receive(String identifier, int retryCount,
-            Store store) throws InterruptedException;
+    public MailMessage receive(String identifier, int retryCount, Store store)
+            throws InterruptedException;
 
 }

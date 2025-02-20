@@ -70,14 +70,12 @@ public class StockPage implements Page<StockPage> {
 
     public void setPurchaseQuantity(Integer quantityVal) {
         purchaseQuantity.clear();
-        WebElementOperations.setValue(purchaseQuantity, String.valueOf(
-                quantityVal));
+        WebElementOperations.setValue(purchaseQuantity, String.valueOf(quantityVal));
     }
 
     public void setSleepTime(long sleepTimeInMillisec) {
         sleepTime.clear();
-        WebElementOperations.setValue(sleepTime, String.valueOf(
-                sleepTimeInMillisec));
+        WebElementOperations.setValue(sleepTime, String.valueOf(sleepTimeInMillisec));
     }
 
     public ExclusionResultPage buyWithRowLock() {

@@ -25,7 +25,7 @@ public class FunctionalTestExceptionLogger extends ExceptionLogger {
 
     @Override
     protected String makeLogMessage(Exception ex) {
-        return MessageFormat.format(LOG_MESSAGE_FORMAT, ex.getClass(), ex
-                .getCause(), ex.getMessage());
+        return MessageFormat.format(LOG_MESSAGE_FORMAT, ex.getClass(), ex.getCause(),
+                ex.getMessage());
     }
 }

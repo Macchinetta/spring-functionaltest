@@ -37,14 +37,11 @@ public interface JPAStockRepository extends JpaRepository<JPAStock, String> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT s FROM JPAStock s WHERE s.itemCode = :itemCode")
-    JPAStock findOneForUpdateUsingPessimisticLock(
-            @Param("itemCode") String itemCode);
+    JPAStock findOneForUpdateUsingPessimisticLock(@Param("itemCode") String itemCode);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT s FROM JPAStock s WHERE s.itemCode = :itemCode")
-    @QueryHints(value = {
-            @QueryHint(name = "javax.persistence.lock.timeout", value = "0") })
-    JPAStock findOneForUpdateUsingPessimisticLockExcp(
-            @Param("itemCode") String itemCode);
+    @QueryHints(value = {@QueryHint(name = "javax.persistence.lock.timeout", value = "0")})
+    JPAStock findOneForUpdateUsingPessimisticLockExcp(@Param("itemCode") String itemCode);
 
 }

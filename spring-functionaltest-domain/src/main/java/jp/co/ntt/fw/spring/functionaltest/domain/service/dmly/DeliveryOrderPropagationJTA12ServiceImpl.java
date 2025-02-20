@@ -31,11 +31,11 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(value = Transactional.TxType.REQUIRED)
 @Service
-public class DeliveryOrderPropagationJTA12ServiceImpl implements
-                                                      DeliveryOrderPropagationJTA12Service {
+public class DeliveryOrderPropagationJTA12ServiceImpl
+        implements DeliveryOrderPropagationJTA12Service {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DeliveryOrderPropagationJTA12ServiceImpl.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(DeliveryOrderPropagationJTA12ServiceImpl.class);
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;
@@ -83,8 +83,7 @@ public class DeliveryOrderPropagationJTA12ServiceImpl implements
     }
 
     @Override
-    public void propagateRequiredRequiresNew2(
-            List<DeliveryOrder> firstOrderList,
+    public void propagateRequiredRequiresNew2(List<DeliveryOrder> firstOrderList,
             List<DeliveryOrder> secondOrderList) {
         int idx = 0;
         int maxNum = firstOrderList.size();
@@ -107,8 +106,7 @@ public class DeliveryOrderPropagationJTA12ServiceImpl implements
     }
 
     @Override
-    public void propagateRequiredNotSupported(
-            List<DeliveryOrder> firstOrderList,
+    public void propagateRequiredNotSupported(List<DeliveryOrder> firstOrderList,
             List<DeliveryOrder> secondOrderList) {
         try {
             for (DeliveryOrder firstOrder : firstOrderList) {

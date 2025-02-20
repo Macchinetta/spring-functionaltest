@@ -1,60 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ファイルアップロード(フォーム)</h1>
 
-      <h1 id="screenTitle">ファイルアップロード(フォーム)</h1>
+                <div th:if="${resultMessages} != null" class="alert alert-error" th:class="|alert alert-${resultMessages.type}|">
+                    <ul>
+                        <li th:each="message : ${resultMessages}" th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">error detail message</li>
+                    </ul>
+                </div>
 
-      <div th:if="${resultMessages} != null" class="alert alert-error"
-        th:class="|alert alert-${resultMessages.type}|">
-        <ul>
-          <li th:each="message : ${resultMessages}"
-            th:text="${message.code} != null ? ${#messages.msgWithParams(message.code, message.args)} : ${message.text}">error
-            detail message</li>
-        </ul>
-      </div>
+                <form th:action method="post" class="form-horizontal" enctype="multipart/form-data" th:object="${screenFlowUploadForm}">
+                    <div class="form-group">
+                        <label for="multipartFile" class="col col-md-2 control-label">コンテンツファイル</label>
+                        <div class="col col-md-10">
+                            <input type="file" th:field="*{multipartFile}" class="multipartFile" /> <input type="text" readonly="readonly" id="selectedFile" class="selectedFile form-control" />
+                            <button id="browseFile" type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-open"></span>参照</button>
+                            <div th:id="multipartFile.errors" th:errors="*{multipartFile}" class="text-danger"></div>
+                        </div>
+                    </div>
 
-      <form th:action method="post" class="form-horizontal" enctype="multipart/form-data"
-        th:object="${screenFlowUploadForm}">
+                    <div class="form-group">
+                        <label for="description" class="col col-md-2 control-label">説明</label>
+                        <div class="col col-md-10">
+                            <textarea th:field="*{description}" rows="3" class="description form-control"></textarea>
+                            <div th:errors="*{description}" class="text-danger"></div>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-          <label for="multipartFile" class="col col-md-2 control-label">コンテンツファイル</label>
-          <div class="col col-md-10">
-            <input type="file" th:field="*{multipartFile}" class="multipartFile" /> <input
-              type="text" readonly="readonly" id="selectedFile" class="selectedFile form-control">
-            <button id="browseFile" type="button" class="btn btn-default">
-              <span class="glyphicon glyphicon-folder-open"></span>参照
-            </button>
-            <div th:id="multipartFile.errors" th:errors="*{multipartFile}" class="text-danger"></div>
-          </div>
+                    <div class="form-group">
+                        <div class="col col-md-10 col-md-offset-2">
+                            <button id="confirmButton" name="confirm" class="btn btn-default"><span class="glyphicon glyphicon-play"></span>確認</button>
+                            <a th:href="@{/flup/}" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span>戻る </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label for="description" class="col col-md-2 control-label">説明</label>
-          <div class="col col-md-10">
-            <textarea th:field="*{description}" rows="3" class="description form-control"></textarea>
-            <div th:errors="*{description}" class="text-danger"></div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col col-md-10 col-md-offset-2">
-            <button id="confirmButton" name="confirm" class="btn btn-default">
-              <span class="glyphicon glyphicon-play"></span>確認
-            </button>
-            <a th:href="@{/flup/}" class="btn btn-default"> <span
-              class="glyphicon glyphicon-arrow-left"></span>戻る
-            </a>
-          </div>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
-</body>
+    </body>
 </html>

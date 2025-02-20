@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  * <p>
  * 次のスキーマ・フラグメントは、このクラス内に含まれる予期されるコンテンツを指定します。
  * <p>
- * 
+ *
  * <pre>
  * &lt;simpleType name="webFaultType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -44,8 +44,7 @@ public enum WebFaultType {
     @XmlEnumValue("AccessDeniedFault")
     ACCESS_DENIED_FAULT("AccessDeniedFault"), @XmlEnumValue("BusinessFault")
     BUSINESS_FAULT("BusinessFault"), @XmlEnumValue("ResourceNotFoundFault")
-    RESOURCE_NOT_FOUND_FAULT(
-            "ResourceNotFoundFault"), @XmlEnumValue("ValidationFault")
+    RESOURCE_NOT_FOUND_FAULT("ResourceNotFoundFault"), @XmlEnumValue("ValidationFault")
     VALIDATION_FAULT("ValidationFault");
 
     private final String value;

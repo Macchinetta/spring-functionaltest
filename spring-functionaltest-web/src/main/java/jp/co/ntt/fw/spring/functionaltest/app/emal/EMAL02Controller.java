@@ -86,13 +86,13 @@ public class EMAL02Controller {
         return "emal/sendMail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=simpleMessage")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=simpleMessage")
     public String handleSimpleMessage(Model model, EmailSendingForm form,
             RedirectAttributes attrs) {
 
         try (Store store = sessionMailSendingService.popBeforeSmtp()) {
-            sessionMailSendingService.sendSimpleMessage(form.getTo().get(0),
-                    form.getText(), store);
+            sessionMailSendingService.sendSimpleMessage(form.getTo().get(0), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -100,13 +100,13 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=allProperties")
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=allProperties")
     public String handleAllProperties(Model model, EmailSendingForm form) {
 
         try (Store store = noAuthMailSendingService.popBeforeSmtp()) {
-            noAuthMailSendingService.sendSimpleMessage(form.getTo().get(0), form
-                    .getCc().get(0), form.getBcc().get(0), form.getReplyTo(),
-                    form.getText(), store);
+            noAuthMailSendingService.sendSimpleMessage(form.getTo().get(0), form.getCc().get(0),
+                    form.getBcc().get(0), form.getReplyTo(), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -114,16 +114,15 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=noAuthPluralRecipients")
-    public String handleNoAuthPluralRecipients(Model model,
-            EmailSendingForm form) {
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=noAuthPluralRecipients")
+    public String handleNoAuthPluralRecipients(Model model, EmailSendingForm form) {
 
         try (Store store = noAuthMailSendingService.popBeforeSmtp()) {
-            noAuthMailSendingService.sendSimpleMessages(form.getTo().toArray(
-                    new String[form.getTo().size()]), form.getCc().toArray(
-                            new String[form.getCc().size()]), form.getBcc()
-                                    .toArray(new String[form.getBcc().size()]),
-                    form.getText(), store);
+            noAuthMailSendingService.sendSimpleMessages(
+                    form.getTo().toArray(new String[form.getTo().size()]),
+                    form.getCc().toArray(new String[form.getCc().size()]),
+                    form.getBcc().toArray(new String[form.getBcc().size()]), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }
@@ -131,16 +130,15 @@ public class EMAL02Controller {
         return "redirect:/emal/receivemail";
     }
 
-    @RequestMapping(value = "sendmail", method = RequestMethod.POST, params = "testcase=authPluralRecipients")
-    public String handleAuthPluralRecipients(Model model,
-            EmailSendingForm form) {
+    @RequestMapping(value = "sendmail", method = RequestMethod.POST,
+            params = "testcase=authPluralRecipients")
+    public String handleAuthPluralRecipients(Model model, EmailSendingForm form) {
 
         try (Store store = authMailSendingService.popBeforeSmtp()) {
-            authMailSendingService.sendSimpleMessage(form.getTo().toArray(
-                    new String[form.getTo().size()]), form.getCc().toArray(
-                            new String[form.getCc().size()]), form.getBcc()
-                                    .toArray(new String[form.getBcc().size()]),
-                    form.getText(), store);
+            authMailSendingService.sendSimpleMessage(
+                    form.getTo().toArray(new String[form.getTo().size()]),
+                    form.getCc().toArray(new String[form.getCc().size()]),
+                    form.getBcc().toArray(new String[form.getBcc().size()]), form.getText(), store);
         } catch (MessagingException e) {
             // ignore
         }

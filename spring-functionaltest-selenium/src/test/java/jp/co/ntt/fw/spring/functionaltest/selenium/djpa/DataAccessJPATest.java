@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.BookDetailsPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.DeliveryOrderDetailsPage;
@@ -44,7 +45,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterBookPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.RegisterConfirmPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.djpa.pages.SystemErrorPage;
 
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class DataAccessJPATest extends FunctionTestSupport {
 
     private static WebDriver driver;
@@ -58,7 +59,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // 日本語ロケールのブラウザを起動
         {
             if (driver == null) {
-                driver = webDriverCreator.createLocaleSpecifiedDriver("ja");
+                driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.JAPAN);
             }
             setCurrentWebDriver(driver);
         }
@@ -74,20 +75,19 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     private void clearAndCreateTestDataForBook() {
-        restOperations.postForObject(getPackageRootUrl() + "/testdata/books",
-                null, Void.class);
+        restOperations.postForObject(getPackageRootUrl() + "/testdata/books", null, Void.class);
     }
 
     /**
      * This method creates the data items in DeliverOrder table with id from 6 to 15)
      */
     private void clearAndCreateTestDataForDeliverOrder() {
-        restOperations.postForObject(getPackageRootUrl() + "/testdata/order",
-                null, Void.class);
+        restOperations.postForObject(getPackageRootUrl() + "/testdata/order", null, Void.class);
     }
 
     /*
-     * private void clearTestDataForForDeliverOrder() { restOperations.delete(getPackageRootUrl() + "/testdata/order"); }
+     * private void clearTestDataForForDeliverOrder() { restOperations.delete(getPackageRootUrl() +
+     * "/testdata/order"); }
      */
 
     /**
@@ -108,8 +108,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -148,8 +148,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title22"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("CL01"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("5000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/04"));
     }
@@ -213,8 +213,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(lazyBookPage.getTitle(), is("title1"));
         assertThat(lazyBookPage.getCategoryName(), is("A01"));
         assertThat(lazyBookPage.getClobCode(), is("54455354"));
-        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((lazyBookPage.getClobCode().getBytes()))));
         assertThat(lazyBookPage.getPrice(), is("40"));
         assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
     }
@@ -234,8 +234,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(lazyBookPage.getTitle(), is("title1"));
         assertThat(lazyBookPage.getCategoryName(), is("A01"));
         assertThat(lazyBookPage.getClobCode(), is("54455354"));
-        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((lazyBookPage.getClobCode().getBytes()))));
         assertThat(lazyBookPage.getPrice(), is("40"));
         assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
     }
@@ -257,7 +257,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Error scenario for lazy loading(acquire Session outside of OpenEntityManagerInViewInterceptor)
+     * Error scenario for lazy loading(acquire Session outside of
+     * OpenEntityManagerInViewInterceptor)
      */
     @Test
     public void testDJPA0103004() {
@@ -266,8 +267,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0103004Click();
         jpaHomePage.setBookIdAndRegisterSession("0001");
         RegisterConfirmPage registerConfirmPage = jpaHomePage.registerSession();
-        SystemErrorPage sysErrorPage = registerConfirmPage
-                .accessOutOfLazyFetchScope();
+        SystemErrorPage sysErrorPage = registerConfirmPage.accessOutOfLazyFetchScope();
 
         // Assertion for system error occurred due to lazy initialization.
         assertTrue(Pattern.compile(
@@ -276,7 +276,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Error scenario for lazy loading(acquire FlashAttribute outside of OpenEntityManagerInViewInterceptor)
+     * Error scenario for lazy loading(acquire FlashAttribute outside of
+     * OpenEntityManagerInViewInterceptor)
      */
     @Test
     public void testDJPA0103005() {
@@ -293,7 +294,31 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Way of Inheriting the interface of spring Data Confirmation for Repository interface for generic CRUD operations.
+     * Log assertions output when reading records
+     */
+    @Test
+    public void testDJPA0105001() {
+        // Clearing DB.
+        {
+            clearAndCreateTestDataForBook();
+        }
+        new JPAIndexPage(driver).djpa0105001Click();
+
+        // Assert log output result of the todo record
+        dbLogAssertOperations.waitForAssertion();
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "^org.terasoluna.gfw.web.logging.TraceLoggingInterceptor$", "handle0105001\\(\\)$");
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
+                ".*select jpabook(?:eg)?0_\\.book_id as book_id1_(?:7|8)_, jpabook(?:eg)?0_\\.blob_code as blob_.*_(?:7|8)_.*from t_book(?:_eg)? jpabook(?:eg)?0_.*",
+                "DEBUG", "org.hibernate.SQL", is(2L));
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
+                ".*binding parameter \\[1\\] as \\[VARCHAR\\] \\- \\[0000000001\\].*", "TRACE",
+                "org.hibernate.type.descriptor.sql.BasicBinder", is(3L));
+    }
+
+    /**
+     * Way of Inheriting the interface of spring Data Confirmation for Repository interface for
+     * generic CRUD operations.
      */
     @Test
     public void testDJPA0201001() {
@@ -309,23 +334,22 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookEntryForm.setTitle("Title19");
 
         // Register the book
-        RegisterBookPage bookDetailsPage = bookEntryForm
-                .registerBookUsingCrudReository();
+        RegisterBookPage bookDetailsPage = bookEntryForm.registerBookUsingCrudReository();
 
         // Assertion for record earlier registered in DB.
         assertThat(bookDetailsPage.getBookIdVal(), is("3"));
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/19"));
     }
 
     /**
-     * Way of Inheriting the interface of spring Data. Confirmation for Repository interface wherein Pagination function and
-     * Sort function are added to findAll method of CrudRepository.
+     * Way of Inheriting the interface of spring Data. Confirmation for Repository interface wherein
+     * Pagination function and Sort function are added to findAll method of CrudRepository.
      */
     @Test
     public void testDJPA0201002() {
@@ -341,8 +365,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("Manual Title 1"));
         assertThat(bookDetailsPage.getClobCode(), is("54455354"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("40"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/01/01"));
     }
@@ -363,8 +387,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePageAfterDelete = jpaHomePage.jpaRepoDefDelAll();
 
-        boolean bookDetailLink = jpaHomePageAfterDelete.isBookDetailLinkPresent(
-                1);
+        boolean bookDetailLink = jpaHomePageAfterDelete.isBookDetailLinkPresent(1);
 
         assertThat(bookDetailLink, is(false));
     }
@@ -392,7 +415,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // Confirming the book exists
         assertThat(message, is("Book Available!!"));
 
-        // setting the book id to find whether it exists in DB.The book with this id is not present in db.
+        // setting the book id to find whether it exists in DB.The book with this id is not present
+        // in db.
         jpaHomePageAfterSearch.setBookIdForDefJPASearchOpn("12345");
 
         // Invoking the existence check method
@@ -434,7 +458,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : void deleteInBatch(Iterable<T> entities)
+     * JPARepository Default Method Confirmation. Method Under Test : void deleteInBatch(Iterable<T>
+     * entities)
      */
     @Test
     public void testDJPA0201006() {
@@ -443,8 +468,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0201006Click();
 
-        jpaHomePage.setBookIdForDefJPADeleteOpn(
-                "0000000001,0000000002,0000000005,0000000008");
+        jpaHomePage.setBookIdForDefJPADeleteOpn("0000000001,0000000002,0000000005,0000000008");
 
         // Deleting the above set books
         jpaHomePage = jpaHomePage.jpaRepoDefDelInBatch();
@@ -479,7 +503,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S> save(Iterable<S> entities).
+     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S>
+     * save(Iterable<S> entities).
      */
     @Test
     public void testDJPA0201007() {
@@ -492,7 +517,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         String bookCount = jpaHomePage.getPageObjectItemCount();
 
-        // confirm that 16 books are added succesfully.The 15 books are created in the service layer.
+        // confirm that 16 books are added succesfully.The 15 books are created in the service
+        // layer.
         assertThat(bookCount, is("18 Books Available!!"));
 
         BookDetailsPage bookDetailsPage = jpaHomePage.displayBookDetails(4);
@@ -549,8 +575,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -566,8 +592,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA012"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA012"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -586,8 +612,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("Z"));
         assertThat(bookDetailsPage.getTitle(), is("TitleZ3"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeZ3"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -602,8 +628,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("Z"));
         assertThat(bookDetailsPage.getTitle(), is("TitleZ2"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeZ2"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -635,8 +661,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -651,8 +677,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA013"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA013"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -667,8 +693,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A02"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA021"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA021"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -685,8 +711,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -701,14 +727,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA012"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA012"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : void delete(Iterable<? extends T> entities)
+     * JPARepository Default Method Confirmation. Method Under Test : void delete(Iterable<? extends
+     * T> entities)
      */
     @Test
     public void testDJPA0201010() {
@@ -751,16 +778,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookEntryForm.setReleaseDate("2015/11/25");
         bookEntryForm.setTitle("Title19");
 
-        BookDetailsPage bookDetailsPage = bookEntryForm
-                .registerUsingSaveAndFlush();
+        BookDetailsPage bookDetailsPage = bookEntryForm.registerUsingSaveAndFlush();
 
         // Assertion for record earlier registered in DB.
         assertThat(bookDetailsPage.getBookIdVal(), is("19"));
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
@@ -814,21 +840,20 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
 
         /**
-         * Confirm that the flush method performed the insert operation by checking 1. its timeStamp of operation and 2.the
-         * timeStamp of the test debug statement just next to it. The insert statement timeStamp should be smaller than the test
-         * debug statement.
+         * Confirm that the flush method performed the insert operation by checking 1. its timeStamp
+         * of operation and 2.the timeStamp of the test debug statement just next to it. The insert
+         * statement timeStamp should be smaller than the test debug statement.
          */
-        List<String> list1 = dbLogAssertOperations.getLogByRegexMessageTime(
-                null, null, "\\\\*Debug:: after flush*");
+        List<String> list1 = dbLogAssertOperations.getLogByRegexMessageTime(null, null,
+                "\\\\*Debug:: after flush*");
 
-        List<String> list2 = dbLogAssertOperations.getLogByRegexMessageTime(
-                null, null,
+        List<String> list2 = dbLogAssertOperations.getLogByRegexMessageTime(null, null,
                 "\\\\*insert into t_book_eg \\(blob_code, category_id, clob_code, created_by, created_date, last_modified_by,"
                         + " last_modified_date, price, release_date, title, version, book_id\\)*");
 
@@ -840,8 +865,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S> saveAllAndFlush(Iterable<S>
-     * entities).
+     * JPARepository Default Method Confirmation. Method Under Test : <S extends T> List<S>
+     * saveAllAndFlush(Iterable<S> entities).
      */
     @Test
     public void testDJPA0201014() {
@@ -868,8 +893,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -881,8 +906,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA012"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA012"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -894,8 +919,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleA013"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeA013"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
 
@@ -907,14 +932,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getCategoryName(), is("B01"));
         assertThat(bookDetailsPage.getTitle(), is("TitleB011"));
         assertThat(bookDetailsPage.getClobCode(), is("CodeB011"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("10000"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/12/24"));
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : void deleteAllById(Iterable<? extends ID> ids)
+     * JPARepository Default Method Confirmation. Method Under Test : void deleteAllById(Iterable<?
+     * extends ID> ids)
      */
     @Test
     public void testDJPA0201015() {
@@ -924,8 +950,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0201015Click();
 
-        jpaHomePage.setBookIdForDefJPADeleteOpn(
-                "0000000003,0000000004,0000000007,0000000010");
+        jpaHomePage.setBookIdForDefJPADeleteOpn("0000000003,0000000004,0000000007,0000000010");
 
         // Deleting the above set books
         jpaHomePage = jpaHomePage.jpaRepoDefDelAllById();
@@ -969,7 +994,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * JPARepository Default Method Confirmation. Method Under Test : void deleteAllByIdInBatch(Iterable<ID> ids)
+     * JPARepository Default Method Confirmation. Method Under Test : void
+     * deleteAllByIdInBatch(Iterable<ID> ids)
      */
     @Test
     public void testDJPA0201016() {
@@ -979,8 +1005,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0201016Click();
 
-        jpaHomePage.setBookIdForDefJPADeleteOpn(
-                "0000000004,0000000005,0000000008,0000000011");
+        jpaHomePage.setBookIdForDefJPADeleteOpn("0000000004,0000000005,0000000008,0000000011");
 
         // Deleting the above set books
         jpaHomePage = jpaHomePage.jpaRepoDefDelAllByIdInBatch();
@@ -1024,8 +1049,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity specific Repository
-     * interface by creating and inheriting a common project specific interface in which only the required methods are defined
+     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity
+     * specific Repository interface by creating and inheriting a common project specific interface
+     * in which only the required methods are defined
      */
     @Test
     public void testDJPA0202001() {
@@ -1049,8 +1075,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
 
@@ -1065,15 +1091,16 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
 
     /**
-     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity specific Repository
-     * interface without inheriting any interface of Spring Data or common interface
+     * Way of Inheriting the interface of spring Data. Confirmation for the method to create entity
+     * specific Repository interface without inheriting any interface of Spring Data or common
+     * interface
      */
     @Test
     public void testDJPA0202002() {
@@ -1090,16 +1117,15 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookEntryForm.setReleaseDate("2015/11/25");
         bookEntryForm.setTitle("Title19");
 
-        RegisterBookPage bookDetailsPage = bookEntryForm
-                .saveUsingNoInheritedIntfRepo();
+        RegisterBookPage bookDetailsPage = bookEntryForm.saveUsingNoInheritedIntfRepo();
 
         // Assertion for record earlier registered in DB.
         String bookId = bookDetailsPage.getBookIdVal();
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
 
@@ -1114,8 +1140,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
     }
@@ -1137,8 +1163,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderListPage = orderListPage.searchByGivenStatus();
 
         // confirm the details of the first record in the list
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
 
         // here the records are displayed in descending order
         // as in the query DESC is used
@@ -1169,8 +1194,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Method to specify a query using @Query annotation. Confirmation of @Query annotation for forward search, backward serach
-     * and partial search
+     * Method to specify a query using @Query annotation. Confirmation of @Query annotation for
+     * forward search, backward serach and partial search
      */
     @Test
     public void testDJPA0301002() {
@@ -1182,16 +1207,13 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : sender address sample value
         orderListPage.setSearchValue("send");
 
-        orderListPage = orderListPage.setSearchCriteria(
-                "Forward Match Sender Address");
+        orderListPage = orderListPage.setSearchCriteria("Forward Match Sender Address");
 
         orderListPage = orderListPage.atQueryLikeSearch();
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1202,8 +1224,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : receiver address sample value
         orderListPage.setSearchValue("1");
 
-        orderListPage = orderListPage.setSearchCriteria(
-                "Backward Match Receiver Address");
+        orderListPage = orderListPage.setSearchCriteria("Backward Match Receiver Address");
 
         orderListPage = orderListPage.atQueryLikeSearch();
 
@@ -1221,13 +1242,11 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // set the search value : receiver address sample value
         orderListPage.setSearchValue("nde");
 
-        orderListPage = orderListPage.setSearchCriteria(
-                "Partial Match Sender Name");
+        orderListPage = orderListPage.setSearchCriteria("Partial Match Sender Name");
         orderListPage = orderListPage.atQueryLikeSearch();
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1247,8 +1266,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.searchByMethodNameConvention();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
 
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("送り先名1"));
@@ -1292,8 +1310,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.searchUsingNativeQuery();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
 
         // confirmation of each property
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
@@ -1317,8 +1334,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each property
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -1336,8 +1352,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each property
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName8"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress8"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress8"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName8"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress8"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver8"));
@@ -1355,7 +1370,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Searching page of entities matching the conditions. Confirmation of page of entities matching the conditions
+     * Searching page of entities matching the conditions. Confirmation of page of entities matching
+     * the conditions
      */
     @Test
     public void testDJPA0402001() {
@@ -1367,8 +1383,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderListPage.setSearchValue("受付");
         orderListPage = orderListPage.searchEnityPageMatchingConditions();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("送り先名5"));
         assertThat(orderDetailsPage.getReceiverAddress(), is("送り先住所5"));
@@ -1409,8 +1424,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.searchPageUsingDynaConditions();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
 
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("送り先名1"));
@@ -1433,8 +1447,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName8"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress8"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress8"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName8"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress8"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver8"));
@@ -1452,8 +1465,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         assertThat(orderDetailsPage.getDeliveryType(), is("2"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName7"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress7"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress7"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName7"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress7"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver7"));
@@ -1485,8 +1497,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
 
@@ -1498,8 +1510,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
     @Test
     public void testDJPA0601002() {
         testDJPA0601001();
-        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
-                null,
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null, null,
                 "\\\\*select jpacategor0_.category_id as category1_2_0_, jpacategor0_.name as name2_2_0_ from m_category_eg jpacategor0_ where jpacategor0_.category_id=1*");
         Integer expVal = 0;
         // confirmation of no query is for dependent entity(i.e.JPACategoryEG )
@@ -1523,13 +1534,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(lazyBookPage.getTitle(), is("title1"));
         assertThat(lazyBookPage.getCategoryName(), is("A01"));
         assertThat(lazyBookPage.getClobCode(), is("54455354"));
-        assertThat(lazyBookPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((lazyBookPage.getClobCode().getBytes()))));
+        assertThat(lazyBookPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((lazyBookPage.getClobCode().getBytes()))));
         assertThat(lazyBookPage.getPrice(), is("40"));
         assertThat(lazyBookPage.getReleaseDate(), is("2013/01/01"));
 
-        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
-                null,
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null, null,
                 "\\\\*[select jpacategor0_.category_id as category]1_3_0_, jpacategor0_.name as name2_3_0_ from m_category_lz jpacategor0_ where jpacategor0_.category_id=1*");
         Integer expVal = 1;
         // confirmation of query is for dependent entity(i.e.JPACategoryLz )
@@ -1537,8 +1547,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Load timing of the related-entity : Lazy Fetch (cant't fetch related-entity when acquire foreign key) For changes
-     * Hibernate 5.2.12(HHH-11838)
+     * Load timing of the related-entity : Lazy Fetch (cant't fetch related-entity when acquire
+     * foreign key) For changes Hibernate 5.2.12(HHH-11838)
      */
     @Test
     public void testDJPA0601004() {
@@ -1567,15 +1577,14 @@ public class DataAccessJPATest extends FunctionTestSupport {
         jpaHomePage.setBookTitle("Manual Title 1");
 
         // there is only one book satisfying above criteria
-        BookDetailsPage bookDetailsPage = jpaHomePage
-                .searchUsingNoPrimaryColumnValue();
+        BookDetailsPage bookDetailsPage = jpaHomePage.searchUsingNoPrimaryColumnValue();
 
         // assertThat(bookDetailsPage.getBookIdVal(), is("4"));
         assertThat(bookDetailsPage.getTitle(), is("Manual Title 1"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("54455354"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("40"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2013/01/01"));
 
@@ -1590,8 +1599,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookDetailsPage = jpaHomePage.searchUsingNoPrimaryColumnValue();
 
         // confirm the IncorrectResultSizeDataAccessException
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                ".*.IncorrectResultSizeDataAccessException.*");
+        dbLogAssertOperations
+                .assertContainsByRegexStackTrace(".*.IncorrectResultSizeDataAccessException.*");
     }
 
     /**
@@ -1601,8 +1610,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
     public void testDJPA0701001() {
         JPAIndexPage jpaIndexPage = new JPAIndexPage(driver);
         JPAHomePage jpaHomePage = jpaIndexPage.djpa0701001Click();
-        DeliveryOrderDetailsPage orderDetailForm = jpaHomePage
-                .addEntityBySave();
+        DeliveryOrderDetailsPage orderDetailForm = jpaHomePage.addEntityBySave();
 
         orderDetailForm.setAcceptDateTime("2015/12/13");
         orderDetailForm.setCompletionDateTime("2015/12/14");
@@ -1614,28 +1622,22 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailForm.setSenderAddress("Test Sender Address");
         orderDetailForm.setSenderName("Test Sender Name");
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderDetailForm
-                .addEntityBySave();
+        DeliveryOrderDetailsPage orderDetailsPage = orderDetailForm.addEntityBySave();
 
-        assertThat(orderDetailsPage.getAcceptDateTime(), is(
-                "Sun Dec 13 00:00:00 JST 2015"));
-        assertThat(orderDetailsPage.getCompletionDateTime(), is(
-                "Mon Dec 14 00:00:00 JST 2015"));
+        assertThat(orderDetailsPage.getAcceptDateTime(), is("Sun Dec 13 00:00:00 JST 2015"));
+        assertThat(orderDetailsPage.getCompletionDateTime(), is("Mon Dec 14 00:00:00 JST 2015"));
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
-        assertThat(orderDetailsPage.getReceiverName(), is(
-                "Test Receiver Name"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "Test Receiver Address"));
+        assertThat(orderDetailsPage.getReceiverName(), is("Test Receiver Name"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("Test Receiver Address"));
         assertThat(orderDetailsPage.getSenderName(), is("Test Sender Name"));
-        assertThat(orderDetailsPage.getSenderAddress(), is(
-                "Test Sender Address"));
+        assertThat(orderDetailsPage.getSenderAddress(), is("Test Sender Address"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("TestDriver"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("完了"));
     }
 
     /**
-     * Confirmation of the related entity getting saved in DB by setting it in the Parent entity which is managed by
-     * entity-manager
+     * Confirmation of the related entity getting saved in DB by setting it in the Parent entity
+     * which is managed by entity-manager
      */
     @Test
     public void testDJPA0702001() {
@@ -1653,15 +1655,14 @@ public class DataAccessJPATest extends FunctionTestSupport {
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(8);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("8"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Order accepted"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Order accepted"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("1500"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "Test Order Comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("Test Order Comment"));
     }
 
     /**
-     * Confirmation of linking the related entity to the existing entity fetched from DB and saving the related entity.
+     * Confirmation of linking the related entity to the existing entity fetched from DB and saving
+     * the related entity.
      */
     @Test
     public void testDJPA0703001() {
@@ -1671,8 +1672,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(6);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("13100"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6"));
 
@@ -1687,11 +1687,9 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = ordersPage.displayOderDetail(6);
 
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("13200"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
     }
 
     /**
@@ -1749,8 +1747,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         // confirmation of order status before updating the status of this orderId#1.
         OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(1);
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                orgStatus));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(orgStatus));
 
         orderDetailsPage.clearStatusField();
 
@@ -1763,13 +1760,13 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         // again get the details of orderId#1 after status update
         orderDetailsPage = ordersPage.displayOderDetail(1);
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                statusToSet));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(statusToSet));
 
     }
 
     /**
-     * Confirmation of the modified values of entities getting saved in db even when save method is not invoked on the entity
+     * Confirmation of the modified values of entities getting saved in db even when save method is
+     * not invoked on the entity
      */
     @Test
     public void testDJPA0802001() {
@@ -1801,7 +1798,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Update the related entity directly without the parent entity using the related entities save method
+     * Update the related entity directly without the parent entity using the related entities save
+     * method
      */
     @Test
     public void testDJPA0803001() {
@@ -1851,7 +1849,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // this method will update the flags isItemRevmovable to true for all items
         ItemPage itemPage = orderDetailsPage.updateByQuery();
 
-        // check the item status of item#1. This would return the same status as above though the update method is invoked
+        // check the item status of item#1. This would return the same status as above though the
+        // update method is invoked
         // this because the default value of clearAutomatically attribute is used durin update
         String itemRemovable = itemPage.getItemStatus();
         assertThat(itemRemovable, is("No"));
@@ -1872,7 +1871,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Confirming that the exception is thrown if no @ Modifying annotaion is used above the method have update query
+     * Confirming that the exception is thrown if no @ Modifying annotaion is used above the method
+     * have update query
      */
     @Test
     public void testDJPA0804002() {
@@ -1884,8 +1884,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // is used on update query method.
         // confirm the IncorrectResultSizeDataAccessException
 
-        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null,
-                null,
+        List<String> list = dbLogAssertOperations.getLogByRegexMessage(null, null,
                 "\\\\*org.hibernate.hql.internal.QueryExecutionRequestException: Not supported for DML operations*");
         System.out.println("**=>" + list.size());
         Integer expVal = 2;
@@ -1894,7 +1893,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Usage of clearAutomatically attribute along with @Modifying annotation Confirmation of the clearAutomatically attribute
+     * Usage of clearAutomatically attribute along with @Modifying annotation Confirmation of the
+     * clearAutomatically attribute
      */
     @Test
     public void testDJPA0804003() {
@@ -1917,8 +1917,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Deleting parent-entity and related-entity Confirmation of deletion of both parent and related entities upon invoking the
-     * delete method on the parent repository.
+     * Deleting parent-entity and related-entity Confirmation of deletion of both parent and related
+     * entities upon invoking the delete method on the parent repository.
      */
     @Test
     public void testDJPA0901001() {
@@ -1933,8 +1933,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("5"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy5"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("50000"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Stock checking"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Stock checking"));
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000002"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("50"));
         assertThat(orderDetailsPage.isItemRevmovable(1), is("No"));
@@ -1954,8 +1953,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         ordersPage.displayOrderDetail();
 
         // confirm the IncorrectResultSizeDataAccessException
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                ".*.ResourceNotFoundException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(".*.ResourceNotFoundException.*");
     }
 
     /**
@@ -1969,15 +1967,13 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 4;
         Integer item = 1;
-        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
-                orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
 
         // confirm that the order is really present
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("4"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy4"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("4000"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Order accepted"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Order accepted"));
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("40"));
         assertThat(orderDetailsPage.isItemRevmovable(1), is("No"));
@@ -2001,7 +1997,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Deleting the related-entity directly. Confirmation of deleting the related entity without using the parent entity
+     * Deleting the related-entity directly. Confirmation of deleting the related entity without
+     * using the parent entity
      */
     @Test
     public void testDJPA0903001() {
@@ -2014,15 +2011,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // candid item for deletion.
         Integer itemSrNum = 4;
 
-        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
-                orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
 
         // confirm that the order is really present with 4 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -2051,10 +2045,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         // confirmation for the item 3 is deleted
         assertThat(orderDetailsPage.isItemPresent(itemSrNum), is(false));
@@ -2082,8 +2074,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Deleting the related-entity directly. Confirmation of deleting the related entity not getting deleted as the parent of
-     * the entity is in managed state
+     * Deleting the related-entity directly. Confirmation of deleting the related entity not getting
+     * deleted as the parent of the entity is in managed state
      */
     @Test
     public void testDJPA0904001() {
@@ -2093,15 +2085,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 5;
 
-        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
-                orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
 
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -2133,10 +2122,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirmation of each items once again
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -2155,7 +2142,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Deleting using query method. Confirming the entity is getting deleted by using query annotation
+     * Deleting using query method. Confirming the entity is getting deleted by using query
+     * annotation
      */
     @Test
     public void testDJPA0905001() {
@@ -2165,15 +2153,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm before deletion the details of the order
         Integer orderIdVal = 5;
 
-        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(
-                orderIdVal);
+        OrderDetailsPage orderDetailsPage = ordersPage.displayOderDetail(orderIdVal);
 
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("6"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is(
-                "dummy6 Mod comment"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy6 Mod comment"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         // Item 1
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000003"));
@@ -2202,8 +2187,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Type of matching condition specified in Query. To confirm the behavior when type of matching is specified in the query
-     * for the escape character "%"
+     * Type of matching condition specified in Query. To confirm the behavior when type of matching
+     * is specified in the query for the escape character "%"
      */
     @Test
     public void testDJPA1001001() {
@@ -2217,12 +2202,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.escapeSearchModulo();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -2239,18 +2222,16 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is(
-                "deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
     /**
-     * Type of matching condition specified in Query. To confirm the behavior when type of matching is specified in the query
-     * for the escape character "_"
+     * Type of matching condition specified in Query. To confirm the behavior when type of matching
+     * is specified in the query for the escape character "_"
      */
     @Test
     public void testDJPA1001002() {
@@ -2266,21 +2247,19 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.gotoNextPage();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is(
-                "deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
     /**
-     * Type of matching in logic.To confirm the behavior when type of matching is specified in the Logic.
+     * Type of matching in logic.To confirm the behavior when type of matching is specified in the
+     * Logic.
      */
     @Test
     public void testDJPA1002001() {
@@ -2294,12 +2273,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
 
         orderListPage = orderListPage.escapeSearchMatchInLogic();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -2316,12 +2293,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName12"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress12"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress12"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName12"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress12"));
-        assertThat(orderDetailsPage.getDeliveryDriver(), is(
-                "deliveryDriver12"));
+        assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver12"));
         assertThat(orderDetailsPage.getDeliveryStatus(), is("配達中"));
     }
 
@@ -2352,8 +2327,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // confirm that the order is really present with 3 items
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("2"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy2"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                searchStatus));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(searchStatus));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("20300"));
 
         // Item 1
@@ -2376,12 +2350,10 @@ public class DataAccessJPATest extends FunctionTestSupport {
         orderListPage.setSearchValue(searchStatus);
         orderListPage.searchByCustomMethodAddedTOIndRepo();
 
-        DeliveryOrderDetailsPage orderDetailsPage = orderListPage
-                .displayOrderDetails(1);
+        DeliveryOrderDetailsPage orderDetailsPage = orderListPage.displayOrderDetails(1);
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("receiverName6"));
-        assertThat(orderDetailsPage.getReceiverAddress(), is(
-                "receiverAddress6"));
+        assertThat(orderDetailsPage.getReceiverAddress(), is("receiverAddress6"));
         assertThat(orderDetailsPage.getSenderName(), is("senderName6"));
         assertThat(orderDetailsPage.getSenderAddress(), is("senderAddress6"));
         assertThat(orderDetailsPage.getDeliveryDriver(), is("deliveryDriver6"));
@@ -2389,8 +2361,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Adding the custom methods to all Repository interfaces in batch. To confirm the added custom method s to a repository
-     * interface which is inherited by all the entities
+     * Adding the custom methods to all Repository interfaces in batch. To confirm the added custom
+     * method s to a repository interface which is inherited by all the entities
      */
     @Test
     public void testDJPA1202001() {
@@ -2417,8 +2389,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Storing query fetch results in objects other than entity. To confirm that the data from the query result can be stored in
-     * any other custom object other than the entity
+     * Storing query fetch results in objects other than entity. To confirm that the data from the
+     * query result can be stored in any other custom object other than the entity
      */
     @Test
     public void testDJPA1301001() {
@@ -2462,15 +2434,14 @@ public class DataAccessJPATest extends FunctionTestSupport {
         bookEntryForm.setReleaseDate("2015/11/25");
         bookEntryForm.setTitle("Title19");
 
-        BookDetailsPage bookDetailsPage = bookEntryForm
-                .registerUsingSaveAndFlush();
+        BookDetailsPage bookDetailsPage = bookEntryForm.registerUsingSaveAndFlush();
 
         // Assertion for record earlier registered in DB.
         assertThat(bookDetailsPage.getTitle(), is("Title19"));
         assertThat(bookDetailsPage.getCategoryName(), is("A01"));
         assertThat(bookDetailsPage.getClobCode(), is("someclobCode"));
-        assertThat(bookDetailsPage.getBlobCode(), is(DatatypeConverter
-                .printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
+        assertThat(bookDetailsPage.getBlobCode(),
+                is(DatatypeConverter.printHexBinary((bookDetailsPage.getClobCode().getBytes()))));
         assertThat(bookDetailsPage.getPrice(), is("1234"));
         assertThat(bookDetailsPage.getReleaseDate(), is("2015/11/25"));
 
@@ -2481,7 +2452,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * Test Common conditions added for JPQL. Confirm the behavior of the common conditions added in JPQL.
+     * Test Common conditions added for JPQL. Confirm the behavior of the common conditions added in
+     * JPQL.
      */
     @Test
     public void testDJPA1501001() {
@@ -2519,15 +2491,13 @@ public class DataAccessJPATest extends FunctionTestSupport {
         // that it retrieves the orders having logical_delete flag as false.
         // the order ID#2 is having flag as false and hence it would be
         // retrieved
-        orderDetailsPage = ordersPage
-                .displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
+        orderDetailsPage = ordersPage.displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
         // confirm the details of order#2
         assertThat(orderDetailsPage.getOrderSummaryOrderId(), is("2"));
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy2"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("20300"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Stock checking"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Stock checking"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000002"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("20"));
@@ -2548,13 +2518,12 @@ public class DataAccessJPATest extends FunctionTestSupport {
         ordersPage.displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
 
         // confirm that the order id#1 is having the flag as true and hence not retrieved here
-        dbLogAssertOperations.assertContainsByRegexStackTrace(
-                ".*.ResourceNotFoundException.*");
+        dbLogAssertOperations.assertContainsByRegexStackTrace(".*.ResourceNotFoundException.*");
     }
 
     /**
-     * Adding common conditions to JPQL to fetch the related-entities. Confirm the behavior of the common conditions added in
-     * JPQL to fetch the related entities
+     * Adding common conditions to JPQL to fetch the related-entities. Confirm the behavior of the
+     * common conditions added in JPQL to fetch the related entities
      */
     @Test
     public void testDJPA1502001() {
@@ -2570,8 +2539,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy7"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("2700"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("1"));
@@ -2588,8 +2556,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         ordersPage = orderDetailsPage.backToOrdersPage();
 
         ordersPage.setSearchOrderId(orderIdVal);
-        orderDetailsPage = ordersPage
-                .displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
+        orderDetailsPage = ordersPage.displayOrderDetailUsingCmnConditionSpecifiedOnEntity();
 
         // confirm that the order is really present with logical_delete flag as
         // false (display value as NO)
@@ -2597,8 +2564,7 @@ public class DataAccessJPATest extends FunctionTestSupport {
         assertThat(orderDetailsPage.getOrderSummaryOrderMemo(), is("dummy7"));
         assertThat(orderDetailsPage.getOrderSummaryOrderAmount(), is("2700"));
         assertThat(orderDetailsPage.getOrderSummaryOrderDelFlag(), is("No"));
-        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is(
-                "Item Shipped"));
+        assertThat(orderDetailsPage.getOrderSummaryOrderStatus(), is("Item Shipped"));
 
         assertThat(orderDetailsPage.getItemCodeValue(1), is("ITM0000001"));
         assertThat(orderDetailsPage.getItemQuantity(1), is("1"));
@@ -2611,7 +2577,8 @@ public class DataAccessJPATest extends FunctionTestSupport {
     }
 
     /**
-     * DataIntegrityViolationException. To confirm the behavior when unique key constraint is violated.
+     * DataIntegrityViolationException. To confirm the behavior when unique key constraint is
+     * violated.
      */
     @Test
     public void testDJPA1601001() {

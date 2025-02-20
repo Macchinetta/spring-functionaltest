@@ -18,13 +18,14 @@ package jp.co.ntt.fw.spring.functionaltest.app.athn;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class AdministratorForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty
+    @NotNull
     @Size(min = 1, max = 20)
     private String username;
 

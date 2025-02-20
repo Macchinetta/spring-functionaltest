@@ -50,8 +50,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DoubleSubmitProtectionTest.class);
+    private static final Logger logger = LoggerFactory.getLogger(DoubleSubmitProtectionTest.class);
 
     @Value("${selenium.dbsp.waitForDownload.offsetSeconds:0}")
     private int offsetSecondsOfWaitForDownload;
@@ -66,8 +65,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        downloadTempDirectory = Files.createTempDirectory("springtest-dbsp-")
-                .toAbsolutePath();
+        downloadTempDirectory = Files.createTempDirectory("springtest-dbsp-").toAbsolutePath();
     }
 
     @AfterClass
@@ -86,31 +84,25 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("dbsp0201001"));
 
         // 登録画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録画面"));
 
         webDriverOperations.appendText(id("firstName"), "Taro");
         webDriverOperations.appendText(id("lastName"), "Yamada");
-        webDriverOperations.appendText(id("filePath"), downloadTempDirectory
-                .toString());
+        webDriverOperations.appendText(id("filePath"), downloadTempDirectory.toString());
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録確認画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録確認画面"));
 
         webDriverOperations.click(id("create"));
 
         // 登録完了画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録完了画面"));
         // ${f:h(output)}の確認
-        assertThat(webDriverOperations.getText(id("output")), is(
-                "result register..."));
+        assertThat(webDriverOperations.getText(id("output")), is("result register..."));
         // redirect がURLに含まれていること
-        assertThat(webDriverOperations.getCurrentUrl(), is(containsString(
-                "?complete")));
+        assertThat(webDriverOperations.getCurrentUrl(), is(containsString("?complete")));
 
         // テスト用ファイルを削除
         File file = downloadTempDirectory.resolve("userData.txt").toFile();
@@ -128,31 +120,25 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("dbsp0201001"));
 
         // 登録画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録画面"));
 
         webDriverOperations.appendText(id("firstName"), "Taro");
         webDriverOperations.appendText(id("lastName"), "Yamada");
-        webDriverOperations.appendText(id("filePath"), downloadTempDirectory
-                .toString());
+        webDriverOperations.appendText(id("filePath"), downloadTempDirectory.toString());
 
         webDriverOperations.click(id("confirm"));
 
         // 確認画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録確認画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録確認画面"));
 
         webDriverOperations.click(id("create"));
 
         // 登録完了画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "ユーザ登録完了画面"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("ユーザ登録完了画面"));
         // ${f:h(output)}の確認
-        assertThat(webDriverOperations.getText(id("output")), is(
-                "result register..."));
+        assertThat(webDriverOperations.getText(id("output")), is("result register..."));
         // ?completeがURLに含まれていること
-        assertThat(webDriverOperations.getCurrentUrl(), is(containsString(
-                "?complete")));
+        assertThat(webDriverOperations.getCurrentUrl(), is(containsString("?complete")));
 
         // ファイルを削除
         File file = downloadTempDirectory.resolve("userData.txt").toFile();
@@ -178,17 +164,14 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         String tokenKey = null;
         /** 生成されたTokenValue */
         String tokenValue = null;
-        String[] buttonNames = { "dbsp0301001", "second", "third", "fourth",
-                "fifth" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView",
-                "fourthView", "fifthView" };
+        String[] buttonNames = {"dbsp0301001", "second", "third", "fourth", "fifth"};
+        String[] screenTitles = {"firstView", "secondView", "thirdView", "fourthView", "fifthView"};
         for (int i = 0; i < 5; i++) {
             if (i >= 2) {
                 // 第二画面から第四画面ではトランザクショントークンを確認する。
                 // トランザクショントークンの確認
-                valueText = (String) webDriverOperations.getJavascriptExecutor()
-                        .executeScript(
-                                "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                valueText = (String) webDriverOperations.getJavascriptExecutor().executeScript(
+                        "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
                 assertNotNull(valueText);
                 if (i == 2) {
                     // 第二画面の場合はTokenKey,TokenValueの存在とNameSpaceの値を確認する。
@@ -207,12 +190,11 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
             // 次の画面へ遷移
             webDriverOperations.click(id(buttonNames[i]));
             // 各画面へ遷移したことをチェック
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    screenTitles[i]));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(screenTitles[i]));
         }
         // 第5画面の場合はトランザクショントークンがないことを確認
-        assertNull(webDriverOperations.getJavascriptExecutor().executeScript(
-                "return document.getElementsByName('_TRANSACTION_TOKEN')[0];"));
+        assertNull(webDriverOperations.getJavascriptExecutor()
+                .executeScript("return document.getElementsByName('_TRANSACTION_TOKEN')[0];"));
     }
 
     /**
@@ -227,8 +209,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("third"));
         webDriverOperations.click(id("fourth"));
         // 第四画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "fourthView"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("fourthView"));
 
         // back()処理が終了せずテストが進行不可になるため、例外処理を用いて継続させる。
         try {
@@ -241,8 +222,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         {
             // エラー画面表示まで待機
             String expectedTitle = "ページ読み込みエラー";
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .titleContains(expectedTitle));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.titleContains(expectedTitle));
 
             assertThat(webDriverOperations.getTitle(), is(expectedTitle));
         }
@@ -261,8 +241,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         {
             // エラー画面表示まで待機
             String expectedTitle = "Transaction Token Error!";
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .titleContains(expectedTitle));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.titleContains(expectedTitle));
 
             assertThat(webDriverOperations.getTitle(), is(expectedTitle));
         }
@@ -280,8 +259,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("third"));
         webDriverOperations.click(id("fourth"));
         // 第四画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "fourthView"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("fourthView"));
 
         // ブラウザの再読み込み
         webDriverOperations.refresh();
@@ -290,8 +268,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         {
             // エラー画面表示まで待機
             String expectedTitle = "Transaction Token Error!";
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .titleContains(expectedTitle));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.titleContains(expectedTitle));
             assertThat(webDriverOperations.getTitle(), is(expectedTitle));
         }
     }
@@ -312,15 +289,13 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(By.id("downloadButton"));
         waitForDownloaded();
         // ダウンロードされたファイルを読み込む
-        File file = new File(downloadTempDirectory
-                .toString(), downloadPdfFileName);
+        File file = new File(downloadTempDirectory.toString(), downloadPdfFileName);
         // ダウンロードファイルを削除
         file.delete();
 
         webDriverOperations.click(id("fourth"));
         // 第四画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "fourthView"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("fourthView"));
     }
 
     /**
@@ -329,7 +304,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
      * <li>(th:actionの値を指定しない)</li>
      * </ul>
      **/
-    @IfProfileValue(name = "test.environment.view", values = { "thymeleaf" })
+    @IfProfileValue(name = "test.environment.view", values = {"thymeleaf"})
     @Test
     public void testDBSP0301006() throws IOException {
         /** トランザクショントークンタグのvalue値 */
@@ -338,17 +313,14 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         String tokenKey = null;
         /** 生成されたTokenValue */
         String tokenValue = null;
-        String[] buttonNames = { "dbsp0301006", "second", "third", "fourth",
-                "fifth" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView",
-                "fourthView", "fifthView" };
+        String[] buttonNames = {"dbsp0301006", "second", "third", "fourth", "fifth"};
+        String[] screenTitles = {"firstView", "secondView", "thirdView", "fourthView", "fifthView"};
         for (int i = 0; i < 5; i++) {
             if (i >= 2) {
                 // 第二画面から第四画面ではトランザクショントークンを確認する。
                 // トランザクショントークンの確認
-                valueText = (String) webDriverOperations.getJavascriptExecutor()
-                        .executeScript(
-                                "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                valueText = (String) webDriverOperations.getJavascriptExecutor().executeScript(
+                        "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
                 assertNotNull(valueText);
                 if (i == 2) {
                     // 第二画面の場合はTokenKey,TokenValueの存在とNameSpaceの値を確認する。
@@ -367,12 +339,12 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
             // 次の画面へ遷移
             webDriverOperations.click(id(buttonNames[i]));
             // 各画面へ遷移したことをチェック
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    screenTitles[i] + "(th:actionの値を指定しない)"));
+            assertThat(webDriverOperations.getText(id("screenTitle")),
+                    is(screenTitles[i] + "(th:actionの値を指定しない)"));
         }
         // 第5画面の場合はトランザクショントークンがないことを確認
-        assertNull(webDriverOperations.getJavascriptExecutor().executeScript(
-                "return document.getElementsByName('_TRANSACTION_TOKEN')[0];"));
+        assertNull(webDriverOperations.getJavascriptExecutor()
+                .executeScript("return document.getElementsByName('_TRANSACTION_TOKEN')[0];"));
     }
 
     /**
@@ -387,8 +359,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         webDriverOperations.click(id("third"));
         webDriverOperations.click(id("fourth"));
         // 第四画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "fourthView"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("fourthView"));
 
         // back()処理が正常に終了しないため、例外処理を用いてテストを継続する。
         try {
@@ -398,8 +369,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         }
 
         // 第三画面に遷移したことをチェック
-        assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                "thirdView"));
+        assertThat(webDriverOperations.getText(id("screenTitle")), is("thirdView"));
 
         // ブラウザの再読み込み
         webDriverOperations.refresh();
@@ -408,8 +378,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         {
             // エラー画面表示まで待機
             String expectedTitle = "Transaction Token Error!";
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .titleContains(expectedTitle));
+            webDriverOperations.waitForDisplayed(ExpectedConditions.titleContains(expectedTitle));
             assertThat(webDriverOperations.getTitle(), is(expectedTitle));
         }
 
@@ -428,18 +397,15 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
         String tokenKey = null;
         /** 生成されたTokenValue */
         String tokenValue = null;
-        String[] buttonNames = { "dbsp0302002", "second", "third", "fourth",
-                "fifth" };
-        String[] screenTitles = { "firstView", "secondView", "thirdView",
-                "fourthView", "fifthView" };
+        String[] buttonNames = {"dbsp0302002", "second", "third", "fourth", "fifth"};
+        String[] screenTitles = {"firstView", "secondView", "thirdView", "fourthView", "fifthView"};
 
         for (int i = 0; i < 5; i++) {
             if (i >= 2) {
                 // 第二画面から第四画面ではトランザクショントークンを確認する。
                 // トランザクショントークンの確認
-                valueText = (String) webDriverOperations.getJavascriptExecutor()
-                        .executeScript(
-                                "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
+                valueText = (String) webDriverOperations.getJavascriptExecutor().executeScript(
+                        "return document.getElementsByName('_TRANSACTION_TOKEN')[0].value;");
                 assertNotNull(valueText);
 
                 if (i == 2) {
@@ -459,8 +425,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
             // 各画面から次の画面へ遷移
             webDriverOperations.click(id(buttonNames[i]));
             // 各画面へ遷移したことをチェック
-            assertThat(webDriverOperations.getText(id("screenTitle")), is(
-                    screenTitles[i]));
+            assertThat(webDriverOperations.getText(id("screenTitle")), is(screenTitles[i]));
         }
     }
 
@@ -501,8 +466,7 @@ public class DoubleSubmitProtectionTest extends FunctionTestSupport {
      */
     private String getTokenKey(String valueText) {
         int startIndex = valueText.indexOf("~") + 1;
-        return valueText.substring(startIndex, valueText.indexOf("~",
-                startIndex));
+        return valueText.substring(startIndex, valueText.indexOf("~", startIndex));
     }
 
     /**

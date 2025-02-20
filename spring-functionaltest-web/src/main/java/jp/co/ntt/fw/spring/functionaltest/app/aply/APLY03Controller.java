@@ -68,9 +68,9 @@ public class APLY03Controller {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "0303/displaySwitching", method = RequestMethod.POST, params = "cIfFormat")
-    public String handleInputDisplaySwitchingUsingCIf(Model model,
-            JspForm form) {
+    @RequestMapping(value = "0303/displaySwitching", method = RequestMethod.POST,
+            params = "cIfFormat")
+    public String handleInputDisplaySwitchingUsingCIf(Model model, JspForm form) {
         return "aply/showDisplaySwitchingUsingCIf";
     }
 
@@ -79,9 +79,9 @@ public class APLY03Controller {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "0303/displaySwitching", method = RequestMethod.POST, params = "cChooseFormat")
-    public String handleInputDisplaySwitchingUsingCChoose(Model model,
-            JspForm form) {
+    @RequestMapping(value = "0303/displaySwitching", method = RequestMethod.POST,
+            params = "cChooseFormat")
+    public String handleInputDisplaySwitchingUsingCChoose(Model model, JspForm form) {
         return "aply/showDisplaySwitchingUsingCChoose";
     }
 
@@ -90,9 +90,9 @@ public class APLY03Controller {
         return "aply/inputCollectionInModel";
     }
 
-    @RequestMapping(value = "0304/collectionInModel", method = RequestMethod.POST, params = "collectionInModel")
-    public String handleInputCollectionInModel(Model model,
-            JspFormListForm form) {
+    @RequestMapping(value = "0304/collectionInModel", method = RequestMethod.POST,
+            params = "collectionInModel")
+    public String handleInputCollectionInModel(Model model, JspFormListForm form) {
         return "aply/showCollectionInModel";
     }
 
@@ -101,7 +101,8 @@ public class APLY03Controller {
         return "aply/inputFormObjectBindHtmlForm";
     }
 
-    @RequestMapping(value = "0305/bindFormObject", method = RequestMethod.POST, params = "bindFormObject")
+    @RequestMapping(value = "0305/bindFormObject", method = RequestMethod.POST,
+            params = "bindFormObject")
     public String handleBindFormObject(Model model, JspForm form) {
         return "aply/showFormObjectBindHtmlForm";
     }

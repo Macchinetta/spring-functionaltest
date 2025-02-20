@@ -39,8 +39,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.dtac.UserListRoutingSer
 @Controller
 public class DTACUserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            DTACUserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(DTACUserController.class);
 
     @Inject
     Mapper beanMapper;
@@ -54,8 +53,7 @@ public class DTACUserController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.GET, params = "complete")
-    public String registerComplete(@RequestParam("username") String username,
-            Model model) {
+    public String registerComplete(@RequestParam("username") String username, Model model) {
 
         User user = userListRoutingService.getUser(username);
         if (null == user) {
@@ -72,8 +70,7 @@ public class DTACUserController {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST, params = "cancel")
-    public String registerCancel(RedirectAttributes redirectAttrs,
-            Model model) {
+    public String registerCancel(RedirectAttributes redirectAttrs, Model model) {
         return "redirect:/dtac/user/list";
     }
 

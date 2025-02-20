@@ -37,8 +37,7 @@ public class Precedence3000Dialect extends AbstractProcessorDialect {
         processors.add(new Precedence2000Processor(dialectPrefix));
         processors.add(new Precedence3000Processor(dialectPrefix));
 
-        processors.add(
-                new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
+        processors.add(new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
 
         return processors;
 

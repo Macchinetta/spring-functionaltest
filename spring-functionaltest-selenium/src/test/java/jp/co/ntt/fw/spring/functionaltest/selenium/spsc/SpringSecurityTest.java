@@ -63,8 +63,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
         // https://github.com/SeleniumHQ/selenium/issues/9528 で検討中のため対応され次第取り込む
         webDriverOperations.forceClick(id("spsc0101001"));
 
-        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"),
-                "Please sign in"));
+        webDriverOperations.waitForDisplayed(textToBe(By.xpath("//h2"), "Please sign in"));
 
         // デフォルトのログイン画面の確認
         // ユーザ
@@ -72,8 +71,7 @@ public class SpringSecurityTest extends FunctionTestSupport {
         // パスワード
         assert (webDriverOperations.exists(name("password")));
         // パス
-        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl
-                + "/login"));
+        assertThat(webDriverOperations.getCurrentUrl(), is(applicationContextUrl + "/login"));
 
     }
 
@@ -97,16 +95,16 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0201/001", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0201/001", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
@@ -134,9 +132,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0201/002", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0201/002", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -170,9 +168,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0201/003", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0201/003", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -211,16 +209,16 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0201/004", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0201/004", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
         assertThat(resultMap.get("X-Content-Type-Options"), is("nosniff"));
@@ -247,9 +245,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0201/006", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0201/006", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -274,9 +272,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0301/001", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0301/001", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -302,10 +300,9 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0401/001/notsecure/001",
-                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders),
-                byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0401/001/notsecure/001",
+                        HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders requestHeaders2 = entity.getHeaders();
         Map<String, String> resultMap = requestHeaders2.toSingleValueMap();
@@ -315,16 +312,15 @@ public class SpringSecurityTest extends FunctionTestSupport {
         assertNull(resultMap.get("Pragma"));
         assertNull(resultMap.get("Expires"));
 
-        entity = restTemplate.exchange(applicationContextUrl
-                + "/spsc/0401/001/secure/001", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        entity = restTemplate.exchange(applicationContextUrl + "/spsc/0401/001/secure/001",
+                HttpMethod.GET, new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         requestHeaders2 = entity.getHeaders();
         resultMap = requestHeaders2.toSingleValueMap();
 
         // キャッシュコントロールされているレスポンスヘッダを確認
-        assertThat(resultMap.get("Cache-Control"), is(
-                "no-cache, no-store, max-age=0, must-revalidate"));
+        assertThat(resultMap.get("Cache-Control"),
+                is("no-cache, no-store, max-age=0, must-revalidate"));
         assertThat(resultMap.get("Pragma"), is("no-cache"));
         assertThat(resultMap.get("Expires"), is("0"));
     }
@@ -345,16 +341,15 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0501/001", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0501/001", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "default-src 'self'"));
+        assertThat(resultMap.get("Content-Security-Policy"), is("default-src 'self'"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -364,7 +359,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" report-only="true" />
+     *      <sec:content-security-policy policy-directives=
+    "default-src 'self'; report-uri /csp_report;" report-only="true" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -374,17 +370,17 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0501/002", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0501/002", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
         assertNull(resultMap.get("Content-Security-Policy"));
-        assertThat(resultMap.get("Content-Security-Policy-Report-Only"), is(
-                "default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy-Report-Only"),
+                is("default-src 'self'; report-uri /csp_report;"));
     }
 
     /**
@@ -393,7 +389,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="default-src 'self'; report-uri /csp_report;" />
+     *      <sec:content-security-policy policy-directives=
+    "default-src 'self'; report-uri /csp_report;" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -403,16 +400,16 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0501/003", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0501/003", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "default-src 'self'; report-uri /csp_report;"));
+        assertThat(resultMap.get("Content-Security-Policy"),
+                is("default-src 'self'; report-uri /csp_report;"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -422,7 +419,8 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:content-security-policy policy-directives="upgrade-insecure-requests; default-src 'self';" />
+     *      <sec:content-security-policy policy-directives=
+    "upgrade-insecure-requests; default-src 'self';" />
      *  </sec:headers>
      * </pre>
      * </ul>
@@ -432,16 +430,16 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0501/004", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0501/004", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Content-Security-Policy"), is(
-                "upgrade-insecure-requests; default-src 'self';"));
+        assertThat(resultMap.get("Content-Security-Policy"),
+                is("upgrade-insecure-requests; default-src 'self';"));
         assertNull(resultMap.get("Content-Security-Policy-Report-Only"));
     }
 
@@ -453,8 +451,10 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *  <sec:headers>
      *      <sec:hpkp report-only="false" max-age-seconds="1">
      *          <sec:pins>
-     *              <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
-     *              <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
      *          </sec:pins>
      *      </sec:hpkp>
      *  </sec:headers>
@@ -467,17 +467,17 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0601/001", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0601/001", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Public-Key-Pins"), is("max-age=1 ;"
-                + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
-                + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\""));
+        assertThat(resultMap.get("Public-Key-Pins"),
+                is("max-age=1 ;" + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
+                        + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\""));
         assertNull(resultMap.get("Public-Key-Pins-Report-Only"));
     }
 
@@ -489,8 +489,10 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *  <sec:headers>
      *      <sec:hpkp max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
      *          <sec:pins>
-     *              <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
-     *              <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
      *          </sec:pins>
      *      </sec:hpkp>
      *  </sec:headers>
@@ -503,18 +505,17 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0601/002", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0601/002", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
         assertNull(resultMap.get("Public-Key-Pins"));
-        assertThat(resultMap.get("Public-Key-Pins-Report-Only"), is(
-                "max-age=1 ;"
-                        + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
+        assertThat(resultMap.get("Public-Key-Pins-Report-Only"),
+                is("max-age=1 ;" + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
                         + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
                         + " report-uri=\"https://www.example.net/hpkp-report\""));
     }
@@ -525,10 +526,13 @@ public class SpringSecurityTest extends FunctionTestSupport {
      *
      * <pre>
      *  <sec:headers>
-     *      <sec:hpkp report-only="false" max-age-seconds="1" report-uri="https://www.example.net/hpkp-report">
+     *      <sec:hpkp report-only="false" max-age-seconds="1" report-uri=
+    "https://www.example.net/hpkp-report">
      *          <sec:pins>
-     *              <sec:pin algorithm="sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
-     *              <sec:pin algorithm="sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=</sec:pin>
+     *              <sec:pin algorithm=
+    "sha256">E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=</sec:pin>
      *          </sec:pins>
      *      </sec:hpkp>
      *  </sec:headers>
@@ -541,18 +545,18 @@ public class SpringSecurityTest extends FunctionTestSupport {
 
         // レスポンスヘッダを取得
         HttpHeaders requestHeaders = new HttpHeaders();
-        ResponseEntity<byte[]> entity = restTemplate.exchange(
-                applicationContextUrl + "/spsc/0601/003", HttpMethod.GET,
-                new HttpEntity<byte[]>(requestHeaders), byte[].class);
+        ResponseEntity<byte[]> entity =
+                restTemplate.exchange(applicationContextUrl + "/spsc/0601/003", HttpMethod.GET,
+                        new HttpEntity<byte[]>(requestHeaders), byte[].class);
 
         HttpHeaders responseHeaders = entity.getHeaders();
         Map<String, String> resultMap = responseHeaders.toSingleValueMap();
 
         // レスポンスヘッダを確認
-        assertThat(resultMap.get("Public-Key-Pins"), is("max-age=1 ;"
-                + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
-                + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
-                + " report-uri=\"https://www.example.net/hpkp-report\""));
+        assertThat(resultMap.get("Public-Key-Pins"),
+                is("max-age=1 ;" + " pin-sha256=\"d6qzRu9zOECb90Uez27xWltNsj0e1Md7GkYYkVoZWmM=\" ;"
+                        + " pin-sha256=\"E9CZ9INDbd+2eRQozYqqbQ2yXLVKB9+xcprMF+44U1g=\" ;"
+                        + " report-uri=\"https://www.example.net/hpkp-report\""));
         assertNull(resultMap.get("Public-Key-Pins-Report-Only"));
     }
 

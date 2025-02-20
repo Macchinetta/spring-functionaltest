@@ -32,8 +32,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.excn.StockRepository
 
 @Service
 @Transactional
-public class StockPessimisticLockServiceImpl implements
-                                             StockPessimisticLockService {
+public class StockPessimisticLockServiceImpl implements StockPessimisticLockService {
 
     @Inject
     StockRepository stockRepository;
@@ -48,8 +47,7 @@ public class StockPessimisticLockServiceImpl implements
     public Stock findOne(String itemCode) {
         Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
-            ResultMessages messages = ResultMessages.danger().add(
-                    "excn.result.datanotfound");
+            ResultMessages messages = ResultMessages.danger().add("excn.result.datanotfound");
             throw new ResourceNotFoundException(messages);
         }
         latchToupdate = new CountDownLatch(1);
@@ -60,8 +58,7 @@ public class StockPessimisticLockServiceImpl implements
     public Stock buy(Stock stock, int purchasingQuantity) {
         Stock subject = null;
         try {
-            subject = stockRepository.findByItemCodeWithPessimisticLock(stock
-                    .getItemCode());
+            subject = stockRepository.findByItemCodeWithPessimisticLock(stock.getItemCode());
         } catch (PessimisticLockingFailureException e) {
             latchToupdate.countDown();
             throw e;

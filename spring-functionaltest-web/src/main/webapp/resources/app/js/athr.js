@@ -1,51 +1,52 @@
-if (!athr)
-    var athr = {};
+if (!athr) var athr = {};
 
-(function(athr) {
+(function (athr) {
     var contextPath = $("meta[name='contextPath']").attr("content");
     var csrfHeaderName = $("meta[name='_csrf_header']").attr("content");
 
-    athr.send = function() {
-
+    athr.send = function () {
         $("#customerResult").remove();
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
 
-        $(document).ajaxSend(function(event, xhr, options) {
+        $(document).ajaxSend(function (event, xhr, options) {
             xhr.setRequestHeader(csrfHeaderName, csrfToken);
         });
 
         $.ajax(contextPath + "/athr/0801/001/afterLogin", {
-            type : "GET",
-            data : "",
-            dataType : "json"
-        }).done(function(json) {
-            searchNormalResultDisplay(json);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "GET",
+            data: "",
+            dataType: "json",
+        })
+            .done(function (json) {
+                searchNormalResultDisplay(json);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
         return false;
     };
 
-    athr.search = function() {
-
+    athr.search = function () {
         $("#customerResult").remove();
 
         var csrfToken = $("meta[name='_csrf']").attr("content");
 
-        $(document).ajaxSend(function(event, xhr, options) {
+        $(document).ajaxSend(function (event, xhr, options) {
             xhr.setRequestHeader(csrfHeaderName, csrfToken);
         });
 
         $.ajax(contextPath + "/athr/0701/001/denyjson", {
-            type : "GET",
-            data : "",
-            dataType : "json"
-        }).done(function(json) {
-            searchNormalResultDisplay(json);
-        }).fail(function(xhr) {
-            errorResultDisplay(xhr);
-        });
+            type: "GET",
+            data: "",
+            dataType: "json",
+        })
+            .done(function (json) {
+                searchNormalResultDisplay(json);
+            })
+            .fail(function (xhr) {
+                errorResultDisplay(xhr);
+            });
         return false;
     };
 
@@ -54,14 +55,13 @@ if (!athr)
     }
 
     function errorResultDisplay(xhr) {
-
         setXMLHttpRequestResultError(xhr);
         setStatusCodeDom(xhr);
         setContentTypeDom(xhr);
         //        var json = xhr.responseJSON;
         //
-        //        
-        //        
+        //
+        //
         //        if (0 < json.errorResults.length) {
         //            setResultMessageError();
         //            var returnMessage = $("#returnMessage");
@@ -73,9 +73,9 @@ if (!athr)
 
     function setXMLHttpRequestResultError(xhr) {
         var xMLHttpRequestResult = $("#xMLHttpRequestResult");
-        xMLHttpRequestResult.removeClass('hidden');
-        xMLHttpRequestResult.removeClass('alert-success');
-        xMLHttpRequestResult.addClass('alert-danger');
+        xMLHttpRequestResult.removeClass("hidden");
+        xMLHttpRequestResult.removeClass("alert-success");
+        xMLHttpRequestResult.addClass("alert-danger");
     }
 
     function setStatusCodeDom(xhr) {
@@ -91,7 +91,6 @@ if (!athr)
     }
 
     function escapeHTML(val) {
-        return $('<div>').text(val).html();
+        return $("<div>").text(val).html();
     }
-
 })(athr);

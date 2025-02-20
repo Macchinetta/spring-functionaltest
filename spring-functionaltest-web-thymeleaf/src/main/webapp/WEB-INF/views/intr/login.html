@@ -1,46 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">ログイン</h1>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ログイン</h1>
 
-      <form method="post" th:action="@{/intr/0301/001/authentication}" class="form-horizontal">
+                <form method="post" th:action="@{/intr/0301/001/authentication}" class="form-horizontal">
+                    <span id="accountLoginError" th:if="${param.containsKey('error')}">
+                        <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}" class="alert">
+                            <ul>
+                                <li th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></li>
+                            </ul>
+                        </div>
+                    </span>
 
-        <span id="accountLoginError" th:if="${param.containsKey('error')}">
-          <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}" class="alert">
-            <ul>
-              <li th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></li>
-            </ul>
-          </div>
-        </span>
+                    <div class="form-group">
+                        <label for="userName" class="col-sm-2 control-label">UserName</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="username" name="username" class="form-control" placeholder="UserName" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-          <label for="userName" class="col-sm-2 control-label">UserName</label>
-          <div class="col-sm-10">
-            <input type="text" id="username" name="username" class="form-control" placeholder="UserName" />
-          </div>
+                    <div class="form-group">
+                        <label for="userName" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="password" name="password" class="form-control" placeholder="Password" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" id="login" name="login" class="btn btn-default">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label for="userName" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input type="text" id="password" name="password" class="form-control" placeholder="Password" />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" id="login" name="login" class="btn btn-default">Login</button>
-          </div>
-        </div>
-
-      </form>
-
-    </div>
-  </div>
-</body>
+    </body>
 </html>

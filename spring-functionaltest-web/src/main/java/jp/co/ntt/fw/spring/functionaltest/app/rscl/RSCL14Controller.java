@@ -87,8 +87,7 @@ public class RSCL14Controller {
     @RequestMapping(value = "1402/001", method = RequestMethod.POST)
     public String handle1402001(Model model, @RequestParam String path) {
 
-        UserResource rcvUser = this.proxyRestClientService
-                .confirmSimpleHttpClientProxy(path);
+        UserResource rcvUser = this.proxyRestClientService.confirmSimpleHttpClientProxy(path);
 
         model.addAttribute("resultDescription",
                 "Proxyホスト/ポートをプロパティファイルに定義し、Proxy経由で、REST APIを呼び出し、JavaBeanを取得する");

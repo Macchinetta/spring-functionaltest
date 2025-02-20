@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-  xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
-  xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
-  <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
+    <import resource="classpath:META-INF/spring/spring-mvc-common.xml" />
 
-  <mvc:interceptors>
-    <mvc:interceptor>
-      <mvc:mapping path="/**" />
-      <mvc:exclude-mapping path="/resources/**" />
-      <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-      </bean>
-    </mvc:interceptor>
-  </mvc:interceptors>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <mvc:exclude-mapping path="/resources/**" />
+            <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
-  <context:annotation-config />
+    <context:annotation-config />
 
-  <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-    <property name="defaultLocale" value="en" />
-  </bean>
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="en" />
+    </bean>
 
-  <bean class="jp.co.ntt.fw.spring.functionaltest.app.intr.INTR0201003Controller" />
+    <bean class="jp.co.ntt.fw.spring.functionaltest.app.intr.INTR0201003Controller" />
 
 </beans>

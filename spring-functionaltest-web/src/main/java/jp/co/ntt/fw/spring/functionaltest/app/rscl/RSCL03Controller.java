@@ -41,8 +41,7 @@ public class RSCL03Controller {
     @RequestMapping(value = "0303/001", method = RequestMethod.GET)
     public String handle0303001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "Authenticationヘッダを設定して、REST APIを呼び出し、Javaオブジェクトを受信");
+        model.addAttribute("testDescription", "Authenticationヘッダを設定して、REST APIを呼び出し、Javaオブジェクトを受信");
         model.addAttribute("testId", "0303/001");
 
         return "rscl/setAuthenticationInf";
@@ -51,9 +50,8 @@ public class RSCL03Controller {
     @RequestMapping(value = "0303/001", method = RequestMethod.POST)
     public String handle0303001(Model model, AuthenticationForm form) {
 
-        UserResource rcvUser = this.restClientService
-                .exchangeWithAuthentication(form.getUsername(), form
-                        .getPassword());
+        UserResource rcvUser = this.restClientService.exchangeWithAuthentication(form.getUsername(),
+                form.getPassword());
 
         model.addAttribute("resultDescription", "Basic認証ユーザ情報");
         model.addAttribute("user", rcvUser);

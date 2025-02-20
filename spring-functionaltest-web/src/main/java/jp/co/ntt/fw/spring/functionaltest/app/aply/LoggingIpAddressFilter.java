@@ -28,13 +28,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class LoggingIpAddressFilter extends OncePerRequestFilter {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            LoggingIpAddressFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingIpAddressFilter.class);
 
     private static final String ATTRIBUTE_NAME = "X-Forwarded-For";
 
-    protected final void doFilterInternal(HttpServletRequest request,
-            HttpServletResponse response,
+    protected final void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
         String remoteIp = request.getHeader(ATTRIBUTE_NAME);
         if (remoteIp == null) {

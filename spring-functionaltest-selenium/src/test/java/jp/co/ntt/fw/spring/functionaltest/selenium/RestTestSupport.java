@@ -36,8 +36,7 @@ import io.restassured.RestAssured;
 
 public abstract class RestTestSupport extends FunctionTestSupport {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            RestTestSupport.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestTestSupport.class);
 
     @Inject
     private RestLog restLog;
@@ -60,13 +59,11 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     public final void setUpConfig() throws IOException {
 
         // Initialization of applicationContextUrl
-        RestAssured.baseURI = applicationContextUrl
-                + "/api/v1/DEFAULT_VIEW_INCLUSION-enable";
-        RestAssured.config = config().logConfig(logConfig()
-                .enablePrettyPrinting(false));
+        RestAssured.baseURI = applicationContextUrl + "/api/v1/DEFAULT_VIEW_INCLUSION-enable";
+        RestAssured.config = config().logConfig(logConfig().enablePrettyPrinting(false));
         writer = new StringWriter();
-        WriterOutputStream writerOutputStream = WriterOutputStream.builder()
-                .setWriter(writer).setCharset(StandardCharsets.UTF_8).get();
+        WriterOutputStream writerOutputStream = WriterOutputStream.builder().setWriter(writer)
+                .setCharset(StandardCharsets.UTF_8).get();
         captor = new PrintStream(writerOutputStream, true);
     }
 
@@ -98,19 +95,18 @@ public abstract class RestTestSupport extends FunctionTestSupport {
     }
 
     protected ApServerName getApServerName() {
-        return ApServerName.getByCode(given().when().get(
-                "/serverinfo/getServerInfo").then().extract().jsonPath()
-                .getString("apServerName").toUpperCase());
+        return ApServerName.getByCode(given().when().get("/serverinfo/getServerInfo").then()
+                .extract().jsonPath().getString("apServerName").toUpperCase());
     }
 
     protected String getApServerVersion() {
-        return given().when().get("/serverinfo/getServerInfo").then().extract()
-                .jsonPath().getString("apServerVersion");
+        return given().when().get("/serverinfo/getServerInfo").then().extract().jsonPath()
+                .getString("apServerVersion");
     }
 
     protected int getJavaVersion() {
-        return given().when().get("/serverinfo/getServerInfo").then().extract()
-                .jsonPath().getInt("javaVersion");
+        return given().when().get("/serverinfo/getServerInfo").then().extract().jsonPath()
+                .getInt("javaVersion");
     }
 
 }

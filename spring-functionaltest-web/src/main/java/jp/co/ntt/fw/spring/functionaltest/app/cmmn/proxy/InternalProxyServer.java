@@ -28,8 +28,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  */
 public class InternalProxyServer {
-    private static final Logger logger = LoggerFactory.getLogger(
-            InternalProxyServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(InternalProxyServer.class);
 
     private int port;
 
@@ -41,8 +40,7 @@ public class InternalProxyServer {
         this.port = port;
     }
 
-    public void setInternalProxyServlet(
-            InternalProxyServlet internalProxyServlet) {
+    public void setInternalProxyServlet(InternalProxyServlet internalProxyServlet) {
         this.internalProxyServlet = internalProxyServlet;
     }
 

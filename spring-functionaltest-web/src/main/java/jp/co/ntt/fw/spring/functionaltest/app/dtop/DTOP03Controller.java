@@ -88,58 +88,48 @@ public class DTOP03Controller {
     }
 
     @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcDayDate")
-    public String handleCalculateDayDate(Model model,
-            DateManipulationForm form) {
+    public String handleCalculateDayDate(Model model, DateManipulationForm form) {
         model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfDay(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
+                .calcIncreaseNumOfDay(form.getTargetIncDecDate(), form.getTargetIncreaseNum()));
         model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfDay(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+                .calcDecreaseNumOfDay(form.getTargetIncDecDate(), form.getTargetDecreaseNum()));
         return "dtop/showIncDecDate";
     }
 
     @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcMonthDate")
-    public String handleCalculateMonthDate(Model model,
-            DateManipulationForm form) {
+    public String handleCalculateMonthDate(Model model, DateManipulationForm form) {
         model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfMonth(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
+                .calcIncreaseNumOfMonth(form.getTargetIncDecDate(), form.getTargetIncreaseNum()));
         model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfMonth(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+                .calcDecreaseNumOfMonth(form.getTargetIncDecDate(), form.getTargetDecreaseNum()));
         return "dtop/showIncDecDate";
     }
 
     @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcYearDate")
-    public String handleCalculateYearDate(Model model,
-            DateManipulationForm form) {
+    public String handleCalculateYearDate(Model model, DateManipulationForm form) {
         model.addAttribute("resultStartDate", dateOperationService
-                .calcIncreaseNumOfYear(form.getTargetIncDecDate(), form
-                        .getTargetIncreaseNum()));
+                .calcIncreaseNumOfYear(form.getTargetIncDecDate(), form.getTargetIncreaseNum()));
         model.addAttribute("resultEndDate", dateOperationService
-                .calcDecreaseNumOfYear(form.getTargetIncDecDate(), form
-                        .getTargetDecreaseNum()));
+                .calcDecreaseNumOfYear(form.getTargetIncDecDate(), form.getTargetDecreaseNum()));
         return "dtop/showIncDecDate";
     }
 
-    @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcMonthStartEndDate")
-    public String handleCalcMonthStartEndDate(Model model,
-            DateManipulationForm form) {
-        model.addAttribute("resultStartDate", form.getTargetStartEndDate()
-                .dayOfMonth().withMinimumValue());
-        model.addAttribute("resultEndDate", form.getTargetStartEndDate()
-                .dayOfMonth().withMaximumValue());
+    @RequestMapping(value = "calcdate", method = RequestMethod.GET,
+            params = "calcMonthStartEndDate")
+    public String handleCalcMonthStartEndDate(Model model, DateManipulationForm form) {
+        model.addAttribute("resultStartDate",
+                form.getTargetStartEndDate().dayOfMonth().withMinimumValue());
+        model.addAttribute("resultEndDate",
+                form.getTargetStartEndDate().dayOfMonth().withMaximumValue());
         return "dtop/showStartEndDate";
     }
 
     @RequestMapping(value = "calcdate", method = RequestMethod.GET, params = "calcWeekStartEndDate")
-    public String handleCalcWeekStartEndDate(Model model,
-            DateManipulationForm form) {
-        model.addAttribute("resultStartDate", form.getTargetStartEndDate()
-                .dayOfWeek().withMinimumValue());
-        model.addAttribute("resultEndDate", form.getTargetStartEndDate()
-                .dayOfWeek().withMaximumValue());
+    public String handleCalcWeekStartEndDate(Model model, DateManipulationForm form) {
+        model.addAttribute("resultStartDate",
+                form.getTargetStartEndDate().dayOfWeek().withMinimumValue());
+        model.addAttribute("resultEndDate",
+                form.getTargetStartEndDate().dayOfWeek().withMaximumValue());
         return "dtop/showStartEndDate";
     }
 }

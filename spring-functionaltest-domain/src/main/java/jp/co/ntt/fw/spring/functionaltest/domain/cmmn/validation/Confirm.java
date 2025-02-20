@@ -31,8 +31,8 @@ import javax.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.Confirm.List;
 
 @Documented
-@Constraint(validatedBy = { ConfirmValidator.class })
-@Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+@Constraint(validatedBy = {ConfirmValidator.class})
+@Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 public @interface Confirm {
@@ -46,7 +46,7 @@ public @interface Confirm {
 
     String confirmField();
 
-    @Target({ TYPE, ANNOTATION_TYPE, TYPE_USE })
+    @Target({TYPE, ANNOTATION_TYPE, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

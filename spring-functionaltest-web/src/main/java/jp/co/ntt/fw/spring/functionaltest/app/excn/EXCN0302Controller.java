@@ -65,8 +65,7 @@ public class EXCN0302Controller {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
-        stock = stockOptimisticLockService.buy(stock, form
-                .getPurchasingQuantity());
+        stock = stockOptimisticLockService.buy(stock, form.getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -79,11 +78,10 @@ public class EXCN0302Controller {
         Stock stock = beanMapper.map(form, Stock.class);
 
         try {
-            stock = stockOptimisticLockService.buyByHiddenVersion(stock, form
-                    .getPurchasingQuantity());
+            stock = stockOptimisticLockService.buyByHiddenVersion(stock,
+                    form.getPurchasingQuantity());
         } catch (OptimisticLockingFailureException e) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivebyrequest"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivebyrequest"));
             return "common/error/exclusiveLockError";
         }
 
@@ -98,8 +96,7 @@ public class EXCN0302Controller {
 
         ExtendedModelMap modelMap = new ExtendedModelMap();
 
-        modelMap.addAttribute(ResultMessages.warning().add(
-                "excn.result.exclusivebycontroller"));
+        modelMap.addAttribute(ResultMessages.warning().add("excn.result.exclusivebycontroller"));
         return new ModelAndView("common/error/exclusiveLockError", modelMap);
     }
 

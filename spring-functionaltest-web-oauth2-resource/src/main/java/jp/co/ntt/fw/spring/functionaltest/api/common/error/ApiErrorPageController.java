@@ -17,10 +17,8 @@ package jp.co.ntt.fw.spring.functionaltest.api.common.error;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,12 +41,12 @@ public class ApiErrorPageController {
 
     @RequestMapping
     public ResponseEntity<ApiError> handleErrorPage(WebRequest request) {
-        HttpStatus httpStatus = HttpStatus.valueOf((Integer) request
-                .getAttribute(RequestDispatcher.ERROR_STATUS_CODE,
+        HttpStatus httpStatus = HttpStatus
+                .valueOf((Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE,
                         RequestAttributes.SCOPE_REQUEST));
         String errorCode = errorCodeMap.get(httpStatus);
-        ApiError apiError = apiErrorCreator.createApiError(request, errorCode,
-                httpStatus.getReasonPhrase());
+        ApiError apiError =
+                apiErrorCreator.createApiError(request, errorCode, httpStatus.getReasonPhrase());
         return ResponseEntity.status(httpStatus).body(apiError);
     }
 

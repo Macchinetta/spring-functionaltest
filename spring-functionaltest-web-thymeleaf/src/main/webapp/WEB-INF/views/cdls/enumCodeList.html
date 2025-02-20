@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">EnumCodeListの読み込み</h1>
 
-      <h1 id="screenTitle">EnumCodeListの読み込み</h1>
-
-      <div>CDLS0104001</div>
-      <div>
-        <select id="cdls0104001" th:field="${codeListForm.code}">
-          <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}"
-            th:text="${order.value}"></option>
-        </select>
-      </div>
-      <div>CDLS0104002</div>
-      <div>
-        <form th:action="@{/cdls/0104/002}" th:object="${clEnumOrderStatusForm}" method="post">
-          <select id="cdls0104002" th:field="*{id}">
-            <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}"
-              th:text="${order.value}"></option>
-          </select> <span th:errors="*{id}"></span>
-          <button id="cdls0104002Submit" type="submit" name="post">Submit</button>
-        </form>
-        <div id="cdls0104002Result" th:text="${enumOrderStatusCodeListValue}"></div>
-      </div>
-    </div>
-  </div>
-</body>
+                <div>CDLS0104001</div>
+                <div>
+                    <select id="cdls0104001" th:field="${codeListForm.code}">
+                        <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}" th:text="${order.value}"></option>
+                    </select>
+                </div>
+                <div>CDLS0104002</div>
+                <div>
+                    <form th:action="@{/cdls/0104/002}" th:object="${clEnumOrderStatusForm}" method="post">
+                        <select id="cdls0104002" th:field="*{id}">
+                            <option th:each="order : ${CL_ENUM_ORDERSTATUS}" th:value="${order.key}" th:text="${order.value}"></option>
+                        </select>
+                        <span th:errors="*{id}"></span>
+                        <button id="cdls0104002Submit" type="submit" name="post">Submit</button>
+                    </form>
+                    <div id="cdls0104002Result" th:text="${enumOrderStatusCodeListValue}"></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

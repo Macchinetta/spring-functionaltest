@@ -45,8 +45,7 @@ public class PersonalComputerWithErrorResults implements Serializable {
         this.errorResults = errorResults;
     }
 
-    public PersonalComputerWithErrorResults addErrorResults(String code,
-            String message) {
+    public PersonalComputerWithErrorResults addErrorResults(String code, String message) {
         ErrorResult errorResult = new ErrorResult();
         errorResult.setCode(code);
         errorResult.setMessage(message);
@@ -54,8 +53,8 @@ public class PersonalComputerWithErrorResults implements Serializable {
         return this;
     }
 
-    public PersonalComputerWithErrorResults addErrorResults(String code,
-            String message, String itemPath) {
+    public PersonalComputerWithErrorResults addErrorResults(String code, String message,
+            String itemPath) {
         ErrorResult errorResult = new ErrorResult();
         errorResult.setCode(code);
         errorResult.setMessage(message);

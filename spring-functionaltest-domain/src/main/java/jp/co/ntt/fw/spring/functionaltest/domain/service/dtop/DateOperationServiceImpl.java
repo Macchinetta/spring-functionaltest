@@ -57,49 +57,43 @@ public class DateOperationServiceImpl implements DateOperationService {
     }
 
     @Override
-    public LocalDate calcIncreaseNumOfMonth(LocalDate dateTime,
-            int increaseNum) {
+    public LocalDate calcIncreaseNumOfMonth(LocalDate dateTime, int increaseNum) {
         return dateTime.plusMonths(increaseNum);
     }
 
     @Override
-    public LocalDate calcDecreaseNumOfMonth(LocalDate dateTime,
-            int decreaseNum) {
+    public LocalDate calcDecreaseNumOfMonth(LocalDate dateTime, int decreaseNum) {
         return dateTime.minusMonths(decreaseNum);
     }
 
     @Override
-    public LocalDate calcIncreaseNumOfYear(LocalDate dateTime,
-            int increaseNum) {
+    public LocalDate calcIncreaseNumOfYear(LocalDate dateTime, int increaseNum) {
         return dateTime.plusYears(increaseNum);
     }
 
     @Override
-    public LocalDate calcDecreaseNumOfYear(LocalDate dateTime,
-            int decreaseNum) {
+    public LocalDate calcDecreaseNumOfYear(LocalDate dateTime, int decreaseNum) {
         return dateTime.minusYears(decreaseNum);
     }
 
     @Override
-    public boolean checkContainTermToDate(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckDate) {
+    public boolean checkContainTermToDate(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckDate) {
         Interval interval1 = new Interval(targetTermFrom, targetTermTo);
         return interval1.contains(targetCheckDate);
     }
 
     @Override
-    public boolean checkContainTermToTerm(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckTermFrom,
-            DateTime targetCheckTermTo) {
+    public boolean checkContainTermToTerm(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckTermFrom, DateTime targetCheckTermTo) {
         Interval interval1 = new Interval(targetTermFrom, targetTermTo);
         Interval interval2 = new Interval(targetCheckTermFrom, targetCheckTermTo);
         return interval1.contains(interval2);
     }
 
     @Override
-    public boolean checkAbutsTerm(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckTermFrom,
-            DateTime targetCheckTermTo) {
+    public boolean checkAbutsTerm(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckTermFrom, DateTime targetCheckTermTo) {
         Interval interval1 = new Interval(targetTermFrom, targetTermTo);
         Interval interval2 = new Interval(targetCheckTermFrom, targetCheckTermTo);
         return interval1.abuts(interval2);
@@ -114,23 +108,20 @@ public class DateOperationServiceImpl implements DateOperationService {
     }
 
     @Override
-    public Interval getOverlapTerm(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckTermFrom,
-            DateTime targetCheckTermTo) {
+    public Interval getOverlapTerm(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckTermFrom, DateTime targetCheckTermTo) {
         Interval interval1 = new Interval(targetTermFrom, targetTermTo);
         Interval interval2 = new Interval(targetCheckTermFrom, targetCheckTermTo);
         return interval1.overlap(interval2);
     }
 
     @Override
-    public DateTime calcIncreaseNumOfDateUsingPeriod(DateTime dateTime,
-            Period increasePeriod) {
+    public DateTime calcIncreaseNumOfDateUsingPeriod(DateTime dateTime, Period increasePeriod) {
         return dateTime.plus(increasePeriod);
     }
 
     @Override
-    public DateTime calcDecreaseNumOfDateUsingPeriod(DateTime dateTime,
-            Period decreasePeriod) {
+    public DateTime calcDecreaseNumOfDateUsingPeriod(DateTime dateTime, Period decreasePeriod) {
         return dateTime.minus(decreasePeriod);
     }
 

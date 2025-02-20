@@ -28,8 +28,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(propagation = Propagation.MANDATORY)
 @Service
-public class DeliveryOrderMandatoryJTA12SharedServiceImpl implements
-                                                          DeliveryOrderMandatoryJTA12SharedService {
+public class DeliveryOrderMandatoryJTA12SharedServiceImpl
+        implements DeliveryOrderMandatoryJTA12SharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

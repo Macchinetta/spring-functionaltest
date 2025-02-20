@@ -30,14 +30,12 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.Account;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.athn.AccountRepository;
 
 @Service
-public class authEventHandleAccountUserDetailsService implements
-                                                      UserDetailsService {
+public class authEventHandleAccountUserDetailsService implements UserDetailsService {
     @Autowired
     AccountRepository accountRepository;
 
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(
-            String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         if ("connectionerror".equals(username)) {
             // 強制的にシステムエラーを発生させる
@@ -55,17 +53,17 @@ public class authEventHandleAccountUserDetailsService implements
         }
 
         switch (username) {
-        case "Edword":
-            account.setAccountNonExpired(false);
-            break;
-        case "Jenkins":
-            account.setCredentialsNonExpired(false);
-            break;
-        case "Rock":
-            account.setAccountNonLocked(false);
-            break;
-        default:
-            break;
+            case "Edword":
+                account.setAccountNonExpired(false);
+                break;
+            case "Jenkins":
+                account.setCredentialsNonExpired(false);
+                break;
+            case "Rock":
+                account.setAccountNonLocked(false);
+                break;
+            default:
+                break;
         }
 
         return new AccountUserDetails(account, getAuthorities(account));
@@ -73,8 +71,7 @@ public class authEventHandleAccountUserDetailsService implements
 
     private Collection<GrantedAuthority> getAuthorities(Account account) {
         if (account.isAdmin()) {
-            return AuthorityUtils.createAuthorityList("ROLE_USER",
-                    "ROLE_ADMIN");
+            return AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
         } else {
             return AuthorityUtils.createAuthorityList("ROLE_USER");
         }

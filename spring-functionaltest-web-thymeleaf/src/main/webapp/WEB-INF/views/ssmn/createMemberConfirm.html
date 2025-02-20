@@ -1,82 +1,76 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-
-      <h1 id="screenTitle">会員情報登録</h1>
-      <br>
-      <form class="form-horizontal" method="post" th:object="${memberForm}" th:action>
-
-        <legend>個人情報登録確認</legend>
-        登録内容は以下の内容でよろしいでしょうか。
-        <table class="table table-striped table-bordered table-condensed">
-          <tr>
-            <th>登録項目</th>
-            <th>登録内容</th>
-          </tr>
-          <tr>
-            <th>氏名（姓）</th>
-            <td><span id="firstName" th:text="*{firstName}"></span></td>
-          </tr>
-          <tr>
-            <th>氏名（名）</th>
-            <td><span id="lastName" th:text="*{lastName}"></span></td>
-          </tr>
-          <tr>
-            <th>氏名カナ（姓）</th>
-            <td><span id="firstNameKana" th:text="*{firstNameKana}"></span></td>
-          </tr>
-          <tr>
-            <th>氏名カナ（名）</th>
-            <td><span id="lastNameKana" th:text="*{lastNameKana}"></span></td>
-          </tr>
-          <tr>
-            <th>年齢</th>
-            <td><span id="age" th:text="*{age}"></span></td>
-          </tr>
-          <tr>
-            <th>性別</th>
-            <td><span id="gender"
-              th:text="${memberForm.gender} != null ? ${CL_GENDER.get(memberForm.gender)}"></span></td>
-          </tr>
-          <tr>
-            <th>郵便番号</th>
-            <td><span id="zipCode" th:text="*{zipCode}"></span></td>
-          </tr>
-          <tr>
-            <th>都道府県</th>
-            <td><span id="state" th:text="*{state}"></span></td>
-          </tr>
-          <tr>
-            <th>市区町村</th>
-            <td><span id="city" th:text="*{city}"></span></td>
-          </tr>
-          <tr>
-            <th>番地建物</th>
-            <td><span id="address" th:text="*{address}"></span></td>
-          </tr>
-          <tr>
-            <th>職業</th>
-            <td><span id="occupation" th:text="*{occupation}"></span></td>
-          </tr>
-          <tr>
-            <th>メールアドレス</th>
-            <td><span id="mailAddress" th:text="*{mailAddress}"></span></td>
-          </tr>
-        </table>
-        <div class="form-group">
-          <button id="redo" name="redo" class="btn btn-default" type="submit" value="Submit">戻る</button>
-          <button class="btn btn-default" type="submit" value="Submit">登録</button>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">会員情報登録</h1>
+                <br />
+                <form class="form-horizontal" method="post" th:object="${memberForm}" th:action>
+                    <legend>個人情報登録確認</legend>
+                    登録内容は以下の内容でよろしいでしょうか。
+                    <table class="table table-striped table-bordered table-condensed">
+                        <tr>
+                            <th>登録項目</th>
+                            <th>登録内容</th>
+                        </tr>
+                        <tr>
+                            <th>氏名（姓）</th>
+                            <td><span id="firstName" th:text="*{firstName}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>氏名（名）</th>
+                            <td><span id="lastName" th:text="*{lastName}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>氏名カナ（姓）</th>
+                            <td><span id="firstNameKana" th:text="*{firstNameKana}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>氏名カナ（名）</th>
+                            <td><span id="lastNameKana" th:text="*{lastNameKana}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>年齢</th>
+                            <td><span id="age" th:text="*{age}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>性別</th>
+                            <td><span id="gender" th:text="${memberForm.gender} != null ? ${CL_GENDER.get(memberForm.gender)}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>郵便番号</th>
+                            <td><span id="zipCode" th:text="*{zipCode}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>都道府県</th>
+                            <td><span id="state" th:text="*{state}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>市区町村</th>
+                            <td><span id="city" th:text="*{city}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>番地建物</th>
+                            <td><span id="address" th:text="*{address}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>職業</th>
+                            <td><span id="occupation" th:text="*{occupation}"></span></td>
+                        </tr>
+                        <tr>
+                            <th>メールアドレス</th>
+                            <td><span id="mailAddress" th:text="*{mailAddress}"></span></td>
+                        </tr>
+                    </table>
+                    <div class="form-group">
+                        <button id="redo" name="redo" class="btn btn-default" type="submit" value="Submit">戻る</button>
+                        <button class="btn btn-default" type="submit" value="Submit">登録</button>
+                    </div>
+                </form>
+                <!-- セッション内Form確認 -->
+                <div id="checkFormInSession" style="visibility: hidden" th:text="${#session.getAttribute('memberForm')} != null ? ${#session.getAttribute('memberForm').getClass().getName()}"></div>
+            </div>
         </div>
-      </form>
-      <!-- セッション内Form確認 -->
-      <div id="checkFormInSession" style="visibility: hidden"
-        th:text="${#session.getAttribute('memberForm')} != null ? ${#session.getAttribute('memberForm').getClass().getName()}"></div>
-    </div>
-  </div>
-</body>
+    </body>
 </html>

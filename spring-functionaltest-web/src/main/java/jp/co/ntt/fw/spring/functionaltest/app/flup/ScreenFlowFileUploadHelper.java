@@ -41,8 +41,7 @@ public class ScreenFlowFileUploadHelper {
 
         MultipartFile multipartFile = form.getMultipartFile();
 
-        File temporaryFile = temporaryFilesHelper.saveTemporaryFile(
-                multipartFile);
+        File temporaryFile = temporaryFilesHelper.saveTemporaryFile(multipartFile);
 
         form.setFileName(multipartFile.getOriginalFilename());
         form.setContentType(multipartFile.getContentType());
@@ -55,14 +54,13 @@ public class ScreenFlowFileUploadHelper {
 
         UploadFile newUploadFile = toUploadFile(form);
 
-        UploadFile savedUploadFile = fileUploadService.saveFileToDisc(
-                temporaryFileId, newUploadFile);
+        UploadFile savedUploadFile =
+                fileUploadService.saveFileToDisc(temporaryFileId, newUploadFile);
 
         UploadedContent uploadedFile = toUploadedContent(savedUploadFile);
         redirectAttributes.addFlashAttribute(uploadedFile);
 
-        redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.sf.flup.0002"));
+        redirectAttributes.addFlashAttribute(ResultMessages.success().add("i.sf.fu.0002"));
     }
 
     public void uploadToDb(ScreenFlowUploadForm form, String temporaryFileId,
@@ -70,14 +68,12 @@ public class ScreenFlowFileUploadHelper {
 
         UploadFile newUploadFile = toUploadFile(form);
 
-        UploadFile savedUploadFile = fileUploadService.saveFileToDb(
-                temporaryFileId, newUploadFile);
+        UploadFile savedUploadFile = fileUploadService.saveFileToDb(temporaryFileId, newUploadFile);
 
         UploadedContent uploadedFile = toUploadedContent(savedUploadFile);
         redirectAttributes.addFlashAttribute(uploadedFile);
 
-        redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.sf.flup.0002"));
+        redirectAttributes.addFlashAttribute(ResultMessages.success().add("i.sf.fu.0002"));
 
     }
 

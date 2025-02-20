@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-  <div th:fragment="footer">
-    <hr>
-    <p align="right">
-      JVM version : <span id="jvmVersion" th:text="${@environment.getProperty('java.version')}">1.8</span>
-    </p>
-    <p align="right">
-      AP Server : <span id="apServerName" th:text="${serverInfo}">tomcat</span>
-    </p>
-    <p align="right">
-      Template Engine : <span id="templateEngineName">Thymeleaf</span>
-    </p>
-    <p id="copyright">
-      Copyright &copy; 20XX CompanyName (X-Track:<span id="xTrack"
-        th:text="${#request.getAttribute('X-Track')}">12345678</span>)
-    </p>
-  </div>
-</body>
+    <head> </head>
+    <body>
+        <div th:fragment="footer">
+            <hr />
+            <p align="right">JVM version : <span id="jvmVersion" th:text="${@environment.getProperty('java.version')}">1.8</span></p>
+            <p align="right">AP Server : <span id="apServerName" th:text="${serverInfo}">tomcat</span></p>
+            <p align="right">Template Engine : <span id="templateEngineName">Thymeleaf</span></p>
+            <p id="copyright">Copyright &copy; 20XX CompanyName (X-Track:<span id="xTrack" th:text="${#request.getAttribute('X-Track')}">12345678</span>)</p>
+        </div>
+    </body>
 </html>

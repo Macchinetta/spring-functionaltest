@@ -27,8 +27,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(value = Transactional.TxType.NEVER)
 @Service
-public class DeliveryOrderNeverJTA12SharedServiceImpl implements
-                                                      DeliveryOrderNeverJTA12SharedService {
+public class DeliveryOrderNeverJTA12SharedServiceImpl
+        implements DeliveryOrderNeverJTA12SharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

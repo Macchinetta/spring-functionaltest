@@ -30,8 +30,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPADeliveryOrde
 
 @Service
 @Transactional(value = "jpaTransactionManager")
-public class JPADeliveryOrderInitializerServiceImpl implements
-                                                    JPADeliveryOrderInitializerService {
+public class JPADeliveryOrderInitializerServiceImpl implements JPADeliveryOrderInitializerService {
 
     @Inject
     JPADeliveryOrderRepository jpaDeliveryOrderRepository;

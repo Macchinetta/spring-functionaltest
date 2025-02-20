@@ -26,8 +26,8 @@ public class THLY03Controller {
 
     @RequestMapping(value = "0301/001")
     public String handle0301001(Model model) {
-        model.addAttribute(ResultMessages.error().add("e.ex.thly.9001"));
-        model.addAttribute("exceptionCode", "e.xx.fw.8001");
+        model.addAttribute(ResultMessages.error().add("e.sf.tl.9001"));
+        model.addAttribute("exceptionCode", "e.sf.fw.8001");
         return "thly/common/error/businessError";
     }
 

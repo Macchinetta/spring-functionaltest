@@ -53,7 +53,7 @@ public class THYM0802Controller {
         model.addAttribute("booleanAttr", true);
 
         // Arrays
-        model.addAttribute("arrayAttr", new String[] { "abc", "def", "ghi" });
+        model.addAttribute("arrayAttr", new String[] {"abc", "def", "ghi"});
 
         // Collections
         Set<String> set = new LinkedHashSet<>();

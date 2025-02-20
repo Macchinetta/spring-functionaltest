@@ -77,8 +77,8 @@ public class ItemImage implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemImage [itemId=" + itemId + ", image=" + image
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "ItemImage [itemId=" + itemId + ", image=" + image + ", super.hashCode()="
+                + super.hashCode() + "]";
     }
 
 }

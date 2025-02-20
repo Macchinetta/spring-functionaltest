@@ -34,8 +34,7 @@ public class SPSM03Controller {
 
     @RequestMapping(value = "0301/001", params = "afterLogin", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Void> handleDeleteSession(
-            SessionStatus sessionStatus) {
+    public ResponseEntity<Void> handleDeleteSession(SessionStatus sessionStatus) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

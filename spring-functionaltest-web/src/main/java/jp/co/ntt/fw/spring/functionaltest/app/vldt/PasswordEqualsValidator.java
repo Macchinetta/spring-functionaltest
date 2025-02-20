@@ -42,7 +42,7 @@ public class PasswordEqualsValidator implements Validator {
         }
 
         if (!Objects.equals(password, confirmPassword)) {
-            errors.rejectValue("confirmPassword", "i.sf.vldt.5001",
+            errors.rejectValue("confirmPassword", "i.sf.vd.5001",
                     "password and confirm password must be same.");
         }
     }

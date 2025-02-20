@@ -1,24 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">コードリストの独自カスタマイズ</h1>
 
-      <h1 id="screenTitle">コードリストの独自カスタマイズ</h1>
-
-      <div>CDLS0301001</div>
-      <div>
-        <select id="cdls0301001" th:field="${codeListForm.code}">
-          <option th:each="recentYear : ${CL_YEAR_CODELIST}" th:value="${recentYear.key}"
-            th:text="${recentYear.value}"></option>
-        </select>
-      </div>
-      <div>System Year</div>
-      <div id="systemYear" th:text="${systemYear}"></div>
-    </div>
-  </div>
-</body>
+                <div>CDLS0301001</div>
+                <div>
+                    <select id="cdls0301001" th:field="${codeListForm.code}">
+                        <option th:each="recentYear : ${CL_YEAR_CODELIST}" th:value="${recentYear.key}" th:text="${recentYear.value}"></option>
+                    </select>
+                </div>
+                <div>System Year</div>
+                <div id="systemYear" th:text="${systemYear}"></div>
+            </div>
+        </div>
+    </body>
 </html>

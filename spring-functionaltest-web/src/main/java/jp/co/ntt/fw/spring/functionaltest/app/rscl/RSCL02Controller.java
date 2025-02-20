@@ -48,8 +48,7 @@ public class RSCL02Controller {
     @RequestMapping(value = "0201/001", method = RequestMethod.GET)
     public String handle0201001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "ByteArrayHttpMessageConverterが適用されたことを確認");
+        model.addAttribute("testDescription", "ByteArrayHttpMessageConverterが適用されたことを確認");
         model.addAttribute("testId", "0201/001");
 
         return "rscl/sendConvertMessage";
@@ -58,11 +57,10 @@ public class RSCL02Controller {
     @RequestMapping(value = "0201/001", method = RequestMethod.POST)
     public String handle0201001(Model model, ConvertMessageForm form) {
 
-        List<String> fileData = this.restClientService
-                .exchangeWithByteArrayHttpMessageConverter(form.getMessage());
+        List<String> fileData =
+                this.restClientService.exchangeWithByteArrayHttpMessageConverter(form.getMessage());
 
-        model.addAttribute("resultDescription",
-                "クライアントが受信したbyte配列をファイルに変換し、内容を確認");
+        model.addAttribute("resultDescription", "クライアントが受信したbyte配列をファイルに変換し、内容を確認");
         model.addAttribute("strList", fileData);
 
         return "rscl/resultStrList";
@@ -71,8 +69,7 @@ public class RSCL02Controller {
     @RequestMapping(value = "0202/001", method = RequestMethod.GET)
     public String handle0202001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "StringHttpMessageConverterが適用されたことを確認");
+        model.addAttribute("testDescription", "StringHttpMessageConverterが適用されたことを確認");
         model.addAttribute("testId", "0202/001");
 
         return "rscl/sendConvertMessage";
@@ -81,11 +78,10 @@ public class RSCL02Controller {
     @RequestMapping(value = "0202/001", method = RequestMethod.POST)
     public String handle0202001After(Model model, ConvertMessageForm form) {
 
-        String res = this.restClientService
-                .exchangeWithStringHttpMessageConverter(form.getMessage());
+        String res =
+                this.restClientService.exchangeWithStringHttpMessageConverter(form.getMessage());
 
-        model.addAttribute("resultDescription",
-                "レスポンスデータ(Content-Type, ステータス)確認。受信文字列確認。");
+        model.addAttribute("resultDescription", "レスポンスデータ(Content-Type, ステータス)確認。受信文字列確認。");
         model.addAttribute("rcvString", res);
 
         return "rscl/resultString";
@@ -94,8 +90,7 @@ public class RSCL02Controller {
     @RequestMapping(value = "0203/001", method = RequestMethod.GET)
     public String handle0203001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "ResourceHttpMessageConverterが適用されたことを確認");
+        model.addAttribute("testDescription", "ResourceHttpMessageConverterが適用されたことを確認");
         model.addAttribute("testId", "0203/001");
 
         return "rscl/sendConvertMessage";
@@ -104,11 +99,10 @@ public class RSCL02Controller {
     @RequestMapping(value = "0203/001", method = RequestMethod.POST)
     public String handle0203001(Model model, ConvertMessageForm form) {
 
-        List<String> retData = this.restClientService
-                .exchangeWithResourceHttpMessageConverter(form.getMessage());
+        List<String> retData =
+                this.restClientService.exchangeWithResourceHttpMessageConverter(form.getMessage());
 
-        model.addAttribute("resultDescription",
-                "レスポンスデータ(ステータス)確認。受信ファイルの内容文字列確認。");
+        model.addAttribute("resultDescription", "レスポンスデータ(ステータス)確認。受信ファイルの内容文字列確認。");
         model.addAttribute("strList", retData);
 
         return "rscl/resultStrList";
@@ -117,8 +111,7 @@ public class RSCL02Controller {
     @RequestMapping(value = "0204/001", method = RequestMethod.GET)
     public String handle0204001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "SourceHttpMessageConverterが適用されたことを確認");
+        model.addAttribute("testDescription", "SourceHttpMessageConverterが適用されたことを確認");
         model.addAttribute("testId", "0204/001");
 
         return "rscl/sendConvertUserInf";
@@ -131,8 +124,8 @@ public class RSCL02Controller {
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService
-                .exchangeWithSourceHttpMessageConverter(sendUser);
+        UserResource rcvUser =
+                this.restClientService.exchangeWithSourceHttpMessageConverter(sendUser);
 
         model.addAttribute("resultDescription",
                 "レスポンスデータ(Content-Type, ステータス)確認。受信したSourceのXMLの内容確認");
@@ -145,7 +138,7 @@ public class RSCL02Controller {
     public String handle0205001First(Model model) {
 
         model.addAttribute("testDescription",
-                "MultiValueMap<String, String>を送受信することで、AllEncompassingFormHttpMessageConverterが適用されたことを確認");
+                "MultiValueMap<String, String>をapplication/x-www-form-urlencodedとして送受信することで、AllEncompassingFormHttpMessageConverterが適用されたことを確認");
         model.addAttribute("testId", "0205/001");
 
         return "rscl/sendConvertUserInf";
@@ -159,10 +152,37 @@ public class RSCL02Controller {
         sendUser.setAge(form.getAge());
 
         UserResource rcvUser = this.restClientService
-                .exchangeWithAllEncompassingFormHttpMessageConverter(sendUser);
+                .exchangeApplicationWithAllEncompassingFormHttpMessageConverter(sendUser);
 
         model.addAttribute("resultDescription",
-                "レスポンスデータ(Content-Type, ステータス)確認。受信したMultiValueMap<String, String>の内容確認");
+                "レスポンスデータ(Content-Type, ステータス)確認。受信したMultiValueMap<String, String>(application/x-www-form-urlencoded)の内容確認");
+        model.addAttribute("user", rcvUser);
+
+        return "rscl/resultUserInf";
+    }
+
+    @RequestMapping(value = "0206/001", method = RequestMethod.GET)
+    public String handle0206001First(Model model) {
+
+        model.addAttribute("testDescription",
+                "MultiValueMap<String, Object>をmultipart/form-dataとして送受信することで、AllEncompassingFormHttpMessageConverterが適用されたことを確認");
+        model.addAttribute("testId", "0206/001");
+
+        return "rscl/sendConvertUserInf";
+    }
+
+    @RequestMapping(value = "0206/001", method = RequestMethod.POST)
+    public String handle0206001(Model model, UserInfForm form) {
+
+        UserResource sendUser = new UserResource();
+        sendUser.setName(form.getName());
+        sendUser.setAge(form.getAge());
+
+        UserResource rcvUser = this.restClientService
+                .exchangeMultipartWithAllEncompassingFormHttpMessageConverter(sendUser);
+
+        model.addAttribute("resultDescription",
+                "レスポンスデータ(Content-Type, ステータス)確認。受信したMultiValueMap<String, Object>(multipart/form-data)の内容確認");
         model.addAttribute("user", rcvUser);
 
         return "rscl/resultUserInf";
@@ -185,8 +205,8 @@ public class RSCL02Controller {
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService
-                .exchangeWithMappingJackson2HttpMessageConverter(sendUser);
+        UserResource rcvUser =
+                this.restClientService.exchangeWithMappingJackson2HttpMessageConverter(sendUser);
 
         model.addAttribute("resultDescription",
                 "レスポンスデータ(Content-Type, ステータス)確認。取得したJavabeanの内容確認");
@@ -212,8 +232,8 @@ public class RSCL02Controller {
         sendUser.setName(form.getName());
         sendUser.setAge(form.getAge());
 
-        UserResource rcvUser = this.restClientService
-                .exchangeWithJaxb2RootElementHttpMessageConverter(sendUser);
+        UserResource rcvUser =
+                this.restClientService.exchangeWithJaxb2RootElementHttpMessageConverter(sendUser);
 
         model.addAttribute("resultDescription",
                 "レスポンスデータ(Content-Type, ステータス)確認。取得したJavabeanの内容確認");

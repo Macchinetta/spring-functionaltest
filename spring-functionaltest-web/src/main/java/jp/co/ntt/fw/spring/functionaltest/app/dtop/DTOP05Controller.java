@@ -59,22 +59,19 @@ public class DTOP05Controller {
 
     @RequestMapping(value = "jsptag/jspTagLocalDateTime", method = RequestMethod.GET)
     public String handleGetNowLocalDateTime(Model model) {
-        model.addAttribute("resultDate", dateOperationService.getNowDateTime()
-                .toLocalDateTime());
+        model.addAttribute("resultDate", dateOperationService.getNowDateTime().toLocalDateTime());
         return "dtop/showLocalDateTime";
     }
 
     @RequestMapping(value = "jsptag/jspTagLocalDate", method = RequestMethod.GET)
     public String handleGetNowLocalDate(Model model) {
-        model.addAttribute("resultDate", dateOperationService.getNowDateTime()
-                .toLocalDate());
+        model.addAttribute("resultDate", dateOperationService.getNowDateTime().toLocalDate());
         return "dtop/showLocalDate";
     }
 
     @RequestMapping(value = "jsptag/jspTagLocalTime", method = RequestMethod.GET)
     public String handleGetNowLocalTime(Model model) {
-        model.addAttribute("resultDate", dateOperationService.getNowDateTime()
-                .toLocalTime());
+        model.addAttribute("resultDate", dateOperationService.getNowDateTime().toLocalTime());
         return "dtop/showLocalTime";
     }
 }

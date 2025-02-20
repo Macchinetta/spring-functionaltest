@@ -1,11 +1,8 @@
 ﻿<div id="wrapper">
-
     <h1 id="screenTitle">[入力]指定した正規化形式で正規化する</h1>
-    <br>
+    <br />
     <t:messagesPanel />
-    <form:form action="${pageContext.request.contextPath}/stpr/normalizer"
-        cssClass="form-horizontal" method="post"
-        modelAttribute="stringProcessing04Form">
+    <form:form action="${pageContext.request.contextPath}/stpr/normalizer" cssClass="form-horizontal" method="post" modelAttribute="stringProcessing04Form">
         <div class="form-group">
             <form:label path="targetValue" class="col col-md-2 control-label">対象文字列</form:label>
             <div class="col col-md-3">
@@ -13,11 +10,9 @@
             </div>
         </div>
         <div class="form-group">
-            <form:label path="normalizationForm"
-                class="col col-md-2 control-label">正規化形式</form:label>
+            <form:label path="normalizationForm" class="col col-md-2 control-label">正規化形式</form:label>
             <div class="col col-md-3">
-                <form:select path="normalizationForm"
-                    cssClass="form-control input-sm">
+                <form:select path="normalizationForm" cssClass="form-control input-sm">
                     <form:options items="${normalizationFormMap}" />
                 </form:select>
             </div>

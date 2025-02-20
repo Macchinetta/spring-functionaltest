@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ローカル変数を利用できることの確認</h1>
 
-      <h1 id="screenTitle">ローカル変数を利用できることの確認</h1>
-
-      <ul th:with="localvar=|Hello, ${thymeleafForm.userName}|">
-        <li id="mnessage1">入力された名前を表示します。</li>
-        <li id="message2" th:text="${localvar}"></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul th:with="localvar=|Hello, ${thymeleafForm.userName}|">
+                    <li id="mnessage1">入力された名前を表示します。</li>
+                    <li id="message2" th:text="${localvar}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

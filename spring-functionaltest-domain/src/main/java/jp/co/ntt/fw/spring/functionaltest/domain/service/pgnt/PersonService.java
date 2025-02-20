@@ -27,6 +27,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.PersonSearchCri
 public interface PersonService {
 
     Page<Person> getPersons(PersonSearchCriteria criteria,
-            @AllowedSortProperty({ "person_id" }) Pageable pageable);
+            @AllowedSortProperty({"person_id"}) Pageable pageable);
 
 }

@@ -16,8 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.app.todo;
 
 import java.io.Serializable;
-
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class TodoForm implements Serializable {
@@ -32,11 +32,11 @@ public class TodoForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty(groups = { TodoFinish.class, TodoDelete.class })
+    @NotEmpty(groups = {TodoFinish.class, TodoDelete.class})
     private String todoId;
 
-    @NotEmpty(groups = { TodoCreate.class })
-    @Size(min = 1, max = 30, groups = { TodoCreate.class })
+    @NotNull(groups = {TodoCreate.class})
+    @Size(min = 1, max = 30, groups = {TodoCreate.class})
     private String todoTitle;
 
     private String registrationId;

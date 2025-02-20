@@ -42,8 +42,7 @@ public class PGNT0102002Controller {
     }
 
     @RequestMapping(value = "articleSearchDescArticleId", method = RequestMethod.GET)
-    public String search(ArticleSearchCriteria criteria, Pageable pageable,
-            Model model) {
+    public String search(ArticleSearchCriteria criteria, Pageable pageable, Model model) {
 
         Page<Article> page = articleService.getArticles(criteria, pageable);
         model.addAttribute("page", page);

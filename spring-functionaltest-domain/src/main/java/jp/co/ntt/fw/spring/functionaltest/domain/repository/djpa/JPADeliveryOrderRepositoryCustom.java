@@ -22,7 +22,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
 public interface JPADeliveryOrderRepositoryCustom {
 
-    Page<JPADeliveryOrder> findByCriteria(DeliveryOrderCriteria criteria,
-            Pageable pageable);
+    Page<JPADeliveryOrder> findByCriteria(DeliveryOrderCriteria criteria, Pageable pageable);
 
 }

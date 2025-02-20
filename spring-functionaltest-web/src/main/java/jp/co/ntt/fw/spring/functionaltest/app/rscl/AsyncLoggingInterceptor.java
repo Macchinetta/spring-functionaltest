@@ -33,14 +33,11 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  * </ul>
  */
 @SuppressWarnings("deprecation")
-public class AsyncLoggingInterceptor implements
-                                     AsyncClientHttpRequestInterceptor {
-    private static final Logger logger = LoggerFactory.getLogger(
-            AsyncLoggingInterceptor.class);
+public class AsyncLoggingInterceptor implements AsyncClientHttpRequestInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(AsyncLoggingInterceptor.class);
 
     @Override
-    public ListenableFuture<ClientHttpResponse> intercept(HttpRequest request,
-            byte[] body,
+    public ListenableFuture<ClientHttpResponse> intercept(HttpRequest request, byte[] body,
             AsyncClientHttpRequestExecution execution) throws IOException {
         logger.info("AsyncLoggingInterceptor Called!");
 
@@ -52,32 +49,28 @@ public class AsyncLoggingInterceptor implements
         }
 
         // 次の処理起動
-        ListenableFuture<ClientHttpResponse> future = execution.executeAsync(
-                request, body);
+        ListenableFuture<ClientHttpResponse> future = execution.executeAsync(request, body);
 
         if (logger.isInfoEnabled()) {
-            future.addCallback(
-                    new ListenableFutureCallback<ClientHttpResponse>() {
+            future.addCallback(new ListenableFutureCallback<ClientHttpResponse>() {
 
-                        @Override
-                        public void onSuccess(ClientHttpResponse response) {
-                            logger.info("onSuccess Called!");
-                            try {
-                                logger.info("Response Header {}", response
-                                        .getHeaders());
-                                logger.info("Response Status Code {}", response
-                                        .getStatusCode());
-                            } catch (IOException e) {
-                                logger.warn("I/O Error", e);
-                            }
-                        }
+                @Override
+                public void onSuccess(ClientHttpResponse response) {
+                    logger.info("onSuccess Called!");
+                    try {
+                        logger.info("Response Header {}", response.getHeaders());
+                        logger.info("Response Status Code {}", response.getStatusCode());
+                    } catch (IOException e) {
+                        logger.warn("I/O Error", e);
+                    }
+                }
 
-                        @Override
-                        public void onFailure(Throwable e) {
-                            logger.info("onFailure Called!");
-                            logger.info("Communication Error", e);
-                        }
-                    });
+                @Override
+                public void onFailure(Throwable e) {
+                    logger.info("onFailure Called!");
+                    logger.info("Communication Error", e);
+                }
+            });
         }
 
         return future;

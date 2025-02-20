@@ -17,8 +17,7 @@ package org.springframework.orm.jpa.vendor;
 
 public class DataBaseInfo {
 
-    public static String getDataBaseID(
-            HibernateJpaVendorAdapter hibernateJpaVendorAdapter) {
+    public static String getDataBaseID(HibernateJpaVendorAdapter hibernateJpaVendorAdapter) {
         return hibernateJpaVendorAdapter.getDatabase().toString();
     }
 

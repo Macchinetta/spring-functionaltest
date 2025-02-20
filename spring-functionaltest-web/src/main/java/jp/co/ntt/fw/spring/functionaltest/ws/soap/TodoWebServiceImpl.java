@@ -37,10 +37,11 @@ import jp.co.ntt.fw.spring.functionaltest.ws.exception.WsExceptionHandler;
 import jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException;
 
 @MTOM
-@WebService(portName = "TodoWebPort", serviceName = "TodoWebService", targetNamespace = "http://functionaltest.spring.fw.ntt.co.jp/todo", endpointInterface = "jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService")
+@WebService(portName = "TodoWebPort", serviceName = "TodoWebService",
+        targetNamespace = "http://functionaltest.spring.fw.ntt.co.jp/todo",
+        endpointInterface = "jp.co.ntt.fw.spring.functionaltest.ws.soap.TodoWebService")
 @BindingType(SOAPBinding.SOAP12HTTP_BINDING)
-public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
-                                TodoWebService {
+public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements TodoWebService {
 
     @Autowired
     WsExceptionHandler handler;
@@ -103,8 +104,7 @@ public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
 
     @Override
     public void handlerTest() throws WebFaultException {
-        handler.translateException(
-                new NullPointerException("for handler test"));
+        handler.translateException(new NullPointerException("for handler test"));
     }
 
     @Override
@@ -120,8 +120,7 @@ public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
     }
 
     @Override
-    public boolean uploadFile(
-            DataHandler dataHandler) throws WebFaultException {
+    public boolean uploadFile(DataHandler dataHandler) throws WebFaultException {
         try (InputStream inputStream = dataHandler.getInputStream()) {
             return todoService.uploadFile(inputStream);
         } catch (Exception e) {
@@ -131,14 +130,13 @@ public class TodoWebServiceImpl extends SpringBeanAutowiringSupport implements
     }
 
     private String getUsername() {
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
             if (principal instanceof UserDetails) {
                 return ((UserDetails) principal).getUsername();
             }
-            return (String) principal.toString();
+            return principal.toString();
         }
         return null;
     }

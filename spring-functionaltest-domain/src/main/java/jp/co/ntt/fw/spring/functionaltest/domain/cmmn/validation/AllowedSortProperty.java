@@ -34,8 +34,8 @@ import javax.validation.Payload;
 import jp.co.ntt.fw.spring.functionaltest.domain.cmmn.validation.AllowedSortProperty.List;
 
 @Documented
-@Constraint(validatedBy = { AllowedSortPropertyValidator.class })
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })
+@Constraint(validatedBy = {AllowedSortPropertyValidator.class})
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
 @Repeatable(List.class)
 public @interface AllowedSortProperty {
@@ -47,8 +47,7 @@ public @interface AllowedSortProperty {
 
     String[] value();
 
-    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER,
-            TYPE_USE })
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
     @interface List {

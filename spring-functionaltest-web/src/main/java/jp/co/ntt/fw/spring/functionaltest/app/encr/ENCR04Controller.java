@@ -42,20 +42,19 @@ public class ENCR04Controller {
     }
 
     @RequestMapping(value = "0401/001/encryptDecryptByHybrid", method = RequestMethod.POST)
-    public String encryptDecryptByHybrid(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String encryptDecryptByHybrid(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0401001(model, form);
         }
 
         KeyPair keyPair = encryptionDataService.generateKeyPairByJCA();
 
-        String encrypted = encryptionDataService.encryptByHybrid(form
-                .getRawText(), keyPair.getPublic());
+        String encrypted =
+                encryptionDataService.encryptByHybrid(form.getRawText(), keyPair.getPublic());
         model.addAttribute("encryptedText", encrypted);
-        model.addAttribute("decryptedText", encryptionDataService
-                .decryptByHybrid(encrypted, keyPair.getPrivate()));
+        model.addAttribute("decryptedText",
+                encryptionDataService.decryptByHybrid(encrypted, keyPair.getPrivate()));
         return "encr/encryptCompleteByHybrid";
     }
 

@@ -65,9 +65,10 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=other_err")
-    public String sendMessageOtherErr(Model model, JmsSendingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=other_err")
+    public String sendMessageOtherErr(Model model, JmsSendingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
         // send message
         jmsCacheConSendingService.sendMessageOtherErr(form.getJmsTodoId());
@@ -83,13 +84,13 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=catch_business_err")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=catch_business_err")
     public String sendMessageCatchBusinessErr(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
         // send message
-        jmsCacheConSendingService.sendMessageCatchBusinessErr(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageCatchBusinessErr(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }
@@ -102,14 +103,13 @@ public class JMSS08SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=catch_err_set_queue")
-    public String sendMessageCatchBusinessErrSetQueue(Model model,
-            JmsSendingForm form,
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=catch_err_set_queue")
+    public String sendMessageCatchBusinessErrSetQueue(Model model, JmsSendingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
         // send message
-        jmsCacheConSendingService.sendMessageCatchBusinessErrSetQueue(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessageCatchBusinessErrSetQueue(form.getJmsTodoId());
         attrs.addFlashAttribute("jmsSendingForm", form);
         return "redirect:/jmss/receivemessage";
     }

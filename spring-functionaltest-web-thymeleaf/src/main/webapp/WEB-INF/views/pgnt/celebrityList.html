@@ -1,81 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()}, ~{::body/content()})}">
-<head>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()}, ~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <h3 id="screenTitle">Celebrity List Screen</h3>
+            <div class="text-center">
+                <form id="celebritySearchCriteria" th:action="@{/pgnt/{path}(path=${path})}" method="get" th:object="${celebritySearchCriteria}">
+                    <fieldset>
+                        <legend>Celebrity List</legend>
+                        <label for="firstName" class="space">First Name</label>
+                        <input id="firstName" name="firstName" class="space name-text-field form-control inline" type="text" th:field="*{firstName}" />
+                        <label for="lastName" class="space">Last Name</label>
+                        <input id="lastName" name="lastName" class="space name-text-field form-control inline" type="text" th:field="*{lastName}" />
+                        <select id="sort" name="sort" class="space sort-field form-control inline">
+                            <option id="celebrityIdASC" th:with="numAsc='celebrity_id,ASC'" th:value="${numAsc}" th:selected="*{sort} == ${numAsc}">No. ASC</option>
+                            <option id="celebrityIdDESC" th:with="numDesc='celebrity_id,DESC'" th:value="${numDesc}" th:selected="*{sort} == ${numDesc}">No. DESC</option>
+                            <option id="firstNameASC" th:with="firstNameAsc='first_name,ASC'" th:value="${firstNameAsc}" th:selected="*{sort} == ${firstNameAsc}">First Name ASC</option>
+                            <option id="firstNameDESC" th:with="firstNameDesc='first_name,DESC'" th:value="${firstNameDesc}" th:selected="*{sort} == ${firstNameDesc}">First Name DESC</option>
+                            <option id="lastNameASC" th:with="lastNameAsc='last_name,ASC'" th:value="${lastNameAsc}" th:selected="*{sort} == ${lastNameAsc}">Last Name ASC</option>
+                            <option id="lastNameDESC" th:with="lastNameDesc='last_name,DESC'" th:value="${lastNameDesc}" th:selected="*{sort} == ${lastNameDesc}">Last Name DESC</option>
+                        </select>
+                        <input id="searchBtn" type="submit" name="Search" class="btn btn-default" value="Search" />
+                    </fieldset>
+                    <div></div>
+                </form>
+            </div>
 
-  <div class="container">
-
-    <h3 id="screenTitle">Celebrity List Screen</h3>
-    <div class="text-center">
-      <form id="celebritySearchCriteria" th:action="@{/pgnt/{path}(path=${path})}" method="get"
-        th:object="${celebritySearchCriteria}">
-        <fieldset>
-          <legend>Celebrity List</legend>
-          <label for="firstName" class="space">First Name</label> <input id="firstName"
-            name="firstName" class="space name-text-field form-control inline" type="text"
-            th:field="*{firstName}" /> <label for="lastName" class="space">Last Name</label> <input
-            id="lastName" name="lastName" class="space name-text-field form-control inline"
-            type="text" th:field="*{lastName}" /> <select id="sort" name="sort"
-            class="space sort-field form-control inline">
-            <option id="celebrityIdASC" th:with="numAsc='celebrity_id,ASC'" th:value="${numAsc}"
-              th:selected="*{sort} == ${numAsc}">No. ASC</option>
-            <option id="celebrityIdDESC" th:with="numDesc='celebrity_id,DESC'" th:value="${numDesc}"
-              th:selected="*{sort} == ${numDesc}">No. DESC</option>
-            <option id="firstNameASC" th:with="firstNameAsc='first_name,ASC'" th:value="${firstNameAsc}"
-              th:selected="*{sort} == ${firstNameAsc}">First Name ASC</option>
-            <option id="firstNameDESC" th:with="firstNameDesc='first_name,DESC'" th:value="${firstNameDesc}"
-              th:selected="*{sort} == ${firstNameDesc}">First Name DESC</option>
-            <option id="lastNameASC" th:with="lastNameAsc='last_name,ASC'" th:value="${lastNameAsc}"
-              th:selected="*{sort} == ${lastNameAsc}">Last Name ASC</option>
-            <option id="lastNameDESC" th:with="lastNameDesc='last_name,DESC'" th:value="${lastNameDesc}"
-              th:selected="*{sort} == ${lastNameDesc}">Last Name DESC</option>
-          </select> <input id="searchBtn" type="submit" name="Search" class="btn btn-default" value="Search" />
-        </fieldset>
-        <div></div>
-      </form>
-    </div>
-
-    <div th:if="${page} != null"
-      th:with="query = 'firstName=${celebritySearchCriteria.firstName},
+            <div
+                th:if="${page} != null"
+                th:with="query = 'firstName=${celebritySearchCriteria.firstName},
         lastName=${celebritySearchCriteria.lastName},sort=${celebritySearchCriteria.sort}',
         pagination = ~{pgnt/fragment :: paginationWithQuery (${page}, ${query})}"
-      th:remove="tag">
+                th:remove="tag"
+            >
+                <div class="text-center">
+                    <div th:replace="${pagination}"></div>
+                </div>
 
-      <div class="text-center">
-        <div th:replace="${pagination}"></div>
-      </div>
+                <table class="maintable">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th />
+                        </tr>
+                    </thead>
 
-      <table class="maintable">
+                    <tr th:each="user, status : ${page.content}" th:object="${user}">
+                        <td th:text="*{celebrityId}"></td>
+                        <td th:text="*{firstName}"></td>
+                        <td th:text="*{lastName}"></td>
+                        <td class="text-center"><input type="submit" class="btn btn-default" value="Details" /></td>
+                    </tr>
+                </table>
 
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th />
-          </tr>
-        </thead>
+                <div class="text-center">
+                    <div th:replace="${pagination}"></div>
+                </div>
 
-        <tr th:each="user, status : ${page.content}" th:object="${user}">
-          <td th:text="*{celebrityId}"></td>
-          <td th:text="*{firstName}"></td>
-          <td th:text="*{lastName}"></td>
-          <td class="text-center"><input type="submit" class="btn btn-default" value="Details" /></td>
-        </tr>
-
-      </table>
-
-      <div class="text-center">
-        <div th:replace="${pagination}"></div>
-      </div>
-
-      <div th:replace="~{pgnt/fragment :: paginationInfo (${page})}"></div>
-
-    </div>
-
-  </div>
-
-</body>
+                <div th:replace="~{pgnt/fragment :: paginationInfo (${page})}"></div>
+            </div>
+        </div>
+    </body>
 </html>

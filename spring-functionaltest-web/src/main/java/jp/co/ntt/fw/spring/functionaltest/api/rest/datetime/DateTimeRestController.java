@@ -37,16 +37,13 @@ public class DateTimeRestController {
      * @param dateTimeResource
      * @return
      */
-    @RequestMapping(value = "getAmericaDateTime", method = {
-            RequestMethod.POST })
+    @RequestMapping(value = "getAmericaDateTime", method = {RequestMethod.POST})
     @ResponseStatus(HttpStatus.OK)
-    public DateTimeResource getAmericaDateTime(
-            @RequestBody DateTimeResource dateTimeResource) {
+    public DateTimeResource getAmericaDateTime(@RequestBody DateTimeResource dateTimeResource) {
 
-        java.time.LocalDateTime dateTime = java.time.LocalDateTime.of(
-                dateTimeResource.getDate(), dateTimeResource.getTime());
-        ZonedDateTime zoneDt = ZonedDateTime.of(dateTime, ZoneId.of(
-                "America/Los_Angeles"));
+        java.time.LocalDateTime dateTime =
+                java.time.LocalDateTime.of(dateTimeResource.getDate(), dateTimeResource.getTime());
+        ZonedDateTime zoneDt = ZonedDateTime.of(dateTime, ZoneId.of("America/Los_Angeles"));
 
         dateTimeResource.setDateTime(zoneDt);
 

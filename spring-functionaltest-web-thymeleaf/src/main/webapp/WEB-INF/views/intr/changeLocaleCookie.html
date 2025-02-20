@@ -1,29 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">INTR 国際化</h1>
 
-      <h1 id="screenTitle">INTR 国際化</h1>
+                <div>
+                    <a id="english" th:href="@{/intr/0202/006(locale='en')}">English</a>
+                </div>
+                <div>
+                    <a id="japanese" th:href="@{/intr/0202/006(locale='ja')}">Japanese</a>
+                </div>
+                <div>
+                    <span id="changeMessage"><span th:text="#{i.intr.0001}"></span></span>
+                </div>
 
-      <div>
-        <a id="english" th:href="@{/intr/0202/006(locale='en')}">English</a>
-      </div>
-      <div>
-        <a id="japanese" th:href="@{/intr/0202/006(locale='ja')}">Japanese</a>
-      </div>
-      <div>
-        <span id="changeMessage"><span th:text="#{i.intr.0001}"></span></span>
-      </div>
-
-      <form th:action="@{/intr/0202/006_check}" method="get">
-        <input type="submit" id="check" class="btn btn-default" value="check">
-      </form>
-  
-    </div>
-  </div>
-</body>
+                <form th:action="@{/intr/0202/006_check}" method="get">
+                    <input type="submit" id="check" class="btn btn-default" value="check" />
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

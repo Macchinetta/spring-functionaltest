@@ -44,7 +44,6 @@ public interface OrderMB3Service {
 
     List<ItemMB3> findAllItemCode();
 
-    Page<OrderMB3> findPageByItemcode(List<String> searchItemCode,
-            Pageable pageable);
+    Page<OrderMB3> findPageByItemcode(List<String> searchItemCode, Pageable pageable);
 
 }

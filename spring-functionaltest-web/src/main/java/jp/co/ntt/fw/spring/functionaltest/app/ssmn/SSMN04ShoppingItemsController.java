@@ -44,12 +44,10 @@ public class SSMN04ShoppingItemsController {
     private UrlPathHelper urlPathHelper = new UrlPathHelper();
 
     @RequestMapping(method = RequestMethod.GET, params = "init")
-    public String init(SessionStatus sessionStatus,
-            HttpServletRequest request) {
+    public String init(SessionStatus sessionStatus, HttpServletRequest request) {
         sessionStatus.setComplete();
 
-        return "redirect:" + urlPathHelper.getServletPath(request)
-                + "/shopping/items";
+        return "redirect:" + urlPathHelper.getServletPath(request) + "/shopping/items";
     }
 
     @RequestMapping(method = RequestMethod.GET)

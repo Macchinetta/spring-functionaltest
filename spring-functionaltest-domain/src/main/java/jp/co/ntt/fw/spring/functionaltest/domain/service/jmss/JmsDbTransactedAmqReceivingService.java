@@ -21,10 +21,10 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsDbTransactedAmqReceivingService {
 
-    void receiveInputValidationIsolatedTransactionJmsCommitDbRollback(
-            JmsTodo jmsTodo) throws IOException;
+    void receiveInputValidationIsolatedTransactionJmsCommitDbRollback(JmsTodo jmsTodo)
+            throws IOException;
 
-    void receiveInputValidationIsolatedTransactionJmsAndDbCommit(
-            JmsTodo jmsTodo) throws IOException;
+    void receiveInputValidationIsolatedTransactionJmsAndDbCommit(JmsTodo jmsTodo)
+            throws IOException;
 
 }

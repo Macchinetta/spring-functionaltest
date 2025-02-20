@@ -28,21 +28,18 @@ import jp.co.ntt.fw.spring.functionaltest.app.aply.aply0401007.test1.AppPackage;
 @ControllerAdvice(basePackageClasses = AppPackage.class)
 public class AppGlobalExceptionHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            AppGlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(AppGlobalExceptionHandler.class);
 
     // パラメータ指定無しだと全てのAdviceクラスのパラメータに対してinitBinderを実施する為、今回の試験ではパラメータを指定
     @InitBinder("commonParam1")
     public void initBinder() {
-        logger.info(
-                "[APLY0401007]AppGlobalExceptionHandler initBinder Method Called");
+        logger.info("[APLY0401007]AppGlobalExceptionHandler initBinder Method Called");
     }
 
     @ModelAttribute
-    public CommonParameters setUpCommonParameters01(
-            @RequestParam(value = "commonParam1", defaultValue = "defCommonParam1") String commonParam1) {
-        logger.info(
-                "[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called");
+    public CommonParameters setUpCommonParameters01(@RequestParam(value = "commonParam1",
+            defaultValue = "defCommonParam1") String commonParam1) {
+        logger.info("[APLY0401007]AppGlobalExceptionHandler setUpCommonParameters01 Method Called");
         CommonParameters params = new CommonParameters();
         params.setCommonParam1(commonParam1);
         return params;

@@ -47,14 +47,13 @@ public class ReceiveMailController {
     }
 
     @RequestMapping(value = "receivemail", method = RequestMethod.POST)
-    public String handleReceiveMail(Model model,
-            EmailReceivingForm form) throws InterruptedException {
+    public String handleReceiveMail(Model model, EmailReceivingForm form)
+            throws InterruptedException {
 
-        try (Store store = mailReceivingSharedService.connect(form.getHost(),
-                form.getPort(), form.getUser(), form.getPassword())) {
+        try (Store store = mailReceivingSharedService.connect(form.getHost(), form.getPort(),
+                form.getUser(), form.getPassword())) {
 
-            MailMessage mail = mailReceivingSharedService.receive(form
-                    .getIdentifier(), 5, store);
+            MailMessage mail = mailReceivingSharedService.receive(form.getIdentifier(), 5, store);
             model.addAttribute("mail", mail);
         } catch (MessagingException e) {
             // ignore

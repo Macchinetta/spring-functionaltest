@@ -1,122 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">和暦</h1>
-      <br>
-      <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal"
-        method="get">
-        <fieldset>
-          <legend>和暦取得</legend>
-          <div class="form-group">
-            <table>
-              <tr>
-                <td>year</td>
-                <td><input id="year1" name="year" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>month</td>
-                <td><input id="month1" name="month" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>day</td>
-                <td><input id="day1" name="day" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-            </table>
-          </div>
-          <div class="form-group">
-            <button type="submit" id="getNowDate" name="getNowDate" class="btn btn-default">現在時刻取得</button>
-            <button type="submit" id="getSpecifiedDate" name="getSpecifiedDate"
-              class="btn btn-default">指定日時取得</button>
-            <button type="submit" id="getSpecifiedJapaneseDate" name="getSpecifiedJapaneseDate"
-              class="btn btn-default">和暦指定取得</button>
-          </div>
-        </fieldset>
-      </form>
-      <br>
-      <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal"
-        method="get">
-        <fieldset>
-          <legend>日時文字列にフォーマット</legend>
-          <div class="form-group">
-            <table>
-              <tr>
-                <td>year</td>
-                <td><input id="year2" name="year" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>month</td>
-                <td><input id="month2" name="month" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>day</td>
-                <td><input id="day2" name="day" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-            </table>
-          </div>
-          <div class="form-group">
-            <button type="submit" id="format" name="format" class="btn btn-default">西暦変換</button>
-          </div>
-        </fieldset>
-      </form>
-      <br />
-      <form th:action="@{/dnta/japaneseDate}" th:object="${changeTypeForm}" class="form-horizontal"
-        method="get">
-        <fieldset>
-          <legend>文字列からのパース</legend>
-          <div class="form-group">
-            <div class="col col-md-2">
-              <label for="name">日時文字列</label>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">和暦</h1>
+                <br />
+                <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal" method="get">
+                    <fieldset>
+                        <legend>和暦取得</legend>
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td>year</td>
+                                    <td><input id="year1" name="year" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>month</td>
+                                    <td><input id="month1" name="month" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>day</td>
+                                    <td><input id="day1" name="day" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="getNowDate" name="getNowDate" class="btn btn-default">現在時刻取得</button>
+                            <button type="submit" id="getSpecifiedDate" name="getSpecifiedDate" class="btn btn-default">指定日時取得</button>
+                            <button type="submit" id="getSpecifiedJapaneseDate" name="getSpecifiedJapaneseDate" class="btn btn-default">和暦指定取得</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal" method="get">
+                    <fieldset>
+                        <legend>日時文字列にフォーマット</legend>
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td>year</td>
+                                    <td><input id="year2" name="year" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>month</td>
+                                    <td><input id="month2" name="month" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>day</td>
+                                    <td><input id="day2" name="day" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="format" name="format" class="btn btn-default">西暦変換</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <form th:action="@{/dnta/japaneseDate}" th:object="${changeTypeForm}" class="form-horizontal" method="get">
+                    <fieldset>
+                        <legend>文字列からのパース</legend>
+                        <div class="form-group">
+                            <div class="col col-md-2">
+                                <label for="name">日時文字列</label>
+                            </div>
+                            <div class="col col-md-2">
+                                <input type="text" th:field="*{targetDate}" class="form-control input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="parse" name="parse" class="btn btn-default">日付文字列判定</button>
+                        </div>
+                    </fieldset>
+                </form>
+                <br />
+                <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal" method="get">
+                    <fieldset>
+                        <legend>和暦取得</legend>
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td>year</td>
+                                    <td><input id="year3" name="year" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>month</td>
+                                    <td><input id="month3" name="month" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td>day</td>
+                                    <td><input id="day3" name="day" class="form-control input-sm" type="text" value="" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="toJapaneseDate" name="toJapaneseDate" class="btn btn-default">西暦変換</button>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-            <div class="col col-md-2">
-              <input type="text" th:field="*{targetDate}" class="form-control input-sm" />
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" id="parse" name="parse" class="btn btn-default">日付文字列判定</button>
-          </div>
-        </fieldset>
-      </form>
-      <br>
-      <form th:action="@{/dnta/japaneseDate}" th:object="${dateForm}" class="form-horizontal"
-        method="get">
-        <fieldset>
-          <legend>和暦取得</legend>
-          <div class="form-group">
-            <table>
-              <tr>
-                <td>year</td>
-                <td><input id="year3" name="year" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>month</td>
-                <td><input id="month3" name="month" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-              <tr>
-                <td>day</td>
-                <td><input id="day3" name="day" class="form-control input-sm" type="text"
-                  value="" /></td>
-              </tr>
-            </table>
-          </div>
-          <div class="form-group">
-            <button type="submit" id="toJapaneseDate" name="toJapaneseDate" class="btn btn-default">西暦変換</button>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-</body>
+        </div>
+    </body>
 </html>

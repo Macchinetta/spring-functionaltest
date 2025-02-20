@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h3 id="screenTitle">ログインフォーム(DefaultFormAuthentication)</h3>
-      <div th:if="${param.keySet().contains('error')}" id="loginError">
-        <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}" class="alert alert-danger">
-          <ul>
-            <li th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></li>
-          </ul>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h3 id="screenTitle">ログインフォーム(DefaultFormAuthentication)</h3>
+                <div th:if="${param.keySet().contains('error')}" id="loginError">
+                    <div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}" class="alert alert-danger">
+                        <ul>
+                            <li th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <form th:action="@{/athn/0102/001/authenticate}" method="post">
+                    <table>
+                        <tr>
+                            <td><label for="username">User Name</label></td>
+                            <td><input type="text" id="username" name="username" /></td>
+                        </tr>
+                        <tr>
+                            <td><label for="password">Password</label></td>
+                            <td><input type="password" id="password" name="password" /></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><button id="login">Login</button></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
         </div>
-      </div>
-      <form th:action="@{/athn/0102/001/authenticate}" method="post">
-        <table>
-          <tr>
-            <td><label for="username">User Name</label></td>
-            <td><input type="text" id="username" name="username"></td>
-          </tr>
-          <tr>
-            <td><label for="password">Password</label></td>
-            <td><input type="password" id="password" name="password"></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td><button id="login">Login</button></td>
-          </tr>
-        </table>
-      </form>
-    </div>
-  </div>
-</body>
+    </body>
 </html>

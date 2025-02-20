@@ -1,9 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <h1>Text Inlining</h1>
-  <p>[[${item.name}]]</p>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <h1>Text Inlining</h1>
+        <p>[[${item.name}]]</p>
+    </body>
 </html>

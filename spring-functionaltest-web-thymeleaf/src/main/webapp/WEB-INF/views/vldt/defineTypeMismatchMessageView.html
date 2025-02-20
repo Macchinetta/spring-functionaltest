@@ -1,149 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">エラーメッセージの定義</h1>
 
-      <h1 id="screenTitle">エラーメッセージの定義</h1>
+                <form method="post" th:action="@{/vldt/0303/001}" th:object="${defineTypeMismatchMessageForm}" class="form-horizontal">
+                    <div class="form-group">
+                        <label th:for="shortValue" class="col-sm-2 control-label">ShortValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{shortValue}" class="form-control" placeholder="ShortValue" />
+                            <span id="shortValue.errors" th:errors="*{shortValue}" class="text-danger"></span>
+                        </div>
+                    </div>
 
-      <form method="post" th:action="@{/vldt/0303/001}" th:object="${defineTypeMismatchMessageForm}"
-        class="form-horizontal">
+                    <div class="form-group">
+                        <label th:for="intValue" class="col-sm-2 control-label">IntValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{intValue}" class="form-control" placeholder="IntValue" />
+                            <span id="intValue.errors" th:errors="*{intValue}" class="text-danger"></span>
+                        </div>
+                    </div>
 
-        <div class="form-group">
-          <label th:for="shortValue" class="col-sm-2 control-label">ShortValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{shortValue}" class="form-control"
-              placeholder="ShortValue" /> <span id="shortValue.errors" th:errors="*{shortValue}"
-              class="text-danger"></span>
-          </div>
+                    <div class="form-group">
+                        <label th:for="longValue" class="col-sm-2 control-label">LongValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{longValue}" class="form-control" placeholder="LongValue" />
+                            <span id="longValue.errors" th:errors="*{longValue}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="floatValue" class="col-sm-2 control-label">FloatValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{floatValue}" class="form-control" placeholder="FloatValue" />
+                            <span id="floatValue.errors" th:errors="*{floatValue}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="doubleValue" class="col-sm-2 control-label">DoubleValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{doubleValue}" class="form-control" placeholder="DoubleValue" />
+                            <span id="doubleValue.errors" th:errors="*{doubleValue}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="shortObject" class="col-sm-2 control-label">ShortObject</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{shortObject}" class="form-control" placeholder="ShortObject" />
+                            <span id="shortObject.errors" th:errors="*{shortObject}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="integerObject" class="col-sm-2 control-label">IntegerObject</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{integerObject}" class="form-control" placeholder="IntegerObject" />
+                            <span id="integerObject.errors" th:errors="*{integerObject}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="longObject" class="col-sm-2 control-label">LongObject</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{longObject}" class="form-control" placeholder="LongObject" />
+                            <span id="longObject.errors" th:errors="*{longObject}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="floatObject" class="col-sm-2 control-label">FloatObject</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{floatObject}" class="form-control" placeholder="FloatObject" />
+                            <span id="floatObject.errors" th:errors="*{floatObject}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="doubleObject" class="col-sm-2 control-label">DoubleObject</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{doubleObject}" class="form-control" placeholder="DoubleObject" />
+                            <span id="doubleObject.errors" th:errors="*{doubleObject}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="date" class="col-sm-2 control-label">Date</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{date}" class="form-control" placeholder="Date" /> <span id="date.errors" th:errors="*{date}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="datetime" class="col-sm-2 control-label">DateTime</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{datetime}" class="form-control" placeholder="DateTime" />
+                            <span id="datetime.errors" th:errors="*{datetime}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="localdate" class="col-sm-2 control-label">LocalDate</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{localdate}" class="form-control" placeholder="LocalDate" />
+                            <span id="localdate.errors" th:errors="*{localdate}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="booleanValue" class="col-sm-2 control-label">BooleanValue</label>
+                        <div class="col-sm-10">
+                            <input type="text" th:field="*{booleanValue}" class="form-control" placeholder="BooleanValue" />
+                            <span id="booleanValue.errors" th:errors="*{booleanValue}" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button id="validate" name="validate" class="btn btn-default" type="submit" value="Submit">validate</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-          <label th:for="intValue" class="col-sm-2 control-label">IntValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{intValue}" class="form-control" placeholder="IntValue" />
-            <span id="intValue.errors" th:errors="*{intValue}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="longValue" class="col-sm-2 control-label">LongValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{longValue}" class="form-control" placeholder="LongValue" />
-            <span id="longValue.errors" th:errors="*{longValue}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="floatValue" class="col-sm-2 control-label">FloatValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{floatValue}" class="form-control"
-              placeholder="FloatValue" /> <span id="floatValue.errors" th:errors="*{floatValue}"
-              class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="doubleValue" class="col-sm-2 control-label">DoubleValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{doubleValue}" class="form-control"
-              placeholder="DoubleValue" /> <span id="doubleValue.errors" th:errors="*{doubleValue}"
-              class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="shortObject" class="col-sm-2 control-label">ShortObject</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{shortObject}" class="form-control"
-              placeholder="ShortObject" /> <span id="shortObject.errors" th:errors="*{shortObject}"
-              class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="integerObject" class="col-sm-2 control-label">IntegerObject</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{integerObject}" class="form-control"
-              placeholder="IntegerObject" /> <span id="integerObject.errors"
-              th:errors="*{integerObject}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="longObject" class="col-sm-2 control-label">LongObject</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{longObject}" class="form-control"
-              placeholder="LongObject" /> <span id="longObject.errors" th:errors="*{longObject}"
-              class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="floatObject" class="col-sm-2 control-label">FloatObject</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{floatObject}" class="form-control"
-              placeholder="FloatObject" /> <span id="floatObject.errors" th:errors="*{floatObject}"
-              class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="doubleObject" class="col-sm-2 control-label">DoubleObject</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{doubleObject}" class="form-control"
-              placeholder="DoubleObject" /> <span id="doubleObject.errors"
-              th:errors="*{doubleObject}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="date" class="col-sm-2 control-label">Date</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{date}" class="form-control" placeholder="Date" /> <span
-              id="date.errors" th:errors="*{date}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="datetime" class="col-sm-2 control-label">DateTime</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{datetime}" class="form-control" placeholder="DateTime" />
-            <span id="datetime.errors" th:errors="*{datetime}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="localdate" class="col-sm-2 control-label">LocalDate</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{localdate}" class="form-control" placeholder="LocalDate" />
-            <span id="localdate.errors" th:errors="*{localdate}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label th:for="booleanValue" class="col-sm-2 control-label">BooleanValue</label>
-          <div class="col-sm-10">
-            <input type="text" th:field="*{booleanValue}" class="form-control"
-              placeholder="BooleanValue" /> <span id="booleanValue.errors"
-              th:errors="*{booleanValue}" class="text-danger"></span>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button id="validate" name="validate" class="btn btn-default" type="submit"
-              value="Submit">validate</button>
-          </div>
-        </div>
-
-      </form>
-
-
-    </div>
-  </div>
-</body>
+    </body>
 </html>

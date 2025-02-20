@@ -27,8 +27,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.dmly.DeliveryOrderRe
 
 @Transactional(value = Transactional.TxType.NOT_SUPPORTED)
 @Service
-public class DeliveryOrderNotSupportedJTA12SharedServiceImpl implements
-                                                             DeliveryOrderNotSupportedJTA12SharedService {
+public class DeliveryOrderNotSupportedJTA12SharedServiceImpl
+        implements DeliveryOrderNotSupportedJTA12SharedService {
 
     @Inject
     DeliveryOrderRepository deliveryOrderRepository;

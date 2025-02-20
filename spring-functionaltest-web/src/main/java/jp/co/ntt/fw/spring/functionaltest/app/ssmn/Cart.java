@@ -112,8 +112,8 @@ public class Cart implements Serializable {
 
     @Override
     public String toString() {
-        return "Cart [cartId=" + cartId + ", cartItems=" + cartItems
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "Cart [cartId=" + cartId + ", cartItems=" + cartItems + ", super.hashCode()="
+                + super.hashCode() + "]";
     }
 
 }

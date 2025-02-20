@@ -62,6 +62,10 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     private WebElement registerFlashAttribute;
 
     @CacheLookup
+    @FindBy(id = "djpa0105001")
+    private WebElement djpa0105001;
+
+    @CacheLookup
     @FindBy(id = "djpa0201001")
     private WebElement crudeRepoCheckPage;
 
@@ -338,6 +342,12 @@ public class JPAIndexPage implements Page<JPAIndexPage> {
     public JPAHomePage djpa0103005Click() {
         JPAHomePage homePage = new JPAHomePage(driver);
         registerFlashAttribute.click();
+        return homePage;
+    }
+
+    public JPAHomePage djpa0105001Click() {
+        JPAHomePage homePage = new JPAHomePage(driver);
+        djpa0105001.click();
         return homePage;
     }
 

@@ -16,14 +16,14 @@
 package jp.co.ntt.fw.spring.functionaltest.app.rscl;
 
 import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserResource;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.HttpsRestClientService;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.HttpsRestClientService.DESTINATION;
+import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.HttpsRestClientService.SERVERS;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.RestClientService;
 
 @RequestMapping("rscl")
@@ -48,7 +48,8 @@ public class RSCL06Controller {
     @RequestMapping(value = "0601/001", method = RequestMethod.POST)
     public String handle0601001(Model model) {
 
-        UserResource rcvUser = this.httpsRestClientService.connectHttps();
+        UserResource rcvUser =
+                this.httpsRestClientService.connectHttps(SERVERS.SERVER1, DESTINATION.RSCL1, false);
 
         model.addAttribute("resultDescription", "自己署名証明書情報");
         model.addAttribute("user", rcvUser);

@@ -21,12 +21,12 @@ import java.util.Set;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-public class UploadFileAllowedExtentionValidator implements
-                                                 ConstraintValidator<UploadFileAllowedExtention, MultipartFile> {
+public class UploadFileAllowedExtentionValidator
+        implements ConstraintValidator<UploadFileAllowedExtention, MultipartFile> {
 
     private final Set<String> extentions = new HashSet<>();
 
@@ -38,8 +38,7 @@ public class UploadFileAllowedExtentionValidator implements
     }
 
     @Override
-    public boolean isValid(MultipartFile multipartFile,
-            ConstraintValidatorContext context) {
+    public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext context) {
         if (CollectionUtils.isEmpty(extentions)) {
             return true;
         }
@@ -51,8 +50,7 @@ public class UploadFileAllowedExtentionValidator implements
             return true;
         }
         String extention = StringUtils.getFilenameExtension(fileName);
-        return StringUtils.hasText(extention) && extentions.contains(extention
-                .toLowerCase());
+        return StringUtils.hasText(extention) && extentions.contains(extention.toLowerCase());
     }
 
 }

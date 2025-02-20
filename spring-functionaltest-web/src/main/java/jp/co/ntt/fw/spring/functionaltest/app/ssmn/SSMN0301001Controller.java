@@ -44,8 +44,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.ssmn.MemberService;
 @RequestMapping(value = "ssmn/0301/001")
 public class SSMN0301001Controller {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            SSMN0301001Controller.class);
+    private static final Logger logger = LoggerFactory.getLogger(SSMN0301001Controller.class);
 
     @Inject
     Mapper beanMapper;
@@ -71,8 +70,8 @@ public class SSMN0301001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "addressForm")
-    public String createMemberAddressForm(
-            @Validated(Personal.class) MemberForm form, BindingResult result) {
+    public String createMemberAddressForm(@Validated(Personal.class) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMemberPersonal();
         }
@@ -80,8 +79,8 @@ public class SSMN0301001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "otherForm")
-    public String createMemberOtherForm(
-            @Validated(Address.class) MemberForm form, BindingResult result) {
+    public String createMemberOtherForm(@Validated(Address.class) MemberForm form,
+            BindingResult result) {
         if (result.hasErrors()) {
             return createRedoMemberAddress();
         }
@@ -98,20 +97,18 @@ public class SSMN0301001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String createMember(@Validated({ Personal.class, Address.class,
-            Other.class }) MemberForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String createMember(
+            @Validated({Personal.class, Address.class, Other.class}) MemberForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            throw new InvalidRequestException(ResultMessages.error().add(
-                    "e.sf.cmmn.8002"));
+            throw new InvalidRequestException(ResultMessages.error().add("e.sf.fw.8002"));
         }
 
         Member member = beanMapper.map(form, Member.class);
         member = memberService.createMember(member);
         redirectAttributes.addFlashAttribute(member);
 
-        ResultMessages messages = ResultMessages.success().add(
-                "i.sf.ssmn.0001");
+        ResultMessages messages = ResultMessages.success().add("i.sf.sm.0001");
         redirectAttributes.addFlashAttribute(messages);
 
         return "redirect:/ssmn/0301/001?complete";

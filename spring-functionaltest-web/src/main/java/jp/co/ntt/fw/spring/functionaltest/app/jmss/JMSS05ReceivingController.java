@@ -42,11 +42,10 @@ public class JMSS05ReceivingController {
     }
 
     @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sync")
-    public String receiveMessageSync(Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    public String receiveMessageSync(Model model, JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", form.getJmsTodoId());

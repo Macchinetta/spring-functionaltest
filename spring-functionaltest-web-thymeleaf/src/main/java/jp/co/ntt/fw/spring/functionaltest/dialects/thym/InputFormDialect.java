@@ -36,8 +36,7 @@ public class InputFormDialect extends AbstractProcessorDialect {
 
         processors.add(new InputFormProcessor(dialectPrefix));
 
-        processors.add(
-                new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
+        processors.add(new StandardXmlNsTagProcessor(TemplateMode.HTML, dialectPrefix));
 
         return processors;
 

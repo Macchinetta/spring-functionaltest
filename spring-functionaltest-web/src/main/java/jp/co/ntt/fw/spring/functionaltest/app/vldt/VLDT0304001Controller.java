@@ -37,8 +37,7 @@ public class VLDT0304001Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated DefineNotAsciiMessageByValidationMessagesForm form,
+    public String handleValidate(@Validated DefineNotAsciiMessageByValidationMessagesForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

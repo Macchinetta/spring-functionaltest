@@ -15,11 +15,11 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.cdls;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 public class ClI18nDBPriceForm {
 
-    @NotNull
+    @NotEmpty
     private String id;
 
     public String getId() {

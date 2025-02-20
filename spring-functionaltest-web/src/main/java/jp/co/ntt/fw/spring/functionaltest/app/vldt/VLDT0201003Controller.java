@@ -49,8 +49,7 @@ public class VLDT0201003Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated UserForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated UserForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/correlationValidationBySpringValidatorViewForMultiFieldHighlight";

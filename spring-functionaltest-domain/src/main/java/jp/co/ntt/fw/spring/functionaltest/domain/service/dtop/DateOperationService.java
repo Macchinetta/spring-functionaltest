@@ -39,12 +39,11 @@ public interface DateOperationService {
 
     LocalDate calcDecreaseNumOfYear(LocalDate dateTime, int decreaseNum);
 
-    boolean checkContainTermToDate(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckDate);
+    boolean checkContainTermToDate(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckDate);
 
-    boolean checkContainTermToTerm(DateTime targetTermFrom,
-            DateTime targetTermTo, DateTime targetCheckTermFrom,
-            DateTime targetCheckTermTo);
+    boolean checkContainTermToTerm(DateTime targetTermFrom, DateTime targetTermTo,
+            DateTime targetCheckTermFrom, DateTime targetCheckTermTo);
 
     boolean checkAbutsTerm(DateTime targetTermFrom, DateTime targetTermTo,
             DateTime targetCheckTermFrom, DateTime targetCheckTermTo);
@@ -55,11 +54,9 @@ public interface DateOperationService {
     Interval getOverlapTerm(DateTime targetTermFrom, DateTime targetTermTo,
             DateTime targetCheckTermFrom, DateTime targetCheckTermTo);
 
-    DateTime calcIncreaseNumOfDateUsingPeriod(DateTime dateTime,
-            Period increasePeriod);
+    DateTime calcIncreaseNumOfDateUsingPeriod(DateTime dateTime, Period increasePeriod);
 
-    DateTime calcDecreaseNumOfDateUsingPeriod(DateTime dateTime,
-            Period decreasePeriod);
+    DateTime calcDecreaseNumOfDateUsingPeriod(DateTime dateTime, Period decreasePeriod);
 
     String getJapaneseDateStr(String format);
 

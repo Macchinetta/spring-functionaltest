@@ -80,8 +80,7 @@ public class JPABookServiceImpl implements JPABookService {
 
     @Override
     public JPABook addBook(JPABook jpaBook) {
-        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName(
-                "UTF-8")));
+        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName("UTF-8")));
         // return jpaBookRepository.saveAndFlush(jpaBook);
         return jpaBookRepository.save(jpaBook);
     }
@@ -90,12 +89,11 @@ public class JPABookServiceImpl implements JPABookService {
     @Override
     public JPABook addBookWithRollback(JPABook jpaBook) throws SystemException {
 
-        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName(
-                "UTF-8")));
+        jpaBook.setBlobCode(jpaBook.getClobCode().getBytes(Charset.forName("UTF-8")));
         // return jpaBookRepository.saveAndFlush(jpaBook);
         JPABook book = jpaBookRepository.save(jpaBook);
         if (null != book) {
-            throw new SystemException("e.sf.djpa.9001", rollbackMsg);
+            throw new SystemException("e.sf.dp.9001", rollbackMsg);
         }
         return book;
     }
@@ -178,8 +176,7 @@ public class JPABookServiceImpl implements JPABookService {
 
     @Override
     public void deleteInBatch(Iterable<String> iterable) {
-        Iterable<JPABook> bookList = jpaBookCRUDRepository.findAllById(
-                iterable);
+        Iterable<JPABook> bookList = jpaBookCRUDRepository.findAllById(iterable);
         jpaBookRepository.deleteAllInBatch(bookList);
     }
 

@@ -33,8 +33,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPAStockReposit
 
 @Service
 @Transactional(value = "jpaTransactionManager")
-public class JPAStockPessimisticLockServiceImpl implements
-                                                JPAStockPessimisticLockService {
+public class JPAStockPessimisticLockServiceImpl implements JPAStockPessimisticLockService {
 
     @Inject
     protected JPAStockRepository jpaStockRepository;
@@ -60,16 +59,13 @@ public class JPAStockPessimisticLockServiceImpl implements
 
     @Override
     public Integer decreamentQty(JPAStock jpaStock, Integer qty) {
-        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(),
-                qty);
+        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(), qty);
     }
 
     @Override
-    public JPAStock buy(JPAStock stock, int purchasingQuantity,
-            long sleepMillis) {
-        JPAStock jpaStock = jpaStockRepository
-                .findOneForUpdateUsingPessimisticLock(stock.getItemCode()
-                        .trim());
+    public JPAStock buy(JPAStock stock, int purchasingQuantity, long sleepMillis) {
+        JPAStock jpaStock =
+                jpaStockRepository.findOneForUpdateUsingPessimisticLock(stock.getItemCode().trim());
 
         jpaStock.setQuantity(jpaStock.getQuantity() - purchasingQuantity);
         jpaStockRepository.saveAndFlush(jpaStock);
@@ -79,11 +75,10 @@ public class JPAStockPessimisticLockServiceImpl implements
     }
 
     @Override
-    public JPAStock buyExcp(JPAStock stock, int purchasingQuantity,
-            long sleepMillis) {
+    public JPAStock buyExcp(JPAStock stock, int purchasingQuantity, long sleepMillis) {
         await();
-        JPAStock jpaStock = jpaStockRepository
-                .findOneForUpdateUsingPessimisticLockExcp(stock.getItemCode());
+        JPAStock jpaStock =
+                jpaStockRepository.findOneForUpdateUsingPessimisticLockExcp(stock.getItemCode());
         sleep(sleepMillis);
         jpaStock.setQuantity(jpaStock.getQuantity() - purchasingQuantity);
         jpaStockRepository.saveAndFlush(jpaStock);

@@ -50,8 +50,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Inject
     JodaTimeDateFactory dateFactory;
 
-    public UploadFile saveFileToDisc(InputStream content,
-            UploadFile newUploadFile) throws IOException {
+    public UploadFile saveFileToDisc(InputStream content, UploadFile newUploadFile)
+            throws IOException {
 
         String fileId = generateFileId();
 
@@ -77,17 +77,14 @@ public class FileUploadServiceImpl implements FileUploadService {
     }
 
     @Override
-    public UploadFile saveFileToDisc(String temporaryFileId,
-            UploadFile newUploadFile) throws IOException {
+    public UploadFile saveFileToDisc(String temporaryFileId, UploadFile newUploadFile)
+            throws IOException {
 
         Path uploadTempDir = Paths.get(uploadTemporaryDirectory);
-        Path temporaryFile = Paths.get(uploadTemporaryDirectory,
-                temporaryFileId);
+        Path temporaryFile = Paths.get(uploadTemporaryDirectory, temporaryFileId);
 
-        if (0 != uploadTempDir.compareTo(temporaryFile.normalize()
-                .getParent())) {
-            throw new FileNotFoundException("File not found : " + temporaryFile
-                    .toString());
+        if (0 != uploadTempDir.compareTo(temporaryFile.normalize().getParent())) {
+            throw new FileNotFoundException("File not found : " + temporaryFile.toString());
         }
 
         Path uploadDirectoryPath = Paths.get(uploadDirectory);
@@ -115,17 +112,14 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Transactional
     @Override
-    public UploadFile saveFileToDb(String temporaryFileId,
-            UploadFile newUploadFile) throws IOException {
+    public UploadFile saveFileToDb(String temporaryFileId, UploadFile newUploadFile)
+            throws IOException {
 
         Path uploadTempDir = Paths.get(uploadTemporaryDirectory);
-        Path temporaryFile = Paths.get(uploadTemporaryDirectory,
-                temporaryFileId);
+        Path temporaryFile = Paths.get(uploadTemporaryDirectory, temporaryFileId);
 
-        if (0 != uploadTempDir.compareTo(temporaryFile.normalize()
-                .getParent())) {
-            throw new FileNotFoundException("File not found : " + temporaryFile
-                    .toString());
+        if (0 != uploadTempDir.compareTo(temporaryFile.normalize().getParent())) {
+            throw new FileNotFoundException("File not found : " + temporaryFile.toString());
         }
 
         byte[] content = Files.readAllBytes(temporaryFile);
@@ -150,9 +144,8 @@ public class FileUploadServiceImpl implements FileUploadService {
     public UploadFile getUploadFile(String fileId) {
         UploadFile loadedUploadFile = uploadFileRepository.findByFileId(fileId);
         if (loadedUploadFile == null) {
-            throw new ResourceNotFoundException(String.format(
-                    "Specified uploaded file not found. file id is '%s'.",
-                    fileId));
+            throw new ResourceNotFoundException(
+                    String.format("Specified uploaded file not found. file id is '%s'.", fileId));
         }
         return loadedUploadFile;
     }

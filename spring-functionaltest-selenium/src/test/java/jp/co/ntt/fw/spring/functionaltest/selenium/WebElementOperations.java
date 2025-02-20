@@ -29,25 +29,22 @@ public class WebElementOperations {
         // NOP
     }
 
-    public static <P extends Page<P>> P input(P page, WebElement element,
-            String value) {
+    public static <P extends Page<P>> P input(P page, WebElement element, String value) {
         element.clear();
         element.sendKeys(value);
         return page;
     }
 
-    public static <P extends Page<P>> P select(P page, List<WebElement> radios,
-            boolean value) {
+    public static <P extends Page<P>> P select(P page, List<WebElement> radios, boolean value) {
         radios.get(value ? 0 : 1).click();
         return page;
     }
 
-    public static <P extends Page<P>> P check(P page,
-            List<WebElement> checkboxes, String... selectValues) {
+    public static <P extends Page<P>> P check(P page, List<WebElement> checkboxes,
+            String... selectValues) {
         Set<String> valueSet = new HashSet<>(Arrays.asList(selectValues));
         for (WebElement checkbox : checkboxes) {
-            if (valueSet.contains(getValue(checkbox)) && !checkbox
-                    .isSelected()) {
+            if (valueSet.contains(getValue(checkbox)) && !checkbox.isSelected()) {
                 checkbox.click();
             } else if (checkbox.isSelected()) {
                 checkbox.click();

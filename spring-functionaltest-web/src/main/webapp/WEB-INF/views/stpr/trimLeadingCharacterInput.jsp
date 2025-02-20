@@ -1,26 +1,18 @@
 ﻿<div id="wrapper">
-
     <h1 id="screenTitle">[入力]前方から指定した文字を除いた文字列を取得できることを確認する</h1>
-    <br>
+    <br />
     <t:messagesPanel />
-    <form:form
-        action="${pageContext.request.contextPath}/stpr/0101/002/trimLeadingCharacter"
-        cssClass="form-horizontal" method="post"
-        modelAttribute="stringProcessing01Form">
+    <form:form action="${pageContext.request.contextPath}/stpr/0101/002/trimLeadingCharacter" cssClass="form-horizontal" method="post" modelAttribute="stringProcessing01Form">
         <div class="form-group">
-            <form:label path="targetText"
-                class="col col-md-2 control-label">トリム対象文字列</form:label>
+            <form:label path="targetText" class="col col-md-2 control-label">トリム対象文字列</form:label>
             <div class="col col-md-3">
-                <form:input path="targetText"
-                    cssClass="form-control input-sm" />
+                <form:input path="targetText" cssClass="form-control input-sm" />
             </div>
         </div>
         <div class="form-group">
-            <form:label path="trimText"
-                class="col col-md-2 control-label">トリム文字</form:label>
+            <form:label path="trimText" class="col col-md-2 control-label">トリム文字</form:label>
             <div class="col col-md-3">
-                <form:input path="trimText"
-                    cssClass="form-control input-sm" />
+                <form:input path="trimText" cssClass="form-control input-sm" />
             </div>
             <div class="col col-md-3">
                 <form:errors path="trimText" class="text-danger" />

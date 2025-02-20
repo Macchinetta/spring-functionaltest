@@ -56,8 +56,8 @@ public class CarServiceImpl implements CarService {
     public CarUnidirectionalDto getCarWithUnidirectionalDto(String carId) {
         Car car = carRepository.findOneByCarId(carId);
         if (car == null) {
-            throw new ResourceNotFoundException(String.format(
-                    "Specified car is not found. carId is '%s'.", carId));
+            throw new ResourceNotFoundException(
+                    String.format("Specified car is not found. carId is '%s'.", carId));
         }
 
         return beanMapper.map(car, CarUnidirectionalDto.class);
@@ -67,8 +67,8 @@ public class CarServiceImpl implements CarService {
     public CarBidirectionalDto getCarWithBidirectionalDto(String carId) {
         Car car = carRepository.findOneByCarId(carId);
         if (car == null) {
-            throw new ResourceNotFoundException(String.format(
-                    "Specified car is not found. carId is '%s'.", carId));
+            throw new ResourceNotFoundException(
+                    String.format("Specified car is not found. carId is '%s'.", carId));
         }
 
         return beanMapper.map(car, CarBidirectionalDto.class);

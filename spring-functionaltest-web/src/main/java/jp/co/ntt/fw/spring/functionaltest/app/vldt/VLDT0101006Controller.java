@@ -42,8 +42,7 @@ public class VLDT0101006Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validateBeanValidation")
-    public String handleBeanValidationValidate(
-            @Validated VariousSimpleValidationBVForm form,
+    public String handleBeanValidationValidate(@Validated VariousSimpleValidationBVForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -53,8 +52,7 @@ public class VLDT0101006Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validateHibernateValidator")
-    public String handleHibernateValidatorValidate(
-            @Validated VariousSimpleValidationHVForm form,
+    public String handleHibernateValidatorValidate(@Validated VariousSimpleValidationHVForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

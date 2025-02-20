@@ -81,8 +81,7 @@ public class DateToStringMappingDto implements Serializable {
         return birthDateGregorianCalendar;
     }
 
-    public void setBirthDateGregorianCalendar(
-            String birthDateGregorianCalendar) {
+    public void setBirthDateGregorianCalendar(String birthDateGregorianCalendar) {
         this.birthDateGregorianCalendar = birthDateGregorianCalendar;
     }
 

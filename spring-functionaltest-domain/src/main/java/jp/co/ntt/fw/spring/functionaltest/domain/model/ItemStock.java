@@ -76,8 +76,8 @@ public class ItemStock implements Serializable {
 
     @Override
     public String toString() {
-        return "ItemStock [itemCode=" + itemId + ", quantity=" + quantity
-                + ", super.hashCode()=" + super.hashCode() + "]";
+        return "ItemStock [itemCode=" + itemId + ", quantity=" + quantity + ", super.hashCode()="
+                + super.hashCode() + "]";
     }
 
 }

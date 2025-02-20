@@ -49,8 +49,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
     public Stock findOne(String itemCode) {
         Stock stock = stockRepository.findByItemCode(itemCode);
         if (stock == null) {
-            ResultMessages messages = ResultMessages.danger().add(
-                    "excn.result.datanotfound");
+            ResultMessages messages = ResultMessages.danger().add("excn.result.datanotfound");
             throw new ResourceNotFoundException(messages);
         }
         return stock;
@@ -64,8 +63,7 @@ public class StockDBLockServiceImpl implements StockDBLockService {
         // できるだけ同時にDBアクセスするように同期する
         await();
         if (stockRepository.updateQuantityWithRDBMSLock(subject) == 0) {
-            ResultMessages messages = ResultMessages.danger().add(
-                    "excn.result.exclusive");
+            ResultMessages messages = ResultMessages.danger().add("excn.result.exclusive");
             throw new BusinessException(messages);
         }
         // RDBMSによる行ロック中に、別スレッドの更新処理が実行されるようにするために、ロックを取得したスレッドを一定時間停止する。

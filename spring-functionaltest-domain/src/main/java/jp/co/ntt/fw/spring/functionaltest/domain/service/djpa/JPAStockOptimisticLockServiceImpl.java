@@ -20,21 +20,16 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
 import javax.inject.Inject;
-
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPAStock;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.djpa.JPAStockRepository;
 
 @Service
 @Transactional(value = "jpaTransactionManager")
-public class JPAStockOptimisticLockServiceImpl implements
-                                               JPAStockOptimisticLockService {
+public class JPAStockOptimisticLockServiceImpl implements JPAStockOptimisticLockService {
 
     @Inject
     protected JPAStockRepository jpaStockRepository;
@@ -56,22 +51,15 @@ public class JPAStockOptimisticLockServiceImpl implements
 
     @Override
     public Integer decreamentQty(JPAStock jpaStock, Integer qty) {
-        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(),
-                qty);
+        return jpaStockRepository.decrementQuantity(jpaStock.getItemCode(), qty);
     }
 
     @Override
     public JPAStock buy(JPAStock stock, int purchasingQuantity) {
-        JPAStock subject = jpaStockRepository.findById(stock.getItemCode())
-                .orElse(null);
+        JPAStock subject = jpaStockRepository.findById(stock.getItemCode()).orElse(null);
         subject.setQuantity(subject.getQuantity() - purchasingQuantity);
         await();
-        JPAStock jpaStckUpdt = jpaStockRepository.saveAndFlush(subject);
-
-        if (null == jpaStckUpdt) {
-            throw new ObjectOptimisticLockingFailureException(JPAStock.class, subject
-                    .getItemCode());
-        }
+        jpaStockRepository.saveAndFlush(subject);
         return subject;
     }
 

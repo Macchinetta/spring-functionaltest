@@ -54,12 +54,12 @@ public class JMSS07ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=validation_ok")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=validation_ok")
     public String receiveMessageValidationOK(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", jmsTodo.getJmsTodoId());
@@ -68,120 +68,105 @@ public class JMSS07ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=validation_ng")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=validation_ng")
     public String receiveMessageValidationNG(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException, JMSException {
 
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
-            model.addAttribute("uniqueIdentifier", "Validated!! :" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "Validated!! :" + form.getJmsTodoId());
         }
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ok")
-    public String receiveMessageInputValidationOK(Model model,
-            JmsReceivingForm form,
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_ok")
+    public String receiveMessageInputValidationOK(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ng")
-    public String receiveMessageInputValidationNg(Model model,
-            JmsReceivingForm form,
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_ng")
+    public String receiveMessageInputValidationNg(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_ng_with_err_msg")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_ng_with_err_msg")
     public String receiveMessageInputValidationWithViolationErrMsg(Model model,
-            JmsReceivingForm form,
+            JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
+        return prepareForReceivingPage(model, form);
+    }
+
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_jms_transaction")
+    public String receiveMessageInputValidationJmsTransaction(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
         return prepareForReceivingPage(model, form);
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_jms_transaction")
-    public String receiveMessageInputValidationJmsTransaction(Model model,
-            JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
-        return prepareForReceivingPage(model, form);
-    }
-
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_c_db_r")
-    public String receiveInputValidationIsolatedTransactionJmsCommitDbRollback(
-            Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_isolated_transaction_jms_c_db_r")
+    public String receiveInputValidationIsolatedTransactionJmsCommitDbRollback(Model model,
+            JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsSharedService.find(form.getJmsTodoId());
 
         if (jmsTodo == null && jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form.getJmsTodoId());
         } else if (jmsTodo == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form.getJmsTodoId());
         } else if (jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form.getJmsTodoId());
         } else {
-            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_"
-                    + form.getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_" + form.getJmsTodoId());
         }
-        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId()
-                + ".invoked")) {
-            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId()
-                    + ".invoked");
+        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId() + ".invoked")) {
+            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId() + ".invoked");
         }
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=input_validation_isolated_transaction_jms_db_c")
-    public String receiveInputValidationIsolatedTransactionJmsAndDbCommit(
-            Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=input_validation_isolated_transaction_jms_db_c")
+    public String receiveInputValidationIsolatedTransactionJmsAndDbCommit(Model model,
+            JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsSharedService.find(form.getJmsTodoId());
 
         if (jmsTodo == null && jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form.getJmsTodoId());
         } else if (jmsTodo == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form.getJmsTodoId());
         } else if (jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form.getJmsTodoId());
         } else {
-            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_"
-                    + form.getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_" + form.getJmsTodoId());
         }
-        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId()
-                + ".invoked")) {
-            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId()
-                    + ".invoked");
+        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId() + ".invoked")) {
+            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId() + ".invoked");
         }
         return "jmss/jmsReceive";
     }
 
-    private String prepareForReceivingPage(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
-        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+    private String prepareForReceivingPage(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
+        JmsTodo jmsTodo = receiveMessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", jmsTodo.getJmsTodoId());
         }
-        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId()
-                + ".invoked")) {
-            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId()
-                    + ".invoked");
+        if (jmsSharedService.existsFile(temporaryDirectory + form.getJmsTodoId() + ".invoked")) {
+            jmsSharedService.deleteFile(temporaryDirectory + form.getJmsTodoId() + ".invoked");
         }
 
         return "jmss/jmsReceive";

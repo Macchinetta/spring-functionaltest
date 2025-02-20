@@ -28,7 +28,7 @@ import org.springframework.test.annotation.IfProfileValue;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class PropertyManagementTest extends FunctionTestSupport {
 
     /**
@@ -43,8 +43,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0101001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0001")), is(
-                "あああ"));
+        assertThat(webDriverOperations.getText(id("propertyValue0001")), is("あああ"));
 
     }
 
@@ -60,8 +59,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0101002"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0002")), is(
-                "20"));
+        assertThat(webDriverOperations.getText(id("propertyValue0002")), is("20"));
 
     }
 
@@ -91,8 +89,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0102001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0007")), is(
-                "70"));
+        assertThat(webDriverOperations.getText(id("propertyValue0007")), is("70"));
 
     }
 
@@ -121,8 +118,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0102002"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0008")), is(
-                "100"));
+        assertThat(webDriverOperations.getText(id("propertyValue0008")), is("100"));
 
     }
 
@@ -151,8 +147,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0102003"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0009")), is(
-                "120"));
+        assertThat(webDriverOperations.getText(id("propertyValue0009")), is("120"));
 
     }
 
@@ -182,8 +177,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0103001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0010")), is(
-                "140"));
+        assertThat(webDriverOperations.getText(id("propertyValue0010")), is("140"));
 
     }
 
@@ -199,8 +193,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0201001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0101")), is(
-                "1000"));
+        assertThat(webDriverOperations.getText(id("propertyValue0101")), is("1000"));
 
     }
 
@@ -216,8 +209,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0202001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0200")), is(
-                "3000"));
+        assertThat(webDriverOperations.getText(id("propertyValue0200")), is("3000"));
 
     }
 
@@ -233,12 +225,9 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0301001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("uploadTitle")), is(
-                "list of update file"));
-        assertThat(webDriverOperations.getText(id("uploadDir")), is(
-                "file:/tmp/upload"));
-        assertThat(webDriverOperations.getText(id("maxUpdateFileNum")), is(
-                "10"));
+        assertThat(webDriverOperations.getText(id("uploadTitle")), is("list of update file"));
+        assertThat(webDriverOperations.getText(id("uploadDir")), is("file:/tmp/upload"));
+        assertThat(webDriverOperations.getText(id("maxUpdateFileNum")), is("10"));
 
     }
 
@@ -254,8 +243,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0302001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("prmnDefaultValue")), is(
-                "4000"));
+        assertThat(webDriverOperations.getText(id("prmnDefaultValue")), is("4000"));
 
     }
 
@@ -271,8 +259,7 @@ public class PropertyManagementTest extends FunctionTestSupport {
         webDriverOperations.click(id("prmn0401001"));
 
         // プロパティ取得値の確認
-        assertThat(webDriverOperations.getText(id("propertyValue0401001")), is(
-                "これは暗号化されたメッセージです"));
+        assertThat(webDriverOperations.getText(id("propertyValue0401001")), is("これは暗号化されたメッセージです"));
 
     }
 

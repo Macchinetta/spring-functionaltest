@@ -37,8 +37,8 @@ public class VLDT0601Controller {
         return new UserIdForm();
     }
 
-    @RequestMapping(value = { "0601/001", "0601/002", "0601/003",
-            "0601/004", }, method = RequestMethod.GET)
+    @RequestMapping(value = {"0601/001", "0601/002", "0601/003", "0601/004",},
+            method = RequestMethod.GET)
     public String handle0101Init() {
         return "vldt/userIdUseRequestForm";
     }
@@ -46,8 +46,7 @@ public class VLDT0601Controller {
     @RequestMapping(value = "0601/regist", method = RequestMethod.POST)
     public String handle0101001Regist(UserIdForm form, Model model) {
 
-        String userId = "beforeNull".equals(form.getUserId()) ? null
-                : form.getUserId();
+        String userId = "beforeNull".equals(form.getUserId()) ? null : form.getUserId();
         // テストの内容的にnullをメソッドに渡さないと意味がないため、SonarQube指摘に未対応としています。
         String convertUserId = userIdUseService.convertUserId(userId);
 

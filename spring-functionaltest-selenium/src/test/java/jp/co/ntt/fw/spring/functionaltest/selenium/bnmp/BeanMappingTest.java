@@ -27,7 +27,7 @@ import org.springframework.test.annotation.IfProfileValue;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class BeanMappingTest extends FunctionTestSupport {
 
     /**
@@ -57,15 +57,12 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         {
             // コピー元Beanからコピー先Beanへ、同名同型フィールドの値がコピーされること。
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "はなこ"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("はなこ"));
             assertThat(webDriverOperations.getText(id("getAge")), is("20"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "2011/11/11"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("2011/11/11"));
 
             // コピー元Beanとコピー先Beanでフィールド名が異なればコピーされないこと。
-            assertThat(webDriverOperations.getText(id("getMyoji")), is(
-                    "DestinationMyoji"));
+            assertThat(webDriverOperations.getText(id("getMyoji")), is("DestinationMyoji"));
 
             // コピー元に存在しないフィールドはコピーされないこと。
             assertThat(webDriverOperations.getText(id("getSex")), is("M"));
@@ -97,13 +94,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         {
             // コピー元Beanからコピー先Beanへ、同名異型フィールドの値がコピーされること。
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "やまだ"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "たかし"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("やまだ"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("たかし"));
             assertThat(webDriverOperations.getText(id("getAge")), is("25"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "2011-11-11"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("2011-11-11"));
         }
     }
 
@@ -135,8 +129,7 @@ public class BeanMappingTest extends FunctionTestSupport {
             // コピー元Beanからコピー先Beanへ、異名フィールドの値がコピーされること。
             assertThat(webDriverOperations.getText(id("getMyoji")), is("やまだ"));
             assertThat(webDriverOperations.getText(id("getAge")), is("25"));
-            assertThat(webDriverOperations.getText(id("getTanjobi")), is(
-                    "2011/11/11"));
+            assertThat(webDriverOperations.getText(id("getTanjobi")), is("2011/11/11"));
 
             // マッピング定義していない異名フィールドはコピーされないこと。
             assertThat(webDriverOperations.getText(id("getNamae")), is(""));
@@ -166,11 +159,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getCarName")), is(
-                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarName")), is("デニオ"));
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    "20140117"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is("20140117"));
         }
     }
 
@@ -204,8 +195,7 @@ public class BeanMappingTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(""));
             assertThat(webDriverOperations.getText(id("getCarColor")), is(""));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    ""));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(""));
         }
     }
 
@@ -232,11 +222,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getCarName")), is(
-                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarName")), is("デニオ"));
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    "20140117"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is("20140117"));
         }
     }
 
@@ -268,11 +256,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー先Beanからコピー元Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getCarName")), is(
-                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarName")), is("デニオ"));
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    "20140117"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is("20140117"));
         }
     }
 
@@ -299,11 +285,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getCarName")), is(
-                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarName")), is("デニオ"));
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    "20140117"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is("20140117"));
         }
 
         // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
@@ -315,8 +299,7 @@ public class BeanMappingTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(""));
             assertThat(webDriverOperations.getText(id("getCarColor")), is(""));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    ""));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(""));
         }
     }
 
@@ -343,11 +326,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getCarName")), is(
-                    "デニオ"));
+            assertThat(webDriverOperations.getText(id("getCarName")), is("デニオ"));
             assertThat(webDriverOperations.getText(id("getCarColor")), is("赤"));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    "20140117"));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is("20140117"));
         }
 
         // コピー先Bean作成後フィールドに値を設定し、Mapperを使用してコピー元Beanを新規作成する。（逆コピー）
@@ -359,8 +340,7 @@ public class BeanMappingTest extends FunctionTestSupport {
         {
             assertThat(webDriverOperations.getText(id("getCarName")), is(""));
             assertThat(webDriverOperations.getText(id("getCarColor")), is(""));
-            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(
-                    ""));
+            assertThat(webDriverOperations.getText(id("getCarReleaseDate")), is(""));
         }
     }
 
@@ -388,10 +368,8 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Bean、及びコピー先でネストされたBeanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "さとう"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "はなこ"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("さとう"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("はなこ"));
             assertThat(webDriverOperations.getText(id("getAge")), is("20"));
         }
     }
@@ -411,92 +389,63 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copySameFieldCumulativeListToListSameType"));
+            webDriverOperations.appendText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copySameFieldCumulativeListToListSameType"));
         }
 
         // コピー先(Destination)の内容確認(List -> List 同じ要素)
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
 
         webDriverOperations.back();
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.overrideText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.overrideText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.overrideText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copySameFieldCumulativeListToListDifferenceType"));
+            webDriverOperations.overrideText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.overrideText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.overrideText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copySameFieldCumulativeListToListDifferenceType"));
         }
 
         // コピー先(Destination)の内容確認(List -> List 異なる要素)
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
 
         webDriverOperations.back();
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.overrideText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.overrideText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.overrideText(id("emails2.email"),
-                    "mogemoge@example.com");
+            webDriverOperations.overrideText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.overrideText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.overrideText(id("emails2.email"), "mogemoge@example.com");
             webDriverOperations.click(id("copySameFieldCumulativeListToSet"));
         }
 
         // コピー先(Destination)の内容確認(List -> Set)
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
     }
 
@@ -515,93 +464,63 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldCumulativeListToListSameType"));
+            webDriverOperations.appendText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldCumulativeListToListSameType"));
         }
 
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
 
         webDriverOperations.back();
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.overrideText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.overrideText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.overrideText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldCumulativeListToListDifferenceType"));
+            webDriverOperations.overrideText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.overrideText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.overrideText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldCumulativeListToListDifferenceType"));
         }
 
         // コピー先(Destination)の内容確認(List -> List 異なる要素)
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
 
         webDriverOperations.back();
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.overrideText(id("emails0.email"),
-                    "hogehoge@example.com");
-            webDriverOperations.overrideText(id("emails1.email"),
-                    "fugafuga@example.com");
-            webDriverOperations.overrideText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldCumulativeListToSet"));
+            webDriverOperations.overrideText(id("emails0.email"), "hogehoge@example.com");
+            webDriverOperations.overrideText(id("emails1.email"), "fugafuga@example.com");
+            webDriverOperations.overrideText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldCumulativeListToSet"));
         }
 
         // コピー先(Destination)の内容確認(List -> Set)
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hogehoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fugafuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hogehoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fugafuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
     }
 
@@ -620,32 +539,22 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copySameFieldCumulativeListToListSameType"));
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copySameFieldCumulativeListToListSameType"));
         }
 
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         // コピー先Beanに値が重複して存在すること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
     }
 
@@ -664,32 +573,22 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldCumulativeListToListSameType"));
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldCumulativeListToListSameType"));
         }
 
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         // コピー先Beanに値が重複して存在すること。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail5")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail6")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail5")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail6")), is("mogemoge@example.com"));
         }
     }
 
@@ -708,12 +607,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
             webDriverOperations.click(id("copySameFieldNonCumulative"));
         }
 
@@ -721,14 +617,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         // コピー先Beanに値が重複して存在しないこと。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("mogemoge@example.com"));
         }
     }
 
@@ -747,12 +639,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
             webDriverOperations.click(id("copyDifferenceFieldNonCumulative"));
         }
 
@@ -760,14 +649,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー元Beanからコピー先Beanへ、フィールドの値がコピーされること。
         // コピー先Beanに値が重複して存在しないこと。
         {
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "moge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail4")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("moge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail4")), is("mogemoge@example.com"));
         }
     }
 
@@ -786,12 +671,9 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
             webDriverOperations.click(id("copySameFieldNonCumulativeDeepCopy"));
         }
 
@@ -800,28 +682,22 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先Beanに値が重複して存在しないこと。
         {
             // 文字列の確認
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("mogemoge@example.com"));
 
             // コピー元Collectionとコピー先Collection参照先の一致確認
             // non-cumulativeかつremove-orphans=trueの場合、コピー先の参照先になる
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceFromTo")), is("false"));
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceDestTo")), is("true"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceFromTo")),
+                    is("false"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceDestTo")),
+                    is("true"));
 
             // コピー元Beanとコピー先Beanのオブジェクト参照先の一致確認(true or false)
             // ディープコピーの為、一致しない(false)
-            assertThat(webDriverOperations.getText(id("getObjectRefference1")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference2")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference3")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference1")), is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference2")), is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference3")), is("false"));
         }
     }
 
@@ -840,14 +716,10 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldNonCumulativeDeepCopy"));
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldNonCumulativeDeepCopy"));
         }
 
         // コピー先(Destination)の内容確認
@@ -855,28 +727,22 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先Beanに値が重複して存在しないこと。
         {
             // 文字列の確認
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("mogemoge@example.com"));
 
             // コピー元Collectionとコピー先Collection参照先の一致確認
             // non-cumulativeかつremove-orphans=trueの場合、コピー先の参照先になる
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceFromTo")), is("false"));
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceDestTo")), is("true"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceFromTo")),
+                    is("false"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceDestTo")),
+                    is("true"));
 
             // コピー元Beanとコピー先Beanのオブジェクト参照先の一致確認(true or false)
             // ディープコピーの為、一致しない(false)
-            assertThat(webDriverOperations.getText(id("getObjectRefference1")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference2")),
-                    is("false"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference3")),
-                    is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference1")), is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference2")), is("false"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference3")), is("false"));
         }
     }
 
@@ -895,14 +761,10 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copySameFieldNonCumulativeShallowCopy"));
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copySameFieldNonCumulativeShallowCopy"));
         }
 
         // コピー先(Destination)の内容確認
@@ -910,28 +772,22 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先Beanに値が重複して存在しないこと。
         {
             // 文字列の確認
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("mogemoge@example.com"));
 
             // コピー元Collectionとコピー先Collection参照先の一致確認
             // copy-by-referenceの場合、コピー元の参照先になる
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceFromTo")), is("true"));
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceDestTo")), is("false"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceFromTo")),
+                    is("true"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceDestTo")),
+                    is("false"));
 
             // コピー元Beanとコピー先Beanのオブジェクト参照先の一致確認(true or false)
             // シャローコピーの為、一致する(true)
-            assertThat(webDriverOperations.getText(id("getObjectRefference1")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference2")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference3")),
-                    is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference1")), is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference2")), is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference3")), is("true"));
         }
     }
 
@@ -950,14 +806,10 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("emails0.email"),
-                    "hoge@example.com");
-            webDriverOperations.appendText(id("emails1.email"),
-                    "fuga@example.com");
-            webDriverOperations.appendText(id("emails2.email"),
-                    "mogemoge@example.com");
-            webDriverOperations.click(id(
-                    "copyDifferenceFieldNonCumulativeShallowCopy"));
+            webDriverOperations.appendText(id("emails0.email"), "hoge@example.com");
+            webDriverOperations.appendText(id("emails1.email"), "fuga@example.com");
+            webDriverOperations.appendText(id("emails2.email"), "mogemoge@example.com");
+            webDriverOperations.click(id("copyDifferenceFieldNonCumulativeShallowCopy"));
         }
 
         // コピー先(Destination)の内容確認
@@ -965,28 +817,22 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先Beanに値が重複して存在しないこと。
         {
             // 文字列の確認
-            assertThat(webDriverOperations.getText(id("getEmail1")), is(
-                    "hoge@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail2")), is(
-                    "fuga@example.com"));
-            assertThat(webDriverOperations.getText(id("getEmail3")), is(
-                    "mogemoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail1")), is("hoge@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail2")), is("fuga@example.com"));
+            assertThat(webDriverOperations.getText(id("getEmail3")), is("mogemoge@example.com"));
 
             // コピー元Collectionとコピー先Collection参照先の一致確認
             // copy-by-referenceの場合、コピー元の参照先になる
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceFromTo")), is("true"));
-            assertThat(webDriverOperations.getText(id(
-                    "getCollectionRefferenceDestTo")), is("false"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceFromTo")),
+                    is("true"));
+            assertThat(webDriverOperations.getText(id("getCollectionRefferenceDestTo")),
+                    is("false"));
 
             // コピー元Beanとコピー先Beanのオブジェクト参照先の一致確認(true or false)
             // シャローコピーの為、一致する(true)
-            assertThat(webDriverOperations.getText(id("getObjectRefference1")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference2")),
-                    is("true"));
-            assertThat(webDriverOperations.getText(id("getObjectRefference3")),
-                    is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference1")), is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference2")), is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectRefference3")), is("true"));
         }
     }
 
@@ -1015,13 +861,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへ、フィールドの値が変換されてコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "やまだ"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "たろう"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("やまだ"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("たろう"));
             assertThat(webDriverOperations.getText(id("getAge")), is("30"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "19840112"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("19840112"));
         }
     }
 
@@ -1050,13 +893,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // 除外設定の有るフィールドはコピー元Beanからコピー先Beanへコピーされないこと。
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "さとう"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "ごろう"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("さとう"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("ごろう"));
             assertThat(webDriverOperations.getText(id("getAge")), is("40"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "99991231"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("99991231"));
         }
     }
 
@@ -1086,23 +926,16 @@ public class BeanMappingTest extends FunctionTestSupport {
         // 提供範囲のフィールドがコピー元Beanからコピー先Beanへコピーされること。
         {
             // 適用なし
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "やまだ"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "はなこ"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("やまだ"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("はなこ"));
             assertThat(webDriverOperations.getText(id("getAge")), is("20"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "19940105"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("19940105"));
 
             // 適用あり
-            assertThat(webDriverOperations.getText(id("getScopedFirstName")),
-                    is("やまだ"));
-            assertThat(webDriverOperations.getText(id("getScopedLastName")), is(
-                    "dummy"));
-            assertThat(webDriverOperations.getText(id("getScopedAge")), is(
-                    "20"));
-            assertThat(webDriverOperations.getText(id("getScopedBirthDate")),
-                    is("99991231"));
+            assertThat(webDriverOperations.getText(id("getScopedFirstName")), is("やまだ"));
+            assertThat(webDriverOperations.getText(id("getScopedLastName")), is("dummy"));
+            assertThat(webDriverOperations.getText(id("getScopedAge")), is("20"));
+            assertThat(webDriverOperations.getText(id("getScopedBirthDate")), is("99991231"));
         }
     }
 
@@ -1131,13 +964,10 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // null・空フィールドはコピー元Beanからコピー先Beanへコピーされないこと。
         {
-            assertThat(webDriverOperations.getText(id("getFirstName")), is(
-                    "さとう"));
-            assertThat(webDriverOperations.getText(id("getLastName")), is(
-                    "dummy"));
+            assertThat(webDriverOperations.getText(id("getFirstName")), is("さとう"));
+            assertThat(webDriverOperations.getText(id("getLastName")), is("dummy"));
             assertThat(webDriverOperations.getText(id("getAge")), is("40"));
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "99991231"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")), is("99991231"));
         }
     }
 
@@ -1156,26 +986,17 @@ public class BeanMappingTest extends FunctionTestSupport {
 
         // コピー元(Source)の内容入力
         {
-            webDriverOperations.appendText(id("birthDate"),
-                    "2013-10-10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateSqlDate"),
-                    "2013-10-10");
-            webDriverOperations.appendText(id("birthDateSqlTime"),
-                    "11:11:11.111");
-            webDriverOperations.appendText(id("birthDateCalendar"),
-                    "2014-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDate"), "2013-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateSqlDate"), "2013-10-10");
+            webDriverOperations.appendText(id("birthDateSqlTime"), "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateCalendar"), "2014-10-10 11:11:11.111");
             webDriverOperations.appendText(id("birthDateGregorianCalendar"),
                     "2014-10-10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateTimestamp"),
-                    "2015-10-10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateLocalDate"),
-                    "2013-10-10");
-            webDriverOperations.appendText(id("birthDateLocalTime"),
-                    "11:11:11.111");
-            webDriverOperations.appendText(id("birthDateLocalDateTime"),
-                    "2013-10-10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateOffsetTime"),
-                    "11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateTimestamp"), "2015-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDate"), "2013-10-10");
+            webDriverOperations.appendText(id("birthDateLocalTime"), "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDateTime"), "2013-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateOffsetTime"), "11:11:11.111+09:00");
             webDriverOperations.appendText(id("birthDateOffsetDateTime"),
                     "2013-10-10 11:11:11.111+09:00");
             webDriverOperations.appendText(id("birthDateZonedDateTime"),
@@ -1186,34 +1007,27 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "2013/10/10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")),
-                    is("2013/10/10"));
-            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")),
-                    is("11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")),
+                    is("2013/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")), is("2013/10/10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")), is("11:11:11.111"));
             assertThat(webDriverOperations.getText(id("getBirthDateCalendar")),
                     is("2014/10/10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateGregorianCalendar")), is(
-                            "2014/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateGregorianCalendar")),
+                    is("2014/10/10 11:11:11.111"));
             assertThat(webDriverOperations.getText(id("getBirthDateTimestamp")),
                     is("2015/10/10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")),
-                    is("2013/10/10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")), is("2013/10/10"));
             assertThat(webDriverOperations.getText(id("getBirthDateLocalTime")),
                     is("11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateLocalDateTime")), is(
-                            "2013/10/10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateOffsetTime")), is("11:11:11.111+09:00"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateOffsetDateTime")), is(
-                            "2013/10/10 11:11:11.111+09:00"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateZonedDateTime")), is(
-                            "2013/10/10 11:11:11.111+08:00[Asia/Shanghai]"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDateTime")),
+                    is("2013/10/10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateOffsetTime")),
+                    is("11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id("getBirthDateOffsetDateTime")),
+                    is("2013/10/10 11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id("getBirthDateZonedDateTime")),
+                    is("2013/10/10 11:11:11.111+08:00[Asia/Shanghai]"));
         }
     }
 
@@ -1233,25 +1047,17 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー元(Source)の内容入力
         // java.sqlは@DateTimeFormatに対応していないため、デフォルトの日付フォーマットで設定している。
         {
-            webDriverOperations.appendText(id("birthDate"),
-                    "2013/10/10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateSqlDate"),
-                    "2013-10-10");
+            webDriverOperations.appendText(id("birthDate"), "2013/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateSqlDate"), "2013-10-10");
             webDriverOperations.appendText(id("birthDateSqlTime"), "11:11:11");
-            webDriverOperations.appendText(id("birthDateCalendar"),
-                    "2014/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateCalendar"), "2014/10/10 11:11:11.111");
             webDriverOperations.appendText(id("birthDateGregorianCalendar"),
                     "2014/10/10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateTimestamp"),
-                    "2015-10-10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateLocalDate"),
-                    "2013/10/10");
-            webDriverOperations.appendText(id("birthDateLocalTime"),
-                    "11:11:11.111");
-            webDriverOperations.appendText(id("birthDateLocalDateTime"),
-                    "2013/10/10 11:11:11.111");
-            webDriverOperations.appendText(id("birthDateOffsetTime"),
-                    "11:11:11.111+09:00");
+            webDriverOperations.appendText(id("birthDateTimestamp"), "2015-10-10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDate"), "2013/10/10");
+            webDriverOperations.appendText(id("birthDateLocalTime"), "11:11:11.111");
+            webDriverOperations.appendText(id("birthDateLocalDateTime"), "2013/10/10 11:11:11.111");
+            webDriverOperations.appendText(id("birthDateOffsetTime"), "11:11:11.111+09:00");
             webDriverOperations.appendText(id("birthDateOffsetDateTime"),
                     "2013/10/10 11:11:11.111+09:00");
             webDriverOperations.appendText(id("birthDateZonedDateTime"),
@@ -1262,34 +1068,27 @@ public class BeanMappingTest extends FunctionTestSupport {
         // コピー先(Destination)の内容確認
         // コピー元Beanからコピー先Beanへコピーされること。
         {
-            assertThat(webDriverOperations.getText(id("getBirthDate")), is(
-                    "2013-10-10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")),
-                    is("2013-10-10"));
-            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")),
-                    is("11:11:11"));
+            assertThat(webDriverOperations.getText(id("getBirthDate")),
+                    is("2013-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlDate")), is("2013-10-10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateSqlTime")), is("11:11:11"));
             assertThat(webDriverOperations.getText(id("getBirthDateCalendar")),
                     is("2014-10-10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateGregorianCalendar")), is(
-                            "2014-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateGregorianCalendar")),
+                    is("2014-10-10 11:11:11.111"));
             assertThat(webDriverOperations.getText(id("getBirthDateTimestamp")),
                     is("2015-10-10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")),
-                    is("2013-10-10"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDate")), is("2013-10-10"));
             assertThat(webDriverOperations.getText(id("getBirthDateLocalTime")),
                     is("11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateLocalDateTime")), is(
-                            "2013-10-10 11:11:11.111"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateOffsetTime")), is("11:11:11.111+09:00"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateOffsetDateTime")), is(
-                            "2013-10-10 11:11:11.111+09:00"));
-            assertThat(webDriverOperations.getText(id(
-                    "getBirthDateZonedDateTime")), is(
-                            "2013-10-10 11:11:11.111+09:00[Asia/Tokyo]"));
+            assertThat(webDriverOperations.getText(id("getBirthDateLocalDateTime")),
+                    is("2013-10-10 11:11:11.111"));
+            assertThat(webDriverOperations.getText(id("getBirthDateOffsetTime")),
+                    is("11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id("getBirthDateOffsetDateTime")),
+                    is("2013-10-10 11:11:11.111+09:00"));
+            assertThat(webDriverOperations.getText(id("getBirthDateZonedDateTime")),
+                    is("2013-10-10 11:11:11.111+09:00[Asia/Tokyo]"));
         }
     }
 
@@ -1317,10 +1116,9 @@ public class BeanMappingTest extends FunctionTestSupport {
             // https://github.com/DozerMapper/dozer/issues/251
             // JDKのロケールが英語でない場合、MappingExceptionではなくIllegalArgumentExceptionとなってしまう。
             // Dozerのバグが解消されるまで、システムエラーもテスト成功とみなす。
-            assertThat(webDriverOperations.getText(By.xpath(
-                    "//div[2]/div/ul/li")), anyOf(is(
-                            "[e.sf.bnmp.0001] マッピング処理に失敗しました。"), is(
-                                    "[e.sf.cmmn.9001] System error occurred!")));
+            assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/ul/li")),
+                    anyOf(is("[e.sf.bm.0001] マッピング処理に失敗しました。"),
+                            is("[e.sf.fw.9001] System error occurred!")));
         }
     }
 }

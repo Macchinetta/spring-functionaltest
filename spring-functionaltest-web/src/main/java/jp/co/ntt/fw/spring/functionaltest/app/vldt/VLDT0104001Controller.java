@@ -36,8 +36,7 @@ public class VLDT0104001Controller {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(String.class,
-                new StringTrimmerEditor(true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -46,8 +45,7 @@ public class VLDT0104001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated NullBindValidationForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated NullBindValidationForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/nullBindValidationView";

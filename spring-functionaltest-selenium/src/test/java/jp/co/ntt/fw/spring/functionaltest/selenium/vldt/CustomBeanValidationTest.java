@@ -19,14 +19,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -34,31 +31,19 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT04 独自のBeanValidationアノテーションの作成のテストケース
  * </p>
  */
-public class CustomBeanValidationTest extends FunctionTestSupport {
-
+public class CustomBeanValidationTest extends ValidationTestSupport {
     private static WebDriver driver;
 
-    private String validate = "validate";
-
-    private String errors = ".errors";
-
-    private String currentLocale = "ja";
-
-    private static Map<String, String> localeDateFormat;
+    private BrowserLocale currentLocale = BrowserLocale.JAPAN;
 
     public CustomBeanValidationTest() {
-        localeDateFormat = new HashMap<String, String>();
-        localeDateFormat.put("ja", "yyyy/MM/dd");
-        localeDateFormat.put("en", "MM/dd/yyyy");
-
         super.disableDefaultWebDriver();
     }
 
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -84,15 +69,13 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target),
-                        "abcdefghijklmnopqrst");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(target), "abcdefghijklmnopqrst");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -101,13 +84,12 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "abc");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -116,13 +98,12 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "abc1");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -130,15 +111,13 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target),
-                        "abcdefghijklmnopqrstu");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(target), "abcdefghijklmnopqrstu");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
@@ -165,13 +144,12 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "192.168.0.1");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -180,13 +158,12 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "192.168.0.256");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
@@ -194,7 +171,8 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
     /**
      * VLDT0402002
      * <ul>
-     * <li>業務ロジックチェックを行う、Bean Validationインタフェースの実装クラスを作成した場合、 業務ロジックチェックの結果メッセージを入力フィールドの横に出力することができることを確認する。</li>
+     * <li>業務ロジックチェックを行う、Bean Validationインタフェースの実装クラスを作成した場合、
+     * 業務ロジックチェックの結果メッセージを入力フィールドの横に出力することができることを確認する。</li>
      * </ul>
      */
     @Test
@@ -213,13 +191,12 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "Tom");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -228,14 +205,14 @@ public class CustomBeanValidationTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "Josh");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
 }
+

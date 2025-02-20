@@ -63,9 +63,8 @@ public class ExcelDownloadView extends AbstractXlsxView {
     }
 
     @Override
-    protected void buildExcelDocument(Map<String, Object> model,
-            Workbook workbook, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
+    protected void buildExcelDocument(Map<String, Object> model, Workbook workbook,
+            HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Sheet sheet = workbook.createSheet("新規口座開設申込書");
         sheet.setFitToPage(true);
@@ -190,15 +189,13 @@ public class ExcelDownloadView extends AbstractXlsxView {
         titleCell.setCellStyle(titleCellStyle);
 
         // fill in application date area
-        Cell applicationDateCell = applicationDateRow.createCell(2,
-                CellType.BLANK);
+        Cell applicationDateCell = applicationDateRow.createCell(2, CellType.BLANK);
         applicationDateCell.setCellValue("申込日");
         applicationDateCell.setCellStyle(dataCellStyle);
 
-        Cell applicationDateValueCell = applicationDateRow.createCell(3,
-                CellType.BLANK);
-        applicationDateValueCell.setCellValue(DateFormatUtils.format(dateFactory
-                .newDate(), "yyyy年MM月dd日"));
+        Cell applicationDateValueCell = applicationDateRow.createCell(3, CellType.BLANK);
+        applicationDateValueCell
+                .setCellValue(DateFormatUtils.format(dateFactory.newDate(), "yyyy年MM月dd日"));
         applicationDateValueCell.setCellStyle(dataCellStyle);
 
         // fill in instructions
@@ -228,9 +225,8 @@ public class ExcelDownloadView extends AbstractXlsxView {
         birthdateCell.setCellStyle(dataCellStyle);
 
         Cell birthdateValueCell = birthdateRow.createCell(3, CellType.BLANK);
-        birthdateValueCell.setCellValue(DateFormatUtils.format(DateUtils
-                .parseDate((String) model.get("birthdate"), "yyyyMMdd"),
-                "yyyy年MM月dd日"));
+        birthdateValueCell.setCellValue(DateFormatUtils.format(
+                DateUtils.parseDate((String) model.get("birthdate"), "yyyyMMdd"), "yyyy年MM月dd日"));
         birthdateValueCell.setCellStyle(ListCellStyle);
 
         // fill in required documents information
@@ -255,55 +251,36 @@ public class ExcelDownloadView extends AbstractXlsxView {
         RegionUtil.setBorderLeft(BorderStyle.MEDIUM, nameRangeAddress, sheet);
         RegionUtil.setBorderRight(BorderStyle.MEDIUM, nameRangeAddress, sheet);
 
-        RegionUtil.setBorderTop(BorderStyle.MEDIUM, nameValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, nameValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, nameValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderRight(BorderStyle.MEDIUM, nameValueRangeAddress,
-                sheet);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, nameValueRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, nameValueRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, nameValueRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, nameValueRangeAddress, sheet);
 
         RegionUtil.setBorderTop(BorderStyle.MEDIUM, addressRangeAddress, sheet);
-        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressRangeAddress,
-                sheet);
-        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressRangeAddress,
-                sheet);
-        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressRangeAddress,
-                sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressRangeAddress, sheet);
 
-        RegionUtil.setBorderTop(BorderStyle.MEDIUM, addressValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressValueRangeAddress,
-                sheet);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, addressValueRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, addressValueRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, addressValueRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, addressValueRangeAddress, sheet);
 
-        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateRangeAddress,
-                sheet);
-        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, birthdateRangeAddress,
-                sheet);
-        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateRangeAddress,
-                sheet);
-        RegionUtil.setBorderRight(BorderStyle.MEDIUM, birthdateRangeAddress,
-                sheet);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, birthdateRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, birthdateRangeAddress, sheet);
 
-        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderBottom(BorderStyle.MEDIUM,
-                birthdateValueRangeAddress, sheet);
-        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateValueRangeAddress,
-                sheet);
-        RegionUtil.setBorderRight(BorderStyle.MEDIUM,
-                birthdateValueRangeAddress, sheet);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, birthdateValueRangeAddress, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, birthdateValueRangeAddress, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, birthdateValueRangeAddress, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, birthdateValueRangeAddress, sheet);
 
         String filename = "日本語ファイル名.xlsx";
         Browser browser = Browser.detect(request.getHeader("user-agent"));
         response.setCharacterEncoding("UTF-8");
-        response.setHeader("Content-Disposition", "attachment;" + browser
-                .appendAndEncodeFilename(filename));
+        response.setHeader("Content-Disposition",
+                "attachment;" + browser.appendAndEncodeFilename(filename));
     }
 
 }

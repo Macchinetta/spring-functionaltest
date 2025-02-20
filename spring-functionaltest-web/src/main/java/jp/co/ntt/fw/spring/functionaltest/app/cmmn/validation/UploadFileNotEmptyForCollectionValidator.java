@@ -22,8 +22,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class UploadFileNotEmptyForCollectionValidator implements
-                                                      ConstraintValidator<UploadFileNotEmpty, Collection<MultipartFile>> {
+public class UploadFileNotEmptyForCollectionValidator
+        implements ConstraintValidator<UploadFileNotEmpty, Collection<MultipartFile>> {
 
     private final UploadFileNotEmptyValidator validator = new UploadFileNotEmptyValidator();
 
@@ -32,9 +32,15 @@ public class UploadFileNotEmptyForCollectionValidator implements
         validator.initialize(constraintAnnotation);
     }
 
+    /**
+     * 複数アップロードファイルの有効確認
+     * @param values 検証するアップロードファイルのリスト
+     * @param context ValidatorContext
+     * @see UploadFileNotEmptyValidator#isValid(MultipartFile, ConstraintValidatorContext)
+     * @return MultipartFileとして有効な場合はtrue、無効の場合はfalse
+     */
     @Override
-    public boolean isValid(Collection<MultipartFile> values,
-            ConstraintValidatorContext context) {
+    public boolean isValid(Collection<MultipartFile> values, ConstraintValidatorContext context) {
         for (MultipartFile file : values) {
             if (!validator.isValid(file, context)) {
                 return false;

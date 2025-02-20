@@ -25,16 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ATHN01Controller {
 
     @RequestMapping(value = "0102", params = "loginSuccess")
-    public String handle0101LoginSuccess(
-            @AuthenticationPrincipal User userDetails, Model model) {
+    public String handle0101LoginSuccess(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("testNo", "0102/001");
         return "athn/topForDefault";
     }
 
     @RequestMapping("0102/001")
-    public String handle0102001(@AuthenticationPrincipal User userDetails,
-            Model model) {
+    public String handle0102001(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
 
         model.addAttribute("testNo", "0102/001");

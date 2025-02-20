@@ -1,4 +1,5 @@
-.selectedFile, .description {
+.selectedFile,
+.description {
     width: 600px;
     display: inline-block;
     overflow: visible;

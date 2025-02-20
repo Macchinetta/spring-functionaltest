@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.oth2;
 
 import java.util.Collection;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 
 public interface TodoService {

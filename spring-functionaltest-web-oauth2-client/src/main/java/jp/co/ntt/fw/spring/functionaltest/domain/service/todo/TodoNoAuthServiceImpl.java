@@ -17,13 +17,11 @@ package jp.co.ntt.fw.spring.functionaltest.domain.service.todo;
 
 import java.util.Collection;
 import java.util.List;
-
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.RequestEntity;
@@ -31,14 +29,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 
 @Service
 @Transactional
 public class TodoNoAuthServiceImpl implements TodoService {
 
-    @Value("${resource.server.base-uri:http://localhost:8080/spring-functionaltest-web-oauth2-resource}")
+    @Value("${oth2.resource.server.base-uri:http://localhost:8080/spring-functionaltest-web-oauth2-resource}")
     private String resourceServerBaseUri;
 
     @Inject
@@ -47,8 +44,7 @@ public class TodoNoAuthServiceImpl implements TodoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Todo findOne(@NotEmpty String todoId,
-            @Nullable String registrationId) {
+    public Todo findOne(@NotEmpty String todoId, @Nullable String registrationId) {
 
         // @formatter:off
         RequestEntity<Void> requestEntity = RequestEntity
@@ -56,8 +52,8 @@ public class TodoNoAuthServiceImpl implements TodoService {
                 .build();
         // @formatter:on
 
-        ResponseEntity<Todo> responseEntity = this.restOperations.exchange(
-                requestEntity, Todo.class);
+        ResponseEntity<Todo> responseEntity =
+                this.restOperations.exchange(requestEntity, Todo.class);
         Todo todo = responseEntity.getBody();
 
         return todo;
@@ -66,16 +62,11 @@ public class TodoNoAuthServiceImpl implements TodoService {
     @Override
     public Collection<Todo> findAll(@Nullable String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Void> requestEntity = RequestEntity
-                .get(this.resourceServerBaseUri + "/noauth")
-                .build();
-        // @formatter:on
+        RequestEntity<Void> requestEntity =
+                RequestEntity.get(this.resourceServerBaseUri + "/noauth").build();
 
-        // @formatter:off
-		ResponseEntity<List<Todo>> responseEntity = this.restOperations.exchange(requestEntity,
-				new ParameterizedTypeReference<List<Todo>>() {});
-        // @formatter:on
+        ResponseEntity<List<Todo>> responseEntity =
+                this.restOperations.exchange(requestEntity, new ParameterizedTypeReference<List<Todo>>() {});
 
         List<Todo> todos = responseEntity.getBody();
 
@@ -85,45 +76,34 @@ public class TodoNoAuthServiceImpl implements TodoService {
     @Override
     public Todo create(@NotNull Todo todo, @Nullable String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Todo> requestEntity = RequestEntity
-                .post(this.resourceServerBaseUri + "/noauth")
-                .body(todo);
-        // @formatter:on
+        RequestEntity<Todo> requestEntity =
+                RequestEntity.post(this.resourceServerBaseUri + "/noauth").body(todo);
 
-        ResponseEntity<Todo> responseEntity = this.restOperations.exchange(
-                requestEntity, Todo.class);
+        ResponseEntity<Todo> responseEntity =
+                this.restOperations.exchange(requestEntity, Todo.class);
         Todo createdTodo = responseEntity.getBody();
 
         return createdTodo;
     }
 
     @Override
-    public Todo finish(@NotEmpty String todoId,
-            @Nullable String registrationId) {
+    public Todo finish(@NotEmpty String todoId, @Nullable String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Void> requestEntity = RequestEntity
-                .put(this.resourceServerBaseUri + "/noauth/" + todoId)
-                .build();
-        // @formatter:on
+        RequestEntity<Void> requestEntity =
+                RequestEntity.put(this.resourceServerBaseUri + "/noauth/" + todoId).build();
 
-        ResponseEntity<Todo> responseEntity = this.restOperations.exchange(
-                requestEntity, Todo.class);
+        ResponseEntity<Todo> responseEntity =
+                this.restOperations.exchange(requestEntity, Todo.class);
         Todo finishedTodo = responseEntity.getBody();
 
         return finishedTodo;
     }
 
     @Override
-    public void delete(@NotEmpty String todoId,
-            @Nullable String registrationId) {
+    public void delete(@NotEmpty String todoId, @Nullable String registrationId) {
 
-        // @formatter:off
-        RequestEntity<Void> requestEntity = RequestEntity
-                .delete(this.resourceServerBaseUri + "/noauth/" + todoId)
-                .build();
-        // @formatter:on
+        RequestEntity<Void> requestEntity =
+                RequestEntity.delete(this.resourceServerBaseUri + "/noauth/" + todoId).build();
 
         this.restOperations.exchange(requestEntity, void.class);
     }
@@ -131,11 +111,8 @@ public class TodoNoAuthServiceImpl implements TodoService {
     @Override
     public void deleteAll() {
 
-        // @formatter:off
-        RequestEntity<Void> requestEntity = RequestEntity
-                .delete(this.resourceServerBaseUri + "/noauth")
-                .build();
-        // @formatter:on
+        RequestEntity<Void> requestEntity =
+                RequestEntity.delete(this.resourceServerBaseUri + "/noauth").build();
 
         this.restOperations.exchange(requestEntity, void.class);
     }

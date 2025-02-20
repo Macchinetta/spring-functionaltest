@@ -60,13 +60,13 @@ public class JMSS06ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTranSuccess")
-    public String receiveMessage_SendOK(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=sendTranSuccess")
+    public String receiveMessage_SendOK(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
@@ -76,13 +76,13 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTranFail")
-    public String receiveMessage_SendNG(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=sendTranFail")
+    public String receiveMessage_SendNG(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
@@ -92,13 +92,13 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=reciTranSuccess")
-    public String receiveMessage_ReceiveOK(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=reciTranSuccess")
+    public String receiveMessage_ReceiveOK(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
@@ -108,13 +108,13 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=reciTranFail")
-    public String receiveMessage_ReceiveNG(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=reciTranFail")
+    public String receiveMessage_ReceiveNG(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
@@ -124,13 +124,13 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=asyncTranSuccess")
-    public String receiveMessage_AsyncOK(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=asyncTranSuccess")
+    public String receiveMessage_AsyncOK(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
@@ -140,30 +140,30 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=asyncTranFail")
-    public String receiveMessage_AsyncNG(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=asyncTranFail")
+    public String receiveMessage_AsyncNG(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(
-                "rollbacked_" + form.getJmsTodoId());
+        JmsTodo jmsTodo =
+                receivemessageHelper.receiveMessagesForJmsTodo("rollbacked_" + form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_" + form.getJmsTodoId());
         }
 
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseSuccess")
-    public String receiveMessage_sendTxBestEffort1PhaseOK(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=sendTxBestEffort1PhaseSuccess")
+    public String receiveMessage_sendTxBestEffort1PhaseOK(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
@@ -175,40 +175,36 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseFail")
-    public String receiveMessage_sendTxBestEffort1PhaseNG(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=sendTxBestEffort1PhaseFail")
+    public String receiveMessage_sendTxBestEffort1PhaseNG(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo == null && jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form.getJmsTodoId());
         } else if (jmsTodo == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form.getJmsTodoId());
         } else if (jmsTodoInDB == null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form.getJmsTodoId());
         } else {
-            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_"
-                    + form.getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_" + form.getJmsTodoId());
         }
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseSuccess")
-    public String receiveMessage_receTxBestEffort1PhaseOK(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=receTxBestEffort1PhaseSuccess")
+    public String receiveMessage_receTxBestEffort1PhaseOK(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // 一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
@@ -220,29 +216,26 @@ public class JMSS06ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseFail")
-    public String receiveMessage_receTxBestEffort1PhaseNG(Model model,
-            JmsReceivingForm form) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=receTxBestEffort1PhaseFail")
+    public String receiveMessage_receTxBestEffort1PhaseNG(Model model, JmsReceivingForm form)
+            throws InterruptedException, IOException {
 
         // MQがRollbackしたことを示す一時ファイルの記載内容を取得し、JmsTodoに変換
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(
-                "rollbacked_" + form.getJmsTodoId());
+        JmsTodo jmsTodo =
+                receivemessageHelper.receiveMessagesForJmsTodo("rollbacked_" + form.getJmsTodoId());
 
         JmsTodo jmsTodoInDB = jmsTodoRepository.findById(form.getJmsTodoId());
 
         // アトリビュート設定
         if (jmsTodo != null && jmsTodoInDB != null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQ_" + form.getJmsTodoId());
         } else if (jmsTodo != null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_MQandDB_" + form.getJmsTodoId());
         } else if (jmsTodoInDB != null) {
-            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form
-                    .getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "rollbacked_DB_" + form.getJmsTodoId());
         } else {
-            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_"
-                    + form.getJmsTodoId());
+            model.addAttribute("uniqueIdentifier", "not_rollbacked_MQandDB_" + form.getJmsTodoId());
         }
 
         return "jmss/jmsReceive";
@@ -251,8 +244,7 @@ public class JMSS06ReceivingController {
     @RequestMapping(value = "await")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
-    public void awaitUntilReceivedMessages(
-            @RequestParam("jmsTodoId") String jmsTodoId) {
+    public void awaitUntilReceivedMessages(@RequestParam("jmsTodoId") String jmsTodoId) {
         jmsAsyncReceiveSynchronizingService.await(jmsTodoId);
     }
 

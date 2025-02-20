@@ -16,8 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 public class AuthorizedValidationForm implements Serializable {
 
@@ -26,7 +25,7 @@ public class AuthorizedValidationForm implements Serializable {
     public static interface Anonymous {
     };
 
-    @NotNull(groups = Anonymous.class)
+    @NotEmpty(groups = Anonymous.class)
     private String deliveryAddress;
 
     public String getDeliveryAddress() {

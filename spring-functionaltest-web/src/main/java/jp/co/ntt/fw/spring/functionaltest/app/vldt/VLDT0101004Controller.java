@@ -37,8 +37,7 @@ public class VLDT0101004Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated DisplayOutsideMessagesForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated DisplayOutsideMessagesForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/displayOutsideMessagesView";

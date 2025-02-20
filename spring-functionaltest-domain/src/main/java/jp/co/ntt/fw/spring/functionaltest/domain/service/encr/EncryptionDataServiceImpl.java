@@ -131,102 +131,95 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
             generator.initialize(2048);
             return generator.generateKeyPair();
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9001", "key generation error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9001", "key generation error (NoSuchAlgorithm).", e);
         }
     }
 
     @Override
     public byte[] encryptByJCAWithPublicKeyOfOpenSSL(String rawText) {
         try (InputStream stream = publicKeyFile.getInputStream()) {
-            KeySpec publicKeySpec = new X509EncodedKeySpec(StreamUtils
-                    .copyToByteArray(stream));
+            KeySpec publicKeySpec = new X509EncodedKeySpec(StreamUtils.copyToByteArray(stream));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return encryptAndSaveByPublicKey(rawText, keyFactory.generatePublic(
-                    publicKeySpec));
+            return encryptAndSaveByPublicKey(rawText, keyFactory.generatePublic(publicKeySpec));
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (InvalidKeySpecException e) {
-            throw new SystemException("e.sf.encr.9010", "encryption error (InvalidKeySpec).", e);
+            throw new SystemException("e.sf.ec.9010", "encryption error (InvalidKeySpec).", e);
         }
     }
 
     @Override
     public String decryptByJCAWithPrivateKeyOfOpenSSL(byte[] encryptedBytes) {
         try (InputStream stream = privateKeyFile.getInputStream()) {
-            KeySpec privateKeySpec = new PKCS8EncodedKeySpec(StreamUtils
-                    .copyToByteArray(stream));
+            KeySpec privateKeySpec = new PKCS8EncodedKeySpec(StreamUtils.copyToByteArray(stream));
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return decryptByPrivateKey(encryptedBytes, keyFactory
-                    .generatePrivate(privateKeySpec));
+            return decryptByPrivateKey(encryptedBytes, keyFactory.generatePrivate(privateKeySpec));
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (InvalidKeySpecException e) {
-            throw new SystemException("e.sf.encr.9010", "encryption error (InvalidKeySpec).", e);
+            throw new SystemException("e.sf.ec.9010", "encryption error (InvalidKeySpec).", e);
         }
     }
 
     @Override
     public byte[] encryptByPublicKey(String rawText, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance(
-                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, publicKey,
-                    new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, publicKey, new OAEPParameterSpec("SHA-256", "MGF1",
+                    MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             return cipher.doFinal(rawText.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (NoSuchPaddingException e) {
-            throw new SystemException("e.sf.encr.9003", "encryption error (NoSuchPadding).", e);
+            throw new SystemException("e.sf.ec.9003", "encryption error (NoSuchPadding).", e);
         } catch (InvalidKeyException e) {
-            throw new SystemException("e.sf.encr.9004", "encryption error (InvalidKey).", e);
+            throw new SystemException("e.sf.ec.9004", "encryption error (InvalidKey).", e);
         } catch (IllegalBlockSizeException e) {
-            throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
+            throw new SystemException("e.sf.ec.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
+            throw new SystemException("e.sf.ec.9006", "encryption error (BadPadding).", e);
         } catch (InvalidAlgorithmParameterException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
+            throw new SystemException("e.sf.ec.9006",
+                    "encryption error (InvalidAlgorithmParameter).", e);
         }
     }
 
     @Override
-    public String decryptByPrivateKey(byte[] encryptedBytes,
-            PrivateKey privateKey) {
+    public String decryptByPrivateKey(byte[] encryptedBytes, PrivateKey privateKey) {
         try {
-            Cipher cipher = Cipher.getInstance(
-                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-            cipher.init(Cipher.DECRYPT_MODE, privateKey,
-                    new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
-            return new String(cipher.doFinal(
-                    encryptedBytes), StandardCharsets.UTF_8);
+            Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, privateKey, new OAEPParameterSpec("SHA-256", "MGF1",
+                    MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
+            return new String(cipher.doFinal(encryptedBytes), StandardCharsets.UTF_8);
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (NoSuchPaddingException e) {
-            throw new SystemException("e.sf.encr.9003", "encryption error (NoSuchPadding).", e);
+            throw new SystemException("e.sf.ec.9003", "encryption error (NoSuchPadding).", e);
         } catch (InvalidKeyException e) {
-            throw new SystemException("e.sf.encr.9004", "encryption error (InvalidKey).", e);
+            throw new SystemException("e.sf.ec.9004", "encryption error (InvalidKey).", e);
         } catch (IllegalBlockSizeException e) {
-            throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
+            throw new SystemException("e.sf.ec.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
+            throw new SystemException("e.sf.ec.9006", "encryption error (BadPadding).", e);
         } catch (InvalidAlgorithmParameterException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
+            throw new SystemException("e.sf.ec.9006",
+                    "encryption error (InvalidAlgorithmParameter).", e);
         }
     }
 
     @Override
-    public byte[] encryptAndSaveByPublicKey(String rawText,
-            PublicKey publicKey) {
+    public byte[] encryptAndSaveByPublicKey(String rawText, PublicKey publicKey) {
         try {
             byte[] encryptedBytes = encryptByPublicKey(rawText, publicKey);
-            Files.write(Paths.get(System.getProperty("java.io.tmpdir"),
-                    "encryptedByJCA.dat"), encryptedBytes);
+            Files.write(Paths.get(System.getProperty("java.io.tmpdir"), "encryptedByJCA.dat"),
+                    encryptedBytes);
             return encryptedBytes;
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         }
     }
 
@@ -239,22 +232,21 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
         try (InputStream stream = privateKey4OpensslFile.getInputStream()) {
 
-            Files.write(privateKeyFilePath, StreamUtils.copyToByteArray(
-                    stream));
+            Files.write(privateKeyFilePath, StreamUtils.copyToByteArray(stream));
 
             Process proc = Runtime.getRuntime().exec(
                     "openssl pkeyutl -decrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -inkey "
-                            + privateKeyFilePath + " -in " + encryptedFilePath
-                            + " -out " + decryptedFilePath);
+                            + privateKeyFilePath + " -in " + encryptedFilePath + " -out "
+                            + decryptedFilePath);
             proc.waitFor();
             byte[] decryptedBytes = Files.readAllBytes(decryptedFilePath);
 
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (InterruptedException e) {
             // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
-            throw new SystemException("e.sf.encr.9009", "interrupted error.", e);
+            throw new SystemException("e.sf.ec.9009", "interrupted error.", e);
         } finally {
             try {
                 Files.deleteIfExists(encryptedFilePath);
@@ -274,22 +266,21 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
         try (InputStream stream = publicKeyFile.getInputStream()) {
             Files.write(publicKeyFilePath, StreamUtils.copyToByteArray(stream));
-            Files.write(rawTextFilePath, rawText.getBytes(
-                    StandardCharsets.UTF_8));
+            Files.write(rawTextFilePath, rawText.getBytes(StandardCharsets.UTF_8));
 
             Process proc = Runtime.getRuntime().exec(
                     "openssl pkeyutl -encrypt -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -keyform DER -pubin -inkey "
-                            + publicKeyFilePath + " -in " + rawTextFilePath
-                            + " -out " + encryptedFilePath);
+                            + publicKeyFilePath + " -in " + rawTextFilePath + " -out "
+                            + encryptedFilePath);
             proc.waitFor();
             byte[] encryptedBytes = Files.readAllBytes(encryptedFilePath);
 
             return encryptedBytes;
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (InterruptedException e) {
             // SystemExceptionをthrowしているため、SonarQube指摘に未対応としています。
-            throw new SystemException("e.sf.encr.9009", "interrupted error.", e);
+            throw new SystemException("e.sf.ec.9009", "interrupted error.", e);
         } finally {
             try {
                 Files.deleteIfExists(rawTextFilePath);
@@ -314,8 +305,7 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
     @Override
     public String encryptBytesByAesWithGcm(String rawText) {
-        return new String(Hex.encode(encryptBytesByAesWithGcm(Utf8.encode(
-                rawText))));
+        return new String(Hex.encode(encryptBytesByAesWithGcm(Utf8.encode(rawText))));
     }
 
     @Override
@@ -342,13 +332,11 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
     // <https://github.com/dsyer/spring-security-rsa/blob/master/src/main/java/org/springframework/security/rsa/crypto/RsaSecretEncryptor.java>
     private byte[] encryptByHybrid(byte[] text, PublicKey key) {
         byte[] random = KeyGenerators.secureRandom(16).generateKey();
-        BytesEncryptor aes = Encryptors.standard(new String(Hex.encode(random)),
-                salt);
+        BytesEncryptor aes = Encryptors.standard(new String(Hex.encode(random)), salt);
         try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            final Cipher cipher = Cipher.getInstance(
-                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key,
-                    new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
+            final Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, key, new OAEPParameterSpec("SHA-256", "MGF1",
+                    MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             byte[] secret = cipher.doFinal(random);
 
             byte[] data = new byte[2];
@@ -361,19 +349,20 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
             return result.toByteArray();
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (NoSuchPaddingException e) {
-            throw new SystemException("e.sf.encr.9003", "encryption error (NoSuchPadding).", e);
+            throw new SystemException("e.sf.ec.9003", "encryption error (NoSuchPadding).", e);
         } catch (InvalidKeyException e) {
-            throw new SystemException("e.sf.encr.9004", "encryption error (InvalidKey).", e);
+            throw new SystemException("e.sf.ec.9004", "encryption error (InvalidKey).", e);
         } catch (IllegalBlockSizeException e) {
-            throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
+            throw new SystemException("e.sf.ec.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
+            throw new SystemException("e.sf.ec.9006", "encryption error (BadPadding).", e);
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (InvalidAlgorithmParameterException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
+            throw new SystemException("e.sf.ec.9006",
+                    "encryption error (InvalidAlgorithmParameter).", e);
         }
 
     }
@@ -398,10 +387,9 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
             byte[] random = new byte[length];
             no_bytes_read = input.read(random);
-            final Cipher cipher = Cipher.getInstance(
-                    "RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-            cipher.init(Cipher.DECRYPT_MODE, key,
-                    new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
+            final Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, key, new OAEPParameterSpec("SHA-256", "MGF1",
+                    MGF1ParameterSpec.SHA256, PSource.PSpecified.DEFAULT));
             String secret = new String(Hex.encode(cipher.doFinal(random)));
             byte[] buffer = new byte[text.length - random.length - 2];
             no_bytes_read = input.read(buffer);
@@ -410,19 +398,20 @@ public class EncryptionDataServiceImpl implements EncryptionDataService {
 
             return output.toByteArray();
         } catch (NoSuchAlgorithmException e) {
-            throw new SystemException("e.sf.encr.9002", "encryption error (NoSuchAlgorithm).", e);
+            throw new SystemException("e.sf.ec.9002", "encryption error (NoSuchAlgorithm).", e);
         } catch (NoSuchPaddingException e) {
-            throw new SystemException("e.sf.encr.9003", "encryption error (NoSuchPadding).", e);
+            throw new SystemException("e.sf.ec.9003", "encryption error (NoSuchPadding).", e);
         } catch (InvalidKeyException e) {
-            throw new SystemException("e.sf.encr.9004", "encryption error (InvalidKey).", e);
+            throw new SystemException("e.sf.ec.9004", "encryption error (InvalidKey).", e);
         } catch (IllegalBlockSizeException e) {
-            throw new SystemException("e.sf.encr.9005", "encryption error (IllegalBlockSize).", e);
+            throw new SystemException("e.sf.ec.9005", "encryption error (IllegalBlockSize).", e);
         } catch (BadPaddingException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (BadPadding).", e);
+            throw new SystemException("e.sf.ec.9006", "encryption error (BadPadding).", e);
         } catch (IOException e) {
-            throw new SystemException("e.sf.encr.9007", "input/output error.", e);
+            throw new SystemException("e.sf.ec.9007", "input/output error.", e);
         } catch (InvalidAlgorithmParameterException e) {
-            throw new SystemException("e.sf.encr.9006", "encryption error (InvalidAlgorithmParameter).", e);
+            throw new SystemException("e.sf.ec.9006",
+                    "encryption error (InvalidAlgorithmParameter).", e);
         }
     }
 

@@ -1,36 +1,34 @@
 <div id="wrapper">
+    <h1 id="screenTitle">フォームオブジェクトの実装 完了画面</h1>
 
-  <h1 id="screenTitle">フォームオブジェクトの実装 完了画面</h1>
-
-  <table class="table table-striped table-bordered table-condensed">
-    <tr>
-      <th class="inputColumn">value1</th>
-      <td><span id="value1">${f:h(formObjectForm.value1)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value2</th>
-      <td><span id="value2">${f:h(formObjectForm.value2)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value3</th>
-      <td><span id="value3">${f:h(formObjectForm.value3)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value4</th>
-      <td><span id="value4">${f:h(formObjectForm.value4)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value5</th>
-      <td><span id="value5">${f:h(formObjectForm.value5)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value6</th>
-      <td><span id="value6">${f:h(formObjectForm.value6)}</span></td>
-    </tr>
-    <tr>
-      <th class="inputColumn">value7</th>
-      <td><span id="value7">${f:h(formObjectForm.value7)}</span></td>
-    </tr>
-  </table>
-
+    <table class="table table-striped table-bordered table-condensed">
+        <tr>
+            <th class="inputColumn">value1</th>
+            <td><span id="value1">${f:h(formObjectForm.value1)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value2</th>
+            <td><span id="value2">${f:h(formObjectForm.value2)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value3</th>
+            <td><span id="value3">${f:h(formObjectForm.value3)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value4</th>
+            <td><span id="value4">${f:h(formObjectForm.value4)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value5</th>
+            <td><span id="value5">${f:h(formObjectForm.value5)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value6</th>
+            <td><span id="value6">${f:h(formObjectForm.value6)}</span></td>
+        </tr>
+        <tr>
+            <th class="inputColumn">value7</th>
+            <td><span id="value7">${f:h(formObjectForm.value7)}</span></td>
+        </tr>
+    </table>
 </div>

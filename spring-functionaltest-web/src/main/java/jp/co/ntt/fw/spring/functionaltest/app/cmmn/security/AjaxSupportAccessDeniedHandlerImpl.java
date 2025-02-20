@@ -29,8 +29,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.terasoluna.gfw.web.util.RequestUtils;
 
-public class AjaxSupportAccessDeniedHandlerImpl extends
-                                                AccessDeniedHandlerImpl {
+public class AjaxSupportAccessDeniedHandlerImpl extends AccessDeniedHandlerImpl {
 
     @Inject
     MessageSource messageSource;
@@ -42,8 +41,8 @@ public class AjaxSupportAccessDeniedHandlerImpl extends
 
             if (RequestUtils.isAjaxRequest(request)) {
                 String jsonObject = "{\"errorResults\":[{\"message\":\""
-                        + messageSource.getMessage("e.sf.cspr.0001", null,
-                                request.getLocale()) + "\"}]}";
+                        + messageSource.getMessage("e.sf.cp.0001", null, request.getLocale())
+                        + "\"}]}";
 
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);

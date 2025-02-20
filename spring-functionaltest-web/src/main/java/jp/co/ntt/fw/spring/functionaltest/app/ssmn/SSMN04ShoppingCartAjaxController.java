@@ -60,8 +60,7 @@ public class SSMN04ShoppingCartAjaxController {
 
         // カートに商品を追加したことを通知するメッセージを設定する
         CartItemAddResult result = new CartItemAddResult();
-        result.setMessage(messageSource.getMessage("i.sf.ssmn.0002", null,
-                locale));
+        result.setMessage(messageSource.getMessage("i.sf.sm.0002", null, locale));
 
         return result;
     }
@@ -69,8 +68,7 @@ public class SSMN04ShoppingCartAjaxController {
     @ExceptionHandler(BindException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public CartItemAddResult handleBindException(BindException e,
-            Locale locale) {
+    public CartItemAddResult handleBindException(BindException e, Locale locale) {
         CartItemAddResult result = new CartItemAddResult();
         if (e.hasFieldErrors()) {
             FieldError error = e.getFieldError();

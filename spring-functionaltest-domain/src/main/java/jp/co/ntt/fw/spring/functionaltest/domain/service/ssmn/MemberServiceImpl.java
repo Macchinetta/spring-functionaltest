@@ -32,8 +32,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member createMember(Member member) {
-        member.setMemberId(String.format("M%09d", memberRepository
-                .getMemberSequence()));
+        member.setMemberId(String.format("M%09d", memberRepository.getMemberSequence()));
         memberRepository.create(member);
         return member;
     }

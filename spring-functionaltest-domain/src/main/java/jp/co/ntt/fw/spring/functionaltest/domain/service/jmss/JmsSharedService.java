@@ -29,8 +29,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.JmsTodo;
 
 public interface JmsSharedService {
 
-    void purgeMessageFrom(List<String> destinationNameList,
-            boolean pubsubDomain);
+    void purgeMessageFrom(List<String> destinationNameList, boolean pubsubDomain);
 
     void deleteDirectory(File file);
 
@@ -46,27 +45,25 @@ public interface JmsSharedService {
 
     List<String> readFileToList(String path) throws IOException;
 
-    void writeListToAddFile(String dir, String fileName,
-            List<String> inputData) throws IOException, InterruptedException;
+    void writeListToAddFile(String dir, String fileName, List<String> inputData)
+            throws IOException, InterruptedException;
 
-    void writeListToFile(String dir, String fileName,
-            List<String> inputData) throws IOException;
+    void writeListToFile(String dir, String fileName, List<String> inputData) throws IOException;
 
     Map<String, String> readFileToMap(String path) throws IOException;
 
-    void writeMapToFile(String dir, String fileName,
-            Map<String, String> inputData) throws IOException;
+    void writeMapToFile(String dir, String fileName, Map<String, String> inputData)
+            throws IOException;
 
-    void writeObjectToFile(String dir, String fileName,
-            Object obj) throws IOException;
+    void writeObjectToFile(String dir, String fileName, Object obj) throws IOException;
 
     Object readFileToObject(String path) throws IOException;
 
-    List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate,
-            String distinationName) throws JMSException;
+    List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate, String distinationName)
+            throws JMSException;
 
-    List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
-            String distinationName, String messageSelector) throws JMSException;
+    List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate, String distinationName,
+            String messageSelector) throws JMSException;
 
     void insert(JmsTodo jmsTodo);
 

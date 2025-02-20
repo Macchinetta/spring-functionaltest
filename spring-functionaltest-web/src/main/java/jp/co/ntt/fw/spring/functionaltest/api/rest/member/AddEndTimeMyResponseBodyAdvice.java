@@ -25,21 +25,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 @ControllerAdvice
-public class AddEndTimeMyResponseBodyAdvice implements
-                                            ResponseBodyAdvice<MemberResourceWithAdvice> {
+public class AddEndTimeMyResponseBodyAdvice
+        implements ResponseBodyAdvice<MemberResourceWithAdvice> {
 
     @Override
     public boolean supports(MethodParameter returnType,
             Class<? extends HttpMessageConverter<?>> converterType) {
 
-        return MemberResourceWithAdvice.class.isAssignableFrom(returnType
-                .getParameterType());
+        return MemberResourceWithAdvice.class.isAssignableFrom(returnType.getParameterType());
     }
 
     @Override
-    public MemberResourceWithAdvice beforeBodyWrite(
-            MemberResourceWithAdvice body, MethodParameter returnType,
-            MediaType selectedContentType,
+    public MemberResourceWithAdvice beforeBodyWrite(MemberResourceWithAdvice body,
+            MethodParameter returnType, MediaType selectedContentType,
             Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request, ServerHttpResponse response) {
 

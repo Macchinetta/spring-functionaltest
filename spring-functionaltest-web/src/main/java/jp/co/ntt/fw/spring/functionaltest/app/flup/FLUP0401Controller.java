@@ -34,7 +34,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jp.co.ntt.fw.spring.functionaltest.app.flup.SingleUploadForm.UploadFileMaxSize250byte;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/0401")
 @Controller
@@ -54,8 +55,7 @@ public class FLUP0401Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handle001Upload(@Validated MultiUploadForm form,
-            BindingResult result,
+    public String handle001Upload(@Validated MultiUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
@@ -66,8 +66,7 @@ public class FLUP0401Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST)
-    public String handle002Upload(@Validated MultiUploadForm form,
-            BindingResult result,
+    public String handle002Upload(@Validated MultiUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
@@ -78,8 +77,7 @@ public class FLUP0401Controller {
     }
 
     @RequestMapping(value = "003", method = RequestMethod.POST)
-    public String handle003Upload(@Validated MultiUploadForm form,
-            BindingResult result,
+    public String handle003Upload(@Validated MultiUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
@@ -90,9 +88,9 @@ public class FLUP0401Controller {
     }
 
     @RequestMapping(value = "004", method = RequestMethod.POST)
-    public String handle004Upload(@Validated({ UploadFileMaxSize250byte.class,
-            Default.class }) MultiUploadForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) throws IOException {
+    public String handle004Upload(
+            @Validated({UploadFileMaxSize250byte.class, Default.class}) MultiUploadForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
         return upload(form, result, redirectAttributes);
     }
 

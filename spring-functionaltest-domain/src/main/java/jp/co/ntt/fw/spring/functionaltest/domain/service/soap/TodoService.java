@@ -20,7 +20,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.groups.Default;
 
 import org.springframework.validation.annotation.Validated;
@@ -32,14 +32,15 @@ public interface TodoService {
 
     List<Todo> getTodos();
 
-    Todo getTodo(@NotNull String todoId);
+    Todo getTodo(@NotEmpty String todoId);
 
+    @Validated({Default.class, Todo.Create.class})
     Todo createTodo(@Valid Todo todo);
 
-    @Validated({ Default.class, Todo.Update.class })
+    @Validated({Default.class, Todo.Update.class})
     Todo updateTodo(@Valid Todo todo);
 
-    void deleteTodo(@NotNull String todoId);
+    void deleteTodo(@NotEmpty String todoId);
 
     void deleteTodos();
 

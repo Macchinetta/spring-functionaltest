@@ -29,7 +29,7 @@ import org.springframework.test.annotation.IfProfileValue;
 
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class TilesLayoutTest extends FunctionTestSupport {
 
     /**
@@ -47,10 +47,9 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
         // デフォルトレイアウトの確認（タイトル固定、X-Trackあり）
         {
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Spring Functional Test"));
-            assertThat(webDriverOperations.getText(id("bodyTitle")), is(
-                    "Register Staff Information"));
+            assertThat(webDriverOperations.getTitle(), is("Spring Functional Test"));
+            assertThat(webDriverOperations.getText(id("bodyTitle")),
+                    is("Register Staff Information"));
             assertThat(webDriverOperations.getXTrack(), not(""));
         }
 
@@ -71,10 +70,9 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
         // レイアウト未適応の確認（X-Trackなし）
         {
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Spring Functional Test"));
-            assertThat(webDriverOperations.getText(id("bodyTitle")), is(
-                    "Delete Staff Information"));
+            assertThat(webDriverOperations.getTitle(), is("Spring Functional Test"));
+            assertThat(webDriverOperations.getText(id("bodyTitle")),
+                    is("Delete Staff Information"));
 
             By idOfXTrack = webDriverOperations.getIdOfXTrack();
             assertFalse(webDriverOperations.exists(idOfXTrack));
@@ -98,10 +96,10 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
         // 複数レイアウト定義時の一つ目適応確認（タイトル固定、X-Trackあり）
         {
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Update Staff Information (TLLY template is valid.)"));
-            assertThat(webDriverOperations.getText(id("bodyTitle")), is(
-                    "Update Staff Information"));
+            assertThat(webDriverOperations.getTitle(),
+                    is("Update Staff Information (TLLY template is valid.)"));
+            assertThat(webDriverOperations.getText(id("bodyTitle")),
+                    is("Update Staff Information"));
             assertThat(webDriverOperations.getXTrack(), not(""));
         }
 
@@ -122,10 +120,10 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
         // 複数レイアウト定義時の二つ目適応確認（タイトル固定、X-Trackあり）
         {
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Search Staff Information (TLLY template is valid.)"));
-            assertThat(webDriverOperations.getText(id("bodyTitle")), is(
-                    "Search Staff Information"));
+            assertThat(webDriverOperations.getTitle(),
+                    is("Search Staff Information (TLLY template is valid.)"));
+            assertThat(webDriverOperations.getText(id("bodyTitle")),
+                    is("Search Staff Information"));
             assertThat(webDriverOperations.getXTrack(), not(""));
         }
 
@@ -133,7 +131,8 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>Tilesの定義ファイルに、複数のレイアウトが定義されている場合、Tilesの定義ファイルに記述した順番で、 最初にURLパターンにマッチするレイアウトが使用されることを確認する。</li>
+     * <li>Tilesの定義ファイルに、複数のレイアウトが定義されている場合、Tilesの定義ファイルに記述した順番で、
+     * 最初にURLパターンにマッチするレイアウトが使用されることを確認する。</li>
      * </ul>
      */
     @Test
@@ -146,10 +145,10 @@ public class TilesLayoutTest extends FunctionTestSupport {
 
         // 複数レイアウト定義時の一つ目適応確認（タイトル固定、X-Trackあり）
         {
-            assertThat(webDriverOperations.getTitle(), is(
-                    "Update Staff Information (TLLY template is valid.)"));
-            assertThat(webDriverOperations.getText(id("bodyTitle")), is(
-                    "Update Staff Information"));
+            assertThat(webDriverOperations.getTitle(),
+                    is("Update Staff Information (TLLY template is valid.)"));
+            assertThat(webDriverOperations.getText(id("bodyTitle")),
+                    is("Update Staff Information"));
             assertThat(webDriverOperations.getXTrack(), not(""));
         }
 

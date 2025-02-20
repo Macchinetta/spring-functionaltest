@@ -22,8 +22,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 @NoRepositoryBean
-public interface CommonProjectRepository<T, ID extends Serializable> extends
-                                        Repository<T, ID> {
+public interface CommonProjectRepository<T, ID extends Serializable> extends Repository<T, ID> {
 
     Optional<T> findById(ID id);
 

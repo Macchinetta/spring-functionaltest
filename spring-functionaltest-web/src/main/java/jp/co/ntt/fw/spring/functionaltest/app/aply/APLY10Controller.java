@@ -48,15 +48,13 @@ public class APLY10Controller {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // bind empty strings as null
-        binder.registerCustomEditor(String.class,
-                new StringTrimmerEditor(true));
+        binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
     }
 
     @RequestMapping(value = "1001/001")
     public String handle01001(Model model) {
         // モデルに格納される値
-        model.addAttribute("valueUsingThText",
-                "<font color='red'>Sample</font>");
+        model.addAttribute("valueUsingThText", "<font color='red'>Sample</font>");
         return "aply/showValueUsingThText";
     }
 
@@ -105,7 +103,7 @@ public class APLY10Controller {
     @RequestMapping(value = "1001/007")
     public String handle01007(Model model) {
         // モデルに格納される値
-        Integer[] array = { 1111, 2222, 3333 };
+        Integer[] array = {1111, 2222, 3333};
         model.addAttribute("valueUsingNumberFormatInteger", array);
         model.addAttribute("testcaseId", "APLY1001007");
         return "aply/showValueUsingNumberFormatInteger";
@@ -138,8 +136,8 @@ public class APLY10Controller {
     @RequestMapping(value = "1001/010")
     public String handle01010(Model model) {
         // モデルに格納される値
-        BigDecimal[] array = { BigDecimal.valueOf(1111.1), BigDecimal.valueOf(
-                2222.2), BigDecimal.valueOf(3333.3) };
+        BigDecimal[] array = {BigDecimal.valueOf(1111.1), BigDecimal.valueOf(2222.2),
+                BigDecimal.valueOf(3333.3)};
         model.addAttribute("valueUsingNumberFormatDecimal", array);
         model.addAttribute("testcaseId", "APLY1001010");
         return "aply/showValueUsingNumberFormatDecimal";
@@ -172,7 +170,7 @@ public class APLY10Controller {
     @RequestMapping(value = "1001/013")
     public String handle01013(Model model) {
         // モデルに格納される値
-        Double[] array = { 0.111, 0.222, 0.333 };
+        Double[] array = {0.111, 0.222, 0.333};
         model.addAttribute("valueUsingNumberFormatPercent", array);
         model.addAttribute("testcaseId", "APLY1001013");
         return "aply/showValueUsingNumberFormatPercent";
@@ -203,8 +201,7 @@ public class APLY10Controller {
     }
 
     @RequestMapping(value = "1001/{caseId:01[6|8|9]|020}")
-    public String handle01016_18_19_20(Model model,
-            @PathVariable String caseId) {
+    public String handle01016_18_19_20(Model model, @PathVariable String caseId) {
         // モデルに格納される値
         model.addAttribute("valueUsingNumberFormatInteger", 7777);
         model.addAttribute("testcaseId", "APLY1001" + caseId);
@@ -287,7 +284,7 @@ public class APLY10Controller {
         calendar2.set(2013, 11, 10);
         Calendar calendar3 = Calendar.getInstance();
         calendar3.set(2013, 11, 11);
-        Calendar[] array = { calendar1, calendar2, calendar3 };
+        Calendar[] array = {calendar1, calendar2, calendar3};
         model.addAttribute("testcaseId", "APLY1001030");
         model.addAttribute("valueUsingCalendarFormat", array);
         return "aply/showValueUsingCalendarFormat";
@@ -395,9 +392,10 @@ public class APLY10Controller {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "comparator")
-    public String handleInputDisplayConditionalExpressionsUsingComparator(
-            Model model, ThymeleafForm thymeleafForm) {
+    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST,
+            params = "comparator")
+    public String handleInputDisplayConditionalExpressionsUsingComparator(Model model,
+            ThymeleafForm thymeleafForm) {
         return "aply/displayConditionalExpressionsUsingComparator";
     }
 
@@ -406,9 +404,10 @@ public class APLY10Controller {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "arithmeticOperation")
-    public String handleInputDisplayConditionalExpressionsUsingArithmeticOperation(
-            Model model, ThymeleafForm thymeleafForm) {
+    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST,
+            params = "arithmeticOperation")
+    public String handleInputDisplayConditionalExpressionsUsingArithmeticOperation(Model model,
+            ThymeleafForm thymeleafForm) {
         return "aply/displayConditionalExpressionsUsingArithmeticOperation";
     }
 
@@ -417,9 +416,9 @@ public class APLY10Controller {
         return "aply/inputConditionalExpressions";
     }
 
-    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST, params = "defaultExpressions")
-    public String handleInputDisplayDefaultExpressions(Model model,
-            ThymeleafForm thymeleafForm) {
+    @RequestMapping(value = "1004/displaySwitching", method = RequestMethod.POST,
+            params = "defaultExpressions")
+    public String handleInputDisplayDefaultExpressions(Model model, ThymeleafForm thymeleafForm) {
         return "aply/displayDefaultExpressions";
     }
 
@@ -428,9 +427,9 @@ public class APLY10Controller {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST, params = "thIfFormat")
-    public String handleInputDisplaySwitchingUsingThIf(Model model,
-            ThymeleafForm thymeleafForm) {
+    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST,
+            params = "thIfFormat")
+    public String handleInputDisplaySwitchingUsingThIf(Model model, ThymeleafForm thymeleafForm) {
         return "aply/showDisplaySwitchingUsingThIf";
     }
 
@@ -439,7 +438,8 @@ public class APLY10Controller {
         return "aply/inputDisplaySwitchingInModel";
     }
 
-    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST, params = "thSwitchFormat")
+    @RequestMapping(value = "1005/displaySwitching", method = RequestMethod.POST,
+            params = "thSwitchFormat")
     public String handleInputDisplaySwitchingUsingCChoose(Model model,
             ThymeleafForm thymeleafForm) {
         return "aply/showDisplaySwitchingUsingThSwitch";
@@ -450,7 +450,8 @@ public class APLY10Controller {
         return "aply/inputCollectionInModel";
     }
 
-    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST, params = "collectionInModel")
+    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST,
+            params = "collectionInModel")
     public String handleInputCollectionInModel(Model model,
             ThymeleafFormListForm thymeleafFormListform) {
         return "aply/showCollectionInModel";
@@ -461,7 +462,8 @@ public class APLY10Controller {
         return "aply/inputCollectionInModel";
     }
 
-    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST, params = "collectionInModelUsingStatus")
+    @RequestMapping(value = "1006/collectionInModel", method = RequestMethod.POST,
+            params = "collectionInModelUsingStatus")
     public String handleInputCollectionUsingThObject(Model model,
             ThymeleafFormListForm thymeleafFormListForm) {
         return "aply/showCollectionInModelUsingStatus";
@@ -473,8 +475,7 @@ public class APLY10Controller {
     }
 
     @RequestMapping(value = "1007/showValue", method = RequestMethod.POST, params = "thObject")
-    public String handleInputValueUsingThObject(Model model,
-            ThymeleafForm thymeleafForm) {
+    public String handleInputValueUsingThObject(Model model, ThymeleafForm thymeleafForm) {
         return "aply/showValueUsingThObject";
     }
 
@@ -484,8 +485,7 @@ public class APLY10Controller {
     }
 
     @RequestMapping(value = "1007/showValue", method = RequestMethod.POST, params = "thWith")
-    public String handleInputValueUsingThWith(Model model,
-            ThymeleafForm thymeleafForm) {
+    public String handleInputValueUsingThWith(Model model, ThymeleafForm thymeleafForm) {
         return "aply/showValueUsingThWith";
     }
 
@@ -494,9 +494,9 @@ public class APLY10Controller {
         return "aply/inputFormObjectBindHtmlForm";
     }
 
-    @RequestMapping(value = "1008/bindFormObject", method = RequestMethod.POST, params = "bindFormObject")
-    public String handleBindFormObject(Model model,
-            ThymeleafForm thymeleafForm) {
+    @RequestMapping(value = "1008/bindFormObject", method = RequestMethod.POST,
+            params = "bindFormObject")
+    public String handleBindFormObject(Model model, ThymeleafForm thymeleafForm) {
         return "aply/showFormObjectBindHtmlForm";
     }
 

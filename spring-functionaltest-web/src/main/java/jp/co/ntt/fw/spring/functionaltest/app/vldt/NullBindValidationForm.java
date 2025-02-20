@@ -16,14 +16,13 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
-
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 public class NullBindValidationForm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
+    @NotEmpty
     private String userName;
 
     public String getUserName() {

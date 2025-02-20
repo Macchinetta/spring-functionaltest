@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.domain.repository.oth2;
 
 import java.util.Collection;
 import java.util.Optional;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.model.oth2.Todo;
 
 public interface TodoRepository {

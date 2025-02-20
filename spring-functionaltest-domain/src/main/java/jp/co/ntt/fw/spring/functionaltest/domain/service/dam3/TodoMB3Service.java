@@ -65,8 +65,7 @@ public interface TodoMB3Service {
 
     TodoMB3 findOneUsingCompositeKey(String todoId, String categoryName);
 
-    TodoMB3 findOneUsingCompositeKeyNoParamAnnot(String todoId,
-            String categoryName);
+    TodoMB3 findOneUsingCompositeKeyNoParamAnnot(String todoId, String categoryName);
 
     List<TodoMB3> findAllByCriteria(TodoCriteria criteria);
 
@@ -76,8 +75,7 @@ public interface TodoMB3Service {
 
     public Page<TodoMB3> searchTodos(TodoCriteria criteria, Pageable pageable);
 
-    Page<TodoMB3> findPageByCriteriaSqLRef(TodoCriteria criteria,
-            Pageable pageable);
+    Page<TodoMB3> findPageByCriteriaSqLRef(TodoCriteria criteria, Pageable pageable);
 
     boolean createAndReturnBoolean(TodoMB3 todoMB3);
 
@@ -101,21 +99,17 @@ public interface TodoMB3Service {
 
     List<TodoMB3> findAllByCriteriaEscapeSrch(TodoCriteria todoCriteria);
 
-    void downloadTodos(TodoCriteria criteria,
-            final BufferedWriter downloadWriter);
+    void downloadTodos(TodoCriteria criteria, final BufferedWriter downloadWriter);
 
     AutoMapTodoMB3 findOneBySP(String todoId);
 
     CategoryMB3 getCategory(String categoryId);
 
-    List<AutoMapTodoMB3> findByUsingClassTypeAlias(
-            TodoSearchCriteria todoSearchCriteria);
+    List<AutoMapTodoMB3> findByUsingClassTypeAlias(TodoSearchCriteria todoSearchCriteria);
 
-    List<AutoMapTodoMB3> findByUsingOverwrittenDefltTypeAliasName(
-            TodoCriteria2 todoSearchCriteria);
+    List<AutoMapTodoMB3> findByUsingOverwrittenDefltTypeAliasName(TodoCriteria2 todoSearchCriteria);
 
-    int updateUsingBatchFinishedByTodIds(boolean finished,
-            List<String> todoIds);
+    int updateUsingBatchFinishedByTodIds(boolean finished, List<String> todoIds);
 
     List<TodoMB3> findUsingChooseEle(TodoCriteria todoCriteria);
 

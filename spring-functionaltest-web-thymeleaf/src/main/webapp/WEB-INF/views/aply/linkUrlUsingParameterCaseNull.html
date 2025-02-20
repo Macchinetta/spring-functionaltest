@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">リンクURL式によって生成されるURLの確認(パラメータ使用、変数値がnull評価)</h1>
 
-      <h1 id="screenTitle">リンクURL式によって生成されるURLの確認(パラメータ使用、変数値がnull評価)</h1>
-
-      <ul>
-        <li id="message1">nullと評価された値を含むリンクURL式によって生成されるURLを確認します。</li>
-        <li id="message2" th:text="@{/user/{userId}/address(userId=${userId})}"></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul>
+                    <li id="message1">nullと評価された値を含むリンクURL式によって生成されるURLを確認します。</li>
+                    <li id="message2" th:text="@{/user/{userId}/address(userId=${userId})}"></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

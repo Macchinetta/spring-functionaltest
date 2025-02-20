@@ -31,8 +31,7 @@ public class WebFaultException extends Exception {
         this.faultInfo = faultInfo;
     }
 
-    public WebFaultException(String message, WebFaultBean faultInfo,
-            Throwable e) {
+    public WebFaultException(String message, WebFaultBean faultInfo, Throwable e) {
         super(message, e);
         this.faultInfo = faultInfo;
     }
@@ -46,7 +45,7 @@ public class WebFaultException extends Exception {
     }
 
     public WebFaultBean getFaultInfo() {
-        return faultInfo;
+        return this.faultInfo;
     }
 
     public void setFaultInfo(WebFaultBean faultInfo) {

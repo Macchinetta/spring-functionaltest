@@ -15,14 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface UserIdUseService {
 
-    @NotNull
-    String convertUserId(@NotNull String userId);
+    @NotEmpty
+    String convertUserId(@NotEmpty String userId);
 
 }

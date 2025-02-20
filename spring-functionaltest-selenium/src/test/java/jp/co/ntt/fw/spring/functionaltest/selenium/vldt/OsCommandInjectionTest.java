@@ -23,7 +23,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
-import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 
 /**
  * VLDT 入力チェックテスト<br>
@@ -31,15 +31,11 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
  * VLDT07 OSコマンドインジェクション
  * </p>
  */
-public class OsCommandInjectionTest extends FunctionTestSupport {
+public class OsCommandInjectionTest extends ValidationTestSupport {
 
     private static WebDriver driver;
 
-    private String validate = "validate";
-
-    private String errors = ".errors";
-
-    private String currentLocale = "en";
+    private BrowserLocale currentLocale = BrowserLocale.ENGLISH_US;
 
     public OsCommandInjectionTest() {
         super.disableDefaultWebDriver();
@@ -48,8 +44,7 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
     @Before
     public void setUp() {
         if (driver == null) {
-            driver = webDriverCreator.createLocaleSpecifiedDriver(
-                    currentLocale);
+            driver = webDriverCreator.createLocaleSpecifiedDriver(currentLocale);
         }
         super.setCurrentWebDriver(driver);
     }
@@ -75,13 +70,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "batch00.sh");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -90,13 +84,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "batch09.sh");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
     }
@@ -123,13 +116,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "../batch00.sh");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -138,13 +130,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "reboot");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }
@@ -170,13 +161,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "a=1");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
 
@@ -185,13 +175,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "Hello_01");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.exists(id(target + errors)), is(
-                        false));
+                assertThat(webDriverOperations.exists(id(target + ID_ERRORS)), is(false));
             }
         }
     }
@@ -217,15 +206,13 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
         {
             // テスト実行
             {
-                webDriverOperations.overrideText(id(target),
-                        "exec.sh; cat /etc/passwd");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.overrideText(id(target), "exec.sh; cat /etc/passwd");
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
 
@@ -234,13 +221,12 @@ public class OsCommandInjectionTest extends FunctionTestSupport {
             // テスト実行
             {
                 webDriverOperations.overrideText(id(target), "; reboot");
-                webDriverOperations.click(id(validate));
+                webDriverOperations.click(id(ID_VALIDATE));
             }
 
             // 結果確認
             {
-                assertThat(webDriverOperations.getText(id(target + errors)), is(
-                        errorMessage));
+                assertThat(webDriverOperations.getText(id(target + ID_ERRORS)), is(errorMessage));
             }
         }
     }

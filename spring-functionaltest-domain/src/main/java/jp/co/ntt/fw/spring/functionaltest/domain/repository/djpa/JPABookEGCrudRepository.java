@@ -19,7 +19,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPABookEG;
 
-public interface JPABookEGCrudRepository extends
-                                         CrudRepository<JPABookEG, Integer> {
+public interface JPABookEGCrudRepository extends CrudRepository<JPABookEG, Integer> {
 
 }

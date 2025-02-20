@@ -24,13 +24,14 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class StringProcessingTest extends FunctionTestSupport {
 
-    private static WebDriver deDriver;
+    private static WebDriver driver;
 
     public StringProcessingTest() {
         disableDefaultWebDriver();
@@ -38,10 +39,10 @@ public class StringProcessingTest extends FunctionTestSupport {
 
     @Before
     public void setUp() {
-        if (deDriver == null) {
-            deDriver = webDriverCreator.createLocaleSpecifiedDriver("ja, JP");
+        if (driver == null) {
+            driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.JAPAN);
         }
-        setCurrentWebDriver(deDriver);
+        setCurrentWebDriver(driver);
 
         // トップ画面での操作
         {
@@ -68,8 +69,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "\"Hello World!\""));
+            assertThat(webDriverOperations.getText(id("resultString")), is("\"Hello World!\""));
         }
     }
 
@@ -93,8 +93,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "\"Hello World!\""));
+            assertThat(webDriverOperations.getText(id("resultString")), is("\"Hello World!\""));
         }
     }
 
@@ -119,8 +118,7 @@ public class StringProcessingTest extends FunctionTestSupport {
 
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "\" Hello World\""));
+            assertThat(webDriverOperations.getText(id("resultString")), is("\" Hello World\""));
         }
     }
 
@@ -144,8 +142,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "001"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("001"));
         }
     }
 
@@ -169,8 +166,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "1"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("1"));
         }
     }
 
@@ -194,8 +190,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "0"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("0"));
         }
     }
 
@@ -218,10 +213,9 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultLength")), is(
-                    "5"));
-            assertThat(webDriverOperations.getText(id(
-                    "resultLengthConsideringSurrogate")), is("4"));
+            assertThat(webDriverOperations.getText(id("resultLength")), is("5"));
+            assertThat(webDriverOperations.getText(id("resultLengthConsideringSurrogate")),
+                    is("4"));
         }
     }
 
@@ -246,10 +240,9 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id(
-                    "resultStringConsideringSurrogate")), is("𠮷田"));
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "𠮷"));
+            assertThat(webDriverOperations.getText(id("resultStringConsideringSurrogate")),
+                    is("𠮷田"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("𠮷"));
         }
     }
 
@@ -273,8 +266,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "[𠮷田, 太郎]"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("[𠮷田, 太郎]"));
         }
     }
 
@@ -298,8 +290,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "[あいう, えお]"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("[あいう, えお]"));
         }
     }
 
@@ -322,8 +313,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "[A, B, C]"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("[A, B, C]"));
         }
     }
 
@@ -347,8 +337,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "モシ\u3099ﾓｼﾞ"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("モシ\u3099ﾓｼﾞ"));
         }
     }
 
@@ -372,8 +361,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "モジﾓｼﾞ"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("モジﾓｼﾞ"));
         }
     }
 
@@ -397,8 +385,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "モシ\u3099モシ\u3099"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("モシ\u3099モシ\u3099"));
         }
     }
 
@@ -422,8 +409,7 @@ public class StringProcessingTest extends FunctionTestSupport {
         }
         // 取得した文字列を確認
         {
-            assertThat(webDriverOperations.getText(id("resultString")), is(
-                    "モジモジ"));
+            assertThat(webDriverOperations.getText(id("resultString")), is("モジモジ"));
         }
     }
 

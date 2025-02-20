@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
-      <h1 id="screenTitle">ユーザ登録確認画面</h1>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">ユーザ登録確認画面</h1>
 
-      <form th:action="@{/dbsp/0201/001/create}" th:object="${userCreateForm}" method="post">
-        FirstName: <span th:text="${userCreateForm.firstName}"></span> <br> <input
-          type="hidden" name="firstName" id="firstName" /> LastName: <span
-          th:text="${userCreateForm.lastName}"></span> <br> <input type="hidden"
-          name="lastName" id="lastName" /> FilePath: <span th:text="${userCreateForm.filePath}"></span>
-        <br> <input type="hidden" name="FilePath" id="FilePath" />
-        <button id="create" name="create" type="submit" value="Submit">Create User</button>
-      </form>
-
-    </div>
-  </div>
-</body>
+                <form th:action="@{/dbsp/0201/001/create}" th:object="${userCreateForm}" method="post">
+                    FirstName: <span th:text="${userCreateForm.firstName}"></span> <br />
+                    <input type="hidden" name="firstName" id="firstName" /> LastName: <span th:text="${userCreateForm.lastName}"></span> <br />
+                    <input type="hidden" name="lastName" id="lastName" /> FilePath: <span th:text="${userCreateForm.filePath}"></span> <br />
+                    <input type="hidden" name="FilePath" id="FilePath" />
+                    <button id="create" name="create" type="submit" value="Submit">Create User</button>
+                </form>
+            </div>
+        </div>
+    </body>
 </html>

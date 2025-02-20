@@ -51,26 +51,22 @@ public class EXCN0402Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.GET)
     public String handle001(StockForm form, Model model) {
-        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402001"),
-                form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402001"), form);
         return "excn/pessimisticLockView";
     }
 
     @RequestMapping(value = "002", method = RequestMethod.GET)
     public String handle002(StockForm form, Model model) {
-        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402002"),
-                form);
+        beanMapper.map(stockPessimisticLockService.findOne("EXCN0402002"), form);
         return "excn/pessimisticLockExceptionHandlingByRequestView";
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST, params = "buy")
-    public String handle001Buy(StockForm form, Model model,
-            RedirectAttributes attributes) {
+    public String handle001Buy(StockForm form, Model model, RedirectAttributes attributes) {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
-        stock = stockPessimisticLockService.buy(stock, form
-                .getPurchasingQuantity());
+        stock = stockPessimisticLockService.buy(stock, form.getPurchasingQuantity());
 
         model.addAttribute("stock", stock);
         model.addAttribute(ResultMessages.success().add("excn.result.success"));
@@ -78,17 +74,14 @@ public class EXCN0402Controller {
     }
 
     @RequestMapping(value = "002", method = RequestMethod.POST, params = "buy")
-    public String handle002Buy(StockForm form, Model model,
-            RedirectAttributes attributes) {
+    public String handle002Buy(StockForm form, Model model, RedirectAttributes attributes) {
 
         Stock stock = beanMapper.map(form, Stock.class);
 
         try {
-            stock = stockPessimisticLockService.buy(stock, form
-                    .getPurchasingQuantity());
+            stock = stockPessimisticLockService.buy(stock, form.getPurchasingQuantity());
         } catch (PessimisticLockingFailureException e) {
-            model.addAttribute(ResultMessages.warning().add(
-                    "excn.result.exclusivebyrequest"));
+            model.addAttribute(ResultMessages.warning().add("excn.result.exclusivebyrequest"));
             return "common/error/exclusiveLockError";
         }
 
@@ -103,8 +96,7 @@ public class EXCN0402Controller {
 
         ExtendedModelMap modelMap = new ExtendedModelMap();
 
-        modelMap.addAttribute(ResultMessages.warning().add(
-                "excn.result.exclusivebycontroller"));
+        modelMap.addAttribute(ResultMessages.warning().add("excn.result.exclusivebycontroller"));
         return new ModelAndView("common/error/exclusiveLockError", modelMap);
     }
 }

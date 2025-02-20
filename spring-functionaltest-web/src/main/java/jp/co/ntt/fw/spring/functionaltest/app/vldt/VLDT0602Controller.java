@@ -44,25 +44,24 @@ public class VLDT0602Controller {
         return new UserInfoForm();
     }
 
-    @RequestMapping(value = { "0602/001", "0602/002", "0602/003", "0602/004",
-            "0602/005", "0602/006", "0602/007", "0602/008",
-            "0602/009" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"0602/001", "0602/002", "0602/003", "0602/004", "0602/005", "0602/006",
+            "0602/007", "0602/008", "0602/009"}, method = RequestMethod.GET)
     public String handle0201001Init() {
         return "vldt/userInfoUseBeanRequestForm";
     }
 
     @RequestMapping(value = "0602/regist", method = RequestMethod.POST)
-    public String handle0201001Regist(@Validated UserInfoForm form,
-            BindingResult result, Model model) {
+    public String handle0201001Regist(@Validated UserInfoForm form, BindingResult result,
+            Model model) {
 
         if (result.hasErrors()) {
             return "vldt/userInfoUseBeanRequestForm";
         }
 
-        UserInfoUseBeanInput userInfoUseBeanInput = vLDT02Helper
-                .changeUserInfoFormToUserInfoUseBeanInput(form);
-        UserInfoUseBeanOutput userInfoUseBeanOutput = userInfoUseBeanService
-                .convertUserInfo(userInfoUseBeanInput);
+        UserInfoUseBeanInput userInfoUseBeanInput =
+                vLDT02Helper.changeUserInfoFormToUserInfoUseBeanInput(form);
+        UserInfoUseBeanOutput userInfoUseBeanOutput =
+                userInfoUseBeanService.convertUserInfo(userInfoUseBeanInput);
 
         model.addAttribute("userInfo", userInfoUseBeanOutput.getUserInfo());
         return "vldt/userInfoUseBeanComplete";

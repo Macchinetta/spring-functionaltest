@@ -39,12 +39,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingBCryptEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeBCrypt(administrator.getPassword()));
+        administrator.setPassword(
+                passwordEncodeSharedService.passwordEncodeBCrypt(administrator.getPassword()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -54,12 +53,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingPbkdf2Encode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodePbkdf2(administrator.getPassword()));
+        administrator.setPassword(
+                passwordEncodeSharedService.passwordEncodePbkdf2(administrator.getPassword()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -69,12 +67,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingSCryptEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeSCrypt(administrator.getPassword()));
+        administrator.setPassword(
+                passwordEncodeSharedService.passwordEncodeSCrypt(administrator.getPassword()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -84,12 +81,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingArgon2Encode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeArgon2(administrator.getPassword()));
+        administrator.setPassword(
+                passwordEncodeSharedService.passwordEncodeArgon2(administrator.getPassword()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -99,12 +95,11 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingDelegatingEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeDelegating(administrator.getPassword()));
+        administrator.setPassword(
+                passwordEncodeSharedService.passwordEncodeDelegating(administrator.getPassword()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -114,8 +109,7 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingCustomPbkdf2Encode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.athn.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
         administrator.setPassword(passwordEncodeSharedService
@@ -129,30 +123,25 @@ public class AdministratorServiceImpl implements AdministratorService {
     public void createUsingMessageDigestEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.pshs.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeMessageDigest(administrator.getPassword(),
-                        administrator.getUsername()));
+        administrator.setPassword(passwordEncodeSharedService.passwordEncodeMessageDigest(
+                administrator.getPassword(), administrator.getUsername()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
     }
 
     @Override
-    public void createUsingDelegatingMessageDigestEncode(
-            Administrator administrator) {
+    public void createUsingDelegatingMessageDigestEncode(Administrator administrator) {
 
         if (findOneByUserName(administrator.getUsername()) != null) {
-            throw new BusinessException(ResultMessages.danger().add(
-                    "e.sf.pshs.0001"));
+            throw new BusinessException(ResultMessages.danger().add("e.sf.ah.0001"));
         }
 
-        administrator.setPassword(passwordEncodeSharedService
-                .passwordEncodeMessageDigestDelegating(administrator
-                        .getPassword(), administrator.getUsername()));
+        administrator.setPassword(passwordEncodeSharedService.passwordEncodeMessageDigestDelegating(
+                administrator.getPassword(), administrator.getUsername()));
         setAdministratorConfig(administrator);
 
         administratorRepository.insert(administrator);
@@ -160,8 +149,7 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     @Override
     public Administrator findOneByUserName(String userName) {
-        Administrator administrator = administratorRepository.findByUserName(
-                userName);
+        Administrator administrator = administratorRepository.findByUserName(userName);
         return administrator;
     }
 

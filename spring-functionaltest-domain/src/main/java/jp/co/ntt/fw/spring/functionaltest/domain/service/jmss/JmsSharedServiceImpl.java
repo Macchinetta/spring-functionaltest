@@ -56,8 +56,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.jmss.JmsTodoReposito
 @Service
 public class JmsSharedServiceImpl implements JmsSharedService {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            JmsSharedServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(JmsSharedServiceImpl.class);
 
     @Value("${app.jms.receiveWaitTime}")
     int receiveWaitTime;
@@ -74,8 +73,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
 
-    public void purgeMessageFrom(List<String> destinationNameList,
-            boolean pubsubDomain) {
+    public void purgeMessageFrom(List<String> destinationNameList, boolean pubsubDomain) {
         JmsTemplate jmsTemplateToUse = null;
         if (pubsubDomain) {
             jmsTemplateToUse = topicPurgeJmsTemplate;
@@ -107,15 +105,13 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         new File(path).delete();
     }
 
-    public void createTemporaryDirectoryIfNotExists(
-            Path path) throws IOException {
+    public void createTemporaryDirectoryIfNotExists(Path path) throws IOException {
         if (Files.exists(path) == false) {
             Files.createDirectories(path);
         }
     }
 
-    public void createTemporaryDirectoryIfNotExists(
-            String path) throws IOException {
+    public void createTemporaryDirectoryIfNotExists(String path) throws IOException {
         File file = new File(path);
         file.mkdirs();
     }
@@ -131,8 +127,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     public List<String> readFileToList(String path) throws IOException {
 
         List<String> outputData = new ArrayList<String>();
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(path),
-                StandardCharsets.UTF_8)) {
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) {
             String line;
             while ((line = br.readLine()) != null) {
                 outputData.add(line);
@@ -141,27 +136,26 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         return outputData;
     }
 
-    public void writeListToAddFile(String dir, String fileName,
-            List<String> inputData) throws IOException, InterruptedException {
+    public void writeListToAddFile(String dir, String fileName, List<String> inputData)
+            throws IOException, InterruptedException {
 
         createTemporaryDirectoryIfNotExists(dir);
 
-        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(dir
-                + fileName), StandardCharsets.UTF_8, StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND)) {
+        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(dir + fileName),
+                StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
             for (String s : inputData) {
                 bw.write(s + System.lineSeparator());
             }
         }
     }
 
-    public void writeListToFile(String dir, String fileName,
-            List<String> inputData) throws IOException {
+    public void writeListToFile(String dir, String fileName, List<String> inputData)
+            throws IOException {
 
         createTemporaryDirectoryIfNotExists(dir);
 
-        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(dir
-                + fileName), StandardCharsets.UTF_8)) {
+        try (BufferedWriter bw =
+                Files.newBufferedWriter(Paths.get(dir + fileName), StandardCharsets.UTF_8)) {
             for (String s : inputData) {
                 bw.write(s + System.lineSeparator());
             }
@@ -171,8 +165,7 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     public Map<String, String> readFileToMap(String path) throws IOException {
 
         Map<String, String> outputData = new HashMap<String, String>();
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(path),
-                StandardCharsets.UTF_8)) {
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] s = line.split(",");
@@ -182,15 +175,15 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         return outputData;
     }
 
-    public void writeMapToFile(String dir, String fileName,
-            Map<String, String> inputData) throws IOException {
+    public void writeMapToFile(String dir, String fileName, Map<String, String> inputData)
+            throws IOException {
 
         createTemporaryDirectoryIfNotExists(dir);
 
-        try (BufferedWriter bw = Files.newBufferedWriter(Paths.get(dir
-                + fileName), StandardCharsets.UTF_8)) {
-            for (Iterator<Entry<String, String>> iterator = inputData.entrySet()
-                    .iterator(); iterator.hasNext();) {
+        try (BufferedWriter bw =
+                Files.newBufferedWriter(Paths.get(dir + fileName), StandardCharsets.UTF_8)) {
+            for (Iterator<Entry<String, String>> iterator =
+                    inputData.entrySet().iterator(); iterator.hasNext();) {
                 Entry<String, String> entry = iterator.next();
 
                 StringBuilder sb = new StringBuilder();
@@ -202,18 +195,16 @@ public class JmsSharedServiceImpl implements JmsSharedService {
         }
     }
 
-    public void writeValidObjectToFile(String dir, String fileName,
-            Object obj) throws IOException {
+    public void writeValidObjectToFile(String dir, String fileName, Object obj) throws IOException {
         writeObjectToFile(dir, fileName, obj);
     }
 
-    public void writeObjectToFile(String dir, String fileName,
-            Object obj) throws IOException {
+    public void writeObjectToFile(String dir, String fileName, Object obj) throws IOException {
 
         createTemporaryDirectoryIfNotExists(dir);
 
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dir
-                + fileName))) {
+        try (ObjectOutputStream out =
+                new ObjectOutputStream(new FileOutputStream(dir + fileName))) {
             out.writeObject(obj);
         }
     }
@@ -225,13 +216,13 @@ public class JmsSharedServiceImpl implements JmsSharedService {
                 ObjectInputStream ois = new ObjectInputStream(fis)) {
             data = (Object) ois.readObject();
         } catch (ClassNotFoundException e) {
-            throw new SystemException("e.sf.jmss.8000", e);
+            throw new SystemException("e.sf.js.8000", e);
         }
         return data;
     }
 
-    public List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate,
-            String distinationName) throws JMSException {
+    public List<javax.jms.Message> getMessages(JmsTemplate jmsTemplate, String distinationName)
+            throws JMSException {
 
         // JMSからメッセージ件数取得
         return getMessagesSelected(jmsTemplate, distinationName, null);
@@ -239,21 +230,19 @@ public class JmsSharedServiceImpl implements JmsSharedService {
     }
 
     public List<javax.jms.Message> getMessagesSelected(JmsTemplate jmsTemplate,
-            String distinationName,
-            String messageSelector) throws JMSException {
+            String distinationName, String messageSelector) throws JMSException {
 
         // JMSからメッセージ件数取得
         return jmsTemplate.browseSelected(distinationName, messageSelector,
                 new BrowserCallback<List<javax.jms.Message>>() {
 
                     @Override
-                    public List<javax.jms.Message> doInJms(Session session,
-                            QueueBrowser browser) throws JMSException {
+                    public List<javax.jms.Message> doInJms(Session session, QueueBrowser browser)
+                            throws JMSException {
                         List<javax.jms.Message> list = new ArrayList<javax.jms.Message>();
                         Enumeration<?> messages = browser.getEnumeration();
                         while (messages.hasMoreElements()) {
-                            list.add((javax.jms.Message) messages
-                                    .nextElement());
+                            list.add((javax.jms.Message) messages.nextElement());
                         }
                         return list;
                     }

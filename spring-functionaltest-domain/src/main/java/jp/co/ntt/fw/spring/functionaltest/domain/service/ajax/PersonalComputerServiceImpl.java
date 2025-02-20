@@ -38,18 +38,16 @@ public class PersonalComputerServiceImpl implements PersonalComputerService {
     @Override
     public PersonalComputer getPersonalComputer(int personalComputerId) {
 
-        PersonalComputer personalComputer = personalComputerRepository.findById(
-                personalComputerId);
+        PersonalComputer personalComputer = personalComputerRepository.findById(personalComputerId);
 
         return personalComputer;
     }
 
     @Override
-    public List<PersonalComputer> getPersonalComputers(
-            PersonalComputerCriteria criteria) {
+    public List<PersonalComputer> getPersonalComputers(PersonalComputerCriteria criteria) {
 
-        List<PersonalComputer> personalComputers = personalComputerRepository
-                .findPageByCriteria(criteria);
+        List<PersonalComputer> personalComputers =
+                personalComputerRepository.findPageByCriteria(criteria);
         return personalComputers;
 
     }
@@ -57,12 +55,11 @@ public class PersonalComputerServiceImpl implements PersonalComputerService {
     @Override
     public void update(PersonalComputer personalComputer) {
 
-        long count = personalComputerRepository.countByNameAndNotEqualID(
-                personalComputer);
+        long count = personalComputerRepository.countByNameAndNotEqualID(personalComputer);
 
         if (0 < count) {
             ResultMessages messages = ResultMessages.danger();
-            messages.add("e.sf.ajax.8001");
+            messages.add("e.sf.aa.8001");
             throw new BusinessException(messages);
         }
 

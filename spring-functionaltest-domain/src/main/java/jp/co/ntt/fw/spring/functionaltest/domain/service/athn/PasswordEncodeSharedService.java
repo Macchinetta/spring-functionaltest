@@ -31,6 +31,5 @@ public interface PasswordEncodeSharedService {
 
     String passwordEncodeMessageDigest(String rawPassword, String userSalt);
 
-    String passwordEncodeMessageDigestDelegating(String rawPassword,
-            String userSalt);
+    String passwordEncodeMessageDigestDelegating(String rawPassword, String userSalt);
 }

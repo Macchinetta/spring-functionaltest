@@ -27,8 +27,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.OrderSummary;
 public interface JPAOrderRepository extends JpaRepository<JPAOrder, Integer> {
 
     @Query("SELECT a FROM JPAOrder a" + " INNER JOIN FETCH a.orderItem"
-            + " WHERE a.orderStatus.statusName = :statusName"
-            + " ORDER BY a.orderId DESC")
+            + " WHERE a.orderStatus.statusName = :statusName" + " ORDER BY a.orderId DESC")
     List<JPAOrder> findAllByOrderStatus(@Param("statusName") String statusName);
 
     @Query("SELECT NEW jp.co.ntt.fw.spring.functionaltest.domain.model."

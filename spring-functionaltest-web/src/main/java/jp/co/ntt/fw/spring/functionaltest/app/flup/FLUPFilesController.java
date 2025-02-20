@@ -27,7 +27,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/files")
 @Controller
@@ -37,8 +38,7 @@ public class FLUPFilesController {
     FileUploadService fileUploadService;
 
     @RequestMapping(method = RequestMethod.GET, params = "download")
-    public String download(@RequestParam(value = "fileId") String fileId,
-            Model model) {
+    public String download(@RequestParam(value = "fileId") String fileId, Model model) {
         UploadFile uploadFile = fileUploadService.getUploadFile(fileId);
         model.addAttribute(uploadFile);
         return "flup/uploadFileDownload";

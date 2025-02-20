@@ -28,16 +28,13 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 public class MyLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            MyLogoutSuccessHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyLogoutSuccessHandler.class);
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request,
-            HttpServletResponse response,
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
 
-        logger.info("Excute MyLogoutSuccessHandler. username : {}",
-                authentication.getName());
+        logger.info("Excute MyLogoutSuccessHandler. username : {}", authentication.getName());
 
         super.handle(request, response, authentication);
     }

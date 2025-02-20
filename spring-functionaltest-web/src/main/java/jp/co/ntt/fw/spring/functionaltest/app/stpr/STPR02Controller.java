@@ -43,14 +43,13 @@ public class STPR02Controller {
     }
 
     @RequestMapping(value = "0201/001/padding", method = RequestMethod.POST)
-    public String handle0201001Padding(Model model,
-            @Validated StringProcessing0201001Form form, BindingResult result) {
+    public String handle0201001Padding(Model model, @Validated StringProcessing0201001Form form,
+            BindingResult result) {
 
         if (result.hasErrors()) {
             return handle0201001();
         }
-        String paddingStr = String.format(form.getFormat(), form
-                .getTargetValueInt());
+        String paddingStr = String.format(form.getFormat(), form.getTargetValueInt());
         model.addAttribute("resultString", paddingStr);
 
         return "stpr/paddingResult";
@@ -62,8 +61,7 @@ public class STPR02Controller {
     }
 
     @RequestMapping(value = "0201/002/suppress", method = RequestMethod.POST)
-    public String handle0201002Suppress(Model model,
-            StringProcessing0201002Form form) {
+    public String handle0201002Suppress(Model model, StringProcessing0201002Form form) {
 
         String paddingStr = form.getTargetValueStr();
         String suppressStr = paddingStr.replaceFirst(form.getFormat(), "");

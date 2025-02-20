@@ -44,59 +44,58 @@ public class JMSS03ReceivingController {
         return form;
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=jmsMessage")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=jmsMessage")
     public String receiveMessageJmsMessage(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        Map<String, String> map = receivemessageHelper.receivedMessageAndForMap(
-                form.getJmsTodoId());
+        Map<String, String> map =
+                receivemessageHelper.receivedMessageAndForMap(form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
-                    .name()));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY.name()));
         }
 
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=addKey")
-    public String receiveMessageAddKey(Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=addKey")
+    public String receiveMessageAddKey(Model model, JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        Map<String, String> map = receivemessageHelper.receivedMessageAndForMap(
-                form.getJmsTodoId());
+        Map<String, String> map =
+                receivemessageHelper.receivedMessageAndForMap(form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
-                    .name()));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY.name()));
         }
 
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=topic")
-    public String receiveMessageTopic(Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=topic")
+    public String receiveMessageTopic(Model model, JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo1 = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId() + "topic1");
-        JmsTodo jmsTodo2 = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId() + "topic2");
+        JmsTodo jmsTodo1 =
+                receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId() + "topic1");
+        JmsTodo jmsTodo2 =
+                receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId() + "topic2");
 
         if (jmsTodo1 != null && jmsTodo2 != null) {
-            model.addAttribute("uniqueIdentifier",
-                    "All of the subscriber has been received.");
+            model.addAttribute("uniqueIdentifier", "All of the subscriber has been received.");
         }
 
         return "jmss/jmsReceive";
     }
 
     @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=many")
-    public String receiveMessageMany(Model model, JmsReceivingForm form,
-            RedirectAttributes attrs) throws InterruptedException, IOException {
+    public String receiveMessageMany(Model model, JmsReceivingForm form, RedirectAttributes attrs)
+            throws InterruptedException, IOException {
 
-        List<String> list = receivemessageHelper.receivedMessageAndForList(form
-                .getJmsTodoId());
+        List<String> list = receivemessageHelper.receivedMessageAndForList(form.getJmsTodoId());
 
         if (list != null) {
             model.addAttribute("uniqueIdentifier", list.get(0));
@@ -106,32 +105,29 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=callback")
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=callback")
     public String receiveMessageCallback(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        Map<String, String> map = receivemessageHelper.receivedMessageAndForMap(
-                form.getJmsTodoId());
+        Map<String, String> map =
+                receivemessageHelper.receivedMessageAndForMap(form.getJmsTodoId());
 
         if (map != null) {
-            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY
-                    .name()));
-            model.addAttribute("priority", map.get(JmsProperty.PRIORITY
-                    .name()));
-            model.addAttribute("deliveryMode", map.get(JmsProperty.DELIVERY_MODE
-                    .name()));
+            model.addAttribute("uniqueIdentifier", map.get(JmsProperty.UUID_KEY.name()));
+            model.addAttribute("priority", map.get(JmsProperty.PRIORITY.name()));
+            model.addAttribute("deliveryMode", map.get(JmsProperty.DELIVERY_MODE.name()));
         }
 
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=withHeadersOK")
-    public String receiveMessageWithHeadersOK(Model model,
-            JmsReceivingForm form,
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=withHeadersOK")
+    public String receiveMessageWithHeadersOK(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", form.getJmsTodoId());
@@ -140,13 +136,12 @@ public class JMSS03ReceivingController {
         return "jmss/jmsReceive";
     }
 
-    @RequestMapping(value = "receivemessage", method = RequestMethod.POST, params = "testCase=withHeadersNG")
-    public String receiveMessageWithWithHeadersNG(Model model,
-            JmsReceivingForm form,
+    @RequestMapping(value = "receivemessage", method = RequestMethod.POST,
+            params = "testCase=withHeadersNG")
+    public String receiveMessageWithWithHeadersNG(Model model, JmsReceivingForm form,
             RedirectAttributes attrs) throws InterruptedException, IOException {
 
-        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form
-                .getJmsTodoId());
+        JmsTodo jmsTodo = receivemessageHelper.receiveMessagesForJmsTodo(form.getJmsTodoId());
 
         if (jmsTodo != null) {
             model.addAttribute("uniqueIdentifier", form.getJmsTodoId());

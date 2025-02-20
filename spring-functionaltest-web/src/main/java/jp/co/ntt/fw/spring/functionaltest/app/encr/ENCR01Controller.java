@@ -58,67 +58,58 @@ public class ENCR01Controller {
     }
 
     @RequestMapping(value = "0101/001/encryptDecryptByTextEncryptor", method = RequestMethod.POST)
-    public String encryptByTextEncryptor(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String encryptByTextEncryptor(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0101001(model, form);
         }
 
-        String encryptedText = encryptionDataService.encryptText(form
-                .getRawText());
+        String encryptedText = encryptionDataService.encryptText(form.getRawText());
         model.addAttribute("encryptedText", encryptedText);
-        model.addAttribute("decryptedText", encryptionDataService.decryptText(
-                encryptedText));
+        model.addAttribute("decryptedText", encryptionDataService.decryptText(encryptedText));
         return "encr/encryptCompleteByTextEncryptor";
     }
 
     @RequestMapping(value = "0103/001/encryptDecryptByBytesEncryptor", method = RequestMethod.POST)
-    public String encryptByBytesEncryptor(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String encryptByBytesEncryptor(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0103001(model, form);
         }
 
-        byte[] encryptedBytes = encryptionDataService.encryptBytes(form
-                .getRawText().getBytes(StandardCharsets.UTF_8));
-        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(
-                encryptedBytes));
-        model.addAttribute("decryptedText", new String(encryptionDataService
-                .decryptBytes(encryptedBytes), StandardCharsets.UTF_8));
+        byte[] encryptedBytes = encryptionDataService
+                .encryptBytes(form.getRawText().getBytes(StandardCharsets.UTF_8));
+        model.addAttribute("encryptedText", Base64.getEncoder().encodeToString(encryptedBytes));
+        model.addAttribute("decryptedText", new String(
+                encryptionDataService.decryptBytes(encryptedBytes), StandardCharsets.UTF_8));
         return "encr/encryptCompleteByBytesEncryptor";
     }
 
     @RequestMapping(value = "0104/001/encryptDecryptTextByAesWithGcm", method = RequestMethod.POST)
-    public String encryptTextByAesWithGcm(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String encryptTextByAesWithGcm(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0104001(model, form);
         }
 
-        String encryptedText = encryptionDataService.encryptTextByAesWithGcm(
-                form.getRawText());
+        String encryptedText = encryptionDataService.encryptTextByAesWithGcm(form.getRawText());
         model.addAttribute("encryptedText", encryptedText);
-        model.addAttribute("decryptedText", encryptionDataService
-                .decryptTextByAesWithGcm(encryptedText));
+        model.addAttribute("decryptedText",
+                encryptionDataService.decryptTextByAesWithGcm(encryptedText));
         return "encr/encryptCompleteTextByAesWithGcm";
     }
 
     @RequestMapping(value = "0105/001/encryptDecryptBytesByAesWithGcm", method = RequestMethod.POST)
-    public String encryptBytesByAesWithGcm(Model model,
-            @Validated EncryptionDataForm form, BindingResult result,
-            RedirectAttributes redirectAttributes) {
+    public String encryptBytesByAesWithGcm(Model model, @Validated EncryptionDataForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return handle0105001(model, form);
         }
 
-        String encryptedBytes = encryptionDataService.encryptBytesByAesWithGcm(
-                form.getRawText());
+        String encryptedBytes = encryptionDataService.encryptBytesByAesWithGcm(form.getRawText());
         model.addAttribute("encryptedText", encryptedBytes);
-        model.addAttribute("decryptedText", encryptionDataService
-                .decryptBytesByAesWithGcm(encryptedBytes));
+        model.addAttribute("decryptedText",
+                encryptionDataService.decryptBytesByAesWithGcm(encryptedBytes));
         return "encr/encryptCompleteBytesByAesWithGcm";
     }
 

@@ -30,7 +30,8 @@ import org.terasoluna.gfw.web.token.transaction.TransactionTokenCheck;
 import org.terasoluna.gfw.web.token.transaction.TransactionTokenType;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/0202")
 @TransactionTokenCheck("flup/0202")
@@ -53,15 +54,13 @@ public class FLUP0202Controller {
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
     @TransactionTokenCheck
-    public String handle001Upload(@Validated SingleUploadForm form,
-            BindingResult result,
+    public String handle001Upload(@Validated SingleUploadForm form, BindingResult result,
             RedirectAttributes redirectAttributes) throws IOException {
         if (result.hasErrors()) {
             return handle001Form();
         }
 
-        fileUploadHelper.bindToModel(form.getMultipartFile(),
-                redirectAttributes);
+        fileUploadHelper.bindToModel(form.getMultipartFile(), redirectAttributes);
 
         return "redirect:/flup/0202?complete";
     }

@@ -37,8 +37,7 @@ public class VLDT0102001Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(@Validated NestedValidationForm form,
-            BindingResult result) {
+    public String handleValidate(@Validated NestedValidationForm form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "vldt/nestedValidationView";

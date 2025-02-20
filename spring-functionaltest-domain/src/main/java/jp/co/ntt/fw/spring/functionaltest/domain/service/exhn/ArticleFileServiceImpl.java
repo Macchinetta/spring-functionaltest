@@ -53,13 +53,10 @@ public class ArticleFileServiceImpl implements ArticleFileService {
     }
 
     @Override
-    public void save(String uploadTemporaryFileId,
-            String title) throws IOException {
+    public void save(String uploadTemporaryFileId, String title) throws IOException {
 
-        Path uploadTemporaryFile = Paths.get(uploadTemporaryDirectory,
-                uploadTemporaryFileId);
-        Path uploadCompletedTemporaryDirectoryPath = Paths.get(
-                uploadCompletedTemporaryDirectory);
+        Path uploadTemporaryFile = Paths.get(uploadTemporaryDirectory, uploadTemporaryFileId);
+        Path uploadCompletedTemporaryDirectoryPath = Paths.get(uploadCompletedTemporaryDirectory);
 
         ArticleFile articleFile = new ArticleFile();
         articleFile.setFileId(uploadTemporaryFileId);
@@ -68,15 +65,14 @@ public class ArticleFileServiceImpl implements ArticleFileService {
         try {
             articleFile.setContent(Files.readAllBytes(uploadTemporaryFile));
         } catch (IOException e) {
-            throw new SystemException("e.sf.exhn.9000", "not found upload file. file is ["
+            throw new SystemException("e.sf.eh.9000", "not found upload file. file is ["
                     + uploadTemporaryFile.toAbsolutePath() + "].", e);
         }
 
         articleFileRepository.register(articleFile);
         try {
-            Files.move(uploadTemporaryFile,
-                    uploadCompletedTemporaryDirectoryPath.resolve(
-                            uploadTemporaryFile.getFileName()));
+            Files.move(uploadTemporaryFile, uploadCompletedTemporaryDirectoryPath
+                    .resolve(uploadTemporaryFile.getFileName()));
         } catch (IOException e) {
             exceptionLogger.log(e);
         }

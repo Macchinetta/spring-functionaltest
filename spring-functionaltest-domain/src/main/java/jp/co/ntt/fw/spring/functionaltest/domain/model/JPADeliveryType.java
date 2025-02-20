@@ -28,7 +28,8 @@ import javax.persistence.Table;
 @Table(name = "m_delivery_type")
 public class JPADeliveryType {
     /**
-     * delivery_type_id INTEGER ,delivery_type_name VARCHAR(1024) ,CONSTRAINT pk_delivery_type PRIMARY KEY (delivery_type_id) );
+     * delivery_type_id INTEGER ,delivery_type_name VARCHAR(1024) ,CONSTRAINT pk_delivery_type
+     * PRIMARY KEY (delivery_type_id) );
      */
 
     @Id

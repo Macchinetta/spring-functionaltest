@@ -27,6 +27,6 @@ import jp.co.ntt.fw.spring.functionaltest.domain.repository.pgnt.ArticleSearchCr
 public interface ArticleService {
 
     Page<Article> getArticles(ArticleSearchCriteria criteria,
-            @AllowedSortProperty({ "article_id", "title" }) Pageable pageable);
+            @AllowedSortProperty({"article_id", "title"}) Pageable pageable);
 
 }

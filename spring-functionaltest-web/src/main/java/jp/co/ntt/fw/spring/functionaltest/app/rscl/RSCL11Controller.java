@@ -45,8 +45,7 @@ public class RSCL11Controller {
 
     @RequestMapping(value = "1102/001", method = RequestMethod.POST)
     public String handle1102001(Model model) {
-        UserResource rcvUser = this.interceptorsRestClientService
-                .confirmInterceptor0101();
+        UserResource rcvUser = this.interceptorsRestClientService.confirmInterceptor0101();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         model.addAttribute("user", rcvUser);
@@ -66,8 +65,7 @@ public class RSCL11Controller {
 
     @RequestMapping(value = "1103/002", method = RequestMethod.POST)
     public String handle1102002(Model model) {
-        UserResource rcvUser = this.interceptorsRestClientService
-                .confirmInterceptor0102();
+        UserResource rcvUser = this.interceptorsRestClientService.confirmInterceptor0102();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         model.addAttribute("user", rcvUser);
@@ -78,8 +76,7 @@ public class RSCL11Controller {
     @RequestMapping(value = "1104/001", method = RequestMethod.GET)
     public String handle1104001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "ClientHttpRequestInterceptorを使用したサーバとの通信の閉塞制御の確認");
+        model.addAttribute("testDescription", "ClientHttpRequestInterceptorを使用したサーバとの通信の閉塞制御の確認");
         model.addAttribute("testId", "1104/001");
 
         return "rscl/extensionOfRest";
@@ -98,8 +95,7 @@ public class RSCL11Controller {
     @RequestMapping(value = "1105/001", method = RequestMethod.GET)
     public String handle1105001First(Model model) {
 
-        model.addAttribute("testDescription",
-                "ClientHttpRequestInterceptorを使用した通信処理のリトライの確認");
+        model.addAttribute("testDescription", "ClientHttpRequestInterceptorを使用した通信処理のリトライの確認");
         model.addAttribute("testId", "1105/001");
 
         return "rscl/extensionOfRest";
@@ -108,8 +104,7 @@ public class RSCL11Controller {
     @RequestMapping(value = "1105/001", method = RequestMethod.POST)
     public String handle1105001(Model model) {
 
-        UserResource rcvUser = this.interceptorsRestClientService
-                .confirmInterceptor03();
+        UserResource rcvUser = this.interceptorsRestClientService.confirmInterceptor03();
 
         model.addAttribute("resultDescription", "取得したユーザ情報");
         model.addAttribute("user", rcvUser);

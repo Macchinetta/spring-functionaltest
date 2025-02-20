@@ -1,38 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-</head>
-<body>
-  <div class="container">
-    <div id="wrapper">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">モデルに格納された値を日付フォーマット表示した画面</h1>
 
-      <h1 id="screenTitle">モデルに格納された値を日付フォーマット表示した画面</h1>
-
-      <ul th:if="${testcaseId} == 'APLY1001005'">
-        <li id="message1">Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。</li>
-        <li id="message2" th:text="${#dates.format(valueUsingDateFormat,'yyyy/MM/dd')}"></li>
-      </ul>
-      <ul th:if="${testcaseId} == 'APLY1001027'">
-        <li id="message1">Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。</li>
-        <li id="message2"><span
-          th:each="date, status : ${#dates.arrayFormat(valueUsingDateFormat,'yyyy/MM/dd')}"
-          th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span></li>
-      </ul>
-      <ul th:if="${testcaseId} == 'APLY1001028'">
-        <li id="message1">Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。</li>
-        <li id="message2"><span
-          th:each="date, status : ${#dates.listFormat(valueUsingDateFormat,'yyyy/MM/dd')}"
-          th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span></li>
-      </ul>
-      <ul th:if="${testcaseId} == 'APLY1001029'">
-        <li id="message1">Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。</li>
-        <li id="message2"><span
-          th:each="date, status : ${#dates.setFormat(valueUsingDateFormat,'yyyy/MM/dd')}"
-          th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span></li>
-      </ul>
-
-    </div>
-  </div>
-</body>
+                <ul th:if="${testcaseId} == 'APLY1001005'">
+                    <li id="message1">Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。</li>
+                    <li id="message2" th:text="${#dates.format(valueUsingDateFormat,'yyyy/MM/dd')}"></li>
+                </ul>
+                <ul th:if="${testcaseId} == 'APLY1001027'">
+                    <li id="message1">Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。</li>
+                    <li id="message2">
+                        <span th:each="date, status : ${#dates.arrayFormat(valueUsingDateFormat,'yyyy/MM/dd')}" th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span>
+                    </li>
+                </ul>
+                <ul th:if="${testcaseId} == 'APLY1001028'">
+                    <li id="message1">Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。</li>
+                    <li id="message2">
+                        <span th:each="date, status : ${#dates.listFormat(valueUsingDateFormat,'yyyy/MM/dd')}" th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span>
+                    </li>
+                </ul>
+                <ul th:if="${testcaseId} == 'APLY1001029'">
+                    <li id="message1">Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。</li>
+                    <li id="message2"><span th:each="date, status : ${#dates.setFormat(valueUsingDateFormat,'yyyy/MM/dd')}" th:text="${status.last}? ${date} : |${date}, |" th:remove="tag"></span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>

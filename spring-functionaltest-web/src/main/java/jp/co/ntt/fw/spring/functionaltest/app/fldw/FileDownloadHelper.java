@@ -24,8 +24,8 @@ import org.springframework.ui.Model;
 @Component
 public class FileDownloadHelper {
 
-    public void bindToModel(Model model,
-            ContentDownloadForm form) throws UnsupportedEncodingException, IOException {
+    public void bindToModel(Model model, ContentDownloadForm form)
+            throws UnsupportedEncodingException, IOException {
         model.addAttribute("name", form.getName());
         model.addAttribute("birthdate", form.getBirthdate());
         model.addAttribute("address", form.getAddress());

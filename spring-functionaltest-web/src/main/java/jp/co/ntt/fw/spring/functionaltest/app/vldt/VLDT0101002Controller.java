@@ -37,8 +37,7 @@ public class VLDT0101002Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "validate")
-    public String handleValidate(
-            @Validated SimpleValidationByHibernateValidatorForm form,
+    public String handleValidate(@Validated SimpleValidationByHibernateValidatorForm form,
             BindingResult result) {
 
         if (result.hasErrors()) {

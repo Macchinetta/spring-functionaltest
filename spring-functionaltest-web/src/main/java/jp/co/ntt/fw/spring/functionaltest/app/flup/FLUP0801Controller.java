@@ -34,7 +34,8 @@ import jp.co.ntt.fw.spring.functionaltest.domain.model.UploadFile;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.flup.FileUploadService;
 
 /**
- * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、 統一して中項目ごとにController作成をしている。
+ * 本アプリでは、原則、大項目単位でcontrollerを作成するが、 ファイルアップロード機能では、中項目単位でweb.xmlのパラメータを変更する試験が存在するため、
+ * 統一して中項目ごとにController作成をしている。
  */
 @RequestMapping("flup/0801")
 @Controller
@@ -54,10 +55,8 @@ public class FLUP0801Controller {
     }
 
     @RequestMapping(value = "001", method = RequestMethod.POST)
-    public String handle001Upload(@Validated({
-            UploadFileAllowJsp.class }) SingleUploadForm form,
-            BindingResult result,
-            RedirectAttributes redirectAttributes) throws IOException {
+    public String handle001Upload(@Validated({UploadFileAllowJsp.class}) SingleUploadForm form,
+            BindingResult result, RedirectAttributes redirectAttributes) throws IOException {
 
         if (result.hasErrors()) {
             return handle001Form();
@@ -68,16 +67,15 @@ public class FLUP0801Controller {
         newUploadFile.setFileName(multipartFile.getOriginalFilename());
         newUploadFile.setContentType(multipartFile.getContentType());
 
-        UploadFile savedUploadFile = fileUploadService.saveFileToDisc(
-                multipartFile.getInputStream(), newUploadFile);
+        UploadFile savedUploadFile =
+                fileUploadService.saveFileToDisc(multipartFile.getInputStream(), newUploadFile);
 
         UploadedContent uploadedContent = new UploadedContent();
         uploadedContent.setFileId(savedUploadFile.getFileId());
         uploadedContent.setFileName(savedUploadFile.getFileName());
         redirectAttributes.addFlashAttribute(uploadedContent);
 
-        redirectAttributes.addFlashAttribute(ResultMessages.success().add(
-                "i.sf.flup.0002"));
+        redirectAttributes.addFlashAttribute(ResultMessages.success().add("i.sf.fu.0002"));
 
         return "redirect:/flup/0801/001?complete";
     }

@@ -75,8 +75,8 @@ public class Celebrity implements Serializable {
 
     @Override
     public String toString() {
-        return "Name [celebrityId=" + celebrityId + ", firstName=" + firstName
-                + ", lastName=" + lastName + "]";
+        return "Name [celebrityId=" + celebrityId + ", firstName=" + firstName + ", lastName="
+                + lastName + "]";
     }
 
 }

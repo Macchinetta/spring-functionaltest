@@ -21,23 +21,22 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.SpringSecurityCoreVersion;
 
-public class CompanyIdUsernamePasswordAuthenticationToken extends
-                                                          UsernamePasswordAuthenticationToken {
+public class CompanyIdUsernamePasswordAuthenticationToken
+        extends UsernamePasswordAuthenticationToken {
 
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
     private final String companyId;
 
-    public CompanyIdUsernamePasswordAuthenticationToken(Object principal,
-            Object credentials, String companyId) {
+    public CompanyIdUsernamePasswordAuthenticationToken(Object principal, Object credentials,
+            String companyId) {
         super(principal, credentials);
 
         this.companyId = companyId;
     }
 
-    public CompanyIdUsernamePasswordAuthenticationToken(Object principal,
-            Object credentials, String companyId,
-            Collection<? extends GrantedAuthority> authorities) {
+    public CompanyIdUsernamePasswordAuthenticationToken(Object principal, Object credentials,
+            String companyId, Collection<? extends GrantedAuthority> authorities) {
         super(principal, credentials, authorities);
         this.companyId = companyId;
     }

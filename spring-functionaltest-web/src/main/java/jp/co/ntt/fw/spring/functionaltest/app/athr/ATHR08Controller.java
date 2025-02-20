@@ -30,13 +30,12 @@ public class ATHR08Controller {
         return "athr/loginForCustomizedAuthorizeErrorForUnAuthenticated";
     }
 
-    @RequestMapping(value = { "0802/001/afterLogin", "0802/001/api" })
+    @RequestMapping(value = {"0802/001/afterLogin", "0802/001/api"})
     public String handle0801001afterLogin(Principal principal, Model model) {
         Authentication authentication = (Authentication) principal;
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
-        model.addAttribute("userEmail", userDetails.getUsername()
-                + "@example.com");
+        model.addAttribute("userEmail", userDetails.getUsername() + "@example.com");
         return "athr/showForCustomizedAutnenticateErrorForUnAuthenticated";
     }
 

@@ -16,8 +16,11 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.repository.cdls;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.CodeList;
+import jp.co.ntt.fw.spring.functionaltest.domain.model.PriceCodeList;
 
 public interface UpdateCodelistRepository {
 
     long updateAuthorityTableValueById(CodeList updatedateCodeList);
+
+    long updatePriceTableValueById(PriceCodeList updatedateCodeList);
 }

@@ -1,207 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:sec="http://www.springframework.org/schema/security"
-  xmlns:context="http://www.springframework.org/schema/context"
-  xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
-        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-  <sec:http pattern="/resources/**" security="none" />
-  <sec:http pattern="/admin/h2/*" security="none" />
-  <!-- テストデータを操作するためのWEB APIは認証・認可の対象外とする -->
-  <sec:http pattern="/**/testdata/*" security="none" />
+    <sec:http pattern="/resources/**" security="none" />
+    <sec:http pattern="/admin/h2/*" security="none" />
+    <!-- テストデータを操作するためのWEB APIは認証・認可の対象外とする -->
+    <sec:http pattern="/**/testdata/*" security="none" />
 
-  <bean id="noOpPasswordEncoder"
-    class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+    <bean id="noOpPasswordEncoder"
+        class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
 
-  <!-- ATHR0401002 Protection -->
-  <!-- ATHR0401002 Protection -->
-  <!-- なぜか、このHandlerをすべてのSpringSecurityの定義の最上位にbeanの定義をしないと動かなかった。 -->
-  <!-- 本質的ではないが、暫定対処 -->
-  <!-- 参考：http://stackoverflow.com/questions/13132922/spring-security-taglib-secauthorize-with-role-hierarchy-not-working?rq=1 -->
-  <bean id="AuthorizationJspRoleHierarchyHandler"
-    class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
-    <property name="roleHierarchy" ref="AuthorizationJspRoleHierarchy" />
-  </bean>
+    <!-- ATHR0401002 Protection -->
+    <!-- ATHR0401002 Protection -->
+    <!-- なぜか、このHandlerをすべてのSpringSecurityの定義の最上位にbeanの定義をしないと動かなかった。 -->
+    <!-- 本質的ではないが、暫定対処 -->
+    <!-- 参考：http://stackoverflow.com/questions/13132922/spring-security-taglib-secauthorize-with-role-hierarchy-not-working?rq=1 -->
+    <bean id="AuthorizationJspRoleHierarchyHandler"
+        class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler">
+        <property name="roleHierarchy" ref="AuthorizationJspRoleHierarchy" />
+    </bean>
 
-  <!-- ATHR0401 Protection -->
-  <!-- <sec:authorize url="">をJSPで使うため。 -->
-  <!-- Springのbagで一番上に定義しないと動かない。 -->
-  <!-- 上にsecurity="none"がある分には大丈夫 -->
-  <!-- https://jira.springsource.org/browse/SEC-2189?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr04.xml" />
+    <!-- ATHR0401 Protection -->
+    <!-- <sec:authorize url="">をJSPで使うため。 -->
+    <!-- Springのbagで一番上に定義しないと動かない。 -->
+    <!-- 上にsecurity="none"がある分には大丈夫 -->
+    <!-- https://jira.springsource.org/browse/SEC-2189?page=com.atlassian.jira.plugin.system.issuetabpanels:all-tabpanel -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr04.xml" />
 
-  <!-- ATHR Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr.xml" />
-  <!-- ATHR02 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr02.xml" />
-  <!-- ATHR03 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr03.xml" />
-  <!-- ATHR06 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr06.xml" />
-  <!-- ATHR07 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr07.xml" />
-  <!-- ATHR08 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr08.xml" />
+    <!-- ATHR Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr.xml" />
+    <!-- ATHR02 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr02.xml" />
+    <!-- ATHR03 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr03.xml" />
+    <!-- ATHR06 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr06.xml" />
+    <!-- ATHR07 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr07.xml" />
+    <!-- ATHR08 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr08.xml" />
 
-  <!-- ATHR09 Protection -->
-  <import resource="classpath:META-INF/spring/athr/spring-security-athr09.xml" />
+    <!-- ATHR09 Protection -->
+    <import resource="classpath:META-INF/spring/athr/spring-security-athr09.xml" />
 
-  <!-- ATHN Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
+    <!-- ATHN Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
 
-  <!-- ATHN01 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn01.xml" />
+    <!-- ATHN01 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn01.xml" />
 
-  <!-- ATHN02 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn02.xml" />
+    <!-- ATHN02 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn02.xml" />
 
-  <!-- ATHN03 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn03.xml" />
+    <!-- ATHN03 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn03.xml" />
 
-  <!-- ATHN04 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn04.xml" />
+    <!-- ATHN04 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn04.xml" />
 
-  <!-- ATHN05 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn05.xml" />
+    <!-- ATHN05 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn05.xml" />
 
-  <!-- ATHN06 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn06.xml" />
+    <!-- ATHN06 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn06.xml" />
 
-  <!-- ATHN07 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn07.xml" />
+    <!-- ATHN07 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn07.xml" />
 
-  <!-- ATHN09 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn09.xml" />
+    <!-- ATHN09 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn09.xml" />
 
-  <!-- ATHN12 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn12.xml" />
+    <!-- ATHN12 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn12.xml" />
 
-  <!-- ATHN13 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn13.xml" />
+    <!-- ATHN13 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn13.xml" />
 
-  <!-- ATHN15 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn15.xml" />
+    <!-- ATHN15 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn15.xml" />
 
-  <!-- ATHN16 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn16.xml" />
+    <!-- ATHN16 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn16.xml" />
 
-  <!-- ATHN17 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn17.xml" />
+    <!-- ATHN17 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn17.xml" />
 
-  <!-- ATHN18 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn18.xml" />
+    <!-- ATHN18 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn18.xml" />
 
-  <!-- ATHN19 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn19.xml" />
+    <!-- ATHN19 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn19.xml" />
 
-  <!-- ATHN22 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn22.xml" />
+    <!-- ATHN22 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn22.xml" />
 
-  <!-- ATHN23 Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn23.xml" />
+    <!-- ATHN23 Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn23.xml" />
 
-  <!-- ATHN Protection -->
-  <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
+    <!-- ATHN Protection -->
+    <import resource="classpath:META-INF/spring/athn/spring-security-athn.xml" />
 
-  <!-- SPSC Protection -->
-  <import resource="classpath:META-INF/spring/spsc/spring-security-spsc.xml" />
+    <!-- SPSC Protection -->
+    <import resource="classpath:META-INF/spring/spsc/spring-security-spsc.xml" />
 
-  <!-- SPSM02 Protection -->
-  <import resource="classpath:META-INF/spring/spsm/spring-security-spsm02.xml" />
-  <!-- SPSM03 Protection -->
-  <import resource="classpath:META-INF/spring/spsm/spring-security-spsm03.xml" />
-  <!-- SPSM04 Protection -->
-  <import resource="classpath:META-INF/spring/spsm/spring-security-spsm04.xml" />
-  <!-- SPSM05 Protection -->
-  <import resource="classpath:META-INF/spring/spsm/spring-security-spsm05.xml" />
+    <!-- SPSM02 Protection -->
+    <import resource="classpath:META-INF/spring/spsm/spring-security-spsm02.xml" />
+    <!-- SPSM03 Protection -->
+    <import resource="classpath:META-INF/spring/spsm/spring-security-spsm03.xml" />
+    <!-- SPSM04 Protection -->
+    <import resource="classpath:META-INF/spring/spsm/spring-security-spsm04.xml" />
+    <!-- SPSM05 Protection -->
+    <import resource="classpath:META-INF/spring/spsm/spring-security-spsm05.xml" />
 
 
-  <!-- DTAC Protection -->
-  <import resource="classpath:META-INF/spring/dtac/spring-security-dtac.xml" />
+    <!-- DTAC Protection -->
+    <import resource="classpath:META-INF/spring/dtac/spring-security-dtac.xml" />
 
-  <!-- CSPR Protection -->
-  <import resource="classpath:META-INF/spring/cspr/spring-security-cspr.xml" />
+    <!-- CSPR Protection -->
+    <import resource="classpath:META-INF/spring/cspr/spring-security-cspr.xml" />
 
-  <!-- CSRF Protection -->
-  <bean id="csrfTokenRepository"
-    class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
+    <!-- CSRF Protection -->
+    <bean id="csrfTokenRepository"
+        class="org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository" />
 
-  <!-- VLDT Protection -->
-  <import resource="classpath:META-INF/spring/vldt/spring-security-vldt.xml" />
+    <!-- VLDT Protection -->
+    <import resource="classpath:META-INF/spring/vldt/spring-security-vldt.xml" />
 
-  <!-- INTR Protection -->
-  <import resource="classpath:META-INF/spring/intr/spring-security-intr0301001.xml" />
-  <import resource="classpath:META-INF/spring/intr/spring-security-intr0301002.xml" />
+    <!-- INTR Protection -->
+    <import resource="classpath:META-INF/spring/intr/spring-security-intr0301001.xml" />
+    <import resource="classpath:META-INF/spring/intr/spring-security-intr0301002.xml" />
 
-  <bean id="sessionAuthenticationStrategy"
-    class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
-    <constructor-arg index="0">
-      <list>
-        <bean
-          class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
-        <bean class="org.springframework.security.web.csrf.CsrfAuthenticationStrategy">
-          <constructor-arg index="0" ref="csrfTokenRepository" />
-        </bean>
-      </list>
-    </constructor-arg>
-  </bean>
+    <bean id="sessionAuthenticationStrategy"
+        class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <constructor-arg index="0">
+            <list>
+                <bean
+                    class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy" />
+                <bean class="org.springframework.security.web.csrf.CsrfAuthenticationStrategy">
+                    <constructor-arg index="0" ref="csrfTokenRepository" />
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
 
-  <!-- SOAP Protection -->
-  <import resource="classpath:META-INF/spring/soap/spring-security-soap.xml" />
+    <!-- SOAP Protection -->
+    <import resource="classpath:META-INF/spring/soap/spring-security-soap.xml" />
 
-  <!-- UserID Protection -->
-  <bean id="userIdMDCPutFilter"
-    class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
-    <property name="removeValue" value="true" />
-  </bean>
+    <!-- UserID Protection -->
+    <bean id="userIdMDCPutFilter"
+        class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
+        <property name="removeValue" value="true" />
+    </bean>
 
-  <!-- ATHR0201002 Protection and ATHR0201002 Protection 等の対応のため最後に定義 -->
-  <sec:http pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**" create-session="stateless"
-    once-per-request="false">
-    <sec:form-login />
-    <sec:logout />
-    <sec:csrf disabled="true" />
-  </sec:http>
+    <!-- ATHR0201002 Protection and ATHR0201002 Protection 等の対応のため最後に定義 -->
+    <sec:http pattern="/api/v1/DEFAULT_VIEW_INCLUSION-*/**" create-session="stateless"
+        once-per-request="false">
+        <sec:form-login />
+        <sec:logout />
+        <sec:csrf disabled="true" />
+    </sec:http>
 
-  <!-- RSCL Protection -->
-  <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
+    <!-- RSCL Protection -->
+    <import resource="classpath:META-INF/spring/rscl-api/spring-security-rscl.xml" />
 
-  <!-- DBSP Protection -->
-  <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
+    <!-- DBSP Protection -->
+    <import resource="classpath:META-INF/spring/dbsp/spring-security-dbsp0302002.xml" />
 
-  <!-- All setting -->
-  <sec:http once-per-request="false">
-    <sec:form-login />
-    <sec:logout />
-    <sec:access-denied-handler ref="accessDeniedHandler" />
-    <sec:csrf />
-  </sec:http>
+    <!-- All setting -->
+    <sec:http once-per-request="false">
+        <sec:form-login />
+        <sec:logout />
+        <sec:access-denied-handler ref="accessDeniedHandler" />
+        <sec:csrf />
+    </sec:http>
 
-  <sec:authentication-manager></sec:authentication-manager>
+    <sec:authentication-manager></sec:authentication-manager>
 
-  <bean id="accessDeniedHandler"
-    class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
-    <constructor-arg index="0">
-      <map>
-        <entry key="org.springframework.security.web.csrf.InvalidCsrfTokenException">
-          <bean
-            class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.security.AjaxSupportAccessDeniedHandlerImpl">
-            <property name="errorPage" value="/common/error/invalidCsrfTokenError" />
-          </bean>
-        </entry>
-        <entry key="org.springframework.security.web.csrf.MissingCsrfTokenException">
-          <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-            <property name="errorPage" value="/common/error/missingCsrfTokenError" />
-          </bean>
-        </entry>
-      </map>
-    </constructor-arg>
-    <constructor-arg index="1">
-      <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
-        <property name="errorPage" value="/common/error/accessDeniedError" />
-      </bean>
-    </constructor-arg>
-  </bean>
+    <bean id="accessDeniedHandler"
+        class="org.springframework.security.web.access.DelegatingAccessDeniedHandler">
+        <constructor-arg index="0">
+            <map>
+                <entry key="org.springframework.security.web.csrf.InvalidCsrfTokenException">
+                    <bean
+                        class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.security.AjaxSupportAccessDeniedHandlerImpl">
+                        <property name="errorPage" value="/common/error/invalidCsrfTokenError" />
+                    </bean>
+                </entry>
+                <entry key="org.springframework.security.web.csrf.MissingCsrfTokenException">
+                    <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+                        <property name="errorPage" value="/common/error/missingCsrfTokenError" />
+                    </bean>
+                </entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg index="1">
+            <bean class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+                <property name="errorPage" value="/common/error/accessDeniedError" />
+            </bean>
+        </constructor-arg>
+    </bean>
 </beans>

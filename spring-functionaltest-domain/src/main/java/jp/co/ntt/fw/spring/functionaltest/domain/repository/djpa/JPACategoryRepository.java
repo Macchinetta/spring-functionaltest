@@ -21,8 +21,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPACategory;
 
-public interface JPACategoryRepository extends
-                                       JpaRepository<JPACategory, Serializable> {
+public interface JPACategoryRepository extends JpaRepository<JPACategory, Serializable> {
 
     JPACategory findByCategoryName(String categoryName);
 

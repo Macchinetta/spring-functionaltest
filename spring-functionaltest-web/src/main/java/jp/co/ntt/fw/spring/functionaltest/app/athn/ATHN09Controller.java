@@ -29,13 +29,12 @@ public class ATHN09Controller {
     @RequestMapping(value = "0901/001", params = "loginSuccess")
     public String handle0901LoginSuccess(Model model) {
 
-        Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication(); // (1)
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); // (1)
         String userUuid = null;
 
         if (authentication.getPrincipal() instanceof AccountUserDetails) {
-            AccountUserDetails userDetails = AccountUserDetails.class.cast(
-                    authentication.getPrincipal()); // (2)
+            AccountUserDetails userDetails =
+                    AccountUserDetails.class.cast(authentication.getPrincipal()); // (2)
             userUuid = userDetails.getAccount().getUserUuid(); // (3)
 
             model.addAttribute("userUuid", userUuid);

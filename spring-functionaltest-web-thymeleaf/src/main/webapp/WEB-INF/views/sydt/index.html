@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head> </head>
+    <body>
+        <div class="container">
+            <div id="wrapper">
+                <h1 id="screenTitle">SYDT システム時刻</h1>
+
+                <div>[SYDT01] JodaTimeDateFactory</div>
+                <ul>
+                    <li><a id="sydt0101001" th:href="@{/sydt/0101/001}">sydt0101001</a></li>
+                    <li><a id="sydt0102001" th:href="@{/sydt/0102/001}">sydt0102001</a></li>
+                    <li><a id="sydt0103001" th:href="@{/sydt/0103/001}">sydt0103001</a></li>
+                    <li><a id="sydt0103002" th:href="@{/sydt/0103/002}">sydt0103002</a></li>
+                </ul>
+
+                <div>DB更新</div>
+                <ul>
+                    <li><a id="select" th:href="@{/sydt/select}">差分時間確認</a></li>
+                    <li><a id="register" th:href="@{/sydt/register}">差分時間更新</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

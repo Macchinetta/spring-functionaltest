@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.ntt.fw.spring.functionaltest.domain.repository.sydt.SydtRepository">
+    <update id="updateOperationDate">
+        UPDATE operation_date SET diff = #{diffValue}
+    </update>
+    
+    <select id="selectDiff" resultType="int">
+        SELECT diff FROM operation_date
+    </select>
+</mapper>

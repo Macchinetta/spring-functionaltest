@@ -1,11 +1,10 @@
-<html xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
-<head>
-<script id="js-template" th:inline="javascript">
-  var itemName = /*[[${item.name}]]*/'Apple';
-</script>
-</head>
-<body>
-  <h1>JavaScript Natural Template</h1>
-</body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/template :: layout(~{::head/content()},~{::body/content()})}">
+    <head>
+        <script id="js-template" th:inline="javascript">
+            var itemName = /*[[${item.name}]]*/ "Apple";
+        </script>
+    </head>
+    <body>
+        <h1>JavaScript Natural Template</h1>
+    </body>
 </html>

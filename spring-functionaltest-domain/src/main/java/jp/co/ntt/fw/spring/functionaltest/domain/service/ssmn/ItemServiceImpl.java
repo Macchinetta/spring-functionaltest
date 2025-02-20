@@ -42,8 +42,7 @@ public class ItemServiceImpl implements ItemService {
         List<Item> items = null;
         long total = itemRepository.count();
         if (0 < total) {
-            RowBounds rowBounds = new RowBounds((int) pageable
-                    .getOffset(), pageable.getPageSize());
+            RowBounds rowBounds = new RowBounds((int) pageable.getOffset(), pageable.getPageSize());
             items = itemRepository.findPage(rowBounds);
         } else {
             items = new ArrayList<Item>();
@@ -54,8 +53,8 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(String itemId) {
         Item item = itemRepository.findByItemId(itemId);
         if (item == null) {
-            throw new ResourceNotFoundException(String.format(
-                    "Specified item is not found. itemId is '%s'.", itemId));
+            throw new ResourceNotFoundException(
+                    String.format("Specified item is not found. itemId is '%s'.", itemId));
         }
         return item;
     }

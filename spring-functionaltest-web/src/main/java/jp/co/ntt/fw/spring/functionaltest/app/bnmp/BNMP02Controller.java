@@ -44,12 +44,12 @@ public class BNMP02Controller {
         return "bnmp/customConverter";
     }
 
-    @RequestMapping(value = "customConverter", method = RequestMethod.POST, params = "copyWithCustomConverter")
+    @RequestMapping(value = "customConverter", method = RequestMethod.POST,
+            params = "copyWithCustomConverter")
     public String handleCustomConverter(Model model, CustomConverterForm form) {
 
         // コピー元Bean作成後フィールドに値を設定し、Mapperを使用してコピー先Beanを新規作成する
-        CustomConverterDto destinationBean = beanMapper.map(form,
-                CustomConverterDto.class);
+        CustomConverterDto destinationBean = beanMapper.map(form, CustomConverterDto.class);
 
         model.addAttribute("resultBean", destinationBean);
 

@@ -46,30 +46,26 @@ public class CSPR04Controller {
     }
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String batchRegister(@Validated CustomerBatchRegisterForm form,
-            BindingResult result,
+    public String batchRegister(@Validated CustomerBatchRegisterForm form, BindingResult result,
             Model model) throws UnsupportedEncodingException, IOException {
         if (result.hasErrors()) {
             return "cspr/customerBatchRegister";
         }
 
-        model.addAttribute("uploadedFileName", form.getMultipartFile()
-                .getOriginalFilename());
+        model.addAttribute("uploadedFileName", form.getMultipartFile().getOriginalFilename());
         model.addAttribute("registerCount", 30);
 
         return "cspr/customerBatchComplete";
     }
 
     @RequestMapping(value = "registerWithTokenFromQuery", method = RequestMethod.POST)
-    public String batchRegisterWithTokenFromQuery(
-            @Validated CustomerBatchRegisterForm form, BindingResult result,
-            Model model) throws UnsupportedEncodingException, IOException {
+    public String batchRegisterWithTokenFromQuery(@Validated CustomerBatchRegisterForm form,
+            BindingResult result, Model model) throws UnsupportedEncodingException, IOException {
         if (result.hasErrors()) {
             return "cspr/customerBatchRegisterUseStandardForm";
         }
 
-        model.addAttribute("uploadedFileName", form.getMultipartFile()
-                .getOriginalFilename());
+        model.addAttribute("uploadedFileName", form.getMultipartFile().getOriginalFilename());
         model.addAttribute("registerCount", 30);
 
         return "cspr/customerBatchComplete";

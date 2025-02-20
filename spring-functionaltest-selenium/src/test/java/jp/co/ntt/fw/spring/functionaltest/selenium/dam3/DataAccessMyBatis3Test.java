@@ -28,6 +28,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.test.annotation.IfProfileValue;
 
+import jp.co.ntt.fw.spring.functionaltest.selenium.BrowserLocale;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 import jp.co.ntt.fw.spring.functionaltest.selenium.SystemErrorPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.pages.dam3.DAM3IndexPage;
@@ -39,7 +40,7 @@ import jp.co.ntt.fw.spring.functionaltest.selenium.pages.dam3.TodoRegisterPage;
 import jp.co.ntt.fw.spring.functionaltest.selenium.pages.dam3.TodoUpdatePage;
 
 //Thymeleaf版未実装のためJSPのみ実行
-@IfProfileValue(name = "test.environment.view", values = { "jsp" })
+@IfProfileValue(name = "test.environment.view", values = {"jsp"})
 public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
     private static WebDriver driver;
@@ -53,7 +54,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         {
             if (driver == null) {
-                driver = webDriverCreator.createLocaleSpecifiedDriver("ja");
+                driver = webDriverCreator.createLocaleSpecifiedDriver(BrowserLocale.JAPAN);
             }
             setCurrentWebDriver(driver);
         }
@@ -69,8 +70,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
     }
 
     private void clearAndCreateTestDataForBook() {
-        restOperations.postForObject(getPackageRootUrl() + "/testdata/todos",
-                null, Void.class);
+        restOperations.postForObject(getPackageRootUrl() + "/testdata/todos", null, Void.class);
     }
 
     /**
@@ -98,8 +98,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // fetch the details of one of the records.
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000001");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
@@ -193,8 +192,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = dam3IndexPage.dam30102002Click();
 
-        boolean insertTodoDetailLink = todoListPage.isTodoDisplayed(
-                "0000000031");
+        boolean insertTodoDetailLink = todoListPage.isTodoDisplayed("0000000031");
 
         // Due to RollBack during registration Process, No link will be
         // available for the tdo.
@@ -233,9 +231,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoListPage.registerBulkTodo();
 
         // データ反映までの待ち時間
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("completedTodo"),
-                        "993"));
+        webDriverOperations.waitForDisplayed(
+                ExpectedConditions.textToBePresentInElementLocated(By.id("completedTodo"), "993"));
 
         // Assert the todo record count from DB table
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("993"));
@@ -264,9 +261,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
 
         // データ反映までの待ち時間
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("completedTodo"),
-                        "993"));
+        webDriverOperations.waitForDisplayed(
+                ExpectedConditions.textToBePresentInElementLocated(By.id("completedTodo"), "993"));
 
         // Assert the todo record count from DB table
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("993"));
@@ -304,8 +300,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         registerTodoPage.setTodoId("0000000030");
         registerTodoPage.setTodoCategory("CA2");
 
-        TodoDetailsPage todoDetailsPage = registerTodoPage
-                .addTodoWithNullTitle();
+        TodoDetailsPage todoDetailsPage = registerTodoPage.addTodoWithNullTitle();
         // confirm that the ToDo registered with null title is saved in DB
         assertThat(todoDetailsPage.getTodoTitle(), equalTo(""));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000030"));
@@ -323,7 +318,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
     @Test
     public void testDAM30205001() {
         /**
-         * The type handler settings is done for JODA DateTime to TimeStamp conversion and vice versa
+         * The type handler settings is done for JODA DateTime to TimeStamp conversion and vice
+         * versa
          */
 
         // Data preparation
@@ -343,8 +339,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // fetch the details of one of the records.
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000001");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
@@ -352,9 +347,49 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoDetailsPage.getTodoCategory(), equalTo("CA1"));
         assertThat(todoDetailsPage.getTodoStatus(), equalTo("false"));
 
-        // confirmed that the date is saved and retrieved by using type handler settings without any error.
+        // confirmed that the date is saved and retrieved by using type handler settings without any
+        // error.
         assertThat(todoDetailsPage.getTodoCreatedDate(), equalTo("2016/12/24"));
         assertThat(todoDetailsPage.getTodoVersion(), equalTo("1"));
+
+    }
+
+    /**
+     * <ul>
+     * <li>DAM30206001 : Confirmation of logback settings.</li>
+     * </ul>
+     */
+    @Test
+    public void testDAM30206001() {
+
+        // Data preparation
+        {
+            clearAndCreateTestDataForBook();
+        }
+
+        // Index page
+        DAM3IndexPage dam3IndexPage = new DAM3IndexPage(driver);
+
+        // Connect to DB and fetch the Todo list
+        TodoListPage todoListPage = dam3IndexPage.dam30206001Click();
+
+        // Assert the todo record count from DB table
+        assertThat(todoListPage.getCompletedTodoCount(), equalTo("3"));
+        assertThat(todoListPage.getIncompletTodoCount(), equalTo("7"));
+        assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
+
+        // Assert log output result of the todo record
+        dbLogAssertOperations.waitForAssertion();
+        dbLogAssertOperations.assertContainsByRegexMessage(
+                "^org.terasoluna.gfw.web.logging.TraceLoggingInterceptor$", "handle0206001\\(\\)$");
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(
+                ".*Preparing: SELECT \\* FROM t_todo.*", "DEBUG",
+                "jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository.findAllTodos");
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(".*Row: 0000000010.*",
+                "TRACE",
+                "jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository.findAllTodos");
+        dbLogAssertOperations.assertContainsByRegexMessageAndLevelsAndLogger(".*Total: 10", "DEBUG",
+                "jp.co.ntt.fw.spring.functionaltest.domain.repository.dam3.TodoRepository.findAllTodos");
 
     }
 
@@ -411,8 +446,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoUpdatePage.setTodoTitle(":Update");
         // Update action
         todoDetailsPage = todoUpdatePage.updateTodo();
-        assertThat(todoDetailsPage.getTodoTitle(), equalTo(
-                "Todo Insert Test:Update"));
+        assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo Insert Test:Update"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000025"));
         assertThat(todoDetailsPage.getTodoCategory(), equalTo("CA2"));
         assertThat(todoDetailsPage.getTodoStatus(), equalTo("false"));
@@ -455,8 +489,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage.setTodoForSearch("0000000005");
 
-        TodoDetailsPage todoDetailsPage = todoListPage
-                .autoMappingResultSearch();
+        TodoDetailsPage todoDetailsPage = todoListPage.autoMappingResultSearch();
 
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 5"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000005"));
@@ -470,7 +503,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>DAM30401002 : Confirmation of Automatic mapping for search results. Use of 'AS' Clause</li>
+     * <li>DAM30401002 : Confirmation of Automatic mapping for search results. Use of 'AS'
+     * Clause</li>
      * </ul>
      */
     @Test
@@ -510,7 +544,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>DAM30501001 : Confirmation of Fetching a single key Entity.Entity for given ID id is present</li>
+     * <li>DAM30501001 : Confirmation of Fetching a single key Entity.Entity for given ID id is
+     * present</li>
      * </ul>
      */
     @Test
@@ -540,7 +575,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>DAM30501001 : Confirmation of Fetching a single key Entity.Entity for given ID id is not present</li>
+     * <li>DAM30501001 : Confirmation of Fetching a single key Entity.Entity for given ID id is not
+     * present</li>
      * </ul>
      */
     @Test
@@ -561,7 +597,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         String actualErorMsg = sysErrorPage.getResNFErrorMessage();
 
-        assertThat(actualErorMsg, is("[e.sf.cmmn.5001] Resource not found."));
+        assertThat(actualErorMsg, is("[e.sf.fw.5001] Resource not found."));
     }
 
     /**
@@ -609,12 +645,13 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         String actualErorMsg = sysErrorPage.getResNFErrorMessage();
 
-        assertThat(actualErorMsg, is("[e.sf.cmmn.5001] Resource not found."));
+        assertThat(actualErorMsg, is("[e.sf.fw.5001] Resource not found."));
     }
 
     /**
      * <ul>
-     * <li>DAM30501002 : Confirmation of Fetching Entity of composite key and not using @Param annotation</li>
+     * <li>DAM30501002 : Confirmation of Fetching Entity of composite key and not using @Param
+     * annotation</li>
      * </ul>
      */
     @Test
@@ -633,8 +670,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage.setTodoForSearch("0000000006");
         todoListPage.setTodoCatForSearch("CA1");
 
-        TodoDetailsPage todoDetailsPage = todoListPage
-                .searchByCmpKeyNoParamAnnot();
+        TodoDetailsPage todoDetailsPage = todoListPage.searchByCmpKeyNoParamAnnot();
 
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 6"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000006"));
@@ -658,7 +694,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         String actualErorMsg = sysErrorPage.getResNFErrorMessage();
 
-        assertThat(actualErorMsg, is("[e.sf.cmmn.5001] Resource not found."));
+        assertThat(actualErorMsg, is("[e.sf.fw.5001] Resource not found."));
     }
 
     /**
@@ -825,9 +861,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
 
         // データ反映までの待ち時間
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("completedTodo"),
-                        "993"));
+        webDriverOperations.waitForDisplayed(
+                ExpectedConditions.textToBePresentInElementLocated(By.id("completedTodo"), "993"));
 
         todoListPage.setTodoTitleContent("TT");
         todoListPage.setTodoCreationDate("2016/12/30");
@@ -874,9 +909,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoListPage.registerBulkTodoByReUseMode();
 
         // データ反映までの待ち時間
-        webDriverOperations.waitForDisplayed(ExpectedConditions
-                .textToBePresentInElementLocated(By.id("completedTodo"),
-                        "993"));
+        webDriverOperations.waitForDisplayed(
+                ExpectedConditions.textToBePresentInElementLocated(By.id("completedTodo"), "993"));
 
         todoListPage.setTodoTitleContent("TT");
         todoListPage.setTodoCreationDate("2016/12/30");
@@ -904,8 +938,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
      * </ul>
      */
     @Ignore("test in testPGNT0102002, testPGNT0101001, testPGNT0101002")
-    public void testDAM30507001() {
-    }
+    public void testDAM30507001() {}
 
     /**
      * <ul>
@@ -943,8 +976,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         registerTodoPage.setTodoCategory("CA2");
         registerTodoPage.setTodoTitle("Todo 30");
 
-        TodoDetailsPage todoDetailsPage = registerTodoPage
-                .addTodoWithAndReturnBool();
+        TodoDetailsPage todoDetailsPage = registerTodoPage.addTodoWithAndReturnBool();
 
         String booleanStr = todoDetailsPage.getRegistrationResult();
 
@@ -1059,8 +1091,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         registerTodoPage.setTodoTitle("Todo 1");
 
         // ID is not set. Its going to be auto generated.
-        TodoDetailsPage todoDetailsPage = registerTodoPage
-                .addTodoUsingAutoIdGeneration();
+        TodoDetailsPage todoDetailsPage = registerTodoPage.addTodoUsingAutoIdGeneration();
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
@@ -1117,11 +1148,9 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = todoListPage.batchRegister();
 
-        String cntOfRegisteredTodo = todoListPage
-                .getCountOfBatchRegisteredTodos();
+        String cntOfRegisteredTodo = todoListPage.getCountOfBatchRegisteredTodos();
 
-        assertThat(cntOfRegisteredTodo, equalTo(
-                "Total Todos Registered/Updated in Batch : 10"));
+        assertThat(cntOfRegisteredTodo, equalTo("Total Todos Registered/Updated in Batch : 10"));
 
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("5"));
         assertThat(todoListPage.getIncompletTodoCount(), equalTo("5"));
@@ -1177,8 +1206,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         TodoDetailsPage todoDetailsPage = todoUpdatePage.updateTodoOpt();
 
         // confirmation of update values : value 1
-        assertThat(todoDetailsPage.getTodoTitle(), equalTo(
-                "Todo 1TitleUpdate1"));
+        assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1TitleUpdate1"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000001"));
         assertThat(todoDetailsPage.getTodoCategory(), equalTo("CA1"));
 
@@ -1214,8 +1242,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // Assert todo id 00001 for sample. this will be updated in batch update
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000001");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000001"));
@@ -1241,15 +1268,13 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoDetailsPage.showTodoListPage();
 
         // set the ids of the ToDo to be updated in batch
-        todoListPage.setTodoIDList(
-                "0000000001,0000000002,0000000003,0000000004");
+        todoListPage.setTodoIDList("0000000001,0000000002,0000000003,0000000004");
 
         todoListPage = todoListPage.batchUpdate();
 
         String cntOfUpdatedTodo = todoListPage.getCountOfBatchRegisteredTodos();
 
-        assertThat(cntOfUpdatedTodo, equalTo(
-                "Total Todos Registered/Updated in Batch : 4"));
+        assertThat(cntOfUpdatedTodo, equalTo("Total Todos Registered/Updated in Batch : 4"));
 
         todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
         // assert all the properties of fetched record.
@@ -1335,15 +1360,15 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getIncompletTodoCount(), equalTo("7"));
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
-        // set date : the completed todos having creation date before this date would be deleted in batch
+        // set date : the completed todos having creation date before this date would be deleted in
+        // batch
         todoListPage.setCutOffDate("2016/12/30");
 
         todoListPage = todoListPage.batchDelete();
 
         String cntOfUpdatedTodo = todoListPage.getCountOfBatchRegisteredTodos();
 
-        assertThat(cntOfUpdatedTodo, equalTo(
-                "Total Todos Registered/Updated in Batch : 3"));
+        assertThat(cntOfUpdatedTodo, equalTo("Total Todos Registered/Updated in Batch : 3"));
 
         // Confirmation of database state before batch update
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("0"));
@@ -1582,8 +1607,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         isTodoPresent = todoListPage.isTodoDisplayed("0000000025");
         assertThat(isTodoPresent, is(true));
 
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000025");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000025");
 
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Bind Test"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000025"));
@@ -1662,8 +1686,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         // on sampling basis check the details of todo retrieved as a result of escape
         // search.
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000001000");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000001000");
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("ESC Test1"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000001000"));
         assertThat(todoDetailsPage.getTodoCategory(), equalTo("CA3"));
@@ -1701,7 +1724,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoRegisterPage.setTodoCategory("CA3");
         todoRegisterPage.setTodoId("0000001000");
 
-        // checking whether the delete statement really entered as a title value really delete the records.
+        // checking whether the delete statement really entered as a title value really delete the
+        // records.
         todoRegisterPage.setTodoTitle("<![CDATA[delete * from t_todo;]]>");
 
         // add a todo to confirm sql injection does not occur.
@@ -1711,17 +1735,17 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         todoListPage = dam3IndexPage.dam31101001Click();
 
-        // Confirmation of database state whether the title value has been executed and deleted the ToDos?
+        // Confirmation of database state whether the title value has been executed and deleted the
+        // ToDos?
         assertThat(todoListPage.getCompletedTodoCount(), equalTo("3"));
         assertThat(todoListPage.getIncompletTodoCount(), equalTo("8"));
         assertThat(todoListPage.getTotalTodoCount(), equalTo("11"));
 
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000001000");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000001000");
 
         // title value is inserted as it is.
-        assertThat(todoDetailsPage.getTodoTitle(), equalTo(
-                "&lt;![CDATA[delete * from t_todo;]]&gt;"));
+        assertThat(todoDetailsPage.getTodoTitle(),
+                equalTo("&lt;![CDATA[delete * from t_todo;]]&gt;"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000001000"));
         assertThat(todoDetailsPage.getTodoCategory(), equalTo("CA3"));
         assertThat(todoDetailsPage.getTodoStatus(), equalTo("false"));
@@ -1732,7 +1756,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
     /**
      * <ul>
      * <li>DAM31102001 : Confirmation of How to embed using a substitution variable</li>
-     * <li>When substitution method is used, the value is substituted as a string while building SQL</li>
+     * <li>When substitution method is used, the value is substituted as a string while building
+     * SQL</li>
      * </ul>
      */
     @Test
@@ -1748,7 +1773,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
      */
     @Test
     public void testDAM31201001() {
-        // In this test case the where clause is specified in a common sql shared in multiple queries.
+        // In this test case the where clause is specified in a common sql shared in multiple
+        // queries.
         testDAM30505001();
     }
 
@@ -1828,8 +1854,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         TodoListPage todoListPage = dam3IndexPage.dam31301001Click();
 
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000010");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000010");
 
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 10"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000010"));
@@ -1840,13 +1865,13 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         // completion date is of timeStamp in DB whereas in entity its of type or.joda.time.DateTime
         // type handler converts appropriately timeStamp to DateTime
-        assertThat(todoDetailsPage.getTodoCompleteDate(), equalTo(
-                "2016/12/30"));
+        assertThat(todoDetailsPage.getTodoCompleteDate(), equalTo("2016/12/30"));
     }
 
     /**
      * <ul>
-     * <li>DAM31304001 : Confirmation for Mybatis3 setting of TypeHandler for JSR310 Date and Time API</li>
+     * <li>DAM31304001 : Confirmation for Mybatis3 setting of TypeHandler for JSR310 Date and Time
+     * API</li>
      * </ul>
      */
     @Test
@@ -1862,12 +1887,10 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         }
 
         {
-            assertThat(webDriverOperations.getText(id("getDateResult")), is(
-                    "2016-12-29"));
+            assertThat(webDriverOperations.getText(id("getDateResult")), is("2016-12-29"));
             assertThat(webDriverOperations.getText(id("getDateClassResult")),
                     is("java.time.LocalDate"));
-            assertThat(webDriverOperations.getText(id(
-                    "getObjectCertification")), is("true"));
+            assertThat(webDriverOperations.getText(id("getObjectCertification")), is("true"));
         }
     }
 
@@ -1909,8 +1932,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getIncompletTodoCount(), equalTo("7"));
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000010");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000010");
 
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 10"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000010"));
@@ -1970,8 +1992,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // Assert todo id 00001 for sample. this will be updated in batch update
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000001");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
         assertThat(todoDetailsPage.getTodoID(), equalTo("0000000001"));
@@ -1997,8 +2018,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         todoListPage = todoDetailsPage.showTodoListPage();
 
         // set the ids of the ToDo to be updated in batch
-        todoListPage.setTodoIDList(
-                "0000000001,0000000002,0000000003,0000000004");
+        todoListPage.setTodoIDList("0000000001,0000000002,0000000003,0000000004");
 
         todoListPage = todoListPage.updateUsingBatchRepo();
 
@@ -2006,8 +2026,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         // In case of Batch mode fixed value -2147482646 is returned if the update is successful.
         // the integer vallue is returned if the repository method return type is int
-        assertThat(cntOfUpdatedTodo, equalTo(
-                "Total Todos Registered/Updated in Batch : -2147482646"));
+        assertThat(cntOfUpdatedTodo,
+                equalTo("Total Todos Registered/Updated in Batch : -2147482646"));
 
         todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
         // assert all the properties of fetched record.
@@ -2094,8 +2114,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         assertThat(todoListPage.getTotalTodoCount(), equalTo("10"));
 
         // fetch the details of one of the records.
-        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail(
-                "0000000001");
+        TodoDetailsPage todoDetailsPage = todoListPage.displayTodoDetail("0000000001");
 
         // assert all the properties of fetched record.
         assertThat(todoDetailsPage.getTodoTitle(), equalTo("Todo 1"));
@@ -2227,7 +2246,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         // Expected order details
         // the string is of the format
         // ORDER STATUS NAME, ITEM CODE, ITEM NAME, CATEGORY CODE, CATEGORY NAME, MEMO
-        String expectedOrdeDetails = "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
+        String expectedOrdeDetails =
+                "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
 
         // get the details of the specified order in a single string
         String actualOrderDetails = orderMB3ListPage.getOrderDetails(1);
@@ -2260,14 +2280,14 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         // Index page
         DAM3IndexPage dam3IndexPage = new DAM3IndexPage(driver);
 
-        OrderMB3PageListPage orderMB3PageListPage = dam3IndexPage
-                .dam32001002Click();
+        OrderMB3PageListPage orderMB3PageListPage = dam3IndexPage.dam32001002Click();
 
         orderMB3PageListPage.checkITM0000001();
 
         orderMB3PageListPage = orderMB3PageListPage.clickItemCodeSearch();
 
-        String expectedOrdeDetails = "Order accepted, ITM0000001\nITM0000002, Orange juice\nNotePC, CTG0000001\nCTG0000002, Drink\nPC, dummy7";
+        String expectedOrdeDetails =
+                "Order accepted, ITM0000001\nITM0000002, Orange juice\nNotePC, CTG0000001\nCTG0000002, Drink\nPC, dummy7";
 
         // get the details of the specified order in a single string
         String actualOrderDetails = orderMB3PageListPage.getOrderDetails(7);
@@ -2291,7 +2311,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         OrderMB3ListPage orderMB3ListPage = dam3IndexPage.dam32101001Click();
 
-        String expectedOrdeDetails = "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
+        String expectedOrdeDetails =
+                "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
 
         // get the details of the specified order in a single string
         String actualOrderDetails = orderMB3ListPage.getOrderDetails(1);
@@ -2306,8 +2327,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         // Expected related entity category details
         String expRelatedEntityDet = "CTG0000001, Drink";
 
-        String actRelatedEntityDet = orderMB3ListPage
-                .getRelatedEntityCategoryDeatils(1);
+        String actRelatedEntityDet = orderMB3ListPage.getRelatedEntityCategoryDeatils(1);
 
         // confirmed realted entity details
         assertThat(actRelatedEntityDet, is(expRelatedEntityDet));
@@ -2339,7 +2359,8 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
 
         OrderMB3ListPage orderMB3ListPage = dam3IndexPage.dam32102002Click();
 
-        String expectedOrdeDetails = "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
+        String expectedOrdeDetails =
+                "Order accepted, ITM0000001, Orange juice, CTG0000001, Drink, dummy1";
 
         // get the details of the specified order in a single string
         String actualOrderDetails = orderMB3ListPage.getOrderDetails(1);
@@ -2354,8 +2375,7 @@ public class DataAccessMyBatis3Test extends FunctionTestSupport {
         // Expected related entity category details
         String expRelatedEntityDet = "CTG0000001, Drink";
 
-        String actRelatedEntityDet = orderMB3ListPage
-                .getRelatedEntityCategoryDeatils(1);
+        String actRelatedEntityDet = orderMB3ListPage.getRelatedEntityCategoryDeatils(1);
 
         // confirmed realted entity details
         assertThat(actRelatedEntityDet, is(expRelatedEntityDet));

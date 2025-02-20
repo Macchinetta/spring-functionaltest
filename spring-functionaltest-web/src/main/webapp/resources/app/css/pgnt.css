@@ -3,15 +3,15 @@
 }
 
 .title-text-field {
-    width:550px;
+    width: 550px;
 }
 
 .name-text-field {
-    width:200px;
+    width: 200px;
 }
 
 .sort-field {
-    width:150px;
+    width: 150px;
 }
 
 .inline {
@@ -20,23 +20,25 @@
 
 table.pgnttable {
     line-height: 1.4;
-    margin:5px auto 15px auto;
-    width:780px;
+    margin: 5px auto 15px auto;
+    width: 780px;
 }
 
 div.pagination {
     height: 46px;
     margin: 18px 0;
-    text-align:center;
+    text-align: center;
     display: block;
 }
 
 div.pagination ul:first-child {
-padding-left: 0px;
+    padding-left: 0px;
 }
 
 div.pagination ul.rightPosition {
-    position: relative; top:0px; left:180px
+    position: relative;
+    top: 0px;
+    left: 180px;
 }
 
 div.pagination ul {
@@ -76,7 +78,8 @@ div.pagination a {
     border-left-width: 0;
 }
 
-div.pagination a:hover,div.pagination .active a {
+div.pagination a:hover,
+div.pagination .active a {
     background-color: #f5f5f5;
 }
 
@@ -85,7 +88,8 @@ div.pagination .active a {
     cursor: default;
 }
 
-div.pagination .disabled a,div.pagination .disabled a:hover {
+div.pagination .disabled a,
+div.pagination .disabled a:hover {
     color: #999999;
     background-color: transparent;
     cursor: default;
@@ -135,7 +139,7 @@ div.pagination span:last-child a {
 
 div.pagination span {
     display: inline-block;
-    padding:3px;
+    padding: 3px;
 }
 
 div.pagination-centered {
@@ -168,7 +172,8 @@ ul.inline li {
     float: left;
 }
 
-tbody tr:nth-child(odd) td,tbody tr.odd td {
+tbody tr:nth-child(odd) td,
+tbody tr.odd td {
     background: #f9f9f9;
     border: 1px;
 }
@@ -179,19 +184,19 @@ tfoot tr th {
 
 table.maintable {
     line-height: 1.4;
-    margin:5px auto 15px auto;
-    width:684px;
+    margin: 5px auto 15px auto;
+    width: 684px;
 }
 table.maintable th {
-    background:#7aa6d0;
-    border:1px solid #fff;
-    padding:8px;
-    color:#fff;
+    background: #7aa6d0;
+    border: 1px solid #fff;
+    padding: 8px;
+    color: #fff;
 }
 table.maintable th span {
-    padding-left:12px;
+    padding-left: 12px;
 }
 table.maintable td {
-    padding:2px 8px;
-    border:1px solid #fff;
+    padding: 2px 8px;
+    border: 1px solid #fff;
 }

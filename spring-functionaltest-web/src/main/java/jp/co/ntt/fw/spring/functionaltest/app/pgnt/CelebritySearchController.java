@@ -44,8 +44,8 @@ public class CelebritySearchController {
     }
 
     @RequestMapping(value = "celebritySearch", method = RequestMethod.GET)
-    public String search(CelebritySearchCriteria criteria,
-            @PageableDefault Pageable pageable, Model model) {
+    public String search(CelebritySearchCriteria criteria, @PageableDefault Pageable pageable,
+            Model model) {
 
         Page<Celebrity> page = celebrityService.getNames(criteria, pageable);
         model.addAttribute("page", page);
@@ -54,8 +54,8 @@ public class CelebritySearchController {
     }
 
     @RequestMapping(value = "celebritySearchDispTwenty", method = RequestMethod.GET)
-    public String searchDispTwenty(CelebritySearchCriteria criteria,
-            Pageable pageable, Model model) {
+    public String searchDispTwenty(CelebritySearchCriteria criteria, Pageable pageable,
+            Model model) {
 
         Page<Celebrity> page = celebrityService.getNames(criteria, pageable);
         model.addAttribute("page", page);

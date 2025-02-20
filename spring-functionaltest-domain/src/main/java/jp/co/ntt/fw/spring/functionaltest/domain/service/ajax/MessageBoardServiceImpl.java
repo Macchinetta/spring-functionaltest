@@ -43,8 +43,7 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     @Override
     public MessageBoard register(MessageBoard messageBoard) {
 
-        messageBoard.setMessageBoardId(messageBoardRepository
-                .getMessageBoardSequence().intValue());
+        messageBoard.setMessageBoardId(messageBoardRepository.getMessageBoardSequence().intValue());
 
         messageBoardRepository.insert(messageBoard);
 

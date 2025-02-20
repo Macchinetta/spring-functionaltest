@@ -115,8 +115,7 @@ public class TodoMB3ForJSR310ServiceImpl implements TodoMB3ForJSR310Service {
      */
     private void formatTodoList(List<TodoMB3> todoList) {
         for (TodoMB3 todoMB3 : todoList) {
-            try (InputStream inputStream = todoMB3.getDesc1();
-                    Reader reader = todoMB3.getDesc2()) {
+            try (InputStream inputStream = todoMB3.getDesc1(); Reader reader = todoMB3.getDesc2()) {
                 String normDesc1 = normalizeDesc1(inputStream);
                 String normDesc2 = normalizeDesc2(reader);
                 todoMB3.setNormDesc1(normDesc1);

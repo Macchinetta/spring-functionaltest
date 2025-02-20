@@ -26,21 +26,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.terasoluna.gfw.common.query.QueryEscapeUtils;
 
 import jp.co.ntt.fw.spring.functionaltest.domain.model.JPADeliveryOrder;
 
-public class TDeliveryOrderRepositoryImpl implements
-                                          TDeliveryOrderRepositoryCustom {
+public class TDeliveryOrderRepositoryImpl implements TDeliveryOrderRepositoryCustom {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
-    public List<JPADeliveryOrder> findAllByCriteria(
-            DeliveryOrderCriteria criteria) {
+    public List<JPADeliveryOrder> findAllByCriteria(DeliveryOrderCriteria criteria) {
         final List<String> andConditions = new ArrayList<String>();
         final List<String> joinConditions = new ArrayList<String>();
         final Map<String, Object> bindParameters = new HashMap<String, Object>();
@@ -57,8 +55,8 @@ public class TDeliveryOrderRepositoryImpl implements
         if (StringUtils.hasLength(criteria.getDeliveryType())) {
             joinConditions.add("o.jpaDeliveryType dt");
             andConditions.add("dt.deliveryTypeName LIKE :delType ESCAPE '~'");
-            bindParameters.put("delType", QueryEscapeUtils.toLikeCondition(
-                    criteria.getDeliveryType()));
+            bindParameters.put("delType",
+                    QueryEscapeUtils.toLikeCondition(criteria.getDeliveryType()));
         }
 
         // (8)
@@ -93,13 +91,11 @@ public class TDeliveryOrderRepositoryImpl implements
 
         // (13)
         // Create typed query.
-        final TypedQuery<JPADeliveryOrder> findQuery = entityManager
-                .createQuery(queryString.toString(), JPADeliveryOrder.class);
+        final TypedQuery<JPADeliveryOrder> findQuery =
+                entityManager.createQuery(queryString.toString(), JPADeliveryOrder.class);
         // Bind parameters.
-        for (Map.Entry<String, Object> bindParameter : bindParameters
-                .entrySet()) {
-            findQuery.setParameter(bindParameter.getKey(), bindParameter
-                    .getValue());
+        for (Map.Entry<String, Object> bindParameter : bindParameters.entrySet()) {
+            findQuery.setParameter(bindParameter.getKey(), bindParameter.getValue());
         }
 
         // (14)

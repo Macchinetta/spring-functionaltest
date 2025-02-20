@@ -22,8 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class CompanyIdUsernamePasswordAuthenticationProvider extends
-                                                             DaoAuthenticationProvider {
+public class CompanyIdUsernamePasswordAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,
@@ -31,32 +30,28 @@ public class CompanyIdUsernamePasswordAuthenticationProvider extends
 
         super.additionalAuthenticationChecks(userDetails, authentication);
 
-        CompanyIdUsernamePasswordAuthenticationToken companyIdUsernamePasswordAuthentication = (CompanyIdUsernamePasswordAuthenticationToken) authentication;
-        String requestedCompanyId = companyIdUsernamePasswordAuthentication
-                .getCompanyId();
-        String companyId = ((ReservationUserDetails) userDetails).getCustomer()
-                .getCompanyId();
+        CompanyIdUsernamePasswordAuthenticationToken companyIdUsernamePasswordAuthentication =
+                (CompanyIdUsernamePasswordAuthenticationToken) authentication;
+        String requestedCompanyId = companyIdUsernamePasswordAuthentication.getCompanyId();
+        String companyId = ((ReservationUserDetails) userDetails).getCustomer().getCompanyId();
 
         if (!companyId.equals(requestedCompanyId)) {
             throw new BadCredentialsException(messages.getMessage(
-                    "AbstractUserDetailsAuthenticationProvider.badCredentials",
-                    "Bad credentials"));
+                    "AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
     }
 
     @Override
     protected Authentication createSuccessAuthentication(Object principal,
             Authentication authentication, UserDetails user) {
-        String companyId = ((ReservationUserDetails) user).getCustomer()
-                .getCompanyId();
-        return new CompanyIdUsernamePasswordAuthenticationToken(user, authentication
-                .getCredentials(), companyId, user.getAuthorities());
+        String companyId = ((ReservationUserDetails) user).getCustomer().getCompanyId();
+        return new CompanyIdUsernamePasswordAuthenticationToken(user,
+                authentication.getCredentials(), companyId, user.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return CompanyIdUsernamePasswordAuthenticationToken.class
-                .isAssignableFrom(authentication);
+        return CompanyIdUsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
 }

@@ -49,13 +49,11 @@ public class WebDriverOperations {
 
     protected int defaultTimeoutSecondsForImplicitlyWait = 10;
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            WebDriverOperations.class);
+    private static final Logger logger = LoggerFactory.getLogger(WebDriverOperations.class);
 
     public WebDriverOperations(WebDriver webDriver,
-            WebDriverInputFieldAccessor webDriverInputFieldAccessor,
-            ScreenCapture screenCapture, PageSource pageSource,
-            int offsetSecondsOfTimeoutForImplicitlyWait) {
+            WebDriverInputFieldAccessor webDriverInputFieldAccessor, ScreenCapture screenCapture,
+            PageSource pageSource, int offsetSecondsOfTimeoutForImplicitlyWait) {
         this.webDriver = webDriver;
         this.webDriverInputFieldAccessor = webDriverInputFieldAccessor;
         this.screenCapture = screenCapture;
@@ -88,24 +86,20 @@ public class WebDriverOperations {
      * 要素を見つけるまでの待機処理のタイムアウト値をデフォルト値に設定する。
      */
     public void setDefaultTimeoutForImplicitlyWait() {
-        setTimeoutForImplicitlyWait(defaultTimeoutSecondsForImplicitlyWait,
-                true);
+        setTimeoutForImplicitlyWait(defaultTimeoutSecondsForImplicitlyWait, true);
     }
 
     /**
      * 要素を見つけるまでの待機処理のタイムアウト値を設定する。
      */
-    public void setTimeoutForImplicitlyWait(int timeoutSeconds,
-            boolean applyOffset) {
+    public void setTimeoutForImplicitlyWait(int timeoutSeconds, boolean applyOffset) {
         int adjustWaitTime;
         if (applyOffset) {
-            adjustWaitTime = timeoutSeconds
-                    + offsetSecondsOfTimeoutForImplicitlyWait;
+            adjustWaitTime = timeoutSeconds + offsetSecondsOfTimeoutForImplicitlyWait;
         } else {
             adjustWaitTime = timeoutSeconds;
         }
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(
-                adjustWaitTime));
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(adjustWaitTime));
     }
 
     /**
@@ -132,8 +126,7 @@ public class WebDriverOperations {
      * @param by 要素(ボタンやリンクなど)を探すための識別子
      */
     public void forceClick(By by) {
-        getJavascriptExecutor().executeScript("arguments[0].click();", webDriver
-                .findElement(by));
+        getJavascriptExecutor().executeScript("arguments[0].click();", webDriver.findElement(by));
     }
 
     /**
@@ -265,9 +258,8 @@ public class WebDriverOperations {
      * @param expectedCondition 表示条件
      */
     public void waitForDisplayed(ExpectedCondition<?> expectedCondition) {
-        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration
-                .ofSeconds(defaultTimeoutSecondsForImplicitlyWait
-                        + offsetSecondsOfTimeoutForImplicitlyWait));
+        WebDriverWait wait = new WebDriverWait(getWebDriver(), Duration.ofSeconds(
+                defaultTimeoutSecondsForImplicitlyWait + offsetSecondsOfTimeoutForImplicitlyWait));
         wait.until(expectedCondition);
     }
 
@@ -317,9 +309,9 @@ public class WebDriverOperations {
      * @return
      */
     public Cookie changeCookieDomainName(Cookie cookie, String domainName) {
-        return new Cookie.Builder(cookie.getName(), cookie.getValue()).domain(
-                domainName).expiresOn(cookie.getExpiry()).isHttpOnly(true)
-                .isSecure(false).path(cookie.getPath()).build();
+        return new Cookie.Builder(cookie.getName(), cookie.getValue()).domain(domainName)
+                .expiresOn(cookie.getExpiry()).isHttpOnly(true).isSecure(false)
+                .path(cookie.getPath()).build();
     }
 
     /**
@@ -419,8 +411,7 @@ public class WebDriverOperations {
         try {
             return ApServerName.valueOf(serverName);
         } catch (IllegalArgumentException e) {
-            logger.warn("Unkown application server name:{} is detected.",
-                    serverName);
+            logger.warn("Unkown application server name:{} is detected.", serverName);
             // ApServerNameクラスで定義していないサーバ名の場合はUNKNOWNとする
             return ApServerName.UNKNOWN;
         }

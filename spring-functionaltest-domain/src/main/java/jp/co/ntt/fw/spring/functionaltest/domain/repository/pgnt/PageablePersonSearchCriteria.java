@@ -27,8 +27,8 @@ public class PageablePersonSearchCriteria implements Serializable {
 
     private final transient Pageable pageable;
 
-    public PageablePersonSearchCriteria(
-            PersonSearchCriteria personSearchCriteria, Pageable pageable) {
+    public PageablePersonSearchCriteria(PersonSearchCriteria personSearchCriteria,
+            Pageable pageable) {
         this.personSearchCriteria = personSearchCriteria;
         this.pageable = pageable;
     }

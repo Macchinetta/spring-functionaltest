@@ -43,8 +43,7 @@ import jp.co.ntt.fw.spring.functionaltest.domain.service.jmss.JmsTransactedCache
 @RequestMapping("jmss")
 public class JMSS06SendingController {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            JMSS06SendingController.class);
+    private static final Logger logger = LoggerFactory.getLogger(JMSS06SendingController.class);
 
     @Value("${app.jms.temporaryDirectory}")
     String temporaryDirectory;
@@ -182,17 +181,16 @@ public class JMSS06SendingController {
         return "jmss/jmsSend";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTranSuccess")
-    public String sendMessage_SendOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=sendTranSuccess")
+    public String sendMessage_SendOK(JmsSendingForm form, RedirectAttributes attrs)
+            throws IOException, JMSException, InterruptedException {
 
         // メッセージ送信
-        jmsTransactedCacheConSendingService.sendMessage_TxSndOK(form
-                .getJmsTodoId());
+        jmsTransactedCacheConSendingService.sendMessage_TxSndOK(form.getJmsTodoId());
 
         // メッセージ取得可否判定（true：取得可 false:取得不可）
-        if (!jmsAmqReceivingService.receiveMessage_TxSndOK(form
-                .getJmsTodoId())) {
+        if (!jmsAmqReceivingService.receiveMessage_TxSndOK(form.getJmsTodoId())) {
             form.setJmsTodoId("Not Received!");
         } else {
             form.setJmsTodoId(form.getJmsTodoId());
@@ -207,21 +205,20 @@ public class JMSS06SendingController {
     @Inject
     JmsTodoRepository jmsTodoRepository;
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTranFail")
-    public String sendMessage_SendNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws JMSException, IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=sendTranFail")
+    public String sendMessage_SendNG(JmsSendingForm form, RedirectAttributes attrs)
+            throws JMSException, IOException {
 
         // メッセージ送信（強制的に例外発生）
         try {
-            jmsTransactedCacheConSendingService.sendMessage_TxSndNG(form
-                    .getJmsTodoId());
+            jmsTransactedCacheConSendingService.sendMessage_TxSndNG(form.getJmsTodoId());
         } catch (BusinessException me) {
             logger.info("BusinessException Occured");
         }
 
         // メッセージ取得可否判定（true：取得可 false:取得不可）
-        if (!jmsAmqReceivingService.receiveMessage_TxSndNG(form
-                .getJmsTodoId())) {
+        if (!jmsAmqReceivingService.receiveMessage_TxSndNG(form.getJmsTodoId())) {
             form.setJmsTodoId("Not Received!");
         } else {
             form.setJmsTodoId(form.getJmsTodoId());
@@ -233,20 +230,19 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranSuccess")
-    public String sendMessage_ReceiveOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException, JMSException, InterruptedException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=reciTranSuccess")
+    public String sendMessage_ReceiveOK(JmsSendingForm form, RedirectAttributes attrs)
+            throws IOException, JMSException, InterruptedException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxRcvOK(form.getJmsTodoId());
 
         // メッセージ受信
-        jmsTransactedAmqReceivingService.receiveMessage_TxRcvOK(form
-                .getJmsTodoId());
+        jmsTransactedAmqReceivingService.receiveMessage_TxRcvOK(form.getJmsTodoId());
 
         // Queue内のメッセージを確認
-        int msgCnt = jmsAmqReceivingService.getMessageCount("TestQueue0602001",
-                "");
+        int msgCnt = jmsAmqReceivingService.getMessageCount("TestQueue0602001", "");
         if (msgCnt == 0) {
             form.setJmsTodoId(form.getJmsTodoId());
         } else {
@@ -259,24 +255,23 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=reciTranFail")
-    public String sendMessage_ReceiveNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws JMSException, InterruptedException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=reciTranFail")
+    public String sendMessage_ReceiveNG(JmsSendingForm form, RedirectAttributes attrs)
+            throws JMSException, InterruptedException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxRcvNG(form.getJmsTodoId());
 
         // メッセージ受信（強制的に例外発生）
         try {
-            jmsTransactedAmqReceivingService.receiveMessage_TxRcvNG(form
-                    .getJmsTodoId());
+            jmsTransactedAmqReceivingService.receiveMessage_TxRcvNG(form.getJmsTodoId());
         } catch (BusinessException me) {
             logger.info("BusinessException Occured");
         }
 
         // Queue内のメッセージを確認
-        int msgCnt = jmsAmqReceivingService.getMessageCount("TestQueue0602002",
-                "");
+        int msgCnt = jmsAmqReceivingService.getMessageCount("TestQueue0602002", "");
         if (msgCnt == 0) {
             form.setJmsTodoId(form.getJmsTodoId());
         } else {
@@ -289,9 +284,10 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=asyncTranSuccess")
-    public String sendMessage_asyncOK(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException, JMSException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=asyncTranSuccess")
+    public String sendMessage_asyncOK(JmsSendingForm form, RedirectAttributes attrs)
+            throws IOException, JMSException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxAsyncOK(form.getJmsTodoId());
@@ -302,9 +298,10 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=asyncTranFail")
-    public String sendMessage_asyncNG(JmsSendingForm form,
-            RedirectAttributes attrs) throws IOException {
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=asyncTranFail")
+    public String sendMessage_asyncNG(JmsSendingForm form, RedirectAttributes attrs)
+            throws IOException {
 
         // メッセージ送信
         jmsCacheConSendingService.sendMessage_TxAsyncNG(form.getJmsTodoId());
@@ -315,7 +312,8 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseSuccess")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=sendTxBestEffort1PhaseSuccess")
     public String sendMessage_sendTxBestEffort1PhaseOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -328,7 +326,8 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=sendTxBestEffort1PhaseFail")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=sendTxBestEffort1PhaseFail")
     public String sendMessage_sendTxBestEffort1PhaseNG(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
@@ -346,13 +345,13 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseSuccess")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=receTxBestEffort1PhaseSuccess")
     public String sendMessage_receTxBestEffort1PhaseOK(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
         // メッセージ送信
-        jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseOK(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseOK(form.getJmsTodoId());
 
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);
@@ -360,13 +359,13 @@ public class JMSS06SendingController {
         return "redirect:/jmss/receivemessage";
     }
 
-    @RequestMapping(value = "sendmessage", method = RequestMethod.POST, params = "testCase=receTxBestEffort1PhaseFail")
+    @RequestMapping(value = "sendmessage", method = RequestMethod.POST,
+            params = "testCase=receTxBestEffort1PhaseFail")
     public String sendMessage_receTxBestEffort1PhaseNG(JmsSendingForm form,
             RedirectAttributes attrs) throws IOException {
 
         // メッセージ送信
-        jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseNG(form
-                .getJmsTodoId());
+        jmsCacheConSendingService.sendMessage_receTxBestEffort1PhaseNG(form.getJmsTodoId());
 
         // アトリビュート設定
         attrs.addFlashAttribute("jmsSendingForm", form);

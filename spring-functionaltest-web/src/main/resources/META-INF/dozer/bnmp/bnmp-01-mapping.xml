@@ -1,182 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd">
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.BeanMapperForm
+    xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping https://dozermapper.github.io/schema/bean-mapping.xsd">
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.BeanMapperForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.DifferenceFieldDto
     </class-b>
-    <field>
-      <a>firstName</a>
-      <b>myoji</b>
-    </field>
-    <field>
-      <a>birthDate</a>
-      <b>tanjobi</b>
-    </field>
-  </mapping>
-  <mapping type="one-way">
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarForm
+        <field>
+            <a>firstName</a>
+            <b>myoji</b>
+        </field>
+        <field>
+            <a>birthDate</a>
+            <b>tanjobi</b>
+        </field>
+    </mapping>
+    <mapping type="one-way">
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
     </class-b>
-    <field>
-      <a>carName</a>
-      <b>name</b>
-    </field>
-    <field>
-      <a>carColor</a>
-      <b>color</b>
-    </field>
-    <field>
-      <a>carReleaseDate</a>
-      <b>releaseDate</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarForm
+        <field>
+            <a>carName</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>carColor</a>
+            <b>color</b>
+        </field>
+        <field>
+            <a>carReleaseDate</a>
+            <b>releaseDate</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarBidirectionalDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarBidirectionalDto
     </class-b>
-    <field>
-      <a>carName</a>
-      <b>name</b>
-    </field>
-    <field>
-      <a>carColor</a>
-      <b>color</b>
-    </field>
-    <field>
-      <a>carReleaseDate</a>
-      <b>releaseDate</b>
-    </field>
-  </mapping>
-  <mapping type="one-way">
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarClassBaseOneWayMappingForm
+        <field>
+            <a>carName</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>carColor</a>
+            <b>color</b>
+        </field>
+        <field>
+            <a>carReleaseDate</a>
+            <b>releaseDate</b>
+        </field>
+    </mapping>
+    <mapping type="one-way">
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarClassBaseOneWayMappingForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
     </class-b>
-  </mapping>
-  <mapping type="one-way">
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarSameNameFieldOneWayMappingForm
+    </mapping>
+    <mapping type="one-way">
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.CarSameNameFieldOneWayMappingForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.CarUnidirectionalDto
     </class-b>
-    <field>
-      <a>name</a>
-      <b>name</b>
-    </field>
-    <field>
-      <a>color</a>
-      <b>color</b>
-    </field>
-    <field>
-      <a>releaseDate</a>
-      <b>releaseDate</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.BeanMapperForm
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>color</a>
+            <b>color</b>
+        </field>
+        <field>
+            <a>releaseDate</a>
+            <b>releaseDate</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.BeanMapperForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.NestedFieldMapperDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.NestedFieldMapperDto
     </class-b>
-    <field>
-      <a>firstName</a>
-      <b>personDto.firstName</b>
-    </field>
-    <field>
-      <a>lastName</a>
-      <b>personDto.lastName</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field>
+            <a>firstName</a>
+            <b>personDto.firstName</b>
+        </field>
+        <field>
+            <a>lastName</a>
+            <b>personDto.lastName</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDto
     </class-b>
-    <field>
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field>
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceTypeDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceTypeDto
     </class-b>
-    <field>
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field>
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceCollectionDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserDifferenceCollectionDto
     </class-b>
-    <field>
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field>
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountNonCumulativeDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountNonCumulativeDto
     </class-b>
-    <field relationship-type="non-cumulative">
-      <a>emails</a>
-      <b>emails</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field relationship-type="non-cumulative">
+            <a>emails</a>
+            <b>emails</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountRemoveOrphansDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountRemoveOrphansDto
     </class-b>
-    <field relationship-type="non-cumulative" remove-orphans="true">
-      <a>emails</a>
-      <b>emails</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field relationship-type="non-cumulative" remove-orphans="true">
+            <a>emails</a>
+            <b>emails</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountCopyByReferenceDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.AccountCopyByReferenceDto
     </class-b>
-    <field copy-by-reference="true">
-      <a>emails</a>
-      <b>emails</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field copy-by-reference="true">
+            <a>emails</a>
+            <b>emails</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserNonCumulativeDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserNonCumulativeDto
     </class-b>
-    <field relationship-type="non-cumulative">
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field relationship-type="non-cumulative">
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserRemoveOrphansDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserRemoveOrphansDto
     </class-b>
-    <field relationship-type="non-cumulative" remove-orphans="true">
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
-  <mapping>
-    <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
+        <field relationship-type="non-cumulative" remove-orphans="true">
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>jp.co.ntt.fw.spring.functionaltest.app.bnmp.AccountForm
     </class-a>
-    <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserCopyByReferenceDto
+        <class-b>jp.co.ntt.fw.spring.functionaltest.domain.service.bnmp.UserCopyByReferenceDto
     </class-b>
-    <field copy-by-reference="true">
-      <a>emails</a>
-      <b>emailAddresses</b>
-    </field>
-  </mapping>
+        <field copy-by-reference="true">
+            <a>emails</a>
+            <b>emailAddresses</b>
+        </field>
+    </mapping>
 </mappings>

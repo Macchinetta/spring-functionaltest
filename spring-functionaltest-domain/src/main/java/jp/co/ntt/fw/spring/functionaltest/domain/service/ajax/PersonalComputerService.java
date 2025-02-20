@@ -24,8 +24,7 @@ public interface PersonalComputerService {
 
     PersonalComputer getPersonalComputer(int personalComputerId);
 
-    List<PersonalComputer> getPersonalComputers(
-            PersonalComputerCriteria criteria);
+    List<PersonalComputer> getPersonalComputers(PersonalComputerCriteria criteria);
 
     void update(PersonalComputer personalComputer);
 

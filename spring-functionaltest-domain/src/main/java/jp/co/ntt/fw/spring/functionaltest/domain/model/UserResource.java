@@ -14,12 +14,11 @@
  * governing permissions and limitations under the License.
  */
 /**
- * 
+ *
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -35,6 +34,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.NONE)
 public class UserResource implements Serializable {
+
+    public UserResource() {
+        super();
+    }
+
+    public UserResource(String name, int age) {
+        super();
+        this.name = name;
+        this.age = age;
+    }
 
     /**
      * シリアルID
