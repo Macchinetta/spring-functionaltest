@@ -16,12 +16,12 @@
         <meta name="contextPath" content="${pageContext.request.contextPath}" />
         <sec:csrfMetaTags />
         <title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
         <script type="text/javascript"></script>
@@ -88,7 +88,7 @@
                             <td class="clobCode" id="clobCode">${f:h(book.clobCode)}</td>
                             <td class="blobCode" id="blobCode">${f:h(book.blobCodeHex)}</td>
                             <td class="price" id="price"><fmt:formatNumber value="${book.price}" pattern="###,###" /></td>
-                            <td class="releaseDate" id="releaseDate"><fmt:formatDate value="${book.releaseDate}" pattern="yyyy/MM/dd" /></td>
+                            <td class="releaseDate" id="releaseDate"><javatime:format value="${book.releaseDate}" pattern="yyyy/MM/dd" /></td>
                         </tr>
                     </c:forEach>
                 </table>

@@ -177,6 +177,11 @@ public class OAuth2_01_JSP_Test extends FunctionTestSupport {
         // 一覧に作成したタスクが表示されていること
         String text = webDriverOperations.getText(By.xpath("//div[3]/ul/li"));
         assertTrue(text, text.startsWith("sample"));
+
+        // ガイドライン実装チェック
+        webDriverOperations.click(By.xpath("//div[3]/ul/li/form[3]/button"));
+        dbLogAssertOperations.assertContainsByRegexMessage(webDriverOperations.getXTrack(),
+                ".*OTH201Controller", ".*findOne:.*: sample");
     }
 
     /**
@@ -226,7 +231,8 @@ public class OAuth2_01_JSP_Test extends FunctionTestSupport {
 
         // Finishボタンが消えていること
         String text = webDriverOperations.getText(By.xpath("//div[3]/ul/li"));
-        assertTrue(text, text.matches("dummy_1(?!.*\\bFinish\\b).*Delete"));
+
+        assertTrue(text, text.matches("(?s)dummy_1(?!.*\\bFinish\\b).*Delete.*"));
     }
 
     /**
@@ -408,7 +414,7 @@ public class OAuth2_01_JSP_Test extends FunctionTestSupport {
 
         // Finishボタンが消えていること
         String text = webDriverOperations.getText(By.xpath("//div[3]/ul/li"));
-        assertTrue(text, text.matches("dummy_1(?!.*\\bFinish\\b).*Delete"));
+        assertTrue(text, text.matches("(?s)dummy_1(?!.*\\bFinish\\b).*Delete.*"));
     }
 
     /**

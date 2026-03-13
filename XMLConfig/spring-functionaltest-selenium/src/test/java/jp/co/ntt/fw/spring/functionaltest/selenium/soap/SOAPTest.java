@@ -627,8 +627,7 @@ public class SOAPTest extends SOAPTestSupport {
                     exceptionClassName = "jakarta.xml.ws.WebServiceException";
                 }
                 dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                        webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
-                        exceptionClassName);
+                        webDriverOperations.getXTrack(), null, "e.sf.fw.9001", exceptionClassName);
             }
         }
 
@@ -941,7 +940,7 @@ public class SOAPTest extends SOAPTestSupport {
             assertHttpStatusCode(500);
             assertHttpRespnseHeader(HEADER_EXISTS);
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                    webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                    webDriverOperations.getXTrack(), null, "e.sf.fw.9001",
                     "jakarta.xml.ws.soap.SOAPFaultException");
         }
 
@@ -997,7 +996,7 @@ public class SOAPTest extends SOAPTestSupport {
         {
             dbLogAssertOperations.waitForAssertion();
             dbLogAssertOperations.assertContainsByRegexExceptionMessage(
-                    webDriverOperations.getXTrack(), null, "e.sf.cmmn.9001",
+                    webDriverOperations.getXTrack(), null, "e.sf.fw.9001",
                     "java.net.http.HttpTimeoutException");
             assertHttpStatusCode(null);
             assertHttpRespnseHeader(HEADER_NOT_EXISTS);

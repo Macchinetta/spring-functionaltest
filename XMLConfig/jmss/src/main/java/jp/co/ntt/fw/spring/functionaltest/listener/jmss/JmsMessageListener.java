@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.listener.adapter.JmsResponse;
+import org.springframework.jms.support.JmsHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Headers;
@@ -134,9 +135,9 @@ public class JmsMessageListener {
     @JmsListener(containerFactory = "conCacheNoTranContainerFactory",
             destination = "TestQueue0303001")
     public void receiveMessageWithPriorityA(JmsTodo jmsTodo,
-            @Header("jms_priority") Integer priority,
-            @Header("jms_deliveryMode") Integer deliveryMode, @Headers Map<String, Object> headers)
-            throws IOException, JMSException {
+            @Header(JmsHeaders.PRIORITY) Integer priority,
+            @Header(JmsHeaders.DELIVERY_MODE) Integer deliveryMode,
+            @Headers Map<String, Object> headers) throws IOException, JMSException {
         jmsAmqReceivingService.receiveMessageWithHeaderOK(jmsTodo, priority, deliveryMode, headers);
     }
 
@@ -202,8 +203,9 @@ public class JmsMessageListener {
     @JmsListener(containerFactory = "conCacheNoTranContainerFactory",
             destination = "TestQueue0403003A")
     public JmsResponse<JmsTodo> receiveMessageReSendAnotherMessageA(JmsTodo jmsTodo,
-            @Header("jms_replyTo") Destination replyDestination,
-            @Header("jms_correlationId") String correlationId) throws IOException, JMSException {
+            @Header(JmsHeaders.REPLY_TO) Destination replyDestination,
+            @Header(JmsHeaders.CORRELATION_ID) String correlationId)
+            throws IOException, JMSException {
 
         if (!jmsTodo.getJmsTodoId().equals(correlationId)) {
             return null;

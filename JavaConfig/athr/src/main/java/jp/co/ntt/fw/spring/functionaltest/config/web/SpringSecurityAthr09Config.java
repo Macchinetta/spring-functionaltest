@@ -91,8 +91,8 @@ public class SpringSecurityAthr09Config {
     public AuthenticationProvider loginForRoleHierarchyAuthenticationProvider(
             @Qualifier("loginForRoleHierarchyDetailsService") UserDetailsService loginForRoleHierarchyDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForRoleHierarchyDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForRoleHierarchyDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

@@ -18,10 +18,13 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.oth2;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Test;
@@ -30,8 +33,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
 
 public class OAuth2_02_JSP_Test extends FunctionTestSupport {
-    // 試験開始時刻を記録
-    Instant startTime = Instant.now();
 
     // 現在のKeycloak設定値は以下の通り
     // Access Token Lifespan : 90s
@@ -112,6 +113,9 @@ public class OAuth2_02_JSP_Test extends FunctionTestSupport {
 
         // login
         login("demo", "demo");
+
+        // 認証完了時点の時刻を記録
+        Instant startTime = Instant.now();
 
         // 認可コードグラント画面
         webDriverOperations
@@ -205,7 +209,15 @@ public class OAuth2_02_JSP_Test extends FunctionTestSupport {
         // 最初の認可時に accessTokenIssued_1 + Client Session Max で最長でどこまで有効なのかを決定している。
         // Access Token Issued + Access Token Lifespan > Client Session Max となった場合には値が変わらないはずだが、
         // Access Token Issued に引きずられ秒がずれることがある模様（認可サーバー側の問題）
-        assertThat(accessTokenExpires_5, is(accessTokenExpires_4));
+        // 認可サーバの時刻ずれによる試験失敗を防ぐため、誤差が1秒以内であれば許容するようにする。
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy/MM/dd H:mm:ss");
+
+        LocalDateTime compareExpires_4 = LocalDateTime.parse(accessTokenExpires_4, formatter);
+        LocalDateTime compareExpires_5 = LocalDateTime.parse(accessTokenExpires_5, formatter);
+
+        long differenceInSeconds = Duration.between(compareExpires_4, compareExpires_5).getSeconds();
+
+        assertThat(Math.abs(differenceInSeconds), lessThanOrEqualTo(1L));
 
         // OTH20201004 - Start
 

@@ -16,12 +16,12 @@
         <meta name="contextPath" content="${pageContext.request.contextPath}" />
         <sec:csrfMetaTags />
         <title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
         <script type="text/javascript"></script>
@@ -62,7 +62,7 @@
                             <td>${f:h(article.category)}</td>
                             <td><a href="">${f:h(article.title)}</a></td>
                             <td>${f:h(article.overview)}</td>
-                            <td><fmt:formatDate value="${article.publishDate}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+                            <td><javatime:format value="${article.publishDate}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
                         </tr>
                     </c:forEach>
                 </table>

@@ -90,7 +90,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
 
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
         assertThat(div.getText(), is("There are inconsistencies in the data."));
     }
 
@@ -107,7 +107,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.waitForDisplayed(textToBe(By.id("screenTitle"), "ResultMessageの表示"));
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
 
         List<WebElement> liElements = div.findElements(By.tagName("li"));
         assertThat(liElements.get(0).getText().trim(),
@@ -128,7 +128,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
 
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
         assertThat(div.getText(),
                 is("Cannot upload, Because the file size must be less than 1024MB."));
     }
@@ -149,31 +149,31 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
         List<WebElement> divs =
                 webDriverOperations.getWebDriver().findElements(By.xpath("//div[2]/div"));
 
-        assertThat(divs.get(0).getAttribute("class"), is("alert alert-success"));
-        assertThat(getColer(divs.get(0)), is("#468847")); // デフォルト値のまま
+        assertThat(divs.get(0).getDomAttribute("class"), is("alert alert-success"));
+        assertThat(getColer(divs.get(0)), is("#3c763d")); // デフォルト値のまま
 
-        assertThat(divs.get(1).getAttribute("class"), is("alert alert-info"));
+        assertThat(divs.get(1).getDomAttribute("class"), is("alert alert-info"));
         assertThat(getColer(divs.get(1)), is("#2d7091")); // msmn.css
 
-        assertThat(divs.get(2).getAttribute("class"), is("alert alert-warning"));
+        assertThat(divs.get(2).getDomAttribute("class"), is("alert alert-warning"));
         assertThat(getColer(divs.get(2)), is("#e28327")); // msmn.css
 
-        assertThat(divs.get(3).getAttribute("class"), is("alert alert-error"));
+        assertThat(divs.get(3).getDomAttribute("class"), is("alert alert-error"));
         assertThat(getColer(divs.get(3)), is("#d85030")); // msmn.css
 
-        assertThat(divs.get(4).getAttribute("class"), is("alert alert-danger"));
-        assertThat(getColer(divs.get(4)), is("#b94a48")); // デフォルト値のまま
+        assertThat(divs.get(4).getDomAttribute("class"), is("alert alert-danger"));
+        assertThat(getColer(divs.get(4)), is("#a94442")); // デフォルト値のまま
 
-        assertThat(divs.get(5).getAttribute("class"), is("alert alert-primary"));
+        assertThat(divs.get(5).getDomAttribute("class"), is("alert alert-primary"));
         assertThat(getColer(divs.get(5)), is("#004085")); // msmn.css
 
-        assertThat(divs.get(6).getAttribute("class"), is("alert alert-secondary"));
+        assertThat(divs.get(6).getDomAttribute("class"), is("alert alert-secondary"));
         assertThat(getColer(divs.get(6)), is("#383d41")); // msmn.css
 
-        assertThat(divs.get(7).getAttribute("class"), is("alert alert-light"));
+        assertThat(divs.get(7).getDomAttribute("class"), is("alert alert-light"));
         assertThat(getColer(divs.get(7)), is("#818182")); // msmn.css
 
-        assertThat(divs.get(8).getAttribute("class"), is("alert alert-dark"));
+        assertThat(divs.get(8).getDomAttribute("class"), is("alert alert-dark"));
         assertThat(getColer(divs.get(8)), is("#1b1e21")); // msmn.css
     }
 
@@ -195,7 +195,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
 
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
         assertThat(div.getText(), is("There are inconsistencies in the data."));
 
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(webDriverOperations.getXTrack(),
@@ -220,7 +220,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
 
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
         assertThat(div.getText(), is("There are inconsistencies in the data."));
 
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(webDriverOperations.getXTrack(),
@@ -240,7 +240,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
 
-        assertThat(div.getAttribute("class"), is("alert alert-notice"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-notice"));
         assertThat(div.getText(), is(
                 "The recommended change interval has passed password. Please change your password."));
     }
@@ -265,12 +265,12 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
                 .waitForDisplayed(textToBe(By.id("screenTitle"), "messagesPanelタグの属性変更"));
 
         WebElement div1 = webDriverOperations.getWebDriver().findElement(By.id("panelElement"));
-        assertThat(div1.findElement(By.tagName("span")).getAttribute("class"),
+        assertThat(div1.findElement(By.tagName("span")).getDomAttribute("class"),
                 is("alert alert-info"));
 
         WebElement div2 = webDriverOperations.getWebDriver()
                 .findElement(By.id("panelClassName_panelTypeClassPrefix"));
-        assertThat(div2.findElement(By.tagName("div")).getAttribute("class"), is("error"));
+        assertThat(div2.findElement(By.tagName("div")).getDomAttribute("class"), is("error"));
 
         WebElement div3 =
                 webDriverOperations.getWebDriver().findElement(By.id("outerElement_innerElement"));
@@ -323,7 +323,7 @@ public class MSMN_Thymeleaf_Test extends FunctionTestSupport {
         webDriverOperations.waitForDisplayed(textToBe(By.id("screenTitle"), "ResultMessageの表示"));
 
         WebElement div = webDriverOperations.getWebDriver().findElement(By.xpath("//div[2]/div"));
-        assertThat(div.getAttribute("class"), is("alert alert-error"));
+        assertThat(div.getDomAttribute("class"), is("alert alert-error"));
 
         List<WebElement> liElements = div.findElements(By.tagName("li"));
         assertThat(liElements.get(0).getText().trim(),

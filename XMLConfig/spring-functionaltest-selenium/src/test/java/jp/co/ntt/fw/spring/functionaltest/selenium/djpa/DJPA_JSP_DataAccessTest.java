@@ -1618,8 +1618,8 @@ public class DJPA_JSP_DataAccessTest extends FunctionTestSupport {
 
         DeliveryOrderDetailsPage orderDetailsPage = orderDetailForm.addEntityBySave();
 
-        assertThat(orderDetailsPage.getAcceptDateTime(), is("2015-12-13"));
-        assertThat(orderDetailsPage.getCompletionDateTime(), is("2015-12-14"));
+        assertThat(orderDetailsPage.getAcceptDateTime(), is("2015/12/13"));
+        assertThat(orderDetailsPage.getCompletionDateTime(), is("2015/12/14"));
         assertThat(orderDetailsPage.getDeliveryType(), is("1"));
         assertThat(orderDetailsPage.getReceiverName(), is("Test Receiver Name"));
         assertThat(orderDetailsPage.getReceiverAddress(), is("Test Receiver Address"));

@@ -195,7 +195,7 @@ public class SOAPTodoController {
     /**
      * Testing the exception handler (Indexページの「例外ハンドリング」リンクに対応) ※エラーが発生するため、エラーページが表示されます。
      * @param model Model
-     * @param form Todo form
+     * @param proxy Identifier of service used
      * @return index page
      */
     @GetMapping(value = "confirmHandler")
@@ -208,7 +208,7 @@ public class SOAPTodoController {
     /**
      * Testing the request timeout (Indexページの「リクエストタイムアウト確認」リンクに対応) ※エラーが発生するため、エラーページが表示されます。
      * @param model Model
-     * @param form Todo form
+     * @param proxy Identifier of service used
      * @return index page
      */
     @GetMapping(value = "requestTimeout")
@@ -251,7 +251,7 @@ public class SOAPTodoController {
                     temporaryFile);
             todoProxyService.uploadFile(proxy, temporaryFile);
         } catch (IOException e) {
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             // deleteメソッドによる削除の成功失敗によってその後のアクションをとることは無いため、SonarQube指摘は未対応としています。
             temporaryFile.delete();

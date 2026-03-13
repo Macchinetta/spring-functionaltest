@@ -18,6 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.selenium.vldt;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.By.id;
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class SimpleValidation_Thymeleaf_Test extends ValidationTestSupport {
 
     private static WebDriver driver;
 
-    private static final String DOT = ".";
+    private static final String PERIOD = ".";
 
     private static final String LINE_FEED = "\n";
 
@@ -531,12 +532,49 @@ public class SimpleValidation_Thymeleaf_Test extends ValidationTestSupport {
     /**
      * VLDT0102001
      * <ul>
-     * <li>ネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。</li>
+     * <li>ネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * （入力チェックエラーがない場合）</li>
      * </ul>
      */
     @Test
     public void testVLDT0102001() {
         String testId = "vldt0102001";
+        String nestedFormName = "reciverAddress";
+        String[] targets = {"userName", "postCode", "address"};
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+        }
+
+        // テスト実行
+        {
+            for (int i = 0; i < targets.length; i++) {
+                webDriverOperations.overrideText(id(nestedFormName + PERIOD + targets[i]),
+                        "SpringTest");
+            }
+            webDriverOperations.click(id(ID_VALIDATE));
+        }
+
+        // 結果確認
+        {
+            assertThat(webDriverOperations.getText(id("noValidationError")),
+                    is("No errors were found during input validation."));
+        }
+    }
+
+    /**
+     * VLDT0102002
+     * <ul>
+     * <li>ネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * （入力チェックエラーがある場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102002() {
+        String testId = "vldt0102001";
+        // testVLDT0102001と同じコントローラを使用するためtestIdはvldt0102002ではなくvldt0102001にしている。
+
         String nestedFormName = "reciverAddress";
         String[] targets = {"userName", "postCode", "address"};
         String[] errorMessages = {"size must be between 1 and 50", "size must be between 1 and 10",
@@ -547,57 +585,81 @@ public class SimpleValidation_Thymeleaf_Test extends ValidationTestSupport {
             webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
         }
 
-        // 実施条件1
+        // テスト実行
         {
-            // テスト実行
-            {
-                for (int i = 0; i < targets.length; i++) {
-                    webDriverOperations.overrideText(id(nestedFormName + DOT + targets[i]),
-                            "SpringTest");
-                }
-                webDriverOperations.click(id(ID_VALIDATE));
+            for (int i = 0; i < targets.length; i++) {
+                webDriverOperations.clearText(id(nestedFormName + PERIOD + targets[i]));
             }
-
-            // 結果確認
-            {
-                for (int i = 0; i < targets.length; i++) {
-                    assertThat(webDriverOperations
-                            .exists(id(nestedFormName + DOT + targets[i] + ID_ERRORS)), is(false));
-                }
-            }
+            webDriverOperations.click(id(ID_VALIDATE));
         }
 
-        // 実施条件2
+        // 結果確認
         {
-            // テスト実行
-            {
-                for (int i = 0; i < targets.length; i++) {
-                    webDriverOperations.clearText(id(nestedFormName + DOT + targets[i]));
-                }
-                webDriverOperations.click(id(ID_VALIDATE));
-            }
-
-            // 結果確認
-            {
-                for (int i = 0; i < targets.length; i++) {
-                    assertThat(
-                            webDriverOperations
-                                    .getText(id(nestedFormName + DOT + targets[i] + ID_ERRORS)),
-                            is(errorMessages[i]));
-                }
+            for (int i = 0; i < targets.length; i++) {
+                assertThat(
+                        webDriverOperations
+                                .getText(id(nestedFormName + PERIOD + targets[i] + ID_ERRORS)),
+                        is(errorMessages[i]));
             }
         }
     }
 
     /**
-     * VLDT0102002
+     * VLDT0102003
      * <ul>
-     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。</li>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * （入力チェックエラーがない場合）</li>
      * </ul>
      */
     @Test
-    public void testVLDT0102002() {
-        String testId = "vldt0102002";
+    public void testVLDT0102003() {
+        String testId = "vldt0102003";
+        String nestedFormName = "addresses";
+        int nestedFormCount = 3;
+        String[] targets = {"userName", "postCode", "address"};
+
+        // テスト画面表示
+        {
+            webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+        }
+
+        // 前提条件設定
+        {
+            for (int i = 0; i < nestedFormCount - 1; i++) {
+                webDriverOperations.click(id("add"));
+            }
+        }
+
+        // テスト実行
+        {
+            for (int i = 0; i < nestedFormCount; i++) {
+                for (int j = 0; j < targets.length; j++) {
+                    webDriverOperations.overrideText(id(nestedFormName + i + PERIOD + targets[j]),
+                            "SpringTest");
+                }
+            }
+            webDriverOperations.click(id(ID_VALIDATE));
+        }
+
+        // 結果確認
+        {
+            assertThat(webDriverOperations.getText(id("noValidationError")),
+                    is("No errors were found during input validation."));
+        }
+    }
+
+    /**
+     * VLDT0102004
+     * <ul>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * （入力チェックエラーがある場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102004() {
+        String testId = "vldt0102003";
+        // testVLDT0102003と同じコントローラを使用するためtestIdはvldt0102004ではなくvldt0102003にしている。
+
         String nestedFormName = "addresses";
         int nestedFormCount = 3;
         String[] targets = {"userName", "postCode", "address"};
@@ -609,65 +671,503 @@ public class SimpleValidation_Thymeleaf_Test extends ValidationTestSupport {
             webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
         }
 
-        // 実施条件1
+        // 前提条件設定
         {
-            // 前提条件設定
-            {
-                for (int i = 0; i < nestedFormCount - 1; i++) {
-                    webDriverOperations.click(id("add"));
-                }
-            }
-
-            // テスト実行
-            {
-                for (int i = 0; i < nestedFormCount; i++) {
-                    for (int j = 0; j < targets.length; j++) {
-                        webDriverOperations.overrideText(id(nestedFormName + i + DOT + targets[j]),
-                                "SpringTest");
-                    }
-                }
-                webDriverOperations.click(id(ID_VALIDATE));
-            }
-
-            // 結果確認
-            {
-                for (int i = 0; i < nestedFormCount; i++) {
-                    for (int j = 0; j < targets.length; j++) {
-                        assertThat(
-                                webDriverOperations.exists(
-                                        id(nestedFormName + i + DOT + targets[j] + ID_ERRORS)),
-                                is(false));
-                    }
-                }
+            for (int i = 0; i < nestedFormCount - 1; i++) {
+                webDriverOperations.click(id("add"));
             }
         }
 
-        // 実施条件2
+        // テスト実行
         {
-            // 前提条件設定
-            {
-                for (int i = 0; i < nestedFormCount - 1; i++) {
-                    webDriverOperations.click(id("add"));
-                }
-            }
+            webDriverOperations.click(id(ID_VALIDATE));
+        }
 
-            // テスト実行
-            {
-                webDriverOperations.click(id(ID_VALIDATE));
-            }
-
-            // 結果確認
-            {
-                for (int i = 0; i < nestedFormCount; i++) {
-                    for (int j = 0; j < targets.length; j++) {
-                        assertThat(
-                                webDriverOperations.getText(
-                                        id(nestedFormName + i + DOT + targets[j] + ID_ERRORS)),
-                                is(errorMessages[j]));
-                    }
+        // 結果確認
+        {
+            for (int i = 0; i < nestedFormCount; i++) {
+                for (int j = 0; j < targets.length; j++) {
+                    assertThat(
+                            webDriverOperations.getText(
+                                    id(nestedFormName + i + PERIOD + targets[j] + ID_ERRORS)),
+                            is(errorMessages[j]));
                 }
             }
         }
+    }
+
+    /**
+     * VLDT0102005
+     * <ul>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * removeボタン押下で削除（サーサイドで実装）したAddressがvalidateボタン押下後も削除されていることを確認する。<br>
+     * （入力チェックエラーがない場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102005() {
+        String testId = "vldt0102005";
+
+        webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+
+        // 1. Address 1の各フィールドに「名前1」「郵便番号1」「住所1」を入力する。
+        webDriverOperations.overrideText(id("addresses0.userName"), "名前1");
+        webDriverOperations.overrideText(id("addresses0.postCode"), "郵便番号1");
+        webDriverOperations.overrideText(id("addresses0.address"), "住所1");
+
+        // 2. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 1（各フィールドの値はそのまま）の下にAddress 2が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+
+        // 3. Address 2の各フィールドに「名前2」「郵便番号2」「住所2」を入力する。
+        webDriverOperations.overrideText(id("addresses1.userName"), "名前2");
+        webDriverOperations.overrideText(id("addresses1.postCode"), "郵便番号2");
+        webDriverOperations.overrideText(id("addresses1.address"), "住所2");
+
+        // 4. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 2（各フィールドの値はそのまま）の下にAddress 3が追加されることを確認する
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")), is("名前2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")), is("郵便番号2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")), is("住所2"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.getText(id("Address2")), is("Address3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove2")), is(true));
+
+        // 5. Address 3の各フィールドに「名前3」「郵便番号3」「住所3」を入力する。
+        webDriverOperations.overrideText(id("addresses2.userName"), "名前3");
+        webDriverOperations.overrideText(id("addresses2.postCode"), "郵便番号3");
+        webDriverOperations.overrideText(id("addresses2.address"), "住所3");
+
+        // 6. Address 2のremoveボタンを押下する。
+        webDriverOperations.click(id("remove1"));
+
+        // →Address 2がなくなっていることとAddress 1/3の各フィールドの値がそのままであることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")), is("名前3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")), is("郵便番号3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")), is("住所3"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
+
+        // 7. validateボタンを押下する。
+        webDriverOperations.click(id(ID_VALIDATE));
+
+        // 「No errors were found during input validation.」が表示されていること
+        assertThat(webDriverOperations.getText(id("noValidationError")),
+                is("No errors were found during input validation."));
+    }
+
+    /**
+     * VLDT0102006
+     * <ul>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * removeボタン押下で削除（サーサイドで実装）したAddressがvalidateボタン押下後も削除されていることを確認する。<br>
+     * （入力チェックエラーがある場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102006() {
+        String testId = "vldt0102005";
+        // testVLDT0102005と同じコントローラを使用するためtestIdはvldt0102006ではなくvldt0102005にしている。
+
+        webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+
+        // 1. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 1の下にAddress 2が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+
+        // 2. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 2の下にAddress 3が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.getText(id("Address2")), is("Address3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove2")), is(true));
+
+        // 3. Address 2のremoveボタンを押下する。
+        webDriverOperations.click(id("remove1"));
+
+        // →Address 2がなくなっていることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
+
+        // 4. validateボタンを押下する。
+        webDriverOperations.click(id(ID_VALIDATE));
+
+        // 以下のエラーメッセージが各フィールドの下に出力されること
+        // UserName：size must be between 1 and 50
+        // PostCode：size must be between 1 and 10
+        // Address：size must be between 1 and 100
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getText(id("addresses0.userName.errors")),
+                is("size must be between 1 and 50"));
+        assertThat(webDriverOperations.getText(id("addresses0.postCode.errors")),
+                is("size must be between 1 and 10"));
+        assertThat(webDriverOperations.getText(id("addresses0.address.errors")),
+                is("size must be between 1 and 100"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getText(id("addresses1.userName.errors")),
+                is("size must be between 1 and 50"));
+        assertThat(webDriverOperations.getText(id("addresses1.postCode.errors")),
+                is("size must be between 1 and 10"));
+        assertThat(webDriverOperations.getText(id("addresses1.address.errors")),
+                is("size must be between 1 and 100"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
+    }
+
+    /**
+     * VLDT0102007
+     * <ul>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * removeボタン押下で削除（JavaScriptで実装）したAddressがvalidateボタン押下後も削除されていることを確認する。<br>
+     * （入力チェックエラーがない場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102007() {
+        String testId = "vldt0102007";
+
+        webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+
+        // 1. Address 1の各フィールドに「名前1」「郵便番号1」「住所1」を入力する。
+        webDriverOperations.overrideText(id("addresses0.userName"), "名前1");
+        webDriverOperations.overrideText(id("addresses0.postCode"), "郵便番号1");
+        webDriverOperations.overrideText(id("addresses0.address"), "住所1");
+
+        // 2. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 1（各フィールドの値はそのまま）の下にAddress 2が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+
+        // 3. Address 2の各フィールドに「名前2」「郵便番号2」「住所2」を入力する。
+        webDriverOperations.overrideText(id("addresses1.userName"), "名前2");
+        webDriverOperations.overrideText(id("addresses1.postCode"), "郵便番号2");
+        webDriverOperations.overrideText(id("addresses1.address"), "住所2");
+
+        // 4. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 2（各フィールドの値はそのまま）の下にAddress 3が追加されることを確認する
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")), is("名前2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")), is("郵便番号2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")), is("住所2"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.getText(id("Address2")), is("Address3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove2")), is(true));
+
+        // 5. Address 3の各フィールドに「名前3」「郵便番号3」「住所3」を入力する。
+        webDriverOperations.overrideText(id("addresses2.userName"), "名前3");
+        webDriverOperations.overrideText(id("addresses2.postCode"), "郵便番号3");
+        webDriverOperations.overrideText(id("addresses2.address"), "住所3");
+
+        // 6. Address 2のremoveボタンを押下する。
+        webDriverOperations.click(id("remove1"));
+
+        // →Address 2がなくなっていることとAddress 1/3の各フィールドの値がそのままであることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")), is("名前1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")), is("郵便番号1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")), is("住所1"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")), is("名前3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")), is("郵便番号3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")), is("住所3"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
+
+        // 7. validateボタンを押下する。
+        webDriverOperations.click(id(ID_VALIDATE));
+
+        // 「No errors were found during input validation.」が表示されていること
+        assertThat(webDriverOperations.getText(id("noValidationError")),
+                is("No errors were found during input validation."));
+    }
+
+    /**
+     * VLDT0102008
+     * <ul>
+     * <li>コレクション型でネストしたJavaBeanにBeanValidationのアノテーションを付与した場合、ネスト先のフィールドも入力チェックできることを確認する。<br>
+     * removeボタン押下で削除（JavaScriptで実装）したAddressがvalidateボタン押下後も削除されていることを確認する。<br>
+     * （入力チェックエラーがある場合）</li>
+     * </ul>
+     */
+    @Test
+    public void testVLDT0102008() {
+        String testId = "vldt0102007";
+        // testVLDT0102007と同じコントローラを使用するためtestIdはvldt0102008ではなくvldt0102007にしている。
+
+        webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
+
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+
+        // 1. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 1の下にAddress 2が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+
+        // 2. addボタンを押下する。
+        webDriverOperations.click(id("add"));
+
+        // →Address 2の下にAddress 3が追加されることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.getText(id("Address2")), is("Address3"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses2.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove2")), is(true));
+
+        // 3. Address 2のremoveボタンを押下する。
+        webDriverOperations.click(id("remove1"));
+
+        // →Address 2がなくなっていることを確認する。
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses0.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.userName")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.postCode")),
+                is(emptyString()));
+        assertThat(webDriverOperations.getInputFieldValue(id("addresses1.address")),
+                is(emptyString()));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
+
+        // 4. validateボタンを押下する。
+        webDriverOperations.click(id(ID_VALIDATE));
+
+        // 以下のエラーメッセージが各フィールドの下に出力されること
+        // UserName：size must be between 1 and 50
+        // PostCode：size must be between 1 and 10
+        // Address：size must be between 1 and 100
+        assertThat(webDriverOperations.getText(id("Address0")), is("Address1"));
+        assertThat(webDriverOperations.getText(id("addresses0.userName.errors")),
+                is("size must be between 1 and 50"));
+        assertThat(webDriverOperations.getText(id("addresses0.postCode.errors")),
+                is("size must be between 1 and 10"));
+        assertThat(webDriverOperations.getText(id("addresses0.address.errors")),
+                is("size must be between 1 and 100"));
+        assertThat(webDriverOperations.exists(id("remove0")), is(false));
+        assertThat(webDriverOperations.getText(id("Address1")), is("Address2"));
+        assertThat(webDriverOperations.getText(id("addresses1.userName.errors")),
+                is("size must be between 1 and 50"));
+        assertThat(webDriverOperations.getText(id("addresses1.postCode.errors")),
+                is("size must be between 1 and 10"));
+        assertThat(webDriverOperations.getText(id("addresses1.address.errors")),
+                is("size must be between 1 and 100"));
+        assertThat(webDriverOperations.exists(id("remove1")), is(true));
+        assertThat(webDriverOperations.exists(id("Address2")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.userName")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.postCode")), is(false));
+        assertThat(webDriverOperations.exists(id("addresses2.address")), is(false));
+        assertThat(webDriverOperations.exists(id("remove2")), is(false));
     }
 
     /**

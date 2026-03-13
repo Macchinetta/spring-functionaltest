@@ -74,10 +74,9 @@ public class SpringSecurityAthn17Config {
     @Bean("customerPasswordAuthenticationProvider")
     public AuthenticationProvider customerPasswordAuthenticationProvider(
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(customerService());
         authProvider.setHideUserNotFoundExceptions(true);
         authProvider.setPasswordEncoder(passwordEncoder);
-        authProvider.setUserDetailsService(customerService());
         return authProvider;
     }
 
@@ -241,8 +240,7 @@ public class SpringSecurityAthn17Config {
     public AuthenticationProvider companyIdUsernamePasswordAuthenticationProvider(
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
         CompanyIdUsernamePasswordAuthenticationProvider authProvider =
-                new CompanyIdUsernamePasswordAuthenticationProvider();
-        authProvider.setUserDetailsService(customerService());
+                new CompanyIdUsernamePasswordAuthenticationProvider(customerService());
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

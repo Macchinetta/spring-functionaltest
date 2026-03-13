@@ -16,9 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.config.web;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 import java.util.Properties;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,7 +73,7 @@ public class SpringSecurityAthn16Config {
 
     /**
      * Configure {@link AuthenticationManager} bean.
-     * @param authEventHandleUserLoginAuthenticationProvider Bean defined by
+     * @param authEventSystemFailureHandleUserLoginAuthenticationProvider Bean defined by
      *        #authEventSystemFailureHandleUserLoginAuthenticationProvider
      * @return Bean of configured {@link AuthenticationManager}
      */
@@ -87,7 +85,7 @@ public class SpringSecurityAthn16Config {
 
     /**
      * Configure {@link AuthenticationProvider} bean.
-     * @param loginWithEncodingPasswordService Bean defined by
+     * @param authEventHandleUserDetailsService Bean defined by
      *        SpringSecurityAthnConfig#authEventHandleUserDetailsService
      * @param passwordEncoder Bean defined by ApplicationContextConfig#passwordEncoder
      * @return Bean of configured {@link AuthenticationProvider}
@@ -96,8 +94,8 @@ public class SpringSecurityAthn16Config {
     public AuthenticationProvider authEventSystemFailureHandleUserLoginAuthenticationProvider(
             @Qualifier("authEventHandleUserDetailsService") UserDetailsService authEventHandleUserDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(authEventHandleUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(authEventHandleUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.thym;
 
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,13 +31,13 @@ public class THYM0502Controller {
 
     @GetMapping("001")
     public String handle0502001(Model model) {
-        model.addAttribute("date", new Date(1510704000000L));
+        model.addAttribute("date", LocalDate.of(2017, 11, 15));
         return "thym/creationDate";
     }
 
     @GetMapping("002")
     public String handle0502002(Model model) {
-        model.addAttribute("date", new Date());
+        model.addAttribute("date", LocalDate.now());
         return "thym/cacheCheck";
     }
 

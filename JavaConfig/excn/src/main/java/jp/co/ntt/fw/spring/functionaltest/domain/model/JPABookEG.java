@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -51,7 +51,7 @@ public class JPABookEG {
     private Integer price;
 
     @Column(name = "release_date")
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     @Column(name = "clob_code")
     private String clobCode;
@@ -125,11 +125,11 @@ public class JPABookEG {
         this.price = price;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 

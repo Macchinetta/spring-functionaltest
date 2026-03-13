@@ -29,10 +29,10 @@
         <!-- Setting and Customization by project. -->
         <property name="exceptionMappings">
             <map>
-                <entry key="ResourceNotFoundException" value="e.sf.cmmn.5001" />
+                <entry key="ResourceNotFoundException" value="e.sf.fw.5001" />
             </map>
         </property>
-        <property name="defaultExceptionCode" value="e.sf.cmmn.9001" />
+        <property name="defaultExceptionCode" value="e.sf.fw.9001" />
     </bean>
 
     <!-- Exception Logger. -->

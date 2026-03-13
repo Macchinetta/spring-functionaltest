@@ -21,8 +21,13 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 public class CompanyIdUsernamePasswordAuthenticationProvider extends DaoAuthenticationProvider {
+
+    public CompanyIdUsernamePasswordAuthenticationProvider(UserDetailsService userDetailsService) {
+        super(userDetailsService);
+    }
 
     @Override
     protected void additionalAuthenticationChecks(UserDetails userDetails,

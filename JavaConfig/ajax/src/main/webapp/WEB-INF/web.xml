@@ -119,27 +119,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>ajax0104001AppServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextClass</param-name>
-            <param-value>
-                org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-            </param-value>
-        </init-param>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>jp.co.ntt.fw.spring.functionaltest.config.web.SpringMvcAjax0104001Config</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ajax0104001AppServlet</servlet-name>
-        <url-pattern>/jsp/0104/001/write</url-pattern>
-        <url-pattern>/thymeleaf/0104/001/write</url-pattern>
-    </servlet-mapping>
-
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

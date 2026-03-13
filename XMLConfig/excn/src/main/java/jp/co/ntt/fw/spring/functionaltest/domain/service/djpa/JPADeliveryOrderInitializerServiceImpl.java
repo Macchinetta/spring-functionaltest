@@ -15,9 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +33,7 @@ public class JPADeliveryOrderInitializerServiceImpl implements JPADeliveryOrderI
 
     @Override
     public void initByBatch() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(2013, 11, 24);
-        Date utilDate = cal.getTime();
-        java.sql.Date recDate = new java.sql.Date(utilDate.getTime());
+        LocalDate recDate = LocalDate.of(2013, 12, 24);
 
         List<JPADeliveryOrder> orderList = new ArrayList<JPADeliveryOrder>();
 

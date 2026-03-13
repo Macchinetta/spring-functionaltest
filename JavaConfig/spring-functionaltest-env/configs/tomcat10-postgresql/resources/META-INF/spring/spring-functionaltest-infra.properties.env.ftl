@@ -109,6 +109,6 @@ oth2.redirect.url={baseUrl}/jsp/auth/authorized
 oth2.client.secret=secret
 
 # Settings specific test cases to run for various environments
-test.environment=${MAIL_SERVER_PROFILE!'nonMailServer'}
-jms.test.environment=${MQ_SERVER_PROFILE!'nonMQServer'}
+test.environment.mailserver=${MAIL_SERVER_PROFILE!'nonMailServer'}
+test.environment.mqserver=${MQ_SERVER_PROFILE!'nonMQServer'}
 test.environment.view=${TEST_ENV_VIEW!'jsp'}

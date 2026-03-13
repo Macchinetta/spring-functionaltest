@@ -40,8 +40,8 @@ public class ResultUserInfPage implements Page<ResultUserInfPage> {
     private WebElement userAge;
 
     @CacheLookup
-    @FindBy(id = "compleatDateTime")
-    private WebElement compleatDateTime;
+    @FindBy(id = "completionDateTime")
+    private WebElement completionDateTime;
 
     @CacheLookup
     @FindBy(id = "executeTime")
@@ -70,8 +70,8 @@ public class ResultUserInfPage implements Page<ResultUserInfPage> {
         return WebElementOperations.getElementTextValue(userAge);
     }
 
-    public String getCompleatDateTime() {
-        return WebElementOperations.getElementTextValue(compleatDateTime);
+    public String getCompletionDateTime() {
+        return WebElementOperations.getElementTextValue(completionDateTime);
     }
 
     public String getExecuteTime() {

@@ -43,7 +43,8 @@ public class SpringSecurityAthr04Config {
     /**
      * Configure {@link SecurityFilterChain} bean.
      * @param http Builder class for setting up authentication and authorization
-     * @param loginForMethodManager Bean defined by SpringSecurityAthrConfig#loginForMethodManager
+     * @param loginForRoleUserManager Bean defined by
+     *        SpringSecurityAthrConfig#loginForRoleUserManager
      * @return Bean of configured {@link SecurityFilterChain}
      * @throws Exception Exception that occurs when setting HttpSecurity
      */
@@ -70,7 +71,8 @@ public class SpringSecurityAthr04Config {
     /**
      * Configure {@link SecurityFilterChain} bean.
      * @param http Builder class for setting up authentication and authorization
-     * @param loginForMethodManager Bean defined by SpringSecurityAthrConfig#loginForMethodManager
+     * @param loginForRoleUserManager Bean defined by
+     *        SpringSecurityAthrConfig#loginForRoleUserManager
      * @return Bean of configured {@link SecurityFilterChain}
      * @throws Exception Exception that occurs when setting HttpSecurity
      */

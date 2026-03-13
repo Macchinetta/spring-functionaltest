@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.vldt;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.UserInfo;
 
@@ -47,9 +47,7 @@ public class UserInfoUseBeanServiceImpl implements UserInfoUseBeanService {
 
         // User.udateOfBirthが未来日の試験用の特殊設定
         if ("dateOfBirthFuture".equals(userInfoUseBeanInput.getVisitMessage())) {
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.YEAR, 1);
-            userInfo.setDateOfBirth(cal.getTime());
+            userInfo.setDateOfBirth(LocalDate.now().plusYears(1));
         }
 
         UserInfoUseBeanOutput UserInfoUseBeanOutput = new UserInfoUseBeanOutput();

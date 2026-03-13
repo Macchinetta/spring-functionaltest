@@ -171,13 +171,13 @@ public class DefineValidationMessages_JSP_Test extends ValidationTestSupport {
     public void testVLDT0303001() {
         String testId = "vldt0303001";
         String[] targets = {"shortValue", "intValue", "longValue", "floatValue", "doubleValue",
-                "shortObject", "integerObject", "longObject", "floatObject", "doubleObject", "date",
+                "shortObject", "integerObject", "longObject", "floatObject", "doubleObject",
                 "localdatetime", "localdate", "booleanValue"};
         String[] errorMessages = {"\"{0}\" はshort型を入力してください。", "\"{0}\" はint型を入力してください。",
                 "\"{0}\" はlong型を入力してください。", "\"{0}\" はfloat型を入力してください。",
                 "\"{0}\" はdouble型を入力してください。", "\"{0}\" はShort型を入力してください。",
                 "\"{0}\" はInteger型を入力してください。", "\"{0}\" はLong型を入力してください。",
-                "\"{0}\" はFloat型を入力してください。", "\"{0}\" はDouble型を入力してください。", "\"{0}\" は日付ではありません。",
+                "\"{0}\" はFloat型を入力してください。", "\"{0}\" はDouble型を入力してください。",
                 "\"{0}\" は日付時刻ではありません。", "\"{0}\" は日付ではありません。", "\"{0}\" は無効です。",};
 
         // テスト画面表示
@@ -185,12 +185,9 @@ public class DefineValidationMessages_JSP_Test extends ValidationTestSupport {
             webDriverOperations.click(id(testId + "_" + VIEW_TYPE));
         }
 
-        DateTimeFormatter dateTimeFormatter1 =
-                DateTimeFormatter.ofPattern(super.getLocalDateFormat(currentLocale));
+        DateTimeFormatter dateTimeFormatter1 = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
 
-        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
-
-        DateTimeFormatter dateTimeFormatter3 = DateTimeFormatter.ofPattern("yy/MM/dd");
+        DateTimeFormatter dateTimeFormatter2 = DateTimeFormatter.ofPattern("yy/MM/dd");
 
         // 実施条件1
         {
@@ -210,8 +207,7 @@ public class DefineValidationMessages_JSP_Test extends ValidationTestSupport {
                 webDriverOperations.overrideText(id(targets[9]), "1.7976931348623157E308");
                 webDriverOperations.overrideText(id(targets[10]), dt.format(dateTimeFormatter1));
                 webDriverOperations.overrideText(id(targets[11]), dt.format(dateTimeFormatter2));
-                webDriverOperations.overrideText(id(targets[12]), dt.format(dateTimeFormatter3));
-                webDriverOperations.overrideText(id(targets[13]), "true");
+                webDriverOperations.overrideText(id(targets[12]), "true");
                 webDriverOperations.click(id(ID_VALIDATE));
             }
 
@@ -240,7 +236,6 @@ public class DefineValidationMessages_JSP_Test extends ValidationTestSupport {
                 webDriverOperations.overrideText(id(targets[10]), "SpringTest");
                 webDriverOperations.overrideText(id(targets[11]), "SpringTest");
                 webDriverOperations.overrideText(id(targets[12]), "SpringTest");
-                webDriverOperations.overrideText(id(targets[13]), "SpringTest");
                 webDriverOperations.click(id(ID_VALIDATE));
             }
 

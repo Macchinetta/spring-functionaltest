@@ -19,18 +19,34 @@ import java.util.Collection;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.Todo;
 
 public interface TodoService {
-    Todo findOne(String todoId, String registrationId);
 
-    Collection<Todo> findAll(String registrationId);
+    // guideline
+    default Todo findOne(String todoId) {
+        throw new UnsupportedOperationException();
+    }
 
-    Todo create(Todo todo, String registrationId);
+    default Todo findOne(String todoId, String registrationId) {
+        throw new UnsupportedOperationException();
+    }
 
-    Todo finish(String todoId, String registrationId);
+    default Collection<Todo> findAll(String registrationId) {
+        throw new UnsupportedOperationException();
+    }
 
-    void delete(String todoId, String registrationId);
+    default Todo create(Todo todo, String registrationId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default Todo finish(String todoId, String registrationId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default void delete(String todoId, String registrationId) {
+        throw new UnsupportedOperationException();
+    }
 
     // NoAuth Only
     default void deleteAll() {
         throw new UnsupportedOperationException();
-    };
+    }
 }

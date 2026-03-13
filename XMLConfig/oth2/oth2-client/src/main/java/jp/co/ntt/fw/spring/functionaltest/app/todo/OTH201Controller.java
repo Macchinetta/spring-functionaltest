@@ -18,6 +18,8 @@ package jp.co.ntt.fw.spring.functionaltest.app.todo;
 import java.net.URI;
 import java.util.Collection;
 import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +50,8 @@ public class OTH201Controller {
 
     private static final String MAJOR_ITEM_ID = "01";
 
+    private static final Logger logger = LoggerFactory.getLogger(OTH201Controller.class);
+
     @Inject
     @Named("todoServiceImpl")
     TodoService todoService;
@@ -55,6 +59,10 @@ public class OTH201Controller {
     @Inject
     @Named("todoMethodAnnotationServiceImpl")
     TodoService todoMethodAnnotationService;
+
+    @Inject
+    @Named("todoNoIdSpecifiedServiceImpl")
+    TodoService todoNoIdSpecifiedService;
 
     @Inject
     TodoFormMapper beanMapper;
@@ -174,6 +182,17 @@ public class OTH201Controller {
 
         URI location = createRedirectUri(registrationId, resourceProtect).toUri();
         return "redirect:" + location.toString();
+    }
+
+    @GetMapping("findone")
+    public String findOne(Model model, @RequestParam(name = "registrationId") String registrationId,
+            @RequestParam(name = "resourceProtect") String resourceProtect,
+            @RequestParam(name = "todoId") String todoId) {
+        // guideline check
+        Todo todoDetail = this.todoNoIdSpecifiedService.findOne(todoId);
+        logger.info("findOne: {}: {}", todoDetail.getTodoId(), todoDetail.getTodoTitle());
+
+        return list(model, registrationId, resourceProtect);
     }
 
     private UriComponents createRedirectUri(String registrationId, String resourceProtect) {

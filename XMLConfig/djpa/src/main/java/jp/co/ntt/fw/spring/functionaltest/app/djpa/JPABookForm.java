@@ -17,7 +17,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class JPABookForm implements Serializable {
 
@@ -31,7 +30,7 @@ public class JPABookForm implements Serializable {
 
     private Integer price;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     private String clobCode;
 
@@ -107,11 +106,11 @@ public class JPABookForm implements Serializable {
         this.price = price;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 

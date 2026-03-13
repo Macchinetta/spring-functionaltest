@@ -40,7 +40,7 @@
                         <td th:text="*{category}"></td>
                         <td><a href="" th:text="*{title}"></a></td>
                         <td th:text="*{overview}"></td>
-                        <td th:text="*{#dates.format(publishDate, 'yyyy/MM/dd HH:mm:ss')}"></td>
+                        <td th:text="*{#temporals.format(publishDate, 'yyyy/MM/dd HH:mm:ss')}"></td>
                     </tr>
                 </table>
 

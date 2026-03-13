@@ -44,7 +44,7 @@ public class EMAL_JSP_02Controller {
     @Inject
     AuthMailSendingService authMailSendingService;
 
-    @Value("${test.environment}")
+    @Value("${test.environment.mailserver}")
     String testEnvironment;
 
     @ModelAttribute

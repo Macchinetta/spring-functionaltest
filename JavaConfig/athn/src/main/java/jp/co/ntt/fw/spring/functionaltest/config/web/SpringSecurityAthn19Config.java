@@ -122,8 +122,8 @@ public class SpringSecurityAthn19Config {
     @Bean("loginWithMessageDigestPasswordAuthenticationProvider")
     public AuthenticationProvider loginWithMessageDigestPasswordAuthenticationProvider(
             @Qualifier("loginWithMessageDigestPasswordService") UserDetailsService loginWithMessageDigestPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithMessageDigestPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithMessageDigestPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderMessageDigest());
         return authProvider;
     }
@@ -149,8 +149,8 @@ public class SpringSecurityAthn19Config {
     @Bean("loginWithMessageDigestDelegatingPasswordAuthenticationProvider")
     public AuthenticationProvider loginWithMessageDigestDelegatingPasswordAuthenticationProvider(
             @Qualifier("loginWithMessageDigestPasswordService") UserDetailsService loginWithMessageDigestPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithMessageDigestPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithMessageDigestPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderMessageDigestDelegating());
         return authProvider;
     }

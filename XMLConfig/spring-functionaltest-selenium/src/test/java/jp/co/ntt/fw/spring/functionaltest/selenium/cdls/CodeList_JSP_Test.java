@@ -135,7 +135,7 @@ public class CodeList_JSP_Test extends FunctionTestSupport {
         Object[] keys = expectedAuthorityValueFactory().keySet().toArray();
         int i = 0;
         for (WebElement span : spans) {
-            String inputValue = span.findElement(By.tagName("input")).getAttribute("value");
+            String inputValue = span.findElement(By.tagName("input")).getDomProperty("value");
             assertThat(inputValue, is((String) keys[i++]));
             assertThat(span.findElement(By.tagName("label")).getText(),
                     is(expectedAuthorityValueFactory().get(inputValue)));
@@ -847,7 +847,7 @@ public class CodeList_JSP_Test extends FunctionTestSupport {
         }
         for (WebElement webElement : actualOptions) {
             assertThat(webElement.getText(),
-                    is(expectedValue.get(webElement.getAttribute("value").trim())));
+                    is(expectedValue.get(webElement.getDomProperty("value").trim())));
         }
     }
 

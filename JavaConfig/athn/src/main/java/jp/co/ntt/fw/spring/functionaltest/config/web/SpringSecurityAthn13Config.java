@@ -102,10 +102,10 @@ public class SpringSecurityAthn13Config {
     public AuthenticationProvider authFailureEventHandleAuthenticationProvider(
             @Qualifier("authEventHandleUserDetailsService") UserDetailsService authEventHandleUserDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(authEventHandleUserDetailsService);
         authProvider.setHideUserNotFoundExceptions(false);
         authProvider.setPasswordEncoder(passwordEncoder);
-        authProvider.setUserDetailsService(authEventHandleUserDetailsService);
         return authProvider;
     }
 

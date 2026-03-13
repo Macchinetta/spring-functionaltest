@@ -67,6 +67,13 @@
                         <form:hidden path="resourceProtect" value="${f:h(resourceProtect)}" />
                         <form:button>Delete</form:button>
                     </form:form>
+                    <form:form action="${pageContext.request.contextPath}/jsp/auth/todo/${id}/findone" method="get"
+                        modelAttribute="todoForm" cssClass="inline">
+                        <form:hidden path="todoId" value="${f:h(todo.todoId)}" />
+                        <form:hidden path="registrationId" value="${f:h(registrationId)}" />
+                        <form:hidden path="resourceProtect" value="${f:h(resourceProtect)}" />
+                        <form:button>FindOne</form:button>
+                    </form:form>
                 </li>
             </c:forEach>
         </ul>

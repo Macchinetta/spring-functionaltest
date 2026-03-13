@@ -29,6 +29,7 @@ public class IntentionalException extends ResultMessagesNotificationException {
      * <p>
      * generate a {@link ResultMessages} instance of error type and add a message.
      * </p>
+     * 
      * @param message result message
      */
     public IntentionalException(String message) {
@@ -40,7 +41,8 @@ public class IntentionalException extends ResultMessagesNotificationException {
      * <p>
      * Takes multiple {@code String} messages as argument.
      * </p>
-     * @param message {@link ResultMessages} instance
+     * 
+     * @param messages {@link ResultMessages} instance
      */
     public IntentionalException(ResultMessages messages) {
         super(messages);
@@ -51,8 +53,9 @@ public class IntentionalException extends ResultMessagesNotificationException {
      * <p>
      * Takes multiple {@code String} messages and cause of exception as argument.
      * </p>
+     * 
      * @param messages {@link ResultMessages} instance
-     * @param cause {@link Throwable} instance
+     * @param cause    {@link Throwable} instance
      */
     public IntentionalException(ResultMessages messages, Throwable cause) {
         super(messages, cause);

@@ -18,8 +18,7 @@ package jp.co.ntt.fw.spring.functionaltest.app.aply;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,9 +118,8 @@ public class APLY_Thymeleaf_02Controller {
     }
 
     @GetMapping(value = "0201/005")
-    public String handle01005(FormObjectForm form, Model model) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        form.setValue5(sdf.parse("19550505"));
+    public String handle01005(FormObjectForm form, Model model) {
+        form.setValue5(LocalDate.of(1955, 5, 5));
         return "thymeleaf/aply/formObjectForm";
     }
 

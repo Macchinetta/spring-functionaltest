@@ -93,7 +93,7 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
 
     /**
      * <ul>
-     * <li>th:includeの動作を確認する。</li>
+     * <li>th:fragmentで定義したフラグメントで引数（変数）をとることができることを確認する。</li>
      * </ul>
      */
     @Test
@@ -102,34 +102,6 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
         // メニュー画面の操作
         {
             webDriverOperations.click(id("thly0101003"));
-        }
-
-        // フラグメントのコンテンツのみ挿入されていることの確認
-        {
-            assertFalse(webDriverOperations
-                    .exists(By.xpath("id('authority-input')/div[@class='col-md-4']/div/div")));
-            assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/div/select/option[@value='STAFF_MNG']")));
-            assertTrue(webDriverOperations.exists(By.xpath(
-                    "id('authority-input')/div[@class='col-md-4']/div/select/option[@value='SHOW_SHOPPING_MNG']")));
-            WebElement selectElement = webDriverOperations.getWebDriver().findElement(
-                    By.xpath("id('authority-input')/div[@class='col-md-4']/div/select"));
-            assertThat(selectElement.getAttribute("disabled"), is(nullValue()));
-            assertThat(selectElement.getAttribute("style"), is(""));
-        }
-    }
-
-    /**
-     * <ul>
-     * <li>th:fragmentで定義したフラグメントで引数（変数）をとることができることを確認する。</li>
-     * </ul>
-     */
-    @Test
-    public void testTHLY0101004() throws IOException {
-
-        // メニュー画面の操作
-        {
-            webDriverOperations.click(id("thly0101004"));
         }
 
         // 入力
@@ -162,11 +134,11 @@ public class ThymeleafLayoutTest extends FunctionTestSupport {
      * </ul>
      */
     @Test
-    public void testTHLY0101005() throws IOException {
+    public void testTHLY0101004() throws IOException {
 
         // メニュー画面の操作
         {
-            webDriverOperations.click(id("thly0101005"));
+            webDriverOperations.click(id("thly0101004"));
         }
 
         // フラグメント部分のHTMLで引数として受け取った値（フラグメント）を出力できることの確認

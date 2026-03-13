@@ -18,7 +18,6 @@ package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class DefineTypeMismatchMessageForm implements Serializable {
 
@@ -43,8 +42,6 @@ public class DefineTypeMismatchMessageForm implements Serializable {
     private Float floatObject;
 
     private Double doubleObject;
-
-    private Date date;
 
     private LocalDateTime localdatetime;
 
@@ -130,14 +127,6 @@ public class DefineTypeMismatchMessageForm implements Serializable {
 
     public void setDoubleObject(Double doubleObject) {
         this.doubleObject = doubleObject;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public LocalDateTime getLocaldatetime() {

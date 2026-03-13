@@ -41,6 +41,7 @@ public class Todo implements Serializable {
 
     private boolean finished;
 
+    // JAXBがリフレクションでインスタンスを作成するため、JSR-310ではなくjava.util.Dateを使用する。
     @Null(groups = Create.class)
     private Date createdAt;
 

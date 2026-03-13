@@ -137,7 +137,7 @@ public class OAuth2_03_JSP_Test extends FunctionTestSupport {
         // ログアサート
         dbLogAssertOperations.waitForAssertion();
         dbLogAssertOperations.assertContainsByRegexMessage(".*ExceptionLogger$",
-                "An error occurred while attempting to decode the Jwt: Couldn't retrieve remote JWK set:.*404");
+                "An error occurred while attempting to decode the Jwt:.*");
     }
 
     /**

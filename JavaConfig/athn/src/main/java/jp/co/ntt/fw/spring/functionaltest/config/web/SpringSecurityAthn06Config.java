@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.config.web;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +31,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.ThrowAuthenticationServiceExceptionAuthenticationProvider;
 
 /**
@@ -70,7 +68,7 @@ public class SpringSecurityAthn06Config {
 
     /**
      * Configure {@link AuthenticationProvider} bean.
-     * @param loginWithEncodingPasswordService Bean defined by
+     * @param authEventHandleUserDetailsService Bean defined by
      *        SpringSecurityAthnConfig#authEventHandleUserDetailsService
      * @param passwordEncoder Bean defined by ApplicationContextConfig#passwordEncoder
      * @return Bean of configured {@link AuthenticationProvider}
@@ -79,8 +77,8 @@ public class SpringSecurityAthn06Config {
     public AuthenticationProvider authEventHandleUserLoginAuthenticationProvider(
             @Qualifier("authEventHandleUserDetailsService") UserDetailsService authEventHandleUserDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(authEventHandleUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(authEventHandleUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

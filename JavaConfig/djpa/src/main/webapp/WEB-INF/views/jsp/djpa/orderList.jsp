@@ -16,12 +16,12 @@
         <meta name="contextPath" content="${pageContext.request.contextPath}" />
         <sec:csrfMetaTags />
         <title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
         <script type="text/javascript"></script>
@@ -114,8 +114,8 @@
                                     <td id="senderAddress">${f:h(delOrder.senderAddress)}</td>
                                     <td id="receiverName">${f:h(delOrder.receiverName)}</td>
                                     <td id="receiverAdress">${f:h(delOrder.receiverAddress)}</td>
-                                    <td id="acceptTime"><fmt:formatDate value="${delOrder.acceptDateTime}" pattern="yyyy/MM/dd" /></td>
-                                    <td id="competionTime"><fmt:formatDate value="${delOrder.completionDateTime}" pattern="yyyy/MM/dd" /></td>
+                                    <td id="acceptTime"><javatime:format value="${delOrder.acceptDateTime}" pattern="yyyy/MM/dd" /></td>
+                                    <td id="competionTime"><javatime:format value="${delOrder.completionDateTime}" pattern="yyyy/MM/dd" /></td>
                                     <td id="driverName">${f:h(delOrder.deliveryDriver)}</td>
                                     <td id="delStatus">${f:h(delOrder.deliveryStatus)}</td>
                                 </tr>
@@ -152,8 +152,8 @@
                                     <td id="senderAddress">${f:h(delOrder.senderAddress)}</td>
                                     <td id="receiverName">${f:h(delOrder.receiverName)}</td>
                                     <td id="receiverAdress">${f:h(delOrder.receiverAddress)}</td>
-                                    <td id="acceptTime"><fmt:formatDate value="${delOrder.acceptDateTime}" pattern="yyyy/MM/dd" /></td>
-                                    <td id="competionTime"><fmt:formatDate value="${delOrder.completionDateTime}" pattern="yyyy/MM/dd" /></td>
+                                    <td id="acceptTime"><javatime:format value="${delOrder.acceptDateTime}" pattern="yyyy/MM/dd" /></td>
+                                    <td id="competionTime"><javatime:format value="${delOrder.completionDateTime}" pattern="yyyy/MM/dd" /></td>
                                     <td id="driverName">${f:h(delOrder.deliveryDriver)}</td>
                                     <td id="delStatus">${f:h(delOrder.deliveryStatus)}</td>
                                 </tr>

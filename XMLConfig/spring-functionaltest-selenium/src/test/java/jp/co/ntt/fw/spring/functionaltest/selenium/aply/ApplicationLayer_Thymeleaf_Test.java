@@ -689,7 +689,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // フォームオブジェクトの実装 入力画面の操作
         {
             assertThat(webDriverOperations.getWebDriver().findElement(id("value3"))
-                    .getAttribute("value"), is("$3,456,789.00"));
+                    .getDomProperty("value"), is("$3,456,789.00"));
 
             webDriverOperations.click(id("submit"));
         }
@@ -756,8 +756,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
 
         // Controllerの実装方法画面の確認
         {
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
         }
         // ログの確認
         {
@@ -929,8 +928,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
@@ -972,8 +970,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
             assertThat(webDriverOperations.getText(id("value7")), is("777777777777777"));
         }
@@ -1015,8 +1012,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
@@ -1092,8 +1088,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
@@ -1170,8 +1165,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
@@ -1247,8 +1241,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
             // assertThat(webDriverOperations.getText(id("value3")),
             // is("34567890"));
             assertThat(webDriverOperations.getText(id("value4")), is("0.44"));
-            assertThat(webDriverOperations.getText(id("value5")),
-                    is("Thu May 05 00:00:00 JST 1955"));
+            assertThat(webDriverOperations.getText(id("value5")), is("1955-05-05"));
             assertThat(webDriverOperations.getText(id("value6")), is("666666666666666"));
         }
         // ログの確認
@@ -1775,7 +1768,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")),
-                    is("Thymeleafが提供している#dates.formatを利用して数値を以下に表示します。"));
+                    is("Thymeleafが提供している#temporals.formatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")), is("2013/12/09"));
         }
         // ログの確認
@@ -2313,7 +2306,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")),
-                    is("Thymeleafが提供している#dates.arrayFormatを利用して数値を以下に表示します。"));
+                    is("Thymeleafが提供している#temporals.arrayFormatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")),
                     is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
@@ -2340,7 +2333,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")),
-                    is("Thymeleafが提供している#dates.listFormatを利用して数値を以下に表示します。"));
+                    is("Thymeleafが提供している#temporals.listFormatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")),
                     is("2013/12/09, 2013/12/10, 2013/12/11"));
         }
@@ -2367,7 +2360,7 @@ public class ApplicationLayer_Thymeleaf_Test extends FunctionTestSupport {
         // リクエスト処理メソッドの応答に対応する画面
         {
             assertThat(webDriverOperations.getText(id("message1")),
-                    is("Thymeleafが提供している#dates.setFormatを利用して数値を以下に表示します。"));
+                    is("Thymeleafが提供している#temporals.setFormatを利用して数値を以下に表示します。"));
             assertThat(webDriverOperations.getText(id("message2")),
                     is("2013/12/09, 2013/12/10, 2013/12/11"));
         }

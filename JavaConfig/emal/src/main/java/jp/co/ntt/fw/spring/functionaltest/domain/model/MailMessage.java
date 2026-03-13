@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class MailMessage implements Serializable {
@@ -33,7 +33,7 @@ public class MailMessage implements Serializable {
 
     String replyTo;
 
-    Date sentDate;
+    LocalDateTime sentDate;
 
     String body;
 
@@ -83,11 +83,11 @@ public class MailMessage implements Serializable {
         this.replyTo = replyTo;
     }
 
-    public Date getSentDate() {
+    public LocalDateTime getSentDate() {
         return sentDate;
     }
 
-    public void setSentDate(Date sentDate) {
+    public void setSentDate(LocalDateTime sentDate) {
         this.sentDate = sentDate;
     }
 

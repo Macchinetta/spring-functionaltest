@@ -3,10 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
     <artifactId>spring-functionaltest</artifactId>
-    <version>1.11.0.RELEASE</version>
+    <version>1.11.1.RELEASE</version>
     <packaging>pom</packaging>
     <modules>
         <module>spring-functionaltest-env</module>
+        <module>spring-functionaltest-selenium</module>
         <module>ajax</module>
         <module>aply</module>
         <module>athn</module>
@@ -31,16 +32,17 @@
         <module>jmss</module>
         <module>lggn</module>
         <module>msmn</module>
+        <module>soap/soap-client</module>
+        <module>soap/soap-server</module>
+        <module>soap/soap-webservice</module>
+        <module>soap/soap-model</module>
         <module>oth2/oth2-client</module>
         <module>oth2/oth2-resource</module>
         <module>pgnt</module>
         <module>prmn</module>
         <module>rest</module>
-        <module>rscl</module>
-        <module>soap/soap-client</module>
-        <module>soap/soap-server</module>
-        <module>soap/soap-webservice</module>
-        <module>soap/soap-model</module>
+        <module>rscl/rscl-client</module>
+        <module>rscl/rscl-server</module>
         <module>spsc</module>
         <module>spsm</module>
         <module>ssmn</module>
@@ -54,7 +56,7 @@
     <parent>
         <groupId>org.terasoluna.gfw</groupId>
         <artifactId>terasoluna-gfw-parent</artifactId>
-        <version>5.10.0.RELEASE</version>
+        <version>5.10.1.RELEASE</version>
         <relativePath />
     </parent>
 
@@ -73,35 +75,6 @@
         <name>Macchinetta Framework Team</name>
         <url>https://macchinetta.github.io/</url>
     </organization>
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>http://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>http://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
     <developers>
         <developer>
             <name>Macchinetta</name>
@@ -163,7 +136,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -175,7 +147,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
                     <configuration>
                         <systemPropertyVariables>
                             <jdk.tls.client.protocols>TLSv1.3</jdk.tls.client.protocols>
@@ -185,7 +156,6 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>${org.codehaus.mojo.build-helper-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>add-source</id>
@@ -218,7 +188,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>${org.apache.maven.plugins.maven-war-plugin.version}</version>
                     <configuration>
                         <webResources>
                             <resource>
@@ -279,13 +248,6 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <configuration>
                         <source>${java-version}</source>
-                        <additionalDependencies>
-                            <additionalDependency>
-                                <groupId>jakarta.interceptor</groupId>
-                                <artifactId>jakarta.interceptor-api</artifactId>
-                                <version>${jakarta.interceptor-api.version}</version>
-                            </additionalDependency>
-                        </additionalDependencies>
                     </configuration>
                 </plugin>
             </plugins>
@@ -308,19 +270,28 @@
                 <artifactId>soap-webservice</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+                <version>${jquery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <properties>
-        <!-- == Maven Plugin Versions == -->
-        <org.apache.maven.plugins.maven-war-plugin.version>3.4.0</org.apache.maven.plugins.maven-war-plugin.version>
-        <org.codehaus.mojo.build-helper-maven-plugin.version>3.6.0</org.codehaus.mojo.build-helper-maven-plugin.version>
-        <org.apache.maven.plugins.maven-failsafe-plugin.version>3.5.2</org.apache.maven.plugins.maven-failsafe-plugin.version>
-        <org.apache.maven.plugins.maven-surefire-plugin.version>3.5.2</org.apache.maven.plugins.maven-surefire-plugin.version>
         <!-- == Dependency Versions == -->
         <org.apache.maven.archetype.version>2.2</org.apache.maven.archetype.version>
         <org.apache.maven.wagon.version>1.0-beta-7</org.apache.maven.wagon.version>
-        <postgresql.version>42.7.4</postgresql.version>
-        <ojdbc.version>23.6.0.24.10</ojdbc.version>
+        <!-- Used with initdb -->
+        <postgresql.version>42.7.9</postgresql.version>
+        <ojdbc.version>23.26.0.0.0</ojdbc.version>
+        <!-- == WebJars Version == -->
+        <jquery.version>1.11.1</jquery.version>
+        <bootstrap.version>3.2.0</bootstrap.version>
         <!-- == Project Properties == -->
         <project.env.main.directory>src/main</project.env.main.directory>
         <project.env.target.name>spring-functionaltest-env</project.env.target.name>

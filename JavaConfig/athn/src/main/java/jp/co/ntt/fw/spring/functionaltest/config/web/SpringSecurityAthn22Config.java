@@ -74,8 +74,8 @@ public class SpringSecurityAthn22Config {
     public AuthenticationProvider loginForRememberMeUserInfoAuthenticationProvider(
             @Qualifier("loginForRememberMeUserInfoDetailsService") UserDetailsService loginForRememberMeUserInfoDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForRememberMeUserInfoDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForRememberMeUserInfoDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

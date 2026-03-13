@@ -103,9 +103,9 @@ public abstract class RestTestSupport extends FunctionTestSupport {
                 .getString("apServerVersion");
     }
 
-    protected int getJavaVersion() {
+    protected String getJavaVersion() {
         return given().when().get("/serverinfo/getServerInfo").then().extract().jsonPath()
-                .getInt("javaVersion");
+                .getString("javaVersion");
     }
 
 }

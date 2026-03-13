@@ -107,7 +107,7 @@ public enum WebDriverInputFieldAccessor {
      * @param by 要素を探すための識別子
      */
     public String getValue(By by, WebDriver webDriver) {
-        return webDriver.findElement(by).getAttribute("value");
+        return webDriver.findElement(by).getDomProperty("value");
     }
 
     private static String js(String value) {

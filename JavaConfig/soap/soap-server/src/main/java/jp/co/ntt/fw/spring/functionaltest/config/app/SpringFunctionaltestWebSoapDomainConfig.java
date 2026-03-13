@@ -76,7 +76,6 @@ public class SpringFunctionaltestWebSoapDomainConfig {
 
     /**
      * Configure {@link MethodValidationPostProcessor} bean.
-     * @param validator Bean defined by SpringFunctionaltestEnvConfig#validator
      * @return Bean of configured {@link MethodValidationPostProcessor}
      */
     @Bean

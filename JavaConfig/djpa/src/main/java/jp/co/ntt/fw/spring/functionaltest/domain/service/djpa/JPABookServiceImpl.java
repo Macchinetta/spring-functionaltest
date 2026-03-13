@@ -16,9 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -100,10 +99,7 @@ public class JPABookServiceImpl implements JPABookService {
     public List<JPABook> saveMultipleFlush() {
         List<JPABook> entities = new ArrayList<JPABook>();
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(2013, 11, 24);
-        Date utilDate = cal.getTime();
-        java.sql.Date releaseDate = new java.sql.Date(utilDate.getTime());
+        LocalDate releaseDate = LocalDate.of(2013, 12, 24);
 
         JPABook book = new JPABook();
         book.setBookId("0000000001");

@@ -16,6 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -165,7 +167,12 @@ public class MailReceivingSharedServiceImpl implements MailReceivingSharedServic
                 mail.setReplyTo(((InternetAddress) message.getReplyTo()[0]).toUnicodeString());
             }
 
-            mail.setSentDate(message.getSentDate());
+            if (message.getSentDate() != null) {
+                mail.setSentDate(LocalDateTime.ofInstant(
+                    message.getSentDate().toInstant(), 
+                    ZoneId.systemDefault()
+                ));
+            }
 
             if (message.getContent() instanceof Multipart) {
                 // マルチパート時のメール関連情報設定

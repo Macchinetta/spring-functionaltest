@@ -111,8 +111,8 @@ public class SpringSecurityConfig {
     @Bean("authenticationProvider")
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsServiceDTAC,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsServiceDTAC);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(userDetailsServiceDTAC);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
@@ -184,7 +184,8 @@ public class SpringSecurityConfig {
      */
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"));
+        return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"),
+                antMatcher("/webjars/**"));
     }
 
     /**

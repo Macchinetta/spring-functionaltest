@@ -16,7 +16,8 @@
 package jp.co.ntt.fw.spring.functionaltest.app.djpa;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class DeliveryOrderStatusForm implements Serializable {
 
@@ -34,9 +35,11 @@ public class DeliveryOrderStatusForm implements Serializable {
 
     private String receiverAddress;
 
-    private Date acceptDateTime;
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private LocalDate acceptDateTime;
 
-    private Date completionDateTime;
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private LocalDate completionDateTime;
 
     private String deliveryDriver;
 
@@ -120,19 +123,19 @@ public class DeliveryOrderStatusForm implements Serializable {
         this.receiverAddress = receiverAddress;
     }
 
-    public Date getAcceptDateTime() {
+    public LocalDate getAcceptDateTime() {
         return acceptDateTime;
     }
 
-    public void setAcceptDateTime(Date acceptDateTime) {
+    public void setAcceptDateTime(LocalDate acceptDateTime) {
         this.acceptDateTime = acceptDateTime;
     }
 
-    public Date getCompletionDateTime() {
+    public LocalDate getCompletionDateTime() {
         return completionDateTime;
     }
 
-    public void setCompletionDateTime(Date completionDateTime) {
+    public void setCompletionDateTime(LocalDate completionDateTime) {
         this.completionDateTime = completionDateTime;
     }
 

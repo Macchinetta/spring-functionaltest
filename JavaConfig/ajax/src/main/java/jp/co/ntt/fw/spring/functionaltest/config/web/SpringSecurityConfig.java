@@ -48,7 +48,7 @@ public class SpringSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"),
-                antMatcher("/**/testdata/*"));
+                antMatcher("/**/testdata/*"), antMatcher("/webjars/**"));
     }
 
     /**

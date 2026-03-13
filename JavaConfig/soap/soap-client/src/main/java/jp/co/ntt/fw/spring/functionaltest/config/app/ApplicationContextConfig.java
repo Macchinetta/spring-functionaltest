@@ -69,11 +69,11 @@ public class ApplicationContextConfig {
     @Bean("exceptionCodeResolver")
     public ExceptionCodeResolver exceptionCodeResolver() {
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
-        map.put("ResourceNotFoundException", "e.sf.cmmn.5001");
-        map.put("MultipartException", "w.sf.cmmn.5002");
+        map.put("ResourceNotFoundException", "e.sf.fw.5001");
+        map.put("MultipartException", "w.sf.fw.5002");
         SimpleMappingExceptionCodeResolver bean = new SimpleMappingExceptionCodeResolver();
         bean.setExceptionMappings(map);
-        bean.setDefaultExceptionCode("e.sf.cmmn.9001");
+        bean.setDefaultExceptionCode("e.sf.fw.9001");
         return bean;
     }
 

@@ -16,11 +16,9 @@
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -85,7 +83,7 @@ public class APLY_Thymeleaf_10Controller {
     public String handle01005(Model model) {
         // モデルに格納される値
         model.addAttribute("testcaseId", "APLY1001005");
-        model.addAttribute("valueUsingDateFormat", Date.from(clockFactory.fixed().instant()));
+        model.addAttribute("valueUsingDateFormat", LocalDateTime.now(clockFactory.fixed()));
         return "thymeleaf/aply/showValueUsingDateFormat";
     }
 
@@ -226,15 +224,10 @@ public class APLY_Thymeleaf_10Controller {
     @GetMapping(value = "1001/027")
     public String handle01027(Model model) {
         // モデルに格納される値
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        Date[] array = new Date[3];
-        try {
-            array[0] = df.parse("2013/12/09");
-            array[1] = df.parse("2013/12/10");
-            array[2] = df.parse("2013/12/11");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        LocalDateTime[] array = new LocalDateTime[3];
+        array[0] = LocalDateTime.of(2013, 12, 9, 0, 0);
+        array[1] = LocalDateTime.of(2013, 12, 10, 0, 0);
+        array[2] = LocalDateTime.of(2013, 12, 11, 0, 0);
         model.addAttribute("testcaseId", "APLY1001027");
         model.addAttribute("valueUsingDateFormat", array);
         return "thymeleaf/aply/showValueUsingDateFormat";
@@ -243,15 +236,10 @@ public class APLY_Thymeleaf_10Controller {
     @GetMapping(value = "1001/028")
     public String handle01028(Model model) {
         // モデルに格納される値
-        List<Date> list = new ArrayList<>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            list.add(df.parse("2013/12/09"));
-            list.add(df.parse("2013/12/10"));
-            list.add(df.parse("2013/12/11"));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        List<LocalDateTime> list = new ArrayList<>();
+        list.add(LocalDateTime.of(2013, 12, 9, 0, 0));
+        list.add(LocalDateTime.of(2013, 12, 10, 0, 0));
+        list.add(LocalDateTime.of(2013, 12, 11, 0, 0));
         model.addAttribute("testcaseId", "APLY1001028");
         model.addAttribute("valueUsingDateFormat", list);
         return "thymeleaf/aply/showValueUsingDateFormat";
@@ -260,15 +248,10 @@ public class APLY_Thymeleaf_10Controller {
     @GetMapping(value = "1001/029")
     public String handle01029(Model model) {
         // モデルに格納される値
-        Set<Date> set = new LinkedHashSet<>();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-        try {
-            set.add(df.parse("2013/12/09"));
-            set.add(df.parse("2013/12/10"));
-            set.add(df.parse("2013/12/11"));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        Set<LocalDateTime> set = new LinkedHashSet<>();
+        set.add(LocalDateTime.of(2013, 12, 9, 0, 0));
+        set.add(LocalDateTime.of(2013, 12, 10, 0, 0));
+        set.add(LocalDateTime.of(2013, 12, 11, 0, 0));
         model.addAttribute("testcaseId", "APLY1001029");
         model.addAttribute("valueUsingDateFormat", set);
         return "thymeleaf/aply/showValueUsingDateFormat";

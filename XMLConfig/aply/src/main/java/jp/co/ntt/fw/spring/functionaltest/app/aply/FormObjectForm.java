@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
@@ -42,7 +42,7 @@ public class FormObjectForm {
     private BigDecimal value4;
 
     @DateTimeFormat(pattern = "yyyyMMdd")
-    private Date value5;
+    private LocalDate value5;
 
     private Long value6;
 
@@ -80,11 +80,11 @@ public class FormObjectForm {
         this.value4 = value4;
     }
 
-    public Date getValue5() {
+    public LocalDate getValue5() {
         return value5;
     }
 
-    public void setValue5(Date value5) {
+    public void setValue5(LocalDate value5) {
         this.value5 = value5;
     }
 

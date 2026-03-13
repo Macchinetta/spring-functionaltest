@@ -55,7 +55,7 @@ public abstract class SOAPTestSupport extends FunctionTestSupport {
      */
     protected void assertWebFault(WebFaultType type, ErrorBean... errors) {
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(webDriverOperations.getXTrack(),
-                null, "e.sf.cmmn.9001",
+                null, "e.sf.fw.9001",
                 "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
         dbLogAssertOperations.assertContainsByMessage(webDriverOperations.getXTrack(), null,
                 String.format("webFaultType=%s", type.toString()));
@@ -79,7 +79,7 @@ public abstract class SOAPTestSupport extends FunctionTestSupport {
      */
     protected void assertWebFaultIsInErrorBeans(WebFaultType type, ErrorBean... errors) {
         dbLogAssertOperations.assertContainsByRegexExceptionMessage(webDriverOperations.getXTrack(),
-                null, "e.sf.cmmn.9001",
+                null, "e.sf.fw.9001",
                 "jp.co.ntt.fw.spring.functionaltest.ws.webfault.WebFaultException");
         dbLogAssertOperations.assertContainsByMessage(webDriverOperations.getXTrack(), null,
                 String.format("webFaultType=%s", type.toString()));

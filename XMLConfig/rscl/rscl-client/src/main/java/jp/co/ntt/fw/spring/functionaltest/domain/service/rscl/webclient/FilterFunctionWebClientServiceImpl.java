@@ -1,0 +1,58 @@
+/*
+ * Copyright(c) 2024 NTT Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+package jp.co.ntt.fw.spring.functionaltest.domain.service.rscl.webclient;
+
+import java.util.concurrent.CompletableFuture;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import jakarta.inject.Inject;
+import jp.co.ntt.fw.spring.functionaltest.app.cmmn.model.User;
+
+@Service
+public class FilterFunctionWebClientServiceImpl implements FilterFunctionWebClientService {
+
+    private static final Logger logger = LoggerFactory.getLogger(FilterFunctionWebClientServiceImpl.class);
+
+    @Value("${rscl.applicationContextUrl}/api/v1/async")
+    private String uri;
+
+    @Inject
+    private WebClient loggingWebClient;
+
+    @Inject
+    private WebClient filtersWebClient;
+
+    @Override
+    public CompletableFuture<ResponseEntity<User>> postLogging(User user) {
+        logger.info("Start Request Thread: {}", Thread.currentThread().getName());
+        return loggingWebClient.post().uri(uri).bodyValue(user).retrieve()
+                .toEntity(User.class).toFuture();
+    }
+
+    @Override
+    public CompletableFuture<ResponseEntity<User>> getHeader() {
+        logger.info("Start Request Thread: {}", Thread.currentThread().getName());
+        return filtersWebClient.get().uri(uri + "/header").retrieve()
+                .toEntity(User.class).toFuture();
+    }
+
+}

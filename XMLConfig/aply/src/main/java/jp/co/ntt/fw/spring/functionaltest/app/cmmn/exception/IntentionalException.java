@@ -40,7 +40,7 @@ public class IntentionalException extends ResultMessagesNotificationException {
      * <p>
      * Takes multiple {@code String} messages as argument.
      * </p>
-     * @param message {@link ResultMessages} instance
+     * @param messages {@link ResultMessages} instance
      */
     public IntentionalException(ResultMessages messages) {
         super(messages);

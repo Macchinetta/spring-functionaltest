@@ -16,12 +16,12 @@
         <meta name="contextPath" content="${pageContext.request.contextPath}" />
         <sec:csrfMetaTags />
         <title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
         <script type="text/javascript"></script>
@@ -50,11 +50,6 @@
                         ajax0104001001 (<a id="ajax0104001001_jsp" href="${pageContext.request.contextPath}/jsp/0104/001/001">JSP</a> /
                         <a id="ajax0104001001_thymeleaf" href="${pageContext.request.contextPath}/thymeleaf/0104/001/001">Thymeleaf</a> )
                     </li>
-                    <li>
-                        ajax0104001 (<a id="ajax0104001_jsp" href="${pageContext.request.contextPath}/jsp/0104/001">JSP</a> /
-                        <a id="ajax0104001_thymeleaf" href="${pageContext.request.contextPath}/thymeleaf/0104/001">Thymeleaf</a> )
-                    </li>
-                    <li><a id="deleteAll" href="javascript:document.messageBoardsDeleteForm.submit();">ajax0104001 初期化(REST API)</a></li>
                 </ul>
 
                 <div>[AJAX02] 入力エラーのハンドリング</div>

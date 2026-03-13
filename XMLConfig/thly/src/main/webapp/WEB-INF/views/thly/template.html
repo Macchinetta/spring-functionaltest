@@ -14,8 +14,8 @@
         <meta name="_csrf_header" th:content="${_csrf.headerName}" />
         <meta name="_csrf" th:content="${_csrf.token}" />
         <title th:replace="${title}">Spring Functional Test</title>
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" />
         <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
         <link rel="stylesheet" th:href="@{/resources/app/css/{functionId}.css(functionId=${functionId})}" />
     </head>
@@ -26,8 +26,8 @@
         </div>
         <div id="footer" th:replace="~{thly/footer :: footer}"></div>
     </body>
-    <script type="text/javascript" th:src="@{/resources/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/resources/vendor/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/resources/app/js/cmmn.js}"></script>
     <script type="text/javascript" th:src="@{/resources/app/js/{functionId}.js(functionId=${functionId})}"></script>
     <script type="text/javascript"></script>

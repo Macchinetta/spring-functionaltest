@@ -34,8 +34,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
 import org.springframework.validation.Validator;
@@ -49,6 +47,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.LiteWebJarsResourceResolver;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 import org.terasoluna.gfw.common.exception.ExceptionCodeResolver;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
@@ -151,14 +150,6 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(marshallingHttpMessageConverter());
-    }
-
-    /**
      * Configure {@link MethodValidationPostProcessor} bean.
      * @return Bean of configured {@link MethodValidationPostProcessor}
      */
@@ -176,15 +167,6 @@ public class SpringMvcConfig implements WebMvcConfigurer {
     @Bean("pageableHandlerMethodArgumentResolver")
     public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
         return new PageableHandlerMethodArgumentResolver();
-    }
-
-    /**
-     * Configure {@link MarshallingHttpMessageConverter} bean.
-     * @return Bean of configured {@link MarshallingHttpMessageConverter}
-     */
-    @Bean("marshallingHttpMessageConverter")
-    public MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
-        return new MarshallingHttpMessageConverter();
     }
 
     /**
@@ -216,6 +198,10 @@ public class SpringMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/", "classpath:META-INF/resources/")
                 .setCachePeriod(60 * 60);
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("/webjars/", "classpath:/META-INF/resources/webjars/")
+                .setCachePeriod(60 * 60).resourceChain(true)
+                .addResolver(new LiteWebJarsResourceResolver());
     }
 
     /**
@@ -235,7 +221,7 @@ public class SpringMvcConfig implements WebMvcConfigurer {
      */
     private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
         registry.addInterceptor(interceptor).addPathPatterns("/**")
-                .excludePathPatterns("/resources/**");
+                .excludePathPatterns("/resources/**", "/webjars/**");
     }
 
     /**

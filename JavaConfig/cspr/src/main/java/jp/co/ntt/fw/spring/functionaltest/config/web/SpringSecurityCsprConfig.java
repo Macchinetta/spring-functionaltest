@@ -30,7 +30,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.cspr.CommitterUserDetailsService;
 
@@ -94,7 +93,6 @@ public class SpringSecurityCsprConfig {
 
         http.securityMatcher(antMatcher("/jsp/**"));
         http.authenticationManager(committerAuthenticationManager);
-        http.csrf(csrf -> csrf.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler()));
         http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler));
         http.addFilterAfter(userIdMDCPutFilter, AnonymousAuthenticationFilter.class);
         http.formLogin(login -> login.loginProcessingUrl("/jsp/authenticate").defaultSuccessUrl("/")
@@ -163,7 +161,6 @@ public class SpringSecurityCsprConfig {
 
         http.securityMatcher(antMatcher("/thymeleaf/**"));
         http.authenticationManager(committerAuthenticationManager);
-        http.csrf(csrf -> csrf.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler()));
         http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler));
         http.addFilterAfter(userIdMDCPutFilter, AnonymousAuthenticationFilter.class);
         http.formLogin(login -> login.loginProcessingUrl("/thymeleaf/authenticate")
@@ -176,17 +173,6 @@ public class SpringSecurityCsprConfig {
                 .requestMatchers(antMatcher("/**")).permitAll());
 
         return http.build();
-    }
-
-    /**
-     * Configure {@link CsrfTokenRequestAttributeHandler} bean.
-     * @return Bean of configured {@link CsrfTokenRequestAttributeHandler}
-     */
-    @Bean("csrfTokenRequestAttributeHandler")
-    public CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler() {
-        CsrfTokenRequestAttributeHandler bean = new CsrfTokenRequestAttributeHandler();
-        bean.setCsrfRequestAttributeName("_csrf");
-        return bean;
     }
 
     /**
@@ -273,10 +259,9 @@ public class SpringSecurityCsprConfig {
     @Bean("committerPasswordAuthenticationProvider")
     public AuthenticationProvider committerPasswordAuthenticationProvider(
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(committerService());
         authProvider.setHideUserNotFoundExceptions(true);
         authProvider.setPasswordEncoder(passwordEncoder);
-        authProvider.setUserDetailsService(committerService());
         return authProvider;
     }
 

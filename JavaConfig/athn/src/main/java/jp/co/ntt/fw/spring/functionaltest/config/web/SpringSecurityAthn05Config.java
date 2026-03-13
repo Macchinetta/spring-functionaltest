@@ -68,8 +68,8 @@ public class SpringSecurityAthn05Config {
     @Bean("loginWithBCryptPasswordAuthenticationProvider")
     public AuthenticationProvider loginWithBCryptPasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderBCrypt());
         return authProvider;
     }
@@ -104,8 +104,8 @@ public class SpringSecurityAthn05Config {
     @Bean("loginWithPbkdf2PasswordAuthenticationProvider")
     public AuthenticationProvider loginWithPbkdf2PasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderPbkdf2());
         return authProvider;
     }
@@ -140,8 +140,8 @@ public class SpringSecurityAthn05Config {
     @Bean("loginWithSCryptPasswordAuthenticationProvider")
     public AuthenticationProvider loginWithSCryptPasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderSCrypt());
         return authProvider;
     }
@@ -176,8 +176,8 @@ public class SpringSecurityAthn05Config {
     @Bean("loginWithArgon2PasswordAuthenticationProvider")
     public AuthenticationProvider loginWithArgon2PasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderArgon2());
         return authProvider;
     }
@@ -214,8 +214,8 @@ public class SpringSecurityAthn05Config {
     public AuthenticationProvider loginWithDelegatingPasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
@@ -251,7 +251,7 @@ public class SpringSecurityAthn05Config {
     /**
      * Configure {@link SecurityFilterChain} bean.
      * @param http Builder class for setting up authentication and authorization
-     * @param loginWithBCryptPassword Bean defined by #loginWithBCryptPassword
+     * @param loginWithPbkdf2Password Bean defined by #loginWithPbkdf2Password
      * @return Bean of configured {@link SecurityFilterChain}
      * @throws Exception Exception that occurs when setting HttpSecurity
      */

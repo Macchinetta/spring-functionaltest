@@ -40,11 +40,6 @@ public class THLY01Controller {
 
     @GetMapping(value = "0101/004")
     public String handle0101004() {
-        return "redirect:/staff/update";
-    }
-
-    @GetMapping(value = "0101/005")
-    public String handle0101005() {
         return "redirect:/staff/search";
     }
 

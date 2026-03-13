@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
+import java.time.LocalDateTime;
 import org.springframework.util.StreamUtils;
 
 public class UploadedContent implements Serializable {
@@ -38,7 +38,7 @@ public class UploadedContent implements Serializable {
 
     private String description;
 
-    private Date uploadedAt;
+    private LocalDateTime uploadedAt;
 
     public String getFileId() {
         return fileId;
@@ -100,11 +100,11 @@ public class UploadedContent implements Serializable {
         this.description = description;
     }
 
-    public Date getUploadedAt() {
+    public LocalDateTime getUploadedAt() {
         return uploadedAt;
     }
 
-    public void setUploadedAt(Date uploadedAt) {
+    public void setUploadedAt(LocalDateTime uploadedAt) {
         this.uploadedAt = uploadedAt;
     }
 

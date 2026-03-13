@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import jakarta.inject.Inject;
 import jp.co.ntt.fw.spring.functionaltest.app.cmmn.bean.ErrorResults;
-import jp.co.ntt.fw.spring.functionaltest.domain.model.MessageBoard;
 import jp.co.ntt.fw.spring.functionaltest.domain.model.PersonalComputer;
 import jp.co.ntt.fw.spring.functionaltest.domain.repository.ajax.PersonalComputerCriteria;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.ajax.MessageBoardService;
@@ -92,28 +91,6 @@ public class AJAX_Thymeleaf_01Controller {
         model.addAttribute("method", "ajax.editPersonalComputerForJson");
 
         return "thymeleaf/ajax/personalComputerEdit";
-    }
-
-    @GetMapping(value = "0104/001/001")
-    public String handle0104001001(Model model) {
-
-        List<MessageBoard> messageBoards = messageBoardService.getMessageBoards();
-
-        model.addAttribute("messageResults", messageBoards);
-        model.addAttribute("path", "0104/write");
-
-        return "thymeleaf/ajax/messageBoard";
-    }
-
-    @GetMapping(value = "0104/001")
-    public String handle0104001(Model model) {
-
-        List<MessageBoard> messageBoards = messageBoardService.getMessageBoards();
-
-        model.addAttribute("messageResults", messageBoards);
-        model.addAttribute("path", "0104/001/write");
-
-        return "thymeleaf/ajax/messageBoard";
     }
 
     @GetMapping(value = "search")

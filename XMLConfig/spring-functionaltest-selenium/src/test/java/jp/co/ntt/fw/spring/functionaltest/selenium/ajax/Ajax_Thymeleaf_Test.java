@@ -19,12 +19,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openqa.selenium.By.id;
-import java.io.File;
 import java.io.IOException;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import jp.co.ntt.fw.spring.functionaltest.selenium.FunctionTestSupport;
@@ -190,65 +187,6 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         // データ戻し
         initData();
 
-    }
-
-    /**
-     * <ul>
-     * <li>AjaxでフォームのデータをXML形式に変換してからPOSTした場合、Controllerのフォームで受け取ることができることを確認する。
-     * </ul>
-     * 
-     * @throws InterruptedException
-     **/
-    @Test
-    public void testAJAX0104001() throws IOException, InterruptedException {
-
-        File xXETargetFile = new ClassPathResource("testdata/ajax/dummy.txt").getFile();
-        String xXETargetString = "<!DOCTYPE comment [<!ELEMENT comment ANY ><!ENTITY xxe SYSTEM \""
-                + xXETargetFile.getAbsolutePath()
-                + "\" >]><messageBoardForm><comment>&xxe;Test</comment></messageBoardForm>";
-
-        // デフォルトで設定されるHttpMessageConverterを使用した場合の動作検証
-        {
-            // データ初期化
-            clearDate();
-
-            webDriverOperations.click(id("ajax0104001001_" + VIEW_TYPE));
-
-            webDriverOperations.overrideText(id("comment"), xXETargetString);
-            webDriverOperations.click(id("writeBtn"));
-
-            // 要素が見つかるまでアサーションを待つ
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
-
-            // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")),
-                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
-
-            webDriverOperations.saveScreenCapture();
-        }
-
-        // 明示的にspring-oxmから提供されているMarshallingHttpMessageConverter+Jaxb2Marshallerを使用した場合の動作検証
-        {
-            // データ初期化
-            clearDate();
-
-            webDriverOperations.displayPage(getPackageRootUrl());
-            webDriverOperations.click(id("ajax0104001_" + VIEW_TYPE));
-
-            webDriverOperations.overrideText(id("comment"), xXETargetString);
-            webDriverOperations.click(id("writeBtn"));
-
-            // 要素が見つかるまでアサーションを待つ
-            webDriverOperations.waitForDisplayed(ExpectedConditions
-                    .visibilityOfElementLocated(By.xpath("//div[2]/div[1]/div[1]/ul/li")));
-
-            // 戻り値の確認
-            assertThat(webDriverOperations.getText(id("returnStatus")),
-                    is(String.valueOf(HttpStatus.BAD_REQUEST.value())));
-
-            webDriverOperations.saveScreenCapture();
-        }
     }
 
     /**
@@ -449,13 +387,6 @@ public class Ajax_Thymeleaf_Test extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(By.xpath("//div[2]/div/div[2]/ul/li")),
                 is("同一のPC名がすでに登録されています。"));
 
-    }
-
-    /**
-     * AJAX0104001用の関連データをクリアする。
-     */
-    private void clearDate() {
-        restOperations.delete(getPackageRootUrl() + "/ajax/testdata/messageBoards");
     }
 
     private void initData() {

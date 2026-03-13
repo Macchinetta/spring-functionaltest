@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
+                        http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+    </bean>
+
+    <bean id="bufferingRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.BufferingClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean class="org.springframework.http.client.SimpleClientHttpRequestFactory" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+
+    <bean id="sourceRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <ref bean="sourceHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="baseRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="uriTemplateHandler">
+            <bean class="org.springframework.web.util.DefaultUriBuilderFactory">
+                <constructor-arg value="${rscl.applicationContextUrl}/api/v1" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="customErrorHandler" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomErrorHandler" />
+
+    <bean id="statusRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="errorHandler" ref="customErrorHandler" />
+    </bean>
+
+    <bean id="noOpResponseErrorHandler" class="org.springframework.web.client.NoOpResponseErrorHandler" />
+
+    <bean id="statusNoOpRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="errorHandler" ref="noOpResponseErrorHandler" />
+    </bean>
+
+    <bean id="noRetryHttpClientBuilder" class="org.apache.hc.client5.http.impl.classic.HttpClientBuilder" factory-method="create">
+        <property name="retryStrategy">
+            <bean class="org.apache.hc.client5.http.impl.DefaultHttpRequestRetryStrategy">
+                <constructor-arg value="0" />
+                <constructor-arg>
+                    <util:constant static-field="org.apache.hc.core5.util.TimeValue.ZERO_MILLISECONDS" />
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="noRetryHttpClient" factory-bean="noRetryHttpClientBuilder" factory-method="build" />
+
+    <bean id="exceptionRetryRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg ref="noRetryHttpClient" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="statusRetryRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg ref="noRetryHttpClient" />
+            </bean>
+        </constructor-arg>
+        <property name="errorHandler" ref="noOpResponseErrorHandler" />
+    </bean>
+
+    <bean id="customHeaderInitializer" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomHeaderInitializer" />
+
+    <bean id="headerRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="clientHttpRequestInitializers">
+            <list>
+                <ref bean="customHeaderInitializer" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="customAuthHeaderInitializer" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomAuthHeaderInitializer">
+        <constructor-arg value="${rscl.basicAuth.username}" />
+        <constructor-arg value="${rscl.basicAuth.password}" />
+    </bean>
+
+    <bean id="authRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="clientHttpRequestInitializers">
+            <list>
+                <ref bean="customAuthHeaderInitializer" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="customAuthInvalidHeaderInitializer" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomAuthHeaderInitializer">
+        <constructor-arg value="${rscl.basicAuth.username}" />
+        <constructor-arg value="${rscl.basicAuth.invalidPassword}" />
+    </bean>
+
+    <bean id="authInvalidRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="clientHttpRequestInitializers">
+            <list>
+                <ref bean="customAuthInvalidHeaderInitializer" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="timeoutConnectionConfigBuilder" class="org.apache.hc.client5.http.config.ConnectionConfig" factory-method="custom" >
+        <property name="connectTimeout" >
+            <bean class="org.apache.hc.core5.util.Timeout" factory-method="ofMilliseconds">
+                <constructor-arg value="${rscl.timeoutRestTemplate.connectTimeout:2000}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="timeoutConnectionConfig" factory-bean="timeoutConnectionConfigBuilder" factory-method="build" />
+
+    <bean id="timeoutPoolManagerBuilder" class="org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder" factory-method="create">
+        <property name="defaultConnectionConfig" ref="timeoutConnectionConfig" />
+    </bean>
+
+    <bean id="timeoutPoolManager" factory-bean="timeoutPoolManagerBuilder" factory-method="build" />
+
+    <bean id="timeoutHttpClientBuilder" class="org.apache.hc.client5.http.impl.classic.HttpClientBuilder" factory-method="create">
+        <property name="connectionManager" ref="timeoutPoolManager" />
+    </bean>
+
+    <bean id="timeoutHttpClient" factory-bean="timeoutHttpClientBuilder" factory-method="build" />
+
+    <bean id="timeoutHttpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="timeoutHttpClient" />
+        <property name="readTimeout" value="${rscl.timeoutRestTemplate.readTimeout:2000}" />
+    </bean>
+
+    <bean id="timeoutRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg ref="timeoutHttpRequestFactory" />
+    </bean>
+
+    <bean id="customUriBuilderFactory" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomUriBuilderFactory" />
+
+    <bean id="uriRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="uriTemplateHandler" ref="customUriBuilderFactory" />
+    </bean>
+
+    <bean id="httpsRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.RequestFactoryBean">
+                <property name="keyStoreFileName" value="${rscl.keystore.filename}" />
+                <property name="keyStorePassword" value="${rscl.keystore.password}" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="abnormalHttpsRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.RequestFactoryBean">
+                <property name="keyStoreFileName" value="${rscl.keystore.filename}" />
+                <property name="keyStorePassword" value="${rscl.keystore.password}" />
+                <property name="handshakeTimeoutMilliseconds" value="1" />
+                <property name="connectionTimeToLiveSeconds" value="10" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="customHttpMessageConverter" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomHttpMessageConverter" />
+
+    <bean id="mappingJackson2HttpMessageConverter" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.LoggingMappingJackson2HttpMessageConverter" />
+
+    <bean id="converterRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="messageConverters">
+            <list>
+                <ref bean="customHttpMessageConverter" />
+                <ref bean="mappingJackson2HttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="loggingInterceptor" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.LoggingInterceptor" />
+
+    <bean id="interceptorRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="interceptors">
+            <list>
+                <ref bean="loggingInterceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="customOrder1Interceptor" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomOrder1Interceptor" />
+
+    <bean id="customOrder2Interceptor" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.CustomOrder2Interceptor" />
+
+    <bean id="multiInterceptorRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory" />
+        </constructor-arg>
+        <property name="interceptors">
+            <list>
+                <ref bean="customOrder1Interceptor" />
+                <ref bean="customOrder2Interceptor" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="proxyHttpClientBuilder" class="org.apache.hc.client5.http.impl.classic.HttpClientBuilder" factory-method="create">
+        <property name="proxy">
+            <bean class="org.apache.hc.core5.http.HttpHost">
+                <constructor-arg index="0" type="java.lang.String" name="hostname" value="${rscl.http.proxyHost}" />
+                <constructor-arg index="1" type="int" name="port" value="${rscl.http.proxyPort}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="httpComponentsProxyRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean factory-bean="proxyHttpClientBuilder" factory-method="build" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="basicCredentialsSuccessProviderFactoryBean" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.BasicCredentialsProviderFactoryBean">
+        <constructor-arg value="${rscl.http.proxyUserName}" />
+        <constructor-arg value="${rscl.http.proxyPassword}" />
+    </bean>
+
+    <bean id="proxyAuthHttpClientSuccessBuilder" class="org.apache.hc.client5.http.impl.classic.HttpClientBuilder"
+        factory-method="create">
+        <property name="defaultCredentialsProvider">
+            <ref bean="basicCredentialsSuccessProviderFactoryBean" />
+        </property>
+        <property name="proxy">
+            <bean class="org.apache.hc.core5.http.HttpHost">
+                <constructor-arg index="0" type="java.lang.String" name="hostname" value="${rscl.http.proxyHost}" />
+                <constructor-arg index="1" type="int" name="port" value="${rscl.http.proxyPort}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="credentialsSuccessProxyRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean factory-bean="proxyAuthHttpClientSuccessBuilder" factory-method="build" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="basicCredentialsFailureProviderFactoryBean" class="jp.co.ntt.fw.spring.functionaltest.app.cmmn.process.BasicCredentialsProviderFactoryBean">
+        <constructor-arg value="${rscl.http.proxyUserName}" />
+        <constructor-arg value="${rscl.http.proxyInvalidPassword}" />
+    </bean>
+
+    <bean id="proxyAuthHttpClientFailureBuilder" class="org.apache.hc.client5.http.impl.classic.HttpClientBuilder"
+        factory-method="create">
+        <property name="defaultCredentialsProvider">
+            <ref bean="basicCredentialsFailureProviderFactoryBean" />
+        </property>
+        <property name="proxy">
+            <bean class="org.apache.hc.core5.http.HttpHost">
+                <constructor-arg index="0" type="java.lang.String" name="hostname" value="${rscl.http.proxyHost}" />
+                <constructor-arg index="1" type="int" name="port" value="${rscl.http.proxyPort}" />
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="credentialsFailureProxyRestTemplate" class="org.springframework.web.client.RestTemplate">
+        <constructor-arg>
+            <bean class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+                <constructor-arg>
+                    <bean factory-bean="proxyAuthHttpClientFailureBuilder" factory-method="build" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+</beans>

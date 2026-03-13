@@ -98,8 +98,7 @@ public class CSRFProtection_JSP_Test extends FunctionTestSupport {
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
                 .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
-        assertThat(csrfToken,
-                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+        assertThat(csrfToken, matchesPattern("^[A-Za-z0-9_-]{96}$"));
 
         webDriverOperations.click(id("confirm"));
 
@@ -130,8 +129,7 @@ public class CSRFProtection_JSP_Test extends FunctionTestSupport {
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
                 .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
-        assertThat(csrfToken,
-                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+        assertThat(csrfToken, matchesPattern("^[A-Za-z0-9_-]{96}$"));
 
         webDriverOperations.click(id("confirm"));
 
@@ -528,8 +526,7 @@ public class CSRFProtection_JSP_Test extends FunctionTestSupport {
         // CSRFトークンが設定されていることを確認
         String csrfToken = webDriverOperations.getJavascriptExecutor()
                 .executeScript("return document.getElementsByName('_csrf')[1].value").toString();
-        assertThat(csrfToken,
-                matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+        assertThat(csrfToken, matchesPattern("^[A-Za-z0-9_-]{96}$"));
 
         webDriverOperations.click(id("uploadButton"));
 

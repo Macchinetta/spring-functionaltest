@@ -43,7 +43,7 @@ public class ServerInfoRestController {
     @GetMapping(value = "getServerInfo")
     @ResponseStatus(HttpStatus.OK)
     public ServerInfoResource getServerInfo() {
-        String[] version = System.getProperty("java.version").split("\\.");
+        String javaVersion = System.getProperty("java.version");
         String info = context.getServerInfo();
         String apServerName = "UNKNOWN";
         String apServerVersion = "UNKNOWN";
@@ -62,7 +62,7 @@ public class ServerInfoRestController {
         }
 
         ServerInfoResource rsc = new ServerInfoResource();
-        rsc.setJavaVersion(Integer.parseInt(version[1]));
+        rsc.setJavaVersion(javaVersion);
         rsc.setApServerName(apServerName);
         rsc.setApServerVersion(apServerVersion);
 

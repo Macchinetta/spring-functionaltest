@@ -15,13 +15,18 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.emal;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+import jakarta.inject.Inject;
+import jakarta.mail.Store;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import jakarta.inject.Inject;
-import jakarta.mail.Store;
 
 @Service
 public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
@@ -56,9 +61,8 @@ public class NoAuthMailSendingServiceImpl implements NoAuthMailSendingService {
         message.setCc(cc);
         message.setBcc(bcc);
         message.setReplyTo(replyTo);
-        Calendar cal = Calendar.getInstance();
-        cal.set(2015, 6, 6);
-        message.setSentDate(cal.getTime());
+        LocalDateTime sentDateTime = LocalDateTime.now().with(LocalDate.of(2015, 7, 6));
+        message.setSentDate(Date.from(sentDateTime.atZone(ZoneId.systemDefault()).toInstant()));
         message.setText(text);
         mailSenderNoAuth.send(message);
 

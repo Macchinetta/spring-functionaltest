@@ -40,7 +40,7 @@ public class InvalidRequestException extends ResultMessagesNotificationException
      * <p>
      * Takes multiple {@code String} messages as argument.
      * </p>
-     * @param message {@link ResultMessages} instance
+     * @param messages {@link ResultMessages} instance
      */
     public InvalidRequestException(ResultMessages messages) {
         super(messages);

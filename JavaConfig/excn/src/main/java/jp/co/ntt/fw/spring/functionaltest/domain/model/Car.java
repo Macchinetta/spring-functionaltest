@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Car implements Serializable {
 
@@ -28,7 +28,7 @@ public class Car implements Serializable {
 
     private String color;
 
-    private Date releaseDate;
+    private LocalDate releaseDate;
 
     public String getCarId() {
         return carId;
@@ -54,11 +54,11 @@ public class Car implements Serializable {
         this.color = color;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 }

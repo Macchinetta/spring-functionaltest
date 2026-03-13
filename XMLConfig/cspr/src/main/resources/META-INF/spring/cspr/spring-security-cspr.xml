@@ -23,7 +23,6 @@
     <!-- CSPR基本設定(deniedHandlerを使用する/JSP) -->
     <sec:http pattern="/jsp/**" request-matcher="ant" auto-config="false"
         authentication-manager-ref="committerAuthenticationManager">
-        <sec:csrf request-handler-ref="csrfTokenRequestAttributeHandler" />
         <sec:access-denied-handler ref="accessDeniedHandler" />
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
         <sec:form-login login-processing-url="/jsp/authenticate" default-target-url="/"
@@ -51,7 +50,6 @@
     <!-- CSPR基本設定(deniedHandlerを使用する/Thymeleaf) -->
     <sec:http pattern="/thymeleaf/**" request-matcher="ant" auto-config="false"
         authentication-manager-ref="committerAuthenticationManager">
-        <sec:csrf request-handler-ref="csrfTokenRequestAttributeHandler" />
         <sec:access-denied-handler ref="accessDeniedHandler" />
         <sec:custom-filter ref="userIdMDCPutFilter" after="ANONYMOUS_FILTER" />
         <sec:form-login login-processing-url="/thymeleaf/authenticate" default-target-url="/"
@@ -62,10 +60,6 @@
         <sec:intercept-url pattern="/thymeleaf/0301/003" access="hasRole('ROLE_USER')" />
         <sec:intercept-url pattern="/**" access="permitAll" />
     </sec:http>
-
-    <bean id="csrfTokenRequestAttributeHandler"
-        class="org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler"
-        p:csrfRequestAttributeName="_csrf" />
 
     <!-- CSPR基本設定(CSRFを使用しない/JSP) -->
     <sec:http pattern="/jspDisabledcspr/**" request-matcher="ant" auto-config="false"

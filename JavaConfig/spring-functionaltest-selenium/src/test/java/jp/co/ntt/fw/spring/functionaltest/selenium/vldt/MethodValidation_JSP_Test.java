@@ -241,7 +241,7 @@ public class MethodValidation_JSP_Test extends FunctionTestSupport {
         {
             assertThat(getTextString(id("userId")), is("visitUserId"));
             assertThat(getTextString(id("userName")), is("visitUserId"));
-            assertThat(getTextString(id("dateOfBirth")), is("Wed Dec 11 00:00:00 JST 2013"));
+            assertThat(getTextString(id("dateOfBirth")), is("2013-12-11"));
         }
 
         // ログ確認(エラーがないこと)

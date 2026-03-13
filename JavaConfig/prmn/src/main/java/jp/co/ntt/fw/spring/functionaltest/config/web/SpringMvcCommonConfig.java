@@ -38,6 +38,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.LiteWebJarsResourceResolver;
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 import org.terasoluna.gfw.common.exception.ExceptionCodeResolver;
 import org.terasoluna.gfw.common.exception.ExceptionLogger;
@@ -113,6 +114,10 @@ public class SpringMvcCommonConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/", "classpath:META-INF/resources/")
                 .setCachePeriod(60 * 60);
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("/webjars/", "classpath:/META-INF/resources/webjars/")
+                .setCachePeriod(60 * 60).resourceChain(true)
+                .addResolver(new LiteWebJarsResourceResolver());
     }
 
     /**
@@ -132,7 +137,7 @@ public class SpringMvcCommonConfig implements WebMvcConfigurer {
      */
     private void addInterceptor(InterceptorRegistry registry, HandlerInterceptor interceptor) {
         registry.addInterceptor(interceptor).addPathPatterns("/**")
-                .excludePathPatterns("/resources/**");
+                .excludePathPatterns("/resources/**", "/webjars/**");
     }
 
     /**

@@ -47,6 +47,7 @@
     </bean>
 
     <sec:http pattern="/resources/**" request-matcher="ant" security="none" />
+    <sec:http pattern="/webjars/**" request-matcher="ant" security="none" />
     <sec:http request-matcher="ant">
         <sec:form-login />
         <sec:logout />

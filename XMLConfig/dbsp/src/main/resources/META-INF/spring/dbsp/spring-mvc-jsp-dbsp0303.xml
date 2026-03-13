@@ -20,9 +20,6 @@
             <bean
                 class="org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver" />
         </mvc:argument-resolvers>
-        <mvc:message-converters>
-            <ref bean="marshallingHttpMessageConverter" />
-        </mvc:message-converters>
     </mvc:annotation-driven>
 
     <mvc:resources mapping="/resources/**" location="/resources/,classpath:META-INF/resources/"
@@ -136,8 +133,6 @@
     </bean>
 
     <bean id="pageableHandlerMethodArgumentResolver" class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
-
-    <bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter" />
 
     <mvc:default-servlet-handler />
     <context:component-scan base-package="jp.co.ntt.fw.spring.functionaltest.app.dbsp" use-default-filters="false">

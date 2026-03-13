@@ -61,7 +61,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getTitle(), is("Search Screen"));
         assertThat(webDriverOperations.getText(By.tagName("h1")), is("Search"));
         assertThat(webDriverOperations.getWebDriver().findElement(By.name("searchForm"))
-                .getAttribute("action"), is(getPackageRootUrl() + "/"));
+                .getDomProperty("action"), is(getPackageRootUrl() + "/"));
         assertThat(webDriverOperations.getInputFieldValue(By.name("fruitsPrice")), is("85"));
 
     }
@@ -81,7 +81,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getTitle(), is("Search Screen"));
         assertThat(webDriverOperations.getText(By.tagName("h1")), is("Search"));
         assertThat(webDriverOperations.getWebDriver().findElement(By.name("searchForm"))
-                .getAttribute("action"), is(getPackageRootUrl() + "/0201/002"));
+                .getDomProperty("action"), is(getPackageRootUrl() + "/0201/002"));
         assertThat(webDriverOperations.getInputFieldValue(By.name("fruitsName")), is(""));
 
     }
@@ -696,7 +696,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(By.tagName("h1")), is("Other Inlining"));
         assertThat(
                 webDriverOperations.getWebDriver().findElement(By.id("js-template"))
-                        .getAttribute("textContent"),
+                        .getDomProperty("textContent"),
                 is(allOf(containsString("Apple\"を購入しました。"), containsString("Apple\"が売れました。"))));
 
     }
@@ -716,7 +716,7 @@ public class ThymeleafTest extends FunctionTestSupport {
         assertThat(webDriverOperations.getText(By.tagName("h1")),
                 is("JavaScript Natural Template"));
         assertThat(webDriverOperations.getWebDriver().findElement(By.id("js-template"))
-                .getAttribute("textContent").trim(), is("var itemName = \"Orange\";"));
+                .getDomProperty("textContent").trim(), is("var itemName = \"Orange\";"));
 
     }
 
@@ -736,7 +736,7 @@ public class ThymeleafTest extends FunctionTestSupport {
                 is("JavaScript Object Serialize"));
         assertThat(
                 webDriverOperations.getWebDriver().findElement(By.id("js-template"))
-                        .getAttribute("textContent"),
+                        .getDomProperty("textContent"),
                 is(allOf(containsString("var str = \"Orange\";"),
                         containsString("var num = 123.456;"), containsString("var bool = true;"),
                         containsString("var ary = [\"abc\",\"def\",\"ghi\"];"),

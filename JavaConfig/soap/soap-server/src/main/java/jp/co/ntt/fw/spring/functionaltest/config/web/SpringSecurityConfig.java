@@ -86,8 +86,8 @@ public class SpringSecurityConfig {
      */
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(soapUserDetailsService());
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(soapUserDetailsService());
         authProvider.setPasswordEncoder(noOpPasswordEncoder());
         return authProvider;
     }

@@ -71,8 +71,8 @@ public class SpringSecurityAthrConfig {
     public AuthenticationProvider loginForStaffAuthenticationProvider(
             @Qualifier("loginForStaffDetailsService") UserDetailsService loginForStaffDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForStaffDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForStaffDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
@@ -100,8 +100,8 @@ public class SpringSecurityAthrConfig {
     public AuthenticationProvider loginForMethodAuthenticationProvider(
             @Qualifier("loginForMethodDetailsService") UserDetailsService loginForMethodDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForMethodDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForMethodDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
@@ -129,8 +129,8 @@ public class SpringSecurityAthrConfig {
     public AuthenticationProvider loginForRoleUserAuthenticationProvider(
             @Qualifier("loginForRoleUserDetailsService") UserDetailsService loginForRoleUserDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForRoleUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForRoleUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

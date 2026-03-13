@@ -12,9 +12,9 @@
     </sec:authentication-manager>
 
     <bean id="customerPasswordAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <constructor-arg ref="customerService" />
         <property name="hideUserNotFoundExceptions" value="true" />
         <property name="passwordEncoder" ref="passwordEncoder" />
-        <property name="userDetailsService" ref="customerService" />
     </bean>
 
     <bean id="customerService"
@@ -91,7 +91,7 @@
     </sec:authentication-manager>
     <bean id="companyIdUsernamePasswordAuthenticationProvider"
         class="jp.co.ntt.fw.spring.functionaltest.domain.service.athn.CompanyIdUsernamePasswordAuthenticationProvider">
-        <property name="userDetailsService" ref="customerService" />
+        <constructor-arg ref="customerService" />
         <property name="passwordEncoder" ref="passwordEncoder" />
     </bean>
 

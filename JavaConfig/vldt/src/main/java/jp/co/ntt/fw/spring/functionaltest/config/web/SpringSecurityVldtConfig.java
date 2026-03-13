@@ -123,8 +123,8 @@ public class SpringSecurityVldtConfig {
     @Bean("authenticationProvider")
     public AuthenticationProvider authenticationProvider(UserDetailsService vldtUserDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(vldtUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(vldtUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

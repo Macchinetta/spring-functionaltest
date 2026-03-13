@@ -251,9 +251,9 @@ public class CorrelationValidation_Thymeleaf_Test extends ValidationTestSupport 
                         is(errorMessage));
                 // CSS適用確認
                 assertThat(webDriverOperations.getWebDriver().findElement(id(targets[0]))
-                        .getAttribute("class"), is("form-control error-input"));
+                        .getDomAttribute("class"), is("form-control error-input"));
                 assertThat(webDriverOperations.getWebDriver().findElement(id(targets[1]))
-                        .getAttribute("class"), is("form-control error-input"));
+                        .getDomAttribute("class"), is("form-control error-input"));
             }
         }
     }
@@ -358,9 +358,9 @@ public class CorrelationValidation_Thymeleaf_Test extends ValidationTestSupport 
                         is(errorMessage));
                 // CSS適用確認
                 assertThat(webDriverOperations.getWebDriver().findElement(id(targets[0]))
-                        .getAttribute("class"), is("form-control error-input"));
+                        .getDomAttribute("class"), is("form-control error-input"));
                 assertThat(webDriverOperations.getWebDriver().findElement(id(targets[1]))
-                        .getAttribute("class"), is("form-control error-input"));
+                        .getDomAttribute("class"), is("form-control error-input"));
             }
         }
     }

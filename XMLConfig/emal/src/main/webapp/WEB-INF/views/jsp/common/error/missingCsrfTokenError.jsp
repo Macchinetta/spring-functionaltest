@@ -6,9 +6,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/styles.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css">
 <link rel="stylesheet"
-  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css">
+  href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet"
-  href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+  href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css">
 </head>
 <body>
   <jsp:include page="/WEB-INF/views/jsp/layout/header.jsp" />

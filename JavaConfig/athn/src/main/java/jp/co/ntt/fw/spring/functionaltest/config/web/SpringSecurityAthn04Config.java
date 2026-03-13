@@ -57,8 +57,8 @@ public class SpringSecurityAthn04Config {
     @Bean("dbUserLoginSpecifiedPassAuthenticationProvider")
     public AuthenticationProvider dbUserLoginSpecifiedPassAuthenticationProvider(
             @Qualifier("dbUserDetailsService") UserDetailsService dbUserDetailsService) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(dbUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(dbUserDetailsService);
         authProvider.setPasswordEncoder(athnPasswordEncoderSpecifiedPass());
         return authProvider;
     }
@@ -94,8 +94,8 @@ public class SpringSecurityAthn04Config {
     public AuthenticationProvider dbUserLoginSpecifiedHashAuthenticationProvider(
             @Qualifier("dbUserDetailsService") UserDetailsService dbUserDetailsService,
             @Qualifier("bCryptPasswordEncoder") PasswordEncoder bCryptPasswordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(dbUserDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(dbUserDetailsService);
         authProvider.setPasswordEncoder(bCryptPasswordEncoder);
         return authProvider;
     }

@@ -141,7 +141,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
      * <li>SimpleMailMessageを使用して設定可能なプロパティをすべて設定した場合に、メール送信できることを確認する。</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment", value = "mailServer")
+    @IfProfileValue(name = "test.environment.mailserver", value = "mailServer")
     @Test
     public void testEMAL0201003() {
 
@@ -203,7 +203,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
      * <li>SimpleMailMessageを使用して複数の宛先を設定した場合に、メール送信できることを確認する。</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment", value = "nonMailServer")
+    @IfProfileValue(name = "test.environment.mailserver", value = "nonMailServer")
     @Test
     public void testEMAL0201004() {
 
@@ -243,7 +243,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
      * <li>SimpleMailMessageを使用して複数の宛先を設定した場合に、メール送信できることを確認する。</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment", value = "mailServer")
+    @IfProfileValue(name = "test.environment.mailserver", value = "mailServer")
     @Test
     public void testEMAL0201005() {
 
@@ -482,7 +482,7 @@ public class Email_JSP_Test extends FunctionTestSupport {
      * <li>SMTP認証エラー時にMailAuthenticationExceptionがスローされることを確認する。</li>
      * </ul>
      */
-    @IfProfileValue(name = "test.environment", value = "mailServer")
+    @IfProfileValue(name = "test.environment.mailserver", value = "mailServer")
     @Test
     public void testEMAL0401001() {
 

@@ -46,6 +46,12 @@ public class TodoRestController {
 
     // Controlled by intercept-url
 
+    @GetMapping("intercepturl/{todoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public TodoResource getTodoWithInterceptUrl(@PathVariable("todoId") String todoId) {
+        return getTodo(todoId);
+    }
+
     @GetMapping("intercepturl")
     @ResponseStatus(HttpStatus.OK)
     public List<TodoResource> getTodosWithInterceptUrl() {
@@ -72,6 +78,13 @@ public class TodoRestController {
     }
 
     // Controlled by @PreAuthorize
+
+    @GetMapping("annotation/{todoId}")
+    @PreAuthorize("hasAuthority('SCOPE_READ')")
+    @ResponseStatus(HttpStatus.OK)
+    public TodoResource getTodoWithPreAuthorize(@PathVariable("todoId") String todoId) {
+        return getTodo(todoId);
+    }
 
     @GetMapping("annotation")
     @PreAuthorize("hasAuthority('SCOPE_READ')")
@@ -103,6 +116,11 @@ public class TodoRestController {
     }
 
     // main processing
+
+    private TodoResource getTodo(String todoId) {
+        Todo todo = this.todoService.findOne(todoId);
+        return this.beanMapper.map(todo);
+    }
 
     private List<TodoResource> getTodos() {
         Collection<Todo> todos = this.todoService.findAll();

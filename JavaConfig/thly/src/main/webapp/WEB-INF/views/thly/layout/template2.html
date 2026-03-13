@@ -9,8 +9,8 @@
         <title th:replace="${title}">Staff Management System</title>
     </head>
     <body>
-        <div id="header" th:replace="thly/layout/header :: header"></div>
+        <div id="header" th:replace="~{thly/layout/header :: header}"></div>
         <div id="body" th:replace="${body}"></div>
-        <div id="footer" th:replace="thly/layout/footer :: footer"></div>
+        <div id="footer" th:replace="~{thly/layout/footer :: footer}"></div>
     </body>
 </html>

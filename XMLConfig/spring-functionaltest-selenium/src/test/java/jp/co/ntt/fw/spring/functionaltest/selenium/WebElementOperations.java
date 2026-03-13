@@ -53,7 +53,7 @@ public class WebElementOperations {
     }
 
     public static String getValue(WebElement item) {
-        return item.getAttribute("value");
+        return item.getDomProperty("value");
     }
 
     public static String getElementTextValue(WebElement item) {

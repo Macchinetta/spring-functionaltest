@@ -7,7 +7,7 @@
     <parent>
         <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
         <artifactId>spring-functionaltest</artifactId>
-        <version>1.11.0.RELEASE</version>
+        <version>1.11.1.RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <name>Spring Functional Test - Web Layer FLDW Functional</name>
@@ -170,11 +170,28 @@
         </dependency>
         <!-- == End For Report == -->
 
-
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
+
+        <!-- == Begin WebJars == -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-lite</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--== End WebJars ==-->
 
     </dependencies>
     <properties>

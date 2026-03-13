@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Past;
 
@@ -31,7 +31,7 @@ public class UserInfo implements Serializable {
     private String userName;
 
     @Past
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public String getUserId() {
         return userId;
@@ -49,11 +49,11 @@ public class UserInfo implements Serializable {
         this.userName = userName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

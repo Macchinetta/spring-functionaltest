@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.api.oth2.todo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -32,7 +32,7 @@ public class TodoResource implements Serializable {
 
     private boolean finished;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
     public String getTodoId() {
         return this.todoId;
@@ -58,11 +58,11 @@ public class TodoResource implements Serializable {
         this.finished = finished;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 }

@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserInfoForm implements Serializable {
@@ -24,17 +24,17 @@ public class UserInfoForm implements Serializable {
     private static final long serialVersionUID = 3155432673599012718L;
 
     @DateTimeFormat(pattern = "yyyyMMdd")
-    private Date visitDate;
+    private LocalDate visitDate;
 
     private String visitMessage;
 
     private String userId;
 
-    public Date getVisitDate() {
+    public LocalDate getVisitDate() {
         return visitDate;
     }
 
-    public void setVisitDate(Date visitDate) {
+    public void setVisitDate(LocalDate visitDate) {
         this.visitDate = visitDate;
     }
 

@@ -27,6 +27,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -36,7 +37,6 @@ import org.springframework.security.web.authentication.session.CompositeSessionA
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy;
 import org.springframework.security.web.csrf.CsrfAuthenticationStrategy;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.security.web.csrf.MissingCsrfTokenException;
@@ -50,6 +50,16 @@ import jp.co.ntt.fw.spring.functionaltest.app.cspr.AjaxSupportAccessDeniedHandle
 @EnableWebSecurity
 @Import({SpringSecurityCsprConfig.class})
 public class SpringSecurityConfig {
+
+    /**
+     * Configure ignore security pattern.
+     * @return Bean of configured {@link WebSecurityCustomizer}
+     */
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers(antMatcher("/resources/**"),
+                antMatcher("/webjars/**"));
+    }
 
     /**
      * Configure {@link HttpSessionCsrfTokenRepository} bean.
@@ -95,19 +105,15 @@ public class SpringSecurityConfig {
     /**
      * Configure {@link SecurityFilterChain} bean.
      * @param http Builder class for setting up authentication and authorization
-     * @param csrfTokenRequestAttributeHandler Bean defined by
-     *        SpringSecurityCsprConfig#csrfTokenRequestAttributeHandler
      * @return Bean of configured {@link SecurityFilterChain}
      * @throws Exception Exception that occurs when setting HttpSecurity
      */
     @Bean
     @Order(10)
-    public SecurityFilterChain filterChain(HttpSecurity http,
-            CsrfTokenRequestAttributeHandler csrfTokenRequestAttributeHandler) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.formLogin(Customizer.withDefaults());
         http.logout(Customizer.withDefaults());
         http.exceptionHandling(ex -> ex.accessDeniedHandler(accessDeniedHandler()));
-        http.csrf(csrf -> csrf.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler));
         http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/**")).permitAll());
 
         return http.build();

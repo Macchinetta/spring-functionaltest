@@ -43,6 +43,6 @@ public class VLDT_JSP_0102001Controller {
         if (result.hasErrors()) {
             return "jsp/vldt/nestedValidationView";
         }
-        return "redirect:/jsp/0102/001";
+        return "jsp/vldt/noValidationError";
     }
 }

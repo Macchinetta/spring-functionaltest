@@ -43,6 +43,6 @@ public class VLDT_Thymeleaf_0102001Controller {
         if (result.hasErrors()) {
             return "thymeleaf/vldt/nestedValidationView";
         }
-        return "redirect:/thymeleaf/0102/001";
+        return "jsp/vldt/noValidationError";
     }
 }

@@ -2,3 +2,9 @@
     border-color: #b94a48;
     margin-left: 5px;
 }
+
+.alert-success {
+    background-color: #5da423;
+    border-color: #457a1a;
+    color: white;
+}

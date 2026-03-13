@@ -78,7 +78,7 @@ $ mvn -U sql:execute -P local-postgres-close
 
 ### [Step 3] Build artifacts
 
-After navigating to the Configration to be used, build the artifact using the maven command.
+After navigating to the Configuration to be used, build the artifact using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
@@ -96,7 +96,7 @@ $ mvn -U clean install -am -pl ajax
 
 To build the entire project, execute the following command.
 ```console
-$ mvn -U clean install
+$ mvn -U clean install -DskipTests
 ```
 
 #### Case of using PostgreSQL as database
@@ -113,7 +113,7 @@ $ mvn -U clean install -am -pl ajax -P tomcat10-postgresql,include-context,compi
 
 To build the entire project, execute the following command.
 ```console
-$ mvn -U clean install -P tomcat10-postgresql,include-context,compile-env
+$ mvn -U clean install -P tomcat10-postgresql,include-context,compile-env -DskipTests
 ```
 
 > **Note:**  
@@ -122,7 +122,7 @@ $ mvn -U clean install -P tomcat10-postgresql,include-context,compile-env
 
 ### [Step 4] Start up Tomcat10 and deploy war file
 
-After navigating to the Configration to be used, start up Tomcat10 and deploy war file using the maven command.
+After navigating to the Configuration to be used, start up Tomcat10 and deploy war file using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
@@ -141,7 +141,7 @@ The following options can be set at cargo runtime.
 
 | Option | Overview | Value that can be set | Default value | Setting example
 | ---- | ---- | ---- | ---- | ---- |
-| cargo.maven.containerUrl | container URL for Cargo | [Tomcat](https://archive.apache.org/dist/tomcat/) | URL corresponding to the version of Tomcat set in parent of | -Dcargo.maven.containerUrl=[https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.zip](https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.33/bin/apache-tomcat-10.1.33.zip) |
+| cargo.maven.containerUrl | container URL for Cargo | [Tomcat](https://archive.apache.org/dist/tomcat/) | URL corresponding to the version of Tomcat set in parent of | -Dcargo.maven.containerUrl=[https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.50/bin/apache-tomcat-10.1.50.zip](https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.50/bin/apache-tomcat-10.1.50.zip) |
 
 Shutdown trigger is "Ctrl + C" on console.
 
@@ -150,7 +150,7 @@ Shutdown trigger is "Ctrl + C" on console.
 
 ### [Step 5] Deploy functions war files
 
-After navigating to the Configration to be used, deploy war file using the maven command.
+After navigating to the Configuration to be used, deploy war file using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
@@ -166,15 +166,14 @@ $ mvn -U cargo:deploy -pl ajax -Dcargo.deployable.artifactId=aply -Dcargo.deploy
 
 ### [Step 6] Run functional tests
 
-After navigating to the Configration to be used, run functional tests using the maven command.
+After navigating to the Configuration to be used, run functional tests using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
-After navigating to the ``spring-functionaltest-selenium`` project, start Selenium (``WebDriver``) and run JUnit.
+Start Selenium (``WebDriver``) and run JUnit.
 
 ```console
-$ cd spring-functionaltest-selenium
-$ mvn -U test
+$ mvn -U test -pl spring-functionaltest-selenium
 ```
 
 If you wish to test a specific project, use ``-Dtest=`` to narrow down the target project to be tested.  
@@ -182,7 +181,7 @@ You can also specify the project name to narrow down the target.
 
 ```console
 # Example: In the case of ajax
-$ mvn -U test -Dtest=*/ajax/*
+$ mvn -U test -pl spring-functionaltest-selenium -Dtest=*/ajax/*
 ```
 
 The following options can be set at selenium runtime.
@@ -219,14 +218,25 @@ $ mvn -U clean install
 
 ### How to build war for various environments
 
-After navigating to the Configration to be used, build war using the maven command.
+After navigating to the Configuration to be used, build war using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
 Using the maven profile , build the war in accordance with the environment that you want to deploy.
 
+To build all projects at once
+
+```console
+$ mvn -U package -P tomcat10-postgresql,provided-env -DskipTests
+```
+
+To build by specifying the target project
+
 ```console
 $ mvn -U package -am -pl xxxx -P tomcat10-postgresql,provided-env
+
+Example: In the case of ajax
+$ mvn -U package -am -pl ajax -P tomcat10-postgresql,provided-env
 ```
 
 Profiles that are available are as follows.
@@ -272,20 +282,19 @@ Profiles that are available are as follows.
 
 ### How to switch specific test cases to run for various environments
 
-After navigating to the Configration to be used, switch specific test cases to run for various environments using the maven command.
+After navigating to the Configuration to be used, switch specific test cases to run for various environments using the maven command.
 * Java Config : ``spring-functionaltest/JavaConfig``
 * XML Config : ``spring-functionaltest/XMLConfig``
 
 Using the system property(``-D``) with ``@IfProfileValue``, you can switch specific test cases to run in accordance with the environment that you want to run.
 
 ```console
-$ cd spring-functionaltest-selenium
-$ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment=mailServier
+$ mvn -U test -pl spring-functionaltest-selenium -Dtest.environment.mailserver=mailServer
 ```
 
 Properties that are available are as follows.
 
 |        properties         | description             |
 |---------------------------|-------------------------|
-|    test.environment       | Whether to run tests using actual mail server.<br>Set **``mailServer``** when ``spring.profiles.active`` of application contains ``mailServer``. |
-|    jms.test.environment   | Whether to run tests using actual mq server.<br>Set **``mqServer``** when ``spring.profiles.active`` of application contains ``mqServer``. |
+|    test.environment.mailserver       | Whether to run tests using actual mail server.<br>Set **``mailServer``** when ``spring.profiles.active`` of application contains ``mailServer``. |
+|    test.environment.mqserver   | Whether to run tests using actual mq server.<br>Set **``mqServer``** when ``spring.profiles.active`` of application contains ``mqServer``. |

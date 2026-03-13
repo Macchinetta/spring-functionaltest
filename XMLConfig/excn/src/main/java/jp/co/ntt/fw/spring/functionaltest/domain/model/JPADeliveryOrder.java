@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -67,10 +67,10 @@ public class JPADeliveryOrder {
     private String receiverAddress;
 
     @Column(name = "accept_datetime")
-    private Date acceptDateTime;
+    private LocalDate acceptDateTime;
 
     @Column(name = "completion_datetime")
-    private Date completionDateTime;
+    private LocalDate completionDateTime;
 
     @Column(name = "delivery_driver", length = 1024)
     private String deliveryDriver;
@@ -134,19 +134,19 @@ public class JPADeliveryOrder {
         this.receiverAddress = receiverAddress;
     }
 
-    public Date getAcceptDateTime() {
+    public LocalDate getAcceptDateTime() {
         return acceptDateTime;
     }
 
-    public void setAcceptDateTime(Date acceptDateTime) {
+    public void setAcceptDateTime(LocalDate acceptDateTime) {
         this.acceptDateTime = acceptDateTime;
     }
 
-    public Date getCompletionDateTime() {
+    public LocalDate getCompletionDateTime() {
         return completionDateTime;
     }
 
-    public void setCompletionDateTime(Date completionDateTime) {
+    public void setCompletionDateTime(LocalDate completionDateTime) {
         this.completionDateTime = completionDateTime;
     }
 

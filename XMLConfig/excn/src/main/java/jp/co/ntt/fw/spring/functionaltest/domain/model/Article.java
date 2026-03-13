@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.domain.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Article implements Serializable {
 
@@ -30,7 +30,7 @@ public class Article implements Serializable {
 
     private String overview;
 
-    private Date publishDate;
+    private LocalDate publishDate;
 
     public int getArticleId() {
         return articleId;
@@ -64,11 +64,11 @@ public class Article implements Serializable {
         this.overview = overview;
     }
 
-    public Date getPublishDate() {
+    public LocalDate getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(LocalDate publishDate) {
         this.publishDate = publishDate;
     }
 

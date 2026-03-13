@@ -87,8 +87,8 @@ public class SpringSecurityAthn18Config {
     public AuthenticationProvider loginWithCustomPbkdf2PasswordAuthenticationProvider(
             @Qualifier("loginWithEncodingPasswordService") UserDetailsService loginWithEncodingPasswordService,
             @Qualifier("athnPasswordEncoderCustomPbkdf2") PasswordEncoder athnPasswordEncoderCustomPbkdf2) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginWithEncodingPasswordService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginWithEncodingPasswordService);
         authProvider.setPasswordEncoder(athnPasswordEncoderCustomPbkdf2);
         return authProvider;
     }

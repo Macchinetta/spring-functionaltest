@@ -16,7 +16,6 @@
 package jp.co.ntt.fw.spring.functionaltest.config.web;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,7 +29,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.AccountUserDetailsService;
 import jp.co.ntt.fw.spring.functionaltest.domain.service.athn.authEventHandleAccountUserDetailsService;
 
@@ -63,7 +61,7 @@ public class SpringSecurityAthnConfig {
 
     /**
      * Configure {@link AuthenticationManager} bean.
-     * @param authenticationProvider Bean defined by #userLoginAuthenticationProvider
+     * @param userLoginAuthenticationProvider Bean defined by #userLoginAuthenticationProvider
      * @return Bean of configured {@link AuthenticationManager}
      */
     @Bean("userLoginManagerForAthn")
@@ -87,15 +85,15 @@ public class SpringSecurityAthnConfig {
     public AuthenticationProvider userLoginAuthenticationProvider(
             @Qualifier("userDetailsServiceForAthn") UserDetailsService userDetailsServiceForAthn,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsServiceForAthn);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(userDetailsServiceForAthn);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
     /**
      * Configure {@link AuthenticationManager} bean.
-     * @param authenticationProvider Bean defined by #dbUserLoginAuthenticationProvider
+     * @param dbUserLoginAuthenticationProvider Bean defined by #dbUserLoginAuthenticationProvider
      * @return Bean of configured {@link AuthenticationManager}
      */
     @Bean("dbUserLoginManager")
@@ -112,8 +110,8 @@ public class SpringSecurityAthnConfig {
     @Bean("dbUserLoginAuthenticationProvider")
     public AuthenticationProvider dbUserLoginAuthenticationProvider(
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(dbUserDetailsService());
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(dbUserDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }

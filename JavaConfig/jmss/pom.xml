@@ -7,7 +7,7 @@
     <parent>
         <groupId>jp.co.ntt.fw.spring.functionaltest</groupId>
         <artifactId>spring-functionaltest</artifactId>
-        <version>1.11.0.RELEASE</version>
+        <version>1.11.1.RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <name>Spring Functional Test - Web Layer JMSS Functional</name>
@@ -155,6 +155,24 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>artemis-jakarta-server</artifactId>
         </dependency>
+
+        <!-- == Begin WebJars == -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-lite</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <!--== End WebJars ==-->
 
     </dependencies>
 

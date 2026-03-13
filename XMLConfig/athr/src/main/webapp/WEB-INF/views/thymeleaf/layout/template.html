@@ -16,12 +16,12 @@
         <meta name="_csrf_parameter" th:if="${_csrf != null}" th:content="${_csrf.parameterName}" />
         <meta name="_csrf_header" th:if="${_csrf != null}" th:content="${_csrf.headerName}" />
         <meta name="_csrf" th:if="${_csrf != null}" th:content="${_csrf.token}" />
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" />
         <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
         <link rel="stylesheet" th:href="@{/resources/app/css/{functionId}.css(functionId=${functionId})}" />
-        <script type="text/javascript" th:src="@{/resources/vendor/jquery/jquery.min.js}"></script>
-        <script th:src="@{/resources/vendor/bootstrap/dist/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
         <script type="text/javascript" th:src="@{/resources/app/js/cmmn.js}"></script>
         <script type="text/javascript" th:src="@{/resources/app/js/{functionId}_thymeleaf.js(functionId=${functionId})}"></script>
         <script type="text/javascript"></script>

@@ -66,7 +66,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.createTodo(forCreateTodo);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (WebServiceException e) {
             // Changed by replacing with JAX-WS
             // (RemoteAccessException -> WebServiceException)
@@ -85,7 +85,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.getTodo(todoId);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
             loggingHttpRespnseHeader(todoWebService);
@@ -109,7 +109,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             return todoWebService.updateTodo(forUpdateTodo);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
             loggingHttpRespnseHeader(todoWebService);
@@ -124,7 +124,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             todoWebService.deleteTodo(todoId);
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
             loggingHttpRespnseHeader(todoWebService);
@@ -139,7 +139,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             todoWebService.handlerTest();
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (SOAPFaultException e) {
             // Changed by replacing with JAX-WS
             // (JaxWsSoapFaultException -> SOAPFaultException)
@@ -158,7 +158,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
             todoWebService.timeoutTest();
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } catch (WebServiceException e) {
             // Changed by replacing with JAX-WS
             // (RemoteAccessException -> WebServiceException)
@@ -167,7 +167,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
                 // Changed by replacing with JAX-WS(ApacheCXF Ver4)
                 // (SocketTimeoutException -> HttpTimeoutException)
                 if (cause instanceof HttpTimeoutException) {
-                    throw new SystemException("e.sf.cmmn.9001", cause);
+                    throw new SystemException("e.sf.fw.9001", cause);
                 }
             }
             throw e;
@@ -191,7 +191,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
 
         } catch (WebFaultException e) {
             loggingWebFault(e);
-            throw new SystemException("e.sf.cmmn.9001", e);
+            throw new SystemException("e.sf.fw.9001", e);
         } finally {
             loggingHttpStatusCode(todoWebService);
             loggingHttpRespnseHeader(todoWebService);
@@ -210,7 +210,7 @@ public class TodoProxyServiceImpl implements TodoProxyService {
         if (todoWebServices.containsKey(webServiceKey)) {
             return todoWebServices.get(webServiceKey);
         } else {
-            throw new SystemException("e.sf.cmmn.9001",
+            throw new SystemException("e.sf.fw.9001",
                     "web service " + webServiceKey + " is not found...");
         }
     }

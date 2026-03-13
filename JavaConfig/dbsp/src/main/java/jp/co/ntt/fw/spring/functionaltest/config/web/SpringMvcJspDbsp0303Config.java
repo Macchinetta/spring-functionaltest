@@ -33,8 +33,6 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.xml.MarshallingHttpMessageConverter;
 import org.springframework.security.web.method.annotation.AuthenticationPrincipalArgumentResolver;
 import org.springframework.security.web.servlet.support.csrf.CsrfRequestDataValueProcessor;
 import org.springframework.validation.Validator;
@@ -162,14 +160,6 @@ public class SpringMvcJspDbsp0303Config implements WebMvcConfigurer {
     @Bean
     public AuthenticationPrincipalArgumentResolver authenticationPrincipalArgumentResolver() {
         return new AuthenticationPrincipalArgumentResolver();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(marshallingHttpMessageConverter());
     }
 
     /**
@@ -389,15 +379,6 @@ public class SpringMvcJspDbsp0303Config implements WebMvcConfigurer {
     @Bean("pageableHandlerMethodArgumentResolver")
     public PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
         return new PageableHandlerMethodArgumentResolver();
-    }
-
-    /**
-     * Configure {@link MarshallingHttpMessageConverter} bean.
-     * @return Bean of configured {@link MarshallingHttpMessageConverter}
-     */
-    @Bean("marshallingHttpMessageConverter")
-    public MarshallingHttpMessageConverter marshallingHttpMessageConverter() {
-        return new MarshallingHttpMessageConverter();
     }
 
     /**

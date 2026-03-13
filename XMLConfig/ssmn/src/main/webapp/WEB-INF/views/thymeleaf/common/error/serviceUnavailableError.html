@@ -5,8 +5,8 @@
         <title>Service Unavailable!</title>
         <link rel="stylesheet" th:href="@{/resources/app/css/styles.css}" />
         <link rel="stylesheet" th:href="@{/resources/app/css/cmmn.css}" />
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap.min.css}" />
-        <link rel="stylesheet" th:href="@{/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}" />
     </head>
     <body>
         <div th:insert="~{thymeleaf/layout/header :: header}">header</div>
@@ -14,7 +14,7 @@
             <h1>Service Unavailable!</h1>
             <div class="alert alert-danger">
                 <ul>
-                    <li th:text="${#strings.isEmpty(exceptionCode)} ? #{e.sf.fw.9503} : |[${exceptionCode}] #{e.sf.fw.9503}|"></li>
+                    <li th:text="${#strings.isEmpty(exceptionCode)} ? #{e.sf.fw.9009} : |[${exceptionCode}] #{e.sf.fw.9009}|"></li>
                 </ul>
             </div>
             <br />

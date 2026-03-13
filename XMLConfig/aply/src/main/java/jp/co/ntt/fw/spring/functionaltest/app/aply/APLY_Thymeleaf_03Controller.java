@@ -15,7 +15,7 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.app.aply;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,7 +60,7 @@ public class APLY_Thymeleaf_03Controller {
     @GetMapping(value = "0302/004")
     public String handle02004(Model model) {
         // モデルに格納される値
-        model.addAttribute("valueUsingDateFormat", Date.from(clockFactory.fixed().instant()));
+        model.addAttribute("valueUsingDateFormat", LocalDateTime.now(clockFactory.fixed()));
         return "thymeleaf/aply/showValueUsingDateFormatInModel";
     }
 

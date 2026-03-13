@@ -611,7 +611,7 @@ public class JMS_JSP_Test extends FunctionTestSupport {
      * </ul>
      * nonMqServerでは1スレッドになるため、試験対象はmqServerのみとする。
      */
-    @IfProfileValue(name = "jms.test.environment", values = {"mqServer"})
+    @IfProfileValue(name = "test.environment.mqserver", values = {"mqServer"})
     @Test
     public void testJMSS0404002() {
 

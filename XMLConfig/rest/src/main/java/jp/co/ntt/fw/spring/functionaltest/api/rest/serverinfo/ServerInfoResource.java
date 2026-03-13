@@ -20,17 +20,17 @@ import java.io.Serializable;
 public class ServerInfoResource implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int javaVersion;
+    private String javaVersion;
 
     private String apServerName;
 
     private String apServerVersion;
 
-    public int getJavaVersion() {
+    public String getJavaVersion() {
         return javaVersion;
     }
 
-    public void setJavaVersion(int javaVersion) {
+    public void setJavaVersion(String javaVersion) {
         this.javaVersion = javaVersion;
     }
 

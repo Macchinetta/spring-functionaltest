@@ -16,12 +16,12 @@
         <meta name="contextPath" content="${pageContext.request.contextPath}" />
         <sec:csrfMetaTags />
         <title><spring:message code="label.sf.cmmn.systemName" var="defaultTitle" /> <spring:message code="${titleKey}" text="${f:h(defaultTitle)}" /></title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/webjars/bootstrap/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/cmmn.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/app/css/${functionId}.css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/webjars/jquery/jquery.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/cmmn.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/app/js/${functionId}.js"></script>
         <script type="text/javascript"></script>
@@ -110,14 +110,6 @@
                         <div class="col-sm-10">
                             <form:input path="doubleObject" class="form-control" placeholder="DoubleObject" />
                             <form:errors path="doubleObject" class="text-danger" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <form:label path="date" class="col-sm-2 control-label">Date</form:label>
-                        <div class="col-sm-10">
-                            <form:input path="date" class="form-control" placeholder="Date" />
-                            <form:errors path="date" class="text-danger" />
                         </div>
                     </div>
 

@@ -16,7 +16,7 @@
 package jp.co.ntt.fw.spring.functionaltest.app.vldt;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -26,13 +26,13 @@ public class NestedCollectionValidationForm implements Serializable {
 
     @NotNull
     @Valid
-    private LinkedList<AddressForm> addresses;
+    private ArrayList<AddressForm> addresses;
 
-    public LinkedList<AddressForm> getAddresses() {
+    public ArrayList<AddressForm> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(LinkedList<AddressForm> addresses) {
+    public void setAddresses(ArrayList<AddressForm> addresses) {
         this.addresses = addresses;
     }
 }

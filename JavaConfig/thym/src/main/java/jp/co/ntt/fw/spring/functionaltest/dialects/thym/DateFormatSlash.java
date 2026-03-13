@@ -15,15 +15,14 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.dialects.thym;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DateFormatSlash {
 
-    public String formatYYYYMMDD(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return dateFormat.format(date);
+    public String formatYYYYMMDD(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return date.format(formatter);
     }
 
 }

@@ -19,8 +19,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -62,7 +64,8 @@ public class TemporaryFilesHelper {
             UploadedContent uploadedFile = new UploadedContent();
             uploadedFile.setFileId(targetFile.getName());
             uploadedFile.setSize(targetFile.length());
-            uploadedFile.setUploadedAt(new Date(targetFile.lastModified()));
+            uploadedFile.setUploadedAt(Instant.ofEpochMilli(
+                    targetFile.lastModified()).atZone(ZoneId.systemDefault()).toLocalDateTime());
             temporaryFiles.add(uploadedFile);
         }
         if (temporaryFiles.size() == 0) {

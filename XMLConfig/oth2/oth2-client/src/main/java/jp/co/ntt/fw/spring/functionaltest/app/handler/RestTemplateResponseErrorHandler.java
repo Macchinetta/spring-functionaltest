@@ -38,14 +38,6 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
     }
 
     @Override
-    public void handleError(ClientHttpResponse clientHttpResponse) throws IOException {
-        // 400系に関してはAPI側でBusinessExceptionとして扱う
-        if (clientHttpResponse.getStatusCode().is4xxClientError()) {
-            throw new BusinessException(getMessage(clientHttpResponse));
-        }
-    }
-
-    @Override
     public void handleError(URI url, HttpMethod method, ClientHttpResponse clientHttpResponse)
             throws IOException {
         // 400系に関してはAPI側でBusinessExceptionとして扱う

@@ -15,9 +15,8 @@
  */
 package jp.co.ntt.fw.spring.functionaltest.domain.service.djpa;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,10 +128,8 @@ public class JPABookEGServiceImpl implements JPABookEGService {
             bookEG.setBlobCode(clobCode.getBytes());
             bookEG.setTitle("Manual Title " + i);
 
-            Calendar cal = Calendar.getInstance();
-            cal.set(2015, 10, 23);
-            Date utilDate = cal.getTime();
-            bookEG.setReleaseDate(new java.sql.Date(utilDate.getTime()));
+            LocalDate releaseDate = LocalDate.of(2015, 11, 23);
+            bookEG.setReleaseDate(releaseDate);
             bookEG.setPrice(400 + i);
 
             bookList.add(bookEG);

@@ -127,7 +127,7 @@ public class SpringFunctionaltestJmsInfraConfig {
 
     /**
      * Configure {@link JmsMessagingTemplate} bean.
-     * @param dynamicConnectionFactory Bean defined by #dynamicJmsTemplate()
+     * @param dynamicJmsTemplate Bean defined by #dynamicJmsTemplate()
      * @return Bean of configured {@link JmsMessagingTemplate}
      */
     @Bean("dynamicJmsMessagingTemplate")

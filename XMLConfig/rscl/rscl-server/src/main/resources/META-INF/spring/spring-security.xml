@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mvcHandlerMappingIntrospector" class="org.springframework.web.servlet.handler.HandlerMappingIntrospector" />
+
+    <sec:http pattern="/api/v1/**" request-matcher="ant" create-session="stateless"
+        authentication-manager-ref="rsclAuthenticationManager">
+        <sec:http-basic />
+        <sec:csrf disabled="true" />
+        <sec:intercept-url pattern="/api/v1/auth/basic" access="hasRole('ROLE_USER')" />
+        <sec:intercept-url pattern="/**" access="permitAll" />
+    </sec:http>
+
+    <!-- ↓他のテストAPIに影響を与えない＆受けないように、managerにIDを振って、IDを特定して使うようにする。↓ -->
+    <sec:authentication-manager id="rsclAuthenticationManager">
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="rscluser" password="password1234" authorities="ROLE_USER" />
+            </sec:user-service>
+            <sec:password-encoder ref="noOpPasswordEncoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+    <!-- NoOpPasswordEncoderは非推奨ではあるが削除予定はない -->
+    <bean id="noOpPasswordEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder" />
+
+    <!-- Put UserID into MDC -->
+    <bean id="userIdMDCPutFilter" class="org.terasoluna.gfw.security.web.logging.UserIdMDCPutFilter">
+    </bean>
+
+</beans>

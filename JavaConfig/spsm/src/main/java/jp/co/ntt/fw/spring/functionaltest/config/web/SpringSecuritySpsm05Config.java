@@ -188,8 +188,8 @@ public class SpringSecuritySpsm05Config {
     public AuthenticationProvider userLoginAuthenticationProvider(
             @Qualifier("loginForSessionUserInfoDetailsService") UserDetailsService loginForSessionUserInfoDetailsService,
             @Qualifier("passwordEncoder") PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(loginForSessionUserInfoDetailsService);
+        DaoAuthenticationProvider authProvider =
+                new DaoAuthenticationProvider(loginForSessionUserInfoDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
